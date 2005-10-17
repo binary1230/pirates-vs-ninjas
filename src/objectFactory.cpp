@@ -3,11 +3,12 @@
 Object* ObjectFactory::CreateObject(uint id) {
 	
 	Object* new_obj = NULL;
+	RadiusBlockObject *block;
 	
 	switch (id) {
 		case OBJECT_ID_SONIC:
 			
-			RadiusBlockObject *block = new RadiusBlockObject();
+			block = new RadiusBlockObject();
 			if (block) {
 							
 				PALETTE pal;
@@ -36,11 +37,11 @@ Object* ObjectFactory::CreateObject(uint id) {
 			}
 
 			new_obj = block;
-			
 			break;
 
 		default:
 			fprintf(stderr, "ObjectFactory: Unknown ID passed: %i\n", id);
+			new_obj = NULL;
 	}
 	
 	return new_obj;
