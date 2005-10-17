@@ -1,0 +1,50 @@
+Backgrounds
+Foregrounds
+Music
+Input
+
+Object {
+ x,y
+ sprite*
+
+ Update()
+ Draw()
+}
+
+Animation {
+ sprite_data[]		// each frame (in order, e.g. 1,2,3,4,5)
+ 
+ sprite* frames[]	// index sprite_data (e.g. frames[0] = sprite_data[3])
+ timing[]		// foreach entry in frames, how long to display it
+}
+
+PhysicalObject : Object {
+ vx,vy
+ forces_x[], forces_y[]
+
+ Update()
+ Draw()
+}
+
+Player : PhysicalObject {
+ state
+ 
+ Update()
+ Draw()
+}
+
+SpriteFactory {
+	sprite* SpriteCreate(int which)
+	SpriteFree()
+}
+
+Map {
+	Draw()
+}
+
+GameState {
+	Update()
+	Draw()
+
+	RunGame()
+}
