@@ -19,7 +19,7 @@ OBJS = $(SRCS:.cpp=.o)
 all: target
 
 clean:
-	rm -rf *.o core $(TARGET)
+	rm -rf *.o core $(TARGET) ../$(TARGET)
 
 target: $(OBJS)
 	$(GXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
