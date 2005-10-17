@@ -1,6 +1,7 @@
 SRCS = \
 main.cpp gameState.cpp window.cpp \
-object.cpp 
+objectFactory.cpp \
+object.cpp
 
 GXX = g++
 GCC = gcc
