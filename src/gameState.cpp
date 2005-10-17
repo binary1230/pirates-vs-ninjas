@@ -5,7 +5,7 @@ int GameState::InitSystem() {
 		exit_game = false;
 
 		window = new Window();
-		if ( !window || window->Init(320,240,0) < 0 )
+		if ( !window || window->Init(640,480,0) < 0 )
 			return -1;
 
 		objectFactory = new ObjectFactory();
@@ -25,6 +25,8 @@ int GameState::InitObjects() {
 
 	for (i = 0; i < max; i++) {
 		objects[i] = objectFactory->CreateObject(OBJECT_ID_SONIC);
+		if (!objects[i])
+			return -1;
 	}
 				
 	return 0;

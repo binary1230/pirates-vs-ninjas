@@ -10,11 +10,15 @@ Object* ObjectFactory::CreateObject(uint id) {
 			RadiusBlockObject *block = new RadiusBlockObject();
 			if (block) {
 							
-				BITMAP* bmp = create_bitmap(32, 32);
+				PALETTE pal;
+				BITMAP* bmp = load_bitmap("ninja.tga", pal);
+				
+				//  = create_bitmap(32, 32);
 		
 				if (bmp) {
 
-					clear_to_color(bmp, Rand(8,10) );
+					set_palette(pal);
+					// clear_to_color(bmp, Rand(8,10) );
 
 					block->SetBitmapIsDeleteable(true);
 					block->SetDestinationBitmap(default_destination_bitmap);
