@@ -19,7 +19,7 @@ int Window::Init(uint _width, uint _height, bool _fullscreen) {
 			gfx_mode = GFX_AUTODETECT;
 
 	if (set_gfx_mode(gfx_mode, width, height, 0, 0) != 0) {
-		fprintf(stderr, "window: Can't set graphics mode! (%i, %i) \n");
+		fprintf(stderr, "window: Can't set graphics mode! (%i, %i) \n", width, height);
 		return -1;
 	}	
 

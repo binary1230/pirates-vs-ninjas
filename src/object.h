@@ -17,9 +17,14 @@ class Object {
 	public:
 		void Update();				
 		void Draw();
+		void DrawAtOffset(int x, int y);	// Draw this object at its coordinates
+																			// plus this offset.
 		
 		void SetBitmap(BITMAP* _bitmap);
 		void SetDestinationBitmap(BITMAP* _destination);
+
+		int GetX();
+		int GetY();
 
 		Object();
 		~Object();
