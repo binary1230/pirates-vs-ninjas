@@ -4,15 +4,23 @@
 #include <allegro.h>
 #include <stdio.h>
 
+#include "globals.h"
 #include "object.h"
+#include "objectRadiusBlock.h"
 #include "objectIDs.h"
 
 class ObjectFactory {
 	protected:
+		BITMAP* default_destination_bitmap;
 
 	public:
+		int Init();
+		void Shutdown();
+
 		Object* CreateObject(uint id);
 		void DeleteObject(Object*);
+	  
+		void SetDefaultDestinationBitmap(BITMAP* bmp);
 
 		ObjectFactory();
 		~ObjectFactory();

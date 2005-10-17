@@ -1,32 +1,64 @@
 #include "objectFactory.h"
 
-// XXX: just a placeholder so we can display _something_
 Object* ObjectFactory::CreateObject(uint id) {
 	
-	Object* new_object = NULL;
+	Object* new_obj = NULL;
+	
 	switch (id) {
 		case OBJECT_ID_SONIC:
-			// create the sonic sprite
 			
-			/* something like:
-			new_object = new SonicObject();
-			SonicObject->SetBitmap(SONIC);
-			SonicObject->SetControls(Player1);
-			*/
+			RadiusBlockObject *block = new RadiusBlockObject();
+			if (block) {
+							
+				BITMAP* bmp = create_bitmap(32, 32);
+		
+				if (bmp) {
+
+					clear_to_color(bmp, Rand(8,10) );
+
+					block->SetBitmapIsDeleteable(true);
+					block->SetDestinationBitmap(default_destination_bitmap);
+					block->SetBitmap(bmp);
+					block->SetXY(Rand(0,320), Rand(0,240));
+					block->SetTheta(Rand(0,360));
+					block->SetRadius(Rand(20,300));
+					
+				} else {
+					fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite's bitmap.\n");
+				}
+		
+			} else {
+				fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite.\n");
+			}
+
+			new_obj = block;
+			
 			break;
 
 		default:
 			fprintf(stderr, "ObjectFactory: Unknown ID passed: %i\n", id);
 	}
 	
-	return new_object;
+	return new_obj;
 }
 
 void ObjectFactory::DeleteObject(Object* obj) {
+	obj->Delete();
 	delete obj;
 }
 
-ObjectFactory::ObjectFactory() {
+int ObjectFactory::Init() {
+	return 0;
+}
+
+void ObjectFactory::SetDefaultDestinationBitmap(BITMAP* bmp) {
+	default_destination_bitmap = bmp;
+}
+
+void ObjectFactory::Shutdown() {
+}
+
+ObjectFactory::ObjectFactory() : default_destination_bitmap(NULL) {
 }
 
 ObjectFactory::~ObjectFactory() {

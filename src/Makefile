@@ -1,12 +1,12 @@
 SRCS = \
 main.cpp gameState.cpp window.cpp \
 objectFactory.cpp \
-object.cpp
+object.cpp objectRadiusBlock.cpp
 
 GXX = g++
 GCC = gcc
 CFLAGS = -c -Wall -g
-LDFLAGS = -ggdb `allegro-config --libs`
+LDFLAGS = -ggdb `allegro-config --libs` -lm
 			
 TARGET = ninjas
 			
@@ -18,6 +18,9 @@ OBJS = $(SRCS:.cpp=.o)
 	$(GXX) $(CFLAGS) $< -o $@
 
 all: target
+
+test: target
+	./$(TARGET)
 
 clean:
 	rm -rf *.o core $(TARGET) ../$(TARGET)
