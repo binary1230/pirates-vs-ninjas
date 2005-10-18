@@ -6,7 +6,7 @@ void MouseBlockObject::Update() {
 }
 
 void MouseBlockObject::Draw() {
-	DrawAtOffset(0,0);
+	draw_sprite_h_flip(dst_bitmap, bitmap, x, y);
 }
 
 MouseBlockObject::MouseBlockObject() {}

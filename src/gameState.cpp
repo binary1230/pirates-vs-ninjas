@@ -22,7 +22,7 @@ int GameState::InitObjects() {
 	// create some random objects
 	Object* new_obj;
 	
-	int i, max = 3;
+	int i, max = 30;
 	objects.resize(0);
 
 	for (i = 0; i < max; i++) {
