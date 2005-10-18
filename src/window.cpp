@@ -35,6 +35,7 @@ int Window::Init(uint _width, uint _height, bool _fullscreen) {
 	clear_bitmap(backbuf);
 
 	install_mouse();
+	install_keyboard();
 
 	return 0;
 }
