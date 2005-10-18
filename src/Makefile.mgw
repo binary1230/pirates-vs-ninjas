@@ -1,0 +1,30 @@
+SRCS = \
+main.cpp gameState.cpp window.cpp \
+objectFactory.cpp \
+object.cpp objectRadiusBlock.cpp objectMouseBlock.cpp
+
+GXX = i586-mingw32msvc-g++
+GXX = i586-mingw32msvc-gcc
+CFLAGS = -c -Wall -g -I/home/dcerquet/i586/include
+LDFLAGS = -ggdb -lalleg --subsystem,windows -lm -L/home/dcerquet/lib/i586-mingw32msvc/ -mno-cygwin -lstdc++
+			
+TARGET = ninjas.exe
+			
+# Dont _really_ need to mess with anything below this
+
+OBJS = $(SRCS:.cpp=.o)
+
+.cpp.o:
+	$(GXX) $(CFLAGS) $< -o $@
+
+all: target
+
+test: target
+	./$(TARGET)
+
+clean:
+	rm -rf *.o core $(TARGET) ../$(TARGET)
+
+target: $(OBJS)
+	$(GXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
+	cp $(TARGET) ..
