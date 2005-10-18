@@ -99,15 +99,16 @@ void GameState::MainLoop() {
 }
 
 void GameState::Shutdown() {
-	if (window) {
-		window->Shutdown();
-		delete window;
-	}
-
 	if (objectFactory) {
 		DestroyObjects();
 		objectFactory->Shutdown();
 		delete objectFactory;
+	}
+
+	// window destruction code must be LAST
+	if (window) {
+		window->Shutdown();
+		delete window;
 	}
 }
 

@@ -1,7 +1,5 @@
-SRCS = \
-main.cpp gameState.cpp window.cpp \
-objectFactory.cpp \
-object.cpp objectRadiusBlock.cpp objectMouseBlock.cpp
+# makefile for linux/*nix
+include Makefile.common
 
 GXX = g++
 GCC = gcc
@@ -20,7 +18,7 @@ OBJS = $(SRCS:.cpp=.o)
 all: target
 
 test: target
-	./$(TARGET)
+	cd .. && ./$(TARGET)
 
 clean:
 	rm -rf *.o core $(TARGET) ../$(TARGET)

@@ -10,4 +10,6 @@ int main(int argc, char* argv) {
 				// run the game
 				GameState gameState;
 				return gameState.RunGame(/* options */);
+
+				return 0;
 } END_OF_MAIN();

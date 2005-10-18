@@ -13,7 +13,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 			if (rblock) {
 							
 				PALETTE pal;
-				BITMAP* bmp = load_bitmap("ninja.tga", pal);
+				BITMAP* bmp = load_bitmap("data/ninja.tga", pal);
 				
 				if (bmp) {
 
@@ -42,7 +42,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 			if (mblock) {
 							
 				PALETTE pal;
-				BITMAP* bmp = load_bitmap("ninja2.tga", pal);
+				BITMAP* bmp = load_bitmap("data/ninja2.tga", pal);
 				
 				if (bmp) {
 
