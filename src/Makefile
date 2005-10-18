@@ -1,7 +1,7 @@
 SRCS = \
 main.cpp gameState.cpp window.cpp \
 objectFactory.cpp \
-object.cpp objectRadiusBlock.cpp
+object.cpp objectRadiusBlock.cpp objectMouseBlock.cpp
 
 GXX = g++
 GCC = gcc

@@ -5,7 +5,7 @@ int GameState::InitSystem() {
 		exit_game = false;
 
 		window = new Window();
-		if ( !window || window->Init(320,240,0) < 0 )
+		if ( !window || window->Init(SCREEN_SIZE_X, SCREEN_SIZE_Y, 0) < 0 )
 			return -1;
 
 		objectFactory = new ObjectFactory();
@@ -20,15 +20,22 @@ int GameState::InitSystem() {
 int GameState::InitObjects() {
 	
 	// create some random objects
-	objects.resize(200);
-	int i, max = objects.size();
+	Object* new_obj;
+	
+	int i, max = 3;
+	objects.resize(0);
 
 	for (i = 0; i < max; i++) {
-		objects[i] = objectFactory->CreateObject(OBJECT_ID_SONIC);
-		if (!objects[i])
+		new_obj = objectFactory->CreateObject(OBJECT_ID_RADIUS_BLOCK);
+		if (!new_obj)
 			return -1;
+
+		objects.push_back(new_obj);
 	}
-				
+		
+	new_obj = objectFactory->CreateObject(OBJECT_ID_MOUSE_BLOCK);
+	objects.push_back(new_obj);
+	
 	return 0;
 }
 

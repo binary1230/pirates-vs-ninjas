@@ -5,9 +5,7 @@
 // NOTE: These are just examples for now, we'll replace them with real
 // objects later on.
 
-#define OBJECT_ID_SONIC 	1
-#define OBJECT_ID_TAILS		2
-#define OBJECT_ID_RING		3
-#define OBJECT_ID_SUN			4
+#define OBJECT_ID_RADIUS_BLOCK 	1
+#define OBJECT_ID_MOUSE_BLOCK 2
 
 #endif // OBJECT_IDS_H

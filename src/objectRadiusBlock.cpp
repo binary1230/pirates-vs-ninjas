@@ -1,7 +1,7 @@
 #include "objectRadiusBlock.h"
 
 void RadiusBlockObject::Update() {
-	theta += 0.001;
+	theta += 0.01;
 }
 
 void RadiusBlockObject::Draw() {

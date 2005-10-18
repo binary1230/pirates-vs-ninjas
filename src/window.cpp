@@ -34,6 +34,8 @@ int Window::Init(uint _width, uint _height, bool _fullscreen) {
 	
 	clear_bitmap(backbuf);
 
+	install_mouse();
+
 	return 0;
 }
 
@@ -46,6 +48,7 @@ void Window::Flip() {
 void Window::Shutdown() {
 	destroy_bitmap(backbuf);
 	release_screen();
+	allegro_exit();
 }
 
 BITMAP* Window::GetBackBuffer() {

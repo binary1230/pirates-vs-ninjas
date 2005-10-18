@@ -6,8 +6,10 @@
 
 #include "globals.h"
 #include "object.h"
-#include "objectRadiusBlock.h"
 #include "objectIDs.h"
+
+#include "objectRadiusBlock.h"
+#include "objectMouseBlock.h"
 
 class ObjectFactory {
 	protected:

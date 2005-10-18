@@ -3,30 +3,54 @@
 Object* ObjectFactory::CreateObject(uint id) {
 	
 	Object* new_obj = NULL;
-	RadiusBlockObject *block;
+	RadiusBlockObject *rblock;
+	MouseBlockObject *mblock;
 	
 	switch (id) {
-		case OBJECT_ID_SONIC:
+		case OBJECT_ID_RADIUS_BLOCK:
 			
-			block = new RadiusBlockObject();
-			if (block) {
+			rblock = new RadiusBlockObject();
+			if (rblock) {
 							
 				PALETTE pal;
 				BITMAP* bmp = load_bitmap("ninja.tga", pal);
 				
-				//  = create_bitmap(32, 32);
-		
 				if (bmp) {
 
 					set_palette(pal);
-					// clear_to_color(bmp, Rand(8,10) );
 
-					block->SetBitmapIsDeleteable(true);
-					block->SetDestinationBitmap(default_destination_bitmap);
-					block->SetBitmap(bmp);
-					block->SetXY(Rand(0,320), Rand(0,240));
-					block->SetTheta(Rand(0,360));
-					block->SetRadius(Rand(20,300));
+					rblock->SetBitmapIsDeleteable(true);
+					rblock->SetDestinationBitmap(default_destination_bitmap);
+					rblock->SetBitmap(bmp);
+					rblock->SetXY(Rand(0, SCREEN_SIZE_X), Rand(0, SCREEN_SIZE_Y));
+					rblock->SetTheta(Rand(0,360));
+					rblock->SetRadius(Rand(20,300));
+					
+				} else {
+					fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite's bitmap.\n");
+				}
+			} else {
+				fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite.\n");
+			}
+
+			new_obj = rblock;
+			break;
+			
+		case OBJECT_ID_MOUSE_BLOCK:
+			
+			mblock = new MouseBlockObject();
+			if (mblock) {
+							
+				PALETTE pal;
+				BITMAP* bmp = load_bitmap("ninja2.tga", pal);
+				
+				if (bmp) {
+
+					set_palette(pal);
+
+					mblock->SetBitmapIsDeleteable(true);
+					mblock->SetDestinationBitmap(default_destination_bitmap);
+					mblock->SetBitmap(bmp);
 					
 				} else {
 					fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite's bitmap.\n");
@@ -36,7 +60,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 				fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite.\n");
 			}
 
-			new_obj = block;
+			new_obj = mblock;
 			break;
 
 		default:

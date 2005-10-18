@@ -13,6 +13,9 @@ typedef unsigned int uint;
 #define Rand(lower, upper) \
 ((rand() % (upper - lower + 1)) + lower)
 
+#define SCREEN_SIZE_X	640
+#define SCREEN_SIZE_Y 480
+
 //extern volatile int cur_time;
 
 #endif // GLOBALS_H
