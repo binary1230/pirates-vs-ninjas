@@ -53,6 +53,10 @@ void GameState::Update() {
 	for (i = 0; i < max; i++) {
 		objects[i]->Update();
 	}
+
+	if (key[KEY_ESC]) {
+		exit_game = true;
+	}
 }
 
 void GameState::Draw() {
