@@ -5,7 +5,7 @@ int GameState::InitSystem() {
 		exit_game = false;
 
 		window = new Window();
-		if ( !window || window->Init(640,480,0) < 0 )
+		if ( !window || window->Init(320,240,0) < 0 )
 			return -1;
 
 		objectFactory = new ObjectFactory();
