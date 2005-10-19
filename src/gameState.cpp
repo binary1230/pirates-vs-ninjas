@@ -2,6 +2,7 @@
 
 int GameState::InitSystem() {
 
+		bool fullscreen = false;
 		exit_game = false;
 
 		allegro_init();
@@ -9,20 +10,21 @@ int GameState::InitSystem() {
 		InitTimers();
 
 		window = new Window();
-		if ( !window || window->Init(SCREEN_SIZE_X, SCREEN_SIZE_Y, 0) < 0 ) {
-			fprintf(stderr, "InitSystem: failed to init window!\n");
+		if ( !window || 
+					window->Init(SCREEN_SIZE_X, SCREEN_SIZE_Y, fullscreen) < 0 ) {
+			fprintf(stderr, "ERROR: InitSystem: failed to init window!\n");
 			return -1;
 		}
 
 		input = new InputLive();
 		if ( !input || input->Init() < 0 ) {
-			fprintf(stderr, "InitSystem: failed to init input!\n");
+			fprintf(stderr, "ERROR: InitSystem: failed to init input!\n");
 			return -1;
 		}
 
 		objectFactory = new ObjectFactory();
 		if ( !objectFactory || objectFactory->Init(input) < 0 ) {
-			fprintf(stderr, "InitSystem: failed to init objectFactory!\n");
+			fprintf(stderr, "ERROR: InitSystem: failed to init objectFactory!\n");
 			return -1;
 		}
 					
@@ -148,5 +150,6 @@ void GameState::DestroyObjects() {
 	}
 }
 
-GameState::GameState() : window(NULL), objects(0) {}
+GameState::GameState() : 
+window(NULL), objectFactory(NULL), input(NULL), objects(0) {}
 GameState::~GameState() {}

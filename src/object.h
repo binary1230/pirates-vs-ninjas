@@ -35,9 +35,9 @@ class Object {
 
 		int GetX();
 		int GetY();
-		void SetX(int _x);
-		void SetY(int _y);
-		void SetXY(int _x, int _y);
+		virtual void SetX(int _x);
+		virtual void SetY(int _y);
+		virtual void SetXY(int _x, int _y);
 		
 		int GetWidth();
 		int GetHeight();

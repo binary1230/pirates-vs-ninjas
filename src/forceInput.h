@@ -10,8 +10,6 @@
 
 class ForceInput : public Force {
 	public:
-		float acc;
-		float decay;
 		float GetAcceleration();
 
 		ForceInput();

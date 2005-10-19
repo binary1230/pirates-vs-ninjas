@@ -9,6 +9,8 @@
 
 class Window {
 	protected:
+		bool initialized;
+
 		uint width, height;
 		BITMAP* backbuf;
 		

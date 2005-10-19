@@ -5,21 +5,19 @@ void MouseBlockObject::SetInputHandler(BaseInput* handler) {
 }
 
 void MouseBlockObject::Update() {	
-	//x = input->MouseX();
-	//y = input->MouseY();
-		
 	x = vectors[_X].CalcNextStep();
 	y = -vectors[_Y].CalcNextStep();
 
 	if (y > dst_bitmap->h - bitmap->h) {
-
-			// XXX remember affecting BOTH int y and float vectors[1].y
 			y = dst_bitmap->h - bitmap->h;
 			vectors[_Y].position = -y;
 	}
+		
+	vectors[_X].v_decay = 1.00f;	// no decay in the air
 
 	// if we're OK to jump now.. do it.
 	if (y == dst_bitmap->h - bitmap->h) {
+		vectors[_X].v_decay = 0.99f;	// decay on the ground
 		if (input->Key(KEY_SPACE)) {
 			vectors[_Y].velocity = Rand(2,12);
 	  }		
@@ -37,7 +35,21 @@ void MouseBlockObject::Update() {
 }
 
 void MouseBlockObject::Draw() {
-	draw_sprite_h_flip(dst_bitmap, bitmap, x, y);
+	
+	bool flip = false;
+	
+	if (vectors[_X].acceleration == 0) {
+		if (vectors[_X].velocity > 0) {
+			flip = true;
+		}
+	} else if (vectors[_X].acceleration > 0) {
+		flip = true;
+	} 
+
+	if (flip)
+		draw_sprite_h_flip(dst_bitmap, bitmap, x, y);
+	else 
+		draw_sprite(dst_bitmap, bitmap, x, y);
 }
 
 void MouseBlockObject::SetXY(int _x, int _y) {
@@ -45,15 +57,14 @@ void MouseBlockObject::SetXY(int _x, int _y) {
 	y = _y;
 	vectors[_Y].position = (float)y;
 	vectors[_X].position = (float)x;
-	
-printf("definiately setting them!!\n");
+	fprintf(stderr, "setting them!\n");
 }
 
 MouseBlockObject::MouseBlockObject() : input(NULL) {
 	vectors[_X].Clear();
 	vectors[_Y].Clear();
 
-	vectors[_X].v_decay = 0.8f;
+	vectors[_X].v_decay = 0.99f;
 
 	vectors[_X].Attach(new ForceInput());
 	vectors[_Y].Attach(new ForceGravity());
