@@ -1,5 +1,12 @@
 #include "gameState.h"
 
+int GameState::InitTimers() {
+    install_timer();
+		LOCK_VARIABLE(outstanding_updates);
+		LOCK_FUNCTION((void*)Timer);
+		return install_int_ex(Timer, BPS_TO_TIMER(60));
+}
+
 int GameState::InitSystem() {
 
 		exit_game = false;
@@ -13,6 +20,8 @@ int GameState::InitSystem() {
 			return -1;
 
 		objectFactory->SetDefaultDestinationBitmap(window->GetBackBuffer());
+
+		InitTimers();
 
 		return 0;
 }
@@ -92,10 +101,18 @@ int GameState::RunGame() {
 }
 
 void GameState::MainLoop() {
+
 	while (!exit_game) {
+
+		while (outstanding_updates > 0) {
+			Update();
+			outstanding_updates--;
+		}
 		Draw();
-		Update();
-	}
+
+		// wait for 1/60th sec to elapse (if we're a fast computa)
+		while (outstanding_updates <= 0);
+  }
 }
 
 void GameState::Shutdown() {

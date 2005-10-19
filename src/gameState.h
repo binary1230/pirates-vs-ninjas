@@ -10,6 +10,7 @@
 using namespace std;
 
 #include "window.h"
+#include "timer.h"
 #include "object.h"
 #include "objectFactory.h"
 
@@ -28,6 +29,9 @@ class GameState {
 		};
 					
 		int InitSystem();
+		int InitTimers();
+
+		void WaitForNextFrame();
 		
 		int InitObjects();
 		void DestroyObjects();
