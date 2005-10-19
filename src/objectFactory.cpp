@@ -1,5 +1,9 @@
 #include "objectFactory.h"
 
+void ObjectFactory::SetInputHandler(BaseInput* handler) {
+	input = handler;
+}
+
 Object* ObjectFactory::CreateObject(uint id) {
 	
 	Object* new_obj = NULL;
@@ -76,7 +80,8 @@ void ObjectFactory::DeleteObject(Object* obj) {
 	delete obj;
 }
 
-int ObjectFactory::Init() {
+int ObjectFactory::Init(BaseInput* handler) {
+	SetInputHandler(handler);
 	return 0;
 }
 
@@ -87,7 +92,8 @@ void ObjectFactory::SetDefaultDestinationBitmap(BITMAP* bmp) {
 void ObjectFactory::Shutdown() {
 }
 
-ObjectFactory::ObjectFactory() : default_destination_bitmap(NULL) {
+ObjectFactory::ObjectFactory() : 
+default_destination_bitmap(NULL), input(NULL) {
 }
 
 ObjectFactory::~ObjectFactory() {

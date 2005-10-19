@@ -11,6 +11,9 @@ using namespace std;
 
 #include "window.h"
 #include "timer.h"
+#include "input.h"
+#include "inputLiveHandler.h"
+
 #include "object.h"
 #include "objectFactory.h"
 
@@ -18,6 +21,7 @@ class GameState {
 	protected:
 		Window *window;
 		ObjectFactory *objectFactory;
+		BaseInput *input;
 
 		vector<Object*> objects;
 		

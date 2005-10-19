@@ -1,10 +1,10 @@
 #include "gameState.h"
 
 int GameState::InitTimers() {
-    install_timer();
-		LOCK_VARIABLE(outstanding_updates);
-		LOCK_FUNCTION((void*)Timer);
-		return install_int_ex(Timer, BPS_TO_TIMER(60));
+	install_timer();
+	LOCK_VARIABLE(outstanding_updates);
+	LOCK_FUNCTION((void*)Timer);
+	return install_int_ex(Timer, BPS_TO_TIMER(60));
 }
 
 int GameState::InitSystem() {
@@ -12,11 +12,15 @@ int GameState::InitSystem() {
 		exit_game = false;
 
 		window = new Window();
-		if ( !window || window->Init(SCREEN_SIZE_X, SCREEN_SIZE_Y, 0) < 0 )
+		if ( !window && window->Init(SCREEN_SIZE_X, SCREEN_SIZE_Y, 0) < 0 )
 			return -1;
 
 		objectFactory = new ObjectFactory();
-		if ( !objectFactory || objectFactory->Init() < 0 )
+		if ( !objectFactory && objectFactory->Init(input) < 0 )
+			return -1;
+
+		input = new InputLive();
+		if ( !input && input->Init() < 0 )
 			return -1;
 
 		objectFactory->SetDefaultDestinationBitmap(window->GetBackBuffer());
@@ -120,6 +124,11 @@ void GameState::Shutdown() {
 		DestroyObjects();
 		objectFactory->Shutdown();
 		delete objectFactory;
+	}
+
+	if (input) {
+		input->Shutdown();
+		delete input;
 	}
 
 	// window destruction code must be LAST

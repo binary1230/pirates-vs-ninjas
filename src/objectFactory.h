@@ -14,15 +14,17 @@
 class ObjectFactory {
 	protected:
 		BITMAP* default_destination_bitmap;
+		BaseInput* input;
 
 	public:
-		int Init();
+		int Init(BaseInput* handler);
 		void Shutdown();
 
 		Object* CreateObject(uint id);
 		void DeleteObject(Object*);
 	  
 		void SetDefaultDestinationBitmap(BITMAP* bmp);
+		void SetInputHandler(BaseInput* handler);
 
 		ObjectFactory();
 		~ObjectFactory();
