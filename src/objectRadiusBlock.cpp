@@ -1,11 +1,13 @@
 #include "objectRadiusBlock.h"
 
 void RadiusBlockObject::Update() {
-	theta += 0.01;
+	theta += RADIUS_BLOCK_SPEED;
+	radius += 0.0001;
 }
 
 void RadiusBlockObject::Draw() {
-	DrawAtOffset(int(sinf(theta) * radius), int(cosf(theta) * radius));
+	DrawAtOffset(	int(sinf(theta) * radius) , 
+								int(cosf(theta) * radius) );
 }
 
 void RadiusBlockObject::SetTheta(float angle) {

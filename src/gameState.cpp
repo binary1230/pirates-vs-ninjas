@@ -104,7 +104,7 @@ void GameState::Update() {
 		objects[i]->Update();
 	}
 
-	if (key[KEY_ESC]) {
+	if (input->Key(KEY_ESC)) {
 		exit_game = true;
 	}
 }

@@ -3,6 +3,8 @@
 #ifndef RADIUSBLOCKOBJECT_H
 #define RADIUSBLOCKOBJECT_H
 
+#define RADIUS_BLOCK_SPEED 0.01f
+
 #include <math.h>
 #include <stdio.h>
 
