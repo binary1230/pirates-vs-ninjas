@@ -2,7 +2,6 @@
 
 void RadiusBlockObject::Update() {
 	theta += RADIUS_BLOCK_SPEED;
-	radius += 0.0001;
 }
 
 void RadiusBlockObject::Draw() {
