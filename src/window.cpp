@@ -10,9 +10,6 @@ int Window::Init(uint _width, uint _height, bool _fullscreen) {
 	width = _width;
 	height = _height;
 	
-	// initialize all allegro stuff
-	allegro_init();
-
 	if (_fullscreen)
 			gfx_mode = GFX_AUTODETECT_FULLSCREEN;
 	else
@@ -46,7 +43,6 @@ void Window::Flip() {
 void Window::Shutdown() {
 	destroy_bitmap(backbuf);
 	release_screen();
-	allegro_exit();
 }
 
 BITMAP* Window::GetBackBuffer() {

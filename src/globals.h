@@ -16,6 +16,4 @@ typedef unsigned int uint;
 #define SCREEN_SIZE_X	640
 #define SCREEN_SIZE_Y 480
 
-//extern volatile int cur_time;
-
 #endif // GLOBALS_H

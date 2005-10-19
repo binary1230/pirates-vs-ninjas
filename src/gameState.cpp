@@ -1,33 +1,36 @@
 #include "gameState.h"
 
-int GameState::InitTimers() {
-	install_timer();
-	LOCK_VARIABLE(outstanding_updates);
-	LOCK_FUNCTION((void*)Timer);
-	return install_int_ex(Timer, BPS_TO_TIMER(60));
-}
-
 int GameState::InitSystem() {
 
 		exit_game = false;
 
+		allegro_init();
+		
+		InitTimers();
+
 		window = new Window();
 		if ( !window && window->Init(SCREEN_SIZE_X, SCREEN_SIZE_Y, 0) < 0 )
-			return -1;
-
-		objectFactory = new ObjectFactory();
-		if ( !objectFactory && objectFactory->Init(input) < 0 )
 			return -1;
 
 		input = new InputLive();
 		if ( !input && input->Init() < 0 )
 			return -1;
 
+		objectFactory = new ObjectFactory();
+		if ( !objectFactory && objectFactory->Init(input) < 0 )
+			return -1;
+
 		objectFactory->SetDefaultDestinationBitmap(window->GetBackBuffer());
 
-		InitTimers();
 
 		return 0;
+}
+
+int GameState::InitTimers() {
+	install_timer();
+	LOCK_VARIABLE(outstanding_updates);
+	LOCK_FUNCTION((void*)Timer);
+	return install_int_ex(Timer, BPS_TO_TIMER(60));
 }
 
 int GameState::InitObjects() {
@@ -50,36 +53,6 @@ int GameState::InitObjects() {
 	objects.push_back(new_obj);
 	
 	return 0;
-}
-
-void GameState::DestroyObjects() {
-	int i, max = objects.size();
-
-	for (i = 0; i < max; i++) {
-		objectFactory->DeleteObject(objects[i]);
-	}
-}
-
-void GameState::Update() {
-	int i, max = objects.size();
-
-	for (i = 0; i < max; i++) {
-		objects[i]->Update();
-	}
-
-	if (key[KEY_ESC]) {
-		exit_game = true;
-	}
-}
-
-void GameState::Draw() {
-	int i, max = objects.size();
-
-	for (i = 0; i < max; i++) {
-		objects[i]->Draw();
-	}
-
-	window->Flip();
 }
 
 // the 'main' function for the game
@@ -119,6 +92,28 @@ void GameState::MainLoop() {
   }
 }
 
+void GameState::Update() {
+	int i, max = objects.size();
+
+	for (i = 0; i < max; i++) {
+		objects[i]->Update();
+	}
+
+	if (key[KEY_ESC]) {
+		exit_game = true;
+	}
+}
+
+void GameState::Draw() {
+	int i, max = objects.size();
+
+	for (i = 0; i < max; i++) {
+		objects[i]->Draw();
+	}
+
+	window->Flip();
+}
+
 void GameState::Shutdown() {
 	if (objectFactory) {
 		DestroyObjects();
@@ -135,6 +130,16 @@ void GameState::Shutdown() {
 	if (window) {
 		window->Shutdown();
 		delete window;
+	}
+	
+	allegro_exit();
+}
+
+void GameState::DestroyObjects() {
+	int i, max = objects.size();
+
+	for (i = 0; i < max; i++) {
+		objectFactory->DeleteObject(objects[i]);
 	}
 }
 
