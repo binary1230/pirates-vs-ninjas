@@ -9,19 +9,24 @@ int GameState::InitSystem() {
 		InitTimers();
 
 		window = new Window();
-		if ( !window && window->Init(SCREEN_SIZE_X, SCREEN_SIZE_Y, 0) < 0 )
+		if ( !window || window->Init(SCREEN_SIZE_X, SCREEN_SIZE_Y, 0) < 0 ) {
+			fprintf(stderr, "InitSystem: failed to init window!\n");
 			return -1;
+		}
 
 		input = new InputLive();
-		if ( !input && input->Init() < 0 )
+		if ( !input || input->Init() < 0 ) {
+			fprintf(stderr, "InitSystem: failed to init input!\n");
 			return -1;
+		}
 
 		objectFactory = new ObjectFactory();
-		if ( !objectFactory && objectFactory->Init(input) < 0 )
+		if ( !objectFactory || objectFactory->Init(input) < 0 ) {
+			fprintf(stderr, "InitSystem: failed to init objectFactory!\n");
 			return -1;
-
+		}
+					
 		objectFactory->SetDefaultDestinationBitmap(window->GetBackBuffer());
-
 
 		return 0;
 }

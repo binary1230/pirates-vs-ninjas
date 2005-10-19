@@ -1,5 +1,5 @@
 SRCS = \
-main.cpp gameState.cpp window.cpp timer.cpp \
+main.cpp gameState.cpp window.cpp timer.cpp\
 input.cpp inputLiveHandler.cpp \
 objectFactory.cpp \
 object.cpp objectRadiusBlock.cpp objectMouseBlock.cpp

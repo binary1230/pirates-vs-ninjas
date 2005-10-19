@@ -52,6 +52,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 
 					set_palette(pal);
 
+					mblock->SetInputHandler(input);
 					mblock->SetBitmapIsDeleteable(true);
 					mblock->SetDestinationBitmap(default_destination_bitmap);
 					mblock->SetBitmap(bmp);

@@ -7,6 +7,8 @@ void MouseBlockObject::SetInputHandler(BaseInput* handler) {
 void MouseBlockObject::Update() {
 	x = input->MouseX();
 	y = input->MouseY();
+	//x = mouse_x;
+	//y = mouse_y;
 }
 
 void MouseBlockObject::Draw() {

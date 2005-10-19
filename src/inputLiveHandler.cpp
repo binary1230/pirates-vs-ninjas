@@ -1,11 +1,15 @@
 #include "inputLiveHandler.h"
 
 int InputLive::Init() {
-	if (	install_mouse() 		== 0	&& 
+	/*if (	install_mouse() 		== 0	&& 
 				install_keyboard() 	== 0	)
 		return 0;
 	else
-		return -1;
+		return -1;*/
+	install_mouse();
+	install_keyboard();
+
+	return 0;
 }
 
 void InputLive::Shutdown() {
@@ -14,7 +18,7 @@ void InputLive::Shutdown() {
 }
 
 bool InputLive::Key(unsigned char index) {
-	return ::key[index];
+	return key[index];
 }
 
 int InputLive::MouseX() {

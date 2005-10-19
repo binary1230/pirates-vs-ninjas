@@ -64,5 +64,6 @@ void Object::Delete() {
 	bitmap = NULL;
 }
 
-Object::Object() : x(0), y(0), bitmap(NULL), bitmap_is_deleteable(false) {}
+Object::Object() : 
+x(0), y(0), bitmap(NULL), bitmap_is_deleteable(false), dst_bitmap(NULL) {}
 Object::~Object() {}
