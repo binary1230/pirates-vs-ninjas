@@ -52,7 +52,9 @@ printf("definiately setting them!!\n");
 MouseBlockObject::MouseBlockObject() : input(NULL) {
 	vectors[_X].Clear();
 	vectors[_Y].Clear();
-	
+
+	vectors[_X].v_decay = 0.8f;
+
 	vectors[_X].Attach(new ForceInput());
 	vectors[_Y].Attach(new ForceGravity());
 }

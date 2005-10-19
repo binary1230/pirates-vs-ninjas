@@ -25,7 +25,7 @@ int vec::CalcNextStep() {
 		acceleration += forces[i]->GetAcceleration();		
 				
 	// 2) add acceleration to velocity to get new velocity
-	velocity += acceleration;
+	velocity = (velocity + acceleration) * v_decay;
 	
 	// 3) add velocity to position to get new position
 	position += velocity;
@@ -39,5 +39,5 @@ int vec::GetPosition() {
 		return (int)nearbyintf(position);
 }
 
-vec::vec() : forces(0) {}
+vec::vec() : forces(0), v_decay(1.00) {}
 vec::~vec() {}

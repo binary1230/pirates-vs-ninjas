@@ -14,6 +14,8 @@ class vec {
 		float position;
 		float velocity;
 		float acceleration;
+
+		float v_decay;
 		
 		vector<Force*> forces;
 
