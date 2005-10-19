@@ -6,6 +6,9 @@
 #define OBJECT_H
 
 #include <allegro.h>
+#include <stdio.h>
+
+#include "globals.h"
 
 class Object {
 				

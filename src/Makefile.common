@@ -1,4 +1,4 @@
 SRCS = \
 main.cpp gameState.cpp window.cpp timer.cpp input.cpp inputLiveHandler.cpp \
 objectFactory.cpp object.cpp objectRadiusBlock.cpp objectMouseBlock.cpp \
-vec.cpp force.cpp forceGravity.cpp
+vec.cpp force.cpp forceGravity.cpp forceInput.cpp

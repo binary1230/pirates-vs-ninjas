@@ -10,12 +10,14 @@
 
 using namespace std;
 
+#include "globals.h"
 #include "input.h"
 #include "inputLiveHandler.h"
 #include "object.h"
 #include "vec.h"
 
 #include "forceGravity.h"
+#include "forceInput.h"
 
 #define _X 0
 #define _Y 1
