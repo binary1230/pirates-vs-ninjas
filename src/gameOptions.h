@@ -17,7 +17,9 @@ class GameOptions {
 		bool fullscreen;
 		
 	public:
-		void PrintUsage(char* arg0);
+		void PrintOptions(char* arg0);
+		void PrintBanner();
+
 		bool ParseArguments(int argc, char* argv[]);
 		bool IsValid();
 		void Clear();

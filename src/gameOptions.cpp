@@ -1,14 +1,15 @@
 #include "gameOptions.h"
 
-void GameOptions::PrintUsage(char* arg0) {
-				
-	fprintf(stderr, 
+void GameOptions::PrintBanner() {
+		fprintf(stderr, 
 		"Dom's Ninja-Engine %s [CVS REVISION %s]\n"
 		"binary1230(at)yahoo.com | http://einsteinsbreakfast.com\n"
 		"(c) 2005 Dominic Cerquetti, this program is Free Software\n"
 		"Licensed under the GNU GPL v2, see http://gnu.org\n\n",
 		ENGINE_VERSION, SUBVERSION_REVISION);
+}
 
+void GameOptions::PrintOptions(char* arg0) {
 	if (!show_help) {
 		fprintf(stderr, "type '%s -h' for more options..\n\n", arg0);
 	} else {
@@ -49,16 +50,16 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 			// fullscreen or windowed
 			case 'f': case 'w':
 				if (_fullscreen_option_set) {
-					fprintf(stderr,"GFX: Use one of -f or -w, not both.\n");
+					fprintf(stderr,"Options ==> ERROR, Cannot select both fullscreen (-f) and windowed (-w) mode.\n");
 					return (is_valid = false);
 				} else if (c == 'f') {
 					fullscreen = true;
 					_fullscreen_option_set = true;
-					fprintf(stderr, "GFX: fullscreen mode enabled\n");
-				} else if (c == 'f') {
+					fprintf(stderr, "Options ==> fullscreen mode enabled\n");
+				} else if (c == 'w') {
 					fullscreen = false;
 					_fullscreen_option_set = true;
-					fprintf(stderr, "GFX: windowed mode enabled\n");
+					fprintf(stderr, "Options ==> windowed mode enabled\n");
 				}
 				break;
 	
