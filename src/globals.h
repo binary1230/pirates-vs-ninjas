@@ -3,6 +3,10 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
+#define ENGINE_VERSION "v0.1-alpha1"
+
+#include "auto-config.h"
+
 typedef unsigned int uint;
 
 // lameass .dat file functions

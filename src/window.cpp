@@ -19,6 +19,9 @@ int Window::Init(uint _width, uint _height, bool _fullscreen) {
 						width, height, _fullscreen);
 		return -1;
 	}	
+
+	set_window_title("Dom's Ninja Engine ("ENGINE_VERSION
+										"."SUBVERSION_REVISION")");
 	
 	clear_bitmap(screen);
 

@@ -1,17 +1,16 @@
 #include "gameState.h"
 
+// Notes: Careful, things need to be done IN ORDER here.
 int GameState::InitSystem() {
 
-		bool fullscreen = false;
 		exit_game = false;
 
 		allegro_init();
-		
 		InitTimers();
 
 		window = new Window();
-		if ( !window || 
-					window->Init(SCREEN_SIZE_X, SCREEN_SIZE_Y, fullscreen) < 0 ) {
+		if ( !window ||	window->Init(	SCREEN_SIZE_X, SCREEN_SIZE_Y, 
+										options->IsFullscreen()) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init window!\n");
 			return -1;
 		}
@@ -66,9 +65,10 @@ int GameState::InitObjects() {
 // XXX todo: pass options like cheats/etc to this function
 // don't pass argc, argv, parse them in main() and give
 // this an array to chew on.
-int GameState::RunGame() {
+int GameState::RunGame(GameOptions* _options) {
 		
 		int return_val = 0;
+		options = _options;
 		
 		return_val = InitSystem();
 

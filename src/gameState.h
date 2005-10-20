@@ -9,6 +9,8 @@
 
 using namespace std;
 
+#include "gameOptions.h"
+
 #include "window.h"
 #include "timer.h"
 #include "input.h"
@@ -19,6 +21,7 @@ using namespace std;
 
 class GameState {
 	protected:
+		GameOptions *options;
 		Window *window;
 		ObjectFactory *objectFactory;
 		BaseInput *input;
@@ -48,7 +51,7 @@ class GameState {
 		void Draw();
 				
 	public:
-		int RunGame(/* options */);
+		int RunGame(GameOptions *_options);
 
 		GameState();
 		~GameState();
