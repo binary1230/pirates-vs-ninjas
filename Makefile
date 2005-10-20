@@ -7,3 +7,6 @@ clean:
 
 test:
 	cd src/ && make test
+
+doc:
+	cd src/ && make doc
