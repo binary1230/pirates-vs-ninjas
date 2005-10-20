@@ -12,11 +12,12 @@
 class GameOptions {
 	protected:
 		bool is_valid;
-
+		
+		bool show_help;
 		bool fullscreen;
 		
 	public:
-		void PrintUsage(char* arg0, bool full = false);
+		void PrintUsage(char* arg0);
 		bool ParseArguments(int argc, char* argv[]);
 		bool IsValid();
 		void Clear();

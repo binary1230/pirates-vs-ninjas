@@ -6,16 +6,16 @@
 
 int main(int argc, char* argv[]) {
 				
+				// see if our command line args are OK
 				GameOptions options;
+				options.ParseArguments(argc, argv);
 				options.PrintUsage(argv[0]);
 
-				options.ParseArguments(argc, argv);
-
-				if (options.IsValid()) {
+				if (!options.IsValid())	{
+					return -1;
+				} else {
 					GameState gameState;
 					return gameState.RunGame(&options);
-				} else {
-					return -1;
 				}
 
 } END_OF_MAIN();

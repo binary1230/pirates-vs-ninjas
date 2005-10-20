@@ -1,8 +1,7 @@
 #include "gameOptions.h"
 
-// print out some usage info to the commandline
-// set full->true if you want HUGE list of options
-void GameOptions::PrintUsage(char* arg0, bool full) {
+void GameOptions::PrintUsage(char* arg0) {
+				
 	fprintf(stderr, 
 		"Dom's Ninja-Engine %s [CVS REVISION %s]\n"
 		"binary1230(at)yahoo.com | http://einsteinsbreakfast.com\n"
@@ -10,7 +9,7 @@ void GameOptions::PrintUsage(char* arg0, bool full) {
 		"Licensed under the GNU GPL v2, see http://gnu.org\n\n",
 		ENGINE_VERSION, SUBVERSION_REVISION);
 
-	if (!full) {
+	if (!show_help) {
 		fprintf(stderr, "type '%s -h' for more options..\n\n", arg0);
 	} else {
 		fprintf(stderr,
@@ -26,7 +25,8 @@ void GameOptions::PrintUsage(char* arg0, bool full) {
 
 void GameOptions::Clear() {
 	fullscreen = false;
-	
+	show_help = false;
+
 	is_valid = true;
 }
 
@@ -42,7 +42,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 			
 			// display help
 			case 'h':
-				PrintUsage(argv[0], true);
+				show_help = true;
 				return (is_valid = false);
 				break;
 	
@@ -65,7 +65,8 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 			// : and ? mean something is weird
 			default:
 			case ':': case '?':
-				PrintUsage(argv[0], true);
+				fprintf(stderr, "Unrecognized command line option '-%c'\n", c);
+				show_help = true;
 				return (is_valid = false);
 				break;
 		}
