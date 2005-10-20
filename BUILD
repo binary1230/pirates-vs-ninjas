@@ -45,3 +45,13 @@ do the following: (only works in linux for now):
 
 The revision number is output to the console on game startup and is also
 the title of the window.
+
+--------------------------------------------------------
+TO BUILD THE DOCUMENTATION
+--------------------------------------------------------
+I use doxygen to generate API info from the source.
+
+To build these docs type 'make doc' from the src/ dir.
+
+The results will be put in docs/html/
+That dir is NOT included in the subversion tree.

@@ -22,7 +22,7 @@ target: $(OBJS)
 	$(GXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
 	cp $(TARGET) ..
 	
-docs: 
+doc: 
 	doxygen
 	
 test: target
