@@ -4,6 +4,8 @@
 #include "gameState.h"
 #include "gameOptions.h"
 
+/// The main function
+/// IT ROCKS
 int main(int argc, char* argv[]) {
 				
 	// see if our command line args are OK
