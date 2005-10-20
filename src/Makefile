@@ -20,7 +20,7 @@ all: target
 
 target: $(OBJS)
 	$(GXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
-	cp $(TARGET) ..
+	mv $(TARGET) ..
 	
 doc: 
 	doxygen

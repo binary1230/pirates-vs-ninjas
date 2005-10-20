@@ -32,4 +32,4 @@ clean:
 
 target: $(OBJS)
 	$(GXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
-	cp $(TARGET) ..
+	mv $(TARGET) ..

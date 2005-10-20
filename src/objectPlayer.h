@@ -1,7 +1,7 @@
 // this file is a TEST ONLY
 
-#ifndef MOUSEBLOCKOBJECT_H
-#define MOUSEBLOCKOBJECT_H
+#ifndef PLAYEROBJECT_H
+#define PLAYEROBJECT_H
 
 #include <allegro.h>
 #include <math.h>
@@ -22,7 +22,7 @@ using namespace std;
 #define _X 0
 #define _Y 1
 
-class MouseBlockObject : public Object {
+class PlayerObject : public Object {
 	protected:
 		BaseInput* input;
 		vec vectors[2];		// vectors for X and Y
@@ -34,8 +34,8 @@ class MouseBlockObject : public Object {
 
 		void SetXY(int, int);
 
-		MouseBlockObject();
-		~MouseBlockObject();
+		PlayerObject();
+		~PlayerObject();
 };
 
-#endif // MouseBlockObject_H   
+#endif // PLAYER_OBJECT_H

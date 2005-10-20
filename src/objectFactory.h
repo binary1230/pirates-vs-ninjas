@@ -8,8 +8,8 @@
 #include "object.h"
 #include "objectIDs.h"
 
+#include "objectPlayer.h"
 #include "objectRadiusBlock.h"
-#include "objectMouseBlock.h"
 
 class ObjectFactory {
 	protected:

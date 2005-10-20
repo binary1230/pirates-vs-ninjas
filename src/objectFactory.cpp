@@ -4,11 +4,12 @@ void ObjectFactory::SetInputHandler(BaseInput* handler) {
 	input = handler;
 }
 
+// XXX NASTY!! SO BADLY WRITTEN, CLEAN IT UP
 Object* ObjectFactory::CreateObject(uint id) {
 	
 	Object* new_obj = NULL;
 	RadiusBlockObject *rblock;
-	MouseBlockObject *mblock;
+	PlayerObject *player;
 	
 	switch (id) {
 		case OBJECT_ID_RADIUS_BLOCK:
@@ -42,8 +43,8 @@ Object* ObjectFactory::CreateObject(uint id) {
 			
 		case OBJECT_ID_MOUSE_BLOCK:
 			
-			mblock = new MouseBlockObject();
-			if (mblock) {
+			player = new PlayerObject();
+			if (player) {
 							
 				PALETTE pal;
 				BITMAP* bmp = load_bitmap("data/ninja2.tga", pal);
@@ -52,10 +53,10 @@ Object* ObjectFactory::CreateObject(uint id) {
 
 					set_palette(pal);
 
-					mblock->SetInputHandler(input);
-					mblock->SetBitmapIsDeleteable(true);
-					mblock->SetDestinationBitmap(default_destination_bitmap);
-					mblock->SetBitmap(bmp);
+					player->SetInputHandler(input);
+					player->SetBitmapIsDeleteable(true);
+					player->SetDestinationBitmap(default_destination_bitmap);
+					player->SetBitmap(bmp);
 					
 				} else {
 					fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite's bitmap.\n");
@@ -65,7 +66,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 				fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite.\n");
 			}
 
-			new_obj = mblock;
+			new_obj = player;
 			break;
 
 		default:

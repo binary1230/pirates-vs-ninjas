@@ -1,10 +1,10 @@
-#include "objectMouseBlock.h"
+#include "objectPlayer.h"
 
-void MouseBlockObject::SetInputHandler(BaseInput* handler) {
+void PlayerObject::SetInputHandler(BaseInput* handler) {
 	input = handler;
 }
 
-void MouseBlockObject::Update() {	
+void PlayerObject::Update() {	
 	x = vectors[_X].CalcNextStep();
 	y = -vectors[_Y].CalcNextStep();
 
@@ -34,7 +34,7 @@ void MouseBlockObject::Update() {
 	}
 }
 
-void MouseBlockObject::Draw() {
+void PlayerObject::Draw() {
 	
 	bool flip = false;
 	
@@ -52,7 +52,7 @@ void MouseBlockObject::Draw() {
 		draw_sprite(dst_bitmap, bitmap, x, y);
 }
 
-void MouseBlockObject::SetXY(int _x, int _y) {
+void PlayerObject::SetXY(int _x, int _y) {
 	x = _x; 
 	y = _y;
 	vectors[_Y].position = (float)y;
@@ -60,7 +60,7 @@ void MouseBlockObject::SetXY(int _x, int _y) {
 	fprintf(stderr, "setting them!\n");
 }
 
-MouseBlockObject::MouseBlockObject() : input(NULL) {
+PlayerObject::PlayerObject() : input(NULL) {
 	vectors[_X].Clear();
 	vectors[_Y].Clear();
 
@@ -70,4 +70,4 @@ MouseBlockObject::MouseBlockObject() : input(NULL) {
 	vectors[_Y].Attach(new ForceGravity());
 }
 
-MouseBlockObject::~MouseBlockObject() {}
+PlayerObject::~PlayerObject() {}
