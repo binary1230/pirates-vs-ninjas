@@ -1,5 +1,3 @@
-// GameState
-// represents the state of the game
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
@@ -19,17 +17,33 @@ using namespace std;
 #include "object.h"
 #include "objectFactory.h"
 
+//! Represents the current state of the game.
+
+//! This is the 'main object' for the game - the centrally
+//! coordinated object which initializes, runs, and destroys
+//! the entire game.  Anything of importance starts in this
+//! class somewhere.
 class GameState {
 	protected:
-		GameOptions *options;
-		Window *window;
-		ObjectFactory *objectFactory;
-		BaseInput *input;
-
-		vector<Object*> objects;
+		//! Options parsed from the commandline
+		GameOptions *options;					
 		
+		//! The game's on-screen window
+		Window *window;								
+		
+		//! Creates new objects
+		ObjectFactory *objectFactory;	
+		
+		//! Active input module
+		BaseInput *input;							
+
+		//! Collection of all drawable objects
+		vector<Object*> objects;
+	
+		//! Set this to TRUE to exit the game 
 		bool exit_game;
-					
+			
+		//! The state of the game engine
 		enum state {
 			STATE_NORMAL,
 			STATE_PAUSED
@@ -38,8 +52,6 @@ class GameState {
 		int InitSystem();
 		int InitTimers();
 
-		void WaitForNextFrame();
-		
 		int InitObjects();
 		void DestroyObjects();
 		

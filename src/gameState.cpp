@@ -1,6 +1,11 @@
 #include "gameState.h"
 
-// Notes: Careful, things need to be done IN ORDER here.
+//! Initialize game systems - main function
+
+//! This is the first init function, it needs to initialize
+//! Allegro, the window, the input subsystem, and the object
+//! factory.
+//! BE CAREFUL, things need to be done IN ORDER here.
 int GameState::InitSystem() {
 
 		exit_game = false;
@@ -32,6 +37,9 @@ int GameState::InitSystem() {
 		return 0;
 }
 
+//! Init game timers
+
+//! This MUST be called BEFORE any other allegro initializations.
 int GameState::InitTimers() {
 	install_timer();
 	LOCK_VARIABLE(outstanding_updates);
@@ -39,6 +47,9 @@ int GameState::InitTimers() {
 	return install_int_ex(Timer, BPS_TO_TIMER(60));
 }
 
+//! Initialize game objects
+
+//! Uses the objectFactory to create some random objects.
 int GameState::InitObjects() {
 	
 	// create some random objects
@@ -61,10 +72,11 @@ int GameState::InitObjects() {
 	return 0;
 }
 
-// the 'main' function for the game
-// XXX todo: pass options like cheats/etc to this function
-// don't pass argc, argv, parse them in main() and give
-// this an array to chew on.
+//! The 'main' function for the game
+
+//! It takes a pointer to some game options (fullscreen/etc).
+//! It initializes everything, and returns 0 if successful
+//! or 1 on error.
 int GameState::RunGame(GameOptions* _options) {
 		
 		int return_val = 0;
@@ -84,6 +96,11 @@ int GameState::RunGame(GameOptions* _options) {
 		return return_val;
 }
 
+//! The Main Loop
+
+//! The most important function.  It will make sure that the game 
+//! is updating at the correct speed, and it will Draw everything
+//! at the correct speed.
 void GameState::MainLoop() {
 
 	while (!exit_game) {
@@ -99,6 +116,10 @@ void GameState::MainLoop() {
   }
 }
 
+//! Update all game status
+
+//! Call update on all objects to let them know
+//! how much time has passed.
 void GameState::Update() {
 	int i, max = objects.size();
 
@@ -111,6 +132,9 @@ void GameState::Update() {
 	}
 }
 
+//! Draw all game objects
+
+//! Loop through and draw all game objects.
 void GameState::Draw() {
 	int i, max = objects.size();
 
@@ -121,6 +145,9 @@ void GameState::Draw() {
 	window->Flip();
 }
 
+//! Shutdown the game
+
+//! Clean up everything we allocated
 void GameState::Shutdown() {
 	if (objectFactory) {
 		DestroyObjects();
@@ -142,6 +169,9 @@ void GameState::Shutdown() {
 	allegro_exit();
 }
 
+//! Destory all game objects
+
+//! Clean up everything we allocated
 void GameState::DestroyObjects() {
 	int i, max = objects.size();
 

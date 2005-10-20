@@ -15,14 +15,18 @@ OBJS = $(SRCS:.cpp=.o)
 .cpp.o:
 	$(GXX) $(CFLAGS) $< -o $@
 
+
 all: target
 
+target: $(OBJS)
+	$(GXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
+	cp $(TARGET) ..
+	
+docs: 
+	doxygen
+	
 test: target
 	cd .. && ./$(TARGET)
 
 clean:
 	rm -rf *.o core $(TARGET) ../$(TARGET)
-
-target: $(OBJS)
-	$(GXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
-	cp $(TARGET) ..
