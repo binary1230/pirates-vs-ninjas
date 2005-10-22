@@ -26,7 +26,7 @@ int vec::CalcNextStep() {
 				
 	// 2) add acceleration to velocity to get new velocity
 	velocity = (velocity + acceleration) * v_decay;
-	if (velocity < 0.01 && velocity > -0.01)
+	if (v_decay != 1.0f && velocity < 0.25 && velocity > -0.25)
 			velocity = 0;
 	
 	// 3) add velocity to position to get new position
