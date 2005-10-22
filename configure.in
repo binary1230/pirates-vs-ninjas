@@ -1,0 +1,41 @@
+# ??DAC - is this file made correctly? first time using automake/autoconf
+
+AC_INIT(src/main.cpp)
+AM_INIT_AUTOMAKE(ninja-engine, 0.1-beta1)
+
+# <HACK>
+# Dont know if this part is the way to do this
+# checks if we are cross compiling, then sets our LDFLAGS correctly
+# this is for MINGW32 only
+if test "${CROSS_COMPILE}" = "y"; then
+	echo "FIXME: Evil crosscompiling hack.  See configure.in"
+  LDFLAGS="-ggdb -lalleg --subsystem,windows -lm -mno-cygwin -lstdc++"
+	AC_SUBST(LDFLAGS)
+fi
+# </HACK>
+
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_INSTALL
+
+AC_OBJEXT
+AC_EXEEXT
+
+# check for SDL
+#SDL_VERSION=1.2.0
+#AM_PATH_SDL($SDL_VERSION,
+#    :,
+#    AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!])
+#)
+		
+#check for required headers
+#AC_CHECK_HEADERS([SDL/SDL.h])
+
+AC_CHECK_HEADERS([allegro.h])
+
+# gen compiler args
+#AC_SUBST(SDL_CFLAGS)
+#AC_SUBST(SDL_LIBS)
+#AC_SUBST(SDL_DEFS)
+
+AC_OUTPUT(Makefile src/Makefile)
