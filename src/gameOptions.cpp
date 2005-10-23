@@ -2,11 +2,11 @@
 
 void GameOptions::PrintBanner() {
 		fprintf(stderr, 
-		"Dom's Ninja-Engine %s [CVS REVISION %s]\n"
+		"Ninja Engine (%s)\n"
 		"binary1230(at)yahoo.com | http://einsteinsbreakfast.com\n"
 		"(c) 2005 Dominic Cerquetti, this program is Free Software\n"
 		"Licensed under the GNU GPL v2, see http://gnu.org\n\n",
-		ENGINE_VERSION, SUBVERSION_REVISION);
+		VERSION_STRING);
 }
 
 void GameOptions::PrintOptions(char* arg0) {

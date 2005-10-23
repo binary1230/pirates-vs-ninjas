@@ -1,7 +1,16 @@
-# ??DAC - is this file made correctly? first time using automake/autoconf
 
 AC_INIT(src/main.cpp)
-AM_INIT_AUTOMAKE(ninja-engine, 0.1-beta1)
+
+VERSION="0.1-beta1"
+
+dnl Test for subversion presence, if so, use the subversion revision number
+if test -e ".svn"; then
+	SVN_VERSION=`svn info | grep Revision | cut -f2 -d ' '`
+	VERSION=${VERSION}.cvs${SVN_VERSION}
+fi
+
+AM_INIT_AUTOMAKE([ninja-engine], ${VERSION})
+AM_CONFIG_HEADER(config.h)
 
 # <HACK>
 # Dont know if this part is the way to do this
@@ -20,16 +29,6 @@ AC_PROG_INSTALL
 
 AC_OBJEXT
 AC_EXEEXT
-
-# check for SDL
-#SDL_VERSION=1.2.0
-#AM_PATH_SDL($SDL_VERSION,
-#    :,
-#    AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!])
-#)
-		
-#check for required headers
-#AC_CHECK_HEADERS([SDL/SDL.h])
 
 AC_CHECK_HEADERS([allegro.h])
 

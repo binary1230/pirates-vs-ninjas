@@ -3,12 +3,8 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#define ENGINE_VERSION "v0.1-alpha1"
-
+// include master config.h from ./configure script
 #include <config.h>
-
-// XXX SOON DEPRECATED
-#include "auto-config.h"
 
 typedef unsigned int uint;
 
@@ -22,5 +18,8 @@ typedef unsigned int uint;
 
 #define SCREEN_SIZE_X	640
 #define SCREEN_SIZE_Y 480
+
+// full version string 
+#define VERSION_STRING PACKAGE"-"VERSION
 
 #endif // GLOBALS_H

@@ -2,6 +2,11 @@ Currently you can build for win32 or linux
 
 Allegro dev packages are required
 
+---------------------------
+To Build from Subversion
+---------------------------
+run ./regen.sh FIRST. then do your ./configure and make
+
 --------------------
 LINUX BUILD (normal)
 --------------------

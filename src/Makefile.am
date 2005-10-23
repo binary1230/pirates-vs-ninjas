@@ -4,7 +4,7 @@ LDFLAGS = -ggdb `allegro-config --libs` -lm
 ninjas_LDFLAGS = @LDFLAGS@
 
 headers = \
-auto-config.h force.h forceGravity.h forceInput.h gameOptions.h gameState.h \
+force.h forceGravity.h forceInput.h gameOptions.h gameState.h \
 globals.h input.h inputLiveHandler.h object.h objectFactory.h objectIDs.h \
 objectPlayer.h objectRadiusBlock.h timer.h vec.h window.h
 
