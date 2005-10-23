@@ -5,6 +5,9 @@
 
 #define ENGINE_VERSION "v0.1-alpha1"
 
+#include <config.h>
+
+// XXX SOON DEPRECATED
 #include "auto-config.h"
 
 typedef unsigned int uint;

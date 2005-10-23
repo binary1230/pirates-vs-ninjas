@@ -5,6 +5,8 @@
 #ifndef FORCE_H
 #define FORCE_H
 
+#include "globals.h"
+
 class Force {
 	public:
 		virtual float GetAcceleration() = 0;

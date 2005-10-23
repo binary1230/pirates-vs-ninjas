@@ -15,6 +15,8 @@
 
 #include <allegro.h>
 
+#include "globals.h"
+
 class BaseInput {
 
 	public:

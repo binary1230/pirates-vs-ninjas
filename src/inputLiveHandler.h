@@ -8,6 +8,7 @@
 
 #include <allegro.h>
 
+#include "globals.h"
 #include "input.h"
 
 class InputLive : public BaseInput {

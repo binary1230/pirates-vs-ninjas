@@ -7,6 +7,7 @@
 
 using namespace std;
 
+#include "globals.h"
 #include "force.h"
 
 class vec {

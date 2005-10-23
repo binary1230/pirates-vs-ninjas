@@ -1,11 +1,7 @@
 bin_PROGRAMS = ninjas
 
-ninjas_LDFLAGS = -ggdb `allegro-config --libs` -lm 
-# ninjas_LDADD = -lm
-
-# XXX should really be something like this:
-#ninjas_LDADD = @ldflags@
-# /XXX
+LDFLAGS = -ggdb `allegro-config --libs` -lm
+ninjas_LDFLAGS = @LDFLAGS@
 
 headers = \
 auto-config.h force.h forceGravity.h forceInput.h gameOptions.h gameState.h \
@@ -21,4 +17,4 @@ timer.cpp vec.cpp window.cpp \
 $(headers)
 
 # EXTRA_DIST = dir1 dir2
-EXTRA_DIST = Doxygen
+# EXTRA_DIST = Doxygen

@@ -7,6 +7,8 @@
 
 using namespace std;
 
+#include "globals.h"
+
 #include "gameOptions.h"
 
 #include "window.h"

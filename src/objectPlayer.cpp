@@ -22,7 +22,7 @@ void PlayerObject::Update() {
 			vectors[_Y].velocity = Rand(2,12);
 	  }		
 	}
-
+	
 	if (x < 0) {
 			vectors[_X].position = x = 0;
 			vectors[_X].velocity = -vectors[_X].velocity;

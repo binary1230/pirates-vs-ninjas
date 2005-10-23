@@ -6,6 +6,7 @@
 
 #include <allegro.h>
 
+#include "globals.h"
 #include "force.h"
 
 class ForceInput : public Force {
