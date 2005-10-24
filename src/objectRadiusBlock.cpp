@@ -6,6 +6,7 @@ void RadiusBlockObject::Update() {
 
 bool RadiusBlockObject::Init(GameState *_game_state) {
 		SetGameState(_game_state);
+		return true;
 }
 
 void RadiusBlockObject::Shutdown() {

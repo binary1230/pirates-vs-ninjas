@@ -1,5 +1,7 @@
 bin_PROGRAMS = ninjas
 
+CXXFLAGS = "-Wall"
+
 LDFLAGS = -ggdb `allegro-config --libs` -lm
 ninjas_LDFLAGS = @LDFLAGS@
 

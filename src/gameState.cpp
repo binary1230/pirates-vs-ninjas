@@ -60,13 +60,15 @@ int GameState::InitObjects() {
 
 	for (i = 0; i < max; i++) {
 		new_obj = objectFactory->CreateObject(OBJECT_ID_RADIUS_BLOCK);
-		if (!new_obj)
+		if (!new_obj && !new_obj->Init(this))
 			return -1;
 
 		objects.push_back(new_obj);
 	}
 		
 	new_obj = objectFactory->CreateObject(OBJECT_ID_MOUSE_BLOCK);
+	if (!new_obj && !new_obj->Init(this))
+		return -1;
 	objects.push_back(new_obj);
 	
 	return 0;

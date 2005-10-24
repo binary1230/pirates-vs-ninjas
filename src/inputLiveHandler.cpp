@@ -24,7 +24,7 @@ void InputLive::Shutdown() {
 }
 
 void InputLive::ClearKeys() {
-	int i;
+	uint i;
 	for (i = 0; i < GAMEKEY_COUNT; i++) {
 		game_key[i] = 0;
 	}
@@ -56,7 +56,7 @@ void InputLive::Update() {
 	// freeze the current state of the input into gamekey[].
 	// key[] is from allegro: the current state of what is
 	// currently being pressed
-	int i;
+	uint i;
 	for (i = 0; i < GAMEKEY_COUNT; i++) {
 		game_key[i] = key[gamekey_to_realkey[i]];
 	}
