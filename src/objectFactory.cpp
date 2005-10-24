@@ -5,20 +5,58 @@ void ObjectFactory::SetInputHandler(BaseInput* handler) {
 }
 
 // XXX NASTY!! SO BADLY WRITTEN, CLEAN IT UP
+// break this up into smaller functions.. COME ON MORON!!X0r.
 Object* ObjectFactory::CreateObject(uint id) {
 	
 	Object* new_obj = NULL;
 	RadiusBlockObject *rblock;
 	PlayerObject *player;
+	BackgroundObject *bg;
 	
 	switch (id) {
+		case OBJECT_ID_BACKGROUND:
+			
+			bg = new BackgroundObject();
+			if ( bg && bg->Init(GetGameState()) ) {
+							
+				PALETTE pal;
+				BITMAP* bmp = load_bitmap("data/back.tga", pal);
+				
+				if (bmp) {
+
+					set_palette(pal);
+
+					bg->SetBitmapIsDeleteable(true);
+					bg->SetDestinationBitmap(default_destination_bitmap);
+					bg->SetBitmap(bmp);
+					bg->SetXY(0,0);
+					
+				} else {
+					fprintf(stderr, "ObjectFactory: Failed to load Player's bitmap.\n");
+					if (bg) {
+							free(bg);
+							bg = NULL;
+					}
+				}
+			} else {
+				fprintf(stderr, "ObjectFactory: Failed to create Player object.\n");
+				if (bg) {
+						free(bg);
+						bg = NULL;
+				}	
+			}
+
+			new_obj = bg;
+			break;
+
+					
 		case OBJECT_ID_RADIUS_BLOCK:
 			
 			rblock = new RadiusBlockObject();
 			if ( rblock && rblock->Init(GetGameState()) ) {
 							
 				PALETTE pal;
-				BITMAP* bmp = load_bitmap("data/ninja.tga", pal);
+				BITMAP* bmp = load_bitmap("data/miroku.tga", pal);
 				
 				if (bmp) {
 
@@ -56,7 +94,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 			if ( player && player->Init(GetGameState()) ) {
 							
 				PALETTE pal;
-				BITMAP* bmp = load_bitmap("data/ninja2.tga", pal);
+				BITMAP* bmp = load_bitmap("data/kenshin.tga", pal);
 				
 				if (bmp) {
 

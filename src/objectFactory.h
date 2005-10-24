@@ -12,6 +12,7 @@ class ObjectFactory;
 
 #include "objectPlayer.h"
 #include "objectRadiusBlock.h"
+#include "objectBackground.h"
 
 #include "gameBase.h"
 

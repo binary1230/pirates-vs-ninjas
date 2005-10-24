@@ -19,7 +19,7 @@ void PlayerObject::Update() {
 	if (y == dst_bitmap->h - bitmap->h) {
 		vectors[_X].v_decay = 0.99f;	// decay on the ground
 		if (input->Key(GAMEKEY_JUMP)) {
-			vectors[_Y].velocity = Rand(2,12);
+			vectors[_Y].velocity = 10; // Rand(2,12);
 	  }		
 	}
 	

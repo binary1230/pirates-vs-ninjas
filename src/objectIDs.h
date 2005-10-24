@@ -7,5 +7,6 @@
 
 #define OBJECT_ID_RADIUS_BLOCK 	1
 #define OBJECT_ID_MOUSE_BLOCK 2
+#define OBJECT_ID_BACKGROUND 3
 
 #endif // OBJECT_IDS_H

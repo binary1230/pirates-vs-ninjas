@@ -14,7 +14,7 @@ int GameState::InitSystem() {
 		InitTimers();
 
 		window = new Window();
-		if ( !window ||	window->Init(this, SCREEN_SIZE_X, SCREEN_SIZE_Y, 
+		if ( !window ||	window->Init(this, 640, 480, 
 										options->IsFullscreen()) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init window!\n");
 			return -1;
@@ -55,9 +55,15 @@ int GameState::InitObjects() {
 	// create some random objects
 	Object* new_obj;
 	
-	int i, max = 300;
+	int i, max = 5;
 	objects.resize(0);
 
+	new_obj = objectFactory->CreateObject(OBJECT_ID_BACKGROUND);
+	if (!new_obj)
+		return -1;
+	
+	objects.push_back(new_obj);
+	
 	for (i = 0; i < max; i++) {
 		new_obj = objectFactory->CreateObject(OBJECT_ID_RADIUS_BLOCK);
 		if (!new_obj)
@@ -65,7 +71,7 @@ int GameState::InitObjects() {
 
 		objects.push_back(new_obj);
 	}
-		
+	
 	new_obj = objectFactory->CreateObject(OBJECT_ID_MOUSE_BLOCK);
 	if (!new_obj)
 		return -1;
