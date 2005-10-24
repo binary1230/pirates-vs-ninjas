@@ -15,8 +15,6 @@ class ForceInput;
 #include "gameState.h"
 
 class ForceInput : public Force {
-	protected:
-		
 	public:
 		float GetAcceleration();
 

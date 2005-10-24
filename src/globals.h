@@ -5,6 +5,8 @@
 
 // include master config.h from ./configure script
 #include <config.h>
+#include <assert.h>
+#include <stdio.h>
 
 typedef unsigned int uint;
 

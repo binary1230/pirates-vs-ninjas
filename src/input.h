@@ -21,14 +21,14 @@ class BaseInput;
 #include "gameBase.h"
 
 //! The logical game keys (e.g. JUMP, FIRE, etc)
-enum GameKeys {
-	GAMEKEY_JUMP,
-	GAMEKEY_LEFT, GAMEKEY_RIGHT, GAMEKEY_UP, GAMEKEY_DOWN,
-	GAMEKEY_EXIT
-};
+#define GAMEKEY_JUMP 		0
+#define GAMEKEY_LEFT		1	
+#define GAMEKEY_RIGHT		2
+#define GAMEKEY_UP			3
+#define GAMEKEY_DOWN		4
+#define GAMEKEY_EXIT		5
 
-//! The count of game keys
-#define GAMEKEY_COUNT	(sizeof(enum GameKeys) - 1)
+#define GAMEKEY_COUNT 	6
 
 //! Base input class
 
@@ -64,7 +64,7 @@ class BaseInput : public GameBase {
 		virtual void Update() = 0;
 		
 		//! Get the status of a key (use 'enum GameKeys')
-		virtual bool Key(enum GameKeys gameKey) = 0;
+		virtual bool Key(uint gameKey) = 0;
 
 		//! Get the mouse X coordinate
 		// virtual int MouseX() = 0;

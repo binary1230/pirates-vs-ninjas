@@ -23,7 +23,7 @@ int vec::CalcNextStep() {
 	acceleration = 0;
 	for (i = 0; i < max; i++)
 		acceleration += forces[i]->GetAcceleration();		
-				
+
 	// 2) add acceleration to velocity to get new velocity
 	velocity = (velocity + acceleration) * v_decay;
 	if (v_decay != 1.0f && velocity < 0.25 && velocity > -0.25)

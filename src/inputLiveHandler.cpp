@@ -48,7 +48,7 @@ bool InputLive::LoadKeyMappings(char* filename) {
 	return false;
 }
 
-bool InputLive::Key(enum GameKeys gameKey) {
+bool InputLive::Key(uint gameKey) {
 	return game_key[gameKey];
 }
 

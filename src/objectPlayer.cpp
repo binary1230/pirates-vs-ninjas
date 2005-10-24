@@ -61,14 +61,24 @@ void PlayerObject::SetXY(int _x, int _y) {
 }
 
 bool PlayerObject::Init(GameState* _game_state) {
+	Force* force;
+
 	SetGameState(_game_state);
+
+	assert(GetGameState() != NULL);
+
 	vectors[_X].Clear();
 	vectors[_Y].Clear();
 
 	vectors[_X].v_decay = 0.99f;
 
-	vectors[_X].Attach(new ForceInput());
-	vectors[_Y].Attach(new ForceGravity());
+	force = new ForceInput();
+	force->Init(GetGameState());
+	vectors[_X].Attach(force);
+
+	force = new ForceGravity();
+	force->Init(GetGameState());
+	vectors[_Y].Attach(force);
 
 	return true;
 }

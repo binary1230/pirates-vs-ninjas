@@ -52,6 +52,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 		case OBJECT_ID_MOUSE_BLOCK:
 			
 			player = new PlayerObject();
+
 			if ( player && player->Init(GetGameState()) ) {
 							
 				PALETTE pal;
@@ -101,7 +102,6 @@ void ObjectFactory::DeleteObject(Object* obj) {
 int ObjectFactory::Init(GameState* _game_state, BaseInput* handler) {
 	SetGameState(_game_state);
 	SetInputHandler(handler);
-	fprintf(stderr, "OF: Init called");
 	return 0;
 }
 

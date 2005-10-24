@@ -47,7 +47,7 @@ class InputLive : public BaseInput {
 
 		void Update();
 				
-		bool Key(enum GameKeys gameKey);
+		bool Key(uint gameKey);
 
 		bool InitRecorder(char* filename) {return NotSupported();}
 		void BeginRecording()	{NotSupported();}
