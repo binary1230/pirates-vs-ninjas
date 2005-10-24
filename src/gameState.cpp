@@ -26,13 +26,13 @@ int GameState::InitSystem() {
 			return -1;
 		}
 
-		objectFactory = new ObjectFactory();
+		/*objectFactory = new ObjectFactory();
 		if ( !objectFactory || objectFactory->Init(this, input) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init objectFactory!\n");
 			return -1;
-		}
+		}*/
 					
-		objectFactory->SetDefaultDestinationBitmap(window->GetBackBuffer());
+		// objectFactory->SetDefaultDestinationBitmap(window->GetBackBuffer());
 
 		return 0;
 }
@@ -50,7 +50,8 @@ int GameState::InitTimers() {
 //! Initialize game objects
 
 //! Uses the objectFactory to create some random objects.
-int GameState::InitObjects() {
+int GameState::InitObjects() {return 0;}
+/*int GameState::InitObjects() {
 	
 	// create some random objects
 	Object* new_obj;
@@ -60,19 +61,20 @@ int GameState::InitObjects() {
 
 	for (i = 0; i < max; i++) {
 		new_obj = objectFactory->CreateObject(OBJECT_ID_RADIUS_BLOCK);
-		if (!new_obj && !new_obj->Init(this))
+		if (!new_obj || !new_obj->Init(this))
 			return -1;
 
 		objects.push_back(new_obj);
 	}
 		
 	new_obj = objectFactory->CreateObject(OBJECT_ID_MOUSE_BLOCK);
-	if (!new_obj && !new_obj->Init(this))
+	if (!new_obj || !new_obj->Init(this))
 		return -1;
+
 	objects.push_back(new_obj);
 	
 	return 0;
-}
+}*/
 
 //! The 'main' function for the game
 
@@ -86,12 +88,14 @@ int GameState::RunGame(GameOptions* _options) {
 		
 		return_val = InitSystem();
 
-		if (return_val != -1) {
+		/*if (return_val != -1) {
 			return_val = InitObjects();
 
-			if (return_val != -1) 
+			if (return_val == -1) 
+				fprintf(stderr, "failed to init objects!\n");
+			else 
 				MainLoop();
-		}
+		}*/
 	
 		Shutdown();
 
@@ -153,6 +157,7 @@ void GameState::Draw() {
 
 //! Clean up everything we allocated
 void GameState::Shutdown() {
+
 	if (objectFactory) {
 		DestroyObjects();
 		objectFactory->Shutdown();
@@ -163,13 +168,13 @@ void GameState::Shutdown() {
 		input->Shutdown();
 		delete input;
 	}
-
+		
 	// window destruction code must be LAST
 	if (window) {
 		window->Shutdown();
 		delete window;
 	}
-	
+		
 	allegro_exit();
 }
 

@@ -23,7 +23,7 @@ class InputLive : public BaseInput {
 		//! The keys currently being pressed (e.g. GAMEKEY_JUMP)
 		int game_key[GAMEKEY_COUNT];
 
-		//! They mapping of real keys to gamekeys (e.g. SPACE to GAMEKEY_JUMP)
+		//! The mapping of real keys to gamekeys (e.g. SPACE to GAMEKEY_JUMP)
 		int gamekey_to_realkey[GAMEKEY_COUNT];
 		
 		//! Load the default key mappings

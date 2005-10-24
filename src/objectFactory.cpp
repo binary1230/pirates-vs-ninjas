@@ -33,9 +33,17 @@ Object* ObjectFactory::CreateObject(uint id) {
 					
 				} else {
 					fprintf(stderr, "ObjectFactory: Failed to load Player's bitmap.\n");
+					if (rblock) {
+							free(rblock);
+							rblock = NULL;
+					}
 				}
 			} else {
 				fprintf(stderr, "ObjectFactory: Failed to create Player object.\n");
+				if (rblock) {
+						free(rblock);
+						rblock = NULL;
+				}	
 			}
 
 			new_obj = rblock;
@@ -60,10 +68,18 @@ Object* ObjectFactory::CreateObject(uint id) {
 					
 				} else {
 					fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite's bitmap.\n");
+					if (player) {
+							free(player);
+							player = NULL;
+					}	
 				}
 		
 			} else {
 				fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite.\n");
+				if (player) {
+						free(player);
+						player = NULL;
+				}
 			}
 
 			new_obj = player;
@@ -85,6 +101,7 @@ void ObjectFactory::DeleteObject(Object* obj) {
 int ObjectFactory::Init(GameState* _game_state, BaseInput* handler) {
 	SetGameState(_game_state);
 	SetInputHandler(handler);
+	fprintf(stderr, "OF: Init called");
 	return 0;
 }
 
