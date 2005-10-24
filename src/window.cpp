@@ -1,8 +1,11 @@
 #include "window.h"
 
-int Window::Init(uint _width, uint _height, bool _fullscreen) {
+int Window::Init(	GameState* _game_state, 
+									uint _width, uint _height, bool _fullscreen) {
 	
 	int gfx_mode;
+
+	SetGameState(_game_state);
 
 	width = _width;
 	height = _height;
@@ -51,10 +54,6 @@ void Window::Shutdown() {
 	destroy_bitmap(backbuf);
 	release_screen();
 	initialized = false;
-}
-
-BITMAP* Window::GetBackBuffer() {
-	return backbuf;
 }
 
 Window::Window() : initialized(false), backbuf(NULL) {}

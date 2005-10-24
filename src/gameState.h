@@ -1,21 +1,22 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+
 #include <allegro.h>
 #include <stdio.h>
 #include <vector>
 
 using namespace std;
 
+class GameState;
+
 #include "globals.h"
 
 #include "gameOptions.h"
-
 #include "window.h"
 #include "timer.h"
 #include "input.h"
 #include "inputLiveHandler.h"
-
 #include "object.h"
 #include "objectFactory.h"
 
@@ -28,7 +29,7 @@ using namespace std;
 class GameState {
 	protected:
 		//! Options parsed from the commandline
-		GameOptions *options;					
+		GameOptions *options;
 		
 		//! The game's on-screen window
 		Window *window;								
@@ -37,7 +38,7 @@ class GameState {
 		ObjectFactory *objectFactory;	
 		
 		//! Active input module
-		BaseInput *input;							
+		BaseInput *input;
 
 		//! Collection of all drawable objects
 		vector<Object*> objects;
@@ -66,6 +67,12 @@ class GameState {
 				
 	public:
 		int RunGame(GameOptions *_options);
+
+		// accessors
+		inline BaseInput* 		GetInput() 					{return input;};
+		inline Window* 				GetWindow() 				{return window;};
+		inline GameOptions* 	GetGameOptions() 		{return options;};
+		inline ObjectFactory*	GetObjectFactory()	{return objectFactory;}
 
 		GameState();
 		~GameState();

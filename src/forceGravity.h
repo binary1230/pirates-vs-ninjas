@@ -4,6 +4,9 @@
 #ifndef FORCEGRAV_H
 #define FORCEGRAV_H
 
+class ForceGravity;
+class Force;
+
 #include "globals.h"
 #include "force.h"
 

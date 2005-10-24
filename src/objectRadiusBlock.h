@@ -8,6 +8,8 @@
 #include <math.h>
 #include <stdio.h>
 
+class RadiusBlockObject;
+
 #include "globals.h"
 #include "object.h"
 
@@ -17,6 +19,9 @@ class RadiusBlockObject : public Object {
 		int radius;
 				
 	public:
+		bool Init(GameState* _game_state);
+		void Shutdown();
+
 		void Update();
 		void Draw();
 

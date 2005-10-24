@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+class GameOptions;
+
 #include "globals.h"
 
 class GameOptions {

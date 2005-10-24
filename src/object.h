@@ -5,12 +5,15 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+class Object;
+
 #include <allegro.h>
 #include <stdio.h>
 
 #include "globals.h"
+#include "gameBase.h"
 
-class Object {
+class Object : public GameBase {
 				
 	protected:
 		int x, y;
@@ -21,6 +24,9 @@ class Object {
 		BITMAP* dst_bitmap;		// which bitmap to Draw() to 
 
 	public:
+		virtual bool Init(GameState* _game_state) = 0;
+		virtual void Shutdown() = 0;
+		
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
 

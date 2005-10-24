@@ -14,20 +14,20 @@ int GameState::InitSystem() {
 		InitTimers();
 
 		window = new Window();
-		if ( !window ||	window->Init(	SCREEN_SIZE_X, SCREEN_SIZE_Y, 
+		if ( !window ||	window->Init(this, SCREEN_SIZE_X, SCREEN_SIZE_Y, 
 										options->IsFullscreen()) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init window!\n");
 			return -1;
 		}
 
 		input = new InputLive();
-		if ( !input || input->Init() < 0 ) {
+		if ( !input || input->Init(this) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init input!\n");
 			return -1;
 		}
 
 		objectFactory = new ObjectFactory();
-		if ( !objectFactory || objectFactory->Init(input) < 0 ) {
+		if ( !objectFactory || objectFactory->Init(this, input) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init objectFactory!\n");
 			return -1;
 		}
@@ -123,11 +123,13 @@ void GameState::MainLoop() {
 void GameState::Update() {
 	int i, max = objects.size();
 
+	input->Update();
+
 	for (i = 0; i < max; i++) {
 		objects[i]->Update();
 	}
 
-	if (input->Key(KEY_ESC)) {
+	if (input->Key(GAMEKEY_EXIT)) {
 		exit_game = true;
 	}
 }

@@ -5,10 +5,15 @@
 #ifndef FORCE_H
 #define FORCE_H
 
-#include "globals.h"
+class Force;
+class GameState;
 
-class Force {
+#include "globals.h"
+#include "gameBase.h"
+
+class Force : public GameBase {
 	public:
+		void Init(GameState* _game_state);
 		virtual float GetAcceleration() = 0;
 
 		Force();

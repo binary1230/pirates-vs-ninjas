@@ -15,7 +15,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 		case OBJECT_ID_RADIUS_BLOCK:
 			
 			rblock = new RadiusBlockObject();
-			if (rblock) {
+			if ( rblock && rblock->Init(GetGameState()) ) {
 							
 				PALETTE pal;
 				BITMAP* bmp = load_bitmap("data/ninja.tga", pal);
@@ -32,10 +32,10 @@ Object* ObjectFactory::CreateObject(uint id) {
 					rblock->SetRadius(Rand(20,300));
 					
 				} else {
-					fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite's bitmap.\n");
+					fprintf(stderr, "ObjectFactory: Failed to load Player's bitmap.\n");
 				}
 			} else {
-				fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite.\n");
+				fprintf(stderr, "ObjectFactory: Failed to create Player object.\n");
 			}
 
 			new_obj = rblock;
@@ -44,7 +44,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 		case OBJECT_ID_MOUSE_BLOCK:
 			
 			player = new PlayerObject();
-			if (player) {
+			if ( player && player->Init(GetGameState()) ) {
 							
 				PALETTE pal;
 				BITMAP* bmp = load_bitmap("data/ninja2.tga", pal);
@@ -82,7 +82,8 @@ void ObjectFactory::DeleteObject(Object* obj) {
 	delete obj;
 }
 
-int ObjectFactory::Init(BaseInput* handler) {
+int ObjectFactory::Init(GameState* _game_state, BaseInput* handler) {
+	SetGameState(_game_state);
 	SetInputHandler(handler);
 	return 0;
 }

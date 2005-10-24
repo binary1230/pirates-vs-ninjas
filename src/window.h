@@ -5,9 +5,13 @@
 #include <allegro.h>
 #include <stdio.h>
 
-#include "globals.h"
+class Window;
 
-class Window {
+#include "globals.h"
+#include "gameState.h"
+#include "gameBase.h"
+
+class Window : public GameBase {
 	protected:
 		bool initialized;
 
@@ -15,10 +19,12 @@ class Window {
 		BITMAP* backbuf;
 		
 	public:
-		int Init(uint width, uint height, bool fullscreen = 0);
+		int Init(	GameState* _game_state, 
+							uint width, uint height, bool fullscreen = 0);
+
 		void Shutdown();
 
-		BITMAP* GetBackBuffer();
+		inline BITMAP* GetBackBuffer() {return backbuf;};
 		void Flip();
 
 		Window();

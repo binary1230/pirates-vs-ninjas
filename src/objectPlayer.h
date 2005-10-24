@@ -10,14 +10,16 @@
 
 using namespace std;
 
+class ObjectPlayer;
+
 #include "globals.h"
 #include "input.h"
 #include "inputLiveHandler.h"
 #include "object.h"
-#include "vec.h"
-
+#include "force.h"
 #include "forceGravity.h"
 #include "forceInput.h"
+#include "vec.h"
 
 #define _X 0
 #define _Y 1
@@ -33,6 +35,9 @@ class PlayerObject : public Object {
 		void SetInputHandler(BaseInput* handler);
 
 		void SetXY(int, int);
+
+		bool Init(GameState* _game_state);
+		void Shutdown();
 
 		PlayerObject();
 		~PlayerObject();

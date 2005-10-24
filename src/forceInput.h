@@ -6,10 +6,17 @@
 
 #include <allegro.h>
 
+class Force;
+class ForceInput;
+
 #include "globals.h"
 #include "force.h"
+#include "input.h"
+#include "gameState.h"
 
 class ForceInput : public Force {
+	protected:
+		
 	public:
 		float GetAcceleration();
 

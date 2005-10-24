@@ -18,7 +18,7 @@ void PlayerObject::Update() {
 	// if we're OK to jump now.. do it.
 	if (y == dst_bitmap->h - bitmap->h) {
 		vectors[_X].v_decay = 0.99f;	// decay on the ground
-		if (input->Key(KEY_SPACE)) {
+		if (input->Key(GAMEKEY_JUMP)) {
 			vectors[_Y].velocity = Rand(2,12);
 	  }		
 	}
@@ -60,7 +60,8 @@ void PlayerObject::SetXY(int _x, int _y) {
 	fprintf(stderr, "setting them!\n");
 }
 
-PlayerObject::PlayerObject() : input(NULL) {
+bool PlayerObject::Init(GameState* _game_state) {
+	SetGameState(_game_state);
 	vectors[_X].Clear();
 	vectors[_Y].Clear();
 
@@ -68,6 +69,16 @@ PlayerObject::PlayerObject() : input(NULL) {
 
 	vectors[_X].Attach(new ForceInput());
 	vectors[_Y].Attach(new ForceGravity());
+
+	return true;
+}
+
+void PlayerObject::Shutdown() {
+	// XXX free vector forces
+	// a.k.a vectors[x].Shutdown()
+}
+
+PlayerObject::PlayerObject() : input(NULL) {
 }
 
 PlayerObject::~PlayerObject() {}
