@@ -46,7 +46,10 @@ void InputRecord::Update() {
 		old_key[i] = game_key[i];
 
 		// Get new keys
-		game_key[i] = key[gamekey_to_realkey[i]];
+		if ( key[gamekey_to_realkey[i]] )
+			game_key[i] = 1;
+		else 
+			game_key[i] = 0;
 
 		// Output any differences between the old and new to a file
 		if ( demofile && (old_key[i] != game_key[i]) ) {
@@ -97,15 +100,13 @@ void InputRecord::BeginRecording()	{
 	
 	frame_counter = 0;
 
-	// write 4 byte 'DEMO' to file
-	fwrite("DEMO", 4, 1, demofile);
-
-	// write the random seed
-	fprintf(demofile, "%i\n", GetGameState()->GetRandomSeed() );
+	// write 4 byte 'DEMO' header and write the random seed
+	fprintf(demofile, "DEMO\n%i\n", GetGameState()->GetRandomSeed() );
 }
 
 void InputRecord::EndRecording()	{
 	fclose(demofile);
+	demofile = NULL;
 }
 
 InputRecord::InputRecord() : demofile(NULL) {}
