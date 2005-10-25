@@ -29,8 +29,9 @@ void GameOptions::PrintOptions(char* arg0) {
 void GameOptions::Clear() {
 	fullscreen = false;
 	show_help = false;
-	demo_record_filename = NULL;
-	demo_playback_filename = NULL;
+	
+	//demo_record_filename = NULL;
+	// demo_playback_filename = NULL;
 
 	is_valid = true;
 }
@@ -45,12 +46,12 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 	while ( (c = getopt(argc,argv,"r:p:fwh")) != -1) {
 		switch (c) {
 
+			// record demo filename
 			case 'r':
-				sscanf(optarg, "%u", &n);															
 				break;
 
+			// playback demo filename
 			case 'p':
-
 				break;
 			
 			// display help
