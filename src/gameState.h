@@ -28,6 +28,10 @@ class GameState;
 //! class somewhere.
 class GameState {
 	protected:
+
+		//! Random seed for the game
+		int random_seed;
+					
 		//! Options parsed from the commandline
 		GameOptions *options;
 		
@@ -69,10 +73,13 @@ class GameState {
 		int RunGame(GameOptions *_options);
 
 		// accessors
-		inline BaseInput* 		GetInput() 					{return input;};
-		inline Window* 				GetWindow() 				{return window;};
-		inline GameOptions* 	GetGameOptions() 		{return options;};
-		inline ObjectFactory*	GetObjectFactory()	{return objectFactory;}
+		inline BaseInput* 		GetInput() 					{ return input; };
+		inline Window* 				GetWindow() 				{ return window; };
+		inline GameOptions* 	GetGameOptions() 		{ return options; };
+		inline ObjectFactory*	GetObjectFactory()	{ return objectFactory; };
+
+		inline void SetRandomSeed(int val)		{ random_seed = val; srand(val); };
+		inline int GetRandomSeed()						{ return random_seed; };
 
 		GameState();
 		~GameState();

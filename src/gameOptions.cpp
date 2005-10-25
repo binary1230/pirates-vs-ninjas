@@ -19,6 +19,8 @@ void GameOptions::PrintOptions(char* arg0) {
 		"Usage: %s [options]\n"
 		"-f            | try to force fullscreen mode\n"
 		"-w            | try to force windowed mode\n"
+		"-r file       | record a demo to 'file'\n"
+		"-p file       | playback a demo from 'file'\n"
 		"-h            | display this help message\n\n"
 		, arg0);
 	}
@@ -27,6 +29,8 @@ void GameOptions::PrintOptions(char* arg0) {
 void GameOptions::Clear() {
 	fullscreen = false;
 	show_help = false;
+	demo_record_filename = NULL;
+	demo_playback_filename = NULL;
 
 	is_valid = true;
 }
@@ -38,8 +42,16 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"fwh")) != -1) {
+	while ( (c = getopt(argc,argv,"r:p:fwh")) != -1) {
 		switch (c) {
+
+			case 'r':
+				sscanf(optarg, "%u", &n);															
+				break;
+
+			case 'p':
+
+				break;
 			
 			// display help
 			case 'h':

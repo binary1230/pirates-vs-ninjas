@@ -20,6 +20,12 @@ class GameBase {
 				game_state = _game_state;
 			};
 
+			//! Display 'not supported'
+			inline bool NotSupported() {
+				fprintf(stderr, "Not supported.\n");
+				return false;
+			}
+
 			GameBase();
 			virtual ~GameBase();
 };

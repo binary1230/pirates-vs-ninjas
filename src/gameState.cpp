@@ -13,6 +13,8 @@ int GameState::InitSystem() {
 		allegro_init();
 		InitTimers();
 
+		SetRandomSeed(42);
+
 		window = new Window();
 		if ( !window ||	window->Init(this, 640, 480, 
 										options->IsFullscreen()) < 0 ) {

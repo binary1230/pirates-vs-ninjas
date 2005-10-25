@@ -53,6 +53,22 @@ class BaseInput;
 //! Don't forget to save the random seed in this class, otherwise demos
 //! will not play back correctly.
 class BaseInput : public GameBase {
+	protected:
+		//! The keys currently being pressed (e.g. GAMEKEY_JUMP)
+		int game_key[GAMEKEY_COUNT];
+
+		//! The mapping of real keys to gamekeys (e.g. SPACE to GAMEKEY_JUMP)
+		int gamekey_to_realkey[GAMEKEY_COUNT];
+		
+		//! Load the default key mappings
+		void LoadDefaultKeyMappings();
+		
+		//! Load key mappings from a file
+		bool LoadKeyMappings(char* filename);
+
+		//! Zero out the keyboard buffer
+		void ClearKeys(int *key_buffer = NULL);
+		
 	public:
 		//! Init the input system
 		virtual int Init(GameState* _game_state) = 0;
@@ -87,12 +103,6 @@ class BaseInput : public GameBase {
 		//! PLAYBACK: End playback of input (for demos)
 		virtual void EndPlayback() = 0;
 
-		//! Save the random seed used in this game (for demos)
-		virtual void SaveRandomSeed() = 0;
-
-		//! Get the random seed used in this game (for demos)
-		virtual void GetRandomSeed() = 0;
-	
 		BaseInput();
 		virtual ~BaseInput() = 0;
 };
