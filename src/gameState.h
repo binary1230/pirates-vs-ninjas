@@ -17,6 +17,7 @@ class GameState;
 #include "timer.h"
 #include "input.h"
 #include "inputLiveHandler.h"
+#include "inputRecord.h"
 #include "object.h"
 #include "objectFactory.h"
 
@@ -57,9 +58,11 @@ class GameState {
 		};
 					
 		int InitSystem();
+		
 		int InitTimers();
-
+		int InitInput();
 		int InitObjects();
+		
 		void DestroyObjects();
 		
 		void Shutdown();
@@ -68,6 +71,7 @@ class GameState {
 
 		void Update();
 		void Draw();
+
 				
 	public:
 		int RunGame(GameOptions *_options);

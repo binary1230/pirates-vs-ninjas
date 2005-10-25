@@ -1,14 +1,17 @@
-#include "InputRecordHandler.h"
+#include "inputRecord.h"
 
-
-int InputRecord::Init(GameState* _game_state) {
+int InputRecord::Init(GameState* _game_state, char* _demo_file) {
 	SetGameState(_game_state);
 				
 	install_mouse();
 	install_keyboard();
 	
 	LoadDefaultKeyMappings();
-	return 0;
+
+	if (_demo_file)
+		return InitRecorder(_demo_file);
+	else 
+		return 0;
 }
 
 void InputRecord::Shutdown() {
@@ -66,10 +69,7 @@ bool InputRecord::InitRecorder(char* filename) {
 	if (demofile) {
 		fprintf(stderr, "InputRecord: ERROR already saving demo file.\n");
 		return false;
-	} else if (random_seed == -1) {
-		fprintf(stderr, "InputRecord: ERROR random seed not set.\n");
-		return false;
-	}
+	} 
 
 	demofile = fopen(filename, "w");
 	
@@ -92,20 +92,20 @@ void InputRecord::BeginRecording()	{
 
 	if (!demofile) {
 		fprintf(stderr,	"InputRecord: ERROR InitRecorder() not called yet!\n");
+		return;
 	}
 	
 	frame_counter = 0;
 
 	// write 4 byte 'DEMO' to file
-	fwrite("DEMO", 4, demofile);
+	fwrite("DEMO", 4, 1, demofile);
 
 	// write the random seed
-	fprintf(demofile, "%i\n", this->GetGameState()->GetRandomSeed() );
+	fprintf(demofile, "%i\n", GetGameState()->GetRandomSeed() );
 }
 
 void InputRecord::EndRecording()	{
 	fclose(demofile);
-	frame_counter = -1;
 }
 
 InputRecord::InputRecord() : demofile(NULL) {}

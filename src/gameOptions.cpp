@@ -29,9 +29,11 @@ void GameOptions::PrintOptions(char* arg0) {
 void GameOptions::Clear() {
 	fullscreen = false;
 	show_help = false;
+
+	record_demo = false;
+	playback_demo = false;
 	
-	//demo_record_filename = NULL;
-	// demo_playback_filename = NULL;
+	demo_filename = NULL;
 
 	is_valid = true;
 }
@@ -39,6 +41,7 @@ void GameOptions::Clear() {
 bool GameOptions::ParseArguments(int argc, char* argv[]) {
 	
 	char c;
+	char* buffer;
 	bool _fullscreen_option_set = false;
 
 	Clear();
@@ -46,12 +49,21 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 	while ( (c = getopt(argc,argv,"r:p:fwh")) != -1) {
 		switch (c) {
 
-			// record demo filename
-			case 'r':
-				break;
+			// get demo filename
+			case 'r': case 'p':
+				if (demo_filename) {
+						fprintf(stderr,	"Options ==> ERROR "
+														"Don't give more than 1 demo filename (-r, -p)\n");
+						return (is_valid = false);
+				}
 
-			// playback demo filename
-			case 'p':
+				if (c == 'r')
+						record_demo = true;
+				else 
+						playback_demo = true;
+								
+				buffer = new char[strlen(optarg) + 1];
+				demo_filename = strcpy(buffer, optarg);
 				break;
 			
 			// display help
@@ -92,6 +104,9 @@ bool GameOptions::IsValid() {
 	return is_valid;
 }
 
-bool GameOptions::IsFullscreen() {
-	return fullscreen;
+GameOptions::~GameOptions() {
+	if (demo_filename)
+		delete demo_filename;
 }
+
+GameOptions::GameOptions() : demo_filename(NULL) {}

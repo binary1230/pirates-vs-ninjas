@@ -22,12 +22,10 @@ int GameState::InitSystem() {
 			return -1;
 		}
 
-		input = new InputLive();
-		if ( !input || input->Init(this) < 0 ) {
-			fprintf(stderr, "ERROR: InitSystem: failed to init input!\n");
-			return -1;
+		if (InitInput() == -1) {
+			fprintf(stderr, "ERROR: InitSystem: failed to init input subsystem!\n");
 		}
-
+			
 		objectFactory = new ObjectFactory();
 		if ( !objectFactory || objectFactory->Init(this, input) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init objectFactory!\n");
@@ -37,6 +35,29 @@ int GameState::InitSystem() {
 		objectFactory->SetDefaultDestinationBitmap(window->GetBackBuffer());
 
 		return 0;
+}
+
+//! Init input subsystems
+int GameState::InitInput() {
+				
+	if ( options->RecordDemo() )
+		input = new InputRecord();
+	
+	else if (options->PlaybackDemo())
+		// init playback stuff
+		//input = new InputPlayer();	
+		; // filler
+	
+	else
+		// init regular stuff
+		input = new InputLive();
+
+	if ( !input || input->Init(this, options->GetDemoFilename()) < 0 ) {
+		fprintf(stderr, "ERROR: InitSystem: failed to init input!\n");
+		return -1;
+	}
+
+	return 0;
 }
 
 //! Init game timers
@@ -90,23 +111,26 @@ int GameState::InitObjects() {
 //! or 1 on error.
 int GameState::RunGame(GameOptions* _options) {
 		
-		int return_val = 0;
 		options = _options;
 		
-		return_val = InitSystem();
+		if (InitSystem() != -1 && InitObjects() != -1) {
+						
+			if (options->RecordDemo())
+				input->BeginRecording();
+			
+			MainLoop();
 
-		if (return_val != -1) {
-			return_val = InitObjects();
+			if (options->RecordDemo())
+				input->EndRecording();
 
-			if (return_val == -1) 
-				fprintf(stderr, "failed to init objects!\n");
-			else 
-				MainLoop();
+		} else {
+			fprintf(stderr, "ERROR: Failed to init game!\n");
+			return -1;	
 		}
 	
 		Shutdown();
 
-		return return_val;
+		return 0;
 }
 
 //! The Main Loop
@@ -115,7 +139,7 @@ int GameState::RunGame(GameOptions* _options) {
 //! is updating at the correct speed, and it will Draw everything
 //! at the correct speed.
 void GameState::MainLoop() {
-
+				
 	while (!exit_game) {
 
 		while (outstanding_updates > 0) {

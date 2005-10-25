@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 class GameOptions;
 
@@ -17,6 +18,10 @@ class GameOptions {
 		
 		bool show_help;
 		bool fullscreen;
+	
+		bool record_demo;
+		bool playback_demo;
+		char* demo_filename;
 		
 	public:
 		void PrintOptions(char* arg0);
@@ -26,7 +31,13 @@ class GameOptions {
 		bool IsValid();
 		void Clear();
 
-		bool IsFullscreen();
+		inline bool IsFullscreen() {return fullscreen;};
+		inline char* GetDemoFilename() {return demo_filename;};
+		inline bool RecordDemo() {return record_demo;};
+		inline bool PlaybackDemo() {return playback_demo;};
+
+		GameOptions();
+		~GameOptions();
 };
 
 #endif // ARGS_H

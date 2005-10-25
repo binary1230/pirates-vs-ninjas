@@ -20,16 +20,16 @@ class InputLive;
 class InputLive : public BaseInput {
 	
 	protected:
+		bool InitRecorder(char* filename) {return NotSupported();}
 	
 	public:
-		int Init(GameState* _game_state);
+		int Init(GameState* _game_state, char* _demo_file = NULL);
 		void Shutdown();
 
 		void Update();
 				
 		bool Key(uint gameKey);
 
-		bool InitRecorder(char* filename) {return NotSupported();}
 		void BeginRecording()	{NotSupported();}
 		void EndRecording()	{NotSupported();}
 		void BeginPlayback()	{NotSupported();}

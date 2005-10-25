@@ -69,9 +69,12 @@ class BaseInput : public GameBase {
 		//! Zero out the keyboard buffer
 		void ClearKeys(int *key_buffer = NULL);
 		
+		//! RECORD: Initialize recording engine
+		virtual bool InitRecorder(char* filename) = 0;
+		
 	public:
 		//! Init the input system
-		virtual int Init(GameState* _game_state) = 0;
+		virtual int Init(GameState* _game_state, char* _demo_file = NULL) = 0;
 
 		//! Shutdown the input system
 		virtual void Shutdown() = 0;
@@ -87,9 +90,6 @@ class BaseInput : public GameBase {
 
 		//! Get the mouse Y coordinates
 		// virtual int MouseY() = 0;
-		
-		//! RECORD: Initialize recording engine
-		virtual bool InitRecorder(char* filename) = 0;
 		
 		//! RECORD: Begin recording input (for demos)
 		virtual void BeginRecording() = 0;

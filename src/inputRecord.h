@@ -13,6 +13,7 @@ class InputRecord;
 
 #include "globals.h"
 #include "input.h"
+#include "gameState.h"
 
 //! Live input 
 
@@ -28,13 +29,18 @@ class InputRecord : public BaseInput {
 		
 		//! The frame count we are on [updated by Update()]
 		unsigned long frame_counter;
+
+		bool InitRecorder(char* filename);
 	
 	public:
-		int Init(GameState* _game_state);
+		int Init(GameState* _game_state, char* _demo_file = NULL);
 		void Shutdown();
 
 		void Update();
 		bool Key(uint gameKey);
+		
+		void BeginRecording();
+		void EndRecording();
 
 		void BeginPlayback()	{NotSupported();}
 		void EndPlayback()	{NotSupported();}
