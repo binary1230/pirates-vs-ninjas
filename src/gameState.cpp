@@ -114,7 +114,8 @@ int GameState::RunGame(GameOptions* _options) {
 		options = _options;
 		
 		if (InitSystem() != -1 && InitObjects() != -1) {
-						
+			
+			// XXX SHOULD NOT BE option-> should be input->RecordDemo()
 			if (options->RecordDemo())
 				input->BeginRecording();
 			
