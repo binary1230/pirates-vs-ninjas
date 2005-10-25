@@ -1,9 +1,9 @@
 bin_PROGRAMS = ninjas
 
-CXXFLAGS = -Wall
+AM_CXXFLAGS = -Wall
 
-LDFLAGS = -ggdb `allegro-config --libs` -lm
-ninjas_LDFLAGS = @LDFLAGS@
+AM_LDFLAGS = -ggdb `allegro-config --libs` -lm
+ninjas_LDFLAGS = @AM_LDFLAGS@
 
 headers = \
 force.h forceGravity.h forceInput.h gameOptions.h gameState.h \

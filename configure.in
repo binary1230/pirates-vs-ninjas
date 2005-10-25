@@ -18,8 +18,8 @@ AM_CONFIG_HEADER(config.h)
 # this is for MINGW32 only
 if test "${CROSS_COMPILE}" = "y"; then
 	echo "FIXME: Evil crosscompiling hack.  See configure.in"
-  LDFLAGS="-ggdb -lalleg --subsystem,windows -lm -mno-cygwin -lstdc++"
-	AC_SUBST(LDFLAGS)
+  AM_LDFLAGS="-ggdb -lalleg --subsystem,windows -lm -mno-cygwin -lstdc++"
+	AC_SUBST(AM_LDFLAGS)
 fi
 # </HACK>
 
