@@ -85,6 +85,8 @@ bool InputRecord::InitRecorder(char* filename) {
 			return false;
 	}
 
+	fprintf(stderr, "InputRecord: Recording demo to file '%s'.\n");
+
 	// write 'DEMO' header + game version number and some extra info
 	fprintf(demofile, "DEMO:ninja-engine saved demo file:%s:%s\n",
 										VERSION_STRING, ALLEGRO_PLATFORM_STR);

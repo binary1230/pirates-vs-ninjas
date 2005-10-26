@@ -32,6 +32,8 @@ bool InputPlayback::InitPlayback(char* filename) {
 							filename);
 			return false;
 	}
+	
+	fprintf(stderr, "InputRecord: Playing back demo from file '%s'.\n", filename);
 
 	// 1st line2: 'DEMO' header + version info
 	// (todo.. we could check for engine version numbers in this line2)
@@ -113,8 +115,6 @@ void InputPlayback::GetNextFrameData() {
 						
 		s++;	// skip over current space
 		count = sscanf(s, "%u %u", &key, &value);
-		fprintf(stderr, "XXX: got '%u %u', "
-										"count=%u, s='%s'.\n", key, value, count, s);
 			
 		if (count == 2) {
 			next_frame_data[key] = value;
@@ -146,12 +146,8 @@ void InputPlayback::Update() {
 	frame_counter++;
 
 	if (frame_counter == next_frame_num && !at_eof) {
-			fprintf(stderr, "-- UPDATE-before: frame_counter=%u, next=%u\n", 
-											frame_counter, next_frame_num);
 			UseNextFrameData();	
 			GetNextFrameData();
-			fprintf(stderr, "-- UPDATE-after: frame_counter=%u, next=%u\n", 
-											frame_counter, next_frame_num);
 	}	
 }
 
