@@ -21,8 +21,9 @@ class ObjectPlayer;
 #include "forceInput.h"
 #include "vec.h"
 
-#define _X 0
-#define _Y 1
+// directions
+#define _dX 0
+#define _dY 1
 
 class PlayerObject : public Object {
 	protected:

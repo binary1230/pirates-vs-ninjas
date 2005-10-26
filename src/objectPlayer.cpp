@@ -4,32 +4,32 @@ void PlayerObject::Update() {
 	int w = game_state->Width(), h = game_state->Height();
 	BITMAP* dst_bitmap = game_state->GetDrawingSurface();
 
-	x = vectors[_X].CalcNextStep();
-	y = -vectors[_Y].CalcNextStep();
+	x = vectors[_dX].CalcNextStep();
+	y = -vectors[_dY].CalcNextStep();
 
 	if (y > h - bitmap->h) {
 			y = h - bitmap->h;
-			vectors[_Y].position = -y;
+			vectors[_dY].position = -y;
 	}
 		
-	vectors[_X].v_decay = 1.00f;	// no decay in the air
+	vectors[_dX].v_decay = 1.00f;	// no decay in the air
 
 	// if we're OK to jump now.. do it.
 	if (y == h - bitmap->h) {
-		vectors[_X].v_decay = 0.99f;	// decay on the ground
+		vectors[_dX].v_decay = 0.99f;	// decay on the ground
 		if (game_state->GetKey(GAMEKEY_JUMP)) {
-			vectors[_Y].velocity = 10; // Rand(2,12);
+			vectors[_dY].velocity = 10; // Rand(2,12);
 	  }
 	}
 	
 	if (x < 0) {
-			vectors[_X].position = x = 0;
-			vectors[_X].velocity = -vectors[_X].velocity;
+			vectors[_dX].position = x = 0;
+			vectors[_dX].velocity = -vectors[_dX].velocity;
 	}
 	
 	if (x > w - bitmap->w) {
-			vectors[_X].position = x = w - bitmap->w;
-			vectors[_X].velocity = -vectors[_X].velocity;
+			vectors[_dX].position = x = w - bitmap->w;
+			vectors[_dX].velocity = -vectors[_dX].velocity;
 	}
 }
 
@@ -37,11 +37,11 @@ void PlayerObject::Draw() {
 	
 	bool flip = false;
 	
-	if (vectors[_X].acceleration == 0) {
-		if (vectors[_X].velocity > 0) {
+	if (vectors[_dX].acceleration == 0) {
+		if (vectors[_dX].velocity > 0) {
 			flip = true;
 		}
-	} else if (vectors[_X].acceleration > 0) {
+	} else if (vectors[_dX].acceleration > 0) {
 		flip = true;
 	} 
 
@@ -51,11 +51,12 @@ void PlayerObject::Draw() {
 		draw_sprite(game_state->GetDrawingSurface(), bitmap, x, y);
 }
 
+// XXX fairly sure this code never gets called, ever
 void PlayerObject::SetXY(int _x, int _y) {
-	x = _x; 
-	y = _y;
-	vectors[_Y].position = (float)y;
-	vectors[_X].position = (float)x;
+	x = _dX; 
+	y = _dY;
+	vectors[_dY].position = (float)y;
+	vectors[_dX].position = (float)x;
 	fprintf(stderr, "setting them!\n");
 }
 
@@ -66,18 +67,18 @@ bool PlayerObject::Init(GameState* _game_state) {
 
 	assert(GetGameState() != NULL);
 
-	vectors[_X].Clear();
-	vectors[_Y].Clear();
+	vectors[_dX].Clear();
+	vectors[_dY].Clear();
 
-	vectors[_X].v_decay = 0.99f;
+	vectors[_dX].v_decay = 0.99f;
 
 	force = new ForceInput();
 	force->Init(GetGameState());
-	vectors[_X].Attach(force);
+	vectors[_dX].Attach(force);
 
 	force = new ForceGravity();
 	force->Init(GetGameState());
-	vectors[_Y].Attach(force);
+	vectors[_dY].Attach(force);
 
 	return true;
 }
