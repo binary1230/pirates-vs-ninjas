@@ -1,8 +1,16 @@
 dnl LARGE PARTS of this configure.in stolen from Clanlib configure.ac
 
-AC_INIT(src/main.cpp)
-
 VERSION="0.1-beta1"
+AC_INIT(src/main.cpp)
+AM_INIT_AUTOMAKE([ninja-engine], ${VERSION})
+
+AC_PROG_CXX
+AC_PROG_INSTALL
+
+AC_LANG(C++)
+
+dnl XXX todo:
+dnl AC_PATH_PROG(SVN, svn, no)
 
 dnl Test for subversion presence, if so, use the subversion revision number
 dnl NEEDS FIXING.. what if 'svn' doesn't exist huh?
@@ -11,16 +19,9 @@ if test -e ".svn"; then
 	VERSION=${VERSION}.cvs${SVN_VERSION}
 fi
 
-AM_INIT_AUTOMAKE([ninja-engine], ${VERSION})
-AM_CONFIG_HEADER(config.h)
-
-case $target in
-	*cygwin )
-		WIN32="yes"
-	;;
+case $target_alias in
 	*mingw*)
 		WIN32="yes"
-		CXXFLAGS="$CXXFLAGS -mno-cygwin -DWIN32 -lmingw32" dnl --subsystem,windows"
 	;;
 	*)
 		WIN32="no"
@@ -28,11 +29,11 @@ case $target in
 esac
 
 if test "$WIN32" = "yes"; then
-	extra_CFLAGS_ninjas="-mwindows"
-	LDFLAGS="$LDFLAGS -lalleg-4.0.3 -lalleg_unsharable -lmingw32"
-else 
-	LDFLAGS="$LDFLAGS `allegro-config --libs`"
+	ninjas_LDFLAGS="$LDFLAGS -lalleg -lmingw32"
+	ninjas_CFLAGS="-mwindows"
 fi
+
+AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
 
 dnl ----------------------------------------
 dnl Additional include and library paths:
@@ -43,36 +44,43 @@ AC_ARG_WITH([extra-includes], AS_HELP_STRING([--with-extra-includes=DIR],[Add ex
   use_extra_includes=NO
 )
 if test -n "$use_extra_includes" && test "$use_extra_includes" != "NO"; then
-  ac_save_ifs=$IFS
-  IFS=':'
   for dir in $use_extra_includes; do
     extra_includes="$extra_includes -I$dir"
   done
-  IFS=$ac_save_ifs
 fi
 
 CXXFLAGS="$CXXFLAGS $extra_includes"
 
-AC_ARG_WITH(extra-libs, AS_HELP_STRING([--with-extra-libs=DIR],[Add extra library paths]), 
-  use_extra_libs=$withval,
+AC_ARG_WITH([extra-libs], AS_HELP_STRING([--with-extra-libs=DIR],[Add extra library paths]), 
+  use_extra_libs="$withval",
   use_extra_libs=NO
 )
 if test -n "$use_extra_libs" && test "$use_extra_libs" != "NO"; then
-   ac_save_ifs=$IFS
-   IFS=':'
    for dir in $use_extra_libs; do
      extra_libraries="$extra_libraries -L$dir"
    done
-   IFS=$ac_save_ifs
 fi
 
-LDFLAGS="$LDFLAGS $extra_libs"
+ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes"
+ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
+
+AC_SUBST(ninjas_CFLAGS)
+AC_SUBST(ninjas_LDFLAGS)
+
+LDFLAGS="$ninjas_LDFLAGS $extra_libraries"
+CFLAGS="$CXXFLAGS"
+
+AC_SUBST(LDFLAGS)
+
+# AC_SUBST(extra_includes)
+AC_SUBST(extra_libraries)
+
+dnl AC_SUBST(libs)
+dnl AC_SUBST(LIBS)
 
 dnl ------------------------------------------------------
 
-dnl AC_PROG_CC
-AC_PROG_CXX
-AC_PROG_INSTALL
+AM_CONFIG_HEADER(config.h)
 
 AC_OBJEXT
 AC_EXEEXT
