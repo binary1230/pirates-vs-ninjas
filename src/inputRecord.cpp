@@ -74,7 +74,7 @@ void InputRecord::Update() {
 }
 
 bool InputRecord::InitRecorder(char* filename) {
-				
+	
 	if (demofile) {
 		fprintf(stderr, "InputRecord: ERROR already saving demo file.\n");
 		return false;
@@ -88,7 +88,7 @@ bool InputRecord::InitRecorder(char* filename) {
 			return false;
 	}
 
-	fprintf(stderr, "InputRecord: Recording demo to file '%s'.\n");
+	fprintf(stderr, "InputRecord: Recording demo to file '%s'.\n", filename);
 
 	// write 'DEMO' header + game version number and some extra info
 	fprintf(demofile, "DEMO:ninja-engine saved demo file:%s:%s\n",
