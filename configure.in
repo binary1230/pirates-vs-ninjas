@@ -15,21 +15,24 @@ AM_INIT_AUTOMAKE([ninja-engine], ${VERSION})
 AM_CONFIG_HEADER(config.h)
 
 case $target in
-	*cygwin ) dnl Don't know if this one works, got it from clanlib
+	*cygwin )
 		WIN32="yes"
 		CXXFLAGS="$CXXFLAGS -mno-cygwin -DWIN32 --subsystem,windows"
 	;;
 	*mingw*)
 		WIN32="yes"
-    ;;
-  *)
+		CXXFLAGS="$CXXFLAGS -mno-cygwin -DWIN32 --subsystem,windows"
+	;;
+	*)
 		WIN32="no"
-    ;;
+	;;
 esac
 
 if test "$WIN32" = "yes"; then
 	extra_CFLAGS_ninjas="-mwindows"
-	extra_LDFLAGS_ninjas="-lalleg-4.0.3 -lalleg_unsharable"
+	LDFLAGS="$LDFLAGS -lalleg-4.0.3 -lalleg_unsharable"
+else 
+	LDFLAGS="$LDFLAGS `allegro-config --libs`"
 fi
 
 dnl ----------------------------------------
@@ -78,7 +81,6 @@ AC_EXEEXT
 AC_CHECK_HEADERS([allegro.h])
 
 # gen compiler args
-#AC_SUBST(SDL_CFLAGS)
 #AC_SUBST(SDL_LIBS)
 #AC_SUBST(SDL_DEFS)
 

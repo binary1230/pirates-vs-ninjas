@@ -3,7 +3,7 @@ bin_PROGRAMS = ninjas
 AM_CXXFLAGS = -Wall
 
 AM_LDFLAGS = -ggdb -lm
-ninjas_LDFLAGS = @AM_LDFLAGS@
+ninjas_LDFLAGS = @LDFLAGS@
 
 headers = \
 globals.h timer.h \
