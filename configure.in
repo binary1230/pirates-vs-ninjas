@@ -28,6 +28,8 @@ case $target_alias in
 	;;
 esac
 
+ninjas_LDFLAGS="$LDFLAGS `allegro-config --libs`"
+
 if test "$WIN32" = "yes"; then
 	ninjas_LDFLAGS="$LDFLAGS -lalleg -lmingw32"
 	ninjas_CFLAGS="-mwindows"
