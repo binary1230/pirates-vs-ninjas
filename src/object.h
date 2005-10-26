@@ -21,8 +21,6 @@ class Object : public GameBase {
 		BITMAP* bitmap;						// this object's sprite
 		bool bitmap_is_deleteable;	// whether to delete the sprite or not on deletion
 		
-		BITMAP* dst_bitmap;		// which bitmap to Draw() to 
-
 	public:
 		virtual bool Init(GameState* _game_state) = 0;
 		virtual void Shutdown() = 0;
@@ -34,7 +32,6 @@ class Object : public GameBase {
 																			// plus this offset.
 		
 		void SetBitmap(BITMAP* _bitmap);
-		void SetDestinationBitmap(BITMAP* _destination);
 		
 		void SetBitmapIsDeleteable(bool _is_deletable);
 		bool GetBitmapIsDeleteable();

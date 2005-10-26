@@ -1,5 +1,8 @@
 #include "object.h"
 
+// Putting this here is a nasty hack to avoid weird dependency loops
+#include "gameState.h"
+
 int Object::GetX() {
 	return x;
 }
@@ -34,15 +37,11 @@ void Object::Draw() {
 }
 
 void Object::DrawAtOffset(int _x, int _y) {	
-	draw_sprite(dst_bitmap, bitmap, x + _x, y + _y);
+	draw_sprite(game_state->GetDrawingSurface(), bitmap, x + _x, y + _y);
 }
 
 void Object::Update() {
 	// nothing to update for regular objects
-}
-
-void Object::SetDestinationBitmap(BITMAP* _dst_bitmap) {
-	dst_bitmap = _dst_bitmap;
 }
 
 void Object::SetBitmap(BITMAP* _bitmap) {
@@ -65,5 +64,5 @@ void Object::Delete() {
 }
 
 Object::Object() : 
-x(0), y(0), bitmap(NULL), bitmap_is_deleteable(false), dst_bitmap(NULL) {}
+x(0), y(0), bitmap(NULL), bitmap_is_deleteable(false)  {}
 Object::~Object() {}

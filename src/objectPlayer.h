@@ -13,9 +13,9 @@ using namespace std;
 class ObjectPlayer;
 
 #include "globals.h"
+#include "object.h"
 #include "input.h"
 #include "inputLiveHandler.h"
-#include "object.h"
 #include "force.h"
 #include "forceGravity.h"
 #include "forceInput.h"

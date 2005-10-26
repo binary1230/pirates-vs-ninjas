@@ -1,5 +1,19 @@
 #include "gameState.h"
 
+//! Get the drawing surface (effectively the screen)
+// THIS FUNCTION CAN'T BE INLINED (easily)
+BITMAP* GameState::GetDrawingSurface() { 
+	return window->GetDrawingSurface(); 
+};
+
+uint GameState::Width() {
+	return window->Width();
+}
+
+uint GameState::Height() {
+	return window->Height();
+}
+
 //! Initialize game systems - main function
 
 //! This is the first init function, it needs to initialize
@@ -27,13 +41,11 @@ int GameState::InitSystem() {
 		}
 			
 		objectFactory = new ObjectFactory();
-		if ( !objectFactory || objectFactory->Init(this, input) < 0 ) {
+		if ( !objectFactory || objectFactory->Init(this) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init objectFactory!\n");
 			return -1;
 		}
 					
-		objectFactory->SetDefaultDestinationBitmap(window->GetBackBuffer());
-
 		return 0;
 }
 

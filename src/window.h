@@ -5,7 +5,7 @@
 #include <allegro.h>
 #include <stdio.h>
 
-class Window;
+// class Window;
 
 #include "globals.h"
 #include "gameState.h"
@@ -16,7 +16,11 @@ class Window : public GameBase {
 		bool initialized;
 
 		uint width, height;
-		BITMAP* backbuf;
+
+		// For page flipping
+		BITMAP* page[2];
+		uint drawing_page;		// index of the page NOT being
+													// displayed (ok to draw on)
 		
 	public:
 		int Init(	GameState* _game_state, 
@@ -24,8 +28,11 @@ class Window : public GameBase {
 
 		void Shutdown();
 
-		inline BITMAP* GetBackBuffer() {return backbuf;};
+		inline BITMAP* GetDrawingSurface() {return page[drawing_page];};
 		void Flip();
+
+		inline uint Width() {return width;};
+		inline uint Height() {return height;};
 
 		Window();
 		~Window();

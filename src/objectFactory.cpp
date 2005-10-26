@@ -1,9 +1,5 @@
 #include "objectFactory.h"
 
-void ObjectFactory::SetInputHandler(BaseInput* handler) {
-	input = handler;
-}
-
 // XXX NASTY!! SO BADLY WRITTEN, CLEAN IT UP
 // break this up into smaller functions.. COME ON MORON!!X0r.
 Object* ObjectFactory::CreateObject(uint id) {
@@ -27,7 +23,6 @@ Object* ObjectFactory::CreateObject(uint id) {
 					set_palette(pal);
 
 					bg->SetBitmapIsDeleteable(true);
-					bg->SetDestinationBitmap(default_destination_bitmap);
 					bg->SetBitmap(bmp);
 					bg->SetXY(0,0);
 					
@@ -63,7 +58,6 @@ Object* ObjectFactory::CreateObject(uint id) {
 					set_palette(pal);
 
 					rblock->SetBitmapIsDeleteable(true);
-					rblock->SetDestinationBitmap(default_destination_bitmap);
 					rblock->SetBitmap(bmp);
 					rblock->SetXY(Rand(0, SCREEN_SIZE_X), Rand(0, SCREEN_SIZE_Y));
 					rblock->SetTheta(Rand(0,360));
@@ -100,9 +94,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 
 					set_palette(pal);
 
-					player->SetInputHandler(input);
 					player->SetBitmapIsDeleteable(true);
-					player->SetDestinationBitmap(default_destination_bitmap);
 					player->SetBitmap(bmp);
 					
 				} else {
@@ -137,22 +129,13 @@ void ObjectFactory::DeleteObject(Object* obj) {
 	delete obj;
 }
 
-int ObjectFactory::Init(GameState* _game_state, BaseInput* handler) {
+int ObjectFactory::Init(GameState* _game_state) {
 	SetGameState(_game_state);
-	SetInputHandler(handler);
 	return 0;
-}
-
-void ObjectFactory::SetDefaultDestinationBitmap(BITMAP* bmp) {
-	default_destination_bitmap = bmp;
 }
 
 void ObjectFactory::Shutdown() {
 }
 
-ObjectFactory::ObjectFactory() : 
-default_destination_bitmap(NULL), input(NULL) {
-}
-
-ObjectFactory::~ObjectFactory() {
-}
+ObjectFactory::ObjectFactory() {}
+ObjectFactory::~ObjectFactory() {} 

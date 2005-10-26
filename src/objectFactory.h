@@ -18,18 +18,13 @@ class ObjectFactory;
 
 class ObjectFactory : GameBase {
 	protected:
-		BITMAP* default_destination_bitmap;
-		BaseInput* input;
 
 	public:
-		int Init(GameState* _game_state, BaseInput* handler);
+		int Init(GameState* _game_state);
 		void Shutdown();
 
 		Object* CreateObject(uint id);
 		void DeleteObject(Object*);
-	  
-		void SetDefaultDestinationBitmap(BITMAP* bmp);
-		void SetInputHandler(BaseInput* handler);
 		
 		ObjectFactory();
 		~ObjectFactory();

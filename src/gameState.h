@@ -11,9 +11,7 @@ using namespace std;
 class GameState;
 
 #include "globals.h"
-
 #include "gameOptions.h"
-#include "window.h"
 #include "timer.h"
 #include "input.h"
 #include "inputLiveHandler.h"
@@ -21,6 +19,9 @@ class GameState;
 #include "inputPlayback.h"
 #include "object.h"
 #include "objectFactory.h"
+#include "window.h"
+
+class Window;
 
 //! Represents the current state of the game.
 
@@ -78,13 +79,21 @@ class GameState {
 		int RunGame(GameOptions *_options);
 
 		// accessors
-		inline BaseInput* 		GetInput() 					{ return input; };
-		inline Window* 				GetWindow() 				{ return window; };
+		// inline BaseInput* 		GetInput() 					{ return input; };
+		// inline Window* 				GetWindow() 				{ return window; };
 		inline GameOptions* 	GetGameOptions() 		{ return options; };
 		inline ObjectFactory*	GetObjectFactory()	{ return objectFactory; };
 
 		inline void SetRandomSeed(int val)		{ random_seed = val; srand(val); };
 		inline int GetRandomSeed()						{ return random_seed; };
+
+		//! Get status of a key
+		inline bool GetKey(uint which_key)				{ return input->Key(which_key); };
+
+		//! Get drawing surface (essentially the screen)
+		BITMAP* GetDrawingSurface();
+		uint Width();
+		uint Height();
 
 		GameState();
 		~GameState();
