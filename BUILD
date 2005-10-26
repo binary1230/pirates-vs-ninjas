@@ -1,6 +1,9 @@
-Currently you can build for win32 or linux
+Currently you can build for windows, linux, or mac
+You can also build the windows packages under linux (and probably mac)
 
-Allegro dev packages are required
+NOTE: Allegro dev packages are required
+
+OUT OF DATE, CHECK THE WIKI
 
 ---------------------------
 To Build from Subversion
@@ -28,6 +31,24 @@ untar everything somewhere (say ~/ninjas)
  make -f Makefile.mgw
  cd ..
  [copy data/, ninjas.exe, and alleg40.dll for distribution]
+
+----------------------------------------------
+WINDOWS BUILD (native)
+----------------------------------------------
+TODO - write instructions.  easy way would
+be to copy Makefile.mgw and modify it, everything
+should be the same except for the compiler name.
+
+----------------------------------------------
+MAC OSX (10.3 [and others??])
+----------------------------------------------
+
+to compile:
+ ./configure 
+ make
+
+to run:
+ src/ninjas
 
 ----------------------------------------------
 SUBVERSION (CVS) Notes

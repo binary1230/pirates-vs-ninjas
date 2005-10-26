@@ -45,7 +45,7 @@ dnl ----------------------------------------
 dnl Additional include and library paths:
 dnl ----------------------------------------
 
-AC_ARG_WITH([extra-includes], AS_HELP_STRING([--with-extra-includes=DIR],[Add extra include paths]),
+AC_ARG_WITH([extra-includes], AC_HELP_STRING([--with-extra-includes=DIR],[Add extra include paths]),
   use_extra_includes="$withval",
   use_extra_includes=NO
 )
@@ -57,7 +57,7 @@ fi
 
 # CXXFLAGS="$CXXFLAGS $extra_includes"
 
-AC_ARG_WITH([extra-libs], AS_HELP_STRING([--with-extra-libs=DIR],[Add extra library paths]), 
+AC_ARG_WITH([extra-libs], AC_HELP_STRING([--with-extra-libs=DIR],[Add extra library paths]), 
   use_extra_libs="$withval",
   use_extra_libs=NO
 )
