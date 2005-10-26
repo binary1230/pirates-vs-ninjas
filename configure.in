@@ -1,9 +1,11 @@
+dnl LARGE PARTS of this configure.in stolen from Clanlib configure.ac
 
 AC_INIT(src/main.cpp)
 
 VERSION="0.1-beta1"
 
 dnl Test for subversion presence, if so, use the subversion revision number
+dnl NEEDS FIXING.. what if 'svn' doesn't exist huh?
 if test -e ".svn"; then
 	SVN_VERSION=`svn info | grep Revision | cut -f2 -d ' '`
 	VERSION=${VERSION}.cvs${SVN_VERSION}
@@ -12,18 +14,61 @@ fi
 AM_INIT_AUTOMAKE([ninja-engine], ${VERSION})
 AM_CONFIG_HEADER(config.h)
 
-# <HACK>
-# Dont know if this part is the way to do this
-# checks if we are cross compiling, then sets our LDFLAGS correctly
-# this is for MINGW32 only
-if test "${CROSS_COMPILE}" = "y"; then
-	echo "FIXME: Evil crosscompiling hack.  See configure.in"
-  AM_LDFLAGS="-ggdb -lalleg --subsystem,windows -lm -mno-cygwin -lstdc++"
-	AC_SUBST(AM_LDFLAGS)
-fi
-# </HACK>
+case $target in
+	*cygwin ) dnl Don't know if this one works, got it from clanlib
+		WIN32="yes"
+		CXXFLAGS="$CXXFLAGS -mno-cygwin -DWIN32 --subsystem,windows"
+	;;
+	*mingw*)
+		WIN32="yes"
+    ;;
+  *)
+		WIN32="no"
+    ;;
+esac
 
-AC_PROG_CC
+if test "$WIN32" = "yes"; then
+	extra_CFLAGS_ninjas="-mwindows"
+	extra_LDFLAGS_ninjas="-lalleg-4.0.3 -lalleg_unsharable"
+fi
+
+dnl ----------------------------------------
+dnl Additional include and library paths:
+dnl ----------------------------------------
+
+AC_ARG_WITH([extra-includes], AS_HELP_STRING([--with-extra-includes=DIR],[Add extra include paths]),
+  use_extra_includes="$withval",
+  use_extra_includes=NO
+)
+if test -n "$use_extra_includes" && test "$use_extra_includes" != "NO"; then
+  ac_save_ifs=$IFS
+  IFS=':'
+  for dir in $use_extra_includes; do
+    extra_includes="$extra_includes -I$dir"
+  done
+  IFS=$ac_save_ifs
+fi
+
+CXXFLAGS="$CXXFLAGS $extra_includes"
+
+AC_ARG_WITH(extra-libs, AS_HELP_STRING([--with-extra-libs=DIR],[Add extra library paths]), 
+  use_extra_libs=$withval,
+  use_extra_libs=NO
+)
+if test -n "$use_extra_libs" && test "$use_extra_libs" != "NO"; then
+   ac_save_ifs=$IFS
+   IFS=':'
+   for dir in $use_extra_libs; do
+     extra_libraries="$extra_libraries -L$dir"
+   done
+   IFS=$ac_save_ifs
+fi
+
+LDFLAGS="$LDFLAGS $extra_libs"
+
+dnl ------------------------------------------------------
+
+dnl AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
 

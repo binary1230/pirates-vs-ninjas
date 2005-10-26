@@ -2,7 +2,7 @@ bin_PROGRAMS = ninjas
 
 AM_CXXFLAGS = -Wall
 
-AM_LDFLAGS = -ggdb `allegro-config --libs` -lm
+AM_LDFLAGS = -ggdb -lm
 ninjas_LDFLAGS = @AM_LDFLAGS@
 
 headers = \
