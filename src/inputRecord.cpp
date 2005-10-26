@@ -15,7 +15,10 @@ int InputRecord::Init(GameState* _game_state, char* _demo_file) {
 	
 	LoadDefaultKeyMappings();
 
-	return InitRecorder(_demo_file);
+	if (InitRecorder(_demo_file))
+		return 0;
+	else 
+		return -1;
 }
 
 void InputRecord::Shutdown() {

@@ -6,7 +6,10 @@ int InputPlayback::Init(GameState* _game_state, char* _demo_file) {
 	LoadDefaultKeyMappings();
 
 	if (_demo_file)
-		return InitPlayback(_demo_file);
+		if( InitPlayback(_demo_file) )
+			return 0;
+		else 
+			return -1;
 	else 
 		return 0;
 }

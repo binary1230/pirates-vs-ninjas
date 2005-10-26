@@ -38,6 +38,7 @@ int GameState::InitSystem() {
 
 		if (InitInput() == -1) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init input subsystem!\n");
+			return -1;
 		}
 			
 		objectFactory = new ObjectFactory();
@@ -61,8 +62,7 @@ int GameState::InitInput() {
 	else
 		input = new InputLive();
 
-	if ( !input || !input->Init(this, options->GetDemoFilename()) ) {
-		fprintf(stderr, "ERROR: InitSystem: failed to init input!\n");
+	if ( !input || !input->Init(this, options->GetDemoFilename()) < 0 ) {
 		return -1;
 	}
 
