@@ -18,6 +18,7 @@ class GameState;
 #include "input.h"
 #include "inputLiveHandler.h"
 #include "inputRecord.h"
+#include "inputPlayback.h"
 #include "object.h"
 #include "objectFactory.h"
 

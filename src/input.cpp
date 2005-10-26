@@ -21,6 +21,10 @@ void BaseInput::ClearKeys(int* key_buffer) {
 	}
 }
 
+bool BaseInput::Key(uint gameKey) {
+	return game_key[gameKey];
+}
+
 void BaseInput::LoadDefaultKeyMappings() {
 	fprintf(stderr, "BaseInput: Using default key mappings!\n");
 	

@@ -20,7 +20,6 @@ class InputLive;
 class InputLive : public BaseInput {
 	
 	protected:
-		bool InitRecorder(char* filename) {return NotSupported();}
 	
 	public:
 		int Init(GameState* _game_state, char* _demo_file = NULL);

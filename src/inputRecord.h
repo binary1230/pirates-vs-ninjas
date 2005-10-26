@@ -37,7 +37,6 @@ class InputRecord : public BaseInput {
 		void Shutdown();
 
 		void Update();
-		bool Key(uint gameKey);
 		
 		void BeginRecording();
 		void EndRecording();

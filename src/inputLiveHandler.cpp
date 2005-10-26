@@ -21,10 +21,6 @@ void InputLive::Shutdown() {
 	remove_keyboard();
 }
 
-bool InputLive::Key(uint gameKey) {
-	return game_key[gameKey];
-}
-
 //! Input update (freeze state of input)
 
 //! freeze the current state of the input into gamekey[].

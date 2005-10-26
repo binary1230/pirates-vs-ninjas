@@ -1,6 +1,13 @@
 #include "inputRecord.h"
 
 int InputRecord::Init(GameState* _game_state, char* _demo_file) {
+
+	if (!_demo_file) {
+		fprintf(stderr, "InputRecord: ERROR: No demo filename passed. "
+										"Required for input recording.\n");
+		return -1;
+	} 
+				
 	SetGameState(_game_state);
 				
 	install_mouse();
@@ -8,10 +15,7 @@ int InputRecord::Init(GameState* _game_state, char* _demo_file) {
 	
 	LoadDefaultKeyMappings();
 
-	if (_demo_file)
-		return InitRecorder(_demo_file);
-	else 
-		return 0;
+	return InitRecorder(_demo_file);
 }
 
 void InputRecord::Shutdown() {
@@ -22,10 +26,6 @@ void InputRecord::Shutdown() {
 		fprintf(stderr, "WARN: closing demofile (currently in progress)");
 		fclose(demofile);
 	}
-}
-
-bool InputRecord::Key(uint gameKey) {
-	return game_key[gameKey];
 }
 
 //! Update the state of the input
@@ -39,6 +39,7 @@ void InputRecord::Update() {
 	uint i;
 	bool keys_changed = false;
 	
+	// TODO: check to make sure this doesn't get too big.
 	frame_counter++;
 	
 	for (i = 0; i < GAMEKEY_COUNT; i++) {
@@ -51,13 +52,15 @@ void InputRecord::Update() {
 		else 
 			game_key[i] = 0;
 
-		// Output any differences between the old and new to a file
+		// Output any differences between the old keys and the new keys to a file
 		if ( demofile && (old_key[i] != game_key[i]) ) {
 				if (!keys_changed) {
 						fprintf(demofile, "%u", frame_counter);
 						keys_changed = true;
 				}
 
+				// remember, we are writing out GAMEKEYs not REAL keys.
+				// e.g. KEY_JUMP, not KEY_SPACEBAR
 				fprintf(demofile, " %u %u", i, game_key[i]);
 		}
 	}
@@ -68,7 +71,7 @@ void InputRecord::Update() {
 }
 
 bool InputRecord::InitRecorder(char* filename) {
-	
+				
 	if (demofile) {
 		fprintf(stderr, "InputRecord: ERROR already saving demo file.\n");
 		return false;
@@ -82,26 +85,27 @@ bool InputRecord::InitRecorder(char* filename) {
 			return false;
 	}
 
-	ClearKeys();
-	ClearKeys(old_key);
-
+	// write 'DEMO' header + game version number and some extra info
+	fprintf(demofile, "DEMO:ninja-engine saved demo file:%s:%s\n",
+										VERSION_STRING, ALLEGRO_PLATFORM_STR);
+	
+	// write the current random seed
+	fprintf(demofile, "%i\n", GetGameState()->GetRandomSeed() );
+	
 	return true;
 }
 
 void InputRecord::BeginRecording()	{
 				
-	ClearKeys();
-	ClearKeys(old_key);
-
 	if (!demofile) {
 		fprintf(stderr,	"InputRecord: ERROR InitRecorder() not called yet!\n");
 		return;
 	}
 	
-	frame_counter = 0;
+	ClearKeys();
+	ClearKeys(old_key);
 
-	// write 4 byte 'DEMO' header and write the random seed
-	fprintf(demofile, "DEMO\n%i\n", GetGameState()->GetRandomSeed() );
+	frame_counter = 0;
 }
 
 void InputRecord::EndRecording()	{

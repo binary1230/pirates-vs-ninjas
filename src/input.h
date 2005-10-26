@@ -69,9 +69,6 @@ class BaseInput : public GameBase {
 		//! Zero out the keyboard buffer
 		void ClearKeys(int *key_buffer = NULL);
 		
-		//! RECORD: Initialize recording engine
-		virtual bool InitRecorder(char* filename) = 0;
-		
 	public:
 		//! Init the input system
 		virtual int Init(GameState* _game_state, char* _demo_file = NULL) = 0;
@@ -79,11 +76,11 @@ class BaseInput : public GameBase {
 		//! Shutdown the input system
 		virtual void Shutdown() = 0;
 
-		//! Update the internal cache of inputs (mice/keys)
+		//! Update the inputs (mice/keys)
 		virtual void Update() = 0;
 		
-		//! Get the status of a key (use 'enum GameKeys')
-		virtual bool Key(uint gameKey) = 0;
+		//! Get the status of a key 
+		bool Key(uint gameKey);
 
 		//! Get the mouse X coordinate
 		// virtual int MouseX() = 0;
