@@ -61,7 +61,7 @@ int GameState::InitInput() {
 	else
 		input = new InputLive();
 
-	if ( !input || input->Init(this, options->GetDemoFilename()) < 0 ) {
+	if ( !input || !input->Init(this, options->GetDemoFilename()) ) {
 		fprintf(stderr, "ERROR: InitSystem: failed to init input!\n");
 		return -1;
 	}
