@@ -43,13 +43,10 @@ int GameState::InitInput() {
 	if ( options->RecordDemo() )
 		input = new InputRecord();
 	
-	else if (options->PlaybackDemo())
-		// init playback stuff
-		//input = new InputPlayer();	
-		; // filler
+	else if ( options->PlaybackDemo() )
+		input = new InputPlayback();
 	
 	else
-		// init regular stuff
 		input = new InputLive();
 
 	if ( !input || input->Init(this, options->GetDemoFilename()) < 0 ) {
@@ -118,11 +115,15 @@ int GameState::RunGame(GameOptions* _options) {
 			// XXX SHOULD NOT BE option-> should be input->RecordDemo()
 			if (options->RecordDemo())
 				input->BeginRecording();
+			else if (options->PlaybackDemo())
+				input->BeginPlayback();
 			
 			MainLoop();
 
 			if (options->RecordDemo())
 				input->EndRecording();
+			else if (options->PlaybackDemo())
+				input->EndPlayback();
 
 		} else {
 			fprintf(stderr, "ERROR: Failed to init game!\n");

@@ -57,8 +57,9 @@ bool InputPlayback::InitPlayback(char* filename) {
 	frame_counter = 0;
 	
 	ClearKeys();
+	ClearKeys(next_frame_data);
 	GetNextFrameData();
-	
+
 	return error;
 }
 
@@ -82,7 +83,7 @@ void InputPlayback::GetNextFrameData() {
 	uint next_frame;
 	uint key, value;
 	uint count = 0;
-	
+
 	if (!demofile || at_eof)
 		return;
 	
@@ -104,19 +105,29 @@ void InputPlayback::GetNextFrameData() {
 		error = true;
 	else
 		next_frame_num = next_frame;
-		
+			
 	// read each key,value pair,
 	// overwrite existing values in next_data_
 	count = 2;
 	while (!error && count == 2 && s) {
 						
+		s++;	// skip over current space
 		count = sscanf(s, "%u %u", &key, &value);
+		fprintf(stderr, "XXX: got '%u %u', "
+										"count=%u, s='%s'.\n", key, value, count, s);
 			
 		if (count == 2) {
 			next_frame_data[key] = value;
-			s = strchr(s, ' ');	// go to next space
+
+			// skip 2 spaces
+			s = strchr(s, ' ');
+			if (s) 
+				s = strchr(s+1, ' ');	// will be NULL at end of the line
+			else
+				count = 1;						// fall through to error handler
+		}
 			
-		} else if (count == 1) {
+		if (count == 1) {
 			// total badness.. we need to handle this better,
 			// but just DIE right here.
 			fprintf(stderr, "HUGE HUGE INTERNAL ERROR: Could only read one value\n"
@@ -135,8 +146,12 @@ void InputPlayback::Update() {
 	frame_counter++;
 
 	if (frame_counter == next_frame_num && !at_eof) {
+			fprintf(stderr, "-- UPDATE-before: frame_counter=%u, next=%u\n", 
+											frame_counter, next_frame_num);
 			UseNextFrameData();	
 			GetNextFrameData();
+			fprintf(stderr, "-- UPDATE-after: frame_counter=%u, next=%u\n", 
+											frame_counter, next_frame_num);
 	}	
 }
 
