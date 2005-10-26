@@ -9,7 +9,7 @@ PATH_TO_WIN32_LIBS = /home/dcerquet/lib/i586-mingw32msvc/
 
 GXX = i586-mingw32msvc-gcc
 GXX = i586-mingw32msvc-g++
-CFLAGS = -c -Wall -g -I$(PATH_TO_WIN32_INCLUDES)
+CFLAGS = -c -Wall -g -I$(PATH_TO_WIN32_INCLUDES) -I..
 LDFLAGS = -ggdb -lalleg --subsystem,windows -lm -mno-cygwin \
 -L$(PATH_TO_WIN32_LIBS)
 			
@@ -33,3 +33,4 @@ clean:
 target: $(OBJS)
 	$(GXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
 	mv $(TARGET) ..
+

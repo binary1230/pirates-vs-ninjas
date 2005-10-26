@@ -30,10 +30,12 @@ case $target_alias in
 	;;
 esac
 
-ninjas_LDFLAGS="$LDFLAGS `allegro-config --libs`"
+# ninjas_LDFLAGS="$LDFLAGS `allegro-config --libs`"
+LIBS="$LIBS `allegro-config --libs`"
+
 
 if test "$WIN32" = "yes"; then
-	ninjas_LDFLAGS="$LDFLAGS -lalleg -lmingw32"
+	LIBS="$LDFLAGS -lalleg -lmingw32"
 	ninjas_CFLAGS="-mwindows"
 fi
 
@@ -68,10 +70,12 @@ fi
 ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes"
 ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
 
+LDFLAGS="$extra_libraries"
+
 AC_SUBST(ninjas_CXXFLAGS)
 AC_SUBST(ninjas_LDFLAGS)
 
-# LDFLAGS="$ninjas_LDFLAGS $extra_libraries"
+# LIBS="$extra_libraries"
 # CFLAGS="$CXXFLAGS"
 
 # AC_SUBST(LDFLAGS)

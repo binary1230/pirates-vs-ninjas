@@ -66,4 +66,7 @@ NEW CROSS COMPILE (up to date sorta)
 MORE DOCS LATER, FOR NOW TRY THIS
 ------------------------------------
 
+you have to cross compile allegro first.
+THEN:
+
 ./configure --target=i586-mingw32msvc --host=i586-mingw32msvc --build=linux-i386 --with-extra-includes=/home/dcerquet/i586/include --with-extra-libs=/home/dcerquet/lib/i586-mingw32msvc/

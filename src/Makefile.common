@@ -1,5 +1,20 @@
 SRCS = \
-main.cpp gameOptions.cpp \
-gameState.cpp window.cpp timer.cpp input.cpp inputLiveHandler.cpp \
-objectFactory.cpp object.cpp objectRadiusBlock.cpp objectPlayer.cpp \
-vec.cpp force.cpp forceGravity.cpp forceInput.cpp
+force.cpp \
+forceGravity.cpp \
+forceInput.cpp \
+gameBase.cpp \
+gameOptions.cpp \
+gameState.cpp \
+input.cpp \
+inputLiveHandler.cpp \
+inputPlayback.cpp \
+inputRecord.cpp \
+main.cpp \
+object.cpp \
+objectBackground.cpp \
+objectFactory.cpp \
+objectPlayer.cpp \
+objectRadiusBlock.cpp \
+timer.cpp \
+vec.cpp \
+window.cpp 
