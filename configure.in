@@ -17,11 +17,10 @@ AM_CONFIG_HEADER(config.h)
 case $target in
 	*cygwin )
 		WIN32="yes"
-		CXXFLAGS="$CXXFLAGS -mno-cygwin -DWIN32 --subsystem,windows"
 	;;
 	*mingw*)
 		WIN32="yes"
-		CXXFLAGS="$CXXFLAGS -mno-cygwin -DWIN32 --subsystem,windows"
+		CXXFLAGS="$CXXFLAGS -mno-cygwin -DWIN32 -lmingw32" dnl --subsystem,windows"
 	;;
 	*)
 		WIN32="no"
@@ -30,7 +29,7 @@ esac
 
 if test "$WIN32" = "yes"; then
 	extra_CFLAGS_ninjas="-mwindows"
-	LDFLAGS="$LDFLAGS -lalleg-4.0.3 -lalleg_unsharable"
+	LDFLAGS="$LDFLAGS -lalleg-4.0.3 -lalleg_unsharable -lmingw32"
 else 
 	LDFLAGS="$LDFLAGS `allegro-config --libs`"
 fi
