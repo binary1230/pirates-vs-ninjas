@@ -53,9 +53,11 @@ int Window::Init(	GameState* _game_state,
 
 // draws the backbuffer to the screen and erases the backbuffer
 void Window::Flip() {
-	/*vsync();
+	/*
 	blit(backbuf, screen, 0, 0, 0, 0, width, height);
 	clear_bitmap(backbuf);*/
+	
+	vsync();
 	show_video_bitmap(page[drawing_page]);
 	
 	if (drawing_page == 1)
