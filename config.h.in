@@ -48,8 +48,14 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* Defined if building for Darwin */
+#undef PLATFORM_DARWIN
+
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
+
+/* Defined if we are building from subversion */
+#undef SUBVERSION_BUILD
 
 /* Version number of package */
 #undef VERSION

@@ -6,7 +6,12 @@ dnl LARGE PARTS of this configure.in stolen from Clanlib configure.ac
 
 AC_INIT(src/main.cpp)
 
-VERSION="0.1-beta1"
+VERSION_MAJOR="0"
+VERSION_MINOR="1"
+VERSION_FIX="0"
+VERSION_EXTRA="-rc1"
+
+VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_FIX$VERSION_EXTRA"
 
 AC_PROG_CXX
 AC_PROG_INSTALL
@@ -14,13 +19,26 @@ AC_PROG_INSTALL
 AC_LANG(C++)
 
 dnl XXX todo:
-dnl AC_PATH_PROG(SVN, svn, no)
 
 dnl Test for subversion presence, if so, use the subversion revision number
-dnl NEEDS FIXING.. what if 'svn' doesn't exist huh?
 if test -e ".svn"; then
-	SVN_VERSION=`svn info | grep Revision | cut -f2 -d ' '`
-	VERSION=${VERSION}.cvs${SVN_VERSION}
+	AC_PATH_PROG(WHICH_SVN, svn, no)
+	if test "$WHICH_SVN" != "no"; then
+		SVN_VERSION=`svn info | grep Revision | cut -f2 -d ' '`
+		VERSION="$VERSION-svn$SVN_VERSION"
+		AC_DEFINE([SUBVERSION_BUILD], [], [Defined if we are building from subversion])
+	fi
+fi
+
+dnl Test if we're running on Mac, if we are, we need a tiny bit
+dnl of MAC carbon code for the package
+dnl IS THIS A HACK?
+AC_PATH_PROG(WHICH_UNAME, uname, no)
+if test "$WHICH_UNAME"; then
+	OUR_PLATFORM=`uname -s`
+	if test "$OUR_PLATFORM" = "Darwin"; then
+		AC_DEFINE([PLATFORM_DARWIN], [], [Defined if building for Darwin])
+	fi
 fi
 
 AM_INIT_AUTOMAKE([ninja-engine], ${VERSION})
@@ -36,7 +54,6 @@ esac
 
 # ninjas_LDFLAGS="$LDFLAGS `allegro-config --libs`"
 LIBS="$LIBS `allegro-config --libs`"
-
 
 dnl XXXX CROSS COMPILING
 if test "$WIN32" = "yes"; then

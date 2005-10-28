@@ -16,6 +16,10 @@ class ObjectFactory;
 
 #include "gameBase.h"
 
+#include "platform.h"
+
+// THIS CLASS IS BAD.
+// It will be rewritten, for now it JUST WORKS.
 class ObjectFactory : GameBase {
 	protected:
 

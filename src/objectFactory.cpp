@@ -2,6 +2,8 @@
 
 // XXX NASTY!! SO BADLY WRITTEN, CLEAN IT UP
 // break this up into smaller functions.. COME ON MORON!!X0r.
+// ALSO, tons of memory leaks.  We will break this thing down
+//  For now it 'just works'
 Object* ObjectFactory::CreateObject(uint id) {
 	
 	Object* new_obj = NULL;
@@ -16,7 +18,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 			if ( bg && bg->Init(GetGameState()) ) {
 							
 				PALETTE pal;
-				BITMAP* bmp = load_bitmap("data/back.tga", pal);
+				BITMAP* bmp = load_bitmap(get_correct_path("data/back.tga"), pal);
 				
 				if (bmp) {
 
@@ -51,7 +53,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 			if ( rblock && rblock->Init(GetGameState()) ) {
 							
 				PALETTE pal;
-				BITMAP* bmp = load_bitmap("data/miroku.tga", pal);
+				BITMAP* bmp = load_bitmap(get_correct_path("data/miroku.tga"), pal);
 				
 				if (bmp) {
 
@@ -88,7 +90,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 			if ( player && player->Init(GetGameState()) ) {
 							
 				PALETTE pal;
-				BITMAP* bmp = load_bitmap("data/kenshin.tga", pal);
+				BITMAP* bmp = load_bitmap(get_correct_path("data/kenshin.tga"), pal);
 				
 				if (bmp) {
 

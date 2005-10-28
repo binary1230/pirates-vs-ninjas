@@ -23,7 +23,7 @@ PROJECT_NAME           = ninja-engine
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 0.1-beta1.cvs89
+PROJECT_NUMBER         = 0.1.0-rc1-svn90
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
