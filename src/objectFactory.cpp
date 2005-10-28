@@ -29,7 +29,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 					bg->SetXY(0,0);
 					
 				} else {
-					fprintf(stderr, "ObjectFactory: Failed to load Player's bitmap.\n");
+					fprintf(stderr, "ObjectFactory: Failed to load Player's bitmap - %s.\n", get_correct_path("data/back.tga"));
 					if (bg) {
 							free(bg);
 							bg = NULL;
@@ -66,7 +66,7 @@ Object* ObjectFactory::CreateObject(uint id) {
 					rblock->SetRadius(Rand(20,300));
 					
 				} else {
-					fprintf(stderr, "ObjectFactory: Failed to load Player's bitmap.\n");
+					fprintf(stderr, "ObjectFactory: Failed to load Player's bitmap - %s.\n", get_correct_path("data/back.tga"));
 					if (rblock) {
 							free(rblock);
 							rblock = NULL;
