@@ -23,4 +23,4 @@ timer.cpp vec.cpp window.cpp \
 $(headers)
 
 # EXTRA_DIST = dir1 dir2
-# EXTRA_DIST = Doxygen
+EXTRA_DIST = Doxyfile Doxyfile.in

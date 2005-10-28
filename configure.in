@@ -1,3 +1,7 @@
+dnl CROSS COMPILING - if you are looking in here to mess with cross
+dnl compiling stuff, scroll down to where it says XXXX CROSS COMPILING
+dnl see BUILD or the Wiki for more info
+
 dnl LARGE PARTS of this configure.in stolen from Clanlib configure.ac
 
 AC_INIT(src/main.cpp)
@@ -34,10 +38,15 @@ esac
 LIBS="$LIBS `allegro-config --libs`"
 
 
+dnl XXXX CROSS COMPILING
 if test "$WIN32" = "yes"; then
+	dnl you can try editing these 2 lines if cross compile stuff isn't working
+	dnl DON'T FORGET to re-run ./autogen.sh when you are done editing here
+	dnl also, double check your cross-configure.sh
 	LIBS="$LDFLAGS -lalleg -lmingw32"
 	ninjas_CFLAGS="-mwindows"
 fi
+dnl END CROSS COMPILING WEIRDNESS
 
 AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
 
@@ -99,4 +108,4 @@ AC_CHECK_HEADERS([allegro.h])
 #AC_SUBST(SDL_LIBS)
 #AC_SUBST(SDL_DEFS)
 
-AC_OUTPUT(Makefile src/Makefile)
+AC_OUTPUT(Makefile src/Makefile src/Doxyfile)

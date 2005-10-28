@@ -10,6 +10,6 @@ else
 fi
 
 echo "-- autoheader.. " && 		autoheader && \
-echo "-- autoconf.." && 				autoconf && \
 echo "-- automake.." && 				automake --add-missing --copy && \
+echo "-- autoconf.." && 				autoconf && \
 echo "Done."
