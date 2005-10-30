@@ -13,4 +13,7 @@ dist_macosx: $(DISTFILES)
 	cp -r $(EXTRA_DATA) dist/darwin/ninjas.app/Resources
 
 dist_win32: $(DISTFILES)
-	echo "yes."
+	echo "COMING SOON - will package us into a nice .zip file."
+
+doc: src/Doxyfile
+	cd src && doxygen
