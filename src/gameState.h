@@ -20,6 +20,7 @@ class GameState;
 #include "object.h"
 #include "objectFactory.h"
 #include "window.h"
+#include "force.h"
 
 class Window;
 
@@ -49,6 +50,9 @@ class GameState {
 
 		//! Collection of all drawable objects
 		vector<Object*> objects;
+
+		//! Collection of forces
+		vector<Force*> forces;
 	
 		//! Set this to TRUE to exit the game 
 		bool exit_game;

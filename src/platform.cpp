@@ -3,6 +3,7 @@
 
 #include "platform.h"
 
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -45,7 +46,7 @@ char* get_correct_path(const char* filename) {
 		return CFStringGetCStringPtr(cfStr, CFStringGetSystemEncoding());
 	}
 #else
-	char* get_current_working_dir() {
+	const char* get_current_working_dir() {
 		return "";
 	}
 #endif
