@@ -17,3 +17,6 @@ dist_win32: $(DISTFILES)
 
 doc: src/Doxyfile
 	cd src && doxygen
+
+test: $(DISTFILES)
+	src/ninjas

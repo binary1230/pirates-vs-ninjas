@@ -17,10 +17,10 @@ class PhysSimulation;
 class PhysSimulation : GameBase {
 		protected:		
 			//! Collection of all drawable objects
-			vector<Object*> objects;
+			ObjectList objects;
 
 			//! Collection of forces
-			vector<Force*> forces;
+			ForceList forces;
 		
 			//! Creates new objects
 			ObjectFactory *objectFactory;

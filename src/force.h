@@ -5,8 +5,13 @@
 #ifndef FORCE_H
 #define FORCE_H
 
+#include <vector>
+using namespace std;
+
 class Force;
 class GameState;
+
+typedef vector<Force*> ForceList;
 
 #include "globals.h"
 #include "gameBase.h"
@@ -20,5 +25,6 @@ class Force : public GameBase {
 		Force();
 		virtual ~Force();
 };
+
 
 #endif // FORCE_H

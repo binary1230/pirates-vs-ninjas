@@ -9,6 +9,10 @@ class Object;
 
 #include <allegro.h>
 #include <stdio.h>
+#include <vector>
+using namespace std;
+
+typedef vector<Object*> ObjectList;
 
 #include "globals.h"
 #include "gameBase.h"
