@@ -1,4 +1,5 @@
 #include "gameOptions.h"
+#include "basename.h"
 
 void GameOptions::PrintBanner() {
 		fprintf(stderr, 
@@ -10,6 +11,7 @@ void GameOptions::PrintBanner() {
 }
 
 void GameOptions::PrintOptions(char* arg0) {
+	arg0 = basename(arg0);
 	if (!show_help) {
 		fprintf(stderr, "type '%s -h' for more options..\n\n", arg0);
 	} else {
