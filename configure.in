@@ -31,8 +31,8 @@ if test -e ".svn"; then
 fi
 
 dnl Test if we're running on Mac, if we are, we need a tiny bit
-dnl of MAC carbon code for the package
-dnl IS THIS A HACK?
+dnl of MAC carbon code for the package.  (this needs to be updated
+dnl if we ever find a way to cross compile FROM linux TO darwin)
 AC_PATH_PROG(WHICH_UNAME, uname, no)
 if test "$WHICH_UNAME"; then
 	OUR_PLATFORM=`uname -s`

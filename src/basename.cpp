@@ -14,6 +14,8 @@ Behavior is undefined if the pathname ends in a directory separator.
 
 */
 
+#include <ctype.h>
+
 #ifndef DIR_SEPARATOR
 #define DIR_SEPARATOR '/'
 #endif
@@ -39,7 +41,7 @@ char* basename (const char* name) {
 
 #if defined (HAVE_DOS_BASED_FILE_SYSTEM)
   /* Skip over the disk name in MSDOS pathnames. */
-  if (ISALPHA (name[0]) && name[1] == ':') 
+  if (isalpha(name[0]) && name[1] == ':') 
     name += 2;
 #endif
 

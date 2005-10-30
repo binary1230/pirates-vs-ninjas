@@ -12,8 +12,15 @@ dist_macosx: $(DISTFILES)
 	cp src/ninjas dist/darwin/ninjas.app/Contents/MacOS
 	cp -r $(EXTRA_DATA) dist/darwin/ninjas.app/Resources
 
-dist_win32: $(DISTFILES)
-	echo "COMING SOON - will package us into a nice .zip file."
+# create the windows .zip file
+dist_win32: $(DISTFILES) 
+	rm -rf dist/win32/*
+	mkdir -p dist/win32/$(VERSION)/data
+	cp src/ninjas.exe dist/win32/$(VERSION)/
+	cp -r $(EXTRA_DATA) dist/win32/data
+	cp LICENSE README dist/win32/data
+	zip -r dist/win32/$(VERSION).zip dist/win32/$(VERSION)
+	echo "Windows version packaged: dist/win32/$(VERSION).zip"
 
 doc: src/Doxyfile
 	cd src && doxygen
