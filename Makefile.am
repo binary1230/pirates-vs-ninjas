@@ -14,13 +14,17 @@ dist_macosx: $(DISTFILES)
 
 # create the windows .zip file
 dist_win32: $(DISTFILES) 
-	rm -rf dist/win32/*
-	mkdir -p dist/win32/$(VERSION)/data
-	cp src/ninjas.exe dist/win32/$(VERSION)
-	cp LICENSE README dist/win32/$(VERSION)
-	cp -r $(EXTRA_DATA) dist/win32/$(VERSION)
-	zip -r dist/win32/$(VERSION).zip dist/win32/$(VERSION) -x \*.svn\*
-	echo "Windows version packaged: dist/win32/$(VERSION).zip"
+	rm -rf dist/win32/ninjas-engine-*
+	mkdir -p dist/win32/ninjas-engine-$(VERSION)/data
+	
+	cp src/ninjas.exe dist/win32/ninjas-engine-$(VERSION)
+	cp LICENSE README dist/win32/ninjas-engine-$(VERSION)
+	cp dist/win32/common/* dist/win32/ninjas-engine-$(VERSION)
+	cp -r $(EXTRA_DATA) dist/win32/ninjas-engine-$(VERSION)
+	
+	zip -r dist/win32/ninjas-engine-$(VERSION).zip dist/win32/ninjas-engine-$(VERSION) -x \*.svn\*
+	
+	echo "Windows version packaged: dist/win32/ninjas-engine-$(VERSION).zip"
 
 doc: src/Doxyfile
 	cd src && doxygen
