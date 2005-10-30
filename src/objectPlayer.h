@@ -38,7 +38,6 @@ class PlayerObject : public Object {
 		void SetXY(int, int);
 
 		bool Init(GameState* _game_state);
-		void Shutdown();
 
 		PlayerObject();
 		~PlayerObject();

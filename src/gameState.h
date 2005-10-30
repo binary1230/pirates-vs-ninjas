@@ -1,7 +1,6 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-
 #include <allegro.h>
 #include <stdio.h>
 #include <vector>
@@ -17,10 +16,10 @@ class GameState;
 #include "inputLiveHandler.h"
 #include "inputRecord.h"
 #include "inputPlayback.h"
-#include "object.h"
-#include "objectFactory.h"
+// #include "object.h"
+// #include "objectFactory.h"
 #include "window.h"
-#include "force.h"
+#include "physSimulation.h"
 
 class Window;
 
@@ -41,18 +40,18 @@ class GameState {
 		
 		//! The game's on-screen window
 		Window *window;								
-		
-		//! Creates new objects
-		ObjectFactory *objectFactory;	
-		
+				
 		//! Active input module
 		BaseInput *input;
 
+		//! The physics simulation
+		PhysSimulation *simulation;
+
 		//! Collection of all drawable objects
-		vector<Object*> objects;
+		//vector<Object*> objects;
 
 		//! Collection of forces
-		vector<Force*> forces;
+		// vector<Force*> forces;
 	
 		//! Set this to TRUE to exit the game 
 		bool exit_game;
@@ -67,9 +66,9 @@ class GameState {
 		
 		int InitTimers();
 		int InitInput();
-		int InitObjects();
+		// int InitSimulation();
 		
-		void DestroyObjects();
+		// void DestroyObjects();
 		
 		void Shutdown();
 
@@ -82,11 +81,9 @@ class GameState {
 	public:
 		int RunGame(GameOptions *_options);
 
-		// accessors
-		// inline BaseInput* 		GetInput() 					{ return input; };
-		// inline Window* 				GetWindow() 				{ return window; };
-		inline GameOptions* 	GetGameOptions() 		{ return options; };
-		inline ObjectFactory*	GetObjectFactory()	{ return objectFactory; };
+		// no one uses these (rv90)
+		// inline GameOptions* 	GetGameOptions() 		{ return options; };
+		// inline ObjectFactory*	GetObjectFactory()	{ return objectFactory; };
 
 		inline void SetRandomSeed(int val)		{ random_seed = val; srand(val); };
 		inline int GetRandomSeed()						{ return random_seed; };

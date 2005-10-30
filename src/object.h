@@ -23,7 +23,7 @@ class Object : public GameBase {
 		
 	public:
 		virtual bool Init(GameState* _game_state) = 0;
-		virtual void Shutdown() = 0;
+		virtual void Shutdown();
 		
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
@@ -44,8 +44,6 @@ class Object : public GameBase {
 		
 		int GetWidth();
 		int GetHeight();
-
-		virtual void Delete();
 
 		Object();
 		virtual ~Object();

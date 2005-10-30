@@ -56,7 +56,7 @@ bool Object::GetBitmapIsDeleteable() {
 	return bitmap_is_deleteable;
 }
 
-void Object::Delete() {
+void Object::Shutdown() {
 	if (bitmap_is_deleteable) 
 		destroy_bitmap(bitmap);
 

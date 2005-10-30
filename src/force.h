@@ -15,6 +15,7 @@ class Force : public GameBase {
 	public:
 		void Init(GameState* _game_state);
 		virtual float GetAcceleration() = 0;
+		void Shutdown();
 
 		Force();
 		virtual ~Force();

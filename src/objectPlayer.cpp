@@ -83,11 +83,6 @@ bool PlayerObject::Init(GameState* _game_state) {
 	return true;
 }
 
-void PlayerObject::Shutdown() {
-	// XXX free vector forces
-	// a.k.a vectors[x].Shutdown()
-}
-
 PlayerObject::PlayerObject() {
 }
 

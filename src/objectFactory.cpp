@@ -126,10 +126,10 @@ Object* ObjectFactory::CreateObject(uint id) {
 	return new_obj;
 }
 
-void ObjectFactory::DeleteObject(Object* obj) {
+/*void ObjectFactory::DeleteObject(Object* obj) {
 	obj->Delete();
 	delete obj;
-}
+}*/
 
 int ObjectFactory::Init(GameState* _game_state) {
 	SetGameState(_game_state);

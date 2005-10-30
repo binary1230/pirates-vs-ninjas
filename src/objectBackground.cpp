@@ -8,9 +8,6 @@ bool BackgroundObject::Init(GameState *_game_state) {
 		return true;
 }
 
-void BackgroundObject::Shutdown() {
-}
-
 void BackgroundObject::Draw() {
 	DrawAtOffset(0, 0);
 }

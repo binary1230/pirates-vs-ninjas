@@ -9,10 +9,6 @@ bool RadiusBlockObject::Init(GameState *_game_state) {
 		return true;
 }
 
-void RadiusBlockObject::Shutdown() {
-				
-}
-
 void RadiusBlockObject::Draw() {
 	DrawAtOffset(	int(sinf(theta) * radius) , 
 								int(cosf(theta) * radius) );

@@ -20,7 +20,6 @@ class RadiusBlockObject : public Object {
 				
 	public:
 		bool Init(GameState* _game_state);
-		void Shutdown();
 
 		void Update();
 		void Draw();
