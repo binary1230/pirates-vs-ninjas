@@ -16,10 +16,10 @@ dist_macosx: $(DISTFILES)
 dist_win32: $(DISTFILES) 
 	rm -rf dist/win32/*
 	mkdir -p dist/win32/$(VERSION)/data
-	cp src/ninjas.exe dist/win32/$(VERSION)/
-	cp -r $(EXTRA_DATA) dist/win32/data
-	cp LICENSE README dist/win32/data
-	zip -r dist/win32/$(VERSION).zip dist/win32/$(VERSION)
+	cp src/ninjas.exe dist/win32/$(VERSION)
+	cp LICENSE README dist/win32/$(VERSION)
+	cp -r $(EXTRA_DATA) dist/win32/$(VERSION)
+	zip -r dist/win32/$(VERSION).zip dist/win32/$(VERSION) -x \*.svn\*
 	echo "Windows version packaged: dist/win32/$(VERSION).zip"
 
 doc: src/Doxyfile
