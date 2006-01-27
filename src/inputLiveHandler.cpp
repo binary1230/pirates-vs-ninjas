@@ -1,11 +1,6 @@
 #include "inputLiveHandler.h"
 
-int InputLive::Init(GameState* _game_state, char* _demo_file) {
-
-	if (_demo_file) {
-		fprintf(stderr, "ERROR: Can't use a demo file with Live Input.\n");
-		return -1;
-	}
+int InputLive::Init(GameState* _game_state, CString _demo_file) {
 				
 	SetGameState(_game_state);
 				

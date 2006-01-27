@@ -1,0 +1,3 @@
+walk1.bmp walk2.bmp walk3.bmp walk4.bmp walk5.bmp walk6.bmp walk7.bmp
+wait1.bmp
+wait2.bmp

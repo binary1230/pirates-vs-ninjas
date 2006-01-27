@@ -1,135 +1,73 @@
 #include "objectFactory.h"
 
-// XXX NASTY!! SO BADLY WRITTEN, CLEAN IT UP
-// break this up into smaller functions.. COME ON MORON!!X0r.
-// ALSO, tons of memory leaks.  We will break this thing down
-//  For now it 'just works'
-Object* ObjectFactory::CreateObject(uint id) {
+#include "globals.h"
+#include "object.h"
+#include "objectIDs.h"
+#include "objectPlayer.h"
+#include "objectRadiusBlock.h"
+#include "objectBackground.h"
+#include "objectController.h"
+#include "objectStatic.h"
+#include "StdString.h"
+
+#include <map>
+
+using namespace std;
+
+// Creates an object from an XML definition
+// in: xObjectDef - XML representation of an object's definition
+// in: xObject - XML representation of additional object paramaters
+// returns: newly create Object*, or NULL if it failed
+Object* ObjectFactory::CreateObject(XMLNode &xObjectDef, XMLNode &xObject) {
+
+	Object* obj = NULL;
+
+	// XXX this shouldn't really be here...
+	// maps strings of object types to numeric ID's.
+	map<const CString, uint> types;
+	types["RadiusBlock"] 				= OBJECT_ID_RADIUS_BLOCK;
+	types["Background"] 				= OBJECT_ID_BACKGROUND;
+	types["Player"] 						= OBJECT_ID_PLAYER;
+	types["ControllerDisplay"] 	= OBJECT_ID_CONTROLLER;
+	types["Static"] 						= OBJECT_ID_STATIC;
 	
-	Object* new_obj = NULL;
-	RadiusBlockObject *rblock;
-	PlayerObject *player;
-	BackgroundObject *bg;
+	CString objType = xObjectDef.getAttribute("type");
 	
-	switch (id) {
+	uint id = types[objType];
+
+	switch(id) {
+					
 		case OBJECT_ID_BACKGROUND:
-			
-			bg = new BackgroundObject();
-			if ( bg && bg->Init(GetGameState()) ) {
-							
-				PALETTE pal;
-				BITMAP* bmp = load_bitmap(get_correct_path("data/back.tga"), pal);
-				
-				if (bmp) {
-
-					set_palette(pal);
-
-					bg->SetBitmapIsDeleteable(true);
-					bg->SetBitmap(bmp);
-					bg->SetXY(0,0);
-					
-				} else {
-					fprintf(stderr, "ObjectFactory: Failed to load Player's bitmap - %s.\n", get_correct_path("data/back.tga"));
-					if (bg) {
-							free(bg);
-							bg = NULL;
-					}
-				}
-			} else {
-				fprintf(stderr, "ObjectFactory: Failed to create Player object.\n");
-				if (bg) {
-						free(bg);
-						bg = NULL;
-				}	
-			}
-
-			new_obj = bg;
+			obj = BackgroundObject::New(GetGameState(), xObjectDef, xObject);
 			break;
-
-					
+			
+		case OBJECT_ID_PLAYER:
+			obj = PlayerObject::New(GetGameState(), xObjectDef, xObject);
+			break;
+			
 		case OBJECT_ID_RADIUS_BLOCK:
-			
-			rblock = new RadiusBlockObject();
-			if ( rblock && rblock->Init(GetGameState()) ) {
-							
-				PALETTE pal;
-				BITMAP* bmp = load_bitmap(get_correct_path("data/miroku.tga"), pal);
-				
-				if (bmp) {
-
-					set_palette(pal);
-
-					rblock->SetBitmapIsDeleteable(true);
-					rblock->SetBitmap(bmp);
-					rblock->SetXY(Rand(0, SCREEN_SIZE_X), Rand(0, SCREEN_SIZE_Y));
-					rblock->SetTheta(Rand(0,360));
-					rblock->SetRadius(Rand(20,300));
-					
-				} else {
-					fprintf(stderr, "ObjectFactory: Failed to load Player's bitmap - %s.\n", get_correct_path("data/back.tga"));
-					if (rblock) {
-							free(rblock);
-							rblock = NULL;
-					}
-				}
-			} else {
-				fprintf(stderr, "ObjectFactory: Failed to create Player object.\n");
-				if (rblock) {
-						free(rblock);
-						rblock = NULL;
-				}	
-			}
-
-			new_obj = rblock;
+			obj = RadiusBlockObject::New(GetGameState(), xObjectDef, xObject);
 			break;
 			
-		case OBJECT_ID_MOUSE_BLOCK:
-			
-			player = new PlayerObject();
-
-			if ( player && player->Init(GetGameState()) ) {
-							
-				PALETTE pal;
-				BITMAP* bmp = load_bitmap(get_correct_path("data/kenshin.tga"), pal);
-				
-				if (bmp) {
-
-					set_palette(pal);
-
-					player->SetBitmapIsDeleteable(true);
-					player->SetBitmap(bmp);
-					
-				} else {
-					fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite's bitmap.\n");
-					if (player) {
-							free(player);
-							player = NULL;
-					}	
-				}
-		
-			} else {
-				fprintf(stderr, "ObjectFactory: Failed to create Sonic sprite.\n");
-				if (player) {
-						free(player);
-						player = NULL;
-				}
-			}
-
-			new_obj = player;
+		case OBJECT_ID_CONTROLLER:
+			obj = ControllerObject::New(GetGameState(), xObjectDef, xObject);
 			break;
 
+		case OBJECT_ID_STATIC:
+			obj = StaticObject::New(GetGameState(), xObjectDef, xObject);
+			break;
+
+		case 0:
+			fprintf(stderr, "ERROR: Specified object doesn't exist - '%s'.\n",
+											objType.c_str());
+			break;
+			
 		default:
-			fprintf(stderr, "ObjectFactory: Unknown ID passed: %i\n", id);
-			new_obj = NULL;
+			fprintf(stderr, "ERROR: Unknown Object ID passed?? [%i]\n", id);
 	}
-	
-	return new_obj;
-}
 
-/*void ObjectFactory::DeleteObject(Object* obj) {
-	obj->Delete();
-	delete obj;
-}*/
+	return obj;
+}
 
 int ObjectFactory::Init(GameState* _game_state) {
 	SetGameState(_game_state);
@@ -137,6 +75,7 @@ int ObjectFactory::Init(GameState* _game_state) {
 }
 
 void ObjectFactory::Shutdown() {
+	SetGameState(NULL);
 }
 
 ObjectFactory::ObjectFactory() {}

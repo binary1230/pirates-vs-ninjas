@@ -88,6 +88,10 @@ MORE DOCS LATER, FOR NOW TRY THIS
 ------------------------------------
 
 you have to cross compile allegro first.
-THEN:
+
+read and edit cross-configure.sh
+
+
+OLD STUPID INSTRUCTIONS:
 
 ./configure --target=i586-mingw32msvc --host=i586-mingw32msvc --build=linux-i386 --with-extra-includes=/home/dcerquet/i586/include --with-extra-libs=/home/dcerquet/lib/i586-mingw32msvc/

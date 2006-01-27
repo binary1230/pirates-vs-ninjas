@@ -1,0 +1,18 @@
+This folder contains a list of the functions which PVN uses right now
+for Allegro.
+
+In order to make a dreamcast port work better, I am thinking we may do
+one of a few things:
+
+1) Stop using allegro, use SDL
+ - Allegro is VERY fast though on systems with no HW acceleration
+ - Is the SDL speed of non-cool computers (e.g. my 600mhz Laptop)
+   comparable to that of allegro?  Also, 640x480 is the target resolution.
+ 
+2) Build some kind of 'graphics rendering library' that can use SDL and alleg
+ - Could choose one or the other
+ - Bugs harder to find, not exactly the same behavior on each
+ 
+3) Write an allegro wrapper for dreamcast
+ - Implement the functions seen in func_conflicts.txt for the DC
+ - Probbaly harder than it looks...

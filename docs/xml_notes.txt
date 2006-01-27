@@ -1,0 +1,44 @@
+Random notes for those looking at the source code for the first time.
+
+- - - - - - 
+- XML     -
+- - - - - - 
+
+The game engine parses XML files to figure out what its supposed to
+load for each level.
+
+Why XML?  Isn't that nasty, hard, wasteful, etc?
+
+It's easy though.  Easy as hell and easy to detect errors.
+Seriously, XML parsing isn't that hard.  Say this XML file represents
+an EGG.  Just a regular old chicken egg.  Maybe it looks like this:
+
+<eggshell>
+	<inner color="yellow" status="gross">
+	
+		42 IS A GOOD NUMBER
+
+		<definitelyDead />
+	</inner>
+</eggshell>
+
+Here's some code that we could use to parse it:
+
+// look for the <eggshell> tag
+XMLNode xEgg = XMLNode::openFileHelper("egg.xml", "eggshell");
+
+// get the <inner> tag
+XMLNode xInner = xEgg.getChildNode("inner");
+
+// get the text of the <inner> tag (in this case it's "42 IS A GOOD NUMBER")
+char* str = xInner.getText();
+
+// get the "color" attribute from <inner> (in our case it's "gross")
+char* str = xInner.getAttribute("color");
+
+ - - - - - - 
+
+There's a few more things you can do with the xml library we use (xmlParser)
+but those are a few good examples.
+
+ - - - - - - 

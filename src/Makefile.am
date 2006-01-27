@@ -1,3 +1,5 @@
+SUBDIRS = tests
+
 bin_PROGRAMS = ninjas
 
 # AM_CXXFLAGS = -Wall
@@ -5,23 +7,33 @@ bin_PROGRAMS = ninjas
 # LDFLAGS = -ggdb -lm
 # ninjas_LDFLAGS = @LDFLAGS@
 
+ninjas_CXXFLAGS = -Wall
+
 headers = \
 globals.h timer.h \
-gameOptions.h gameState.h gameBase.h window.h physSimulation.h \
+gameOptions.h gameState.h gameBase.h window.h \
+gameMode.h physSimulation.h \
 input.h inputLiveHandler.h inputRecord.h inputPlayback.h \
 object.h objectFactory.h objectIDs.h \
-objectPlayer.h objectRadiusBlock.h objectBackground.h \
-vec.h force.h forceGravity.h forceInput.h \
-platform.h basename.h
+objectPlayer.h objectRadiusBlock.h objectBackground.h objectController.h \
+objectStatic.h \
+vector2D.h force.h forceFactory.h \
+forceGravity.h forceInput.h \
+basename.h resourceLoader.h \
+animation.h animations.h sprite.h \
+StdString.h xmlParser.h objectLayer.h
 
 ninjas_SOURCES = \
-force.cpp forceGravity.cpp forceInput.cpp \
-gameOptions.cpp gameState.cpp main.cpp gameBase.cpp physSimulation.cpp \
+force.cpp forceGravity.cpp forceInput.cpp forceFactory.cpp \
+gameOptions.cpp gameState.cpp main.cpp gameBase.cpp \
+gameMode.cpp physSimulation.cpp objectLayer.cpp \
 input.cpp inputLiveHandler.cpp inputRecord.cpp inputPlayback.cpp \
 object.cpp objectFactory.cpp objectPlayer.cpp objectRadiusBlock.cpp \
-objectBackground.cpp \
-timer.cpp vec.cpp window.cpp \
-platform.cpp basename.cpp \
+objectBackground.cpp objectController.cpp objectStatic.cpp \
+timer.cpp vector2D.cpp window.cpp \
+basename.cpp resourceLoader.cpp \
+animation.cpp animations.cpp \
+xmlParser.cpp \
 $(headers)
 
 # EXTRA_DIST = dir1 dir2

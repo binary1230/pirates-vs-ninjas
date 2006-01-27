@@ -1,0 +1,11 @@
+# TEMPORARY UNTIL WE USE XML
+# Force list - list of all forces to load in the game
+# 
+# possible forces:
+#  fg - force of gravity
+#				fg :id: :grav_constant:
+#  fi - input force 1
+#				fi :id:                  # -- later :magnitude: :which_player:
+
+fg 0 -9.81
+fi 1 

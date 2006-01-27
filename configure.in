@@ -7,17 +7,19 @@ dnl LARGE PARTS of this configure.in stolen from Clanlib configure.ac
 AC_INIT(src/main.cpp)
 
 VERSION_MAJOR="0"
-VERSION_MINOR="1"
+VERSION_MINOR="2"
 VERSION_FIX="0"
-VERSION_EXTRA="-rc1"
+VERSION_EXTRA="-beta3"
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_FIX$VERSION_EXTRA"
 
 AC_PROG_CXX
+AC_PROG_CC
 AC_PROG_INSTALL
 
 AC_LANG(C++)
 
+AM_PATH_CPPUNIT(1.9.6)
 dnl XXX todo:
 
 dnl Test for subversion presence, if so, use the subversion revision number
@@ -31,8 +33,15 @@ if test -e ".svn"; then
 fi
 
 dnl Test if we're running on Mac, if we are, we need a tiny bit
-dnl of MAC carbon code for the package.  (this needs to be updated
-dnl if we ever find a way to cross compile FROM linux TO darwin)
+dnl of MAC carbon code for the package.  
+dnl
+dnl NEEDS FIXING - 'uname -s' tests the platform we are RUNNING on,
+dnl  NOT the platform we are building for.  Most of the time these are
+dnl  the same, but during cross compiles they are not.
+dnl
+dnl For example, cross compiling from Mac->Linux would currently make
+dnl our script think that we are building FOR MacOSX.
+
 AC_PATH_PROG(WHICH_UNAME, uname, no)
 if test "$WHICH_UNAME"; then
 	OUR_PLATFORM=`uname -s`
@@ -41,7 +50,7 @@ if test "$WHICH_UNAME"; then
 	fi
 fi
 
-AM_INIT_AUTOMAKE([ninja-engine], ${VERSION})
+AM_INIT_AUTOMAKE([ninjas-engine], ${VERSION})
 
 case $target_alias in
 	*mingw*)
@@ -121,8 +130,8 @@ AC_EXEEXT
 
 AC_CHECK_HEADERS([allegro.h])
 
-# gen compiler args
 #AC_SUBST(SDL_LIBS)
 #AC_SUBST(SDL_DEFS)
 
-AC_OUTPUT(Makefile src/Makefile src/Doxyfile)
+# These are the files which we create based on the info in THIS file.
+AC_OUTPUT(Makefile src/Makefile src/Doxyfile src/tests/Makefile)

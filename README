@@ -1,5 +1,5 @@
 PIRATES VERSUS NINJAS 
-A 2-d sidesrolling adventure for Linux, Windows, and MacOSx
+An open source 2-d sidesrolling adventure for Linux, Windows, and MacOSx
 
 (c) 2005 Dominic Cerquetti (binary1230-at-yahoo-dot-com)
 Licensed under the GNU GPL, see the file LICENSE for more information
@@ -9,3 +9,22 @@ http://marcie.cs.loyola.edu:4400/
 
 Also, the natural tendencies of pirates and ninjas were originally
 discovered by http://realultimatepower.com/
+
+This game is open source (e.g. YOU can help create it!)
+
+---------
+GAMEPLAY:
+---------
+
+Player 1:
+LEFT, RIGHT, UP, DOWN with the ARROW keys
+JUMP with the SPACEBAR
+
+Player 2:
+LEFT, RIGHT, UP, DOWN with the 'A', 'S', 'D', 'W' keys
+JUMP with the 'E' key
+
+-------
+BUGS
+-------
+Found a bug? Report it to binary1230/at/yahoo/dot/com

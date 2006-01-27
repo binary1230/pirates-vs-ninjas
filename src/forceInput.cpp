@@ -1,23 +1,34 @@
 #include "forceInput.h"
+#include "globals.h"
+#include "input.h"
+#include "gameState.h"
+#include "object.h"
 
-float ForceInput::GetAcceleration() {
+#define MAGNITUDE 14.0f
 
-	if (!GetGameState()) {
-			fprintf(stderr, "Gamestate is NULL??\n");
-			abort();
-	}
+Vector2D ForceInput::GetForce(Object* obj) {
+				
+	assert(game_state != NULL);
+
+	if (obj->GetControllerNum() != controller_num)
+		return Vector2D(0,0);
 
 	// return a force based on 2 inputs.
-	if (game_state->GetKey(GAMEKEY_LEFT)) {
-		return -0.3f;
-	} else if (game_state->GetKey(GAMEKEY_RIGHT)) {
-		return 0.3f;
-	} else {
-		return 0.0f;	
-	}
+	if (game_state->GetKey(PLAYERKEY_LEFT, controller_num) && 
+			!game_state->GetKey(PLAYERKEY_RIGHT, controller_num)) 
+		return Vector2D(-MAGNITUDE * TIMESTEP, 0.0f);
+
+	else if (game_state->GetKey(PLAYERKEY_RIGHT, controller_num) && 
+					!game_state->GetKey(PLAYERKEY_LEFT, controller_num)) 
+		return Vector2D( MAGNITUDE * TIMESTEP, 0.0f);
+
+	else
+		return Vector2D( 0.0f, 0.0f);	
 }
 
 ForceInput::ForceInput() {
+	type = FORCE_INPUT;
+	controller_num = 1;	// default
 }
 
 ForceInput::~ForceInput() {}

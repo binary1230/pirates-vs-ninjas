@@ -1,0 +1,10 @@
+# TEMPORARY FILE UNTIL WE USE XML
+#
+# possible objects:
+#  op - player object
+#      x, y, sprite1, sprite2, etc
+#  or - radius block object
+#      x, y, 
+#  ob - background object
+
+op 

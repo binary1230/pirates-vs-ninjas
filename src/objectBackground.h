@@ -5,10 +5,12 @@
 #include <stdio.h>
 
 class BackgroundObject;
+class GameState;
 
-#include "globals.h"
 #include "object.h"
+#include "xmlParser.h"
 
+//! An Object which repeats itself, usually used for backgrounds
 class BackgroundObject : public Object {
 	protected:
 				
@@ -20,6 +22,8 @@ class BackgroundObject : public Object {
 
 		BackgroundObject();
 		~BackgroundObject();
+
+		static Object* New(GameState* gameState, XMLNode &xDef, XMLNode &xObj);
 };
 
 #endif // BackgroundObject_H   

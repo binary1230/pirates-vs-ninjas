@@ -1,5 +1,6 @@
 #include "gameOptions.h"
 #include "basename.h"
+#include "globals.h"
 
 void GameOptions::PrintBanner() {
 		fprintf(stderr, 
@@ -21,8 +22,12 @@ void GameOptions::PrintOptions(char* arg0) {
 		"Usage: %s [options]\n"
 		"-f            | try to force fullscreen mode\n"
 		"-w            | try to force windowed mode\n"
+		"-g mode       | 0 = no buffering, 1 = double buffer [default]\n"
+		"              | 2 = page flipping, 3 = triple buffering\n\n"
+		
 		"-r file       | record a demo to 'file'\n"
-		"-p file       | playback a demo from 'file'\n"
+		"-p file       | playback a demo from 'file'\n\n"
+
 		"-h            | display this help message\n\n"
 		, arg0);
 	}
@@ -37,6 +42,8 @@ void GameOptions::Clear() {
 	
 	demo_filename = NULL;
 
+	graphics_mode = 1;	// XXX magic number. get it from window.h
+
 	is_valid = true;
 }
 
@@ -48,7 +55,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"r:p:fwh")) != -1) {
+	while ( (c = getopt(argc,argv,"g:r:p:fwh")) != -1) {
 		switch (c) {
 
 			// get demo filename
@@ -87,6 +94,16 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 					fullscreen = false;
 					_fullscreen_option_set = true;
 					fprintf(stderr, "Options ==> windowed mode enabled\n");
+				}
+				break;
+
+			case 'g':
+				graphics_mode = strtoul(optarg, NULL, 10);
+				// XXX Magic number.  #define u twit.
+				if (graphics_mode >= 4 || graphics_mode < 0) {
+					fprintf(stderr, "ERROR: Graphics mode is out of range.\n");
+					show_help = true;
+					return (is_valid = false);
 				}
 				break;
 	

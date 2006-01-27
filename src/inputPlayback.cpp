@@ -1,20 +1,22 @@
 #include "inputPlayback.h"
+#include "globals.h"
+#include "gameState.h"
 
-int InputPlayback::Init(GameState* _game_state, char* _demo_file) {
+int InputPlayback::Init(GameState* _game_state, CString _demo_file) {
 	SetGameState(_game_state);
 				
 	LoadDefaultKeyMappings();
+	
+	install_mouse();
+	install_keyboard();
 
-	if (_demo_file)
-		if( InitPlayback(_demo_file) )
-			return 0;
-		else 
-			return -1;
-	else 
-		return 0;
+	if( !InitPlayback(_demo_file) )
+		return -1;
+	
+	return 0;
 }
 
-bool InputPlayback::InitPlayback(char* filename) {
+bool InputPlayback::InitPlayback(CString filename) {
 
 	const uint BUF_SIZE = 256; 
 	char line2[256];
@@ -28,15 +30,16 @@ bool InputPlayback::InitPlayback(char* filename) {
 		return false;
 	} 
 
-	demofile = fopen(filename, "r");
+	demofile = fopen(filename.c_str(), "r");
 	
 	if (!demofile) {
 			fprintf(stderr,	"InputPlayback: ERROR can't open demofile '%s'.\n",
-							filename);
+							filename.c_str());
 			return false;
 	}
 	
-	fprintf(stderr, "InputRecord: Playing back demo from file '%s'.\n", filename);
+	fprintf(stderr, "InputRecord: Playing back demo from file '%s'.\n", 
+							filename.c_str());
 
 	// 1st line2: 'DEMO' header + version info
 	// (todo.. we could check for engine version numbers in this line2)
@@ -65,7 +68,7 @@ bool InputPlayback::InitPlayback(char* filename) {
 	ClearKeys(next_frame_data);
 	GetNextFrameData();
 
-	return error;
+	return !error;
 }
 
 // pass key_buffer = NULL in order to use the default key buffer
@@ -148,10 +151,18 @@ void InputPlayback::Update() {
 	// TODO: check to make sure this doesn't get too big.
 	frame_counter++;
 
+	// Read keystrokes from Demo file if they exist
 	if (frame_counter == next_frame_num && !at_eof) {
 			UseNextFrameData();	
 			GetNextFrameData();
 	}	
+
+	// SPECIAL EXCEPTION
+	// everything comes back from the demo file,
+	// but we still allow the user to press GAMEKEY_EXIT key LIVE
+	// so they can exit the demo manually
+	if (key[gamekey_to_realkey[GAMEKEY_EXIT]])
+		game_key[GAMEKEY_EXIT] = 1;	
 }
 
 void InputPlayback::BeginPlayback()	{
@@ -159,7 +170,7 @@ void InputPlayback::BeginPlayback()	{
 	ClearKeys();
 
 	if (!demofile) {
-		fprintf(stderr,	"InputPlayback: ERROR InitRecorder() not called yet!\n");
+		fprintf(stderr,	"InputPlayback: ERROR InitPlayback() not called yet!\n");
 		return;
 	}	
 
@@ -177,7 +188,11 @@ void InputPlayback::Shutdown() {
 		fclose(demofile);
 		demofile = NULL;
 	}
+	remove_mouse();
+	remove_keyboard();
 }
 
-InputPlayback::InputPlayback() : demofile(NULL) {}
+InputPlayback::InputPlayback() : demofile(NULL) {
+	next_frame_data.resize(GAMEKEY_COUNT);
+}
 InputPlayback::~InputPlayback() {}

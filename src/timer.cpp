@@ -1,4 +1,5 @@
 #include "timer.h"
+#include "globals.h"
 
 // For timing stuff
 volatile int outstanding_updates = 0;

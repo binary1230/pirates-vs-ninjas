@@ -1,7 +1,7 @@
 SUBDIRS = src
 
-EXTRA_DATA = data
-EXTRA_DIST = docs $(EXTRA_DATA)
+DATA_DIR = data
+EXTRA_DIST = docs $(DATA_DIR)
 
 # create the MAC OSX Bundle
 dist_macosx: $(DISTFILES)
@@ -10,7 +10,8 @@ dist_macosx: $(DISTFILES)
 	mkdir dist/darwin/ninjas.app/PkgInfo
 	mkdir dist/darwin/ninjas.app/Resources
 	cp src/ninjas dist/darwin/ninjas.app/Contents/MacOS
-	cp -r $(EXTRA_DATA) dist/darwin/ninjas.app/Resources
+	cp -r $(DATA_DIR) dist/darwin/ninjas.app/Resources
+	hdiutil create -fs HFS+ -volname PiratesVersusNinjas-$(VERSION) -srcfolder dist/darwin/ PiratesVersusNinjas-$(VERSION)
 
 # create the windows .zip file
 dist_win32: $(DISTFILES) 
@@ -18,13 +19,13 @@ dist_win32: $(DISTFILES)
 	mkdir -p dist/win32/ninjas-engine-$(VERSION)/data
 	
 	cp src/ninjas.exe dist/win32/ninjas-engine-$(VERSION)
+	strip dist/win32/ninjas-engine-$(VERSION)/ninjas.exe
 	cp LICENSE README dist/win32/ninjas-engine-$(VERSION)
 	cp dist/win32/common/* dist/win32/ninjas-engine-$(VERSION)
-	cp -r $(EXTRA_DATA) dist/win32/ninjas-engine-$(VERSION)
+	cp -r $(DATA_DIR) dist/win32/ninjas-engine-$(VERSION)
+	cd dist/win32/ && zip -r ninjas-engine-$(VERSION).zip ninjas-engine-$(VERSION) -x \*.svn\*
 	
-	zip -r dist/win32/ninjas-engine-$(VERSION).zip dist/win32/ninjas-engine-$(VERSION) -x \*.svn\*
-	
-	echo "Windows version packaged: dist/win32/ninjas-engine-$(VERSION).zip"
+	@echo -en "\n\nWindows version packaged: dist/win32/ninjas-engine-$(VERSION).zip\n\n"
 
 doc: src/Doxyfile
 	cd src && doxygen

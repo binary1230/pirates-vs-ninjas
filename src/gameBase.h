@@ -3,19 +3,21 @@
 
 #include <stdio.h>
 
-//! Really generic base class for all game classes
-
 class GameState;
 
+//! A generic base class for all game classes
 class GameBase {
 		protected:
+			//! A pointer to the current game state
 			GameState* game_state;
 	
 		public:
+			//! Returns the game state
 			inline GameState* GetGameState() {
 				return game_state;
 			};
 
+			//! Sets the game state
 			inline void SetGameState(GameState* _game_state) {
 				game_state = _game_state;
 			};

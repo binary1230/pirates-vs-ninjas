@@ -1,23 +1,16 @@
-/* Live Input 
- *
- * Repsonsible for handling 'live' input (keyboard, mouse, etc)
- */
-
-#ifndef InputRecordHANDLER_H
-#define InputRecordHANDLER_H
+#ifndef INPUT_RECORD_HANDLER_H
+#define INPUT_RECORD_HANDLER_H
 
 #include <allegro.h>
 #include <stdio.h>
+#include <vector>
+using namespace std;
 
 class InputRecord;
 
-#include "globals.h"
 #include "input.h"
-#include "gameState.h"
 
-//! Live input 
-
-//! Reads input devices in realtime (used for normal game play)
+//! Reads live input and records it to a file (used for recording demos)
 class InputRecord : public BaseInput {
 	
 	protected:
@@ -25,15 +18,15 @@ class InputRecord : public BaseInput {
 		FILE* demofile;
 		
 		//! The last state of the keys
-		int old_key[GAMEKEY_COUNT];
+		vector<int> old_key;
 		
 		//! The frame count we are on [updated by Update()]
 		unsigned long frame_counter;
 
-		bool InitRecorder(char* filename);
+		bool InitRecorder(CString filename);
 	
 	public:
-		int Init(GameState* _game_state, char* _demo_file = NULL);
+		int Init(GameState* _game_state, CString _demo_file);
 		void Shutdown();
 
 		void Update();

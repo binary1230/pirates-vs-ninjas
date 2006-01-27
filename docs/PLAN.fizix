@@ -1,40 +1,15 @@
-Physics plan
+Fizix Ideas:
+------------
+Impulse/Momentum
 
-Objects have forces attached to them:
+Object with constant velocity/no force/accel needs to stop when it
+hits a wall.
 
-for example
-F(gravity) = -9.81
-F(spring)  = (x,y) something + (x,y) something else
+What do you do?
 
-abstract class Force {
-	virtual GetAcceleration(1/60th sec);
-}
+Is this right?
 
-class ForceGravity {
-	GetAcceleration(1/60th sec) {
-	 //return -9.81*1/60th
-	 //return -9.81 * 0.016666667
-	 return -0.1635;
-	}
-}
-
-character_update() {
-
- // float vy
-
- if (vy == 0 && key[JUMP] && WeCanJump() ) {
- 	vy = 100; // +100m/sec
- } else {
-  foreach (force in forces) {
-	 a_total += force.GetAcceleration();
-	}
-	vx += a_total;
-	new_x += vx;
- }
-
- // see if we can move to (new_x,new_y)
- if (ok_to_move(new_x, new_y) {
-  x = new_x;
-	y = new_y;
- }
-}
+Collions(Wall, Object)
+The wall applies an Impusle Force on the object.  The impulse force
+must be enough to immediately cancel out the velocity of the object (so
+it doesn't move against the wall).  

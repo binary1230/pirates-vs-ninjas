@@ -1,23 +1,25 @@
-/* Forces: Gravity
- * all time increments are 1/60th of a second */
-
 #ifndef FORCEINPUT_H
 #define FORCEINPUT_H
 
 #include <allegro.h>
 
-class Force;
 class ForceInput;
+class Object;
 
-#include "globals.h"
 #include "force.h"
-#include "input.h"
-#include "gameState.h"
+#include "globals.h"
 
+//! A Force generated in response to keystrokes (e.g. LEFT or RIGHT)
 class ForceInput : public Force {
 	public:
-		float GetAcceleration();
+		Vector2D GetForce(Object*);
 
+		//! Which controller we look at
+		uint controller_num;
+
+		//! Set which controller we look at
+		void SetControllerNum(uint _c) {controller_num = _c;};
+		
 		ForceInput();
 		virtual ~ForceInput();
 };

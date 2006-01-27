@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- best viewed with tabs set to 2 spaces -->
+
+<gameMode type="simulation" name="Level 1 - Sonic Desert Run">
+
+	<info>
+		<map_version>0.2-beta</map_version>
+		<author>Dominic Cerquetti</author>
+		<description>Sonic Desert Run</description>
+	</info>
+
+	<properties>
+		<width>2560</width>
+		<height>240</height>
+		<camera_left>0</camera_left>
+		<camera_top>0</camera_top>
+	</properties>
+	
+	<objectDefinitions>
+		<!-- the IMPORTANT game objects -->
+		<include_xml_file>data/objects/obj_sonic.xml</include_xml_file>
+		<include_xml_file>data/objects/obj_sonic_x.xml</include_xml_file>
+		<include_xml_file>data/objects/obj_tails.xml</include_xml_file>
+
+		<!-- level backgrounds/foregrounds -->
+		<include_xml_file>data/objects/obj_background.xml</include_xml_file>
+		<include_xml_file>data/objects/obj_floor.xml</include_xml_file>
+		
+		<!-- shows a controler, used during demos -->
+		<include_xml_file>data/objects/obj_controller.xml</include_xml_file>
+	
+		<!-- various scenery -->
+		<include_xml_file>data/objects/obj_s_palm_tall.xml</include_xml_file>
+		<include_xml_file>data/objects/obj_s_palm_small.xml</include_xml_file>
+		<include_xml_file>data/objects/flower1.xml</include_xml_file>
+		<include_xml_file>data/objects/flower2.xml</include_xml_file>
+		<include_xml_file>data/objects/plane.xml</include_xml_file>
+		<include_xml_file>data/objects/sign-arrow.xml</include_xml_file>
+		<include_xml_file>data/objects/sign-haha.xml</include_xml_file>
+		<include_xml_file>data/objects/sign-credits.xml</include_xml_file>
+		<include_xml_file>data/objects/totem1.xml</include_xml_file>
+
+	</objectDefinitions>
+
+	<map>
+		<layer scroll_speed="0.15f" name="background">
+				
+			<object objectDef="background">
+				<position type="fixed">	<x>0</x> <y>0</y> <alignBottom /></position>
+			</object>
+
+			<!-- plane flying around in the back -->
+			<object objectDef="plane">
+				<position type="fixed"> 
+					<x>340</x><y>200</y>
+					<velx>-6.0f</velx><vely>0.0f</vely>
+				</position>
+			</object>
+	
+		</layer>
+	
+		<layer scroll_speed="1.0f" name="bg_objects">	
+
+			<!-- oh, some palm trees and things -->
+			<!-- FYI, y = 21 is the floor height -->
+			<repeat>50
+				<object objectDef="s_palm_tall">
+					<position type="random">
+						<xmin>0</xmin><xmax>2500</xmax>
+						<ymin>-50</ymin><ymax>21</ymax>
+						<alignBottom />
+					</position>
+				</object>
+			</repeat>
+
+			<object objectDef="s_sign_arrow"><position type="fixed">
+			<x>30</x><y>21</y><alignBottom /></position></object>
+			
+			<object objectDef="s_sign_arrow"><position type="fixed">
+			<x>1000</x><y>21</y><alignBottom /></position></object>
+			<object objectDef="s_sign_arrow"><position type="fixed">
+			<x>1100</x><y>21</y><alignBottom /></position></object>
+			<object objectDef="s_sign_arrow"><position type="fixed">
+			<x>1200</x><y>21</y><alignBottom /></position></object>
+			
+			<object objectDef="s_sign_haha"><position type="fixed">
+			<x>2380</x><y>21</y><alignBottom /></position></object>
+			<object objectDef="s_sign_credits"><position type="fixed">
+			<x>2450</x><y>21</y><alignBottom /></position></object>
+			
+			<object objectDef="s_totem1"><position type="fixed">
+			<x>2544</x><y>21</y><alignBottom /></position></object>
+			<object objectDef="s_totem1"><position type="fixed">
+			<x>2544</x><y>84</y><alignBottom /></position></object>
+			
+			<!-- tails flying around -->
+			<object objectDef="tails">
+				<position type="random"> 
+					<xmin>0</xmin> <xmax>200</xmax>
+					<ymin>0</ymin> <ymax>200</ymax>
+				</position>
+			</object>
+
+		</layer>
+
+		<layer scroll_speed="1.0f" name="foreground">
+			<object objectDef="sonic">
+				<position type="fixed">	<x>20</x> <y>200</y> </position>
+				<inputController>1</inputController>
+				<cameraFollow />
+			</object>
+	
+			<object objectDef="sonicx">
+				<position type="fixed">	<x>50</x> <y>200</y> </position>
+				<inputController>2</inputController>
+			</object>
+
+			<object objectDef="floor">
+				<position type="fixed"> 
+					<x>0</x> <y>26</y>
+				</position>
+			</object>
+
+		</layer>
+
+		<layer scroll_speed="1.0f" name="overlays">
+			<object objectDef="controller">
+				<position type="fixed">	<x>125</x> <y>5</y> </position>
+				<inputController>1</inputController>
+			</object>
+		</layer>
+
+		<layer scroll_speed="1.5f" name="foreground_fast">
+			<repeat>20
+				<object objectDef="s_flower1">
+					<position type="random">
+						<xmin>0</xmin><xmax>2500</xmax>
+						<ymin>-50</ymin><ymax>0</ymax>
+						<alignBottom />
+					</position>
+				</object>
+			</repeat>
+
+			<repeat>20
+				<object objectDef="s_flower2">
+					<position type="random">
+						<xmin>0</xmin><xmax>2500</xmax>
+						<ymin>-30</ymin><ymax>0</ymax>
+						<alignBottom />
+					</position>
+				</object>
+			</repeat>
+
+		</layer>
+			
+	</map>
+
+</gameMode>

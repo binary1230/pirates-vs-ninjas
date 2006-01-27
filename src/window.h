@@ -5,11 +5,11 @@
 #include <allegro.h>
 #include <stdio.h>
 
-// class Window;
+class GameState;
+class Sprite;
 
-#include "globals.h"
-#include "gameState.h"
 #include "gameBase.h"
+#include "globals.h"
 
 // Modes for creating the display
 // Listed in order from fastest, but nastier, to slowest, but nicest
@@ -28,6 +28,7 @@
 // see flickering or tearing.
 #define MODE_TRIPLEBUFFERING	3
 
+//! The onscreen window
 class Window : public GameBase {
 	protected:
 		bool initialized;
@@ -45,6 +46,9 @@ class Window : public GameBase {
 		// For double buffering
 		BITMAP* backbuf;
 		
+		//! Draw a bitmap, minus the clipping.
+		void DrawBitmapAt(BITMAP* bmp, int x, int y, bool flip_x, bool flip_y);
+		
 	public:
 		int Init(	GameState* _game_state, 
 							uint _width, uint _height, bool _fullscreen = 0,
@@ -53,10 +57,15 @@ class Window : public GameBase {
 		void Shutdown();
 
 		inline BITMAP* GetDrawingSurface() {return drawing_surface;};
+		void Clear();
 		void Flip();
 
 		inline uint Width() {return width;};
 		inline uint Height() {return height;};
+
+		// Drawing functions
+		void DrawSprite(Sprite* sprite, int x, int y, bool flip_x=0, bool flip_y=0);
+		void DrawBitmap(BITMAP* bmp, int x, int y, bool flip_x=0, bool flip_y=0);
 
 		Window();
 		~Window();

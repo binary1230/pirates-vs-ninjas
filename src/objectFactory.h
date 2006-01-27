@@ -3,32 +3,35 @@
 
 #include <allegro.h>
 #include <stdio.h>
+#include <vector>
+
+using namespace std;
 
 class ObjectFactory;
-
-#include "globals.h"
-#include "object.h"
-#include "objectIDs.h"
-
-#include "objectPlayer.h"
-#include "objectRadiusBlock.h"
-#include "objectBackground.h"
+class Object;
+class ResourceLoader;
 
 #include "gameBase.h"
+#include "xmlParser.h"
+#include "StdString.h"
 
-#include "platform.h"
-
-// THIS CLASS IS BAD.
-// It will be rewritten, for now it JUST WORKS.
+//! A class which creates Object classes from integer ID's
 class ObjectFactory : GameBase {
 	protected:
-
+		Object* CreatePlayerObject();
+		Object* CreateBackgroundObject();
+		Object* CreateRadiusBlockObject();
+		
 	public:
 		int Init(GameState* _game_state);
 		void Shutdown();
 
-		Object* CreateObject(uint id);
+		// Object* CreateObject(uint id);
+		// Object* CreateObject(XMLNode type);
+		Object* CreateObject(XMLNode &xObjectDef, XMLNode &xObject);
 		void DeleteObject(Object*);
+
+		int LoadObjectsFromXML(XMLNode, vector<Object*> &);
 		
 		ObjectFactory();
 		~ObjectFactory();

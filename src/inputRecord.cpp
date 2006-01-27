@@ -1,13 +1,9 @@
 #include "inputRecord.h"
+#include "globals.h"
+#include "gameState.h"
 
-int InputRecord::Init(GameState* _game_state, char* _demo_file) {
+int InputRecord::Init(GameState* _game_state, CString _demo_file) {
 
-	if (!_demo_file) {
-		fprintf(stderr, "InputRecord: ERROR: No demo filename passed. "
-										"Required for input recording.\n");
-		return -1;
-	} 
-				
 	SetGameState(_game_state);
 				
 	install_mouse();
@@ -58,7 +54,7 @@ void InputRecord::Update() {
 		// Output any differences between the old keys and the new keys to a file
 		if ( demofile && (old_key[i] != game_key[i]) ) {
 				if (!keys_changed) {
-						fprintf(demofile, "%u", frame_counter);
+						fprintf(demofile, "%lu", frame_counter);
 						keys_changed = true;
 				}
 
@@ -73,22 +69,23 @@ void InputRecord::Update() {
 	}
 }
 
-bool InputRecord::InitRecorder(char* filename) {
+bool InputRecord::InitRecorder(CString filename) {
 	
 	if (demofile) {
 		fprintf(stderr, "InputRecord: ERROR already saving demo file.\n");
 		return false;
 	} 
 
-	demofile = fopen(filename, "w");
+	demofile = fopen(filename.c_str(), "w");
 	
 	if (!demofile) {
 			fprintf(stderr,	"InputRecord: ERROR can't write to demofile '%s'.\n",
-							filename);
+							filename.c_str());
 			return false;
 	}
 
-	fprintf(stderr, "InputRecord: Recording demo to file '%s'.\n", filename);
+	fprintf(stderr, "InputRecord: Recording demo to file '%s'.\n", 
+							filename.c_str());
 
 	// write 'DEMO' header + game version number and some extra info
 	fprintf(demofile, "DEMO:ninja-engine saved demo file:%s:%s\n",
@@ -118,5 +115,7 @@ void InputRecord::EndRecording()	{
 	demofile = NULL;
 }
 
-InputRecord::InputRecord() : demofile(NULL) {}
+InputRecord::InputRecord() : demofile(NULL) {
+	old_key.resize(GAMEKEY_COUNT);
+}
 InputRecord::~InputRecord() {}

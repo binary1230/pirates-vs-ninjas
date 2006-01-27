@@ -11,34 +11,32 @@
 using namespace std;
 
 class ObjectPlayer;
+class Animation;
+class GameState;
+class BaseInput;
+class Animation;
 
-#include "globals.h"
 #include "object.h"
-#include "input.h"
-#include "inputLiveHandler.h"
-#include "force.h"
-#include "forceGravity.h"
-#include "forceInput.h"
-#include "vec.h"
+#include "xmlParser.h"
 
-// directions
-#define _dX 0
-#define _dY 1
+//! The Player object, represents our HERO on screen
 
+//! Quite possibly the most important class in the game
 class PlayerObject : public Object {
 	protected:
-		BaseInput* input;
-		vec vectors[2];		// vectors for X and Y
+		float jump_velocity;
+		float min_velocity;
+		float drag;
 				
 	public:
-		void Update();
-		void Draw();
-		void SetInputHandler(BaseInput* handler);
-
-		void SetXY(int, int);
-
 		bool Init(GameState* _game_state);
-
+		
+		bool LoadProperties(XMLNode &xDef);		//! Load object properties from XML
+		
+		void Update();
+			
+		static Object* New(GameState* gameState, XMLNode &xDef, XMLNode &xObj);
+		
 		PlayerObject();
 		~PlayerObject();
 };
