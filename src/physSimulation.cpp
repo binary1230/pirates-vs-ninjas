@@ -13,7 +13,9 @@
 #include "input.h"
 #include "gameState.h"
 #include "objectLayer.h"
+#include "window.h"
 
+#include <stdio.h>
 #include <map>
 using namespace std;
 
@@ -421,9 +423,28 @@ int PhysSimulation::LoadObjectFromXML(
 				return -1;
 			}
 				
-			// if <alignBottom> is present, we do that.
+			// if <alignBottom> is present, we align this sprite with ITs 
+			// bottom coordinates. (e.g. saying 0 puts the player on the floor)
 			if (xPos.nChildNode("alignBottom")>0) {
 				y += obj->GetHeight();
+			}
+			
+			// if <alignRight> is present, we take the X coordinate from the
+			// right side instead of the left.
+			if (xPos.nChildNode("alignRight")>0) {
+				x += obj->GetWidth();
+			}
+
+			// if <alignScreenRight> is present, we align this sprite
+			// to the SCREEN's right (useful only for overlays)
+			if (xPos.nChildNode("alignScreenRight")>0) {
+				x = GetGameState()->GetWindow()->Width() - obj->GetWidth() - x;
+			}
+
+			// if <alignScreenBottom> is present, we align this sprite
+			// to the SCREEN's bottom (useful only for overlays)
+			if (xPos.nChildNode("alignScreenBottom")>0) {
+				y = GetGameState()->GetWindow()->Height() - obj->GetHeight() - y;
 			}
 
 			// One last position calculation:

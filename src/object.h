@@ -139,8 +139,8 @@ class Object : public GameBase {
 		}
 		
 		//! Get width/height of this object
-		int GetWidth(); 
-		int GetHeight(); 
+		virtual int GetWidth(); 
+		virtual int GetHeight(); 
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();

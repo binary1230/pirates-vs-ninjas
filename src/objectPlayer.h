@@ -27,6 +27,9 @@ class PlayerObject : public Object {
 		float jump_velocity;
 		float min_velocity;
 		float drag;
+
+		int floor_height_xml;		// XXX temporary hack
+														// the "floor height" as read from the XML
 				
 	public:
 		bool Init(GameState* _game_state);

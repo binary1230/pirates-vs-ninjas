@@ -32,6 +32,11 @@ class ControllerObject : public Object {
 		void Update();
 		void Draw();
 
+		// XXX SHOULD get the width from a cached var, 
+		// NOT by just grabbing the animation's first frame's width. (see object.h)
+		int GetWidth();		// need to override, default ones grab the animation
+		int GetHeight();
+
 		ControllerObject();
 		~ControllerObject();
 

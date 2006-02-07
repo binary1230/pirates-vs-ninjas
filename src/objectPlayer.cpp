@@ -16,7 +16,7 @@
 #define DEFAULT_DRAG 0.95f
 #define DEFAULT_MIN_VELOCITY 0.3f
 
-#define FLOOR_HEIGHT 21
+#define DEFAULT_FLOOR_HEIGHT 21
 
 // XXX the physics is all hardcoded in here for now
 // eventually, ALL collision stuff will be taken care
@@ -27,7 +27,7 @@ void PlayerObject::Update() {
 	currentAnimation->Update();
 				
 	int w = simulation->GetWidth();
-	int floor_height = FLOOR_HEIGHT + GetHeight();
+	int floor_height = floor_height_xml + GetHeight();
 
 	// Compute the new position
 	pos = Solve();
@@ -106,6 +106,7 @@ PlayerObject::PlayerObject() {
 	min_velocity = DEFAULT_MIN_VELOCITY;
 	mass = 1.0f;
 	drag = DEFAULT_DRAG;
+	floor_height_xml = DEFAULT_FLOOR_HEIGHT;
 }
 
 PlayerObject::~PlayerObject() {}
@@ -146,6 +147,8 @@ bool PlayerObject::LoadProperties(XMLNode &xDef) {
 									"%f", &drag);
 	sscanf(xProps.getChildNode("mass").getText(), 
 									"%f", &mass);	
+	sscanf(xProps.getChildNode("floorHeight").getText(), 
+									"%i", &floor_height_xml);	
 	
 	properties.feels_gravity = 		xProps.nChildNode("affectedByGravity"); 
 	properties.feels_user_input =	xProps.nChildNode("affectedByInput1"); 

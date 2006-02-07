@@ -8,6 +8,14 @@
 #include "physSimulation.h"
 #include "StdString.h"
 
+int ControllerObject::GetHeight() {
+	return controller_sprite->bmp->h;
+}
+
+int ControllerObject::GetWidth() {
+	return controller_sprite->bmp->w;
+}
+
 void ControllerObject::Draw() {
 
 	if (only_show_during_demo && !GetGameState()->IsPlayingBackDemo()) {
