@@ -16,7 +16,7 @@
 #define DEFAULT_DRAG 0.95f
 #define DEFAULT_MIN_VELOCITY 0.3f
 
-#define DEFAULT_FLOOR_HEIGHT 21
+#define DEFAULT_FLOOR_HEIGHT 14
 
 // XXX the physics is all hardcoded in here for now
 // eventually, ALL collision stuff will be taken care
