@@ -32,6 +32,9 @@ class GameOptions {
 
 		//! Requested graphics mode (double buffering, pageflipping, nothing, etc)
 		int graphics_mode;
+
+		//! The default mode ID to use (leave 0 to select the first mode)
+		int default_mode_id;
 		
 	public:
 		//! Print the list of available options to stdout
@@ -66,6 +69,8 @@ class GameOptions {
 		//! Requested graphics mode (double buffering, pageflipping, nothing, etc)
 		//! (used for the Window class)
 		inline int GraphicsMode() {return graphics_mode;};
+
+		inline int GetDefaultModeId() {return default_mode_id;};
 		
 		GameOptions();
 		~GameOptions();

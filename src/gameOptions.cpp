@@ -25,10 +25,13 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-g mode       | 0 = no buffering, 1 = double buffer [default]\n"
 		"              | 2 = page flipping, 3 = triple buffering\n\n"
 		
+		"-m	id         | specify a different mode ID to use from default.xml\n\n"
+		
 		"-r file       | record a demo to 'file'\n"
 		"-p file       | playback a demo from 'file'\n\n"
 
 		"-h            | display this help message\n\n"
+
 		, arg0);
 	}
 }
@@ -36,6 +39,8 @@ void GameOptions::PrintOptions(char* arg0) {
 void GameOptions::Clear() {
 	fullscreen = false;
 	show_help = false;
+	
+	default_mode_id = 0;
 
 	record_demo = false;
 	playback_demo = false;
@@ -55,8 +60,12 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"g:r:p:fwh")) != -1) {
+	while ( (c = getopt(argc,argv,"m:g:r:p:fwh")) != -1) {
 		switch (c) {
+
+			case 'm':
+				default_mode_id = strtoul(optarg, NULL, 10);
+				break;
 
 			// get demo filename
 			case 'r': case 'p':
@@ -128,4 +137,6 @@ GameOptions::~GameOptions() {
 		delete demo_filename;
 }
 
-GameOptions::GameOptions() : demo_filename(NULL) {}
+GameOptions::GameOptions() : demo_filename(NULL) {
+	Clear();
+}

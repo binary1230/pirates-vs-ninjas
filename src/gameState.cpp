@@ -19,37 +19,65 @@
 // returns: XMLNode of first GameMode to load
 XMLNode GameState::LoadXMLConfig(CString xml_filename) {
 				
-	// XXX currently xmlParser just DIES if it can't load 
-	// the XML files or on corrupted file
+	int i, iterator, max;
+	int default_mode_id = options->GetDefaultModeId();
+
+	// XXX xmlParser just DIES on error
 	xml_filename = resourceLoader->GetPathOf(xml_filename.c_str());
 	xGame = XMLNode::openFileHelper(xml_filename.c_str(), "game");
 	
 	XMLNode xInfo = xGame.getChildNode("info");
-
-	// xInfo.getChildNode("map_version").getAttribute("name");
+	XMLNode xMode;
 	
+	max = xGame.nChildNode("mode_file");
+
 	fprintf(stderr, 
 		" Mod Info: requires engine version '%s'\n"
 		" Mod Info: map version '%s'\n"
 		" Mod Info: map author '%s'\n"
-		" Mod Info: Description: '%s'\n",
+		" Mod Info: Description: '%s'\n"
+		" Mod Info: Number of modes: '%i'\n"
+		" Mod Info: Default Mode ID: '%i'\n",
 		xInfo.getChildNode("requires_engine_version").getText(),
 		xInfo.getChildNode("game_version").getText(),
 		xInfo.getChildNode("author").getText(),
-		xInfo.getText() );
+		xInfo.getText(),
+		max, default_mode_id);
 
-	// Get the filename of the XML file which contains our first mode
-	CString mode_xml_filename = xGame.getChildNode("initial_mode_file").getText();
-	
+	// Go through all the available modes and find the default mode
+	bool found_default_mode = false;
+	int mode_id;
+	CString mode_xml_filename;
+
+	for (i=iterator=0; i<max; i++) {
+		xMode = xGame.getChildNode("mode_file", &iterator);
+
+		sscanf(xMode.getAttribute("id"), "%i", &mode_id);
+		
+		if (	!found_default_mode && 
+					 (default_mode_id == 0 || mode_id == default_mode_id)) {
+			found_default_mode = true;
+
+			// Get the filename of the XML file which contains our first mode
+			mode_xml_filename = xMode.getText();
+		}
+	}
+
+	if (!found_default_mode) {
+		if (default_mode_id == 0)
+			fprintf(stderr, " Mod ERROR: No mode tags found in default XML file!\n");
+		else
+			fprintf(stderr, " Mod ERROR: Mode ID '%i' not found in default XML file!\n", 
+				default_mode_id);
+	}
+
 	fprintf(stderr, 
-		" Mod Info: default map filename '%s'\n",
+		" Mod Info: default mode filename '%s'\n",
 		mode_xml_filename.c_str());
 
 	// Open that file, return the node
 	mode_xml_filename = resourceLoader->GetPathOf(mode_xml_filename);
-	XMLNode xMode = XMLNode::openFileHelper(mode_xml_filename.c_str(), "gameMode" );
-
-	return xMode;
+	return XMLNode::openFileHelper(mode_xml_filename.c_str(), "gameMode" );
 }
 
 //! Initialize a "game mode" (e.g. menu, simulation, etc)
