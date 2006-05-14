@@ -25,7 +25,7 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-g mode       | 0 = no buffering, 1 = double buffer [default]\n"
 		"              | 2 = page flipping, 3 = triple buffering\n\n"
 		
-		"-m	id         | specify a different mode ID to use from default.xml\n\n"
+		"-m id         | specify a different mode ID to use from default.xml\n\n"
 		
 		"-r file       | record a demo to 'file'\n"
 		"-p file       | playback a demo from 'file'\n\n"
