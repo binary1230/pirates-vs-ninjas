@@ -1,7 +1,7 @@
 PIRATES VERSUS NINJAS 
 An open source 2-d sidesrolling adventure for Linux, Windows, and MacOSx
 
-(c) 2005 Dominic Cerquetti (binary1230-at-yahoo-dot-com)
+(c) 2006 Dominic Cerquetti (binary1230-at-yahoo-dot-com)
 Licensed under the GNU GPL, see the file LICENSE for more information
 
 Full documenation available at the WIKI:
@@ -24,10 +24,63 @@ Player 2:
 LEFT, RIGHT, UP, DOWN with the 'A', 'S', 'D', 'W' keys
 JUMP with the 'E' key
 
+--------------------
+COMMAND LINE OPTIONS
+--------------------
+
+-f            try to force fullscreen mode
+
+-w            try to force windowed mode
+
+-g mode       Set Graphics Mode
+							0 = no buffering, 1 = double buffer [default]
+              2 = page flipping, 3 = triple buffering
+
+-m id         Set Default Mode (Level)
+							specify a different mode ID to use from default.xml
+
+-r file       record a demo to 'file'
+-p file       playback a demo from 'file'
+
+-h            display this help message
+
+--------
+EXAMPLES
+--------
+
+(these will change as the game progresses)
+
+Start on level 2
+ninjas.exe -m 2
+
+Try to start in fullscreen mode
+ninjas.exe -f
+
+Record a demo in file 'test.demo'
+ninjas.exe -r test.demo
+
+Play back a demo from file 'test.demo'
+ninjas.exe -p test.demo
+
+Show the help options
+ninjas.exe -h
+
+-------------------
+HACKING ON THE GAME
+-------------------
+
+Try messing with stuff in data/
+The entire game is controlled via a series of XML files.
+
+The game initial reads data/default.xml and includes the other XML files.
+
+You can customize pretty much everything by modifying things in those XML
+files.
+
+Happy hacking! Have fun!
+
 -------
 BUGS
 -------
 Found a bug? Report it to binary1230/at/yahoo/dot/com
 
-DESKTOP
-yea desktop stuff
