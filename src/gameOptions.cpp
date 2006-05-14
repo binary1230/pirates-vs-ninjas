@@ -1,5 +1,6 @@
 #include "gameOptions.h"
 #include "basename.h"
+#include "window.h"
 #include "globals.h"
 
 void GameOptions::PrintBanner() {
@@ -47,7 +48,7 @@ void GameOptions::Clear() {
 	
 	demo_filename = NULL;
 
-	graphics_mode = 1;	// XXX magic number. get it from window.h
+	graphics_mode = MODE_DOUBLEBUFFERING;	
 
 	is_valid = true;
 }
@@ -108,7 +109,6 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 			case 'g':
 				graphics_mode = strtoul(optarg, NULL, 10);
-				// XXX Magic number.  #define u twit.
 				if (graphics_mode >= 4 || graphics_mode < 0) {
 					fprintf(stderr, "ERROR: Graphics mode is out of range.\n");
 					show_help = true;
@@ -116,7 +116,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				}
 				break;
 	
-			// : and ? mean something is weird
+			// ':' and '?' mean unrecognized
 			default:
 			case ':': case '?':
 				fprintf(stderr, "Unrecognized command line option '-%c'\n", c);

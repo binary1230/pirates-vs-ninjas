@@ -17,9 +17,6 @@ class Sprite;
 // NO buffering (fastest, looks bad) NOT RECOMMENDED
 #define MODE_NOBUFFERING			0
 
-// This is just a test.  Gawd
-#define XXXX_REMOVE_ME_FUCKER
-
 // Double buffering (reduces tearing) recommended default
 #define MODE_DOUBLEBUFFERING	1
 
