@@ -145,7 +145,7 @@ int GameState::InitSystem() {
 		
 		fprintf(stderr, "[init: window]\n");
 		window = new Window();
-		if ( !window ||	window->Init(this, SCREEN_SIZE_X, SCREEN_SIZE_Y, 
+		if ( !window ||	window->Init(this, screen_size_x, screen_size_y, 
 										options->IsFullscreen(), options->GraphicsMode()) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init window!\n");
 			return -1;

@@ -5,6 +5,9 @@
 #include "globals.h"
 #include "sprite.h"
 
+int screen_size_x = DEFAULT_SCREEN_SIZE_X;
+int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
+
 // public function
 void Window::DrawBitmap(BITMAP* bmp, int x, int y, bool flip_x, bool flip_y) {
 

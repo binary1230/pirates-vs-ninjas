@@ -31,6 +31,8 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-r file       | record a demo to 'file'\n"
 		"-p file       | playback a demo from 'file'\n\n"
 
+		"-d            | (DEBUG ONLY) use 640x480 instead of 320x240\n\n"
+
 		"-h            | display this help message\n\n"
 
 		, arg0);
@@ -61,7 +63,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"m:g:r:p:fwh")) != -1) {
+	while ( (c = getopt(argc,argv,"m:g:r:p:fwhd")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -114,6 +116,12 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 					show_help = true;
 					return (is_valid = false);
 				}
+				break;
+
+			// a slight hack - 'double size'
+			case 'd':
+				screen_size_x = 640;
+				screen_size_y = 480;
 				break;
 	
 			// ':' and '?' mean unrecognized

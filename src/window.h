@@ -28,6 +28,9 @@ class Sprite;
 // see flickering or tearing.
 #define MODE_TRIPLEBUFFERING	3
 
+extern int screen_size_x;
+extern int screen_size_y;
+
 //! The onscreen window
 class Window : public GameBase {
 	protected:
