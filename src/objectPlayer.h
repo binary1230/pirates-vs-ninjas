@@ -28,6 +28,8 @@ class PlayerObject : public Object {
 		float min_velocity;
 		float drag;
 
+		bool on_floor;
+
 		int floor_height_xml;		// XXX temporary hack
 														// the "floor height" as read from the XML
 				
@@ -37,6 +39,7 @@ class PlayerObject : public Object {
 		bool LoadPlayerProperties(XMLNode &xDef);		//! Load object properties from XML
 		
 		void Update();
+		void Collide(Object* obj);
 			
 		static Object* New(GameState* gameState, XMLNode &xDef, XMLNode &xObj);
 		

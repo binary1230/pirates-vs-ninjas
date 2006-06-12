@@ -9,9 +9,24 @@
 #include "physSimulation.h"
 #include "xmlParser.h"
 
-//! XXX not always the animation width!
-int Object::GetWidth() { return currentAnimation->GetWidth(); }
-int Object::GetHeight() {	return currentAnimation->GetHeight(); }
+// GetWidth() and GetHeight() need rethinking.
+
+int Object::GetWidth() { 
+	// return currentAnimation->GetWidth();
+	
+	if (animations.size() > 0 && animations[0])
+		return animations[0]->GetWidth();
+	else
+		return 0;
+}
+
+int Object::GetHeight() {	
+	// return currentAnimation->GetHeight();
+	if (animations.size() > 0 && animations[0])
+		return animations[0]->GetHeight();
+	else
+		return 0;
+}
 
 //! Cache some commonly used stuff
 void Object::SetupCachedVariables() {
@@ -192,14 +207,116 @@ bool Object::LoadProperties(XMLNode &xDef) {
 // Return a vector with x,y set to 
 // the closest these two objects can get to
 // each other without colliding
-Vector2D GetBound(Object* obj) {
+CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
+	
+	bool check_up = false, check_right = false;
+	CollisionDirection d; d.up = d.down = d.left = d.right = 0;
+
+	v.SetX(GetX());
+	v.SetY(GetY()); 
+	
+	if (vel.GetX() > 0) check_right = true;
+	if (vel.GetY() > 0) check_up = true;
+
+	if (check_right && 
+			old_pos.GetX() + GetWidth() < obj->GetX() &&
+			obj->GetX() < GetX() + GetWidth() 
+			) {
+		d.right = 1;
+	} else if (	GetX() < 
+							obj->GetX() + obj->GetWidth() && 
+							obj->GetX() + obj->GetWidth() <
+							old_pos.GetX()) {
+		d.left = 1;
+	}
+
+	if (check_up && 
+		old_pos.GetY() < obj->GetY() &&
+		obj->GetY() < GetY() + GetHeight()) {
+		d.up = 1;
+	} else if (	GetY() < 
+							obj->GetY() + obj->GetHeight() && 
+							obj->GetY() + obj->GetHeight() <
+							old_pos.GetY() ) {
+		d.down = 1;
+	}
+
+	if (d.up) {
+		v.SetY(obj->GetY() - GetHeight());
+		printf("up!");
+	}
+
+	if (d.down) {
+		v.SetY(obj->GetY() + obj->GetHeight());
+		printf("down!");
+	}
+
+	if (d.left) {
+		v.SetX(obj->GetX() + obj->GetWidth());
+		printf("left!");
+	}
+
+	if (d.right) {
+		v.SetX(obj->GetX() - GetWidth());
+		printf("right!");
+	}
+
+	printf("-\n");
+
+		/*if (GetX() < obj->GetX() + obj->GetWidth()) {
+			d.left = 1;
+			printf("left!");
+		}*/
+	
+//	if (check_up) {
+
+
+
+		/*printf("|checking up...");
+		if (GetY() + obj->GetHeight() > obj->GetY()) {
+			d.up = 1;
+			printf("up!");
+		}*/
+//	} else { // check down
+
+
+
+		/*printf("|checking down...");
+		if (GetY() - GetHeight() < obj->GetY()  ) {
+			d.down = 1;
+			printf("down!");
+		}*/
+//	}
+
+	//printf("\n");
+
+/*	if (d.right)
+//			&& !( d.up || d.down))
+		v.SetX(obj->GetX() - GetWidth());
+
+	if (d.left) 
+	//		&& !( d.up || d.down))
+		v.SetX(obj->GetX() + obj->GetWidth());
+
+	if (d.up )
+	//		&& ! (d.right || d.left) )
+		v.SetY(obj->GetY() - GetHeight());
+
+	if (d.down )
+	//		&& ! (d.right || d.left) )
+		v.SetY(obj->GetY() + obj->GetHeight());*/
+
+	return d;
 }
 
+// XXX need to check OLDPOS too in order to form
+// a path where the player went.  otherwise, they could
+// 'skip' through a block if going too fast
 bool Object::IsColliding(Object *obj) {
-	if (pos.GetX() + GetWidth() > obj->pos.GetX() &&
-			pos.GetX() < obj->pos.GetX() + obj->GetWidth() &&
-			pos.GetY() + GetHeight() > obj->pos.GetY() &&
-			pos.GetY() < obj->pos.GetY() + obj->GetHeight() )
+	if (GetX() + GetWidth() > obj->pos.GetX() &&
+			GetX() < obj->pos.GetX() + obj->GetWidth() &&
+			GetY() + GetHeight() > obj->pos.GetY() &&
+			GetY() < obj->pos.GetY() + obj->GetHeight() )
 			return true;
 
 	return false;
@@ -210,9 +327,7 @@ void Object::MoveBack() {
 }
 
 void Object::Collide(Object* obj) {
-	if (properties.is_player && obj->GetProperties().is_solid) {
-		MoveBack();		
-	}
+	// default is no action, this is overriden in higher classes
 }
 
 void Object::MoveToNewPosition() {

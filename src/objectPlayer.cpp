@@ -38,17 +38,19 @@ void PlayerObject::Update() {
 		pos.SetX(w - GetWidth());
 	}
 
-	// See if we hit the floor
+	// HACK, for now See if we hit the floor
 	if (pos.GetY() < floor_height) {
 			pos.SetY(floor_height);
+			on_floor = true;
 	}
 
 	// If we're on the floor.. 
-	if (pos.GetY() == floor_height) {
+	if (on_floor == true) {
 					
 		// Then we can jump.
 		if (game_state->GetKey(PLAYERKEY_JUMP, controller_num)) {
 			vel.SetY(jump_velocity);
+			on_floor = false;
 	  }	else {
 			vel *= drag;	
 			
@@ -90,10 +92,30 @@ void PlayerObject::Update() {
 	currentSprite = currentAnimation->GetCurrentSprite();
 }
 
+void PlayerObject::Collide(Object* obj) {
+	  if (properties.is_player && obj->GetProperties().is_solid) {
+
+    Vector2D newpos;
+    CollisionDirection d = GetBound(obj, newpos);
+
+    pos = newpos;
+
+    if (d.left || d.right)
+      vel.SetX(0);
+
+    if (d.up || d.down)
+      vel.SetY(0);
+
+		if (d.down)
+			on_floor = true;
+  }
+}
+
 bool PlayerObject::Init(GameState* _game_state) {
 	SetGameState(_game_state);
 	
 	controller_num = 1;
+	on_floor = 0;
 
 	return BaseInit();
 }
@@ -104,6 +126,7 @@ PlayerObject::PlayerObject() {
 	mass = 1.0f;
 	drag = DEFAULT_DRAG;
 	floor_height_xml = DEFAULT_FLOOR_HEIGHT;
+	on_floor = 0;
 }
 
 PlayerObject::~PlayerObject() {}

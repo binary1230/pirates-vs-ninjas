@@ -21,6 +21,13 @@ typedef vector<Object*> ObjectList;
 #include "xmlParser.h"
 #include "animations.h"
 
+struct CollisionDirection {
+	unsigned up : 1;
+	unsigned down : 1;
+	unsigned left : 1;
+	unsigned right : 1;
+};
+
 //! Various properties of an Object
 struct ObjectProperties {
 	
@@ -199,7 +206,7 @@ class Object : public GameBase {
 		//! This vector will be have a position that is guaranteed
 		//! to make the passed object NOT collide with THIS object.
 		//! (based on velocity)
-		Vector2D BoundObject(Object *o);
+		CollisionDirection GetBound(Object* obj, Vector2D &v);
 		
 		Object();
 		virtual ~Object();
