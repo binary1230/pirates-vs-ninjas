@@ -41,11 +41,13 @@ class BaseInput;
 #define PLAYERKEY2_DOWN					9
 
 #define GAMEKEY_EXIT						10
+#define GAMEKEY_DEBUGPAUSE			11
+#define GAMEKEY_DEBUGSTEP				12
 
 /* End of logical mapping */
 
 //! The max number of defined keys 
-#define GAMEKEY_COUNT						11
+#define GAMEKEY_COUNT						13
 
 //! Input Base Class
  

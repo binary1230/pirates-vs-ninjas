@@ -19,7 +19,9 @@
 #define DEFAULT_PLAYERKEY_P2_DOWN		KEY_S
 
 // Other keys
-#define DEFAULT_GAMEKEY_EXIT	KEY_ESC
+#define DEFAULT_GAMEKEY_EXIT				KEY_ESC
+#define DEFAULT_GAMEKEY_DEBUGPAUSE	KEY_F1
+#define DEFAULT_GAMEKEY_DEBUGSTEP		KEY_F2
 
 void BaseInput::ClearKeys() {
 	ClearKeys(game_key);
@@ -66,6 +68,8 @@ void BaseInput::LoadDefaultKeyMappings() {
 	gamekey_to_realkey[PLAYERKEY_DOWN+player2_offset] =DEFAULT_PLAYERKEY_P2_DOWN;
 
 	gamekey_to_realkey[GAMEKEY_EXIT] = DEFAULT_GAMEKEY_EXIT;
+	gamekey_to_realkey[GAMEKEY_DEBUGPAUSE] = DEFAULT_GAMEKEY_DEBUGPAUSE;
+	gamekey_to_realkey[GAMEKEY_DEBUGSTEP] = DEFAULT_GAMEKEY_DEBUGSTEP;
 	
 	ClearKeys();
 }

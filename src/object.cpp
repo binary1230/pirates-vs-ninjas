@@ -235,16 +235,34 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 		d.left = 1;
 	}
 
-	if (check_up && 
+	printf("oy=%f, oy-h=%f, by=%f, ny=%f, ny-h=%f . ", 
+		old_pos.GetY(), old_pos.GetY() - GetHeight(),
+		(float)obj->GetY(), (float)GetY(), (float)GetY() - (float)GetHeight());
+
+	/*if (check_up && 
 		old_pos.GetY() <= obj->GetY() &&
 		obj->GetY() <= GetY() + GetHeight()) {
 		d.up = 1;
-	} else if (	GetY() <= 
+	} else*/ /*if (	old_pos.GetY() - GetHeight() >= 
+							obj->GetY() && 
+							obj->GetY() >=
+							GetY() - GetHeight() ) {
+		d.down = 1;
+	}*/
+
+	/*if (check_up && 
+			old_pos.GetY() + Get() <= obj->GetX() &&
+			obj->GetX() <= GetX() + GetWidth() 
+			) {
+		d.right = 1;
+	} else */if (	!check_up && GetY() <= 
 							obj->GetY() + obj->GetHeight() && 
 							obj->GetY() + obj->GetHeight() <=
-							old_pos.GetY() ) {
+							old_pos.GetY()) {
 		d.down = 1;
 	}
+
+
 
 	if (d.up) {
 		v.SetY(obj->GetY() - GetHeight());

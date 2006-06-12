@@ -244,6 +244,11 @@ int GameState::RunGame(GameOptions* _options) {
 //! at the correct speed.
 void GameState::MainLoop() {
 				
+	int debug_update_count;
+	bool released_step = 1;
+	bool released_pause = 1;
+	bool pause_toggle = 0;
+
 	while (!exit_game) {
 
 		// outstanding_updates is incremented once every 1/60th of a sec.
@@ -252,6 +257,46 @@ void GameState::MainLoop() {
 		// no matter the speed of the computer
 		while (outstanding_updates > 0 && !exit_game) {
 			Update();	// mode signals handled here
+
+			// ignore this IF if not looking at debug functionality
+			// e.g. trying to understand this loop.  just skip this piece
+
+			if (!input->Key(GAMEKEY_DEBUGPAUSE))
+				released_pause = 1;
+
+			if (released_pause && input->Key(GAMEKEY_DEBUGPAUSE)) {
+				pause_toggle = !pause_toggle;
+				released_pause = 0;
+			}
+
+			if (pause_toggle) {
+			
+				debug_update_count = outstanding_updates;
+
+				while (pause_toggle) {
+					input->Update();
+					Draw();	
+
+					if (!input->Key(GAMEKEY_DEBUGPAUSE))
+						released_pause = 1;
+
+					if (released_pause && input->Key(GAMEKEY_DEBUGPAUSE)) {
+						pause_toggle = !pause_toggle;
+						released_pause = 0;
+					}
+
+					if (!input->Key(GAMEKEY_DEBUGSTEP))
+						released_step = 1;
+						
+					if (released_step && input->Key(GAMEKEY_DEBUGSTEP)) {
+						released_step = 0;
+						break;
+					}
+				}
+
+				outstanding_updates = debug_update_count;
+			}
+
 			outstanding_updates--;
 		}
 		if (!exit_game) Draw();
