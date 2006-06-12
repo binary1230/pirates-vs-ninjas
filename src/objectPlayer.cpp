@@ -38,10 +38,15 @@ void PlayerObject::Update() {
 		pos.SetX(w - GetWidth());
 	}
 
-	// HACK, for now See if we hit the floor
+	if (d.down)
+		on_floor = true;
+	else
+		on_floor = false;
+
+	// HACK, for now See if we hit 'the floor'
 	if (pos.GetY() < floor_height) {
-			pos.SetY(floor_height);
-			on_floor = true;
+		pos.SetY(floor_height);
+		on_floor = true;
 	}
 
 	// If we're on the floor.. 
@@ -93,21 +98,19 @@ void PlayerObject::Update() {
 }
 
 void PlayerObject::Collide(Object* obj) {
-	  if (properties.is_player && obj->GetProperties().is_solid) {
-
-    Vector2D newpos;
-    CollisionDirection d = GetBound(obj, newpos);
-
+  if (obj->GetProperties().is_solid) {
+    
+		Vector2D newpos;
+    d = GetBound(obj, newpos);
     pos = newpos;
 
     if (d.left || d.right)
       vel.SetX(0);
 
-    if (d.up || d.down)
+    if (d.down) {
       vel.SetY(0);
-
-		if (d.down)
 			on_floor = true;
+		}
   }
 }
 

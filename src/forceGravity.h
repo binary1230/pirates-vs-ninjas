@@ -17,7 +17,7 @@ class ForceGravity : public Force {
 	public:
 		Vector2D GetForce(Object*);
 
-		ForceGravity(float _magnitude = -9.81f);
+		ForceGravity(float _magnitude = -25.0f);
 		virtual ~ForceGravity();
 };
 

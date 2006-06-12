@@ -20,6 +20,10 @@ void Window::DrawBitmap(BITMAP* bmp, int x, int y, bool flip_x, bool flip_y) {
 	DrawBitmapAt(bmp, x, y, flip_x, flip_y);
 }
 
+void Window::DrawRect(int x, int y, int w, int h) {
+	rect(drawing_surface, x, y, x+w, y+h, makecol(255, 0, 255));
+}
+
 // private: only
 void Window::DrawBitmapAt(BITMAP* bmp, int x, int y, bool flip_x, bool flip_y) {
 	if (!flip_x) 

@@ -89,6 +89,9 @@ class Object : public GameBase {
 		//! Current force
 		Vector2D accel;
 		
+		//! The directions of current collisions (up,down,right,left)
+		CollisionDirection d;
+		
 		//! Object properties
 		struct ObjectProperties properties;
 		

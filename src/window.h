@@ -70,6 +70,9 @@ class Window : public GameBase {
 		void DrawSprite(Sprite* sprite, int x, int y, bool flip_x=0, bool flip_y=0);
 		void DrawBitmap(BITMAP* bmp, int x, int y, bool flip_x=0, bool flip_y=0);
 
+		//! Debug only - draw a bounding rectangle
+		void DrawRect(int x, int y, int w, int h);
+
 		Window();
 		~Window();
 };

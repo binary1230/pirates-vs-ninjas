@@ -78,6 +78,10 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	if (sprite_to_draw)
 		GetGameState()->GetWindow()->
 		DrawSprite(sprite_to_draw, x, y, flip_x, flip_y);
+
+	if (properties.is_player || properties.is_solid)
+		GetGameState()->GetWindow()->
+		DrawRect(x, y, GetWidth(), GetHeight());
 }
 
 void Object::ApplyForce(Force* force) {
@@ -93,6 +97,7 @@ void Object::ApplyForce(Force* force) {
 void Object::ResetForNextFrame() {
 	old_pos = pos;
 	accel.Clear();
+	d.up = d.down = d.left = d.right = 0;
 }
 
 //! Solve for new position based on velocity
@@ -219,24 +224,24 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	if (vel.GetY() > 0) check_up = true;
 
 	if (check_right && 
-			old_pos.GetX() + GetWidth() < obj->GetX() &&
-			obj->GetX() < GetX() + GetWidth() 
+			old_pos.GetX() + GetWidth() <= obj->GetX() &&
+			obj->GetX() <= GetX() + GetWidth() 
 			) {
 		d.right = 1;
-	} else if (	GetX() < 
+	} else if (	GetX() <= 
 							obj->GetX() + obj->GetWidth() && 
-							obj->GetX() + obj->GetWidth() <
+							obj->GetX() + obj->GetWidth() <=
 							old_pos.GetX()) {
 		d.left = 1;
 	}
 
 	if (check_up && 
-		old_pos.GetY() < obj->GetY() &&
-		obj->GetY() < GetY() + GetHeight()) {
+		old_pos.GetY() <= obj->GetY() &&
+		obj->GetY() <= GetY() + GetHeight()) {
 		d.up = 1;
-	} else if (	GetY() < 
+	} else if (	GetY() <= 
 							obj->GetY() + obj->GetHeight() && 
-							obj->GetY() + obj->GetHeight() <
+							obj->GetY() + obj->GetHeight() <=
 							old_pos.GetY() ) {
 		d.down = 1;
 	}
@@ -247,8 +252,8 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	}
 
 	if (d.down) {
-		v.SetY(obj->GetY() + obj->GetHeight());
-		printf("down!");
+		v.SetY(obj->GetY() + GetHeight() );
+		printf("down / %f!", v.GetY());
 	}
 
 	if (d.left) {
@@ -262,49 +267,6 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	}
 
 	printf("-\n");
-
-		/*if (GetX() < obj->GetX() + obj->GetWidth()) {
-			d.left = 1;
-			printf("left!");
-		}*/
-	
-//	if (check_up) {
-
-
-
-		/*printf("|checking up...");
-		if (GetY() + obj->GetHeight() > obj->GetY()) {
-			d.up = 1;
-			printf("up!");
-		}*/
-//	} else { // check down
-
-
-
-		/*printf("|checking down...");
-		if (GetY() - GetHeight() < obj->GetY()  ) {
-			d.down = 1;
-			printf("down!");
-		}*/
-//	}
-
-	//printf("\n");
-
-/*	if (d.right)
-//			&& !( d.up || d.down))
-		v.SetX(obj->GetX() - GetWidth());
-
-	if (d.left) 
-	//		&& !( d.up || d.down))
-		v.SetX(obj->GetX() + obj->GetWidth());
-
-	if (d.up )
-	//		&& ! (d.right || d.left) )
-		v.SetY(obj->GetY() - GetHeight());
-
-	if (d.down )
-	//		&& ! (d.right || d.left) )
-		v.SetY(obj->GetY() + obj->GetHeight());*/
 
 	return d;
 }
