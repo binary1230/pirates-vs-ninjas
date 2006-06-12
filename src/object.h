@@ -28,6 +28,9 @@ struct ObjectProperties {
 	unsigned feels_gravity : 1;	
 	unsigned feels_user_input : 1;
 	unsigned feels_friction : 1;
+
+	//! If solid, another solid object cannot move through it
+	unsigned is_solid: 1;
 	
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -41,6 +44,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.feels_user_input = 0;
 	p.feels_friction = 0;
 	p.is_overlay = 0;
+	p.is_solid = 0;
 }
 
 //! A drawable entity in the physics simulation
@@ -168,6 +172,15 @@ class Object : public GameBase {
 		
 		void SetDebugFlag(bool d) {debug_flag = d;};
 		bool GetDebugFlag() {return debug_flag;};
+
+		//! Called on collision with another object
+		void Collision(Object *o);
+
+		//! Returns a vector used for collision detection
+		//! This vector will be have a position that is guaranteed
+		//! to make the passed object NOT collide with THIS object.
+		//! (based on velocity)
+		Vector2D BoundObject(Object *o);
 		
 		Object();
 		virtual ~Object();
