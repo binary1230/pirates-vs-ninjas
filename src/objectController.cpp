@@ -164,6 +164,9 @@ Object* ControllerObject::New(	GameState* _game_state,
 	if (xDef.nChildNode("showDuringDemoOnly") > 0)
 		obj->only_show_during_demo = true;
 	
+	if (!obj->LoadProperties(xDef))
+		return NULL;
+	
 	return obj;
 }
 

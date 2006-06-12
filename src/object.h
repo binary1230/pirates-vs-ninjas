@@ -31,6 +31,8 @@ struct ObjectProperties {
 
 	//! If solid, another solid object cannot move through it
 	unsigned is_solid: 1;
+	unsigned is_player: 1;
+
 	
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -45,6 +47,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.feels_friction = 0;
 	p.is_overlay = 0;
 	p.is_solid = 0;
+	p.is_player = 0;
 }
 
 //! A drawable entity in the physics simulation
@@ -69,6 +72,9 @@ class Object : public GameBase {
 					
 		//! Current position
 		Vector2D pos;
+
+		//! Old position (last frame)
+		Vector2D old_pos;
 
 		//! Current velocity 
 		Vector2D vel;
@@ -102,6 +108,7 @@ class Object : public GameBase {
 		//! Solve for the new position of this object
 		Vector2D Solve();
 
+
 		//! Base class initialization
 		bool BaseInit();	
 
@@ -113,6 +120,14 @@ class Object : public GameBase {
 		virtual void Shutdown();
 		
 		virtual void Update() = 0;
+
+		//! Move this object to its new position (done before 
+		//! collision detection)
+		void MoveToNewPosition();
+
+		//! Move this object back to its previous frame's position
+		void MoveBack();
+
 		virtual void Draw();
 
 		void Transform(int &x, int &y, int offset_x = 0, int offset_y = 0);
@@ -172,9 +187,13 @@ class Object : public GameBase {
 		
 		void SetDebugFlag(bool d) {debug_flag = d;};
 		bool GetDebugFlag() {return debug_flag;};
+		
+		bool LoadProperties(XMLNode &xDef);		//! Load object properties from XML
+		
+		//! Handle collisions with another object
+		virtual void Collide(Object* obj);
 
-		//! Called on collision with another object
-		void Collision(Object *o);
+		bool IsColliding(Object* obj);
 
 		//! Returns a vector used for collision detection
 		//! This vector will be have a position that is guaranteed

@@ -29,11 +29,11 @@ class Vector2D {
 	 	inline void SetY(float _y) {y=_y;}
 		
 		//! Assign a vector's values to this vector
-		/*inline Vector2D Vector2D::operator=(const Vector2D &v) {
+		inline Vector2D Vector2D::operator=(const Vector2D &v) {
 			x = v.GetX();
 			y = v.GetY();
-			return ;
-		}*/
+			return *this;
+		}
 	
 		//! Add two vectors
 		inline Vector2D Vector2D::operator+(const Vector2D &v) const {

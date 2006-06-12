@@ -54,6 +54,9 @@ Object* BackgroundObject::New(	GameState* gameState,
 	if (!obj->LoadAnimations(xDef) )
 		return NULL;
 	
+	if (!obj->LoadProperties(xDef))
+		return NULL;
+	
 	return obj;
 }
 

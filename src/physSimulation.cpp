@@ -154,6 +154,42 @@ void PhysSimulation::Solve() {
 	}
 }
 
+// TODO: probably a BIG source of CPU here.
+// probably need to optimize, but PROFILE to find out.
+void PhysSimulation::CheckForCollisions() {
+
+	Object* player;
+	
+	int i, j, max = objects.size();
+	
+	for (i = 0; i < max; i++) {
+		if (objects[i]->GetProperties().is_player) {
+			
+			player = objects[i];
+
+			for (j = 0; j < max; j++) {
+				if (objects[j] != player && 
+						objects[j]->GetProperties().is_solid &&
+						objects[j]->IsColliding(player)) {
+
+					objects[j]->Collide(player);
+					player->Collide(objects[j]);
+				}
+			}
+		}
+	}
+			
+}
+
+//! Move all objects to newly computed positions.
+//! NO COLLISION DETECTION HAPPENS YET
+void PhysSimulation::MoveObjectsToNewPositions() {			
+	int i, max = objects.size();
+	for (i = 0; i < max; i++) {
+		objects[i]->MoveToNewPosition();
+	}
+}
+
 //! Update all objects
 void PhysSimulation::UpdateObjects() {			
 	int i, max = objects.size();
@@ -173,8 +209,10 @@ void PhysSimulation::Update() {
 	}
 
 	// Do the physics simulation
-	ResetForNextFrame();
-	Solve();
+	ResetForNextFrame();	// oldpos = current_pos
+	Solve();	// Applies forces
+	MoveObjectsToNewPositions(); // newpos
+	CheckForCollisions(); // newpos = oldpos
 	UpdateObjects();
 		
 	// Calc where to put the camera now

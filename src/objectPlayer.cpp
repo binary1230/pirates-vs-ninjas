@@ -29,9 +29,6 @@ void PlayerObject::Update() {
 	int w = simulation->GetWidth();
 	int floor_height = floor_height_xml + GetHeight();
 
-	// Compute the new position
-	pos = Solve();
-
 	// See if we're out of bounds
 	if (pos.GetX() < 0) {
 		vel.SetX(-vel.GetX());
@@ -133,11 +130,16 @@ Object* PlayerObject::New(GameState* gameState, XMLNode &xDef, XMLNode &xObj) {
 	if (!obj->LoadProperties(xDef))
 		return NULL;
 
+	if (!obj->LoadPlayerProperties(xDef))
+		return NULL;
+
 	return obj;
 }
 
-bool PlayerObject::LoadProperties(XMLNode &xDef) {
+bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	XMLNode xProps = xDef.getChildNode("properties");
+
+	properties.is_player = 1;
 
 	sscanf(xProps.getChildNode("jumpVelocity").getText(), 
 									"%f", &jump_velocity);
@@ -145,14 +147,11 @@ bool PlayerObject::LoadProperties(XMLNode &xDef) {
 									"%f", &min_velocity);
 	sscanf(xProps.getChildNode("drag").getText(), 
 									"%f", &drag);
-	sscanf(xProps.getChildNode("mass").getText(), 
-									"%f", &mass);	
+
+	// XXX HACK! Should not have a "floor height"
+	// this will be replaced once collision detection is fully in place.
 	sscanf(xProps.getChildNode("floorHeight").getText(), 
 									"%i", &floor_height_xml);	
 	
-	properties.feels_gravity = 		xProps.nChildNode("affectedByGravity"); 
-	properties.feels_user_input =	xProps.nChildNode("affectedByInput1"); 
-	properties.feels_friction =		xProps.nChildNode("affectedByFriction"); 
-
 	return true;
 }

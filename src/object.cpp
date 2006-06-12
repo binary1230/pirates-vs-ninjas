@@ -9,6 +9,7 @@
 #include "physSimulation.h"
 #include "xmlParser.h"
 
+//! XXX not always the animation width!
 int Object::GetWidth() { return currentAnimation->GetWidth(); }
 int Object::GetHeight() {	return currentAnimation->GetHeight(); }
 
@@ -75,12 +76,12 @@ void Object::ApplyForce(Force* force) {
 }
 
 void Object::ResetForNextFrame() {
+	old_pos = pos;
 	accel.Clear();
 }
 
 //! Solve for new position based on velocity
 Vector2D Object::Solve() {
-	// Vector2D newpos = pos;
 
 	vel += accel;
 	pos += vel;
@@ -169,6 +170,53 @@ bool Object::LoadAnimations(XMLNode &xDef, AnimationMapping *animation_lookup) {
 	currentSprite = currentAnimation->GetCurrentSprite();
 
 	return true;
+}
+
+//! Load some common object properties from XML
+bool Object::LoadProperties(XMLNode &xDef) {
+	XMLNode xProps = xDef.getChildNode("properties");
+
+	if (xProps.nChildNode("mass"))
+		sscanf(xProps.getChildNode("mass").getText(), "%f", &mass);	
+	
+	ClearProperties(properties);
+	properties.feels_gravity = 		xProps.nChildNode("affectedByGravity"); 
+	properties.feels_user_input =	xProps.nChildNode("affectedByInput1"); 
+	properties.feels_friction =		xProps.nChildNode("affectedByFriction"); 
+
+	properties.is_solid =		xProps.nChildNode("solidObject"); 
+
+	return true;
+}
+
+// Return a vector with x,y set to 
+// the closest these two objects can get to
+// each other without colliding
+Vector2D GetBound(Object* obj) {
+}
+
+bool Object::IsColliding(Object *obj) {
+	if (pos.GetX() + GetWidth() > obj->pos.GetX() &&
+			pos.GetX() < obj->pos.GetX() + obj->GetWidth() &&
+			pos.GetY() + GetHeight() > obj->pos.GetY() &&
+			pos.GetY() < obj->pos.GetY() + obj->GetHeight() )
+			return true;
+
+	return false;
+}
+
+void Object::MoveBack() {
+	pos = old_pos;
+}
+
+void Object::Collide(Object* obj) {
+	if (properties.is_player && obj->GetProperties().is_solid) {
+		MoveBack();		
+	}
+}
+
+void Object::MoveToNewPosition() {
+	pos = Solve();
 }
 
 Object::~Object() {}

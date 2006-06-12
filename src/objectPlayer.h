@@ -34,7 +34,7 @@ class PlayerObject : public Object {
 	public:
 		bool Init(GameState* _game_state);
 		
-		bool LoadProperties(XMLNode &xDef);		//! Load object properties from XML
+		bool LoadPlayerProperties(XMLNode &xDef);		//! Load object properties from XML
 		
 		void Update();
 			

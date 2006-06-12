@@ -90,6 +90,9 @@ class PhysSimulation : public GameMode {
 			void TransformWorldToView(int &x, int &y);
 			void TransformViewToScreen(int &x, int &y);
 
+			void MoveObjectsToNewPositions();
+			void CheckForCollisions();
+
 			PhysSimulation();
 			~PhysSimulation();
 };
