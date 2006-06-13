@@ -30,7 +30,7 @@ class PlayerObject : public Object {
 
 		bool on_floor;
 
-		int floor_height_xml;		// XXX temporary hack
+		// int floor_height_xml;		// XXX temporary hack
 														// the "floor height" as read from the XML
 				
 	public:

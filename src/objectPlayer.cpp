@@ -22,12 +22,12 @@
 // eventually, ALL collision stuff will be taken care
 // of by the objects outside this one.
 void PlayerObject::Update() {
-
+	
 	assert(currentAnimation != NULL);
 	currentAnimation->Update();
 				
 	int w = simulation->GetWidth();
-	int floor_height = floor_height_xml + GetHeight();
+	// int floor_height = floor_height_xml + GetHeight();
 
 	// See if we're out of bounds
 	if (pos.GetX() < 0) {
@@ -44,10 +44,10 @@ void PlayerObject::Update() {
 		on_floor = false;
 
 	// HACK, for now See if we hit 'the floor'
-	if (pos.GetY() < floor_height) {
+	/*if (pos.GetY() < floor_height) {
 		pos.SetY(floor_height);
 		on_floor = true;
-	}
+	}*/
 
 	// If we're on the floor.. 
 	if (on_floor == true) {
@@ -128,7 +128,7 @@ PlayerObject::PlayerObject() {
 	min_velocity = DEFAULT_MIN_VELOCITY;
 	mass = 1.0f;
 	drag = DEFAULT_DRAG;
-	floor_height_xml = DEFAULT_FLOOR_HEIGHT;
+	// floor_height_xml = DEFAULT_FLOOR_HEIGHT;
 	on_floor = 0;
 }
 
@@ -176,8 +176,8 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 
 	// XXX HACK! Should not have a "floor height"
 	// this will be replaced once collision detection is fully in place.
-	sscanf(xProps.getChildNode("floorHeight").getText(), 
-									"%i", &floor_height_xml);	
+	/*sscanf(xProps.getChildNode("floorHeight").getText(), 
+									"%i", &floor_height_xml);	*/
 	
 	return true;
 }

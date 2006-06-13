@@ -133,6 +133,8 @@ void PhysSimulation::Draw() {
 //! Reset all objects for the next frame
 void PhysSimulation::ResetForNextFrame() {
 	int i, max = objects.size();
+	
+	fprintf(stderr, "\033[H\033[J\r\n");
 
 	for (i = 0; i < max; i++) {
 		objects[i]->ResetForNextFrame();

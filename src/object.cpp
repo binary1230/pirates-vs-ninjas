@@ -235,10 +235,6 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 		d.left = 1;
 	}
 
-	printf("oy=%f, oy-h=%f, by=%f, ny=%f, ny-h=%f . ", 
-		old_pos.GetY(), old_pos.GetY() - GetHeight(),
-		(float)obj->GetY(), (float)GetY(), (float)GetY() - (float)GetHeight());
-
 	/*if (check_up && 
 		old_pos.GetY() <= obj->GetY() &&
 		obj->GetY() <= GetY() + GetHeight()) {
@@ -255,36 +251,52 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 			obj->GetX() <= GetX() + GetWidth() 
 			) {
 		d.right = 1;
-	} else */if (	!check_up && GetY() <= 
-							obj->GetY() + obj->GetHeight() && 
-							obj->GetY() + obj->GetHeight() <=
-							old_pos.GetY()) {
+	} else *//*if (	!check_up && GetY() <= 
+							obj->GetY() - obj->GetHeight() && 
+							obj->GetY() - obj->GetHeight() <=
+							old_pos.GetY()) {*/
+	if (	!check_up )
+		fprintf(stderr, "CHECKING DOWN!\n\n");
+		if (
+				old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
+				obj->pos.GetY() >= pos.GetY() - (float)GetHeight()) {
 		d.down = 1;
 	}
 
+if (properties.is_player)
+
+	fprintf(stderr, "     TOP(y)       BOT(y-h)\n"
+									"OLD:    %f        -->%f\n"
+									"BOX: -->%f           %f\n"
+									"NEW:    %f        -->%f\n"
+				 					"\n\nCollisions:", 
+		old_pos.GetY(), old_pos.GetY() - GetHeight(),
+		obj->pos.GetY(), obj->pos.GetY() - obj->GetHeight(),
+		(float)GetY(), (float)GetY() - (float)GetHeight());
 
 
 	if (d.up) {
 		v.SetY(obj->GetY() - GetHeight());
-		printf("up!");
+		fprintf(stderr, "up!");
 	}
 
 	if (d.down) {
 		v.SetY(obj->GetY() + GetHeight() );
-		printf("down / %f!", v.GetY());
+		fprintf(stderr, "down / %f!", v.GetY());
 	}
 
 	if (d.left) {
 		v.SetX(obj->GetX() + obj->GetWidth());
-		printf("left!");
+		fprintf(stderr, "left!");
 	}
 
 	if (d.right) {
 		v.SetX(obj->GetX() - GetWidth());
-		printf("right!");
+		fprintf(stderr, "right!");
 	}
 
-	printf("-\n");
+	if (!(d.right || d.left || d.down || d.up))
+		fprintf(stderr, "NONE! Not good.\n");
 
 	return d;
 }
@@ -295,8 +307,9 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 bool Object::IsColliding(Object *obj) {
 	if (GetX() + GetWidth() > obj->pos.GetX() &&
 			GetX() < obj->pos.GetX() + obj->GetWidth() &&
-			GetY() + GetHeight() > obj->pos.GetY() &&
-			GetY() < obj->pos.GetY() + obj->GetHeight() )
+
+			GetY() + GetHeight() < obj->pos.GetY() &&
+			GetY() > obj->pos.GetY() - obj->GetHeight() )
 			return true;
 
 	return false;
