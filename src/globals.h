@@ -28,4 +28,12 @@ typedef unsigned int uint;
 #define FPS 30
 #define TIMESTEP 1/FPS
 
+//! A fudge value.  You can't compare two floats
+//! directly, we just want to know if they are close.
+//! This defines how close they must be to be considered
+//! 'equal'
+#define TOLERANCE 0.00001
+
+
+
 #endif // GLOBALS_H

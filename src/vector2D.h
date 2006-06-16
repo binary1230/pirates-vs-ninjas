@@ -5,15 +5,11 @@
 #include <math.h>
 #include <vector>
 
+#include "globals.h"
+
 using namespace std;
 
 class Vector2D;
-
-//! A fudge value.  You can't compare two floats
-//! directly, we just want to know if they are close.
-//! This defines how close they must be to be considered
-//! 'equal'
-#define TOLERANCE 0.00001
 
 //! A 2 Dimensional Vector
 class Vector2D {
