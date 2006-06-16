@@ -17,6 +17,7 @@ typedef vector<Object*> ObjectList;
 
 #include "globals.h"
 #include "gameBase.h"
+#include "rect.h"
 #include "vector2D.h"
 #include "xmlParser.h"
 #include "animations.h"
@@ -68,8 +69,14 @@ class Object : public GameBase {
 		//! input for this object
 		int controller_num;
 		
-		//! Width/height of this object
+		//! Real Width/height of this object
 		int width, height;
+
+		//! Bounding box for this object
+		Rect bbox;
+
+		//! Projection rectange (for collisions)
+		Rect projRect;
 
 		//! CACHED level width and height
 		int level_width, level_height;

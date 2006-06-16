@@ -77,7 +77,7 @@ class Vector2D {
 		}
 
 
-		//! Scalar product (vector * number)
+		//! Scalar divide (vector * number)
 		//XXX need to add exception handling for DIVIDE by ZERO
 		inline Vector2D Vector2D::operator/(float n) const {
 			return Vector2D(x/n, y/n);
@@ -92,6 +92,11 @@ class Vector2D {
 		/*inline Vector2D cross(Vector2D v) const {
 
 		}*/
+
+		//! Return a vector which has our components but negated
+		inline Vector2D Negation(const Vector2D &v) {
+			return Vector2D(-v.GetX(), -v.GetY());
+		}
 		
 		Vector2D();
 		Vector2D(float _x, float _y);

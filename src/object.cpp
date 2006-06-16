@@ -98,6 +98,12 @@ void Object::ResetForNextFrame() {
 	old_pos = pos;
 	accel.Clear();
 	d.up = d.down = d.left = d.right = 0;
+
+	// setup new bounding box
+	bbox.x1(pos.GetX());
+	bbox.x1(pos.GetY());
+	bbox.x1(pos.GetX() + GetWidth());
+	bbox.x1(pos.GetY() + GetHeight());
 }
 
 //! Solve for new position based on velocity
@@ -224,8 +230,8 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	if (vel.GetY() > 0) check_up = true;
 
 	if (check_right && 
-			old_pos.GetX() + GetWidth() <= obj->GetX() &&
-			obj->GetX() <= GetX() + GetWidth() 
+			old_pos.GetX() + (float)GetWidth() <= obj->pos.GetX() &&
+			obj->pos.GetX() <= pos.GetX() + GetWidth() 
 			) {
 		d.right = 1;
 	} else if (	GetX() <= 
@@ -250,14 +256,14 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 			old_pos.GetY() + Get() <= obj->GetX() &&
 			obj->GetX() <= GetX() + GetWidth() 
 			) {
-		d.right = 1;
-	} else *//*if (	!check_up && GetY() <= 
-							obj->GetY() - obj->GetHeight() && 
-							obj->GetY() - obj->GetHeight() <=
-							old_pos.GetY()) {*/
-	if (	!check_up )
-		fprintf(stderr, "CHECKING DOWN!\n\n");
-		if (
+		d.right = 1;*/
+
+	if ( check_up && old_pos.GetY() <= 
+							obj->pos.GetY() - (float)obj->GetHeight() && 
+							obj->pos.GetY() - (float)obj->GetHeight() <=
+							pos.GetY()) {
+		d.up = 1;
+	} else if (	!check_up &&
 				old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
 				obj->pos.GetY() >= pos.GetY() - (float)GetHeight()) {
 		d.down = 1;
@@ -300,19 +306,31 @@ if (properties.is_player)
 
 	return d;
 }
+	
+#define OVERLAPS(x0,y0,x1,y1,x2,y2,x3,y3) \
+	(	(!(   ((x0)<(x2) && (x1)<(x2))	|| ((x0)>(x3) && (x1)>(x3)) || ((y0)<(y2) && (y1)<(y2)) || \
+	((y0)>(y3) &&	(y1)>(y3))   ))	)
 
-// XXX need to check OLDPOS too in order to form
-// a path where the player went.  otherwise, they could
-// 'skip' through a block if going too fast
-bool Object::IsColliding(Object *obj) {
-	if (GetX() + GetWidth() > obj->pos.GetX() &&
-			GetX() < obj->pos.GetX() + obj->GetWidth() &&
+// get a rectangle whose area encompasses the total 
+// space we moved from last frame to this frame
+void Object::UpdateProjectionRect() {
+	// compute a bounding box based on our current position and velocity
+	Vector2D projection;
 
-			GetY() + GetHeight() < obj->pos.GetY() &&
-			GetY() > obj->pos.GetY() - obj->GetHeight() )
-			return true;
+	// project the velocity vector backwards
+	projection = vel.Negation();	
 
-	return false;
+	// get the projection rectangle
+	projRect = bbox.Project(projection);
+}
+
+bool Object::Overlaps(const Rect &_projRect) {
+	return projRect.Overlaps(_projRect);
+}
+
+// rough, fast collision detection phase
+bool Object::IsColliding(const Object *obj) {
+	return projRect.Overlaps(obj->GetProjectionRect());
 }
 
 void Object::MoveBack() {
