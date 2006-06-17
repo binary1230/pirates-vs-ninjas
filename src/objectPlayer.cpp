@@ -166,6 +166,7 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	XMLNode xProps = xDef.getChildNode("properties");
 
 	properties.is_player = 1;
+	properties.is_solid = 1;
 
 	sscanf(xProps.getChildNode("jumpVelocity").getText(), 
 									"%f", &jump_velocity);

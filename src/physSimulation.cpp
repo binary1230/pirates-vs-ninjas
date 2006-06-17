@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <map>
+#include <vector>
 using namespace std;
 
 int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
@@ -156,31 +157,46 @@ void PhysSimulation::Solve() {
 	}
 }
 
+void PhysSimulation::GetCollideableObjects(vector<Object*> &objs) {
+	int i, max = objects.size();
+	objs.clear();
+
+	// optimization: only allow collisions on certain layers?
+
+	for (i=0; i<max; i++) {
+		if (objects[i]->GetProperties().is_solid)
+			objs.push_back(objects[i]);
+	}
+}
+
+
 // TODO: probably a BIG source of CPU here.
 // probably need to optimize, but PROFILE to find out.
 void PhysSimulation::CheckForCollisions() {
 
+	vector<Object*> objs;
 	Object* player;
+
+	GetCollideableObjects(objs);
 	
-	int i, j, max = objects.size();
+	int i, j, max = objs.size();
 	
 	for (i = 0; i < max; i++) {
-		if (objects[i]->GetProperties().is_player) {
+		if (objs[i]->GetProperties().is_player) {
 			
-			player = objects[i];
+			player = objs[i];
 
 			for (j = 0; j < max; j++) {
-				if (objects[j] != player && 
-						objects[j]->GetProperties().is_solid &&
-						objects[j]->IsColliding(player)) {
+				if (objs[j] != player && 
+						objs[j]->GetProperties().is_solid &&
+						objs[j]->IsColliding(player)) {
 
-					objects[j]->Collide(player);
-					player->Collide(objects[j]);
+					objs[j]->Collide(player);
+					player->Collide(objs[j]);
 				}
 			}
 		}
-	}
-			
+	}	
 }
 
 //! Move all objects to newly computed positions.

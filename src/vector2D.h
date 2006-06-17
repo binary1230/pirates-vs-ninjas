@@ -94,8 +94,8 @@ class Vector2D {
 		}*/
 
 		//! Return a vector which has our components but negated
-		inline Vector2D Negation(const Vector2D &v) {
-			return Vector2D(-v.GetX(), -v.GetY());
+		inline Vector2D Negation() {
+			return Vector2D(-GetX(), -GetY());
 		}
 		
 		Vector2D();

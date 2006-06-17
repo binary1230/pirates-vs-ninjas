@@ -78,10 +78,18 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	if (sprite_to_draw)
 		GetGameState()->GetWindow()->
 		DrawSprite(sprite_to_draw, x, y, flip_x, flip_y);
-
+	
+	// DEBUG ONLY
+	// draw projection rectangle
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
-		DrawRect(x, y, GetWidth(), GetHeight());
+		DrawRect(projRect, makecol(0,0,255));
+
+	// DEBUG ONLY
+	// draw bounding rectangle
+	if (properties.is_player || properties.is_solid)
+		GetGameState()->GetWindow()->
+		DrawRect(bbox, makecol(255, 0, 255));
 }
 
 void Object::ApplyForce(Force* force) {
@@ -100,10 +108,12 @@ void Object::ResetForNextFrame() {
 	d.up = d.down = d.left = d.right = 0;
 
 	// setup new bounding box
-	bbox.x1(pos.GetX());
-	bbox.x1(pos.GetY());
-	bbox.x1(pos.GetX() + GetWidth());
-	bbox.x1(pos.GetY() + GetHeight());
+	bbox.setx1(pos.GetX());
+	bbox.sety1(pos.GetY());
+	bbox.setx2(pos.GetX() + GetWidth());
+	bbox.sety2(pos.GetY() + GetHeight());
+
+	UpdateProjectionRect();
 }
 
 //! Solve for new position based on velocity
@@ -307,9 +317,13 @@ if (properties.is_player)
 	return d;
 }
 	
-#define OVERLAPS(x0,y0,x1,y1,x2,y2,x3,y3) \
+/*#define OVERLAPS(x0,y0,x1,y1,x2,y2,x3,y3) \
 	(	(!(   ((x0)<(x2) && (x1)<(x2))	|| ((x0)>(x3) && (x1)>(x3)) || ((y0)<(y2) && (y1)<(y2)) || \
-	((y0)>(y3) &&	(y1)>(y3))   ))	)
+	((y0)>(y3) &&	(y1)>(y3))   ))	)*/
+
+Rect t() {
+	return Rect();
+}
 
 // get a rectangle whose area encompasses the total 
 // space we moved from last frame to this frame
@@ -324,12 +338,13 @@ void Object::UpdateProjectionRect() {
 	projRect = bbox.Project(projection);
 }
 
+/*
 bool Object::Overlaps(const Rect &_projRect) {
 	return projRect.Overlaps(_projRect);
-}
+}*/
 
 // rough, fast collision detection phase
-bool Object::IsColliding(const Object *obj) {
+bool const Object::IsColliding(Object *obj) {
 	return projRect.Overlaps(obj->GetProjectionRect());
 }
 

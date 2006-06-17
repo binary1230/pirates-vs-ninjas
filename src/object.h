@@ -210,13 +210,16 @@ class Object : public GameBase {
 		//! Handle collisions with another object
 		virtual void Collide(Object* obj);
 
-		bool IsColliding(Object* obj);
+		bool const IsColliding(Object *obj);
 
 		//! Returns a vector used for collision detection
 		//! This vector will be have a position that is guaranteed
 		//! to make the passed object NOT collide with THIS object.
 		//! (based on velocity)
 		CollisionDirection GetBound(Object* obj, Vector2D &v);
+
+		void UpdateProjectionRect();
+		Rect GetProjectionRect() {return projRect;}
 		
 		Object();
 		virtual ~Object();

@@ -10,6 +10,7 @@ class Sprite;
 
 #include "gameBase.h"
 #include "globals.h"
+#include "rect.h"
 
 // Modes for creating the display
 // Listed in order from fastest, but nastier, to slowest, but nicest
@@ -30,6 +31,7 @@ class Sprite;
 
 extern int screen_size_x;
 extern int screen_size_y;
+
 
 //! The onscreen window
 class Window : public GameBase {
@@ -71,7 +73,7 @@ class Window : public GameBase {
 		void DrawBitmap(BITMAP* bmp, int x, int y, bool flip_x=0, bool flip_y=0);
 
 		//! Debug only - draw a bounding rectangle
-		void DrawRect(int x, int y, int w, int h);
+		void DrawRect(Rect &r, int col);
 
 		Window();
 		~Window();
