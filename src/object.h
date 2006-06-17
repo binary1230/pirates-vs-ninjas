@@ -148,6 +148,7 @@ class Object : public GameBase {
 		virtual void Draw();
 
 		void Transform(int &x, int &y, int offset_x = 0, int offset_y = 0);
+		void TransformRect(Rect &r);
 		
 		//! Draw this object at its coordinates plus specified offset
 		//! Optionally, you can pass in a specific sprite to draw, otherwise

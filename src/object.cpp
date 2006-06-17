@@ -66,6 +66,28 @@ void Object::Transform(int &x, int &y, int offset_x, int offset_y) {
 	simulation->TransformViewToScreen(x, y);
 }
 
+// Same as Transform(), just for rectangles only.
+void Object::TransformRect(Rect &r) {
+
+	int x1, x2, y1, y2, w, h;
+	r.Fix();
+	x1 = r.getx1();	x2 = r.getx2();
+	y1 = r.gety1();	y2 = r.gety2();
+	w = x2 - x1;
+	h = y2 - y1;
+
+	// take into account the camera now.
+	if (!properties.is_overlay) {
+		simulation->TransformWorldToView(x1, y1);
+	}
+	
+	// compute absolute x,y coordinates on the screen
+	simulation->TransformViewToScreen(x1, y1);
+
+	r.setx1(x1); 			r.sety1(y1);
+	r.setx2(x1 + w); 	r.sety2(y1 + h);
+}
+
 //! This function does the real dirty work of drawing.
 void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {	
 	int x, y;
@@ -78,18 +100,29 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	if (sprite_to_draw)
 		GetGameState()->GetWindow()->
 		DrawSprite(sprite_to_draw, x, y, flip_x, flip_y);
-	
+
+	#define DEBUG_DRAW_BOUNDING_BOXES 1
+
+	if (!DEBUG_DRAW_BOUNDING_BOXES)
+		return;
+
 	// DEBUG ONLY
 	// draw projection rectangle
+	Rect r1 = projRect;
+	Rect r2 = projRect;
+
+	TransformRect(r1);
+	TransformRect(r2);
+
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
-		DrawRect(projRect, makecol(0,0,255));
+		DrawRect(r1, makecol(0,0,255));
 
 	// DEBUG ONLY
 	// draw bounding rectangle
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
-		DrawRect(bbox, makecol(255, 0, 255));
+		DrawRect(r2, makecol(255, 0, 255));
 }
 
 void Object::ApplyForce(Force* force) {
