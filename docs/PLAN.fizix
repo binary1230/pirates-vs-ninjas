@@ -13,3 +13,25 @@ Collions(Wall, Object)
 The wall applies an Impusle Force on the object.  The impulse force
 must be enough to immediately cancel out the velocity of the object (so
 it doesn't move against the wall).  
+
+----------------
+NEW STUFF
+
+bounding box collision detection:
+
+need to use the velocity vector, old position, and new position to
+
+
+ old position					 new positon (not checked for collisions)
+ +----+                +-----+
+ |    |      velocity  |     |
+ |    |      ------>   |     |
+ +----+                +-----+
+
+ we'd need to check this rectangle
+ +---------------------------+
+ |                           |
+ |                           |
+ +---------------------------+
+
+
