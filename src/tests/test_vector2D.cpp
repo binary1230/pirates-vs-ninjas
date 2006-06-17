@@ -173,10 +173,12 @@ void Test_Vector2D::setUp() {
 	static float set[] = {	0.0f, -1.0f, 1.0f, 5.0f, -5.0f, 0.00001f, 
 									-0.00001f, 100000.0f, -100000.0f };
 
-	testing_set = set;
+	testing_set = (float*)malloc(sizeof(set));
+	memcpy(testing_set, set, sizeof(set));
 	count = sizeof(set) / sizeof(float);
 }
 
 //! CLEANUP: Teardown the tests
 void Test_Vector2D::tearDown() {
+	free(testing_set);
 }

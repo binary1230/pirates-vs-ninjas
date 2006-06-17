@@ -27,10 +27,10 @@ class Rect {
 		}
 
 	public:
-		inline float const getx1() {return x1;};
-		inline float const gety1() {return y1;};
-		inline float const getx2() {return x2;};
-		inline float const gety2() {return y2;};
+		inline float getx1() const {return x1;};
+		inline float gety1() const {return y1;};
+		inline float getx2() const {return x2;};
+		inline float gety2() const {return y2;};
 
 		inline void setx1(float _x1) {x1=_x1; Fix();};
 		inline void sety1(float _y1) {y2=_y1; Fix();};
@@ -39,15 +39,16 @@ class Rect {
 		inline void setx1y1(float _x1, float _y1) {setx1(_x1); sety1(_y1);};
 		inline void setx2y2(float _x2, float _y2) {setx2(_x2); sety2(_y2);};
 
+		// XXX NOT WORKING!!
 		inline void set(float _x1, float _y1, float _x2, float _y2) {
-			x1 = _x1; y1 = _y1;	x2 = x2; y2 = _y2; 
+			x1 = _x1; y1 = _y1;	x2 = _x2; y2 = _y2; 
 			Fix();
 		}
 
 		//! Create a rect from 2 vectors
 		void fromVec(const Vector2D &v1, const Vector2D &v2);
 
-		inline bool const Overlaps(const Rect &rect) {	
+		inline bool Overlaps(const Rect &rect) const {	
 			// remember, x1 is always < x2
 			// and y1 is always > y2
 			if ( 	(
@@ -72,7 +73,7 @@ class Rect {
 		}
 
 		// projRect = bbox.Project(projection);
-		inline Rect Project(Vector2D &projection) {
+		inline Rect Project(Vector2D &projection) const {
 			Rect r = *this;
 						
 			if (projection.GetX() < 0)
@@ -86,6 +87,26 @@ class Rect {
 				r.sety2(r.gety2() - projection.GetY());
 
 			return r;
+		}
+
+		inline void Clear() {
+			x1 = x2 = y1 = y2 = 0.0f;
+		}
+		
+		//! Compare two rectangles
+		inline bool Rect::operator==(const Rect &v) const {
+			return (x1 - v.getx1() < TOLERANCE && x1 - v.getx1() > -TOLERANCE &&
+							y1 - v.gety1() < TOLERANCE && y1 - v.gety1() > -TOLERANCE &&
+							x2 - v.getx2() < TOLERANCE && x2 - v.getx2() > -TOLERANCE &&
+							y2 - v.gety2() < TOLERANCE && y2 - v.gety2() > -TOLERANCE );
+		}
+		
+		//! Compare two rectangles
+		inline bool Rect::operator!=(const Rect &v) const {
+			return (x1 - v.getx1() > TOLERANCE && x1 - v.getx1() < -TOLERANCE &&
+							y1 - v.gety1() > TOLERANCE && y1 - v.gety1() < -TOLERANCE &&
+							x2 - v.getx2() > TOLERANCE && x2 - v.getx2() < -TOLERANCE &&
+							y2 - v.gety2() > TOLERANCE && y2 - v.gety2() < -TOLERANCE );
 		}
 
 		Rect(float _x1 =0.0f, float _y1 =0.0f, float _x2 =0.0f, float _y2 =0.0f);

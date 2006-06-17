@@ -1,3 +1,4 @@
+#include <allegro.h>
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
@@ -19,4 +20,4 @@ int main(int argc, char* argv[])
 
   // Return error code 1 if the one of test failed.
   return wasSucessful ? 0 : 1;
-}
+} END_OF_MAIN()
