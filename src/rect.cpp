@@ -33,31 +33,24 @@ void Rect::FixY() {
 	if (y2<y1) Swap(y2,y1);
 }
 
+void Rect::Print(char* name) {
+	fprintf(stderr, "%s\t x1 = %f, y1 = %f, x2 = %f, y2 = %f\n", 
+					name, x1, y1, x2, y2);
+}
+
 bool Rect::Overlaps(Rect rect) {	
 
 	Fix();
 	rect.Fix();
 
-	/*if ( 	(
-					(rect.x1 <= x1 && rect.x2 >= x1) || 
-					(rect.x1 <= x2 && rect.x2 >= x2) 
-				) && (
-					(rect.y1 <= y1 && rect.y2 >= y1) || 
-					(rect.y1 <= y2 && rect.y2 >= y2)  
-				) )
-		return true;
-	else
-		return false;*/
+	//Print("ME:  ");
+	// rect.Print("THEM:");
 
-	//if (bottom1 < top2) return false;
-	//if (top1 > bottom2) return false;
-	//if (right1 < left2) return false;
-	//if (left1 > right2) return false;
-	
-	if (y1 < rect.y2) return false;
-	if (y2 > rect.y1) return false;
-	if (x2 < rect.x1) return false;
-	if (x1 > rect.x2) return false;
+	if (y1 > rect.y2 ||
+			y2 < rect.y1 ||
+			x2 < rect.x1 ||
+			x1 > rect.x2) 
+		return false;
 
 	return true;
 }

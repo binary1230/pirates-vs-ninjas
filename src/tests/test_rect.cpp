@@ -150,7 +150,7 @@ void Test_Rect::testDoesNotOverlap() {
 	Rect r3(21.0f, 1.0f, 30.0f, 2.0f);
 
 	Rect r4(0.0f, 10.0f, 5.0f, 20.0f);
-	// Rect r5(10.0f, 10.0f, 20.0f, 20.0f);
+	// Rect r5(10.0f, 10.0f, 20.0f, 20.0f);		// Overlaps!
 	Rect r6(21.0f, 10.0f, 30.0f, 20.0f);
 
 	Rect r7(0.0f, 21.0f, 5.0f, 30.0f);
@@ -176,7 +176,7 @@ void Test_Rect::testOverlap() {
 	#define IN2   0.5f
 	#define OUT2  1.5f
 
-	#define TEST1(y1, y2) OUT1, y1, OUT2, y2
+	/*#define TEST1(y1, y2) OUT1, y1, OUT2, y2
 	#define TEST2(y1, y2) IN1, y1, OUT2, y2
 	#define TEST3(y1, y2) IN1, y1, IN2, y2
 	#define TEST4(y1, y2) OUT1, y1, IN2, y2
@@ -199,9 +199,9 @@ void Test_Rect::testOverlap() {
 	Rect rD(TEST1(IN1, OUT2));
 	Rect rE(TEST2(IN1, OUT2));
 	Rect rF(TEST3(IN1, OUT2));
-	Rect rG(TEST4(IN1, OUT2));
+	Rect rG(TEST4(IN1, OUT2));*/
 
-	/*Rect r1(OUT1, OUT1, OUT2, OUT2);
+  Rect r1(OUT1, OUT1, OUT2, OUT2);
   Rect r2(IN1,  OUT1, OUT2, OUT2);
   Rect r3(IN1,  OUT1, IN2,  OUT2);
   Rect r4(OUT1, OUT1, IN2,  OUT2);
@@ -212,14 +212,14 @@ void Test_Rect::testOverlap() {
   Rect r8(OUT1, OUT1, IN2,  IN2);
 
   Rect r9(OUT1, IN1, OUT2, IN2);
-  Rect rA(OUT1, IN1, OUT2, IN2);
-  Rect rB(OUT1, IN1, OUT2, IN2);
-  Rect rC(OUT1, IN1, OUT2, IN2);
+  Rect rA(IN1,  IN1, OUT2, IN2);
+  Rect rB(IN1,  IN1, IN2,  IN2);
+  Rect rC(OUT1, IN1, IN2,  IN2);
 
   Rect rD(OUT1, IN1, OUT2, OUT2);
-  Rect rE(OUT1, IN1, OUT2, OUT2);
-  Rect rF(OUT1, IN1, OUT2, OUT2);
-  Rect rG(OUT1, IN1, OUT2, OUT2);*/
+  Rect rE(IN1,  IN1, OUT2, OUT2);
+  Rect rF(IN1,  IN1, IN2,  OUT2);
+  Rect rG(OUT1, IN1, IN2,  OUT2);
 
 	CPPUNIT_ASSERT(r.Overlaps(r1));
 	CPPUNIT_ASSERT(r.Overlaps(r2));
@@ -237,6 +237,23 @@ void Test_Rect::testOverlap() {
 	CPPUNIT_ASSERT(r.Overlaps(rE));
 	CPPUNIT_ASSERT(r.Overlaps(rF));
 	CPPUNIT_ASSERT(r.Overlaps(rG));
+
+	CPPUNIT_ASSERT(r.Overlaps(r1) == r1.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(r2) == r2.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(r3) == r3.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(r4) == r4.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(r5) == r5.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(r6) == r6.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(r7) == r7.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(r8) == r8.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(r9) == r9.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(rA) == rA.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(rB) == rB.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(rC) == rC.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(rD) == rD.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(rE) == rE.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(rF) == rF.Overlaps(r));
+	CPPUNIT_ASSERT(r.Overlaps(rG) == rG.Overlaps(r));
 }
 
 //! INIT: Setup the tests

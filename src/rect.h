@@ -49,6 +49,8 @@ class Rect {
 		void fromVec(const Vector2D &v1, const Vector2D &v2);
 
 		bool Overlaps(Rect rect);
+		
+		void Print(char* name = "");
 
 		//! Assign a rect's values to this rect
 		Rect Rect::operator=(Rect r);
