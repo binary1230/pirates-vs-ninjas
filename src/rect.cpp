@@ -33,11 +33,12 @@ void Rect::FixY() {
 	if (y2<y1) Swap(y2,y1);
 }
 
-bool Rect::Overlaps(const Rect &rect) {	
+bool Rect::Overlaps(Rect rect) {	
 
 	Fix();
+	rect.Fix();
 
-	if ( 	(
+	/*if ( 	(
 					(rect.x1 <= x1 && rect.x2 >= x1) || 
 					(rect.x1 <= x2 && rect.x2 >= x2) 
 				) && (
@@ -46,7 +47,19 @@ bool Rect::Overlaps(const Rect &rect) {
 				) )
 		return true;
 	else
-		return false;
+		return false;*/
+
+	//if (bottom1 < top2) return false;
+	//if (top1 > bottom2) return false;
+	//if (right1 < left2) return false;
+	//if (left1 > right2) return false;
+	
+	if (y1 < rect.y2) return false;
+	if (y2 > rect.y1) return false;
+	if (x2 < rect.x1) return false;
+	if (x1 > rect.x2) return false;
+
+	return true;
 }
 
 Rect Rect::operator=(Rect r) {

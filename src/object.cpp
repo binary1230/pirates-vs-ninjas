@@ -107,19 +107,18 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 		return;
 
 	// DEBUG ONLY
-	// draw projection rectangle
-	Rect r1 = projRect;
+	Rect r1 = bbox;
 	Rect r2 = projRect;
 
 	TransformRect(r1);
 	TransformRect(r2);
 
+	// draw projection rectangle, blue
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
 		DrawRect(r1, makecol(0,0,255));
 
-	// DEBUG ONLY
-	// draw bounding rectangle
+	// draw bounding rectangle, pink
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
 		DrawRect(r2, makecol(255, 0, 255));

@@ -12,6 +12,8 @@ class Test_Rect : public CppUnit::TestFixture {
 				CPPUNIT_TEST( testClear );
 				CPPUNIT_TEST( testOperatorEquals ); 
 				CPPUNIT_TEST( testOperatorEqualsFuzzy ); 
+				CPPUNIT_TEST( testDoesNotOverlap );
+				CPPUNIT_TEST( testOverlap );
 				CPPUNIT_TEST_SUITE_END(); 
 				
 			public: 
@@ -23,6 +25,8 @@ class Test_Rect : public CppUnit::TestFixture {
 				void testConstructors();
 				void testOperatorEquals(); 
 				void testOperatorEqualsFuzzy();
+				void testDoesNotOverlap();
+				void testOverlap();
 
 				int count;
 				float *testing_set;

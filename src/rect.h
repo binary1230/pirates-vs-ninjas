@@ -48,7 +48,7 @@ class Rect {
 		//! Create a rect from 2 vectors
 		void fromVec(const Vector2D &v1, const Vector2D &v2);
 
-		bool Overlaps(const Rect &rect);
+		bool Overlaps(Rect rect);
 
 		//! Assign a rect's values to this rect
 		Rect Rect::operator=(Rect r);

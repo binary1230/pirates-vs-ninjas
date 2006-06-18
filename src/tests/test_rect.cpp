@@ -141,6 +141,104 @@ void Test_Rect::testGetSet() {
 	CPPUNIT_ASSERT_EQUAL_MESSAGE("y2 SHOULD have swapped", r.gety2(), d4);
 }
 
+void Test_Rect::testDoesNotOverlap() {
+	// x1,y1 x2,y2
+	Rect r(10.0f, 10.0f, 20.0f, 20.0f);
+
+	Rect r1(0.0f, 1.0f, 5.0f, 2.0f);
+	Rect r2(10.0f, 1.0f, 20.0f, 2.0f);
+	Rect r3(21.0f, 1.0f, 30.0f, 2.0f);
+
+	Rect r4(0.0f, 10.0f, 5.0f, 20.0f);
+	// Rect r5(10.0f, 10.0f, 20.0f, 20.0f);
+	Rect r6(21.0f, 10.0f, 30.0f, 20.0f);
+
+	Rect r7(0.0f, 21.0f, 5.0f, 30.0f);
+	Rect r8(10.0f, 21.0f, 20.0f, 30.0f);
+	Rect r9(21.0f, 21.0f, 30.0f, 30.0f);
+	
+	CPPUNIT_ASSERT(!r.Overlaps(r1));
+	CPPUNIT_ASSERT(!r.Overlaps(r2));
+	CPPUNIT_ASSERT(!r.Overlaps(r3));
+	CPPUNIT_ASSERT(!r.Overlaps(r4));
+	CPPUNIT_ASSERT(!r.Overlaps(r6));
+	CPPUNIT_ASSERT(!r.Overlaps(r7));
+	CPPUNIT_ASSERT(!r.Overlaps(r8));
+	CPPUNIT_ASSERT(!r.Overlaps(r9));
+}
+
+
+void Test_Rect::testOverlap() {
+	Rect r(-1.0f, -1.0f, 1.0f, 1.0f);
+
+	#define IN1  -0.5f
+	#define OUT1 -1.5f
+	#define IN2   0.5f
+	#define OUT2  1.5f
+
+	#define TEST1(y1, y2) OUT1, y1, OUT2, y2
+	#define TEST2(y1, y2) IN1, y1, OUT2, y2
+	#define TEST3(y1, y2) IN1, y1, IN2, y2
+	#define TEST4(y1, y2) OUT1, y1, IN2, y2
+	
+	Rect r1(TEST1(OUT1, OUT2));
+	Rect r2(TEST2(OUT1, OUT2));
+	Rect r3(TEST3(OUT1, OUT2));
+	Rect r4(TEST4(OUT1, OUT2));
+
+	Rect r5(TEST1(OUT1, IN2));
+	Rect r6(TEST2(OUT1, IN2));
+	Rect r7(TEST3(OUT1, IN2));
+	Rect r8(TEST4(OUT1, IN2));
+
+	Rect r9(TEST1(IN1, IN2));
+	Rect rA(TEST2(IN1, IN2));
+	Rect rB(TEST3(IN1, IN2));
+	Rect rC(TEST4(IN1, IN2));
+
+	Rect rD(TEST1(IN1, OUT2));
+	Rect rE(TEST2(IN1, OUT2));
+	Rect rF(TEST3(IN1, OUT2));
+	Rect rG(TEST4(IN1, OUT2));
+
+	/*Rect r1(OUT1, OUT1, OUT2, OUT2);
+  Rect r2(IN1,  OUT1, OUT2, OUT2);
+  Rect r3(IN1,  OUT1, IN2,  OUT2);
+  Rect r4(OUT1, OUT1, IN2,  OUT2);
+
+  Rect r5(OUT1, OUT1, OUT2, IN2);
+  Rect r6(IN1,  OUT1, OUT2, IN2);
+  Rect r7(IN1,  OUT1, IN2,  IN2);
+  Rect r8(OUT1, OUT1, IN2,  IN2);
+
+  Rect r9(OUT1, IN1, OUT2, IN2);
+  Rect rA(OUT1, IN1, OUT2, IN2);
+  Rect rB(OUT1, IN1, OUT2, IN2);
+  Rect rC(OUT1, IN1, OUT2, IN2);
+
+  Rect rD(OUT1, IN1, OUT2, OUT2);
+  Rect rE(OUT1, IN1, OUT2, OUT2);
+  Rect rF(OUT1, IN1, OUT2, OUT2);
+  Rect rG(OUT1, IN1, OUT2, OUT2);*/
+
+	CPPUNIT_ASSERT(r.Overlaps(r1));
+	CPPUNIT_ASSERT(r.Overlaps(r2));
+	CPPUNIT_ASSERT(r.Overlaps(r3));
+	CPPUNIT_ASSERT(r.Overlaps(r4));
+	CPPUNIT_ASSERT(r.Overlaps(r5));
+	CPPUNIT_ASSERT(r.Overlaps(r6));
+	CPPUNIT_ASSERT(r.Overlaps(r7));
+	CPPUNIT_ASSERT(r.Overlaps(r8));
+	CPPUNIT_ASSERT(r.Overlaps(r9));
+	CPPUNIT_ASSERT(r.Overlaps(rA));
+	CPPUNIT_ASSERT(r.Overlaps(rB));
+	CPPUNIT_ASSERT(r.Overlaps(rC));
+	CPPUNIT_ASSERT(r.Overlaps(rD));
+	CPPUNIT_ASSERT(r.Overlaps(rE));
+	CPPUNIT_ASSERT(r.Overlaps(rF));
+	CPPUNIT_ASSERT(r.Overlaps(rG));
+}
+
 //! INIT: Setup the tests
 void Test_Rect::setUp() {
 }
