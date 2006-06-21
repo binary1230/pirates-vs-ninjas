@@ -1,3 +1,7 @@
 /Makefile.in
 /.deps
 /Makefile
+/*.Po
+/vector2D
+/rect
+/resourceLoader

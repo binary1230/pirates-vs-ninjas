@@ -71,8 +71,10 @@ void Object::TransformRect(Rect &r) {
 
 	int x1, x2, y1, y2, w, h;
 	r.Fix();
-	x1 = r.getx1();	x2 = r.getx2();
-	y1 = r.gety1();	y2 = r.gety2();
+	x1 = (int)r.getx1();	
+	y1 = (int)r.gety1();	
+	x2 = (int)r.getx2();
+	y2 = (int)r.gety2();
 	w = x2 - x1;
 	h = y2 - y1;
 
@@ -271,7 +273,7 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	if (vel.GetX() > 0) check_right = true;
 	if (vel.GetY() > 0) check_up = true;
 
-	if (check_right && 
+	/*if (check_right && 
 			old_pos.GetX() + (float)GetWidth() <= obj->pos.GetX() &&
 			obj->pos.GetX() <= pos.GetX() + GetWidth() 
 			) {
@@ -281,7 +283,7 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 							obj->GetX() + obj->GetWidth() <=
 							old_pos.GetX()) {
 		d.left = 1;
-	}
+	}*/
 
 	/*if (check_up && 
 		old_pos.GetY() <= obj->GetY() &&
@@ -300,9 +302,9 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 			) {
 		d.right = 1;*/
 
-	if ( check_up && old_pos.GetY() <= 
+	if ( check_up && old_pos.GetY() >= 
 							obj->pos.GetY() - (float)obj->GetHeight() && 
-							obj->pos.GetY() - (float)obj->GetHeight() <=
+							obj->pos.GetY() - (float)obj->GetHeight() >=
 							pos.GetY()) {
 		d.up = 1;
 	} else if (	!check_up &&
@@ -311,16 +313,17 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 		d.down = 1;
 	}
 
-if (properties.is_player)
 
-	fprintf(stderr, "     TOP(y)       BOT(y-h)\n"
-									"OLD:    %f        -->%f\n"
-									"BOX: -->%f           %f\n"
-									"NEW:    %f        -->%f\n"
-				 					"\n\nCollisions:", 
-		old_pos.GetY(), old_pos.GetY() - GetHeight(),
-		obj->pos.GetY(), obj->pos.GetY() - obj->GetHeight(),
-		(float)GetY(), (float)GetY() - (float)GetHeight());
+
+	if (properties.is_player)
+		fprintf(stderr, "     TOP(y)       BOT(y-h)\n"
+										"OLD:    %f        -->%f\n"
+										"BOX: -->%f           %f\n"
+										"NEW:    %f        -->%f\n"
+					 					"\n\nCollisions:", 
+			old_pos.GetY(), old_pos.GetY() - GetHeight(),
+			obj->pos.GetY(), obj->pos.GetY() - obj->GetHeight(),
+			(float)GetY(), (float)GetY() - (float)GetHeight());
 
 
 	if (d.up) {
@@ -349,14 +352,6 @@ if (properties.is_player)
 	return d;
 }
 	
-/*#define OVERLAPS(x0,y0,x1,y1,x2,y2,x3,y3) \
-	(	(!(   ((x0)<(x2) && (x1)<(x2))	|| ((x0)>(x3) && (x1)>(x3)) || ((y0)<(y2) && (y1)<(y2)) || \
-	((y0)>(y3) &&	(y1)>(y3))   ))	)*/
-
-Rect t() {
-	return Rect();
-}
-
 // get a rectangle whose area encompasses the total 
 // space we moved from last frame to this frame
 void Object::UpdateProjectionRect() {
@@ -369,11 +364,6 @@ void Object::UpdateProjectionRect() {
 	// get the projection rectangle
 	projRect = bbox.Project(projection);
 }
-
-/*
-bool Object::Overlaps(const Rect &_projRect) {
-	return projRect.Overlaps(_projRect);
-}*/
 
 // rough, fast collision detection phase
 bool const Object::IsColliding(Object *obj) {
