@@ -31,7 +31,8 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-r file       | record a demo to 'file'\n"
 		"-p file       | playback a demo from 'file'\n\n"
 
-		"-d            | (DEBUG ONLY) use 640x480 instead of 320x240\n\n"
+		"-2            | (DEBUG ONLY) use 640x480 instead of 320x240\n"
+		"-d            | (DEBUG ONLY) start the game paused (try F1 and F2)\n\n"
 
 		"-h            | display this help message\n\n"
 
@@ -49,6 +50,7 @@ void GameOptions::Clear() {
 	playback_demo = false;
 	
 	demo_filename = NULL;
+	debug_start_paused = false;
 
 	graphics_mode = MODE_DOUBLEBUFFERING;	
 
@@ -63,7 +65,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"m:g:r:p:fwhd")) != -1) {
+	while ( (c = getopt(argc,argv,"m:g:r:p:fwhd2")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -118,11 +120,17 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				}
 				break;
 
-			// a slight hack - 'double size'
-			case 'd':
+			// a slight hack - '2x size'
+			case '2':
 				screen_size_x = 640;
 				screen_size_y = 480;
 				break;
+
+			// debug pause mode - enable it or not
+			case 'd':
+				debug_start_paused = true;
+				break;
+
 	
 			// ':' and '?' mean unrecognized
 			default:
