@@ -256,6 +256,21 @@ void Test_Rect::testOverlap() {
 	CPPUNIT_ASSERT(r.Overlaps(rG) == rG.Overlaps(r));
 }
 
+//! Test projection function for rectangles
+void Test_Rect::testProject() {
+		Rect r(-10.0f, -10.0f, 10.0f, 10.0f);
+
+		Vector2D v1(-10.0f, 0.0f);
+		Vector2D v2( 10.0f, 0.0f);
+		Vector2D v3(0.0f, -10.0f);
+		Vector2D v4(0.0f,  10.0f);
+
+		CPPUNIT_ASSERT_EQUAL(r.Project(v1).getx1(), -20.0f);
+		CPPUNIT_ASSERT_EQUAL(r.Project(v2).getx2(),  20.0f);
+		CPPUNIT_ASSERT_EQUAL(r.Project(v3).gety1(), -20.0f);
+		CPPUNIT_ASSERT_EQUAL(r.Project(v4).gety2(),  20.0f);
+}
+
 //! INIT: Setup the tests
 void Test_Rect::setUp() {
 }

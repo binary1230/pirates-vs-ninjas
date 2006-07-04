@@ -35,6 +35,9 @@ class GameOptions {
 
 		//! The default mode ID to use (leave 0 to select the first mode)
 		int default_mode_id;
+
+		//! If true, start the game in debug pause mode
+		bool debug_start_paused;
 		
 	public:
 		//! Print the list of available options to stdout
@@ -70,7 +73,11 @@ class GameOptions {
 		//! (used for the Window class)
 		inline int GraphicsMode() {return graphics_mode;};
 
+		//! Get the default mode ID
 		inline int GetDefaultModeId() {return default_mode_id;};
+		
+		//! Return whether we are starting the game in 'debug pause mode'
+		inline bool GetDebugStartPaused() {return debug_start_paused;};
 		
 		GameOptions();
 		~GameOptions();

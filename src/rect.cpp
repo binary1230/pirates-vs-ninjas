@@ -70,12 +70,12 @@ Rect Rect::Project(Vector2D &projection) {
 	Rect r = *this;
 						
 	if (projection.GetX() < 0)
-		r.setx1(r.getx1() - projection.GetX());
+		r.setx1(r.getx1() + projection.GetX());
 	else
 		r.setx2(r.getx2() + projection.GetX());
 			
 	if (projection.GetY() < 0)
-		r.sety1(r.gety1() - projection.GetY());
+		r.sety1(r.gety1() + projection.GetY());
 	else
 		r.sety2(r.gety2() + projection.GetY());
 

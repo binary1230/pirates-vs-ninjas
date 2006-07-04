@@ -302,24 +302,24 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 			) {
 		d.right = 1;*/
 
-	if ( check_up && old_pos.GetY() >= 
+	/*if ( check_up && old_pos.GetY() >= 
 							obj->pos.GetY() - (float)obj->GetHeight() && 
 							obj->pos.GetY() - (float)obj->GetHeight() >=
 							pos.GetY()) {
 		d.up = 1;
-	} else if (	!check_up &&
+	} else */
+	
+	if (	!check_up &&
 				old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
 				obj->pos.GetY() >= pos.GetY() - (float)GetHeight()) {
 		d.down = 1;
 	}
 
-
-
 	if (properties.is_player)
 		fprintf(stderr, "     TOP(y)       BOT(y-h)\n"
-										"OLD:    %f        -->%f\n"
-										"BOX: -->%f           %f\n"
-										"NEW:    %f        -->%f\n"
+										"OLD:    %f           %f\n"
+										"BOX:    %f           %f\n"
+										"NEW:    %f           %f\n"
 					 					"\n\nCollisions:", 
 			old_pos.GetY(), old_pos.GetY() - GetHeight(),
 			obj->pos.GetY(), obj->pos.GetY() - obj->GetHeight(),

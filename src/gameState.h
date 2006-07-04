@@ -89,6 +89,9 @@ class GameState {
 		
 		//! Set to TRUE to immediately shutdown the game 
 		bool exit_game;	
+	
+		//! Flag to enable DEBUG pause toggling
+		bool debug_pause_toggle;
 
 		//! If a game has the same random seed, it will
 		//! return the EXACT same sequence of random numbers.
