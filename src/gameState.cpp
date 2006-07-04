@@ -121,6 +121,7 @@ int GameState::InitSystem() {
 		exit_game = false;
 		is_playing_back_demo = false;
 		end_current_mode = false;
+		debug_pause_toggle = false;
 
 		fprintf(stderr, "[init: allegro]\n");
 		allegro_init();			// must be called FIRST
@@ -216,6 +217,9 @@ int GameState::RunGame(GameOptions* _options) {
 			return -1;	
 		} else {
 
+			if (options->GetDebugStartPaused()) 
+				debug_pause_toggle = 1;	
+
 			// XXX SHOULD NOT TEST option->is_xxx should TEST input->is_xxx()
 			if (options->RecordDemo())
 				input->BeginRecording();
@@ -247,7 +251,6 @@ void GameState::MainLoop() {
 	int debug_update_count;
 	bool released_step = 1;
 	bool released_pause = 1;
-	bool pause_toggle = 0;
 
 	while (!exit_game) {
 
@@ -258,22 +261,21 @@ void GameState::MainLoop() {
 		while (outstanding_updates > 0 && !exit_game) {
 			Update();	// mode signals handled here
 
-			// ignore this IF if not looking at debug functionality
-			// e.g. trying to understand this loop.  just skip this piece
-
+			// ignore the PAUSE stuff if you are just trying to 
+			// understand this loop. 
 			if (!input->Key(GAMEKEY_DEBUGPAUSE))
 				released_pause = 1;
 
 			if (released_pause && input->Key(GAMEKEY_DEBUGPAUSE)) {
-				pause_toggle = !pause_toggle;
+				debug_pause_toggle = !debug_pause_toggle;
 				released_pause = 0;
 			}
 
-			if (pause_toggle) {
+			if (debug_pause_toggle) {
 			
 				debug_update_count = outstanding_updates;
 
-				while (pause_toggle) {
+				while (debug_pause_toggle) {
 					input->Update();
 					Draw();	
 
@@ -281,7 +283,7 @@ void GameState::MainLoop() {
 						released_pause = 1;
 
 					if (released_pause && input->Key(GAMEKEY_DEBUGPAUSE)) {
-						pause_toggle = !pause_toggle;
+						debug_pause_toggle = !debug_pause_toggle;
 						released_pause = 0;
 					}
 
