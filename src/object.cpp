@@ -108,24 +108,31 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	if (!DEBUG_DRAW_BOUNDING_BOXES)
 		return;
 
-	// get current bounding box
 	Rect bbox_t;
+	Rect projRect_t = projRect;
+	Rect bbox_t_old = bbox;
+
+	// get current bounding box
 	bbox_t.setx1(pos.GetX());
 	bbox_t.sety1(pos.GetY());
 	bbox_t.setx2(pos.GetX() + GetWidth());
 	bbox_t.sety2(pos.GetY() + GetHeight());
 
-	Rect projRect_t = projRect;
-
 	TransformRect(bbox_t);
+	TransformRect(bbox_t_old);
 	TransformRect(projRect_t);
 	
+	// draw current bounding rectangle, dark pink
+	if (properties.is_player || properties.is_solid)
+		GetGameState()->GetWindow()->
+		DrawRect(bbox_t_old, makecol(127,0,127));
+
 	// draw projection rectangle, blue
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
 		DrawRect(projRect_t, makecol(0, 0, 255));
 
-	// draw bounding rectangle, pink
+	// draw current bounding rectangle, pink
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
 		DrawRect(bbox_t, makecol(255,0,255));
@@ -151,8 +158,6 @@ void Object::ResetForNextFrame() {
 	bbox.sety1(pos.GetY());
 	bbox.setx2(pos.GetX() + GetWidth());
 	bbox.sety2(pos.GetY() + GetHeight());
-
-	UpdateProjectionRect();
 }
 
 //! Solve for new position based on velocity
@@ -163,6 +168,8 @@ Vector2D Object::Solve() {
 
 	if (debug_flag)
 		fprintf(stderr, "vel=(%f,%f)\n", vel.GetX(), vel.GetY());
+	
+	UpdateProjectionRect();
 
 	return pos;
 }
@@ -364,7 +371,12 @@ void Object::UpdateProjectionRect() {
 	Vector2D projection;
 
 	// project the velocity vector backwards
-	projection = vel.Negation();
+	// projection = vel.Negation();
+	projection = vel;
+	projection.SetY(-projection.GetY());
+	
+	if (properties.is_player)
+		fprintf(stderr, "v=(%f,%f)\n", projection.GetX(), projection.GetY());
 
 	// get the projection rectangle
 	projRect = bbox.Project(projection);
