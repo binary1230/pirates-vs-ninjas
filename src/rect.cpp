@@ -8,6 +8,11 @@ Rect::Rect(float _x1, float _y1, float _x2, float _y2) {
 	set(_x1, _y1, _x2, _y2);
 }
 
+// copy constructor
+Rect::Rect(const Rect &r) {
+	set(r.getx1(), r.gety1(), r.getx2(), r.gety2());
+}
+
 Rect::Rect(const Vector2D &v1, const Vector2D &v2) {
 	fromVec(v1, v2);
 }
@@ -63,21 +68,21 @@ Rect Rect::operator=(Rect r) {
 			return *this;
 }
 
-Rect Rect::Project(Vector2D &projection) {
+Rect Rect::Project(Vector2D &projection) const {
+	
+	Rect r(*this);
 
-	Fix();
-
-	Rect r = *this;
-						
-	if (projection.GetX() < 0)
-		r.setx1(r.getx1() + projection.GetX());
-	else
+	r.Fix();
+		
+	if (projection.GetX() >= 0.0f)
 		r.setx2(r.getx2() + projection.GetX());
-			
-	if (projection.GetY() < 0)
-		r.sety1(r.gety1() + projection.GetY());
 	else
+		r.setx1(r.getx1() + projection.GetX());
+			
+	if (projection.GetY() >= 0.0f) 
 		r.sety2(r.gety2() + projection.GetY());
+	else
+		r.sety1(r.gety1() + projection.GetY());
 
 	return r;
 }

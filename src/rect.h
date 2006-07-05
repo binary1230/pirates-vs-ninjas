@@ -55,7 +55,7 @@ class Rect {
 		//! Assign a rect's values to this rect
 		Rect Rect::operator=(Rect r);
 		
-		Rect Project(Vector2D &projection);
+		Rect Project(Vector2D &projection) const;
 
 		inline void Clear() {
 			x1 = x2 = y1 = y2 = 0.0f;
@@ -67,6 +67,7 @@ class Rect {
 
 		Rect(float _x1 =0.0f, float _y1 =0.0f, float _x2 =0.0f, float _y2 =0.0f);
 		Rect(const Vector2D &v1, const Vector2D &v2);
+		Rect(const Rect &r);
 };
 
 #endif // RECT_H

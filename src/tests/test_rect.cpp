@@ -258,17 +258,35 @@ void Test_Rect::testOverlap() {
 
 //! Test projection function for rectangles
 void Test_Rect::testProject() {
-		Rect r(-10.0f, -10.0f, 10.0f, 10.0f);
+	Rect r(-10.0f, -10.0f, 10.0f, 10.0f);
+	Rect r_copy(-10.0f, -10.0f, 10.0f, 10.0f);
 
-		Vector2D v1(-10.0f, 0.0f);
-		Vector2D v2( 10.0f, 0.0f);
-		Vector2D v3(0.0f, -10.0f);
-		Vector2D v4(0.0f,  10.0f);
+	Vector2D v1(-10.0f, 0.0f);	// x1
+	Vector2D v2( 10.0f, 0.0f);  // x2
+	Vector2D v3(0.0f, -10.0f);  // y1
+	Vector2D v4(0.0f,  10.0f);  // y2
 
-		CPPUNIT_ASSERT_EQUAL(r.Project(v1).getx1(), -20.0f);
-		CPPUNIT_ASSERT_EQUAL(r.Project(v2).getx2(),  20.0f);
-		CPPUNIT_ASSERT_EQUAL(r.Project(v3).gety1(), -20.0f);
-		CPPUNIT_ASSERT_EQUAL(r.Project(v4).gety2(),  20.0f);
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("x1 not right!",-20.0f,r.Project(v1).getx1());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!", -10.0f, r.Project(v1).gety1());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!",  10.0f, r.Project(v1).getx2());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!",  10.0f, r.Project(v1).gety2());
+
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!", -10.0f, r.Project(v2).getx1());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!", -10.0f, r.Project(v2).gety1());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("x2 not right!", 20.0f, r.Project(v2).getx2());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!",  10.0f, r.Project(v2).gety2());
+
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!", -10.0f, r.Project(v3).getx1());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("y1 not right!", -20.0f, r.Project(v3).gety1());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!",  10.0f, r.Project(v3).getx2());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!",  10.0f, r.Project(v3).gety2());
+
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!", -10.0f, r.Project(v4).getx1());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!", -10.0f, r.Project(v4).gety1());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("it changed!",  10.0f, r.Project(v4).getx2());
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("y2 not right!",  20.0f, r.Project(v4).gety2());
+		
+	CPPUNIT_ASSERT_MESSAGE("'r' should NOT have changed", r == r_copy);
 }
 
 //! INIT: Setup the tests

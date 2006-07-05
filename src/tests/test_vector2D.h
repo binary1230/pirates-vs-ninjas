@@ -19,6 +19,7 @@ class Test_Vector2D : public CppUnit::TestFixture {
 				CPPUNIT_TEST( testOperatorMultiply ); 
 				CPPUNIT_TEST( testOperatorDivide ); 
 				CPPUNIT_TEST( testDotProduct );
+				CPPUNIT_TEST( testNegation );
 				CPPUNIT_TEST_SUITE_END(); 
 				
 				float *testing_set;
@@ -40,6 +41,7 @@ class Test_Vector2D : public CppUnit::TestFixture {
 				void testOperatorMultiply();
 				void testOperatorDivide();
 				void testDotProduct();
+				void testNegation();
 }; 
 
 #endif // Test_Vector2D_H 

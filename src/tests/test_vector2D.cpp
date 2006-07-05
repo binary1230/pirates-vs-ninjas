@@ -168,6 +168,14 @@ void Test_Vector2D::testDotProduct() {
 	CPPUNIT_ASSERT_EQUAL( dot_expected, dot_result );
 }
 
+//! Test negation
+void Test_Vector2D::testNegation() {
+	Vector2D v1(12.0f, 11.0f);
+	Vector2D v2 = v1.Negation();
+	CPPUNIT_ASSERT_EQUAL( v1.GetX(), -v2.GetX() );
+	CPPUNIT_ASSERT_EQUAL( v1.GetY(), -v2.GetY() );
+}
+
 //! INIT: Setup the tests
 void Test_Vector2D::setUp() {
 	static float set[] = {	0.0f, -1.0f, 1.0f, 5.0f, -5.0f, 0.00001f, 

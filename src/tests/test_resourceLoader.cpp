@@ -2,6 +2,8 @@
 
 //! Unit tests for Vector2D class
 
+// TODO: Needs to be _written_
+
 // Registers the fixture into the 'registry'
 CPPUNIT_TEST_SUITE_REGISTRATION( Test_ResourceLoader );
 

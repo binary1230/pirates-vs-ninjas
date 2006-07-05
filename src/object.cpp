@@ -108,22 +108,27 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	if (!DEBUG_DRAW_BOUNDING_BOXES)
 		return;
 
-	// DEBUG ONLY
-	Rect r1 = bbox;
-	Rect r2 = projRect;
+	// get current bounding box
+	Rect bbox_t;
+	bbox_t.setx1(pos.GetX());
+	bbox_t.sety1(pos.GetY());
+	bbox_t.setx2(pos.GetX() + GetWidth());
+	bbox_t.sety2(pos.GetY() + GetHeight());
 
-	TransformRect(r1);
-	TransformRect(r2);
+	Rect projRect_t = projRect;
 
+	TransformRect(bbox_t);
+	TransformRect(projRect_t);
+	
 	// draw projection rectangle, blue
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
-		DrawRect(r1, makecol(0,0,255));
+		DrawRect(projRect_t, makecol(0, 0, 255));
 
 	// draw bounding rectangle, pink
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
-		DrawRect(r2, makecol(255, 0, 255));
+		DrawRect(bbox_t, makecol(255,0,255));
 }
 
 void Object::ApplyForce(Force* force) {
@@ -327,7 +332,7 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 
 
 	if (d.up) {
-		v.SetY(obj->GetY() - GetHeight());
+		//v.SetY(obj->GetY() - GetHeight());
 		fprintf(stderr, "up!");
 	}
 
@@ -359,7 +364,7 @@ void Object::UpdateProjectionRect() {
 	Vector2D projection;
 
 	// project the velocity vector backwards
-	projection = vel.Negation();	
+	projection = vel.Negation();
 
 	// get the projection rectangle
 	projRect = bbox.Project(projection);
