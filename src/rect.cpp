@@ -44,12 +44,8 @@ void Rect::Print(char* name) {
 }
 
 bool Rect::Overlaps(Rect rect) {	
-
 	Fix();
 	rect.Fix();
-
-	//Print("ME:  ");
-	// rect.Print("THEM:");
 
 	if (y1 > rect.y2 ||
 			y2 < rect.y1 ||
@@ -69,7 +65,6 @@ Rect Rect::operator=(Rect r) {
 }
 
 Rect Rect::Project(Vector2D &projection) const {
-	
 	Rect r(*this);
 
 	r.Fix();
@@ -83,6 +78,8 @@ Rect Rect::Project(Vector2D &projection) const {
 		r.sety2(r.gety2() + projection.GetY());
 	else
 		r.sety1(r.gety1() + projection.GetY());
+
+	r.Fix(); 
 
 	return r;
 }
@@ -103,4 +100,10 @@ bool Rect::operator!=(const Rect &r) const {
 					y2 - r.gety2() > TOLERANCE && y2 - r.gety2() < -TOLERANCE );
 }
 
-
+void Rect::print(FILE* f) {
+	fprintf(f, 	"+ + + + + + + + + + + + + + + + + + + + +\n"
+							"++ x1,y1 = %f, %f\n"
+							"++ x2,y2 = %f, %f\n"
+							"+ + + + + + + + + + + + + + + + + + + + +\n",
+							x1,y1,x2,y2);
+}

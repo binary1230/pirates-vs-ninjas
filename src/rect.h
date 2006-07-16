@@ -68,6 +68,8 @@ class Rect {
 		Rect(float _x1 =0.0f, float _y1 =0.0f, float _x2 =0.0f, float _y2 =0.0f);
 		Rect(const Vector2D &v1, const Vector2D &v2);
 		Rect(const Rect &r);
+
+		void print(FILE* f = stderr);
 };
 
 #endif // RECT_H

@@ -158,7 +158,7 @@ class Object : public GameBase {
 		//! Functions to get/set position
 		inline int GetX() 					{ return (int)pos.GetX(); }
 		inline int GetY() 					{ return (int)pos.GetY(); }
-		inline void SetX(int _x) 		{ pos.SetX((float)_x); }
+		inline void SetX(int _x) 		{ pos.SetX((float)_x);  }
 		inline void SetY(int _y) 		{ pos.SetY((float)_y);	}
 		inline void SetXY(int _x, int _y) {
 				pos.SetX((float)_x);	

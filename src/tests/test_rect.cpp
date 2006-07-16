@@ -256,6 +256,15 @@ void Test_Rect::testOverlap() {
 	CPPUNIT_ASSERT(r.Overlaps(rG) == rG.Overlaps(r));
 }
 
+//! Second tests for overlapping
+void Test_Rect::testOverlap2() {
+	Rect r1(10,20,40,10);
+	Rect r2(20,40,30,15);
+
+	CPPUNIT_ASSERT(r1.Overlaps(r2));
+	CPPUNIT_ASSERT(r2.Overlaps(r1));
+}
+
 //! Test projection function for rectangles
 void Test_Rect::testProject() {
 	Rect r(-10.0f, -10.0f, 10.0f, 10.0f);

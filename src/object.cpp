@@ -9,7 +9,8 @@
 #include "physSimulation.h"
 #include "xmlParser.h"
 
-// GetWidth() and GetHeight() need rethinking.
+// GetWidth() and GetHeight() need rethinking - 
+// they use the first frame's width and height
 
 int Object::GetWidth() { 
 	// return currentAnimation->GetWidth();
@@ -63,7 +64,7 @@ void Object::Transform(int &x, int &y, int offset_x, int offset_y) {
 		simulation->TransformWorldToView(x, y);
 	
 	// compute absolute x,y coordinates on the screen
-	simulation->TransformViewToScreen(x, y);
+	simulation->TransformViewToScreen(x, y, GetWidth(), GetHeight());
 }
 
 // Same as Transform(), just for rectangles only.
@@ -81,13 +82,16 @@ void Object::TransformRect(Rect &r) {
 	// take into account the camera now.
 	if (!properties.is_overlay) {
 		simulation->TransformWorldToView(x1, y1);
+		simulation->TransformWorldToView(x2, y2);
 	}
 	
 	// compute absolute x,y coordinates on the screen
 	simulation->TransformViewToScreen(x1, y1);
+	simulation->TransformViewToScreen(x2, y2);
 
-	r.setx1(x1); 			r.sety1(y1);
-	r.setx2(x1 + w); 	r.sety2(y1 + h);
+	r.setx1(x1); 	r.sety1(y1);
+	r.setx2(x2); 	r.sety2(y2);
+	// r.setx2(x1 + w); 	r.sety2(y1 + h);
 }
 
 //! This function does the real dirty work of drawing.
@@ -116,26 +120,26 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	bbox_t.setx1(pos.GetX());
 	bbox_t.sety1(pos.GetY());
 	bbox_t.setx2(pos.GetX() + GetWidth());
-	bbox_t.sety2(pos.GetY() + GetHeight());
+	bbox_t.sety2(pos.GetY() - GetHeight());
 
 	TransformRect(bbox_t);
 	TransformRect(bbox_t_old);
 	TransformRect(projRect_t);
-	
-	// draw current bounding rectangle, dark pink
+
+	// draw old bounding rectangle, dark pink
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
 		DrawRect(bbox_t_old, makecol(127,0,127));
+	
+	// draw current bounding rectangle, pink
+	if (properties.is_player || properties.is_solid)
+		GetGameState()->GetWindow()->
+		DrawRect(bbox_t, makecol(255,0,255));
 
 	// draw projection rectangle, blue
 	if (properties.is_player || properties.is_solid)
 		GetGameState()->GetWindow()->
 		DrawRect(projRect_t, makecol(0, 0, 255));
-
-	// draw current bounding rectangle, pink
-	if (properties.is_player || properties.is_solid)
-		GetGameState()->GetWindow()->
-		DrawRect(bbox_t, makecol(255,0,255));
 }
 
 void Object::ApplyForce(Force* force) {
@@ -157,7 +161,12 @@ void Object::ResetForNextFrame() {
 	bbox.setx1(pos.GetX());
 	bbox.sety1(pos.GetY());
 	bbox.setx2(pos.GetX() + GetWidth());
-	bbox.sety2(pos.GetY() + GetHeight());
+	bbox.sety2(pos.GetY() - GetHeight());
+
+	bbox.Fix();
+
+	assert(bbox.getx1() <= bbox.getx2());
+	assert(bbox.gety1() <= bbox.gety2());
 }
 
 //! Solve for new position based on velocity
@@ -170,6 +179,11 @@ Vector2D Object::Solve() {
 		fprintf(stderr, "vel=(%f,%f)\n", vel.GetX(), vel.GetY());
 	
 	UpdateProjectionRect();
+
+	if (properties.is_player) {
+		fprintf(stderr, "-- YPOS  : %f\n", pos.GetY());
+		fprintf(stderr, "-- YPOS-H: %f\n", pos.GetY() - GetHeight());
+	}
 
 	return pos;
 }
@@ -196,6 +210,7 @@ Object::Object() {
 	simulation = NULL;
 	debug_flag = false;
 	pos.SetX(0); pos.SetY(0);
+	old_pos.SetX(0); old_pos.SetY(0);
 	accel.SetX(0); accel.SetY(0);
 	vel.SetX(0); vel.SetY(0);
 }
@@ -314,32 +329,42 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 			) {
 		d.right = 1;*/
 
-	/*if ( check_up && old_pos.GetY() >= 
+	//Rect o1 = projRect;
+	//Rect o2 = obj->GetProjectionRect();
+
+	float o1 = old_pos.GetY() - (float)GetHeight();
+	float o2 = obj->pos.GetY();
+	float o3 = pos.GetY() - (float)GetHeight();
+
+	if ( check_up && old_pos.GetY() >= 
 							obj->pos.GetY() - (float)obj->GetHeight() && 
 							obj->pos.GetY() - (float)obj->GetHeight() >=
 							pos.GetY()) {
 		d.up = 1;
-	} else */
-	
-	if (	!check_up &&
-				old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
-				obj->pos.GetY() >= pos.GetY() - (float)GetHeight()) {
+	} else if (	!check_up &&
+				//old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
+				//obj->pos.GetY() >= pos.GetY() - (float)GetHeight()) {
+				//old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
+				//obj->pos.GetY() >= pos.GetY()
+				o1 >= o2 && o2 >= o3
+				) {
 		d.down = 1;
 	}
 
 	if (properties.is_player)
-		fprintf(stderr, "     TOP(y)       BOT(y-h)\n"
-										"OLD:    %f           %f\n"
-										"BOX:    %f           %f\n"
-										"NEW:    %f           %f\n"
-					 					"\n\nCollisions:", 
-			old_pos.GetY(), old_pos.GetY() - GetHeight(),
-			obj->pos.GetY(), obj->pos.GetY() - obj->GetHeight(),
-			(float)GetY(), (float)GetY() - (float)GetHeight());
-
+		fprintf(stderr, "     points(y)       \n"//BOT(y-h)\n"
+										"OLD[1]:    %f           \n"//%f\n"
+										"BOX[2]:    %f           \n"//%f\n"
+										"NEW[3]:    %f           \n"//%f\n"
+					 					"\n\n1 >= 2 >= 3\n\nCollisions:", 
+			//old_pos.GetY(), old_pos.GetY() - GetHeight(),
+			//obj->pos.GetY(), obj->pos.GetY() - obj->GetHeight(),
+			//(float)GetY(), (float)GetY() - (float)GetHeight()
+			o1, o2, o3
+			);
 
 	if (d.up) {
-		//v.SetY(obj->GetY() - GetHeight());
+		v.SetY(obj->GetY() - GetHeight());
 		fprintf(stderr, "up!");
 	}
 
@@ -375,8 +400,8 @@ void Object::UpdateProjectionRect() {
 	projection = vel;
 	projection.SetY(-projection.GetY());
 	
-	if (properties.is_player)
-		fprintf(stderr, "v=(%f,%f)\n", projection.GetX(), projection.GetY());
+	// if (properties.is_player)
+		// fprintf(stderr, "v=(%f,%f)\n", projection.GetX(), projection.GetY());
 
 	// get the projection rectangle
 	projRect = bbox.Project(projection);
@@ -384,6 +409,10 @@ void Object::UpdateProjectionRect() {
 
 // rough, fast collision detection phase
 bool const Object::IsColliding(Object *obj) {
+	if (obj->properties.is_player) {
+		projRect.print();
+		obj->projRect.print();
+	}
 	return projRect.Overlaps(obj->GetProjectionRect());
 }
 

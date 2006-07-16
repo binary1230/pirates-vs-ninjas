@@ -43,7 +43,8 @@ int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
 
 //! Transforms view coordinates into absolute screen coordinates
 //! e.g. flip the Y axis mostly.
-void PhysSimulation::TransformViewToScreen(int &x, int &y) {
+void PhysSimulation::TransformViewToScreen(	int &x, int &y, 
+																						int &width, int &height) {
 	y = game_state->ScreenHeight() - y;
 }
 
@@ -129,13 +130,17 @@ void PhysSimulation::Draw() {
 	for (i = 0; i < max; i++) {
 		layers[i]->Draw();
 	}
+
+	
 }
+
+#define CLEAR_SCREEN_STRING "\033[H\033[J\r\n"
 
 //! Reset all objects for the next frame
 void PhysSimulation::ResetForNextFrame() {
 	int i, max = objects.size();
 	
-	fprintf(stderr, "\033[H\033[J\r\n");
+	fprintf(stderr, CLEAR_SCREEN_STRING);
 
 	for (i = 0; i < max; i++) {
 		objects[i]->ResetForNextFrame();
@@ -209,7 +214,7 @@ void PhysSimulation::MoveObjectsToNewPositions() {
 }
 
 //! Update all objects
-void PhysSimulation::UpdateObjects() {			
+void PhysSimulation::UpdateObjects() {
 	int i, max = objects.size();
 	for (i = 0; i < max; i++) {
 		objects[i]->Update();
