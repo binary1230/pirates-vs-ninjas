@@ -65,7 +65,7 @@ void Object::Transform(int &x, int &y, int offset_x, int offset_y) {
 		simulation->TransformWorldToView(x, y);
 	
 	// compute absolute x,y coordinates on the screen
-	y = y + GetWidth();
+	y = y + GetHeight();
 	simulation->TransformViewToScreen(x, y);
 }
 
@@ -122,7 +122,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	bbox_t.setx1(pos.GetX());
 	bbox_t.sety1(pos.GetY());
 	bbox_t.setx2(pos.GetX() + GetWidth());
-	bbox_t.sety2(pos.GetY() - GetHeight());
+	bbox_t.sety2(pos.GetY() + GetHeight());
 
 	// draw projection rectangle, blue
 	TransformRect(bbox_t);
@@ -164,7 +164,7 @@ void Object::ResetForNextFrame() {
 	bbox.setx1(pos.GetX());
 	bbox.sety1(pos.GetY());
 	bbox.setx2(pos.GetX() + GetWidth());
-	bbox.sety2(pos.GetY() - GetHeight());
+	bbox.sety2(pos.GetY() + GetHeight());
 
 	bbox.Fix();
 
