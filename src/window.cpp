@@ -62,6 +62,7 @@ int Window::Init(	GameState* _game_state,
 	width = _width;
 	height = _height;
 	mode = _mode;
+	clear_color = 0;
 	
 	if (_fullscreen)
 			gfx_mode = GFX_AUTODETECT_FULLSCREEN;
@@ -90,7 +91,7 @@ int Window::Init(	GameState* _game_state,
 	set_window_title(VERSION_STRING);
 	
 	if (mode == MODE_DOUBLEBUFFERING) {
-		clear_bitmap(screen);
+		clear_to_color(screen, clear_color);
 		
 		// initialize back buffering
 		backbuf = create_bitmap(width, height);
@@ -99,7 +100,7 @@ int Window::Init(	GameState* _game_state,
 			return -2;
 		}
 		
-		clear_bitmap(backbuf);
+		clear_to_color(backbuf, clear_color);
 		drawing_surface = backbuf;
 		
 	} else if (mode == MODE_PAGEFLIPPING) {
@@ -118,7 +119,7 @@ int Window::Init(	GameState* _game_state,
 		
 	} else if (mode == MODE_NOBUFFERING) {
 
-		clear_bitmap(screen);
+		clear_to_color(screen, clear_color);
 		drawing_surface = screen;
 		
 	} else {
@@ -136,13 +137,13 @@ int Window::Init(	GameState* _game_state,
 void Window::Clear() {
 	switch (mode) {
 		case MODE_PAGEFLIPPING:
-			clear_bitmap(page[active_page]);
+			clear_to_color(page[active_page], clear_color);
 			break;
 		case MODE_DOUBLEBUFFERING:
-			clear_bitmap(backbuf);
+			clear_to_color(backbuf, clear_color);
 			break;
 		case MODE_NOBUFFERING:
-			clear_bitmap(screen);
+			clear_to_color(screen, clear_color);
 			break;
 		default:
 			fprintf(stderr, "ERROR: Unkown buffering mode %u\n", mode);

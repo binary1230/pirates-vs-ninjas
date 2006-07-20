@@ -32,7 +32,6 @@ class Sprite;
 extern int screen_size_x;
 extern int screen_size_y;
 
-
 //! The onscreen window
 class Window : public GameBase {
 	protected:
@@ -53,6 +52,9 @@ class Window : public GameBase {
 		
 		//! Draw a bitmap, minus the clipping.
 		void DrawBitmapAt(BITMAP* bmp, int x, int y, bool flip_x, bool flip_y);
+
+		//! Background clear color
+		int clear_color;
 		
 	public:
 		int Init(	GameState* _game_state, 
@@ -74,6 +76,8 @@ class Window : public GameBase {
 
 		//! Debug only - draw a bounding rectangle
 		void DrawRect(Rect &r, int col);
+
+		inline void SetClearColor(int col) {clear_color = col;};
 
 		Window();
 		~Window();

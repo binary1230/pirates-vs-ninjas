@@ -65,24 +65,24 @@ void PhysSimulation::ComputeNewCamera() {
 	int ox = camera_follow->GetX();
 	int ow = camera_follow->GetWidth();
 	int sw = GetGameState()->ScreenWidth();
-	/*int oy = camera_follow->GetY();
+	int oy = camera_follow->GetY();
 	int oh = camera_follow->GetHeight();
-	int sh = GetGameState()->ScreenHeight();*/
+	int sh = GetGameState()->ScreenHeight();
 
 	if (ox - camera_left < CAM_THRESHOLD)
 		camera_left = ox - CAM_THRESHOLD;
 	else if ( (camera_left + sw) - (ox + ow) < CAM_THRESHOLD )
 		camera_left = ox + ow + CAM_THRESHOLD - sw;
 								
-	// XXX needs testing, should work OK.
-	/*if (oy - camera_top < CAM_THRESHOLD)
+	if (oy - camera_top < CAM_THRESHOLD)
 		camera_top = oy - CAM_THRESHOLD;
-	else if ( (camera_top + sh) - (ox + ow) < CAM_THRESHOLD )
-		camera_top = oy + oh + CAM_THRESHOLD - sh;*/
+	else if ( (camera_top + sh) - (oy + oh) < CAM_THRESHOLD )
+		camera_top  = oy + oh + CAM_THRESHOLD - sh;
 
-	// XXX better done as min/max
 	if (camera_left < 0) camera_left = 0;
 	if (camera_left > width) camera_left = width;
+	if (camera_top < 0) camera_top = 0;
+	if (camera_top > height) camera_left = height;
 }
 
 void PhysSimulation::Shutdown() {
@@ -266,12 +266,25 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 	fprintf(stderr, " Loading Level: '%s'\n", xInfo.getChildNode("description").getText() );
 
 	XMLNode xProps = xMode.getChildNode("properties");
+	XMLNode xColor;
+	int clear_color;
 
 	// get width/height/camera xy
 	width 			=	xProps.getChildNode("width").getInt();
 	height 			= xProps.getChildNode("height").getInt();
 	camera_left = xProps.getChildNode("camera_left").getInt();
 	camera_top 	= xProps.getChildNode("camera_top").getInt();
+
+	if (xProps.nChildNode("bgcolor") == 1) {
+		xColor = xProps.getChildNode("bgcolor");
+		clear_color = makecol(xColor.getChildNode("r").getInt(),
+													xColor.getChildNode("g").getInt(),
+													xColor.getChildNode("b").getInt() );
+	} else {
+		clear_color = 0;
+	}
+
+	GetGameState()->GetWindow()->SetClearColor(clear_color);
 
 	return 0;
 }
