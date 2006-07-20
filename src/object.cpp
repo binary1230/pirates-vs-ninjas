@@ -401,7 +401,7 @@ void Object::UpdateProjectionRect() {
 	Vector2D projection;
 
 	// project the velocity vector backwards
-	projection = vel.Negation();
+	projection = vel;//;.Negation();
 	//projection = vel;
 	//projection.SetY(-projection.GetY());
 	
