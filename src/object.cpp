@@ -64,7 +64,8 @@ void Object::Transform(int &x, int &y, int offset_x, int offset_y) {
 		simulation->TransformWorldToView(x, y);
 	
 	// compute absolute x,y coordinates on the screen
-	simulation->TransformViewToScreen(x, y, GetWidth(), GetHeight());
+	y = y + GetWidth();
+	simulation->TransformViewToScreen(x, y);
 }
 
 // Same as Transform(), just for rectangles only.
@@ -122,6 +123,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	bbox_t.setx2(pos.GetX() + GetWidth());
 	bbox_t.sety2(pos.GetY() - GetHeight());
 
+	// draw projection rectangle, blue
 	TransformRect(bbox_t);
 	TransformRect(bbox_t_old);
 	TransformRect(projRect_t);
@@ -341,12 +343,10 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 							obj->pos.GetY() - (float)obj->GetHeight() >=
 							pos.GetY()) {
 		d.up = 1;
-	} else if (	!check_up &&
-				//old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
-				//obj->pos.GetY() >= pos.GetY() - (float)GetHeight()) {
-				//old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
-				//obj->pos.GetY() >= pos.GetY()
-				o1 >= o2 && o2 >= o3
+	} else if (	!check_up //&&
+				/*old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
+				obj->pos.GetY() >= pos.GetY() - (float)GetHeight()*/ 
+				// projRect.gety()
 				) {
 		d.down = 1;
 	}
@@ -410,8 +410,8 @@ void Object::UpdateProjectionRect() {
 // rough, fast collision detection phase
 bool const Object::IsColliding(Object *obj) {
 	if (obj->properties.is_player) {
-		projRect.print();
-		obj->projRect.print();
+		//projRect.print();
+		//obj->projRect.print();
 	}
 	return projRect.Overlaps(obj->GetProjectionRect());
 }

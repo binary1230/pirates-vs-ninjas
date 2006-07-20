@@ -88,7 +88,7 @@ class PhysSimulation : public GameMode {
 			int GetCameraTop() {return camera_top;};
 			
 			void TransformWorldToView(int &x, int &y);
-			void TransformViewToScreen(int &x, int &y, int &width, int &height);
+			void TransformViewToScreen(int &x, int &y);
 
 			void MoveObjectsToNewPositions();
 			void CheckForCollisions();

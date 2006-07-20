@@ -43,8 +43,7 @@ int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
 
 //! Transforms view coordinates into absolute screen coordinates
 //! e.g. flip the Y axis mostly.
-void PhysSimulation::TransformViewToScreen(	int &x, int &y, 
-																						int &width, int &height) {
+void PhysSimulation::TransformViewToScreen(	int &x, int &y ) {
 	y = game_state->ScreenHeight() - y;
 }
 
