@@ -374,7 +374,7 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	}
 
 	if (d.down) {
-		v.SetY(obj->GetY() + GetHeight() );
+		v.SetY(obj->GetY() + obj->GetHeight() );
 		if (debug) fprintf(stderr, "down / %f!", v.GetY());
 	}
 
@@ -401,9 +401,9 @@ void Object::UpdateProjectionRect() {
 	Vector2D projection;
 
 	// project the velocity vector backwards
-	// projection = vel.Negation();
-	projection = vel;
-	projection.SetY(-projection.GetY());
+	projection = vel.Negation();
+	//projection = vel;
+	//projection.SetY(-projection.GetY());
 	
 	// if (properties.is_player)
 		// fprintf(stderr, "v=(%f,%f)\n", projection.GetX(), projection.GetY());
