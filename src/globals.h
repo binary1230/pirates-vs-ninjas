@@ -34,6 +34,8 @@ typedef unsigned int uint;
 //! 'equal'
 #define TOLERANCE 0.00001
 
-
+//! The default debug message level.  0 = none, 1 = all
+//! This value is overridden by the '-m' command line switch
+#define DEFAULT_DEBUG_MSG_LEVEL 0
 
 #endif // GLOBALS_H

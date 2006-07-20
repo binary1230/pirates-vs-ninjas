@@ -160,6 +160,9 @@ class GameState {
 		//! Get the current window
 		inline Window* GetWindow() {return window;};
 
+		//! Gets the game options
+		inline GameOptions* GetGameOptions() {return options;};
+
 		GameState();
 		~GameState();
 };

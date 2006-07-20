@@ -14,6 +14,7 @@
 #include "gameState.h"
 #include "objectLayer.h"
 #include "window.h"
+#include "gameOptions.h"
 
 #include <stdio.h>
 #include <map>
@@ -138,8 +139,11 @@ void PhysSimulation::Draw() {
 //! Reset all objects for the next frame
 void PhysSimulation::ResetForNextFrame() {
 	int i, max = objects.size();
-	
-	fprintf(stderr, CLEAR_SCREEN_STRING);
+
+	int debug = GetGameState()->GetGameOptions()->GetDebugMessageLevel();
+
+	if (debug)
+		fprintf(stderr, CLEAR_SCREEN_STRING);
 
 	for (i = 0; i < max; i++) {
 		objects[i]->ResetForNextFrame();
@@ -231,10 +235,10 @@ void PhysSimulation::Update() {
 	}
 
 	// Do the physics simulation
-	ResetForNextFrame();	// oldpos = current_pos
-	Solve();	// Applies forces
-	MoveObjectsToNewPositions(); // newpos
-	CheckForCollisions(); // newpos = oldpos
+	ResetForNextFrame();					// oldpos = current_pos
+	Solve();											// Applies forces
+	MoveObjectsToNewPositions();	// newpos
+	CheckForCollisions();					// newpos = oldpos
 	UpdateObjects();
 		
 	// Calc where to put the camera now
@@ -255,7 +259,7 @@ int PhysSimulation::Load(XMLNode &xMode) {
 	return 0;	
 }
 
-// loads misc junk from the XML file
+// Loads the header info from the Mode XML file
 int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 	XMLNode xInfo = xMode.getChildNode("info");
 
@@ -396,6 +400,7 @@ int PhysSimulation::LoadLayerFromXML(
 
 	for (i=iterator=0; i < max; i++) {
 
+		// XXX should make this an ATTRIBUTE not the TEXT of the <repeat> tag
 		xRepeater = xLayer.getChildNode("repeat", &iterator);
 		times_to_repeat = xRepeater.getInt();
 		

@@ -31,8 +31,9 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-r file       | record a demo to 'file'\n"
 		"-p file       | playback a demo from 'file'\n\n"
 
-		"-2            | (DEBUG ONLY) use 640x480 instead of 320x240\n"
-		"-d            | (DEBUG ONLY) start the game paused (try F1 and F2)\n\n"
+		"-2            | (DEBUG) use 640x480 instead of 320x240\n"
+		"-d            | (DEBUG) start the game paused (press F1 and F2 in game)\n"
+		"-v            | (DEBUG) show debugging messages\n\n"
 
 		"-h            | display this help message\n\n"
 
@@ -48,9 +49,10 @@ void GameOptions::Clear() {
 
 	record_demo = false;
 	playback_demo = false;
-	
 	demo_filename = NULL;
+	
 	debug_start_paused = false;
+	debug_message_level = DEFAULT_DEBUG_MSG_LEVEL;
 
 	graphics_mode = MODE_DOUBLEBUFFERING;	
 
@@ -65,7 +67,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"m:g:r:p:fwhd2")) != -1) {
+	while ( (c = getopt(argc,argv,"m:g:r:p:fwhd2v")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -120,17 +122,21 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				}
 				break;
 
-			// a slight hack - '2x size'
+			// debug: hack - '2x size'
 			case '2':
 				screen_size_x = 640;
 				screen_size_y = 480;
 				break;
 
-			// debug pause mode - enable it or not
+			// debug: start in 'paused' mode, press F1 to go, F2 to step
 			case 'd':
 				debug_start_paused = true;
 				break;
 
+			// debug: enable extra debug messages
+			case 'v':
+				debug_message_level = 1;
+				break;
 	
 			// ':' and '?' mean unrecognized
 			default:

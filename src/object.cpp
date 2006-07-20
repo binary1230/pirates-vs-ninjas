@@ -8,6 +8,7 @@
 #include "animations.h"
 #include "physSimulation.h"
 #include "xmlParser.h"
+#include "gameOptions.h"
 
 // GetWidth() and GetHeight() need rethinking - 
 // they use the first frame's width and height
@@ -182,10 +183,10 @@ Vector2D Object::Solve() {
 	
 	UpdateProjectionRect();
 
-	if (properties.is_player) {
+	/*if (debug && properties.is_player) {
 		fprintf(stderr, "-- YPOS  : %f\n", pos.GetY());
 		fprintf(stderr, "-- YPOS-H: %f\n", pos.GetY() - GetHeight());
-	}
+	}*/
 
 	return pos;
 }
@@ -291,8 +292,12 @@ bool Object::LoadProperties(XMLNode &xDef) {
 // Return a vector with x,y set to 
 // the closest these two objects can get to
 // each other without colliding
+//
+// This method is a work in progress, and fairly nasty at the moment.
 CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	
+	int debug = GetGameState()->GetGameOptions()->GetDebugMessageLevel();
+
 	bool check_up = false, check_right = false;
 	CollisionDirection d; d.up = d.down = d.left = d.right = 0;
 
@@ -351,7 +356,7 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 		d.down = 1;
 	}
 
-	if (properties.is_player)
+	if (debug && properties.is_player)
 		fprintf(stderr, "     points(y)       \n"//BOT(y-h)\n"
 										"OLD[1]:    %f           \n"//%f\n"
 										"BOX[2]:    %f           \n"//%f\n"
@@ -365,26 +370,26 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 
 	if (d.up) {
 		v.SetY(obj->GetY() - GetHeight());
-		fprintf(stderr, "up!");
+		if (debug) fprintf(stderr, "up!");
 	}
 
 	if (d.down) {
 		v.SetY(obj->GetY() + GetHeight() );
-		fprintf(stderr, "down / %f!", v.GetY());
+		if (debug) fprintf(stderr, "down / %f!", v.GetY());
 	}
 
 	if (d.left) {
 		v.SetX(obj->GetX() + obj->GetWidth());
-		fprintf(stderr, "left!");
+		if (debug) fprintf(stderr, "left!");
 	}
 
 	if (d.right) {
 		v.SetX(obj->GetX() - GetWidth());
-		fprintf(stderr, "right!");
+		if (debug) fprintf(stderr, "right!");
 	}
 
 	if (!(d.right || d.left || d.down || d.up))
-		fprintf(stderr, "NONE! Not good.\n");
+		if (debug) fprintf(stderr, "NONE! Not good.\n");
 
 	return d;
 }

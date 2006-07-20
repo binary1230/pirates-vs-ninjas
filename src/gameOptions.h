@@ -38,6 +38,9 @@ class GameOptions {
 
 		//! If true, start the game in debug pause mode
 		bool debug_start_paused;
+
+		//! Debug message level (default is DEFAULT_DEBUG_MSG_LEVEL)
+		int debug_message_level;
 		
 	public:
 		//! Print the list of available options to stdout
@@ -78,6 +81,10 @@ class GameOptions {
 		
 		//! Return whether we are starting the game in 'debug pause mode'
 		inline bool GetDebugStartPaused() {return debug_start_paused;};
+
+		//! Return the debug message level.
+		//! Right now, 0 = no messages, 1 = all messages
+		inline int GetDebugMessageLevel() {return debug_message_level;};
 		
 		GameOptions();
 		~GameOptions();
