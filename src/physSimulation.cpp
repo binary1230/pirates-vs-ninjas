@@ -51,12 +51,27 @@ void PhysSimulation::TransformViewToScreen(	int &x, int &y ) {
 //! Transforms an object's coordinates from its world coordinates
 //! Into "view" coordinates (e.g. x < screen.width, y < screen.height)
 void PhysSimulation::TransformWorldToView(int &x, int &y) {
-	x = int((x - GetCameraLeft() ) * camera_scroll_speed);
-	y = y - GetCameraTop();
+	x = int((x - GetCameraX() ) * camera_scroll_speed);
+	y = int((y - GetCameraY() ) * camera_scroll_speed);
+	// y = y - GetCameraY();
 }
 
-// camera threshold in pixels
-#define CAM_THRESHOLD 40
+//! Camera paramater: Absolute amount of pixels that 
+//! the camera_follow object will be bounded at
+#define CAM_ABS_THRESHOLD 40
+
+//! Weighted average nums for the 'floaty' camera
+//! Increase CAM_WEIGHT_CAM to make the camera 'snap' quicker
+#define CAM_WEIGHT_POS 1.0f // why bother to mess with this one
+#define CAM_WEIGHT_CAM 5.0f	// change this one
+
+//! Function which moves the camera according to a weight, shown above
+//! Uses a weighted average of the object coordinates and the new camera coords
+#define CAM_MOVE_TO_CENTER(cam, o, o_size, s_size) 									\
+	int( float( 																											\
+			(((o + o_size / 2.0f) - (s_size / 2.0f)) * CAM_WEIGHT_POS) + 	\
+			((cam) * CAM_WEIGHT_CAM) 																			\
+		) / (CAM_WEIGHT_CAM + CAM_WEIGHT_POS) )
 
 void PhysSimulation::ComputeNewCamera() {
 	
@@ -65,24 +80,28 @@ void PhysSimulation::ComputeNewCamera() {
 	int ox = camera_follow->GetX();
 	int ow = camera_follow->GetWidth();
 	int sw = GetGameState()->ScreenWidth();
+	
 	int oy = camera_follow->GetY();
 	int oh = camera_follow->GetHeight();
 	int sh = GetGameState()->ScreenHeight();
-
-	if (ox - camera_left < CAM_THRESHOLD)
-		camera_left = ox - CAM_THRESHOLD;
-	else if ( (camera_left + sw) - (ox + ow) < CAM_THRESHOLD )
-		camera_left = ox + ow + CAM_THRESHOLD - sw;
+	
+	camera_x = CAM_MOVE_TO_CENTER(camera_x, ox, ow, sw);
+	camera_y = CAM_MOVE_TO_CENTER(camera_y, oy, oh, sh);
+	
+	if (ox - camera_x < CAM_ABS_THRESHOLD)
+		camera_x = ox - CAM_ABS_THRESHOLD;
+	else if ( (camera_x + sw) - (ox + ow) < CAM_ABS_THRESHOLD )
+		camera_x = ox + ow + CAM_ABS_THRESHOLD - sw;
 								
-	if (oy - camera_top < CAM_THRESHOLD)
-		camera_top = oy - CAM_THRESHOLD;
-	else if ( (camera_top + sh) - (oy + oh) < CAM_THRESHOLD )
-		camera_top  = oy + oh + CAM_THRESHOLD - sh;
-
-	if (camera_left < 0) camera_left = 0;
-	if (camera_left > width) camera_left = width;
-	if (camera_top < 0) camera_top = 0;
-	if (camera_top > height) camera_left = height;
+	if (oy - camera_y < CAM_ABS_THRESHOLD)
+		camera_y = oy - CAM_ABS_THRESHOLD;
+	else if ( (camera_y + sh) - (oy + oh) < CAM_ABS_THRESHOLD )
+		camera_y  = oy + oh + CAM_ABS_THRESHOLD - sh;
+	
+	if (camera_x < 0) camera_x = 0;
+	if (camera_x > width - sw) camera_x = width - sw;
+	if (camera_y < 0) camera_y = 0;
+	if (camera_y > height - sh) camera_x = height - sh;
 }
 
 void PhysSimulation::Shutdown() {
@@ -255,6 +274,9 @@ int PhysSimulation::Load(XMLNode &xMode) {
 			LoadObjectsFromXML(xMode) == -1 ||
 			LoadForcesFromXML(xMode) == -1 )
 		return -1;
+
+	camera_x = camera_follow->GetX();
+	camera_y = camera_follow->GetY();
 	
 	return 0;	
 }
@@ -272,8 +294,8 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 	// get width/height/camera xy
 	width 			=	xProps.getChildNode("width").getInt();
 	height 			= xProps.getChildNode("height").getInt();
-	camera_left = xProps.getChildNode("camera_left").getInt();
-	camera_top 	= xProps.getChildNode("camera_top").getInt();
+	camera_x = xProps.getChildNode("camera_x").getInt();
+	camera_y 	= xProps.getChildNode("camera_y").getInt();
 
 	if (xProps.nChildNode("bgcolor") == 1) {
 		xColor = xProps.getChildNode("bgcolor");
@@ -528,8 +550,10 @@ int PhysSimulation::LoadObjectFromXML(
 			// One last position calculation:
 			// We need to undo the offset of the background here
 			// So users don't have to compensate in their data files
-			if (layer->GetScrollSpeed() > 0.01f)
+			if (layer->GetScrollSpeed() > 0.01f) {
 				x = int( float(x) / layer->GetScrollSpeed() );
+				y = int( float(y) / layer->GetScrollSpeed() );
+			}
 			
 			obj->SetXY(x,y);
 

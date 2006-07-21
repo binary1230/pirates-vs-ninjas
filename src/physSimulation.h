@@ -45,8 +45,7 @@ class PhysSimulation : public GameMode {
 			//! (usually much bigger than screen width/height)
 			int width, height;
 
-			//! Top Left corner of camera
-			int camera_left, camera_top;
+			int camera_x, camera_y;
 
 			//! Which object the camera should follow
 			Object* camera_follow;
@@ -84,8 +83,8 @@ class PhysSimulation : public GameMode {
 			void ComputeNewCamera();
 			void SetCameraScrollSpeed(float s) {camera_scroll_speed = s;};
 
-			int GetCameraLeft() {return camera_left;};
-			int GetCameraTop() {return camera_top;};
+			int GetCameraX() {return camera_x;};
+			int GetCameraY() {return camera_y;};
 			
 			void TransformWorldToView(int &x, int &y);
 			void TransformViewToScreen(int &x, int &y);
