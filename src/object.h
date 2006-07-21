@@ -22,10 +22,6 @@ typedef vector<Object*> ObjectList;
 #include "xmlParser.h"
 #include "animations.h"
 
-//! Maps a sound name to it's handle (e.g. "jump" to 42)
-typedef map<CString, int> SoundMapping;
-typedef map<CString, int>::iterator s_iter;
-
 struct CollisionDirection {
 	unsigned up : 1;
 	unsigned down : 1;
@@ -69,9 +65,6 @@ inline void ClearProperties(struct ObjectProperties& p) {
 //! not always have to take part in the physics simulation.
 class Object : public GameBase {
 	protected:
-
-		//! Our sound (handles)
-		SoundMapping sounds;
 
 		//! Which controller (e.g. which joystick) use, if we are getting
 		//! input for this object

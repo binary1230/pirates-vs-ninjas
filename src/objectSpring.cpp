@@ -22,6 +22,7 @@ SpringObject::~SpringObject() {}
 void SpringObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_player) {
 		currentAnimation->Unfreeze();
+		PlaySound("spring");
 	}
 }
 
@@ -34,6 +35,9 @@ Object* SpringObject::New(	GameState* gameState,
 	if (!obj || !obj->Init(gameState) )
 		return NULL;
 
+	if (!obj->LoadSounds(xDef))
+		return NULL;
+	
 	if (!obj->LoadAnimations(xDef))
 		return NULL;
 	

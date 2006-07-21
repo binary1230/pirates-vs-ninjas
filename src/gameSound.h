@@ -8,9 +8,13 @@
 
 #include <allegro.h>
 #include <stdio.h>
-#include <vector>
+#include <map>
 
 using namespace std;
+
+//! Maps a sound name to it's handle (e.g. "jump" to 42)
+typedef map<CString, SAMPLE*> SoundMapping;
+typedef map<CString, SAMPLE*>::iterator s_iter;
 
 class GameSound : public GameBase {
 				
@@ -19,12 +23,18 @@ class GameSound : public GameBase {
 			bool sound_enabled;
 
 			//! Holds the sounds that are loaded
-			vector<SAMPLE*> sounds;
+			SoundMapping sounds;
 						
 		public:
-			int LoadSound(const char* filename);
+			//! Load a sound
+			//! example: LoadSound("sounds/jump.wav", "jump")
+			//! Then you can PlaySound("jump") to hear it.  Neat eh?
+			bool LoadSound(const char* filename, const char* sound_name);
 			
-			void PlaySound(unsigned int which_sound, unsigned int pan = 128);
+			//! Load all sounds from a <sounds> block in XML
+			bool LoadSounds(XMLNode &xSounds);
+			
+			void PlaySound(CString name, unsigned int pan = 128);
 
 			//! Init the sound system
 			int Init(GameState* _game_state, bool _sound_enabled);

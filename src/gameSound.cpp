@@ -11,36 +11,61 @@ GameSound::~GameSound() {}
 
 //! Plays a sound
 //! Pan goes from 0-255, 128 being the center
-void GameSound::PlaySound(unsigned int which_sound, unsigned int pan) {
+void GameSound::PlaySound(CString name, unsigned int pan) {
+
+	const int freq = 1000;  	// pitch to play at (1000=normal)
+	
 	if (!sound_enabled)
 		return;
 	
-	assert(which_sound < sounds.size());
+	s_iter s = sounds.find(name.c_str());
+
+	if (s == sounds.end()) {
+		fprintf(stderr, "- sound: warning: Sound '%s' was never loaded.\n", 
+										name.c_str());
+		return;
+	}
 	
-	SAMPLE* spl = sounds[which_sound];
+	SAMPLE* spl = s->second;
 
 	if (spl)
-		play_sample(spl, 255, pan, 1000, 0);
+		play_sample(spl, 255, pan, freq, 0);
 }
 
-//! Loads a sound, returns a 'handle' to it that you can 
-//! pass to PlaySound()
-int GameSound::LoadSound(const char* filename) {
+//! Loads a sound, you can call it later with PlaySound(sound_name)
+bool GameSound::LoadSound(const char* filename, const char* sound_name) {
 	if (!sound_enabled)
-		return 0;
+		return true;
 
 	SAMPLE* spl = game_state->GetResourceLoader()->LoadSound(filename);
 
+	sounds[sound_name] = spl;
+
 	if (!spl)
-		return -1;
-
-	int i = sounds.size();
-	sounds.resize(i+1);
-	sounds[i] = spl;
-
-	return i;
+		return false;
+	else 
+		return true;
 }
 	
+bool GameSound::LoadSounds(XMLNode &xSounds) {
+	XMLNode xSound;
+	int max, i, iterator;
+
+	max = xSounds.nChildNode("sound");
+	for (i = iterator = 0; i<max; i++) {
+		xSound = xSounds.getChildNode("sound", &iterator);
+		CString name = xSound.getAttribute("name");
+		
+		if (LoadSound(xSound.getText(), name) == -1) {
+			fprintf(stderr, "ERROR: Can't load soundfile: '%s'\n", 
+											xSound.getText());
+			return false;
+		}
+	}
+	
+	return true;
+}
+
 int GameSound::Init(GameState* _game_state, bool _sound_enabled) {
 	sound_enabled = _sound_enabled;
 	game_state = _game_state;
@@ -57,17 +82,15 @@ int GameSound::Init(GameState* _game_state, bool _sound_enabled) {
 
 void GameSound::Shutdown() {
 
-	int i, max = sounds.size();
+	s_iter s;
 	game_state = NULL;
 				
 	if (!sound_enabled)
 		return;
 
-	for (i=0; i<max; i++) {
-		if (sounds[i]) {
-			destroy_sample(sounds[i]);
-			sounds[i] = NULL;
-		}
+	for (s = sounds.begin(); s != sounds.end(); s++) {
+		if (s->second)
+			destroy_sample(s->second);
 	}
 	
 	sounds.clear();

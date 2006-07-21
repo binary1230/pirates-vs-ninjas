@@ -103,7 +103,6 @@ void PlayerObject::Collide(Object* obj) {
 
 	if (obj->GetProperties().is_spring) {
 		vel.SetY(20);
-		PlaySound("spring");		// XXX needs to be moved, remember?
 	}
 }
 

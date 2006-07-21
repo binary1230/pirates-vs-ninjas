@@ -13,13 +13,7 @@
 #include "gameSound.h"
 
 void Object::PlaySound(CString name) {
-	s_iter s = sounds.find(name.c_str());
-
-	if (s != sounds.end()) {
-		GetGameState()->GetSound()->PlaySound(s->second);
-	} else {
-		fprintf(stderr, "- sound: warning: Sound %s not loaded.\n", name.c_str());
-	}
+	GetGameState()->GetSound()->PlaySound(name);
 }
 
 // GetWidth() and GetHeight() need rethinking - 
@@ -286,26 +280,12 @@ bool Object::LoadAnimations(XMLNode &xDef, AnimationMapping *animation_lookup) {
 //! Load any sounds specified in the XML
 bool Object::LoadSounds(XMLNode &xDef) {
 				
-	int i, iterator, max;
 	GameSound* sound = GetGameState()->GetSound();
 
-	sounds.clear();
-	
 	if (xDef.nChildNode("sounds")) {
 		XMLNode xSounds = xDef.getChildNode("sounds");
-		XMLNode xSound;
-
-		max = xSounds.nChildNode("sound");
-		for (i = iterator = 0; i<max; i++) {
-			xSound = xSounds.getChildNode("sound", &iterator);
-			CString name = xSound.getAttribute("name");
-			
-			if ((sounds[name.c_str()] = sound->LoadSound(xSound.getText())) == -1) {
-				fprintf(stderr, "ERROR: Can't load soundfile: '%s'\n", 
-												xSound.getText());
-				return false;
-			}
-		}
+		if (!sound->LoadSounds(xSounds))
+			return false;
 	}
 
 	return true;
