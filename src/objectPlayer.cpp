@@ -100,6 +100,11 @@ void PlayerObject::Collide(Object* obj) {
 			on_floor = true;
 		}
   }
+
+	if (obj->GetProperties().is_spring) {
+		vel.SetY(20);
+		PlaySound("spring");		// XXX needs to be moved, remember?
+	}
 }
 
 bool PlayerObject::Init(GameState* _game_state) {

@@ -44,6 +44,7 @@ struct ObjectProperties {
 	//! If solid, another solid object cannot move through it
 	unsigned is_solid: 1;
 	unsigned is_player: 1;
+	unsigned is_spring: 1;
 	
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -59,6 +60,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_overlay = 0;
 	p.is_solid = 0;
 	p.is_player = 0;
+	p.is_spring = 0;
 }
 
 //! A drawable entity in the physics simulation

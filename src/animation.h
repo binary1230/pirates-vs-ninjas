@@ -23,6 +23,7 @@ struct AnimFrame {
 	
 	int duration;					//! Number of frames to show before advancing to next
 	AnimFrame* nextFrame;	//! Pointer to next frame, or NULL if end of animation
+	bool freeze_at_end;		//! True if we freeze at the end of this frame
 };
 
 //! Holds sprites and displays them in a preset order and timing
@@ -57,11 +58,15 @@ class Animation : public GameBase {
 
 		void ResetAnimation();		//! Set the animation back to the first frame
 
+		inline void Unfreeze() {freeze_animation = false;};
+		inline void Freeze() {freeze_animation = true;};
+		inline void ToggleFreeze() {freeze_animation = !freeze_animation;};
+
 		bool Init(GameState*);		//! Initialize the animation
 		void Shutdown();					//! Cleanup this animation
 
 		//! Used in constructing a new animation, pushes this image onto it.
-		bool PushImage(const char* filename, const int duration);
+		bool PushImage(const char* filename, const int duration, bool freeze_at_end);
 
 		int GetWidth();
 		int GetHeight();

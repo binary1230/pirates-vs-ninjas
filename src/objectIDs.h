@@ -10,6 +10,7 @@
 #define OBJECT_ID_BACKGROUND 3
 #define OBJECT_ID_CONTROLLER 4
 #define OBJECT_ID_STATIC 5
+#define OBJECT_ID_SPRING 6
 
 //! OBJECT animation ID's
 #define PLAYER_WALKING 0

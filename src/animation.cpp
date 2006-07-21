@@ -47,11 +47,17 @@ void Animation::Update() {
 
 	// if it's time to advance to the next frame..
 	if (elapsed_time >= currentFrame->duration * speed_multiplier) {
+					
 		elapsed_time = 0;
 		
 		// NOTE: if no currentFrame->nextFrame, NEVER advance until reset
 		if (currentFrame->nextFrame)
 			currentFrame = currentFrame->nextFrame;
+	
+		if (currentFrame->freeze_at_end) {
+			elapsed_time=currentFrame->duration * speed_multiplier;
+			freeze_animation = true;
+		}
 	}
 }
 
@@ -87,7 +93,9 @@ void Animation::Shutdown() {
 //! Add another frame to this animation
 //! Use for temporary loading routines, need to rethink this one.
 //! Returns false on error
-bool Animation::PushImage(const char* _file, const int duration) {
+bool Animation::PushImage(
+				const char* _file, const int duration, bool freeze_at_end) {
+				
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
 
@@ -107,6 +115,7 @@ bool Animation::PushImage(const char* _file, const int duration) {
 	f->sprite->y_offset = 0;
 	f->nextFrame = NULL;
 	f->duration = duration;
+	f->freeze_at_end = freeze_at_end;
 	
 	frames.push_back(f);
 
@@ -128,6 +137,7 @@ Animation* Animation::New(GameState* gameState, XMLNode &xAnim) {
 	Animation* anim = new Animation();
 	int duration;
 	CString filename;
+	int freeze_at_end;
 	
 	if (!anim || !anim->Init(gameState) )
 		return NULL;
@@ -148,10 +158,15 @@ Animation* Animation::New(GameState* gameState, XMLNode &xAnim) {
 		sscanf(xImg.getAttribute("duration"), "%i", &duration);
 		filename = xImg.getAttribute("name");
 		
-		// fprintf(stderr, "--- f=%s, d=%i\n", filename.c_str(), duration);
+		// handle 'pause' attribute
+		const char* freeze = xImg.getAttribute("pause");
+		if (!freeze)
+			freeze_at_end = 0;
+		else
+			sscanf(freeze, "%i", &freeze_at_end);
 
 		// Create the frame
-		if (!anim->PushImage(filename, duration)) {
+		if (!anim->PushImage(filename, duration, (bool)freeze_at_end)) {
 			anim->Shutdown();
 			free(anim);
 			return NULL;
