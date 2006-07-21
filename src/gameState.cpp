@@ -10,6 +10,7 @@
 #include "gameMode.h"
 #include "resourceLoader.h"
 #include "xmlParser.h"
+#include "gameSound.h"
 
 // XXX 	todo: mode switching code is VERY hackish and bad.
 //      			need to fix that.
@@ -158,6 +159,11 @@ int GameState::InitSystem() {
 			return -1;
 		}
 
+		fprintf(stderr, "[init: sound subsystem]\n");
+		if (InitSound() == -1) {
+			fprintf(stderr, "ERROR: InitSystem: failed to init sound subsystem!\n");
+		}
+
 		fprintf(stderr, "[init: default game mode]\n");
 		if (LoadGameMode(xMode) == -1) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init default game mode!\n");
@@ -169,6 +175,22 @@ int GameState::InitSystem() {
 		fprintf(stderr, "[init complete]\n");
 				
 		return 0;
+}
+
+//! Init sound subsystem
+//TODO if sound init fails, make it just keep going instead of erroring out.
+int GameState::InitSound() {
+
+	sound = new GameSound();
+
+	if (!options->SoundEnabled())
+		fprintf(stderr, " Sound disabled.\n");
+
+	if ( !sound || (sound->Init(this, options->SoundEnabled()) == -1) ) {
+		return -1;
+	}
+				
+	return 0;
 }
 
 //! Init input subsystems
@@ -460,6 +482,7 @@ GameState::GameState() {
 	input = NULL;  
 	currentMode = NULL; 
 	physSimulation = NULL;
+	sound = NULL;
 }
 
 void GameState::SignalExit() {

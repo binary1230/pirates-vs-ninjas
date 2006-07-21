@@ -20,19 +20,16 @@ class Animation;
 #include "xmlParser.h"
 
 //! The Player object, represents our HERO on screen
-
-//! Quite possibly the most important class in the game
 class PlayerObject : public Object {
 	protected:
 		float jump_velocity;
 		float min_velocity;
 		float drag;
 
+		int sound_jump;
+
 		bool on_floor;
 
-		// int floor_height_xml;		// XXX temporary hack
-														// the "floor height" as read from the XML
-				
 	public:
 		bool Init(GameState* _game_state);
 		

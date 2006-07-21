@@ -3,7 +3,7 @@
 #include "gameState.h"
 #include "globals.h"
 #include "input.h"
-// #include "inputLiveHandler.h"
+#include "gameSound.h"
 #include "force.h"
 #include "forceGravity.h"
 #include "forceInput.h"
@@ -16,18 +16,12 @@
 #define DEFAULT_DRAG 0.95f
 #define DEFAULT_MIN_VELOCITY 0.3f
 
-#define DEFAULT_FLOOR_HEIGHT 14
-
-// XXX the physics is all hardcoded in here for now
-// eventually, ALL collision stuff will be taken care
-// of by the objects outside this one.
 void PlayerObject::Update() {
 	
 	assert(currentAnimation != NULL);
 	currentAnimation->Update();
 				
 	int w = simulation->GetWidth();
-	// int floor_height = floor_height_xml + GetHeight();
 
 	// See if we're out of bounds
 	if (pos.GetX() < 0) {
@@ -43,19 +37,13 @@ void PlayerObject::Update() {
 	else
 		on_floor = false;
 
-	// HACK, for now See if we hit 'the floor'
-	/*if (pos.GetY() < floor_height) {
-		pos.SetY(floor_height);
-		on_floor = true;
-	}*/
-
-	// If we're on the floor.. 
 	if (on_floor == true) {
 					
 		// Then we can jump.
 		if (game_state->GetKey(PLAYERKEY_JUMP, controller_num)) {
 			vel.SetY(jump_velocity);
 			on_floor = false;
+			PlaySound("jump");
 	  }	else {
 			vel *= drag;	
 			
@@ -128,9 +116,9 @@ PlayerObject::PlayerObject() {
 	min_velocity = DEFAULT_MIN_VELOCITY;
 	mass = 1.0f;
 	drag = DEFAULT_DRAG;
-	// floor_height_xml = DEFAULT_FLOOR_HEIGHT;
 	on_floor = 0;
 }
+
 
 PlayerObject::~PlayerObject() {}
 
@@ -152,6 +140,13 @@ Object* PlayerObject::New(GameState* gameState, XMLNode &xDef, XMLNode &xObj) {
 	if (!obj->LoadAnimations(xDef, &animation_map))
 		return NULL;
 
+	//! Maps a sound to an integer handle (e.g. "jump" to 321, etc)
+	typedef map<const CString, uint> SoundMapping;
+
+	// load the sounds
+	if (!obj->LoadSounds(xDef))
+		return NULL;
+	
 	// get the object properties
 	if (!obj->LoadProperties(xDef))
 		return NULL;
@@ -175,10 +170,5 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	sscanf(xProps.getChildNode("drag").getText(), 
 									"%f", &drag);
 
-	// XXX HACK! Should not have a "floor height"
-	// this will be replaced once collision detection is fully in place.
-	/*sscanf(xProps.getChildNode("floorHeight").getText(), 
-									"%i", &floor_height_xml);	*/
-	
 	return true;
 }

@@ -46,6 +46,11 @@ class ResourceLoader : public GameBase {
 		//! it also outputs the palette in *pal
 		BITMAP* OpenBitmap(const char* file, PALETTE* pal) const;
 
+		//! Opens a bitmap file, or returns NULL on failure
+		//! This function looks in the current search path
+		//! it also outputs the palette in *pal
+		SAMPLE* LoadSound(const char* filename) const;
+
 		//! Returns the current working directory
 		CString GetMacOSXCurrentWorkingDir() const;
 

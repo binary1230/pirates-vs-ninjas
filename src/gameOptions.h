@@ -30,6 +30,9 @@ class GameOptions {
 		//! The demo filename if it was set
 		char* demo_filename;
 
+		//! Whether to enable sound or not
+		int sound_enabled;
+
 		//! Requested graphics mode (double buffering, pageflipping, nothing, etc)
 		int graphics_mode;
 
@@ -78,6 +81,9 @@ class GameOptions {
 
 		//! Get the default mode ID
 		inline int GetDefaultModeId() {return default_mode_id;};
+
+		//! Get whether sound is enabled or not
+		inline int SoundEnabled() {return sound_enabled;};
 		
 		//! Return whether we are starting the game in 'debug pause mode'
 		inline bool GetDebugStartPaused() {return debug_start_paused;};

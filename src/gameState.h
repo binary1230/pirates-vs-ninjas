@@ -13,6 +13,7 @@ class Window;
 class GameMode;
 class ResourceLoader;
 class PhysSimulation;
+class GameSound;
 
 #include "globals.h"
 #include "timer.h"
@@ -42,6 +43,9 @@ class GameState {
 		//! The active input class
 		BaseInput *input;
 
+		//! The sound class
+		GameSound *sound;
+
 		//! All open game modes (e.g. menu, simulation, etc)
 		vector<GameMode*> modes;
 		
@@ -63,6 +67,9 @@ class GameState {
 		
 		//! Init input subsystems
 		int InitInput();								
+
+		//! Init sound system
+		int InitSound();
 
 		
 		//! Load master game config from an XML file, return an XMLNode which is
@@ -162,6 +169,9 @@ class GameState {
 
 		//! Gets the game options
 		inline GameOptions* GetGameOptions() {return options;};
+
+		//! Gets the sound class
+		inline GameSound* GetSound() {return sound;};
 
 		GameState();
 		~GameState();

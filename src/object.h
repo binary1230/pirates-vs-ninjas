@@ -22,6 +22,10 @@ typedef vector<Object*> ObjectList;
 #include "xmlParser.h"
 #include "animations.h"
 
+//! Maps a sound name to it's handle (e.g. "jump" to 42)
+typedef map<CString, int> SoundMapping;
+typedef map<CString, int>::iterator s_iter;
+
 struct CollisionDirection {
 	unsigned up : 1;
 	unsigned down : 1;
@@ -40,7 +44,6 @@ struct ObjectProperties {
 	//! If solid, another solid object cannot move through it
 	unsigned is_solid: 1;
 	unsigned is_player: 1;
-
 	
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -64,6 +67,9 @@ inline void ClearProperties(struct ObjectProperties& p) {
 //! not always have to take part in the physics simulation.
 class Object : public GameBase {
 	protected:
+
+		//! Our sound (handles)
+		SoundMapping sounds;
 
 		//! Which controller (e.g. which joystick) use, if we are getting
 		//! input for this object
@@ -196,6 +202,9 @@ class Object : public GameBase {
 
 		//! Load animations from an XML object definition 
 		bool LoadAnimations(XMLNode &xDef, AnimationMapping* = NULL);
+
+		//! Loads all the sounds from an XML file
+		bool LoadSounds(XMLNode &xDef);
 		
 		//! Set which controller we monitor
 		void SetControllerNum(uint _c) {controller_num = _c;};
@@ -221,6 +230,9 @@ class Object : public GameBase {
 
 		void UpdateProjectionRect();
 		Rect GetProjectionRect() {return projRect;}
+
+		//! Plays a sound, or does nothing if that sound is not loaded
+		void PlaySound(CString name);
 		
 		Object();
 		virtual ~Object();

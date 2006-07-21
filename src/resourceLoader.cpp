@@ -70,6 +70,17 @@ BITMAP* ResourceLoader::OpenBitmap(const char* filename, PALETTE* pal) const {
 	return bmp;
 }
 
+SAMPLE* ResourceLoader::LoadSound(const char* filename) const {
+	SAMPLE *spl = NULL;
+	CString file = GetPathOf(filename);
+
+	if (file.length() != 0) {
+		spl = load_sample(file);
+	}
+
+	return spl;
+}
+
 ResourceLoader::ResourceLoader() {
 	ResetPaths();
 }

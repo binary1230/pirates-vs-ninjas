@@ -18,7 +18,7 @@ void GameOptions::PrintOptions(char* arg0) {
 		fprintf(stderr, "type '%s -h' for more options..\n\n", arg0);
 	} else {
 		fprintf(stderr,
-		"NOTE: .dat files MUST be in a dir in THIS folder called 'data'\n\n"
+		"NOTE: data files MUST be in a dir in THIS folder called 'data'\n\n"
 
 		"Usage: %s [options]\n"
 		"-f            | try to force fullscreen mode\n"
@@ -30,6 +30,8 @@ void GameOptions::PrintOptions(char* arg0) {
 		
 		"-r file       | record a demo to 'file'\n"
 		"-p file       | playback a demo from 'file'\n\n"
+
+		"-s            | disable sound\n\n"
 
 		"-2            | (DEBUG) use 640x480 instead of 320x240\n"
 		"-d            | (DEBUG) start the game paused (press F1 and F2 in game)\n"
@@ -51,6 +53,8 @@ void GameOptions::Clear() {
 	playback_demo = false;
 	demo_filename = NULL;
 	
+	sound_enabled = 1;
+	
 	debug_start_paused = false;
 	debug_message_level = DEFAULT_DEBUG_MSG_LEVEL;
 
@@ -67,7 +71,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"m:g:r:p:fwhd2v")) != -1) {
+	while ( (c = getopt(argc,argv,"m:g:r:p:fwhd2vs")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -95,6 +99,11 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 			case 'h':
 				show_help = true;
 				return (is_valid = false);
+				break;
+
+			// disable sound
+			case 's':
+				sound_enabled = false;
 				break;
 	
 			// fullscreen or windowed
