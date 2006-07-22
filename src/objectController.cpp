@@ -105,7 +105,8 @@ Object* ControllerObject::New(	GameState* _game_state,
 	props.is_overlay = 1;
 	obj->SetProperties(props);
 
-	// XXX READ which controller we monitor from XML file, but not in this method
+	// XXX READ which controller we monitor from XML file
+	// but not in this method
 
 	int i, iterator, max;
 	CString filename;

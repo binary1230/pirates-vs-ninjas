@@ -33,19 +33,21 @@ struct CollisionDirection {
 struct ObjectProperties {
 	
 	// NOTE: If you add anything here, update ClearProperties()
-	unsigned feels_gravity : 1;	
-	unsigned feels_user_input : 1;
-	unsigned feels_friction : 1;
+	bool feels_gravity;	
+	bool feels_user_input;
+	bool feels_friction;
 
 	//! If solid, another solid object cannot move through it
-	unsigned is_solid: 1;
-	unsigned is_player: 1;
-	unsigned is_spring: 1;
+	bool is_solid;
+	bool is_player;
+	bool is_spring;
 	
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
 	//! like our status bar or health or something.
-	unsigned is_overlay : 1;				
+	bool is_overlay;
+
+	int spring_strength;
 };
 
 //! Clears property masks

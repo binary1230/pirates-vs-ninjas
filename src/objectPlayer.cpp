@@ -102,7 +102,7 @@ void PlayerObject::Collide(Object* obj) {
   }
 
 	if (obj->GetProperties().is_spring) {
-		vel.SetY(20);
+		vel.SetY(obj->GetProperties().spring_strength);
 	}
 }
 
@@ -143,9 +143,6 @@ Object* PlayerObject::New(GameState* gameState, XMLNode &xDef, XMLNode &xObj) {
 	AnimationMapping animation_map = GetPlayerAnimationMappings();
 	if (!obj->LoadAnimations(xDef, &animation_map))
 		return NULL;
-
-	//! Maps a sound to an integer handle (e.g. "jump" to 321, etc)
-	typedef map<const CString, uint> SoundMapping;
 
 	// load the sounds
 	if (!obj->LoadSounds(xDef))

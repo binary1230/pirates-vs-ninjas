@@ -303,7 +303,15 @@ bool Object::LoadProperties(XMLNode &xDef) {
 	properties.feels_user_input =	xProps.nChildNode("affectedByInput1"); 
 	properties.feels_friction =		xProps.nChildNode("affectedByFriction"); 
 
-	properties.is_solid =		xProps.nChildNode("solidObject"); 
+	properties.is_solid =		xProps.nChildNode("solidObject");
+	
+	if (xProps.nChildNode("isOverlay")) {
+		properties.is_overlay = 1;
+	}
+
+	if (xProps.nChildNode("springStrength")) {
+		properties.spring_strength=xProps.getChildNode("springStrength").getInt();
+	}
 
 	return true;
 }

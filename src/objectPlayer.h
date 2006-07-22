@@ -29,6 +29,7 @@ class PlayerObject : public Object {
 		int sound_jump;
 
 		bool on_floor;
+		bool looking_up;
 
 	public:
 		bool Init(GameState* _game_state);

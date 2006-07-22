@@ -31,6 +31,7 @@ Object* SpringObject::New(	GameState* gameState,
 																XMLNode &xObj) {
 				
 	SpringObject* obj = new SpringObject();
+	obj->properties.spring_strength = 20; // default
 
 	if (!obj || !obj->Init(gameState) )
 		return NULL;
