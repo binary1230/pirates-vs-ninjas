@@ -168,6 +168,9 @@ class Object : public GameBase {
 				pos.SetY((float)_y);
 		}
 
+		inline void SetFlipX(bool val) { flip_x = val; };
+		inline void SetFlipY(bool val) { flip_y = val; };
+
 		//! Functions to get/set velocity
 		inline float GetVelX() 					{ return vel.GetX(); }
 		inline float GetVelY() 					{ return vel.GetY(); }

@@ -25,10 +25,12 @@ void PlayerObject::Update() {
 
 	// See if we're out of bounds
 	if (pos.GetX() < 0) {
-		vel.SetX(-vel.GetX());
+		// vel.SetX(-vel.GetX()); // flip
+		vel.SetX(0); 							// stop
 		pos.SetX(0);
 	} else if (pos.GetX() > (w - GetWidth()) ) {
-		vel.SetX(-vel.GetX());
+		// vel.SetX(-vel.GetX());	// flip
+		vel.SetX(0);							// stop
 		pos.SetX(w - GetWidth());
 	}
 

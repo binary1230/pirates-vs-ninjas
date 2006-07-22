@@ -73,7 +73,12 @@ int GameSound::Init(GameState* _game_state, bool _sound_enabled) {
 	if (!sound_enabled)
 		return 0;	
 	
-	install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL);
+	//if (install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL) == -1) {
+	if (install_sound(DIGI_AUTODETECT, 0, NULL) == -1) {
+		fprintf(stderr, " WARNING: Sound init failure.  Message from Allegro:\n"
+										"%s\n", allegro_error);
+		sound_enabled = false;
+	}
 
 	sounds.clear();
 

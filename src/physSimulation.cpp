@@ -554,7 +554,15 @@ int PhysSimulation::LoadObjectFromXML(
 				x = int( float(x) / layer->GetScrollSpeed() );
 				y = int( float(y) / layer->GetScrollSpeed() );
 			}
-			
+
+			// flipping
+			if (xPos.nChildNode("flipx")>0) {
+				obj->SetFlipX(true);
+			}
+			if (xPos.nChildNode("flipy")>0) {
+				obj->SetFlipX(false);
+			}
+		
 			obj->SetXY(x,y);
 
 			// check for velocity - <velx> and <vely>
