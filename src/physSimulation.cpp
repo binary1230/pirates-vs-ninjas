@@ -105,14 +105,14 @@ void PhysSimulation::ComputeNewCamera() {
 }
 
 void PhysSimulation::Shutdown() {
-	int i, max;
+	ObjectListIter iter;
+	int max, i;
 
 	// delete all the objects
-	max = objects.size();
-	for (i = 0; i < max; i++) {
-		objects[i]->Shutdown();
-		delete objects[i];
-		objects[i] = NULL;
+	for (iter = objects.begin(); iter != objects.end(); iter++) {
+		(*iter)->Shutdown();
+		delete (*iter);
+		(*iter) = NULL;
 	}
 	objects.clear();
 
@@ -157,42 +157,42 @@ void PhysSimulation::Draw() {
 
 //! Reset all objects for the next frame
 void PhysSimulation::ResetForNextFrame() {
-	int i, max = objects.size();
+	ObjectListIter iter;
 
 	int debug = GetGameState()->GetGameOptions()->GetDebugMessageLevel();
 
 	if (debug)
 		fprintf(stderr, CLEAR_SCREEN_STRING);
 
-	for (i = 0; i < max; i++) {
-		objects[i]->ResetForNextFrame();
+	for (iter = objects.begin(); iter != objects.end(); iter++) {
+		(*iter)->ResetForNextFrame();
 	}
 }
 
 //! Solve for next frame
 void PhysSimulation::Solve() {
-	int i, j, max_o, max_f;
+	ObjectListIter iter;
+	int j, max;
 	
-	max_o = objects.size();
-	max_f = forces.size();
+	max = forces.size();
 
 	// apply each force to the object
-	for (i = 0; i < max_o; i++) {
-		for (j = 0; j < max_f; j++) {
-			objects[i]->ApplyForce(forces[j]);
+	for (iter = objects.begin(); iter != objects.end(); iter++) {
+		for (j = 0; j < max; j++) {
+			(*iter)->ApplyForce(forces[j]);
 		}
 	}
 }
 
 void PhysSimulation::GetCollideableObjects(vector<Object*> &objs) {
-	int i, max = objects.size();
+	ObjectListIter iter;
 	objs.clear();
 
 	// optimization: only allow collisions on certain layers?
 
-	for (i=0; i<max; i++) {
-		if (objects[i]->GetProperties().is_solid)
-			objs.push_back(objects[i]);
+	for (iter = objects.begin(); iter != objects.end(); iter++) {
+		if ((*iter)->GetProperties().is_solid)
+			objs.push_back(*iter);
 	}
 }
 
@@ -229,17 +229,27 @@ void PhysSimulation::CheckForCollisions() {
 //! Move all objects to newly computed positions.
 //! NO COLLISION DETECTION HAPPENS YET
 void PhysSimulation::MoveObjectsToNewPositions() {			
-	int i, max = objects.size();
-	for (i = 0; i < max; i++) {
-		objects[i]->MoveToNewPosition();
+	ObjectListIter iter;
+	for (iter = objects.begin(); iter != objects.end(); iter++) {
+		(*iter)->MoveToNewPosition();
 	}
 }
 
 //! Update all objects
 void PhysSimulation::UpdateObjects() {
-	int i, max = objects.size();
-	for (i = 0; i < max; i++) {
-		objects[i]->Update();
+	ObjectListIter iter;
+	Object* obj;
+	for (iter = objects.begin(); iter != objects.end(); iter++) {
+		obj = (*iter);
+		if (obj) {
+			if (!obj->IsDead()) {
+				obj->Update();
+			} else {
+				obj->Shutdown();
+				delete obj;
+				(*iter) = obj = NULL;
+			}
+		}
 	}
 }
 
@@ -580,8 +590,8 @@ int PhysSimulation::LoadObjectFromXML(
 		}
 		
 		// Everything loaded OK, now we add it to the simulation
-		objects.push_back(obj);
-		layer->PushObject(obj);
+		objects.push_front(obj);
+		layer->AddObject(obj);
 	}
 
 	return 0;

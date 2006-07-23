@@ -11,6 +11,7 @@
 #include "gameOptions.h"
 #include "StdString.h"
 #include "gameSound.h"
+#include "objectLayer.h"
 
 void Object::PlaySound(CString name) {
 	GetGameState()->GetSound()->PlaySound(name);
@@ -45,6 +46,7 @@ void Object::SetupCachedVariables() {
 bool Object::BaseInit() {
 	SetupCachedVariables();
 	ClearProperties(properties);
+	is_dead = false;
 	return true;
 }
 
@@ -114,7 +116,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 		GetGameState()->GetWindow()->
 		DrawSprite(sprite_to_draw, x, y, flip_x, flip_y);
 
-	#define DEBUG_DRAW_BOUNDING_BOXES 0
+	#define DEBUG_DRAW_BOUNDING_BOXES 1
 
 	if (!DEBUG_DRAW_BOUNDING_BOXES)
 		return;
@@ -197,7 +199,9 @@ Vector2D Object::Solve() {
 }
 
 void Object::Shutdown() {
-				
+
+	layer->RemoveObject(this);
+
 	int i, max = animations.size();
 	for (i = 0; i < max; i++) {
 		animations[i]->Shutdown();
@@ -208,12 +212,17 @@ void Object::Shutdown() {
 	
 	currentAnimation = NULL;
 	currentSprite = NULL;
+	layer = NULL;
+
+	// just in case..
+	is_dead = true;
 }
 
 Object::Object() {
 	currentSprite = NULL;
 	currentAnimation = NULL;
 	flip_x = false; 
+	is_dead = true;
 	mass = 1.0f;
 	simulation = NULL;
 	debug_flag = false;

@@ -6,18 +6,32 @@
 #include "physSimulation.h"
 
 void ObjectLayer::Draw() {
-	int i, max = objects.size();
+	ObjectListReverseIter rev_iter;
 
 	// set scroll speed for this layer
 	GetGameState()->GetPhysSimulation()->SetCameraScrollSpeed(scroll_speed);
 	
-	for (i=0; i<max; i++) {
-		objects[i]->Draw();
-	}
+	// ORDER IS IMPORTANT
+	// we draw starting at the end, going to the beginning
+	// things at the end were put there FIRST to be drawn FIRST.
+	for (rev_iter = objects.rbegin(); rev_iter != objects.rend(); rev_iter++)
+		(*rev_iter)->Draw();
 }
 
-void ObjectLayer::PushObject(Object* obj) {
-	objects.push_back(obj);
+void ObjectLayer::AddObject(Object* obj) {
+	objects.push_front(obj);
+	obj->SetLayer(this);
+}
+
+// Does not free any memory, just removes from our list
+// This is a bit silly... layers need rethinking.
+void ObjectLayer::RemoveObject(Object* obj) {
+	ObjectListIter iter = find(objects.begin(), objects.end(), obj);
+
+	if (iter != objects.end())
+		objects.erase(iter);
+	else
+		fprintf(stderr, " WARN: memmgmt: asked to remove an object that's not here.\n");
 }
 
 bool ObjectLayer::Init(GameState* gs) {

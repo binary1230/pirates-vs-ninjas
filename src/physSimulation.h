@@ -1,6 +1,7 @@
 #ifndef PHYS_SYSTEM_H
 #define PHYS_SYSTEM_H
 
+#include <list>
 #include <vector>
 #include <map>
 using namespace std;
@@ -23,11 +24,16 @@ class ObjectLayer;
 //! only used for parsing XML
 typedef map<const CString, XMLNode> ObjectDefMapping;
 
+typedef list<Object*> ObjectList;
+typedef list<Object*>::iterator ObjectListIter;
+typedef list<Object*>::reverse_iterator ObjectListReverseIter;
+
 //! Represents a physical simulation (the main game levels)
 class PhysSimulation : public GameMode {
 		protected:		
 			//! ALL objects in the scene
-			vector<Object*> objects;
+			// note: list is STL's doubly linked list
+			list<Object*> objects;
 
 			//! Layers, which hold pointers to objects.
 			vector<ObjectLayer*> layers;

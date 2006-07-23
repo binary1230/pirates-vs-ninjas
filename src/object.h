@@ -7,13 +7,12 @@ class Force;
 class Animation;
 class PhysSimulation;
 class Sprite;
+class ObjectLayer;
 
 #include <allegro.h>
 #include <stdio.h>
 #include <vector>
 using namespace std;
-
-typedef vector<Object*> ObjectList;
 
 #include "globals.h"
 #include "gameBase.h"
@@ -67,6 +66,9 @@ inline void ClearProperties(struct ObjectProperties& p) {
 //! not always have to take part in the physics simulation.
 class Object : public GameBase {
 	protected:
+
+		//! A pointer to the layer this object is on
+		ObjectLayer* layer;
 
 		//! Which controller (e.g. which joystick) use, if we are getting
 		//! input for this object
@@ -131,6 +133,9 @@ class Object : public GameBase {
 
 		//! Base class initialization
 		bool BaseInit();	
+
+		//! True if this object is no longer in play and needs to be cleaned up
+		bool is_dead;
 
 		//! If true, this object can print debug info out if it wants to.
 		bool debug_flag;
@@ -222,6 +227,8 @@ class Object : public GameBase {
 
 		bool const IsColliding(Object *obj);
 
+		inline bool IsDead() {return is_dead;};
+
 		//! Returns a vector used for collision detection
 		//! This vector will be have a position that is guaranteed
 		//! to make the passed object NOT collide with THIS object.
@@ -233,6 +240,9 @@ class Object : public GameBase {
 
 		//! Plays a sound, or does nothing if that sound is not loaded
 		void PlaySound(CString name);
+
+		ObjectLayer* GetLayer() {return layer;};
+		void SetLayer(ObjectLayer* l) {layer = l;};
 		
 		Object();
 		virtual ~Object();
