@@ -64,17 +64,22 @@ class PhysSimulation : public GameMode {
 			//! Physics functions
 			void ResetForNextFrame();
 			void Solve();
+
+			//! Game update functions
 			void UpdateObjects();
+
+			//! Update an object, return false if we need to delete it
+			bool UpdateObject(Object* obj);
 		
 			//! Sets up simulation from an XML file
-			//XXX should be moved into a friend factory class
+			//XXX should be moved into a friend factory class, or something.
 			int Load(XMLNode&);
 			int LoadHeaderFromXML(XMLNode&);
 			int LoadObjectsFromXML(XMLNode&);
-			int PhysSimulation::LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer*);
+			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer*);
 			int LoadForcesFromXML(XMLNode&);
 			int LoadObjectDefsFromXML(XMLNode&, ObjectDefMapping&);
-			int LoadLayerFromXML(XMLNode &, ObjectLayer*, ObjectDefMapping&);
+			int LoadLayerFromXML(XMLNode&, ObjectLayer*, ObjectDefMapping&);
 
 		public:
 			int Init(GameState*, XMLNode);

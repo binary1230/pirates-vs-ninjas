@@ -116,7 +116,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 		GetGameState()->GetWindow()->
 		DrawSprite(sprite_to_draw, x, y, flip_x, flip_y);
 
-	#define DEBUG_DRAW_BOUNDING_BOXES 1
+	#define DEBUG_DRAW_BOUNDING_BOXES 0
 
 	if (!DEBUG_DRAW_BOUNDING_BOXES)
 		return;
@@ -136,20 +136,22 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	TransformRect(bbox_t_old);
 	TransformRect(projRect_t);
 
-	// draw old bounding rectangle, dark pink
-	if (properties.is_player || properties.is_solid)
+	if (	properties.is_player || 
+				properties.is_solid || 
+				properties.is_collectable) {
+
+		// draw old bounding rectangle, dark pink
 		GetGameState()->GetWindow()->
 		DrawRect(bbox_t_old, makecol(127,0,127));
 	
-	// draw current bounding rectangle, pink
-	if (properties.is_player || properties.is_solid)
+		// draw current bounding rectangle, pink
 		GetGameState()->GetWindow()->
 		DrawRect(bbox_t, makecol(255,0,255));
 
-	// draw projection rectangle, blue
-	if (properties.is_player || properties.is_solid)
+		// draw projection rectangle, blue
 		GetGameState()->GetWindow()->
 		DrawRect(projRect_t, makecol(0, 0, 255));
+	}
 }
 
 void Object::ApplyForce(Force* force) {

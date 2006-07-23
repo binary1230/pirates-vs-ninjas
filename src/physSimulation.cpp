@@ -191,7 +191,8 @@ void PhysSimulation::GetCollideableObjects(vector<Object*> &objs) {
 	// optimization: only allow collisions on certain layers?
 
 	for (iter = objects.begin(); iter != objects.end(); iter++) {
-		if ((*iter)->GetProperties().is_solid)
+		if (	(*iter)->GetProperties().is_solid || 
+					(*iter)->GetProperties().is_collectable)
 			objs.push_back(*iter);
 	}
 }
@@ -214,9 +215,10 @@ void PhysSimulation::CheckForCollisions() {
 			player = objs[i];
 
 			for (j = 0; j < max; j++) {
-				if (objs[j] != player && 
-						objs[j]->GetProperties().is_solid &&
-						objs[j]->IsColliding(player)) {
+				if (	objs[j] != player && 
+							(	objs[j]->GetProperties().is_solid || 
+								objs[j]->GetProperties().is_collectable ) &&
+								objs[j]->IsColliding(player)) {
 
 					objs[j]->Collide(player);
 					player->Collide(objs[j]);
@@ -235,20 +237,38 @@ void PhysSimulation::MoveObjectsToNewPositions() {
 	}
 }
 
+//! Update a specific object
+//! Returns true if we need to delete it afterwards
+bool PhysSimulation::UpdateObject(Object* obj) {
+
+	// if it's not dead, update it
+	if (!obj->IsDead()) {
+		obj->Update();
+	} 
+
+	// if it's dead _after_ the update, clean it up
+	if (obj->IsDead()) {
+		obj->Shutdown();
+		delete obj; 
+		obj = NULL;
+		return false;
+	}
+
+	return true;
+}
+
 //! Update all objects
 void PhysSimulation::UpdateObjects() {
-	ObjectListIter iter;
+	ObjectListIter iter, erased;
 	Object* obj;
+
 	for (iter = objects.begin(); iter != objects.end(); iter++) {
-		obj = (*iter);
-		if (obj) {
-			if (!obj->IsDead()) {
-				obj->Update();
-			} else {
-				obj->Shutdown();
-				delete obj;
-				(*iter) = obj = NULL;
-			}
+		obj = *iter;
+
+		// if UpdateObject was false, we need to remove this from the list
+		if (obj && !UpdateObject(obj)) {
+			erased = iter++;
+			objects.erase(erased);
 		}
 	}
 }

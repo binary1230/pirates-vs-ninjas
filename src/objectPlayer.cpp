@@ -106,6 +106,8 @@ void PlayerObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_spring) {
 		vel.SetY(obj->GetProperties().spring_strength);
 	}
+
+	
 }
 
 bool PlayerObject::Init(GameState* _game_state) {

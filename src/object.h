@@ -40,6 +40,7 @@ struct ObjectProperties {
 	bool is_solid;
 	bool is_player;
 	bool is_spring;
+	bool is_collectable;
 	
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -58,6 +59,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_solid = 0;
 	p.is_player = 0;
 	p.is_spring = 0;
+	p.is_collectable = 0;
 }
 
 //! A drawable entity in the physics simulation

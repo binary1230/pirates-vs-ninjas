@@ -9,6 +9,7 @@
 #include "objectController.h"
 #include "objectStatic.h"
 #include "objectSpring.h"
+#include "objectCollectable.h"
 #include "StdString.h"
 
 #include <map>
@@ -32,6 +33,7 @@ Object* ObjectFactory::CreateObject(XMLNode &xObjectDef, XMLNode &xObject) {
 	types["ControllerDisplay"] 	= OBJECT_ID_CONTROLLER;
 	types["Static"] 						= OBJECT_ID_STATIC;
 	types["Spring"]							= OBJECT_ID_SPRING;
+	types["Collectable"]				= OBJECT_ID_COLLECTABLE;
 	
 	CString objType = xObjectDef.getAttribute("type");
 	
@@ -61,6 +63,10 @@ Object* ObjectFactory::CreateObject(XMLNode &xObjectDef, XMLNode &xObject) {
 
 		case OBJECT_ID_SPRING:
 			obj = SpringObject::New(GetGameState(), xObjectDef, xObject);
+			break;
+
+		case OBJECT_ID_COLLECTABLE:
+			obj = CollectableObject::New(GetGameState(), xObjectDef, xObject);
 			break;
 
 		case 0:
