@@ -42,6 +42,8 @@ void ControllerObject::Draw() {
 }
 
 void ControllerObject::Update() {
+	
+	UpdateFade();
 
 	// keys, in the order shown on the controller
 	int keys[] = {

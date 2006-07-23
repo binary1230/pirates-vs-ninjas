@@ -9,7 +9,8 @@ int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
 
 // public function
-void Window::DrawBitmap(BITMAP* bmp, int x, int y, bool flip_x, bool flip_y) {
+void Window::DrawBitmap(	BITMAP* bmp, int x, int y, 
+													bool flip_x, bool flip_y, int alpha) {
 
 	// if its position is offscreen, don't draw it.
 	if (x + bmp->w < 0 || x >= (int)width || 
@@ -17,7 +18,7 @@ void Window::DrawBitmap(BITMAP* bmp, int x, int y, bool flip_x, bool flip_y) {
 			return;
 
 	// Draw the bitmap
-	DrawBitmapAt(bmp, x, y, flip_x, flip_y);
+	DrawBitmapAt(bmp, x, y, flip_x, flip_y, alpha);
 }
 
 void Window::DrawRect(Rect &r, int col) {
@@ -30,11 +31,20 @@ void Window::DrawRect(Rect &r, int col) {
 }
 
 // private: only
-void Window::DrawBitmapAt(BITMAP* bmp, int x, int y, bool flip_x, bool flip_y) {
-	if (!flip_x) 
-		draw_sprite(drawing_surface, bmp, x, y);
-	else
-		draw_sprite_h_flip(drawing_surface, bmp, x, y);
+void Window::DrawBitmapAt(	BITMAP* bmp, int x, int y, 
+														bool flip_x, bool flip_y, int alpha) {
+	
+	// no transparency to worry about
+	if (alpha == 255) {
+		if (!flip_x) 
+			draw_sprite(drawing_surface, bmp, x, y);
+		else
+			draw_sprite_h_flip(drawing_surface, bmp, x, y);
+	} else {
+		// XXX DOES NOT FLIP SPRITES RIGHT NOW
+		// draw_trans_sprite(
+	}
+
 }
 
 // public function
@@ -44,7 +54,8 @@ void Window::DrawBitmapAt(BITMAP* bmp, int x, int y, bool flip_x, bool flip_y) {
 // NOT flip it at all) 
 //
 // Holy sweetness. Remember that '^' is XOR, and XOR rocks.
-void Window::DrawSprite(Sprite* sprite, int x, int y, bool flip_x, bool flip_y) {
+void Window::DrawSprite(	Sprite* sprite, int x, int y, 
+													bool flip_x, bool flip_y, int alpha) {
 	DrawBitmap( sprite->bmp, 
 							x + sprite->x_offset, y + sprite->y_offset, 
 							sprite->flip_x ^ flip_x, sprite->flip_y ^ flip_y);

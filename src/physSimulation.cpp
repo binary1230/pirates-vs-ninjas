@@ -608,7 +608,19 @@ int PhysSimulation::LoadObjectFromXML(
 			int controller_num = xObject.getChildNode("inputController").getInt();
 			obj->SetControllerNum(controller_num);
 		}
-		
+
+		if (xObject.nChildNode("fadeout") == 1) {
+			int fadeout_time = xObject.getChildNode("fadeout").getInt();
+			if (fadeout_time > 0)
+				obj->FadeOut(fadeout_time);
+		}
+
+		/*if (xObject.nChildNode("fadein") == 1) {
+			int fadein_time = xObject.getChildNode("fadein").getInt();
+			if (fadein_time > 0)
+				obj->FadeIn(fadein_time);
+		}*/
+	
 		// Everything loaded OK, now we add it to the simulation
 		objects.push_front(obj);
 		layer->AddObject(obj);

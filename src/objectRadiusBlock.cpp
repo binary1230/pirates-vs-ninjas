@@ -6,6 +6,8 @@
 #include "physSimulation.h"
 
 void RadiusBlockObject::Update() {
+	UpdateFade();
+
 	if (currentAnimation) {
 		currentAnimation->Update();
 		currentSprite = currentAnimation->GetCurrentSprite();

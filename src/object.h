@@ -141,12 +141,27 @@ class Object : public GameBase {
 
 		//! If true, this object can print debug info out if it wants to.
 		bool debug_flag;
+
+		//! Current fade-out time (0 if not active)
+		int fade_out;
+
+		//! True if the object is fading in or out
+		bool is_fading;
+
+		//! Alpha (transparency) of this object (0=inviz, 255=opaque)
+		int alpha;
 		
 	public:
 		virtual bool Init(GameState* _game_state) = 0;
 		virtual void Shutdown();
 		
 		virtual void Update() = 0;
+		
+		//! Update the fading stuff
+		void UpdateFade();
+
+		//! Fade this object out over a given time (in frames)
+		void FadeOut(int time);
 
 		//! Move this object to its new position (done before 
 		//! collision detection)

@@ -7,7 +7,7 @@
 #include "window.h"
 
 void BackgroundObject::Update() {
-	// pos.SetX(0);
+	UpdateFade();
 
 	if (currentAnimation) {
 		currentAnimation->Update();

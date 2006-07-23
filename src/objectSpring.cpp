@@ -5,6 +5,7 @@
 #include "gameState.h"
 
 void SpringObject::Update() {
+	UpdateFade();
 	if (currentAnimation) {
 		currentAnimation->Update();
 		currentSprite = currentAnimation->GetCurrentSprite();

@@ -43,10 +43,22 @@ void Object::SetupCachedVariables() {
 	level_height = simulation->GetHeight();
 }
 
+void Object::UpdateFade() {
+	
+}
+
+void Object::FadeOut(int time) {
+	fade_out = time;
+	is_fading = true;
+}
+
 bool Object::BaseInit() {
 	SetupCachedVariables();
 	ClearProperties(properties);
 	is_dead = false;
+	fade_out = 0;
+	is_fading = false;
+	alpha = 255;
 	return true;
 }
 

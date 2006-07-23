@@ -17,6 +17,7 @@
 #define DEFAULT_MIN_VELOCITY 0.3f
 
 void PlayerObject::Update() {
+	UpdateFade();
 	
 	assert(currentAnimation != NULL);
 	currentAnimation->Update();

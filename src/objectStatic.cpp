@@ -5,6 +5,7 @@
 #include "gameState.h"
 
 void StaticObject::Update() {
+	UpdateFade();
 	if (currentAnimation) {
 		currentAnimation->Update();
 		currentSprite = currentAnimation->GetCurrentSprite();
