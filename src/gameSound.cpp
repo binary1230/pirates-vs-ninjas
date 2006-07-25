@@ -1,6 +1,6 @@
 #include "gameSound.h"
 #include "gameState.h"
-#include "resourceLoader.h"
+#include "assetManager.h"
 
 GameSound::GameSound() {
 	sound_enabled = false;
@@ -37,14 +37,13 @@ bool GameSound::LoadSound(const char* filename, const char* sound_name) {
 	if (!sound_enabled)
 		return true;
 
-	SAMPLE* spl = game_state->GetResourceLoader()->LoadSound(filename);
-
-	sounds[sound_name] = spl;
+	SAMPLE* spl = game_state->GetAssetManager()->LoadSound(filename);
 
 	if (!spl)
 		return false;
-	else 
-		return true;
+	
+	sounds[sound_name] = spl;
+	return true;
 }
 	
 bool GameSound::LoadSounds(XMLNode &xSounds) {
@@ -86,20 +85,10 @@ int GameSound::Init(GameState* _game_state, bool _sound_enabled) {
 }
 
 void GameSound::Shutdown() {
-
 	s_iter s;
 	game_state = NULL;
 				
-	if (!sound_enabled)
-		return;
-
-	for (s = sounds.begin(); s != sounds.end(); s++) {
-		if (s->second)
-			destroy_sample(s->second);
-	}
-	
+	// do NOT free pointers in here
 	sounds.clear();
-				
 	sound_enabled = false;
-	
 }

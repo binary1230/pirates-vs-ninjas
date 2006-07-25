@@ -12,7 +12,7 @@
 
 using namespace std;
 
-//! Maps a sound name to it's handle (e.g. "jump" to 42)
+//! Maps a sound name to it's handle (e.g. "jump" to the sample)
 typedef map<CString, SAMPLE*> SoundMapping;
 typedef map<CString, SAMPLE*>::iterator s_iter;
 
@@ -22,7 +22,8 @@ class GameSound : public GameBase {
 			//! If false, then this class doesn't output any sound
 			bool sound_enabled;
 
-			//! Holds the sounds that are loaded
+			//! Holds pointers to SAMPLE's.  Do NOT create or free these
+			//! pointers, AssetManager does that.
 			SoundMapping sounds;
 						
 		public:

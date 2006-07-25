@@ -1,26 +1,52 @@
-#include "resourceLoader.h"
+#include "assetManager.h"
 
 #ifdef PLATFORM_DARWIN
 #include <CoreServices/CoreServices.h>
 #endif 
 
-int ResourceLoader::Init(GameState* _game_state) {
+int AssetManager::Init(GameState* _game_state) {
 	SetGameState(_game_state);
 	ResetPaths();
+	bitmaps.clear();
+	samples.clear();
 	return true;
 }
 
-void ResourceLoader::Shutdown() {
+void AssetManager::FreeSamples() {
+	SampleListIter i;
+
+	for (i = samples.begin(); i != samples.end(); i++) {
+		if (i->second)
+			destroy_sample(i->second);
+	}
+
+	samples.clear();
+}
+
+void AssetManager::FreeBitmaps() {
+	BitmapListIter i;
+
+	for (i = bitmaps.begin(); i != bitmaps.end(); i++) {
+		if (i->second)
+			destroy_bitmap(i->second);
+	}
+
+	bitmaps.clear();
+}
+
+void AssetManager::Shutdown() {	
+	FreeBitmaps();
+	FreeSamples();
 	paths.clear();
 }
 
 // XXXX using '..' doesn't work yet, (allegro's load_bitmap()'s fault)
-void ResourceLoader::AppendToSearchPath(const char* path) {
+void AssetManager::AppendToSearchPath(const char* path) {
 	if (path && path[0])
 		paths.push_back(path);
 }
 
-void ResourceLoader::ResetPaths() {
+void AssetManager::ResetPaths() {
 	paths.clear();
 	
 	// Only for MacOSX paths
@@ -35,7 +61,7 @@ void ResourceLoader::ResetPaths() {
 
 //! Returns either the full path to a real file,
 //! or an empty CString
-CString ResourceLoader::GetPathOf(const char* filename) const {
+CString AssetManager::GetPathOf(const char* filename) const {
 	
 	const CString seperator = "/";
 	CString fullpath;
@@ -50,7 +76,7 @@ CString ResourceLoader::GetPathOf(const char* filename) const {
 }
 
 //! Returns true if a file exists, false otherwise
-bool ResourceLoader::FileExists(const char* file) const {
+bool AssetManager::FileExists(const char* file) const {
 	struct stat sb;
 	
 	if (stat(file, &sb) == -1)
@@ -60,32 +86,57 @@ bool ResourceLoader::FileExists(const char* file) const {
 }
 
 //! Opens a bitmap, utilizes the search paths
-BITMAP* ResourceLoader::OpenBitmap(const char* filename, PALETTE* pal) const {
+BITMAP* AssetManager::LoadBitmap(const char* filename, PALETTE* pal) {
 	BITMAP* bmp = NULL;
-	CString file = GetPathOf(filename);
 	
-	if (file.length() != 0)
+	// 1) See if this bitmap is already loaded
+	BitmapListIter i = bitmaps.find(filename);
+
+	if (i != bitmaps.end()) {
+		return i->second;		// return the already loaded bitmap
+	}
+
+	// 2) Try to open the file
+	CString file = GetPathOf(filename);
+	if (file.length() != 0) {
 		bmp = load_bitmap(file, *pal);
+
+		// success, add it to the list
+		if (bmp)
+			bitmaps[filename] = bmp;
+	}
 	
 	return bmp;
 }
 
-SAMPLE* ResourceLoader::LoadSound(const char* filename) const {
+SAMPLE* AssetManager::LoadSound(const char* filename) {
 	SAMPLE *spl = NULL;
-	CString file = GetPathOf(filename);
 
+	// 1) See if this sample is already loaded
+	SampleListIter i = samples.find(filename);
+
+	if (i != samples.end()) {
+		return i->second;		// return the already loaded sample
+	}
+
+	// 2) Try to open the file
+	CString file = GetPathOf(filename);
 	if (file.length() != 0) {
 		spl = load_sample(file);
+
+		if (spl)
+			samples[filename] = spl;
 	}
 
 	return spl;
 }
 
-ResourceLoader::ResourceLoader() {
+AssetManager::AssetManager() {
 	ResetPaths();
 }
 
-ResourceLoader::~ResourceLoader() {
+AssetManager::~AssetManager() {
+	Shutdown();
 }
 
 //  -------------------------------------------------------------------------
@@ -105,7 +156,7 @@ ResourceLoader::~ResourceLoader() {
 
 //! Returns something like "/Applications/Ninjas.app/Resources" on Mac, 
 //! if not on Mac, it just returns ""
-CString ResourceLoader::GetMacOSXCurrentWorkingDir() const {
+CString AssetManager::GetMacOSXCurrentWorkingDir() const {
 #ifdef PLATFORM_DARWIN 
 	CFBundleRef mainBundle = CFBundleGetMainBundle();
 	CFURLRef url = CFBundleCopyBundleURL(mainBundle);

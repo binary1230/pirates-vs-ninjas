@@ -246,7 +246,7 @@ Object::Object() {
 	vel.SetX(0); vel.SetY(0);
 }
 
-// A static helper function to load animations
+// A helper function to load animations
 bool Object::LoadAnimations(XMLNode &xDef, AnimationMapping *animation_lookup) {
 	int i, iterator, max;
 

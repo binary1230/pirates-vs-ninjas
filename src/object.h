@@ -222,6 +222,9 @@ class Object : public GameBase {
 		//! Setup some commonly used variables
 		void SetupCachedVariables();
 
+		//! Load object properties from XML
+		bool LoadProperties(XMLNode &xDef);		
+
 		//! Load animations from an XML object definition 
 		bool LoadAnimations(XMLNode &xDef, AnimationMapping* = NULL);
 
@@ -236,8 +239,6 @@ class Object : public GameBase {
 		
 		void SetDebugFlag(bool d) {debug_flag = d;};
 		bool GetDebugFlag() {return debug_flag;};
-		
-		bool LoadProperties(XMLNode &xDef);		//! Load object properties from XML
 		
 		//! Handle collisions with another object
 		virtual void Collide(Object* obj);

@@ -1,6 +1,6 @@
 #include "physSimulation.h"
 
-#include "resourceLoader.h"
+#include "assetManager.h"
 #include "xmlParser.h"
 #include "globals.h"
 #include "objectFactory.h"
@@ -371,7 +371,7 @@ int PhysSimulation::LoadObjectDefsFromXML(XMLNode &xObjs,
 		file = xObjs.getChildNode("include_xml_file", &iterator).getText();
 		
 		// open that file, get the objectDef
-		file = GetGameState()->GetResourceLoader()->GetPathOf(file);
+		file = GetGameState()->GetAssetManager()->GetPathOf(file);
 		xObjectDef = XMLNode::openFileHelper(file.c_str(), "objectDef");
 
 		// save it

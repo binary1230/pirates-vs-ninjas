@@ -7,6 +7,9 @@ bin_PROGRAMS = ninjas
 # LDFLAGS = -ggdb -lm
 # ninjas_LDFLAGS = @LDFLAGS@
 
+# for profiling
+# ninjas_LDFLAGS = -pg
+
 ninjas_CXXFLAGS = -Wall
 
 headers = \
@@ -19,7 +22,7 @@ objectPlayer.h objectRadiusBlock.h objectBackground.h objectController.h \
 objectStatic.h objectSpring.h objectCollectable.h\
 rect.h vector2D.h force.h forceFactory.h \
 forceGravity.h forceInput.h \
-basename.h resourceLoader.h \
+basename.h assetManager.h \
 animation.h animations.h sprite.h \
 StdString.h xmlParser.h objectLayer.h 
 
@@ -32,7 +35,7 @@ object.cpp objectFactory.cpp objectPlayer.cpp objectRadiusBlock.cpp \
 objectBackground.cpp objectController.cpp objectStatic.cpp \
 objectSpring.cpp objectCollectable.cpp\
 timer.cpp rect.cpp vector2D.cpp window.cpp \
-basename.cpp resourceLoader.cpp \
+basename.cpp assetManager.cpp \
 animation.cpp animations.cpp \
 xmlParser.cpp \
 $(headers)

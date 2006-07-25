@@ -2,7 +2,7 @@
 #include "gameState.h"
 #include "sprite.h"
 #include "window.h"
-#include "resourceLoader.h"
+#include "assetManager.h"
 
 #include <map>
 using namespace std;
@@ -78,7 +78,6 @@ void Animation::Shutdown() {
 		if (frames[i]) {
 			
 			if (frames[i]->sprite) {
-				frames[i]->sprite->Shutdown();
 				delete frames[i]->sprite;
 				frames[i]->sprite = NULL;
 			}
@@ -102,15 +101,13 @@ bool Animation::PushImage(
 	f->sprite = new Sprite();
 	assert(f->sprite != NULL);
 	
-	CString file = GetGameState()->GetResourceLoader()->GetPathOf(_file);
-	f->sprite->bmp = load_bitmap(file, NULL);
+	f->sprite->bmp = GetGameState()->GetAssetManager()->LoadBitmap(_file);
 
 	if (!f->sprite->bmp) {
-		fprintf(stderr, "Can't load file: '%s' - not adding to animation\n", file.c_str());
+		fprintf(stderr, "Can't load file: '%s' - not adding to animation\n", _file);
 		return false;
 	}
 
-	f->sprite->bitmap_is_deleteable = true;
 	f->sprite->x_offset = 0;
 	f->sprite->y_offset = 0;
 	f->nextFrame = NULL;

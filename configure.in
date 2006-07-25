@@ -105,7 +105,7 @@ fi
 ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes"
 ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
 
-LDFLAGS="$extra_libraries"
+LDFLAGS="$extra_libraries $LDFLAGS"
 
 AC_SUBST(ninjas_CXXFLAGS)
 AC_SUBST(ninjas_LDFLAGS)
@@ -129,6 +129,8 @@ AC_OBJEXT
 AC_EXEEXT
 
 AC_CHECK_HEADERS([allegro.h])
+AC_CHECK_HEADERS([vector])
+AC_CHECK_HEADERS([list])
 
 #AC_SUBST(SDL_LIBS)
 #AC_SUBST(SDL_DEFS)

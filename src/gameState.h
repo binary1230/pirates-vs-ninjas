@@ -11,7 +11,7 @@ class GameOptions;
 class BaseInput;
 class Window;
 class GameMode;
-class ResourceLoader;
+class AssetManager;
 class PhysSimulation;
 class GameSound;
 
@@ -35,7 +35,7 @@ class GameState {
 		XMLNode xGame;
 		
 		//! Loads things and knows about path handling
-		ResourceLoader* resourceLoader;
+		AssetManager* assetManager;
 		
 		//! The game's on-screen window
 		Window *window;								
@@ -153,7 +153,7 @@ class GameState {
 		uint ScreenHeight() const;
 
 		//! Get our resource loader.
-		inline ResourceLoader* GetResourceLoader() const {return resourceLoader;};
+		inline AssetManager* GetAssetManager() const {return assetManager;};
 
 		//! Unconditionally exit game
 		void SignalExit();

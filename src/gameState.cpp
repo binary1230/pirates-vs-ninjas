@@ -8,7 +8,7 @@
 #include "window.h"
 #include "physSimulation.h"
 #include "gameMode.h"
-#include "resourceLoader.h"
+#include "assetManager.h"
 #include "xmlParser.h"
 #include "gameSound.h"
 
@@ -24,7 +24,7 @@ XMLNode GameState::LoadXMLConfig(CString xml_filename) {
 	int default_mode_id = options->GetDefaultModeId();
 
 	// XXX xmlParser just DIES on error
-	xml_filename = resourceLoader->GetPathOf(xml_filename.c_str());
+	xml_filename = assetManager->GetPathOf(xml_filename.c_str());
 	xGame = XMLNode::openFileHelper(xml_filename.c_str(), "game");
 	
 	XMLNode xInfo = xGame.getChildNode("info");
@@ -77,7 +77,7 @@ XMLNode GameState::LoadXMLConfig(CString xml_filename) {
 		mode_xml_filename.c_str());
 
 	// Open that file, return the node
-	mode_xml_filename = resourceLoader->GetPathOf(mode_xml_filename);
+	mode_xml_filename = assetManager->GetPathOf(mode_xml_filename);
 	return XMLNode::openFileHelper(mode_xml_filename.c_str(), "gameMode" );
 }
 
@@ -132,14 +132,14 @@ int GameState::InitSystem() {
 
 		SetRandomSeed(42);
 		
-		fprintf(stderr, "[init: resourceLoader]\n");
-		resourceLoader = new ResourceLoader();
-		if (!resourceLoader || resourceLoader->Init(this) < 0) {
-			fprintf(stderr, "ERROR: InitSystem: failed to create resourceLoader!\n");
+		fprintf(stderr, "[init: assetManager]\n");
+		assetManager = new AssetManager();
+		if (!assetManager || assetManager->Init(this) < 0) {
+			fprintf(stderr, "ERROR: InitSystem: failed to create assetManager!\n");
 			return -1;
 		}
 
-		resourceLoader->AppendToSearchPath("../");
+		assetManager->AppendToSearchPath("../");
 
 		// just DIES if it can't load this file (bad)
 		fprintf(stderr, "[init: xml config]\n");

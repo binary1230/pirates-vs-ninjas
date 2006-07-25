@@ -1,5 +1,5 @@
 #include "objectController.h"
-#include "resourceLoader.h"
+#include "assetManager.h"
 #include "window.h"
 #include "sprite.h"
 #include "xmlParser.h"
@@ -82,14 +82,12 @@ void ControllerObject::Shutdown() {
 	
 	for (i = 0; i < max; i++) {
 		if (buttons[i].sprite) {
-			buttons[i].sprite->Shutdown();
 			delete buttons[i].sprite;
 			buttons[i].sprite = NULL;
 		}
 	}
 
 	if (controller_sprite) {
-		controller_sprite->Shutdown();
 		delete controller_sprite;
 		controller_sprite = NULL;
 	}
@@ -122,13 +120,12 @@ Object* ControllerObject::New(	GameState* _game_state,
 
 	filename = xImages.getChildNode("base").getText();
 	obj->controller_sprite = new Sprite();
-	obj->controller_sprite->bitmap_is_deleteable = true;
 	
-	CString file = obj->GetGameState()->GetResourceLoader()->GetPathOf(filename);
-	obj->controller_sprite->bmp = load_bitmap(file, NULL);
+	obj->controller_sprite->bmp = 
+	obj->GetGameState()->GetAssetManager()->LoadBitmap(filename.c_str());
 		
 	if (!obj->controller_sprite->bmp) {
-	fprintf(stderr, "-- ERROR: Can't load file '%s'\n", filename.c_str() );
+		fprintf(stderr, "-- ERROR: Can't load file '%s'\n", filename.c_str() );
 		delete obj->controller_sprite;
 		delete obj;
 		return NULL;
@@ -149,14 +146,13 @@ Object* ControllerObject::New(	GameState* _game_state,
 			
 			filename = xBtn.getText();
 			b->sprite = new Sprite();
-			b->sprite->bitmap_is_deleteable = true;
 			b->active = 0;
 		
-			file = obj->GetGameState()->GetResourceLoader()->GetPathOf(filename);
-			b->sprite->bmp = load_bitmap(file, NULL);
+			b->sprite->bmp = 
+			obj->GetGameState()->GetAssetManager()->LoadBitmap(filename.c_str());
 			
 			if (!b->sprite->bmp) {
-				fprintf(stderr, "-- ERROR: Can't load file '%s'\n", filename.c_str() );
+				fprintf(stderr,"-- ERROR: Can't load file '%s'\n",filename.c_str());
 				return NULL;
 			}
 

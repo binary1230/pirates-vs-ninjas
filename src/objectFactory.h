@@ -9,7 +9,7 @@ using namespace std;
 
 class ObjectFactory;
 class Object;
-class ResourceLoader;
+class AssetManager;
 
 #include "gameBase.h"
 #include "xmlParser.h"
