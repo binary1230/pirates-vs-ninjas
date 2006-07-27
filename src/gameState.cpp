@@ -7,6 +7,7 @@
 #include "inputPlayback.h"
 #include "window.h"
 #include "physSimulation.h"
+#include "credits.h"
 #include "gameMode.h"
 #include "assetManager.h"
 #include "xmlParser.h"
@@ -88,10 +89,19 @@ int GameState::LoadGameMode(XMLNode xMode) {
 		// Get the mode type from the XML file
 		CString nodeType = xMode.getAttribute("type");
 
-		// TODO: Is it worth making a "mode factory" for this?
+		// XXX: Is it worth making a "mode factory" for this?
+
 		if (nodeType == "simulation") {
 						
 			mode = physSimulation = new PhysSimulation();
+			if ( !mode || mode->Init(this, xMode) < 0) {
+				fprintf(stderr, "ERROR: InitSystem: failed to init simulation!\n");
+				return -1;
+			}
+
+		}	else if (nodeType == "credits") {
+						
+			mode = new CreditsMode();
 			if ( !mode || mode->Init(this, xMode) < 0) {
 				fprintf(stderr, "ERROR: InitSystem: failed to init simulation!\n");
 				return -1;
@@ -130,7 +140,7 @@ int GameState::InitSystem() {
 		fprintf(stderr, "[init: timers]\n");
 		InitTimers();				// must be called SECOND
 
-		SetRandomSeed(42);
+		SetRandomSeed(42);	// for now, makes testing easier
 		
 		fprintf(stderr, "[init: assetManager]\n");
 		assetManager = new AssetManager();

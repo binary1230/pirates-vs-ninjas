@@ -8,6 +8,18 @@
 int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
 
+void Window::BlitBitmap(  BITMAP* bmp, int source_x, int source_y, 
+									int dest_x, int dest_y, int width, int height) {
+
+	// if its position is offscreen, don't draw it.
+	if (dest_x + bmp->w < 0 || dest_x >= (int)width ||
+			dest_y + bmp->h < 0 || dest_y >= (int)height )
+			return;
+
+	blit(bmp, drawing_surface, source_x, source_y, dest_x, dest_y, width, height);
+}
+
+
 // public function
 void Window::DrawBitmap(	BITMAP* bmp, int x, int y, 
 													bool flip_x, bool flip_y, int alpha) {

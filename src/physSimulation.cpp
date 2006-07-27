@@ -336,6 +336,7 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 		clear_color = 0;
 	}
 
+	// XXX make it a class memeber
 	GetGameState()->GetWindow()->SetClearColor(clear_color);
 
 	return 0;

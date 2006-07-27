@@ -71,11 +71,15 @@ class Window : public GameBase {
 		inline uint Width() {return width;};
 		inline uint Height() {return height;};
 
-		// Drawing functions
 		void DrawSprite(	Sprite* sprite, int x, int y, 
 											bool flip_x=0, bool flip_y=0, int alpha=255);
+
 		void DrawBitmap(	BITMAP* bmp, int x, int y, 
 											bool flip_x=0, bool flip_y=0, int alpha=255);
+
+		//! Blit is provided if we need to do something more complex
+		void BlitBitmap(  BITMAP* bmp, int source_x, int source_y, 
+											int dest_x, int dest_y, int width, int height);
 
 		//! Debug only - draw a bounding rectangle
 		void DrawRect(Rect &r, int col);
