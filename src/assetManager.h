@@ -12,6 +12,7 @@
 #include <allegro.h>
 using namespace std;
 
+#include "alogg.h"
 #include "gameBase.h"
 #include "StdString.h"
 #include "globals.h"
@@ -37,12 +38,16 @@ typedef map<CString, BITMAP*>::iterator BitmapListIter;
 typedef map<CString, SAMPLE*> SampleList;
 typedef map<CString, SAMPLE*>::iterator SampleListIter;
 
+//typedef map<CString, OGG*> SongList;
+//typedef map<CString, OGG*>::iterator SongListIter;
+
 //! Manages game assets and memory
 class AssetManager : public GameBase {
 	protected:
 		vector<CString> paths;
 		BitmapList bitmaps;
 		SampleList samples;
+		// SongList   songs;
 		
 	public:
 		int Init(GameState*);
@@ -73,10 +78,14 @@ class AssetManager : public GameBase {
 		//! it also outputs the palette in *pal
 		BITMAP* LoadBitmap(const char* filename, PALETTE* pal = NULL); 
 
-		//! Opens a bitmap file, or returns NULL on failure
+		//! Opens a sound file (e.g. WAV), or returns NULL on failure
 		//! This function looks in the current search path
-		//! it also outputs the palette in *pal
 		SAMPLE* LoadSound(const char* filename);
+
+		//! Opens an ogg file, or returns NULL on failure
+		//! This function looks in the current search path
+		// OGG* LoadSong(const char* filename);
+
 
 		//! Returns the current working directory
 		CString GetMacOSXCurrentWorkingDir() const;

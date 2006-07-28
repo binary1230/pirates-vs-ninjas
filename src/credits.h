@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 class GameState;
+class OGGFILE;
 
 #include "gameBase.h"
 #include "gameMode.h"
@@ -17,6 +18,7 @@ class CreditsMode : public GameMode {
 			BITMAP* credits_bmp;
 			int scroll_speed;
 			int scroll_offset;
+			OGGFILE* music;
 
 		public:
 			int Init(GameState*, XMLNode);

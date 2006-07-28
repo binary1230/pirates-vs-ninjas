@@ -25,7 +25,7 @@ forceGravity.h forceInput.h \
 basename.h assetManager.h \
 animation.h animations.h sprite.h \
 StdString.h xmlParser.h objectLayer.h \
-credits.h
+credits.h oggFile.h
 
 ninjas_SOURCES = \
 force.cpp forceGravity.cpp forceInput.cpp forceFactory.cpp \
@@ -39,7 +39,7 @@ timer.cpp rect.cpp vector2D.cpp window.cpp \
 basename.cpp assetManager.cpp \
 animation.cpp animations.cpp \
 xmlParser.cpp \
-credits.cpp \
+credits.cpp oggFile.cpp \
 $(headers)
 
 # EXTRA_DIST = dir1 dir2

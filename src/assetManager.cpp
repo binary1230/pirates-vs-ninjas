@@ -12,27 +12,35 @@ int AssetManager::Init(GameState* _game_state) {
 	return true;
 }
 
+// XXX should make these templated...
 void AssetManager::FreeSamples() {
 	SampleListIter i;
-
 	for (i = samples.begin(); i != samples.end(); i++) {
 		if (i->second)
 			destroy_sample(i->second);
 	}
-
 	samples.clear();
 }
 
 void AssetManager::FreeBitmaps() {
 	BitmapListIter i;
-
 	for (i = bitmaps.begin(); i != bitmaps.end(); i++) {
 		if (i->second)
 			destroy_bitmap(i->second);
 	}
-
 	bitmaps.clear();
 }
+
+/*void AssetManager::FreeSongs() {
+	SongListIter i;
+	for (i = songs.begin(); i != songs.end(); i++) {
+		if (i->second)
+			(i->second);
+	}
+	songs.clear();
+}*/
+
+
 
 void AssetManager::Shutdown() {	
 	FreeBitmaps();
