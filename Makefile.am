@@ -1,10 +1,13 @@
-SUBDIRS = src
+SUBDIRS = libs/alogg src
 
 DATA_DIR = data
-EXTRA_DIST = docs $(DATA_DIR)
+EXTRA_DIST = docs $(DATA_DIR) 
+
+dist_common:
+	make -C libs/alogg clean
 
 # create the MAC OSX Bundle
-dist_macosx: $(DISTFILES)
+dist_macosx: dist_common $(DISTFILES)
 	rm -rf dist/darwin/*
 	mkdir -p dist/darwin/ninjas.app/Contents/MacOS
 	mkdir dist/darwin/ninjas.app/PkgInfo
@@ -14,7 +17,7 @@ dist_macosx: $(DISTFILES)
 	hdiutil create -fs HFS+ -volname PiratesVersusNinjas-$(VERSION) -srcfolder dist/darwin/ PiratesVersusNinjas-$(VERSION)
 
 # create the windows .zip file
-dist_win32: $(DISTFILES) 
+dist_win32: dist_common $(DISTFILES) 
 	rm -rf dist/win32/ninjas-engine-*
 	mkdir -p dist/win32/ninjas-engine-$(VERSION)/data
 	

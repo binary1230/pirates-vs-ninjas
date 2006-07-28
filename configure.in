@@ -61,8 +61,12 @@ case $target_alias in
 	;;
 esac
 
+dnl Alogg Stuff
+ALOGG_INCLUDE_DIR="../libs/alogg/include/"
+ALOGG_LIB="../libs/alogg/lib/linux/libalogg.a"
+
 # ninjas_LDFLAGS="$LDFLAGS `allegro-config --libs`"
-LIBS="$LIBS `allegro-config --libs`"
+LIBS="$LIBS `allegro-config --libs` $ALOGG_LIB"
 
 dnl XXXX CROSS COMPILING
 if test "$WIN32" = "yes"; then
@@ -102,10 +106,12 @@ if test -n "$use_extra_libs" && test "$use_extra_libs" != "NO"; then
    done
 fi
 
+
 ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes"
 ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
 
 LDFLAGS="$extra_libraries $LDFLAGS"
+CXXFLAGS="$CXXFLAGS -I$ALOGG_INCLUDE_DIR"
 
 AC_SUBST(ninjas_CXXFLAGS)
 AC_SUBST(ninjas_LDFLAGS)
