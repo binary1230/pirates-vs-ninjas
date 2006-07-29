@@ -133,8 +133,18 @@ Object* ControllerObject::New(	GameState* _game_state,
 	
 	obj->controller_sprite->x_offset = 0;
 	obj->controller_sprite->y_offset = 0;
-	obj->pos.SetX(xImages.getChildNode("base").getChildNode("x").getInt());
-	obj->pos.SetY(xImages.getChildNode("base").getChildNode("y").getInt());
+
+	int x1,y1;
+	if (!xImages.getChildNode("base").getChildNode("x").getInt(x1)) {
+		fprintf(stderr, "Invalid controller base X!\n");
+		return NULL;
+	}
+	if (!xImages.getChildNode("base").getChildNode("x").getInt(y1)) {
+		fprintf(stderr, "Invalid controller base Y!\n");
+		return NULL;
+	}
+	obj->pos.SetX(x1);
+	obj->pos.SetY(y1);
 
 	Button* b;
 	
@@ -156,8 +166,17 @@ Object* ControllerObject::New(	GameState* _game_state,
 				return NULL;
 			}
 
-			b->sprite->x_offset = xBtn.getChildNode("x").getInt();
-			b->sprite->y_offset = xBtn.getChildNode("y").getInt();
+			int x2,y2;	
+			if (!xBtn.getChildNode("x").getInt(x2)) {
+				fprintf(stderr, "Invalid controller button X!\n");
+				return NULL;
+			}
+			if (!xBtn.getChildNode("y").getInt(y2)) {
+				fprintf(stderr, "Invalid controller button Y!\n");
+				return NULL;
+			}
+			b->sprite->x_offset = x2;
+			b->sprite->y_offset = y2;
 	}
 
 	if (xDef.nChildNode("showDuringDemoOnly") > 0)

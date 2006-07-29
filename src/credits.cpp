@@ -13,7 +13,10 @@ int CreditsMode::Init(GameState* gs, XMLNode xMode) {
 
 	credits_bmp = m->LoadBitmap(xMode.getChildNode("scrollPic").getText());
 
-	scroll_speed = xMode.getChildNode("scrollSpeed").getInt();
+	if (!xMode.getChildNode("scrollSpeed").getInt(scroll_speed)) {
+		fprintf(stderr, " -- Invalid scroll speed!\n");
+		return -1;
+	}
 	scroll_offset = window->Height();
 
 	window->SetClearColor(0);

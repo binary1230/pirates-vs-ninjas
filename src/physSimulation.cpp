@@ -322,21 +322,41 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 	int clear_color;
 
 	// get width/height/camera xy
-	width 			=	xProps.getChildNode("width").getInt();
-	height 			= xProps.getChildNode("height").getInt();
-	camera_x = xProps.getChildNode("camera_x").getInt();
-	camera_y 	= xProps.getChildNode("camera_y").getInt();
+	if (!xProps.getChildNode("width").getInt(width)) {
+		fprintf(stderr, "-- Invalid width!\n");
+		return -1;
+	}
+	if (!xProps.getChildNode("height").getInt(height)) {
+		fprintf(stderr, "-- Invalid height!\n");
+		return -1;
+	}
+	if (!xProps.getChildNode("camera_x").getInt(camera_x)) {
+		fprintf(stderr, "-- Invalid camera_x!\n");
+		return -1;
+	}
+	if (!xProps.getChildNode("camera_y").getInt(camera_y)) {
+		fprintf(stderr, "-- Invalid camera_y!\n");
+		return -1;
+	}
 
 	if (xProps.nChildNode("bgcolor") == 1) {
 		xColor = xProps.getChildNode("bgcolor");
-		clear_color = makecol(xColor.getChildNode("r").getInt(),
-													xColor.getChildNode("g").getInt(),
-													xColor.getChildNode("b").getInt() );
+		int r,g,b;
+	
+		if (	!xColor.getChildNode("r").getInt(r) ||
+					!xColor.getChildNode("g").getInt(g) ||
+					!xColor.getChildNode("b").getInt(b) ||
+					r < 0 || g < 0 || b < 0 || r > 255 || b > 255 | g > 255) {
+					fprintf(stderr, "-- Invalid bgcolor specified!\n");
+					return -1;
+		}
+
+		clear_color = makecol(r,g,b);
 	} else {
 		clear_color = 0;
 	}
 
-	// XXX make it a class memeber
+	// XXX make clear_color it a class memeber
 	GetGameState()->GetWindow()->SetClearColor(clear_color);
 
 	return 0;
@@ -468,7 +488,11 @@ int PhysSimulation::LoadLayerFromXML(
 
 		// XXX should make this an ATTRIBUTE not the TEXT of the <repeat> tag
 		xRepeater = xLayer.getChildNode("repeat", &iterator);
-		times_to_repeat = xRepeater.getInt();
+
+		if (!xRepeater.getInt(times_to_repeat)) {
+			fprintf(stderr, "-- Invalid # repeat times!\n");
+			return -1;
+		}
 		
 		// Repeat the creation of this object the specified # of times.
 		// same exact object code as above...
@@ -529,7 +553,7 @@ int PhysSimulation::LoadObjectFromXML(
 
 		// SPECIAL debug flag.  IF it is set, the object MAY print debug message
 		if (xObject.nChildNode("debug") == 1) {
-			fprintf(stderr, "-------------- Enabling debug mode. ----------\n");
+			fprintf(stderr, "-- Enabling debug mode.\n");
 			obj->SetDebugFlag(true);
 		}
 		
@@ -538,14 +562,39 @@ int PhysSimulation::LoadObjectFromXML(
 			XMLNode xPos = xObject.getChildNode("position");
 			CString type = xPos.getAttribute("type");
 			if (type == CString("fixed")) {
-				x = xPos.getChildNode("x").getInt();
-				y = xPos.getChildNode("y").getInt();
+				
+				if (!xPos.getChildNode("x").getInt(x)) {
+					fprintf(stderr, "-- Invalid X!\n");
+					return -1;	
+				}
+				if (!xPos.getChildNode("y").getInt(y)) {
+					fprintf(stderr, "-- Invalid X!\n");
+					return -1;
+				}
 				
 			} else if (type == CString("random")) {
-				int xmin = xPos.getChildNode("xmin").getInt();
-				int ymin = xPos.getChildNode("ymin").getInt();
-				int xmax = xPos.getChildNode("xmax").getInt();
-				int ymax = xPos.getChildNode("ymax").getInt();
+
+				int xmin, ymin, xmax, ymax, x, y;
+
+				if (!xPos.getChildNode("xmin").getInt(xmin)) {
+					fprintf(stderr, "-- Invalid xmin!\n");
+					return -1;
+				}
+
+				if (!xPos.getChildNode("ymin").getInt(ymin)) {
+					fprintf(stderr, "-- Invalid ymin!\n");
+					return -1;
+				}
+
+				if (!xPos.getChildNode("xmax").getInt(xmax)) {
+					fprintf(stderr, "-- Invalid xmax!\n");
+					return -1;
+				}
+
+				if (!xPos.getChildNode("ymax").getInt(ymax)) {
+					fprintf(stderr, "-- Invalid ymax!\n");
+					return -1;
+				}
 				x = Rand(xmin, xmax);
 				y = Rand(ymin, ymax);
 
@@ -598,20 +647,38 @@ int PhysSimulation::LoadObjectFromXML(
 
 			// check for velocity - <velx> and <vely>
 			if (xPos.nChildNode("velx")>0) {
-				obj->SetVelX(xPos.getChildNode("velx").getFloat());
+				float velx;
+				if (!xPos.getChildNode("velx").getFloat(velx)) {
+					fprintf(stderr, "-- Invalid velx!\n");
+					return -1;
+				}
+				obj->SetVelX(velx);
 			}
 			if (xPos.nChildNode("vely")>0) {
-				obj->SetVelY(xPos.getChildNode("vely").getFloat());
+				float vely;
+				if (!xPos.getChildNode("vely").getFloat(vely)) {
+					fprintf(stderr, "-- Invalid vely!\n");
+					return -1;
+				}
+				obj->SetVelY(vely);
 			}
 		}
 			
 		if (xObject.nChildNode("inputController") == 1) {
-			int controller_num = xObject.getChildNode("inputController").getInt();
+			int controller_num;
+			if (!xObject.getChildNode("inputController").getInt(controller_num)) {
+				fprintf(stderr, "-- Invalid controller number!\n");
+				return -1;
+			}
 			obj->SetControllerNum(controller_num);
 		}
 
 		if (xObject.nChildNode("fadeout") == 1) {
-			int fadeout_time = xObject.getChildNode("fadeout").getInt();
+			int fadeout_time;
+			if (!xObject.getChildNode("fadeout").getInt(fadeout_time)) {
+				fprintf(stderr, "-- Invalid fadeout time!\n");
+				return -1;
+			}
 			if (fadeout_time > 0)
 				obj->FadeOut(fadeout_time);
 		}

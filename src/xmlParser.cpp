@@ -1831,16 +1831,12 @@ char         XMLNode::isDeclaration(     ) { if (!d) return 0;                 r
 char         XMLNode::isEmpty      (     ) { return (d==NULL); }
 int          XMLNode::nElement     (     ) { if (!d) return 0; return d->nChild+d->nText+d->nClear+d->nAttribute; }
 
-int XMLNode::getInt(int i) 
+bool XMLNode::getInt(int &result, int i) 
 {
-	int tmp;
-	sscanf(getText(i), "%i", &tmp);
-	return tmp;
+	return (sscanf(getText(i), "%i", &result) > 0);
 }
 
-float XMLNode::getFloat(int i) 
+bool XMLNode::getFloat(float &result, int i) 
 { 
-	float tmp;
-	sscanf(getText(i), "%f", &tmp);
-	return tmp;
+	return (sscanf(getText(i), "%f", &result) > 0);
 }

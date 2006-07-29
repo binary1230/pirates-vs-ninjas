@@ -333,7 +333,10 @@ bool Object::LoadProperties(XMLNode &xDef) {
 	}
 
 	if (xProps.nChildNode("springStrength")) {
-		properties.spring_strength=xProps.getChildNode("springStrength").getInt();
+		if (!xProps.getChildNode("springStrength").getInt(properties.spring_strength)) {
+			fprintf(stderr, " -- invalid spring strength!\n");
+			return false;
+		}
 	}
 
 	return true;

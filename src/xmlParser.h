@@ -168,9 +168,14 @@ typedef struct XMLNode
     static LPCTSTR getError(XMLError error);
 
     LPCTSTR getName();                                     // name of the node
+
     LPCTSTR getText(int i=0);                              // return ith text field
-		int getInt(int i=0);                                   // return ith text field cast to int
-		float getFloat(int i=0);                               // return ith text field cast to float
+
+		bool getInt(int &result, int i=0);                     // try to cast ith text field cast to int
+		                                                       // return false on failure
+
+		bool getFloat(float &result, int i=0);                 // return ith text field cast to float
+		                                                       // return false on failure
 		
     int nText();                                           // nbr of text field
     XMLNode getChildNode(int i);                           // return ith child node
