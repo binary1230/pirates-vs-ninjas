@@ -17,6 +17,8 @@
 #define DEFAULT_MIN_VELOCITY 0.3f
 
 void PlayerObject::Update() {
+	BaseInput* input = GetGameState()->GetInput();
+
 	UpdateFade();
 	
 	assert(currentAnimation != NULL);
@@ -43,7 +45,8 @@ void PlayerObject::Update() {
 	if (on_floor == true) {
 					
 		// Then we can jump.
-		if (game_state->GetKey(PLAYERKEY_JUMP, controller_num)) {
+		if (input->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
+			input->HandleKeyOnce(PLAYERKEY_JUMP, controller_num);
 			vel.SetY(jump_velocity);
 			on_floor = false;
 			PlaySound("jump");

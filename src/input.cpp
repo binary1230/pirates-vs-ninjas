@@ -35,8 +35,16 @@ void BaseInput::ClearKeys(vector<int> &key_buffer) {
 	}
 }
 
-bool BaseInput::Key(uint gameKey) {
-	return game_key[gameKey];
+// Turn a playerkey + controller combo into the correct GAMEKEY
+// e.g. turn (GAMEKEY_JUMP, controller 1) into KEY #13
+// REMEMBER: Controllers start at ONE not ZERO.
+int BaseInput::ResolveControllerKey(uint gameKey, uint controller_number) {
+	assert(controller_number >= 0 && controller_number < GAMEKEY_COUNT);
+
+	if (!controller_number)
+		return gameKey;
+	else 
+		return gameKey + ((controller_number - 1) * PLAYERKEY_COUNT);
 }
 
 // REMEMBER, controller numbers start at 1
@@ -44,10 +52,44 @@ bool BaseInput::Key(uint gameKey) {
 // This function computes an offset into game_key that represents
 // the Nth player.
 bool BaseInput::Key(uint gameKey, uint controller_number) {
-	assert(controller_number >= 0 && controller_number < GAMEKEY_COUNT);
-
-	int i = gameKey + ((controller_number - 1) * PLAYERKEY_COUNT);
+	int i = ResolveControllerKey(gameKey, controller_number);
 	return game_key[i];
+}
+
+//! Returns true if a key was first released, then pressed.
+//! Can be used to make sure that a player is pressing and releasing
+//! a key, instead of just holding it down.  Make sure to call HandleKeyOnce()
+//! to update this appropriately.
+bool BaseInput::KeyOnce(uint gameKey, uint controller_number) {
+	int i = ResolveControllerKey(gameKey, controller_number);
+	if (released_key[i] && game_key[i])
+		return true;
+	else 
+		return false;
+}
+
+void BaseInput::HandleKeyOnce(uint gameKey, uint controller_number) {
+	int i = ResolveControllerKey(gameKey, controller_number);
+	released_key[i] = false;
+}
+
+void BaseInput::UpdateKeyReleases() {
+	for (int i = 0; i < GAMEKEY_COUNT; i++) {
+		if (!game_key[i]) 
+			released_key[i] = true;
+	}
+}
+
+bool BaseInput::BaseInit() {
+	gamekey_to_realkey.resize(GAMEKEY_COUNT);
+	game_key.resize(GAMEKEY_COUNT);
+	released_key.resize(GAMEKEY_COUNT);
+	
+	for (int i = 0; i < GAMEKEY_COUNT; i++) {
+		released_key[i] = true;
+	}
+
+	return true;
 }
 
 void BaseInput::LoadDefaultKeyMappings() {
@@ -82,8 +124,5 @@ bool BaseInput::LoadKeyMappings(char* filename) {
 	return false;
 }
 
-BaseInput::BaseInput() {
-	gamekey_to_realkey.resize(GAMEKEY_COUNT);
-	game_key.resize(GAMEKEY_COUNT);
-}
+BaseInput::BaseInput() {}
 BaseInput::~BaseInput() {}

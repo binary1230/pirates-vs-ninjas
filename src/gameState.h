@@ -172,6 +172,9 @@ class GameState {
 
 		//! Gets the sound class
 		inline GameSound* GetSound() {return sound;};
+		
+		//! Gets the input class
+		inline BaseInput* GetInput() {return input;};
 
 		GameState();
 		~GameState();

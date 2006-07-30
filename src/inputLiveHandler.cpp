@@ -6,6 +6,10 @@ int InputLive::Init(GameState* _game_state, CString _demo_file) {
 				
 	install_mouse();
 	install_keyboard();
+
+	if (!BaseInit()) {
+		return -1;
+	}
 	
 	LoadDefaultKeyMappings();
 	return 0;
@@ -26,6 +30,8 @@ void InputLive::Update() {
 	for (i = 0; i < GAMEKEY_COUNT; i++) {
 		game_key[i] = key[gamekey_to_realkey[i]];
 	}
+
+	UpdateKeyReleases();
 }
 
 InputLive::InputLive() {}

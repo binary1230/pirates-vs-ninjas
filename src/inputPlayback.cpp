@@ -5,10 +5,14 @@
 int InputPlayback::Init(GameState* _game_state, CString _demo_file) {
 	SetGameState(_game_state);
 				
-	LoadDefaultKeyMappings();
-	
 	install_mouse();
 	install_keyboard();
+	
+	if (!BaseInit()) {
+		return -1;
+	}
+
+	LoadDefaultKeyMappings();
 
 	if( !InitPlayback(_demo_file) )
 		return -1;
@@ -163,6 +167,8 @@ void InputPlayback::Update() {
 	// so they can exit the demo manually
 	if (key[gamekey_to_realkey[GAMEKEY_EXIT]])
 		game_key[GAMEKEY_EXIT] = 1;	
+	
+	UpdateKeyReleases();
 }
 
 void InputPlayback::BeginPlayback()	{

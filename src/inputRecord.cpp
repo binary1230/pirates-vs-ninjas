@@ -8,7 +8,11 @@ int InputRecord::Init(GameState* _game_state, CString _demo_file) {
 				
 	install_mouse();
 	install_keyboard();
-	
+		
+	if (!BaseInit()) {
+		return -1;
+	}
+
 	LoadDefaultKeyMappings();
 
 	if (InitRecorder(_demo_file))
@@ -67,6 +71,8 @@ void InputRecord::Update() {
 	if (keys_changed && demofile) {
 			fprintf(demofile, "\n");
 	}
+
+	UpdateKeyReleases();
 }
 
 bool InputRecord::InitRecorder(CString filename) {

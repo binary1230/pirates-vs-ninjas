@@ -90,6 +90,9 @@ class BaseInput : public GameBase {
 
 		//! The mapping of real keys to gamekeys (e.g. SPACE to GAMEKEY_JUMP)
 		vector<int> gamekey_to_realkey;
+
+		//! Whether a key has been released after it was pressed
+		vector<int> released_key;
 		
 		//! Load the default key mappings
 		void LoadDefaultKeyMappings();
@@ -112,22 +115,34 @@ class BaseInput : public GameBase {
 
 		//! Update the inputs (mice/keys)
 		virtual void Update() = 0;
-		
-		//! Get the status of a key 
-		//! note: for player keys (e.g. player 1 JUMP), with this method 
-		//! you will need to say Key(PLAYERKEY1_JUMP).  
-		//!
-		//! Controller numbers start at 1.
-		//!
-		//! [See the other Key() method too.]
-		bool Key(uint gameKey);
-		
+
 		//! Get the status of a key on a specified controller
 		//! note: for player keys (e.g. player 1 JUMP), with this method you 
 		//! will need to say Key(PLAYERKEY_JUMP, 1)
-		//
+		//!
+		//! Or, you can skip the controller # and say something like 
+		//! Key(GAMEKEY_SCREENSHOT);
+		//!
 		//! Controller numbers start with 1.
-		bool Key(uint gameKey, uint controller_number);
+		bool Key(uint gameKey, uint controller_number = 0);
+
+		//! Returns true if a key was first released, then pressed.
+		//! Can be used to make sure that a player is pressing and releasing
+		//! a key, instead of just holding it down.  
+		//!
+		//! NOTE: This is just the check. Make sure to call HandleKeyOnce()
+		//! as well.
+		bool KeyOnce(uint gameKey, uint controller_number = 0);
+
+		//! Call after KeyOnce to make sure that the player must release 
+		//! the key before KeyOnce will return true again
+		void HandleKeyOnce(uint gameKey, uint controller_number = 0);
+
+		int ResolveControllerKey(uint gameKey, uint controller_number);
+
+		void UpdateKeyReleases();
+
+		bool BaseInit();
 
 		//! Get the mouse X coordinate
 		// virtual int MouseX() = 0;
