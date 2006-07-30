@@ -132,11 +132,14 @@ class BaseInput : public GameBase {
 		//!
 		//! NOTE: This is just the check. Make sure to call HandleKeyOnce()
 		//! as well.
-		bool KeyOnce(uint gameKey, uint controller_number = 0);
+		bool CheckKeyOnce(uint gameKey, uint controller_number = 0);
 
 		//! Call after KeyOnce to make sure that the player must release 
 		//! the key before KeyOnce will return true again
 		void HandleKeyOnce(uint gameKey, uint controller_number = 0);
+
+		//! Calls CheckKeyOnce() and HandleKeyOnce()
+		bool KeyOnce(uint gameKey, uint controller_number = 0);
 
 		int ResolveControllerKey(uint gameKey, uint controller_number);
 

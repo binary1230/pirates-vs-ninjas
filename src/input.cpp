@@ -60,7 +60,7 @@ bool BaseInput::Key(uint gameKey, uint controller_number) {
 //! Can be used to make sure that a player is pressing and releasing
 //! a key, instead of just holding it down.  Make sure to call HandleKeyOnce()
 //! to update this appropriately.
-bool BaseInput::KeyOnce(uint gameKey, uint controller_number) {
+bool BaseInput::CheckKeyOnce(uint gameKey, uint controller_number) {
 	int i = ResolveControllerKey(gameKey, controller_number);
 	if (released_key[i] && game_key[i])
 		return true;
@@ -71,6 +71,15 @@ bool BaseInput::KeyOnce(uint gameKey, uint controller_number) {
 void BaseInput::HandleKeyOnce(uint gameKey, uint controller_number) {
 	int i = ResolveControllerKey(gameKey, controller_number);
 	released_key[i] = false;
+}
+
+bool BaseInput::KeyOnce(uint gameKey, uint controller_number) {
+	if (CheckKeyOnce(gameKey, controller_number)) {
+		HandleKeyOnce(gameKey, controller_number);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 void BaseInput::UpdateKeyReleases() {

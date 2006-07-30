@@ -285,9 +285,7 @@ int GameState::RunGame(GameOptions* _options) {
 // class as well.
 void GameState::MainLoop() {
 				
-	int debug_update_count;
-	bool released_step = 1;
-	bool released_pause = 1;
+	int debug_update_count = 0;
 
 	while (!exit_game) {
 
@@ -298,40 +296,22 @@ void GameState::MainLoop() {
 		while (outstanding_updates > 0 && !exit_game) {
 			Update();	// mode signals handled here
 
-			if (!input->Key(GAMEKEY_DEBUGPAUSE))
-				released_pause = 1;
-
-			if (released_pause && input->Key(GAMEKEY_DEBUGPAUSE)) {
+			if (input->KeyOnce(GAMEKEY_DEBUGPAUSE))
 				debug_pause_toggle = !debug_pause_toggle;
-				released_pause = 0;
-			}
 
 			if (debug_pause_toggle) {
 			
 				debug_update_count = outstanding_updates;
 
-				while (debug_pause_toggle) {
+				while (debug_pause_toggle && !input->KeyOnce(GAMEKEY_DEBUGSTEP)) {
 					input->Update();
 					Draw();
 
-					if (input->Key(GAMEKEY_SCREENSHOT))
+					if (input->KeyOnce(GAMEKEY_SCREENSHOT))
 						window->Screenshot();
 
-					if (!input->Key(GAMEKEY_DEBUGPAUSE))
-						released_pause = 1;
-
-					if (released_pause && input->Key(GAMEKEY_DEBUGPAUSE)) {
+					if (input->KeyOnce(GAMEKEY_DEBUGPAUSE))
 						debug_pause_toggle = !debug_pause_toggle;
-						released_pause = 0;
-					}
-
-					if (!input->Key(GAMEKEY_DEBUGSTEP))
-						released_step = 1;
-						
-					if (released_step && input->Key(GAMEKEY_DEBUGSTEP)) {
-						released_step = 0;
-						break;
-					}
 				}
 
 				outstanding_updates = debug_update_count;
@@ -347,10 +327,11 @@ void GameState::MainLoop() {
 				window->Screenshot();
 		}
 
-
 		// wait for 1/60th sec to elapse (if we're on a fast computer)
-		// XXX should _usleep()_ here to save CPU
-		while (outstanding_updates <= 0 && !exit_game);
+		while (outstanding_updates <= 0 && !exit_game) {
+			// XXX _should_ sleep until woken up by timer instead of randomly
+			usleep(100);	// 1/30 sec is 33 usec, we sleep for 10
+		}
   }
 }
 

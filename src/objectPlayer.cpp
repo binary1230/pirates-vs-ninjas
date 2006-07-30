@@ -46,7 +46,6 @@ void PlayerObject::Update() {
 					
 		// Then we can jump.
 		if (input->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
-			input->HandleKeyOnce(PLAYERKEY_JUMP, controller_num);
 			vel.SetY(jump_velocity);
 			on_floor = false;
 			PlaySound("jump");
@@ -73,6 +72,10 @@ void PlayerObject::Update() {
 	} else {
 		// We're not on the floor, we're falling or jumping
 		currentAnimation = animations[PLAYER_JUMPING];
+
+		// insure they can't press jump in the air 
+		// and then have it jump once they land.
+		input->HandleKeyOnce(PLAYERKEY_JUMP, controller_num);
 	}
 
 	// figure out whether to flip the sprite or not
