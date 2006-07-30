@@ -1,6 +1,6 @@
 dnl CROSS COMPILING - if you are looking in here to mess with cross
 dnl compiling stuff, scroll down to where it says XXXX CROSS COMPILING
-dnl see BUILD or the Wiki for more info
+dnl see BUILD or the Wiki for more info 
 
 dnl LARGE PARTS of this configure.in stolen from Clanlib configure.ac
 
