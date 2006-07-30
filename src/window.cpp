@@ -8,6 +8,22 @@
 int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
 
+void Window::Screenshot(char* filename) {
+	CString file;
+	static int screenshot_num = 0;
+
+	if (filename) {
+		file = filename;
+	} else {
+		// Make one up.
+		file.Format("screenshot%i.bmp", screenshot_num++);
+	}
+
+	fprintf(stderr, " -- saving screenshot '%s'\n", file.c_str());
+
+	save_bitmap(file.c_str(), GetDrawingSurface(), NULL);
+}
+
 void Window::BlitBitmap(  BITMAP* bmp, int source_x, int source_y, 
 									int dest_x, int dest_y, int width, int height) {
 

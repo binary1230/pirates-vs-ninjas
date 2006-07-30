@@ -3,6 +3,7 @@
 
 #include "gameState.h"
 #include "gameOptions.h"
+#include "StdString.h"
 
 /// The main function
 /// IT ROCKS

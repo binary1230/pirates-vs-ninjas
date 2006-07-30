@@ -43,11 +43,12 @@ class BaseInput;
 #define GAMEKEY_EXIT						10
 #define GAMEKEY_DEBUGPAUSE			11
 #define GAMEKEY_DEBUGSTEP				12
+#define GAMEKEY_SCREENSHOT			13
 
 /* End of logical mapping */
 
 //! The max number of defined keys 
-#define GAMEKEY_COUNT						13
+#define GAMEKEY_COUNT						14
 
 //! Input Base Class
  
@@ -68,8 +69,8 @@ class BaseInput;
 //! -
 //! Every frame, Update() MUST be called.  This freezes the
 //! current state of the buttons/mouse for this frame.  This is
-//! extremely important, especially for the demos, to make sure 
-//! input values do NOT change DURING Update()'s.  
+//! extremely important, especially for the demos, because it makes 
+//! sure that input values do NOT change DURING Update()'s.  
 //! -
 //! If the derived class is LiveInput then input received live
 //! from the input devices will be used

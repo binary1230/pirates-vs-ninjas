@@ -278,6 +278,11 @@ int GameState::RunGame(GameOptions* _options) {
 //! The most important function.  It will make sure that the game 
 //! is updating at the correct speed, and it will Draw everything
 //! at the correct speed.
+
+// XXX NOTE: This is currently a bit more complex than it should be.
+// If you are trying to understand it, ignore all the DEBUG_ and pause
+// junk.  The whole release_ thing needs to be refactored into the INPUT
+// class as well.
 void GameState::MainLoop() {
 				
 	int debug_update_count;
@@ -293,8 +298,6 @@ void GameState::MainLoop() {
 		while (outstanding_updates > 0 && !exit_game) {
 			Update();	// mode signals handled here
 
-			// ignore the PAUSE stuff if you are just trying to 
-			// understand this loop. 
 			if (!input->Key(GAMEKEY_DEBUGPAUSE))
 				released_pause = 1;
 
@@ -309,7 +312,10 @@ void GameState::MainLoop() {
 
 				while (debug_pause_toggle) {
 					input->Update();
-					Draw();	
+					Draw();
+
+					if (input->Key(GAMEKEY_SCREENSHOT))
+						window->Screenshot();
 
 					if (!input->Key(GAMEKEY_DEBUGPAUSE))
 						released_pause = 1;
@@ -333,9 +339,17 @@ void GameState::MainLoop() {
 
 			outstanding_updates--;
 		}
-		if (!exit_game) Draw();
+
+		if (!exit_game) {
+			Draw();
+
+			if (input->Key(GAMEKEY_SCREENSHOT))
+				window->Screenshot();
+		}
+
 
 		// wait for 1/60th sec to elapse (if we're on a fast computer)
+		// XXX should _usleep()_ here to save CPU
 		while (outstanding_updates <= 0 && !exit_game);
   }
 }

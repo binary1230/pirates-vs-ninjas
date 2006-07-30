@@ -86,6 +86,10 @@ class Window : public GameBase {
 
 		inline void SetClearColor(int col) {clear_color = col;};
 
+		//! Take a screenshot, call after Draw()
+		//! Leave the filename NULL to use an automatic one
+		void Screenshot(char* filename = NULL);
+
 		Window();
 		~Window();
 };
