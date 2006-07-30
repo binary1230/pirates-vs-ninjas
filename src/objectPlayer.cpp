@@ -73,9 +73,9 @@ void PlayerObject::Update() {
 		// We're not on the floor, we're falling or jumping
 		currentAnimation = animations[PLAYER_JUMPING];
 
-		// insure they can't press jump in the air 
+		// insure they can't press JUMP in the air 
 		// and then have it jump once they land.
-		input->HandleKeyOnce(PLAYERKEY_JUMP, controller_num);
+		// input->HandleKeyOnce(PLAYERKEY_JUMP, controller_num);
 	}
 
 	// figure out whether to flip the sprite or not

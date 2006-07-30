@@ -5,7 +5,7 @@
 // - - - - - - - - - - - - - - - - - - 
 
 // Player 1 default game keys (total count must = PLAYER_KEYS_COUNT)
-#define DEFAULT_PLAYERKEY_P1_JUMP		KEY_SPACE
+#define DEFAULT_PLAYERKEY_P1_JUMP		KEY_C
 #define DEFAULT_PLAYERKEY_P1_LEFT		KEY_LEFT
 #define DEFAULT_PLAYERKEY_P1_RIGHT 	KEY_RIGHT
 #define DEFAULT_PLAYERKEY_P1_UP 		KEY_UP

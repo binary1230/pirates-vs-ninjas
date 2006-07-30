@@ -192,6 +192,12 @@ typedef struct XMLNode
     LPCTSTR getAttribute(LPCTSTR name, int *i=NULL);       // return next attribute content with specific name
                                                            //     (return a NULL if failing)
     int nAttribute();                                      // nbr of attribute
+
+		int getAttributeInt(LPCTSTR lpszAttrib, int &result);   // try to cast specified attribute to int
+		                                                       // return false on failure
+		int getAttributeFloat(LPCTSTR lpszAttrib, float &result); // try to cast specified attribute to int
+		                                                       // return false on failure
+
     XMLClear getClear(int i);                              // return ith clear field (comment)
     int nClear();                                          // nbr of clear field
     LPTSTR createXMLString(int nFormat, int *pnSize=NULL); // create XML string starting from current XMLNode

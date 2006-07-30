@@ -460,6 +460,8 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 	return 0;
 }
 
+int repeating;
+
 //! Parse XML info from a <layer> block
 int PhysSimulation::LoadLayerFromXML(
 								XMLNode &xLayer, 
@@ -486,10 +488,9 @@ int PhysSimulation::LoadLayerFromXML(
 
 	for (i=iterator=0; i < max; i++) {
 
-		// XXX should make this an ATTRIBUTE not the TEXT of the <repeat> tag
 		xRepeater = xLayer.getChildNode("repeat", &iterator);
 
-		if (!xRepeater.getInt(times_to_repeat)) {
+		if (!xRepeater.getAttributeInt("times", times_to_repeat)) {
 			fprintf(stderr, "-- Invalid # repeat times!\n");
 			return -1;
 		}
@@ -502,10 +503,12 @@ int PhysSimulation::LoadLayerFromXML(
 			objDefName = xObject.getAttribute("objectDef");
 
 			// create the object from the objectDefinition
+			repeating = 1;
 			if (LoadObjectFromXML(objectDefs[objDefName], xObject, layer) == -1) {
 				fprintf(stderr, "ERROR: Unable To Load  '%s'\n", objDefName.c_str());
 				return -1;
 			}
+			repeating = 0;
 		}	
 	}
 
@@ -556,7 +559,7 @@ int PhysSimulation::LoadObjectFromXML(
 			fprintf(stderr, "-- Enabling debug mode.\n");
 			obj->SetDebugFlag(true);
 		}
-		
+
 		if (xObject.nChildNode("position") == 1) {
 
 			XMLNode xPos = xObject.getChildNode("position");
@@ -574,7 +577,7 @@ int PhysSimulation::LoadObjectFromXML(
 				
 			} else if (type == CString("random")) {
 
-				int xmin, ymin, xmax, ymax, x, y;
+				int xmin, ymin, xmax, ymax;
 
 				if (!xPos.getChildNode("xmin").getInt(xmin)) {
 					fprintf(stderr, "-- Invalid xmin!\n");
@@ -595,8 +598,15 @@ int PhysSimulation::LoadObjectFromXML(
 					fprintf(stderr, "-- Invalid ymax!\n");
 					return -1;
 				}
+
+				if (repeating)
+					fprintf(stderr, "%i %i %i %i\n", xmin, ymin, xmax, ymax);
+
 				x = Rand(xmin, xmax);
 				y = Rand(ymin, ymax);
+				
+				if (repeating)
+					fprintf(stderr, "%i %i\n", x, y);
 
 			} else {
 				fprintf(stderr, "Unknown object position type: %s\n", type.c_str());
@@ -605,14 +615,14 @@ int PhysSimulation::LoadObjectFromXML(
 				
 			// if <alignBottom> is present, we align this sprite with ITs 
 			// bottom coordinates. (e.g. saying 0 puts the player on the floor)
-			if (xPos.nChildNode("alignBottom")>0) {
-				y += obj->GetHeight();
+			if (xPos.nChildNode("alignTop")>0) {
+				y -= obj->GetHeight();
 			}
 			
 			// if <alignRight> is present, we take the X coordinate from the
 			// right side instead of the left.
 			if (xPos.nChildNode("alignRight")>0) {
-				x += obj->GetWidth();
+				x -= obj->GetWidth();
 			}
 
 			// if <alignScreenRight> is present, we align this sprite

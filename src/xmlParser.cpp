@@ -1775,6 +1775,14 @@ XMLNode XMLNode::getChildNode(LPCTSTR name, int j)
     return getChildNode(name,&i);
 }
 
+int XMLNode::getAttributeInt(LPCTSTR lpszAttrib, int &result) {
+	return (sscanf(getAttribute(lpszAttrib), "%i", &result) > 0);
+}
+
+int XMLNode::getAttributeFloat(LPCTSTR lpszAttrib, float &result) {
+	return (sscanf(getAttribute(lpszAttrib), "%f", &result) > 0);
+}
+
 // Find an attribute on an node.
 LPCTSTR XMLNode::getAttribute(LPCTSTR lpszAttrib, int *j)
 {

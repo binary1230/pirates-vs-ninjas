@@ -4,7 +4,7 @@
 #include "gameState.h"
 #include "object.h"
 
-#define MAGNITUDE 20.0f
+#define MAGNITUDE 40.0f
 
 Vector2D ForceInput::GetForce(Object* obj) {
 				
