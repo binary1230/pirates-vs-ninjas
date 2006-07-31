@@ -8,6 +8,7 @@ class Animation;
 class PhysSimulation;
 class Sprite;
 class ObjectLayer;
+class ObjectFactory;
 
 #include <allegro.h>
 #include <stdio.h>
@@ -222,15 +223,6 @@ class Object : public GameBase {
 		//! Setup some commonly used variables
 		void SetupCachedVariables();
 
-		//! Load object properties from XML
-		bool LoadProperties(XMLNode &xDef);		
-
-		//! Load animations from an XML object definition 
-		bool LoadAnimations(XMLNode &xDef, AnimationMapping* = NULL);
-
-		//! Loads all the sounds from an XML file
-		bool LoadSounds(XMLNode &xDef);
-		
 		//! Set which controller we monitor
 		void SetControllerNum(uint _c) {controller_num = _c;};
 		
@@ -264,6 +256,8 @@ class Object : public GameBase {
 		
 		Object();
 		virtual ~Object();
+
+		friend class ObjectFactory;
 };
 
 #endif // OBJECT_H

@@ -24,25 +24,3 @@ bool RadiusBlockObject::Init(GameState *_game_state) {
 
 RadiusBlockObject::RadiusBlockObject() : theta(0.0f) {}
 RadiusBlockObject::~RadiusBlockObject() {}
-
-// Factory method, creates new RadiusBlockObjects
-// XXX animation stuff needs to be abstracted
-Object* RadiusBlockObject::New(	GameState* gameState, 
-																XMLNode &xDef, 
-																XMLNode &xObj) {
-	RadiusBlockObject* obj = new RadiusBlockObject();
-
-	if (!obj || !obj->Init(gameState) )
-		return NULL;
-
-	obj->SetTheta(Rand(0,360));
-	obj->SetRadius(Rand(20,300));
-
-	if (!obj->LoadAnimations(xDef))
-		return NULL;
-	
-	if (!obj->LoadProperties(xDef))
-		return NULL;
-
-	return obj;
-}

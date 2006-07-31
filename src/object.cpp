@@ -246,6 +246,7 @@ Object::Object() {
 	vel.SetX(0); vel.SetY(0);
 }
 
+/*
 // A helper function to load animations
 bool Object::LoadAnimations(XMLNode &xDef, AnimationMapping *animation_lookup) {
 	int i, iterator, max;
@@ -313,44 +314,13 @@ bool Object::LoadSounds(XMLNode &xDef) {
 
 	return true;
 }
-
-//! Load some common object properties from XML
-bool Object::LoadProperties(XMLNode &xDef) {
-	XMLNode xProps = xDef.getChildNode("properties");
-
-	if (xProps.nChildNode("mass")) {
-		if (!xProps.getChildNode("mass").getFloat(mass)) {
-			fprintf(stderr, "-- Invalid MASS.\n");
-			return false;
-		}
-	}
-	
-	ClearProperties(properties);
-	properties.feels_gravity = 		xProps.nChildNode("affectedByGravity"); 
-	properties.feels_user_input =	xProps.nChildNode("affectedByInput1"); 
-	properties.feels_friction =		xProps.nChildNode("affectedByFriction"); 
-
-	properties.is_solid =		xProps.nChildNode("solidObject");
-	
-	if (xProps.nChildNode("isOverlay")) {
-		properties.is_overlay = 1;
-	}
-
-	if (xProps.nChildNode("springStrength")) {
-		if (!xProps.getChildNode("springStrength").getInt(properties.spring_strength)) {
-			fprintf(stderr, " -- invalid spring strength!\n");
-			return false;
-		}
-	}
-
-	return true;
-}
+*/
 
 // Return a vector with x,y set to 
 // the closest these two objects can get to
 // each other without colliding
 //
-// This method is a work in progress, and fairly nasty at the moment.
+// XXX BIG MESS and NOT FINISHED, not even close.
 CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	
 	int debug = GetGameState()->GetGameOptions()->GetDebugMessageLevel();

@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 class GameState;
+class ObjectFactory;
 
 #include "object.h"
 #include "xmlParser.h"
@@ -22,7 +23,8 @@ class SpringObject : public Object {
 
 		void Collide(Object* obj);
 			
-		static Object* New(GameState* gameState, XMLNode &xDef, XMLNode &xObj);
+		friend class ObjectFactory;
+
 };
 
 #endif // SpringObject_H   

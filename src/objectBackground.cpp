@@ -40,25 +40,5 @@ bool BackgroundObject::Init(GameState *_game_state) {
 		return BaseInit();
 }
 
-Object* BackgroundObject::New(	GameState* gameState, 
-																XMLNode &xDef, 
-																XMLNode &xObj) {
-	
-	BackgroundObject* obj = new BackgroundObject();
-	
-	if (!obj || !obj->Init(gameState) )
-		return NULL;
-
-	obj->SetXY(0,0);
-
-	if (!obj->LoadAnimations(xDef) )
-		return NULL;
-	
-	if (!obj->LoadProperties(xDef))
-		return NULL;
-	
-	return obj;
-}
-
 BackgroundObject::BackgroundObject() {}
 BackgroundObject::~BackgroundObject() {}

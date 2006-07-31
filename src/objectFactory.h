@@ -8,31 +8,46 @@
 using namespace std;
 
 class ObjectFactory;
-class Object;
 class AssetManager;
+
+// All must declare objectFactory as friend classes
+class Object;
+class ObjectPlayer;
+class ObjectRadiusBlock;
+class ObjectCollectable;
+class ObjectController;
+class ObjectBackground;
+class ObjectStatic;
+class ObjectSpring;
 
 #include "gameBase.h"
 #include "xmlParser.h"
 #include "StdString.h"
+#include "animation.h"
 
 //! A class which creates Object classes from integer ID's
 class ObjectFactory : GameBase {
 	protected:
-		Object* CreatePlayerObject();
-		Object* CreateBackgroundObject();
-		Object* CreateRadiusBlockObject();
+		Object* NewPlayerObject(XMLNode &xDef, XMLNode &xObj);
+		Object* NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj);
+		Object* NewCollectableObject(XMLNode &xDef, XMLNode &xObj);
+		Object* NewControllerObject(XMLNode &xDef, XMLNode &xObj);
+		Object* NewBackgroundObject(XMLNode &xDef, XMLNode &xObj);
+		Object* NewStaticObject(XMLNode &xDef, XMLNode &xObj);
+		Object* NewSpringObject(XMLNode &xDef, XMLNode &xObj);
 		
+		bool LoadObjectSounds(Object* obj, XMLNode &xDef);
+		bool LoadObjectProperties(Object* obj, XMLNode &xDef);
+		bool LoadObjectAnimations(Object* obj, XMLNode &xDef, 
+															AnimationMapping *animation_lookup = NULL);
+
 	public:
 		int Init(GameState* _game_state);
 		void Shutdown();
 
-		// Object* CreateObject(uint id);
-		// Object* CreateObject(XMLNode type);
 		Object* CreateObject(XMLNode &xObjectDef, XMLNode &xObject);
-		void DeleteObject(Object*);
-
-		int LoadObjectsFromXML(XMLNode, vector<Object*> &);
 		
+
 		ObjectFactory();
 		~ObjectFactory();
 };

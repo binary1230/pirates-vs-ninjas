@@ -19,21 +19,3 @@ bool StaticObject::Init(GameState *_game_state) {
 
 StaticObject::StaticObject() {}
 StaticObject::~StaticObject() {}
-
-Object* StaticObject::New(	GameState* gameState, 
-																XMLNode &xDef, 
-																XMLNode &xObj) {
-				
-	StaticObject* obj = new StaticObject();
-
-	if (!obj || !obj->Init(gameState) )
-		return NULL;
-
-	if (!obj->LoadAnimations(xDef))
-		return NULL;
-	
-	if (!obj->LoadProperties(xDef))
-		return NULL;
-
-	return obj;
-}

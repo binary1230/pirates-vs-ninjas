@@ -26,26 +26,3 @@ void CollectableObject::Collide(Object* obj) {
 		is_dead = true;
 	}
 }
-
-Object* CollectableObject::New(	GameState* gameState, 
-																XMLNode &xDef, 
-																XMLNode &xObj) {
-				
-	CollectableObject* obj = new CollectableObject();
-
-	if (!obj || !obj->Init(gameState) )
-		return NULL;
-
-	if (!obj->LoadSounds(xDef))
-		return NULL;
-	
-	if (!obj->LoadAnimations(xDef))
-		return NULL;
-	
-	if (!obj->LoadProperties(xDef))
-		return NULL;
-
-	obj->properties.is_collectable = 1;
-
-	return obj;
-}

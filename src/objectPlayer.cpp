@@ -198,38 +198,6 @@ PlayerObject::PlayerObject() {
 
 PlayerObject::~PlayerObject() {}
 
-//! Factory method, creates new PlayerObjects from XML files
-//
-//! NOTE: this only takes an ObjectDefinition XML fragment,
-// memory leaks on failures here.. CLEAN IT.
-Object* PlayerObject::New(GameState* gameState, XMLNode &xDef, XMLNode &xObj) {
-	
-	// ObjectProperties props;
-	PlayerObject* obj = new PlayerObject();
-
-	// init the object
-	if (!obj || !obj->Init(gameState) )
-		return NULL;
-
-	// load the animations
-	AnimationMapping animation_map = GetPlayerAnimationMappings();
-	if (!obj->LoadAnimations(xDef, &animation_map))
-		return NULL;
-
-	// load the sounds
-	if (!obj->LoadSounds(xDef))
-		return NULL;
-	
-	// get the object properties
-	if (!obj->LoadProperties(xDef))
-		return NULL;
-
-	if (!obj->LoadPlayerProperties(xDef))
-		return NULL;
-
-	return obj;
-}
-
 bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	XMLNode xProps = xDef.getChildNode("properties");
 

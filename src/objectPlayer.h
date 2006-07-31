@@ -1,5 +1,3 @@
-// this file is a TEST ONLY
-
 #ifndef PLAYEROBJECT_H
 #define PLAYEROBJECT_H
 
@@ -16,6 +14,7 @@ class GameState;
 class BaseInput;
 class Animation;
 class BaseInput;
+class ObjectFactory;
 
 #include "object.h"
 #include "xmlParser.h"
@@ -60,15 +59,16 @@ class PlayerObject : public Object {
 	public:
 		bool Init(GameState* _game_state);
 		
-		bool LoadPlayerProperties(XMLNode &xDef);		//! Load object properties from XML
+		//! Load object properties from XML
+		bool LoadPlayerProperties(XMLNode &xDef);		
 		
 		void Update();
 		void Collide(Object* obj);
 			
-		static Object* New(GameState* gameState, XMLNode &xDef, XMLNode &xObj);
-		
 		PlayerObject();
 		~PlayerObject();
+
+		friend class ObjectFactory;
 };
 
 #endif // PLAYER_OBJECT_H

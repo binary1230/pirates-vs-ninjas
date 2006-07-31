@@ -1776,11 +1776,20 @@ XMLNode XMLNode::getChildNode(LPCTSTR name, int j)
 }
 
 int XMLNode::getAttributeInt(LPCTSTR lpszAttrib, int &result) {
-	return (sscanf(getAttribute(lpszAttrib), "%i", &result) > 0);
+	const char* s = getAttribute(lpszAttrib);
+	if (s)
+		return (sscanf(s, "%i", &result) > 0);
+	else 
+		return false;
 }
 
 int XMLNode::getAttributeFloat(LPCTSTR lpszAttrib, float &result) {
-	return (sscanf(getAttribute(lpszAttrib), "%f", &result) > 0);
+	const char* s = getAttribute(lpszAttrib);
+	if (s)
+		return (sscanf(s, "%f", &result) > 0);
+	else 
+		return false;
+
 }
 
 // Find an attribute on an node.
@@ -1841,10 +1850,18 @@ int          XMLNode::nElement     (     ) { if (!d) return 0; return d->nChild+
 
 bool XMLNode::getInt(int &result, int i) 
 {
-	return (sscanf(getText(i), "%i", &result) > 0);
+	const char* s = getText(i);
+	if (s)
+		return (sscanf(s, "%i", &result) > 0);
+	else 
+		return false;
 }
 
 bool XMLNode::getFloat(float &result, int i) 
 { 
-	return (sscanf(getText(i), "%f", &result) > 0);
+	const char* s = getText(i);
+	if (s)
+		return (sscanf(s, "%f", &result) > 0);
+	else 
+		return false;
 }

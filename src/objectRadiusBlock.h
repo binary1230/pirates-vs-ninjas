@@ -10,6 +10,7 @@
 
 class RadiusBlockObject;
 class GameState;
+class ObjectFactory;
 
 #include "object.h"
 #include "xmlParser.h"
@@ -36,7 +37,7 @@ class RadiusBlockObject : public Object {
 		~RadiusBlockObject();
 			
 		//! Factory method to create a new radius block object
-		static Object* New(GameState* gameState, XMLNode &xDef, XMLNode &xObj);
+		friend class ObjectFactory;
 };
 
 #endif // RadiusBlockObject_H   

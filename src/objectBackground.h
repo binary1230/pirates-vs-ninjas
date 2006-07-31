@@ -6,6 +6,7 @@
 
 class BackgroundObject;
 class GameState;
+class ObjectFactory;
 
 #include "object.h"
 #include "xmlParser.h"
@@ -23,7 +24,7 @@ class BackgroundObject : public Object {
 		BackgroundObject();
 		~BackgroundObject();
 
-		static Object* New(GameState* gameState, XMLNode &xDef, XMLNode &xObj);
+		friend class ObjectFactory;
 };
 
 #endif // BackgroundObject_H   

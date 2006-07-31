@@ -7,6 +7,7 @@ using namespace std;
 
 class GameState;
 class Sprite;
+class ObjectFactory;
 
 #include "object.h"
 #include "xmlParser.h"
@@ -32,17 +33,13 @@ class ControllerObject : public Object {
 		void Update();
 		void Draw();
 
-		// XXX SHOULD get the width from a cached var, 
-		// NOT by just grabbing the animation's first frame's 
-		// width. (see object.h)
-
 		int GetWidth();		// need to override, default ones grab the animation
 		int GetHeight();
 
 		ControllerObject();
 		~ControllerObject();
 
-		static Object* New(GameState* gameState, XMLNode &xDef, XMLNode &xObj);
+		friend class ObjectFactory;
 };
 
 #endif // OBJ_CONTROLLER_H

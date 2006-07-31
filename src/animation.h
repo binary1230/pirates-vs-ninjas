@@ -22,7 +22,7 @@ struct AnimFrame {
 	Sprite* sprite;				//! Sprite data
 	
 	int duration;					//! Number of frames to show before advancing to next
-	AnimFrame* nextFrame;	//! Pointer to next frame, or NULL if end of animation
+	AnimFrame* nextFrame;	//! Pointer to next frame, or NULL at end frame
 	bool freeze_at_end;		//! True if we freeze at the end of this frame
 };
 
