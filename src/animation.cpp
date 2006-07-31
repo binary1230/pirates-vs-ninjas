@@ -152,7 +152,10 @@ Animation* Animation::New(GameState* gameState, XMLNode &xAnim) {
 					
 		xImg = xFrames.getChildNode("img", &iterator);
 		
-		sscanf(xImg.getAttribute("duration"), "%i", &duration);
+		if (!xImg.getAttributeInt("duration", duration)) {
+			return false;
+		}
+
 		filename = xImg.getAttribute("name");
 		
 		// handle 'pause' attribute

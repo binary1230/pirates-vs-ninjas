@@ -54,10 +54,13 @@ XMLNode GameState::LoadXMLConfig(CString xml_filename) {
 	for (i=iterator=0; i<max; i++) {
 		xMode = xGame.getChildNode("mode_file", &iterator);
 
-		sscanf(xMode.getAttribute("id"), "%i", &mode_id);
+		if (!xMode.getAttributeInt("id", mode_id)) {
+			mode_id = 0;
+		}
 		
-		if (	!found_default_mode && 
-					 (default_mode_id == 0 || mode_id == default_mode_id)) {
+		if (!found_default_mode && 
+				(default_mode_id == 0 || mode_id == default_mode_id)) {
+			
 			found_default_mode = true;
 
 			// Get the filename of the XML file which contains our first mode

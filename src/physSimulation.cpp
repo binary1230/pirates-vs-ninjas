@@ -460,8 +460,6 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 	return 0;
 }
 
-int repeating;
-
 //! Parse XML info from a <layer> block
 int PhysSimulation::LoadLayerFromXML(
 								XMLNode &xLayer, 
@@ -474,7 +472,11 @@ int PhysSimulation::LoadLayerFromXML(
 
 	// 1) How much do we scroll this layer by?
 	float scroll_speed;
-  sscanf(xLayer.getAttribute("scroll_speed"), "%f", &scroll_speed);
+  if ( !xLayer.getAttributeFloat("scroll_speed", scroll_speed) ) {
+		fprintf(stderr, " -- no scroll_speed specified.\n");
+		return -1;
+	}
+
 	layer->SetScrollSpeed(scroll_speed);
 	
 	// 2) NEW: special case.  Because I, Dom, am LAZY as HELL, I have
@@ -503,12 +505,10 @@ int PhysSimulation::LoadLayerFromXML(
 			objDefName = xObject.getAttribute("objectDef");
 
 			// create the object from the objectDefinition
-			repeating = 1;
 			if (LoadObjectFromXML(objectDefs[objDefName], xObject, layer) == -1) {
 				fprintf(stderr, "ERROR: Unable To Load  '%s'\n", objDefName.c_str());
 				return -1;
 			}
-			repeating = 0;
 		}	
 	}
 
@@ -599,15 +599,9 @@ int PhysSimulation::LoadObjectFromXML(
 					return -1;
 				}
 
-				if (repeating)
-					fprintf(stderr, "%i %i %i %i\n", xmin, ymin, xmax, ymax);
-
 				x = Rand(xmin, xmax);
 				y = Rand(ymin, ymax);
 				
-				if (repeating)
-					fprintf(stderr, "%i %i\n", x, y);
-
 			} else {
 				fprintf(stderr, "Unknown object position type: %s\n", type.c_str());
 				return -1;

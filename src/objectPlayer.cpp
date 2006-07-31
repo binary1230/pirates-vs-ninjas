@@ -62,11 +62,13 @@ void PlayerObject::Update() {
 				// alter the speed of the animation based on the velocity
 				// fprintf(stderr, "vel=%f\n", fabs(vel.GetX()));
 				if (fabs(vel.GetX()) < 3.0f)
-					currentAnimation->SetSpeedMultiplier(5);//slow
+					currentAnimation->SetSpeedMultiplier(10);// slow
 				else if (fabs(vel.GetX()) < 7.0f)
-					currentAnimation->SetSpeedMultiplier(3);//med
+					currentAnimation->SetSpeedMultiplier(6);// med
+				else if (fabs(vel.GetX()) < 13.0f)
+					currentAnimation->SetSpeedMultiplier(2);// slight fast
 				else 
-					currentAnimation->SetSpeedMultiplier(1);//fast
+					currentAnimation->SetSpeedMultiplier(1);// max
 			}
 		}
 	} else {
@@ -175,12 +177,7 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	properties.is_player = 1;
 	properties.is_solid = 1;
 
-	sscanf(xProps.getChildNode("jumpVelocity").getText(), 
-									"%f", &jump_velocity);
-	sscanf(xProps.getChildNode("minVelocity").getText(), 
-									"%f", &min_velocity);
-	sscanf(xProps.getChildNode("drag").getText(), 
-									"%f", &drag);
-
-	return true;
+	return (xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
+					xProps.getChildNode("minVelocity").getFloat(min_velocity) &&
+					xProps.getChildNode("drag").getFloat(drag) );
 }

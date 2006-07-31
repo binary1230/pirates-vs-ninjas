@@ -318,8 +318,12 @@ bool Object::LoadSounds(XMLNode &xDef) {
 bool Object::LoadProperties(XMLNode &xDef) {
 	XMLNode xProps = xDef.getChildNode("properties");
 
-	if (xProps.nChildNode("mass"))
-		sscanf(xProps.getChildNode("mass").getText(), "%f", &mass);	
+	if (xProps.nChildNode("mass")) {
+		if (!xProps.getChildNode("mass").getFloat(mass)) {
+			fprintf(stderr, "-- Invalid MASS.\n");
+			return false;
+		}
+	}
 	
 	ClearProperties(properties);
 	properties.feels_gravity = 		xProps.nChildNode("affectedByGravity"); 
