@@ -15,9 +15,21 @@ class Animation;
 class GameState;
 class BaseInput;
 class Animation;
+class BaseInput;
 
 #include "object.h"
 #include "xmlParser.h"
+
+enum PlayerState {
+	STANDING,
+	JUMPING,
+	FALLING,
+	WALKING,
+	RUNNING,
+	WHISTLING,
+	LOOKINGUP,
+	CROUCHINGDOWN
+};
 
 //! The Player object, represents our HERO on screen
 class PlayerObject : public Object {
@@ -26,10 +38,24 @@ class PlayerObject : public Object {
 		float min_velocity;
 		float drag;
 
-		int sound_jump;
+		PlayerState state;
+		BaseInput* input;
+	
+		void UpdateState();
 
-		bool on_floor;
-		bool looking_up;
+		void DoStanding();
+		void DoWalking();
+		void DoRunning();
+		void DoJumping();
+		void DoFalling();
+		void DoWhistling();
+		void DoLookingUp();
+		void DoCrouchingDown();
+
+		void ScreenBoundsConstraint();
+		void UpdateSpriteFlip();
+		void UpdateRunningAnimationSpeed();
+		void DoCommonGroundStuff();
 
 	public:
 		bool Init(GameState* _game_state);

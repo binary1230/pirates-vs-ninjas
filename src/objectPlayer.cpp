@@ -16,71 +16,19 @@
 #define DEFAULT_DRAG 0.95f
 #define DEFAULT_MIN_VELOCITY 0.3f
 
-void PlayerObject::Update() {
-	BaseInput* input = GetGameState()->GetInput();
-
-	UpdateFade();
-	
-	assert(currentAnimation != NULL);
-	currentAnimation->Update();
-				
-	int w = simulation->GetWidth();
-
-	// See if we're out of bounds
+void PlayerObject::ScreenBoundsConstraint() {
 	if (pos.GetX() < 0) {
-		// vel.SetX(-vel.GetX()); // flip
+		// vel.SetX(-vel.GetX()); // flip velocity
 		vel.SetX(0); 							// stop
 		pos.SetX(0);
-	} else if (pos.GetX() > (w - GetWidth()) ) {
-		// vel.SetX(-vel.GetX());	// flip
+	} else if (pos.GetX() > (simulation->GetWidth() - GetWidth()) ) {
+		// vel.SetX(-vel.GetX());	// flip velocity
 		vel.SetX(0);							// stop
-		pos.SetX(w - GetWidth());
+		pos.SetX(simulation->GetWidth() - GetWidth());
 	}
+}
 
-	if (d.down)
-		on_floor = true;
-	else
-		on_floor = false;
-
-	if (on_floor == true) {
-					
-		// Then we can jump.
-		if (input->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
-			vel.SetY(jump_velocity);
-			on_floor = false;
-			PlaySound("jump");
-	  }	else {
-			vel *= drag;	
-			
-			// If on floor, do we draw the standing sprite?
-			if (accel.GetX() == 0.0f && fabs(vel.GetX()) < min_velocity) {
-				vel.SetX(0);
-				currentAnimation = animations[PLAYER_STANDING];
-			} else {
-				currentAnimation = animations[PLAYER_WALKING];
-
-				// alter the speed of the animation based on the velocity
-				// fprintf(stderr, "vel=%f\n", fabs(vel.GetX()));
-				if (fabs(vel.GetX()) < 3.0f)
-					currentAnimation->SetSpeedMultiplier(10);// slow
-				else if (fabs(vel.GetX()) < 7.0f)
-					currentAnimation->SetSpeedMultiplier(6);// med
-				else if (fabs(vel.GetX()) < 13.0f)
-					currentAnimation->SetSpeedMultiplier(2);// slight fast
-				else 
-					currentAnimation->SetSpeedMultiplier(1);// max
-			}
-		}
-	} else {
-		// We're not on the floor, we're falling or jumping
-		currentAnimation = animations[PLAYER_JUMPING];
-
-		// insure they can't press JUMP in the air 
-		// and then have it jump once they land.
-		// input->HandleKeyOnce(PLAYERKEY_JUMP, controller_num);
-	}
-
-	// figure out whether to flip the sprite or not
+void PlayerObject::UpdateSpriteFlip() {
 	if (accel.GetX() == 0.0f) {
 		if (vel.GetX() > 0.0f)
 			flip_x = false;
@@ -91,6 +39,119 @@ void PlayerObject::Update() {
 	} else {
 		flip_x = true;
 	}
+}
+
+void PlayerObject::UpdateRunningAnimationSpeed() {
+	// alter the speed of the animation based on the velocity
+	// fprintf(stderr, "vel=%f\n", fabs(vel.GetX()));
+	if (fabs(vel.GetX()) < 3.0f)
+		currentAnimation->SetSpeedMultiplier(10);// slow
+	else if (fabs(vel.GetX()) < 7.0f)
+		currentAnimation->SetSpeedMultiplier(6);// med
+	else if (fabs(vel.GetX()) < 13.0f)
+		currentAnimation->SetSpeedMultiplier(2);// slight fast
+	else 
+		currentAnimation->SetSpeedMultiplier(1);// max
+}
+
+// Things common to STANDING, WALKING, and RUNNING
+void PlayerObject::DoCommonGroundStuff() {
+	if (!d.down) {
+		DoFalling();
+		return;
+	}	
+
+	if (input->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
+		vel.SetY(jump_velocity);
+		PlaySound("jump");
+		DoJumping();
+		return;
+  }	
+	
+	// Do ghetto friction
+	vel *= drag;
+}
+
+void PlayerObject::DoStanding() {	
+	state = STANDING;
+
+	DoCommonGroundStuff();
+
+	currentAnimation = animations[PLAYER_STANDING];
+
+	if (fabs(accel.GetX()) > 0.0f || fabs(vel.GetX()) > 0.0f ) {
+		DoWalking();
+		return;
+	}
+}
+
+void PlayerObject::DoWalking() {
+	state = WALKING;
+
+	DoCommonGroundStuff();
+	
+	currentAnimation = animations[PLAYER_WALKING];
+
+	if (accel.GetX() == 0.0f && fabs(vel.GetX()) < min_velocity) {
+		vel.SetX(0);
+		DoStanding();
+	}
+		
+	UpdateRunningAnimationSpeed();
+}
+
+// no distinction from walking yet.
+void PlayerObject::DoRunning() {
+	state = RUNNING;
+}
+
+void PlayerObject::DoJumping() {
+	state = JUMPING;
+
+	currentAnimation = animations[PLAYER_JUMPING];
+
+	// really shouldn't have a downward 
+	// collision on an upward jump
+	if (d.down) {
+		DoStanding();
+		return;
+	}
+
+	if (vel.GetY() < 0) {
+		DoFalling();
+		return;
+	}
+}
+
+void PlayerObject::DoFalling() {
+	state = FALLING;
+
+	currentAnimation = animations[PLAYER_JUMPING];
+
+	if (d.down) {
+		DoStanding();
+	}
+}
+
+void PlayerObject::DoWhistling() {
+	state = WHISTLING;
+}
+void PlayerObject::DoLookingUp() {
+	state = LOOKINGUP;
+}
+void PlayerObject::DoCrouchingDown() {
+	state = CROUCHINGDOWN;
+}
+
+void PlayerObject::Update() {
+	UpdateFade();
+	
+	assert(currentAnimation != NULL);
+	currentAnimation->Update();
+
+	ScreenBoundsConstraint();
+	UpdateState();
+	UpdateSpriteFlip();
 
 	// set the current sprite to the current animation
 	currentSprite = currentAnimation->GetCurrentSprite();
@@ -108,22 +169,20 @@ void PlayerObject::Collide(Object* obj) {
 
     if (d.down) {
       vel.SetY(0);
-			on_floor = true;
 		}
   }
 
 	if (obj->GetProperties().is_spring) {
 		vel.SetY(obj->GetProperties().spring_strength);
 	}
-
-	
 }
 
 bool PlayerObject::Init(GameState* _game_state) {
 	SetGameState(_game_state);
+	input = GetGameState()->GetInput();
 	
 	controller_num = 1;
-	on_floor = 0;
+	state = FALLING; 
 
 	return BaseInit();
 }
@@ -133,7 +192,7 @@ PlayerObject::PlayerObject() {
 	min_velocity = DEFAULT_MIN_VELOCITY;
 	mass = 1.0f;
 	drag = DEFAULT_DRAG;
-	on_floor = 0;
+	state = FALLING;
 }
 
 
@@ -180,4 +239,37 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	return (xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
 					xProps.getChildNode("minVelocity").getFloat(min_velocity) &&
 					xProps.getChildNode("drag").getFloat(drag) );
+}
+
+void PlayerObject::UpdateState() {
+	switch (state) {
+		case STANDING:
+			DoStanding();
+			break;
+		case WALKING:
+			DoWalking();
+			break;
+		case RUNNING:
+			DoRunning();
+			break;
+		case JUMPING:
+			DoJumping();
+			break;
+		case FALLING:
+			DoFalling();
+			break;
+		case WHISTLING:
+			DoWhistling();
+			break;
+		case LOOKINGUP:
+			DoLookingUp();
+			break;
+		case CROUCHINGDOWN:
+			DoCrouchingDown();
+			break;
+		default:
+			fprintf(stderr, " -- PLAYEROBJECT ERROR: Unkown state asked for!\n");
+			assert(NULL);
+			break;
+	}
 }
