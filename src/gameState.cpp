@@ -12,6 +12,7 @@
 #include "assetManager.h"
 #include "xmlParser.h"
 #include "gameSound.h"
+#include "gameMenu.h"
 
 // XXX 	todo: mode switching code is VERY hackish and bad.
 //      			need to fix that.
@@ -110,6 +111,14 @@ int GameState::LoadGameMode(XMLNode xMode) {
 				return -1;
 			}
 	
+		} else if (nodeType == "menu") {
+
+			mode = new GameMenu();
+			if ( !mode || mode->Init(this, xMode) < 0) {
+				fprintf(stderr, "ERROR: InitSystem: failed to init menu!\n");
+				return -1;
+			}
+		
 		} else {
 			mode = NULL;
 		}
@@ -331,9 +340,10 @@ void GameState::MainLoop() {
 		}
 
 		// wait for 1/60th sec to elapse (if we're on a fast computer)
+		// note: this should really be down() on a lock of some kind rather than
+		// just sleep randomly.
 		while (outstanding_updates <= 0 && !exit_game) {
-			// XXX _should_ sleep until woken up by timer instead of randomly
-			usleep(100);	// 1/30 sec is 33 usec, we sleep for 10
+			usleep(10);	// 1/30 sec is 33 usec, we sleep for 10
 		}
   }
 }

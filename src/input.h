@@ -16,6 +16,8 @@ class BaseInput;
 #define PLAYERKEY_COUNT					5
 
 //! The player keys (these are NOT indices into game_key[])
+//! These constants are used with a controller number
+//! To get the logical key mapping, shown below this.
 #define PLAYERKEY_JUMP 					0
 #define PLAYERKEY_LEFT					1
 #define PLAYERKEY_RIGHT					2
@@ -41,14 +43,15 @@ class BaseInput;
 #define PLAYERKEY2_DOWN					9
 
 #define GAMEKEY_EXIT						10
-#define GAMEKEY_DEBUGPAUSE			11
-#define GAMEKEY_DEBUGSTEP				12
-#define GAMEKEY_SCREENSHOT			13
+#define GAMEKEY_START						11
+#define GAMEKEY_DEBUGPAUSE			12
+#define GAMEKEY_DEBUGSTEP				13
+#define GAMEKEY_SCREENSHOT			14
 
 /* End of logical mapping */
 
 //! The max number of defined keys 
-#define GAMEKEY_COUNT						14
+#define GAMEKEY_COUNT						15
 
 //! Input Base Class
  
