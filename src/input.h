@@ -4,7 +4,7 @@
 #include <allegro.h>
 #include <vector>
 #include <assert.h>
-#include <StdString.h>
+#include "StdString.h"
 using namespace std;
 
 class BaseInput;
@@ -21,7 +21,7 @@ class BaseInput;
 #define PLAYERKEY_JUMP 					0
 #define PLAYERKEY_LEFT					1
 #define PLAYERKEY_RIGHT					2
-#define PLAYERKEY_UP						3
+#define PLAYERKEY_UP					3
 #define PLAYERKEY_DOWN					4
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

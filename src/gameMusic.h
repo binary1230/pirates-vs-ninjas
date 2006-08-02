@@ -28,8 +28,8 @@ class GameMusic : public GameBase {
 		//! Shutdown the sound system
 		void Shutdown();
 
-		GameSound();
-		~GameSound();
+		GameMusic();
+		~GameMusic();
 };
 
 #endif // GAME_MUSIC_H

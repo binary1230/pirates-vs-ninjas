@@ -237,7 +237,7 @@ void PlayerObject::UpdateState() {
 			break;
 		default:
 			fprintf(stderr, " -- PLAYEROBJECT ERROR: Unkown state asked for!\n");
-			assert(NULL);
+			assert(false);
 			break;
 	}
 }

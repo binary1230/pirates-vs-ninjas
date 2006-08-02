@@ -6,6 +6,7 @@
 #include "window.h"
 #include "gameMenu.h"
 #include "gameBase.h"
+#include "globals.h"
 
 void GameMenu::DoNewGame() {
 	
@@ -33,11 +34,19 @@ void GameMenu::DoMenuAction(CString action) {
 	}			
 }
 
+#define DEBUG_VERSION_PRINT 1
+
 void GameMenu::Draw() {
 	 Window* window = GetGameState()->GetWindow();
 
    window->DrawBitmap(back, 0, 0);
 	 window->DrawBitmap(selector, x_pos, y_pos[current_pos]);
+	 
+	 #ifdef DEBUG_VERSION_PRINT
+	 textprintf_right_ex(  window->GetDrawingSurface(), font, 
+                        SCREEN_W, SCREEN_H - 10, makecol(255, 255, 255), -1, 
+                        VERSION_STRING);
+	 #endif
 }
 
 void GameMenu::Update() {
@@ -47,12 +56,18 @@ void GameMenu::Update() {
 		if ((current_pos--) == 0) {
 			current_pos = y_pos.size() - 1;
 		}
-	}
+  }
 
 	if (input->KeyOnce(PLAYERKEY_DOWN, 1)) {
 		if ((++current_pos) == y_pos.size())
 			current_pos = 0;
 	}
+	
+	if (input->KeyOnce(GAMEKEY_EXIT)) {
+    DoQuit();
+  }
+	
+	assert(current_pos >= 0 || current_pos < y_pos.size());
 
 	if (input->KeyOnce(GAMEKEY_START)) {
 		DoMenuAction(actions[current_pos]);
@@ -62,6 +77,8 @@ void GameMenu::Update() {
 int GameMenu::Init(GameState* gs, XMLNode xMode) {
 	SetGameState(gs);
 	AssetManager* m = GetGameState()->GetAssetManager();
+	
+	current_pos = 0;
 
 	back = m->LoadBitmap(xMode.getChildNode("bgPic").getText());
 	if (!back) {
@@ -109,6 +126,7 @@ void GameMenu::Shutdown() {
 	selector = NULL;
 	y_pos.clear();
 	x_pos = 0;
+	current_pos = 0;
 	actions.clear();
 }
 

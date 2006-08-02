@@ -1,0 +1,144 @@
+# Project: ninjas-engine
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = ninjas-engine-devcpp_private.res
+OBJ  = src/xmlParser.o src/animation.o src/animations.o src/assetManager.o src/basename.o src/credits.o src/force.o src/forceFactory.o src/forceGravity.o src/forceInput.o src/gameBase.o src/gameMenu.o src/gameMode.o src/gameMusic.o src/gameOptions.o src/gameSound.o src/gameState.o src/input.o src/inputLiveHandler.o src/inputPlayback.o src/inputRecord.o src/main.o src/object.o src/objectBackground.o src/objectCollectable.o src/objectController.o src/objectFactory.o src/objectLayer.o src/objectPlayer.o src/objectRadiusBlock.o src/objectSpring.o src/objectStatic.o src/oggFile.o src/physSimulation.o src/rect.o src/timer.o src/vector2D.o src/window.o $(RES)
+LINKOBJ  = src/xmlParser.o src/animation.o src/animations.o src/assetManager.o src/basename.o src/credits.o src/force.o src/forceFactory.o src/forceGravity.o src/forceInput.o src/gameBase.o src/gameMenu.o src/gameMode.o src/gameMusic.o src/gameOptions.o src/gameSound.o src/gameState.o src/input.o src/inputLiveHandler.o src/inputPlayback.o src/inputRecord.o src/main.o src/object.o src/objectBackground.o src/objectCollectable.o src/objectController.o src/objectFactory.o src/objectLayer.o src/objectPlayer.o src/objectRadiusBlock.o src/objectSpring.o src/objectStatic.o src/oggFile.o src/physSimulation.o src/rect.o src/timer.o src/vector2D.o src/window.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib" ../../Dev-Cpp/lib/liballeg.a ../../Dev-Cpp/lib/libaloggdll.a  
+INCS =  -I"C:/Dev-Cpp/include" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
+BIN  = ninjas-engine-devcpp.exe
+CXXFLAGS = $(CXXINCS)  
+CFLAGS = $(INCS)  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before ninjas-engine-devcpp.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "ninjas-engine-devcpp.exe" $(LIBS)
+
+src/xmlParser.o: src/xmlParser.cpp
+	$(CPP) -c src/xmlParser.cpp -o src/xmlParser.o $(CXXFLAGS)
+
+src/animation.o: src/animation.cpp
+	$(CPP) -c src/animation.cpp -o src/animation.o $(CXXFLAGS)
+
+src/animations.o: src/animations.cpp
+	$(CPP) -c src/animations.cpp -o src/animations.o $(CXXFLAGS)
+
+src/assetManager.o: src/assetManager.cpp
+	$(CPP) -c src/assetManager.cpp -o src/assetManager.o $(CXXFLAGS)
+
+src/basename.o: src/basename.cpp
+	$(CPP) -c src/basename.cpp -o src/basename.o $(CXXFLAGS)
+
+src/credits.o: src/credits.cpp
+	$(CPP) -c src/credits.cpp -o src/credits.o $(CXXFLAGS)
+
+src/force.o: src/force.cpp
+	$(CPP) -c src/force.cpp -o src/force.o $(CXXFLAGS)
+
+src/forceFactory.o: src/forceFactory.cpp
+	$(CPP) -c src/forceFactory.cpp -o src/forceFactory.o $(CXXFLAGS)
+
+src/forceGravity.o: src/forceGravity.cpp
+	$(CPP) -c src/forceGravity.cpp -o src/forceGravity.o $(CXXFLAGS)
+
+src/forceInput.o: src/forceInput.cpp
+	$(CPP) -c src/forceInput.cpp -o src/forceInput.o $(CXXFLAGS)
+
+src/gameBase.o: src/gameBase.cpp
+	$(CPP) -c src/gameBase.cpp -o src/gameBase.o $(CXXFLAGS)
+
+src/gameMenu.o: src/gameMenu.cpp
+	$(CPP) -c src/gameMenu.cpp -o src/gameMenu.o $(CXXFLAGS)
+
+src/gameMode.o: src/gameMode.cpp
+	$(CPP) -c src/gameMode.cpp -o src/gameMode.o $(CXXFLAGS)
+
+src/gameMusic.o: src/gameMusic.cpp
+	$(CPP) -c src/gameMusic.cpp -o src/gameMusic.o $(CXXFLAGS)
+
+src/gameOptions.o: src/gameOptions.cpp
+	$(CPP) -c src/gameOptions.cpp -o src/gameOptions.o $(CXXFLAGS)
+
+src/gameSound.o: src/gameSound.cpp
+	$(CPP) -c src/gameSound.cpp -o src/gameSound.o $(CXXFLAGS)
+
+src/gameState.o: src/gameState.cpp
+	$(CPP) -c src/gameState.cpp -o src/gameState.o $(CXXFLAGS)
+
+src/input.o: src/input.cpp
+	$(CPP) -c src/input.cpp -o src/input.o $(CXXFLAGS)
+
+src/inputLiveHandler.o: src/inputLiveHandler.cpp
+	$(CPP) -c src/inputLiveHandler.cpp -o src/inputLiveHandler.o $(CXXFLAGS)
+
+src/inputPlayback.o: src/inputPlayback.cpp
+	$(CPP) -c src/inputPlayback.cpp -o src/inputPlayback.o $(CXXFLAGS)
+
+src/inputRecord.o: src/inputRecord.cpp
+	$(CPP) -c src/inputRecord.cpp -o src/inputRecord.o $(CXXFLAGS)
+
+src/main.o: src/main.cpp
+	$(CPP) -c src/main.cpp -o src/main.o $(CXXFLAGS)
+
+src/object.o: src/object.cpp
+	$(CPP) -c src/object.cpp -o src/object.o $(CXXFLAGS)
+
+src/objectBackground.o: src/objectBackground.cpp
+	$(CPP) -c src/objectBackground.cpp -o src/objectBackground.o $(CXXFLAGS)
+
+src/objectCollectable.o: src/objectCollectable.cpp
+	$(CPP) -c src/objectCollectable.cpp -o src/objectCollectable.o $(CXXFLAGS)
+
+src/objectController.o: src/objectController.cpp
+	$(CPP) -c src/objectController.cpp -o src/objectController.o $(CXXFLAGS)
+
+src/objectFactory.o: src/objectFactory.cpp
+	$(CPP) -c src/objectFactory.cpp -o src/objectFactory.o $(CXXFLAGS)
+
+src/objectLayer.o: src/objectLayer.cpp
+	$(CPP) -c src/objectLayer.cpp -o src/objectLayer.o $(CXXFLAGS)
+
+src/objectPlayer.o: src/objectPlayer.cpp
+	$(CPP) -c src/objectPlayer.cpp -o src/objectPlayer.o $(CXXFLAGS)
+
+src/objectRadiusBlock.o: src/objectRadiusBlock.cpp
+	$(CPP) -c src/objectRadiusBlock.cpp -o src/objectRadiusBlock.o $(CXXFLAGS)
+
+src/objectSpring.o: src/objectSpring.cpp
+	$(CPP) -c src/objectSpring.cpp -o src/objectSpring.o $(CXXFLAGS)
+
+src/objectStatic.o: src/objectStatic.cpp
+	$(CPP) -c src/objectStatic.cpp -o src/objectStatic.o $(CXXFLAGS)
+
+src/oggFile.o: src/oggFile.cpp
+	$(CPP) -c src/oggFile.cpp -o src/oggFile.o $(CXXFLAGS)
+
+src/physSimulation.o: src/physSimulation.cpp
+	$(CPP) -c src/physSimulation.cpp -o src/physSimulation.o $(CXXFLAGS)
+
+src/rect.o: src/rect.cpp
+	$(CPP) -c src/rect.cpp -o src/rect.o $(CXXFLAGS)
+
+src/timer.o: src/timer.cpp
+	$(CPP) -c src/timer.cpp -o src/timer.o $(CXXFLAGS)
+
+src/vector2D.o: src/vector2D.cpp
+	$(CPP) -c src/vector2D.cpp -o src/vector2D.o $(CXXFLAGS)
+
+src/window.o: src/window.cpp
+	$(CPP) -c src/window.cpp -o src/window.o $(CXXFLAGS)
+
+ninjas-engine-devcpp_private.res: ninjas-engine-devcpp_private.rc 
+	$(WINDRES) -i ninjas-engine-devcpp_private.rc --input-format=rc -o ninjas-engine-devcpp_private.res -O coff 

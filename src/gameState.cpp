@@ -191,6 +191,7 @@ int GameState::InitSystem() {
 			fprintf(stderr, "ERROR: InitSystem: failed to init default game mode!\n");
 			return -1;
 		}
+		
 		currentMode = modes[0];
 		currentModeIndex = 0;
 		
@@ -271,6 +272,7 @@ int GameState::RunGame(GameOptions* _options) {
 				input->BeginPlayback();
 			
 			outstanding_updates = 0;	// reset our timer to 0.
+			
 			MainLoop();
 
 			// XXX SHOULD NOT TEST option->is_xxx should TEST input->is_xxx()
@@ -343,7 +345,7 @@ void GameState::MainLoop() {
 		// note: this should really be down() on a lock of some kind rather than
 		// just sleep randomly.
 		while (outstanding_updates <= 0 && !exit_game) {
-			usleep(10);	// 1/30 sec is 33 usec, we sleep for 10
+			rest(10);	// 1/30 sec is 33 usec, we sleep for 10
 		}
   }
 }

@@ -3,7 +3,10 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
 #include <assert.h>
 #include <stdio.h>
 
@@ -21,7 +24,11 @@ typedef unsigned int uint;
 #define DEFAULT_SCREEN_SIZE_Y 240
 
 // PACKAGE and VERSION come from autotools (config.h)
+#ifdef HAVE_CONFIG_H
 #define VERSION_STRING PACKAGE"-"VERSION
+#else
+#define VERSION_STRING "ninjas-engine"
+#endif // HAVE_CONFIG_H
 
 // the fps (not ever changed)
 // timestep is 1/FPS
