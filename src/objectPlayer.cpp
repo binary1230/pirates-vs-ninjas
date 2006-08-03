@@ -177,8 +177,9 @@ void PlayerObject::Collide(Object* obj) {
 	}
 }
 
-bool PlayerObject::Init(GameState* _game_state) {
+bool PlayerObject::Init(GameState* _game_state, PhysSimulation *p) {
 	SetGameState(_game_state);
+	simulation = p;
 	input = GetGameState()->GetInput();
 	
 	controller_num = 1;

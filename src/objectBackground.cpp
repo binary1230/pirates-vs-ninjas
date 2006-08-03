@@ -35,8 +35,9 @@ void BackgroundObject::Draw() {
 	} while ( x < (int)game_state->ScreenWidth() );
 }
 
-bool BackgroundObject::Init(GameState *_game_state) {
+bool BackgroundObject::Init(GameState *_game_state, PhysSimulation *p) {
 		SetGameState(_game_state);
+		simulation = p;
 		return BaseInit();
 }
 

@@ -12,8 +12,9 @@ void CollectableObject::Update() {
 	}
 }
 
-bool CollectableObject::Init(GameState *_game_state) {
+bool CollectableObject::Init(GameState *_game_state, PhysSimulation *p) {
 	SetGameState(_game_state);
+	simulation = p;
 	return BaseInit();
 }
 

@@ -55,6 +55,7 @@ class AssetManager : public GameBase {
 
 		void FreeBitmaps();
 		void FreeSamples();
+		void Free();
 
 		//! Set the search path
 		void SetSearchPath(const char* path, ...);
@@ -68,7 +69,7 @@ class AssetManager : public GameBase {
 		//! This function either returns a full to a file path which 
 		//! is guaranteed to exist, or returns "" if one can't be found
 		//! in the current search path
-		CString AssetManager::GetPathOf(const char* filename) const;
+		CString GetPathOf(const char* filename) const;
 
 		//! Returns true if the file exists.
 		bool FileExists(const char* file) const;

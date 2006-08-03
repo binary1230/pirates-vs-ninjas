@@ -9,7 +9,7 @@ void ObjectLayer::Draw() {
 	ObjectListReverseIter rev_iter;
 
 	// set scroll speed for this layer
-	GetGameState()->GetPhysSimulation()->SetCameraScrollSpeed(scroll_speed);
+	simulation->SetCameraScrollSpeed(scroll_speed);
 	
 	// ORDER IS IMPORTANT
 	// we draw starting at the end, going to the beginning
@@ -34,7 +34,8 @@ void ObjectLayer::RemoveObject(Object* obj) {
 		fprintf(stderr, " WARN: memmgmt: asked to remove an object that's not here.\n");
 }
 
-bool ObjectLayer::Init(GameState* gs) {
+bool ObjectLayer::Init(GameState* gs, PhysSimulation* p) {
+	simulation = p;
 	scroll_speed = 1;
 	visible = true;
 	SetGameState(gs);
@@ -51,8 +52,12 @@ void ObjectLayer::Shutdown() {
 ObjectLayer::ObjectLayer() {
 	scroll_speed = 1.0f;
 	visible = true;	
+	simulation = NULL;
 	objects.clear();
 }
 
-ObjectLayer::~ObjectLayer() {}
+ObjectLayer::~ObjectLayer() {
+	Shutdown();
+	simulation = NULL;
+}
 

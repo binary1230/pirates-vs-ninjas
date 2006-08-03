@@ -7,6 +7,7 @@
 class BackgroundObject;
 class GameState;
 class ObjectFactory;
+class PhysSimulation;
 
 #include "object.h"
 #include "xmlParser.h"
@@ -16,7 +17,7 @@ class BackgroundObject : public Object {
 	protected:
 				
 	public:
-		bool Init(GameState* _game_state);
+		bool Init(GameState* _game_state, PhysSimulation *p);
 
 		void Update();
 		void Draw();

@@ -18,7 +18,7 @@ void GameMenu::DoNewGame() {
 }
 
 void GameMenu::DoQuit() {
-	GetGameState()->SignalEndCurrentMode();
+	GetGameState()->SignalGameExit();
 }
 
 // Hardcoded for now...
@@ -34,7 +34,7 @@ void GameMenu::DoMenuAction(CString action) {
 	}			
 }
 
-#define DEBUG_VERSION_PRINT 1
+// #define DEBUG_VERSION_PRINT 1
 
 void GameMenu::Draw() {
 	 Window* window = GetGameState()->GetWindow();

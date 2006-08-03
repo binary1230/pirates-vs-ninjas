@@ -38,7 +38,6 @@ int Object::GetHeight() {
 
 //! Cache some commonly used stuff
 void Object::SetupCachedVariables() {
-	simulation = GetGameState()->GetPhysSimulation();
 	level_width  = simulation->GetWidth();
 	level_height = simulation->GetHeight();
 }

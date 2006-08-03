@@ -153,7 +153,7 @@ class Object : public GameBase {
 		int alpha;
 		
 	public:
-		virtual bool Init(GameState* _game_state) = 0;
+		virtual bool Init(GameState* _game_state, PhysSimulation* p) = 0;
 		virtual void Shutdown();
 		
 		virtual void Update() = 0;

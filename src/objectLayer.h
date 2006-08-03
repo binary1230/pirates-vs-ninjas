@@ -9,6 +9,7 @@ using namespace std;
 #include "gameBase.h"
 
 class Object;
+class PhysSimulation;
 
 //! A container class representing "layers" (e.g. background, foreground, etc)
 
@@ -23,9 +24,11 @@ class ObjectLayer : public GameBase {
 		list<Object*> objects;
 		bool visible;
 		float scroll_speed;
+
+		PhysSimulation* simulation;
 	
 	public:
-		bool Init(GameState*);
+		bool Init(GameState*, PhysSimulation*);
 		void Shutdown();
 
 		//! Get/set layer scroll speed

@@ -65,8 +65,10 @@ void ControllerObject::Update() {
 	}
 }
 
-bool ControllerObject::Init(GameState* _game_state) {
+bool ControllerObject::Init(GameState* _game_state, PhysSimulation *p) {
 	SetGameState(_game_state);
+
+	simulation = p;
 	
 	buttons.clear();
 	controller_sprite = NULL;

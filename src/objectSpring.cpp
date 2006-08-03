@@ -12,8 +12,9 @@ void SpringObject::Update() {
 	}
 }
 
-bool SpringObject::Init(GameState *_game_state) {
+bool SpringObject::Init(GameState *_game_state, PhysSimulation *p) {
 	SetGameState(_game_state);
+	simulation = p;
 	return BaseInit();
 }
 

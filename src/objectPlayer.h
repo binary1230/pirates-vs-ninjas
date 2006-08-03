@@ -15,6 +15,7 @@ class BaseInput;
 class Animation;
 class BaseInput;
 class ObjectFactory;
+class PhysSimulation;
 
 #include "object.h"
 #include "xmlParser.h"
@@ -57,7 +58,7 @@ class PlayerObject : public Object {
 		void DoCommonGroundStuff();
 
 	public:
-		bool Init(GameState* _game_state);
+		bool Init(GameState* _game_state, PhysSimulation* p);
 		
 		//! Load object properties from XML
 		bool LoadPlayerProperties(XMLNode &xDef);		

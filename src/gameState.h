@@ -14,6 +14,7 @@ class GameMode;
 class AssetManager;
 class PhysSimulation;
 class GameSound;
+class GameModes;
 
 #include "globals.h"
 #include "timer.h"
@@ -46,14 +47,8 @@ class GameState {
 		//! The sound class
 		GameSound *sound;
 
-		//! All open game modes (e.g. menu, simulation, etc)
-		vector<GameMode*> modes;
-		
-		//! The index of the current mode in 'modes'
-		int currentModeIndex;		
-
-		//! Points to one of the game modes in 'modes' array
-		GameMode *currentMode;
+		//! Collection of all game modes (e.g. menu mode, simulation mode, etc)
+		GameModes *modes;
 
 		//! Points to the active physics simulation (if there is one)
 		PhysSimulation* physSimulation;
@@ -74,10 +69,10 @@ class GameState {
 		
 		//! Load master game config from an XML file, return an XMLNode which is
 		//! the first game Mode's config we should now load.
-		XMLNode LoadXMLConfig(CString xml_filename);
+		int LoadXMLConfig(CString xml_filename);
 		
 		//! Load a game mode from an XML config file
-		int LoadGameMode(XMLNode);
+		int LoadGameModes();
 
 		//! Load the default configuration
 		int LoadDefaultConfig();				
@@ -107,22 +102,7 @@ class GameState {
 	
 		//! Set to true if we are playing back a demo
 		bool is_playing_back_demo;
-		
-		//! Set this to true to signal the end of the current mode
-		bool end_current_mode;
-		
-		//! Exits the current mode and deletes it, free its memory
-		//! Exits the game if it is the last mode left.
-		void EndCurrentMode();
-
-		//! Switches to the next mode if it exists. If not, does nothing.
-		//! Returns false on error
-		bool SwitchToNextMode();
-
-		//! Switches the current mode to its parent if it exists. If it does
-		//! not exist, exit the game.
-		void SwitchToParentMode();
-			
+					
 	public:
 		//! Main function - run the game
 		int RunGame(GameOptions *_options);
@@ -156,7 +136,7 @@ class GameState {
 		inline AssetManager* GetAssetManager() const {return assetManager;};
 
 		//! Unconditionally exit game
-		void SignalExit();
+		void SignalGameExit();
 		
 		//! The current mode calls this to signal it wants to end
 		void SignalEndCurrentMode();

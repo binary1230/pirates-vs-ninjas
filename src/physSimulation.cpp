@@ -30,6 +30,8 @@ int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
 		return -1;
 	}
 
+	objectFactory->SetPhysSimulation(this);
+
 	forceFactory = new ForceFactory();
 	if ( !forceFactory || forceFactory->Init(GetGameState()) < 0 ) {
 		fprintf(stderr, "ERROR: InitSystem: failed to init forceFactory!\n");
@@ -279,7 +281,7 @@ void PhysSimulation::Update() {
 	// If they pressed the 'exit' key (typically ESCAPE)
 	// Then end the physics simulation
 	if (GetGameState()->GetKey(GAMEKEY_EXIT)) {
-		GetGameState()->SignalEndCurrentMode();
+		GetGameState()->SignalGameExit();
 		return;
 	}
 
@@ -443,7 +445,7 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 		xLayer = xMap.getChildNode("layer", &iterator);
 		
 		ObjectLayer* layer = new ObjectLayer();
-		layer->Init(GetGameState());
+		layer->Init(GetGameState(), this);
 		layers.push_back(layer);
 		
 		if (LoadLayerFromXML(xLayer, layer, objectDefs) == -1) {

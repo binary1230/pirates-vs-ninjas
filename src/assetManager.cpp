@@ -12,6 +12,11 @@ int AssetManager::Init(GameState* _game_state) {
 	return true;
 }
 
+void AssetManager::Free() {
+	FreeBitmaps();
+	FreeSamples();
+}
+
 // XXX should make these templated...
 void AssetManager::FreeSamples() {
 	SampleListIter i;
@@ -43,8 +48,7 @@ void AssetManager::FreeBitmaps() {
 
 
 void AssetManager::Shutdown() {	
-	FreeBitmaps();
-	FreeSamples();
+	Free();
 	paths.clear();
 }
 

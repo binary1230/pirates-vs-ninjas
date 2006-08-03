@@ -6,23 +6,18 @@
 #include "inputRecord.h"
 #include "inputPlayback.h"
 #include "window.h"
-#include "physSimulation.h"
-#include "credits.h"
 #include "gameMode.h"
 #include "assetManager.h"
 #include "xmlParser.h"
 #include "gameSound.h"
-#include "gameMenu.h"
+#include "gameModes.h"
 
-// XXX 	todo: mode switching code is VERY hackish and bad.
-//      			need to fix that.
-// 			todo: clean up, shouldn't pass XMLNode, should pass XMLNode*
+// TODO clean up, shouldn't pass XMLNode, should pass XMLNode*
 
 // Parse the master XML file
 // returns: XMLNode of first GameMode to load
-XMLNode GameState::LoadXMLConfig(CString xml_filename) {
+int GameState::LoadXMLConfig(CString xml_filename) {
 				
-	int i, iterator, max;
 	int default_mode_id = options->GetDefaultModeId();
 
 	// XXX xmlParser just DIES on error
@@ -30,25 +25,25 @@ XMLNode GameState::LoadXMLConfig(CString xml_filename) {
 	xGame = XMLNode::openFileHelper(xml_filename.c_str(), "game");
 	
 	XMLNode xInfo = xGame.getChildNode("info");
-	XMLNode xMode;
-	
-	max = xGame.nChildNode("mode_file");
 
 	fprintf(stderr, 
 		" Mod Info: requires engine version '%s'\n"
 		" Mod Info: map version '%s'\n"
 		" Mod Info: map author '%s'\n"
 		" Mod Info: Description: '%s'\n"
-		" Mod Info: Number of modes: '%i'\n"
+		// " Mod Info: Number of modes: '%i'\n"
 		" Mod Info: Default Mode ID: '%i'\n",
 		xInfo.getChildNode("requires_engine_version").getText(),
 		xInfo.getChildNode("game_version").getText(),
 		xInfo.getChildNode("author").getText(),
 		xInfo.getText(),
-		max, default_mode_id);
+		//max, 
+		default_mode_id);
 
+	return 0;
+	
 	// Go through all the available modes and find the default mode
-	bool found_default_mode = false;
+	/*bool found_default_mode = false;
 	int mode_id;
 	CString mode_xml_filename;
 
@@ -57,7 +52,7 @@ XMLNode GameState::LoadXMLConfig(CString xml_filename) {
 
 		if (!xMode.getAttributeInt("id", mode_id)) {
 			mode_id = 0;
-		}
+}
 		
 		if (!found_default_mode && 
 				(default_mode_id == 0 || mode_id == default_mode_id)) {
@@ -84,10 +79,16 @@ XMLNode GameState::LoadXMLConfig(CString xml_filename) {
 	// Open that file, return the node
 	mode_xml_filename = assetManager->GetPathOf(mode_xml_filename);
 	return XMLNode::openFileHelper(mode_xml_filename.c_str(), "gameMode" );
+	*/
+}
+
+void GameState::SignalEndCurrentMode() {
+	modes->SignalEndCurrentMode();
 }
 
 //! Initialize a "game mode" (e.g. menu, simulation, etc)
-int GameState::LoadGameMode(XMLNode xMode) {
+/*int GameState::LoadGameModes() {
+		
 		GameMode* mode;
 			
 		// Get the mode type from the XML file
@@ -129,7 +130,7 @@ int GameState::LoadGameMode(XMLNode xMode) {
 		} else {
 			return -1;
 		}
-}
+}*/
 
 
 //! Initialize game systems - main function
@@ -143,7 +144,6 @@ int GameState::InitSystem() {
 				
 		exit_game = false;
 		is_playing_back_demo = false;
-		end_current_mode = false;
 		debug_pause_toggle = false;
 
 		fprintf(stderr, "[init: allegro]\n");
@@ -163,9 +163,13 @@ int GameState::InitSystem() {
 
 		assetManager->AppendToSearchPath("../");
 
-		// just DIES if it can't load this file (bad)
 		fprintf(stderr, "[init: xml config]\n");
-		XMLNode xMode = LoadXMLConfig("data/default.xml");
+
+		// just DIES if it can't load this file (bad)
+		if (LoadXMLConfig("data/default.xml") < 0) {
+			fprintf(stderr, "ERROR: Failed to parse default.xml");	
+			return -1;
+		}
 		
 		fprintf(stderr, "[init: window]\n");
 		window = new Window();
@@ -186,18 +190,24 @@ int GameState::InitSystem() {
 			fprintf(stderr, "ERROR: InitSystem: failed to init sound subsystem!\n");
 		}
 
-		fprintf(stderr, "[init: default game mode]\n");
-		if (LoadGameMode(xMode) == -1) {
+		fprintf(stderr, "[init: loading game modes]\n");
+		if (LoadGameModes() == -1) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init default game mode!\n");
 			return -1;
 		}
 		
-		currentMode = modes[0];
-		currentModeIndex = 0;
-		
 		fprintf(stderr, "[init complete]\n");
 				
 		return 0;
+}
+
+int GameState::LoadGameModes() {
+	modes = new GameModes();
+
+	if (!modes)
+		return -1;
+
+	return modes->Init(this, xGame);
 }
 
 //! Init sound subsystem
@@ -353,40 +363,24 @@ void GameState::MainLoop() {
 //! Update all game status
 void GameState::Update() {
 
-	// see if we were signalled
-	if (end_current_mode) {
-		EndCurrentMode();
-		if (exit_game) 
-			return;
-	}
-	
+	if (exit_game)
+		return;
+
 	input->Update();
-	currentMode->Update();
+	modes->Update();
 }
 
 //! Draw the current mode
 void GameState::Draw() {
 	window->Clear();
-	currentMode->Draw();
+	modes->Draw();
 	window->Flip();
 }
 
-//! Shutdown the game
-
-//! Clean up everything we allocated
 void GameState::Shutdown() {
 
-	int i, max = modes.size();
-	for (i = 0; i < max; i++) {
-		if (modes[i]) {
-			modes[i]->Shutdown();
-			delete modes[i];
-			modes[i] = NULL;
-		}
-	}
+	modes->Shutdown();
 
-	currentMode = NULL;
-				
 	if (input) {
 		input->Shutdown();
 		delete input;
@@ -402,66 +396,6 @@ void GameState::Shutdown() {
 		
 	allegro_exit();
 	fprintf(stderr, "[Exiting]\n");	
-}
-
-//! Exits the current mode and deletes it, free its memory
-//! Exits the game if it is the last mode left.
-
-// XXX stop whining and use iterators.  this is messier than it needs to be
-// XXX probably need a modeList class to handle this messiness.
-// XXX should we remove currentMode->next too?  that memory will be freed
-//     on shutdown() though...
-void GameState::EndCurrentMode() {
-	if (currentMode) {
-										
-		// get the prev mode (will be NULL if this is the last mode in the game)
-		GameMode* parent = currentMode->GetParentMode();
-					
-		// kill this mode
-		currentMode->Shutdown();
-		currentMode = parent;
-					
-		// delete + remove it from the modes list
-		delete modes[currentModeIndex];
-		modes.erase(	modes.begin()+currentModeIndex,
-									modes.begin()+currentModeIndex + 1);
-	}
-
-	// if there is no more current mode, exit the game
-	if (!currentMode) {
-		SignalExit();
-	}
-
-	end_current_mode = false;
-}
-
-//! Switches to the next mode if it exists. If not, does nothing.
-//! Returns false if there is no next mode (usually an error)
-bool GameState::SwitchToNextMode() {
-	if (currentMode) {
-		GameMode* next = currentMode->GetNextMode();
-		if (next)
-			currentMode = next;
-		else 
-			return false;
-	}
-	return true;
-}
-
-//! Switches the current mode to its parent if it exists. If it does
-//! not exist, exit the game.
-void GameState::SwitchToParentMode() {
-	if (currentMode) {
-		GameMode* parent = currentMode->GetParentMode();
-		if (parent)
-			currentMode = parent;
-		else 
-			SignalExit();
-	}
-}
-
-PhysSimulation* GameState::GetPhysSimulation() {
-	return physSimulation;					
 }
 
 void GameState::SetRandomSeed(int val) { 
@@ -493,21 +427,16 @@ uint GameState::ScreenHeight() const {
 	return window->Height();
 }
 
-void GameState::SignalEndCurrentMode() {
-		end_current_mode = true;
-}
-
 GameState::GameState() {
 	window = NULL; 
 	input = NULL;  
-	currentMode = NULL; 
-	physSimulation = NULL;
 	sound = NULL;
 }
 
-void GameState::SignalExit() {
+void GameState::SignalGameExit() {
 	exit_game = true; 
 	is_playing_back_demo = false;
+	modes->SignalGameExit();
 }
 
 GameState::~GameState() {}

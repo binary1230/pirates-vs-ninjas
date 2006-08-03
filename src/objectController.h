@@ -8,6 +8,7 @@ using namespace std;
 class GameState;
 class Sprite;
 class ObjectFactory;
+class PhysSimulation;
 
 #include "object.h"
 #include "xmlParser.h"
@@ -27,7 +28,8 @@ class ControllerObject : public Object {
 		bool only_show_during_demo;
 		
 	public:
-		bool Init(GameState*);
+		bool Init(GameState* _game_state, PhysSimulation *p);
+		
 		void Shutdown();
 
 		void Update();

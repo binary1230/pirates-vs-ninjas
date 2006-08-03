@@ -25,7 +25,9 @@ using namespace std;
 // in: xObjectDef - XML representation of an object's definition
 // in: xObject - XML representation of additional object paramaters
 // returns: newly create Object*, or NULL if it failed
-Object* ObjectFactory::CreateObject(XMLNode &xObjectDef, XMLNode &xObject) {
+Object* ObjectFactory::CreateObject(	XMLNode &xObjectDef, XMLNode &xObject) {
+
+	assert(physSimulation);
 
 	Object* obj = NULL;
 
@@ -88,6 +90,7 @@ Object* ObjectFactory::CreateObject(XMLNode &xObjectDef, XMLNode &xObject) {
 
 int ObjectFactory::Init(GameState* _game_state) {
 	SetGameState(_game_state);
+	physSimulation = NULL;
 	return 0;
 }
 
@@ -105,7 +108,7 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode &xObj) {
 	PlayerObject* obj = new PlayerObject();
 
 	// init the object
-	if (!obj || !obj->Init(GetGameState()) )
+	if (!obj || !obj->Init(GetGameState(), physSimulation) )
 		return NULL;
 
 	// load the animations
@@ -130,7 +133,7 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj) {
 	RadiusBlockObject* obj = new RadiusBlockObject();
 
-  if (!obj || !obj->Init(GetGameState()) )
+  if (!obj || !obj->Init(GetGameState(), physSimulation) )
     return NULL;
 
   obj->SetTheta(Rand(0,360));
@@ -148,7 +151,7 @@ Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode &xObj) {
   CollectableObject* obj = new CollectableObject();
 
-  if (!obj || !obj->Init(GetGameState()) )
+  if (!obj || !obj->Init(GetGameState(), physSimulation) )
     return NULL;
 
   if (!LoadObjectSounds(obj,xDef))
@@ -168,7 +171,7 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode &xObj) {
   ControllerObject* obj = new ControllerObject();
 
-  if (!obj || !obj->Init(GetGameState()) )
+  if (!obj || !obj->Init(GetGameState(), physSimulation) )
     return NULL;
 
   ObjectProperties props;
@@ -261,7 +264,7 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode &xObj) {
   BackgroundObject* obj = new BackgroundObject();
   
-  if (!obj || !obj->Init(GetGameState()) )
+  if (!obj || !obj->Init(GetGameState(), physSimulation) )
     return NULL;
 
   obj->SetXY(0,0);
@@ -278,7 +281,7 @@ Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode &xObj) {
 	StaticObject* obj = new StaticObject();
 
-  if (!obj || !obj->Init(GetGameState()) )
+  if (!obj || !obj->Init(GetGameState(), physSimulation) )
     return NULL;
 
   if (!LoadObjectAnimations(obj,xDef))
@@ -294,7 +297,7 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode &xObj) {
   SpringObject* obj = new SpringObject();
   obj->properties.spring_strength = 20; // default
 
-  if (!obj || !obj->Init(GetGameState()) )
+  if (!obj || !obj->Init(GetGameState(), physSimulation) )
     return NULL;
 
   if (!LoadObjectSounds(obj,xDef))

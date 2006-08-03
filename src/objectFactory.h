@@ -19,6 +19,7 @@ class ObjectController;
 class ObjectBackground;
 class ObjectStatic;
 class ObjectSpring;
+class PhysSimulation;
 
 #include "gameBase.h"
 #include "xmlParser.h"
@@ -41,12 +42,15 @@ class ObjectFactory : GameBase {
 		bool LoadObjectAnimations(Object* obj, XMLNode &xDef, 
 															AnimationMapping *animation_lookup = NULL);
 
+		PhysSimulation *physSimulation;
+
 	public:
 		int Init(GameState* _game_state);
 		void Shutdown();
-
-		Object* CreateObject(XMLNode &xObjectDef, XMLNode &xObject);
 		
+		inline void SetPhysSimulation(PhysSimulation* p) {physSimulation = p;};
+
+		Object* CreateObject(	XMLNode &xObjectDef, XMLNode &xObject);
 
 		ObjectFactory();
 		~ObjectFactory();
