@@ -64,7 +64,7 @@ void CreditsMode::Update() {
 
 	// If we finished scrolling or they press the exit key, we exit
 	if (scroll_offset < -int(credits_bmp->h)
-			|| gs->GetKey(GAMEKEY_EXIT)) {
+			|| gs->GetInput()->KeyOnce(GAMEKEY_EXIT)) {
 		    GetGameState()->SignalEndCurrentMode();
 	}
 }

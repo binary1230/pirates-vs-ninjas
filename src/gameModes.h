@@ -12,7 +12,7 @@ using namespace std;
 
 class GameModes : public GameBase {
 	protected:
-		uint currentModeIndex;
+		unsigned int currentModeIndex;
 
 		bool signal_end_current_mode;
 		bool signal_game_exit;

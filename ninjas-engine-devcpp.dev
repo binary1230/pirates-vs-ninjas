@@ -1,7 +1,7 @@
 [Project]
 FileName=ninjas-engine-devcpp.dev
 Name=ninjas-engine
-UnitCount=80
+UnitCount=82
 Type=1
 Ver=1
 ObjFiles=
@@ -846,4 +846,24 @@ OriginalFilename=
 ProductName=
 ProductVersion=
 AutoIncBuildNr=0
+
+[Unit81]
+FileName=src\gameModes.cpp
+CompileCpp=1
+Folder=ninjas-engine
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit82]
+FileName=src\gameModes.h
+CompileCpp=1
+Folder=ninjas-engine
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 

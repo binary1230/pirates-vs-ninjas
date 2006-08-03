@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = ninjas-engine-devcpp_private.res
-OBJ  = src/xmlParser.o src/animation.o src/animations.o src/assetManager.o src/basename.o src/credits.o src/force.o src/forceFactory.o src/forceGravity.o src/forceInput.o src/gameBase.o src/gameMenu.o src/gameMode.o src/gameMusic.o src/gameOptions.o src/gameSound.o src/gameState.o src/input.o src/inputLiveHandler.o src/inputPlayback.o src/inputRecord.o src/main.o src/object.o src/objectBackground.o src/objectCollectable.o src/objectController.o src/objectFactory.o src/objectLayer.o src/objectPlayer.o src/objectRadiusBlock.o src/objectSpring.o src/objectStatic.o src/oggFile.o src/physSimulation.o src/rect.o src/timer.o src/vector2D.o src/window.o $(RES)
-LINKOBJ  = src/xmlParser.o src/animation.o src/animations.o src/assetManager.o src/basename.o src/credits.o src/force.o src/forceFactory.o src/forceGravity.o src/forceInput.o src/gameBase.o src/gameMenu.o src/gameMode.o src/gameMusic.o src/gameOptions.o src/gameSound.o src/gameState.o src/input.o src/inputLiveHandler.o src/inputPlayback.o src/inputRecord.o src/main.o src/object.o src/objectBackground.o src/objectCollectable.o src/objectController.o src/objectFactory.o src/objectLayer.o src/objectPlayer.o src/objectRadiusBlock.o src/objectSpring.o src/objectStatic.o src/oggFile.o src/physSimulation.o src/rect.o src/timer.o src/vector2D.o src/window.o $(RES)
+OBJ  = src/xmlParser.o src/animation.o src/animations.o src/assetManager.o src/basename.o src/credits.o src/force.o src/forceFactory.o src/forceGravity.o src/forceInput.o src/gameBase.o src/gameMenu.o src/gameMode.o src/gameMusic.o src/gameOptions.o src/gameSound.o src/gameState.o src/input.o src/inputLiveHandler.o src/inputPlayback.o src/inputRecord.o src/main.o src/object.o src/objectBackground.o src/objectCollectable.o src/objectController.o src/objectFactory.o src/objectLayer.o src/objectPlayer.o src/objectRadiusBlock.o src/objectSpring.o src/objectStatic.o src/oggFile.o src/physSimulation.o src/rect.o src/timer.o src/vector2D.o src/window.o src/gameModes.o $(RES)
+LINKOBJ  = src/xmlParser.o src/animation.o src/animations.o src/assetManager.o src/basename.o src/credits.o src/force.o src/forceFactory.o src/forceGravity.o src/forceInput.o src/gameBase.o src/gameMenu.o src/gameMode.o src/gameMusic.o src/gameOptions.o src/gameSound.o src/gameState.o src/input.o src/inputLiveHandler.o src/inputPlayback.o src/inputRecord.o src/main.o src/object.o src/objectBackground.o src/objectCollectable.o src/objectController.o src/objectFactory.o src/objectLayer.o src/objectPlayer.o src/objectRadiusBlock.o src/objectSpring.o src/objectStatic.o src/oggFile.o src/physSimulation.o src/rect.o src/timer.o src/vector2D.o src/window.o src/gameModes.o $(RES)
 LIBS =  -L"C:/Dev-Cpp/lib" ../../Dev-Cpp/lib/liballeg.a ../../Dev-Cpp/lib/libaloggdll.a  
 INCS =  -I"C:/Dev-Cpp/include" 
 CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
@@ -139,6 +139,9 @@ src/vector2D.o: src/vector2D.cpp
 
 src/window.o: src/window.cpp
 	$(CPP) -c src/window.cpp -o src/window.o $(CXXFLAGS)
+
+src/gameModes.o: src/gameModes.cpp
+	$(CPP) -c src/gameModes.cpp -o src/gameModes.o $(CXXFLAGS)
 
 ninjas-engine-devcpp_private.res: ninjas-engine-devcpp_private.rc 
 	$(WINDRES) -i ninjas-engine-devcpp_private.rc --input-format=rc -o ninjas-engine-devcpp_private.res -O coff 

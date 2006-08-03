@@ -280,8 +280,12 @@ void PhysSimulation::Update() {
 	
 	// If they pressed the 'exit' key (typically ESCAPE)
 	// Then end the physics simulation
-	if (GetGameState()->GetKey(GAMEKEY_EXIT)) {
-		GetGameState()->SignalGameExit();
+	if (GetGameState()->GetInput()->KeyOnce(GAMEKEY_EXIT)) {
+		
+		// Should be.. but until we get a 'goal'
+    // GetGameState()->SignalGameExit();
+    GetGameState()->SignalEndCurrentMode();
+    
 		return;
 	}
 

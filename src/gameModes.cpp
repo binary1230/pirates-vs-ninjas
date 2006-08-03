@@ -13,6 +13,7 @@ void GameModes::Update() {
 		return;
 
 	assert(currentMode);
+	
 	currentMode->Update();
 
 	if (signal_end_current_mode) {
@@ -74,6 +75,9 @@ int GameModes::Init(GameState* gs, XMLNode _xGame) {
 	SetGameState(gs);
 	currentMode = NULL;
 	currentModeIndex = 0;
+	
+	signal_game_exit = false;
+	signal_end_current_mode = false;
 
 	int i, iterator;
 	int max = _xGame.nChildNode("mode_file");
