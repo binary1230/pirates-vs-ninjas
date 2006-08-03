@@ -13,6 +13,7 @@ class Object;
 class ObjectFactory;
 class ForceFactory;
 class ObjectLayer;
+class OGGFILE;
 
 #include "gameBase.h"
 #include "gameMode.h"
@@ -46,6 +47,9 @@ class PhysSimulation : public GameMode {
 
 			//! Creates new forces
 			ForceFactory *forceFactory;
+
+			//! Temporary. Belongs in GameMusic
+			OGGFILE* music;
 
 			//! Width and height of the entire level
 			//! (usually much bigger than screen width/height)

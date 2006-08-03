@@ -92,9 +92,7 @@ int GameModes::Init(GameState* gs, XMLNode _xGame) {
 
 	// iterate backwards for push_back(), lame I know.
 	for (i=iterator=0; i < max; i++) {
-		tmp = _xGame.getChildNode("mode_file", &iterator).getText();
-		mode_files[i] = tmp;
-		fprintf(stderr, "%i '%s'\n", i, mode_files[i].c_str());
+		mode_files[i] = _xGame.getChildNode("mode_file", &iterator).getText();
 	}
 
  	if (!LoadNextMode()) {
