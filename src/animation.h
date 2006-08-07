@@ -54,7 +54,7 @@ class Animation : public GameBase {
 
 		//! The speed multiplier can slow down the animation speed.
 		//! Higher values result in a slower animation
-		void SetSpeedMultiplier(int m) {speed_multiplier = m;};
+		void SetSpeedMultiplier(int m) {speed_multiplier = max(m, 1);};
 
 		void ResetAnimation();		//! Set the animation back to the first frame
 

@@ -355,7 +355,7 @@ void GameState::MainLoop() {
 		// note: this should really be down() on a lock of some kind rather than
 		// just sleep randomly.
 		while (outstanding_updates <= 0 && !exit_game) {
-			rest(10);	// 1/30 sec is 33 usec, we sleep for 10
+			// rest(10);	// 1/30 sec is 33 usec, we sleep for 10
 		}
   }
 }

@@ -58,6 +58,7 @@ bool Object::BaseInit() {
 	fade_out = 0;
 	is_fading = false;
 	alpha = 255;
+	old_pos = pos;
 	return true;
 }
 
@@ -201,7 +202,7 @@ Vector2D Object::Solve() {
 	if (debug_flag)
 		fprintf(stderr, "vel=(%f,%f)\n", vel.GetX(), vel.GetY());
 	
-	UpdateProjectionRect();
+	UpdateProjectionRectFromVelocity();
 
 	/*if (debug && properties.is_player) {
 		fprintf(stderr, "-- YPOS  : %f\n", pos.GetY());
@@ -248,7 +249,6 @@ Object::Object() {
 // Return a vector with x,y set to 
 // the closest these two objects can get to
 // each other without colliding
-//
 // XXX BIG MESS and NOT FINISHED, not even close.
 CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	
@@ -262,76 +262,29 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	
 	if (vel.GetX() > 0) check_right = true;
 	if (vel.GetY() > 0) check_up = true;
+	
+	float top = projRect.gety2();
+	float mid = obj->GetY() + obj->GetHeight();
+	float bot = projRect.gety1();
 
-	/*if (check_right && 
-			old_pos.GetX() + (float)GetWidth() <= obj->pos.GetX() &&
-			obj->pos.GetX() <= pos.GetX() + GetWidth() 
-			) {
-		d.right = 1;
-	} else if (	GetX() <= 
-							obj->GetX() + obj->GetWidth() && 
-							obj->GetX() + obj->GetWidth() <=
-							old_pos.GetX()) {
-		d.left = 1;
-	}*/
-
-	/*if (check_up && 
-		old_pos.GetY() <= obj->GetY() &&
-		obj->GetY() <= GetY() + GetHeight()) {
-		d.up = 1;
-	} else*/ /*if (	old_pos.GetY() - GetHeight() >= 
-							obj->GetY() && 
-							obj->GetY() >=
-							GetY() - GetHeight() ) {
-		d.down = 1;
-	}*/
-
-	/*if (check_up && 
-			old_pos.GetY() + Get() <= obj->GetX() &&
-			obj->GetX() <= GetX() + GetWidth() 
-			) {
-		d.right = 1;*/
-
-	//Rect o1 = projRect;
-	//Rect o2 = obj->GetProjectionRect();
-
-	float o1 = old_pos.GetY() - (float)GetHeight();
-	float o2 = obj->pos.GetY();
-	float o3 = pos.GetY() - (float)GetHeight();
-
-	if ( check_up && old_pos.GetY() >= 
-							obj->pos.GetY() - (float)obj->GetHeight() && 
-							obj->pos.GetY() - (float)obj->GetHeight() >=
-							pos.GetY()) {
-		d.up = 1;
-	} else if (	!check_up //&&
-				/*old_pos.GetY() - (float)GetHeight() >= obj->pos.GetY() &&
-				obj->pos.GetY() >= pos.GetY() - (float)GetHeight()*/ 
-				// projRect.gety()
-				) {
-		d.down = 1;
+	// handle up-down collisions
+	if (!check_up && top >= mid && mid >= bot) {
+		//if (vel.GetY() >= 0)
+		//	d.up = 1;
+		//else 
+			d.down = 1;
 	}
 
-	if (debug && properties.is_player)
-		fprintf(stderr, "     points(y)       \n"//BOT(y-h)\n"
-										"OLD[1]:    %f           \n"//%f\n"
-										"BOX[2]:    %f           \n"//%f\n"
-										"NEW[3]:    %f           \n"//%f\n"
-					 					"\n\n1 >= 2 >= 3\n\nCollisions:", 
-			//old_pos.GetY(), old_pos.GetY() - GetHeight(),
-			//obj->pos.GetY(), obj->pos.GetY() - obj->GetHeight(),
-			//(float)GetY(), (float)GetY() - (float)GetHeight()
-			o1, o2, o3
-			);
+	//debug = true;
 
-	if (d.up) {
+	/*if (d.up) {
 		v.SetY(obj->GetY() - GetHeight());
 		if (debug) fprintf(stderr, "up!");
-	}
+	}*/
 
 	if (d.down) {
 		v.SetY(obj->GetY() + obj->GetHeight() );
-		if (debug) fprintf(stderr, "down / %f!", v.GetY());
+		if (debug) fprintf(stderr, "down!");
 	}
 
 	if (d.left) {
@@ -344,28 +297,27 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 		if (debug) fprintf(stderr, "right!");
 	}
 
-	if (!(d.right || d.left || d.down || d.up))
-		if (debug) fprintf(stderr, "NONE! Not good.\n");
+	//if (!(d.right || d.left || d.down || d.up))
+	//	if (debug) fprintf(stderr, "NONE! Not good.");
+
+	// fprintf(stderr, "\n");
 
 	return d;
 }
 	
 // get a rectangle whose area encompasses the total 
 // space we moved from last frame to this frame
-void Object::UpdateProjectionRect() {
-	// compute a bounding box based on our current position and velocity
-	Vector2D projection;
+// based solely on velocity (not collisions)
+void Object::UpdateProjectionRectFromVelocity() {
+	projRect = bbox.Project(vel);
+}
 
-	// project the velocity vector backwards
-	projection = vel;//;.Negation();
-	//projection = vel;
-	//projection.SetY(-projection.GetY());
-	
-	// if (properties.is_player)
-		// fprintf(stderr, "v=(%f,%f)\n", projection.GetX(), projection.GetY());
-
-	// get the projection rectangle
-	projRect = bbox.Project(projection);
+void Object::UpdateProjectionRectFromCollisions(Vector2D &newPos) {
+	/*projRect.setx1(fmin(newPos.GetX(), old_pos.GetX()));
+	projRect.setx2(fmax(newPos.GetX(), old_pos.GetX()));
+	projRect.sety1(fmin(newPos.GetY(), old_pos.GetY()));
+	projRect.sety2(fmax(newPos.GetY(), old_pos.GetY()));
+	projRect.Fix();*/
 }
 
 // rough, fast collision detection phase
@@ -375,10 +327,6 @@ bool const Object::IsColliding(Object *obj) {
 		//obj->projRect.print();
 	}
 	return projRect.Overlaps(obj->GetProjectionRect());
-}
-
-void Object::MoveBack() {
-	pos = old_pos;
 }
 
 void Object::Collide(Object* obj) {

@@ -11,6 +11,7 @@
 #include "animation.h"
 #include "animations.h"
 #include "physSimulation.h"
+#include "objectDoor.h"
 
 #define DEFAULT_JUMP_VELOCITY 8.0f
 #define DEFAULT_DRAG 0.95f
@@ -54,12 +55,29 @@ void PlayerObject::UpdateRunningAnimationSpeed() {
 		currentAnimation->SetSpeedMultiplier(1);// max
 }
 
+void PlayerObject::DoWalkThroughDoor() {
+	state = WALKING_THRU_DOOR;
+
+	// XXX don't have an animation for this yet...
+	currentAnimation = animations[PLAYER_WALKING];
+
+	if (door_in_front_of_us)
+		door_in_front_of_us->Activate();
+
+	door_in_front_of_us = NULL;
+}
+
 // Things common to STANDING, WALKING, and RUNNING
 void PlayerObject::DoCommonGroundStuff() {
 	if (!d.down) {
 		DoFalling();
 		return;
 	}	
+
+	if (door_in_front_of_us && input->KeyOnce(PLAYERKEY_UP, controller_num)) {
+		DoWalkThroughDoor();
+		return;
+	}
 
 	if (input->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
 		vel.SetY(jump_velocity);
@@ -155,21 +173,34 @@ void PlayerObject::Update() {
 
 	// set the current sprite to the current animation
 	currentSprite = currentAnimation->GetCurrentSprite();
+	
+	// this will be set true on each collision with a door
+	door_in_front_of_us = NULL;
 }
 
 void PlayerObject::Collide(Object* obj) {
+
+	if (obj->GetProperties().is_door) {
+		door_in_front_of_us = (DoorObject*)obj;
+		return;
+	}
+		
+	if (obj->GetProperties().is_fan) 
+		return;
+
   if (obj->GetProperties().is_solid) {
     
 		Vector2D newpos;
     d = GetBound(obj, newpos);
-    pos = newpos;
+    
+		pos = newpos;
+		UpdateProjectionRectFromCollisions(newpos);
 
     if (d.left || d.right)
       vel.SetX(0);
 
-    if (d.down) {
+    if (d.down || d.up)
       vel.SetY(0);
-		}
   }
 
 	if (obj->GetProperties().is_spring) {
@@ -184,6 +215,7 @@ bool PlayerObject::Init(GameState* _game_state, PhysSimulation *p) {
 	
 	controller_num = 1;
 	state = FALLING; 
+	door_in_front_of_us = NULL;
 
 	return BaseInit();
 }
@@ -194,6 +226,7 @@ PlayerObject::PlayerObject() {
 	mass = 1.0f;
 	drag = DEFAULT_DRAG;
 	state = FALLING;
+	door_in_front_of_us = NULL;
 }
 
 
@@ -235,6 +268,9 @@ void PlayerObject::UpdateState() {
 			break;
 		case CROUCHINGDOWN:
 			DoCrouchingDown();
+			break;
+		case WALKING_THRU_DOOR:
+			DoWalkThroughDoor();
 			break;
 		default:
 			fprintf(stderr, " -- PLAYEROBJECT ERROR: Unkown state asked for!\n");

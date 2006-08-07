@@ -12,6 +12,8 @@
 #include "objectStatic.h"
 #include "objectSpring.h"
 #include "objectCollectable.h"
+#include "objectFan.h"
+#include "objectDoor.h"
 #include "assetManager.h"
 #include "StdString.h"
 #include "animations.h"
@@ -39,6 +41,8 @@ Object* ObjectFactory::CreateObject(	XMLNode &xObjectDef, XMLNode &xObject) {
 	types["Player"] 						= OBJECT_ID_PLAYER;
 	types["ControllerDisplay"] 	= OBJECT_ID_CONTROLLER;
 	types["Static"] 						= OBJECT_ID_STATIC;
+	types["Fan"]								= OBJECT_ID_FAN;
+	types["Door"]								= OBJECT_ID_DOOR;
 	types["Spring"]							= OBJECT_ID_SPRING;
 	types["Collectable"]				= OBJECT_ID_COLLECTABLE;
 	
@@ -76,13 +80,23 @@ Object* ObjectFactory::CreateObject(	XMLNode &xObjectDef, XMLNode &xObject) {
 			obj = NewCollectableObject(xObjectDef, xObject);
 			break;
 
+		case OBJECT_ID_DOOR:
+			obj = NewDoorObject(xObjectDef, xObject);
+			break;
+
+		case OBJECT_ID_FAN:
+			obj = NewFanObject(xObjectDef, xObject);
+			break;
+
 		case 0:
 			fprintf(stderr, "ERROR: Specified object doesn't exist - '%s'.\n",
 											objType.c_str());
+			return NULL;
 			break;
 			
 		default:
 			fprintf(stderr, "ERROR: Unknown Object ID passed?? [%i]\n", id);
+			return NULL;
 	}
 
 	return obj;
@@ -312,6 +326,42 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode &xObj) {
   obj->properties.is_spring = 1;
 
   return obj;
+}
+
+Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode &xObj) {
+	DoorObject* obj = new DoorObject();
+
+  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+    return NULL;
+
+  if (!LoadObjectAnimations(obj,xDef))
+    return NULL;
+
+  if (!LoadObjectProperties(obj, xDef))
+    return NULL;
+
+	obj->properties.is_door = 1;
+	obj->properties.is_solid = 1;
+
+	return obj;
+}
+
+Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode &xObj) {
+	FanObject* obj = new FanObject();
+
+  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+    return NULL;
+
+  if (!LoadObjectAnimations(obj,xDef))
+    return NULL;
+
+  if (!LoadObjectProperties(obj, xDef))
+    return NULL;
+
+	obj->properties.is_fan = 1;
+	obj->properties.is_solid = 1;
+
+	return obj;
 }
 
 //! Load some common object properties from XML

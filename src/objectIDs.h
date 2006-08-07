@@ -12,6 +12,8 @@
 #define OBJECT_ID_STATIC 5
 #define OBJECT_ID_SPRING 6
 #define OBJECT_ID_COLLECTABLE 7
+#define OBJECT_ID_FAN 8
+#define OBJECT_ID_DOOR 9
 
 //! OBJECT animation ID's
 #define PLAYER_WALKING 0

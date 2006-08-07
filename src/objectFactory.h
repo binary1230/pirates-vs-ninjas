@@ -36,6 +36,8 @@ class ObjectFactory : GameBase {
 		Object* NewBackgroundObject(XMLNode &xDef, XMLNode &xObj);
 		Object* NewStaticObject(XMLNode &xDef, XMLNode &xObj);
 		Object* NewSpringObject(XMLNode &xDef, XMLNode &xObj);
+		Object* NewFanObject(XMLNode &xDef, XMLNode &xObj);
+		Object* NewDoorObject(XMLNode &xDef, XMLNode &xObj);
 		
 		bool LoadObjectSounds(Object* obj, XMLNode &xDef);
 		bool LoadObjectProperties(Object* obj, XMLNode &xDef);

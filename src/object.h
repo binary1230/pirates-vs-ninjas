@@ -42,6 +42,8 @@ struct ObjectProperties {
 	bool is_player;
 	bool is_spring;
 	bool is_collectable;
+	bool is_fan;
+	bool is_door;
 	
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -61,6 +63,8 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_player = 0;
 	p.is_spring = 0;
 	p.is_collectable = 0;
+	p.is_fan = 0;
+	p.is_door = 0;
 }
 
 //! A drawable entity in the physics simulation
@@ -168,9 +172,6 @@ class Object : public GameBase {
 		//! collision detection)
 		void MoveToNewPosition();
 
-		//! Move this object back to its previous frame's position
-		void MoveBack();
-
 		virtual void Draw();
 
 		void Transform(int &x, int &y, int offset_x = 0, int offset_y = 0);
@@ -245,7 +246,9 @@ class Object : public GameBase {
 		//! (based on velocity)
 		CollisionDirection GetBound(Object* obj, Vector2D &v);
 
-		void UpdateProjectionRect();
+		void UpdateProjectionRectFromVelocity();
+		void UpdateProjectionRectFromCollisions(Vector2D &newPos);
+
 		Rect GetProjectionRect() {return projRect;}
 
 		//! Plays a sound, or does nothing if that sound is not loaded
