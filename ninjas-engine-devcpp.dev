@@ -1,8 +1,8 @@
 [Project]
 FileName=ninjas-engine-devcpp.dev
 Name=ninjas-engine
-UnitCount=82
-Type=1
+UnitCount=86
+Type=0
 Ver=1
 ObjFiles=
 Includes=
@@ -17,17 +17,17 @@ IsCpp=1
 Icon=ninjas-engine-devcpp.ico
 ExeOutput=
 ObjectOutput=
-OverrideOutput=0
-OverrideOutputName=ninjas-engine-devcpp.exe
+OverrideOutput=1
+OverrideOutputName=ninjas.exe
 HostApplication=
 Folders=
 CommandLine=
 UseCustomMakefile=0
 CustomMakefile=
-IncludeVersionInfo=0
+IncludeVersionInfo=1
 SupportXPThemes=0
 CompilerSet=0
-CompilerSettings=0000000000000000000000
+CompilerSettings=0000000001000000000000
 
 [Unit1]
 FileName=src\xmlParser.cpp
@@ -831,20 +831,20 @@ BuildCmd=
 
 [VersionInfo]
 Major=0
-Minor=1
-Release=1
-Build=1
+Minor=2
+Release=8
+Build=652
 LanguageID=1033
 CharsetID=1252
 CompanyName=
-FileVersion=
-FileDescription=Developed using the Dev-C++ IDE
+FileVersion=0.2-beta8
+FileDescription=Pirates Vs Ninjas
 InternalName=
 LegalCopyright=
 LegalTrademarks=
-OriginalFilename=
-ProductName=
-ProductVersion=
+OriginalFilename=ninjas.exe
+ProductName=Pirates Vs Ninjas
+ProductVersion=0.2-beta8
 AutoIncBuildNr=0
 
 [Unit81]
@@ -859,6 +859,46 @@ BuildCmd=
 
 [Unit82]
 FileName=src\gameModes.h
+CompileCpp=1
+Folder=ninjas-engine
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit83]
+FileName=src\objectFan.h
+CompileCpp=1
+Folder=ninjas-engine
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit84]
+FileName=src\objectDoor.cpp
+CompileCpp=1
+Folder=ninjas-engine
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit85]
+FileName=src\objectDoor.h
+CompileCpp=1
+Folder=ninjas-engine
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit86]
+FileName=src\objectFan.cpp
 CompileCpp=1
 Folder=ninjas-engine
 Compile=1
