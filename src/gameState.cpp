@@ -347,7 +347,7 @@ void GameState::MainLoop() {
 		if (!exit_game) {
 			Draw();
 
-			if (input->Key(GAMEKEY_SCREENSHOT))
+			if (input->KeyOnce(GAMEKEY_SCREENSHOT))
 				window->Screenshot();
 		}
 
