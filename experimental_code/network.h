@@ -14,6 +14,6 @@
 
 #define BUFFSIZE 255
 
-
+inline void Die(char *mess) { perror(mess); exit(1); }
 
 #endif // PVN_NETWORK_H
