@@ -19,7 +19,9 @@ class GameOptions {
 
 		//! True if we are to attempt fullscreen display
 		bool fullscreen;
-	
+
+		//! Network player number
+		int network_player_num;
 
 		//! True if the user wants to reccord a demo
 		bool record_demo;

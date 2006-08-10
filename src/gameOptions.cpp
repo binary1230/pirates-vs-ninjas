@@ -37,6 +37,8 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-d            | (DEBUG) start the game paused (press F1 and F2 in game)\n"
 		"-v            | (DEBUG) show debugging messages\n\n"
 
+		"-n player_num | (EXPERIMENTAL) enable network control for player_num\n\n"
+
 		"-h            | display this help message\n\n"
 
 		, arg0);
@@ -60,8 +62,12 @@ void GameOptions::Clear() {
 
 	graphics_mode = MODE_DOUBLEBUFFERING;	
 
+	network_player_num = 0;
+
 	is_valid = true;
 }
+
+#define MAX_NET_PLAYER_NUM 2
 
 bool GameOptions::ParseArguments(int argc, char* argv[]) {
 	
@@ -71,8 +77,21 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"m:g:r:p:fwhd2vs")) != -1) {
+	while ( (c = getopt(argc,argv,"n:m:g:r:p:fwhd2vs")) != -1) {
 		switch (c) {
+
+			case 'n':
+				network_player_num = strtoul(optarg, NULL, 10);
+				if (	network_player_num <= 0 || 
+							network_player_num > MAX_NET_PLAYER_NUM) {
+
+					fprintf(	stderr, 
+										"Options ==> ERROR (-n) Number out of range "
+										"(1 to %i)\n", MAX_NET_PLAYER_NUM );
+					return (is_valid = false);
+				}
+
+				break;
 
 			case 'm':
 				default_mode_id = strtoul(optarg, NULL, 10);
