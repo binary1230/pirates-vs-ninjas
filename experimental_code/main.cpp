@@ -19,9 +19,11 @@ void do_client(char* ip) {
 
 	if (!ip)
 		ip = "127.0.0.1";
+			
+	fprintf(stderr, "Using '%s' for IP\n", ip);
 
 	UDPClient client;
-	client.Init("127.0.0.1", SERVER_PORT);
+	client.Init(ip,  SERVER_PORT);
 	client.SendMsg("CRAP1!");
 	client.SendMsg("CRAP2!");
 	client.SendMsg("CRAP3!");

@@ -9,9 +9,10 @@ int UDPClient::Init(char* server_ip, int server_port) {
     Die("Failed to create socket");
   }
 
-  memset(&echoserver, 0, sizeof(echoserver));      
+  memset(&echoserver, 0, sizeof(echoserver));
   echoserver.sin_family = AF_INET;        
-  echoserver.sin_addr.s_addr = inet_addr(server_ip); 
+
+  echoserver.sin_addr.s_addr = inet_addr(server_ip);
   echoserver.sin_port = htons(server_port);      
 
 	return 0;
