@@ -1,4 +1,4 @@
-SRCS = network.cpp main.cpp client.cpp server.cpp
+SRCS = dom-test-udp.cpp  ezSockets.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 GXX = g++
