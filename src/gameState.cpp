@@ -175,8 +175,8 @@ int GameState::InitNetworkClient() {
 	int port = options->GetNetworkPortNumber();
 	const char* host = options->GetNetworkServerName();
 
-	fprintf(stderr, "NET: Starting UDP network client: \n"
-									"Trying to connect to: %s:%i\n", host, port);
+	fprintf(stderr, "NET: Starting UDP network client:\n"
+									"NET: Trying to connect to: %s:%i\n", host, port);
 
   socket->mode = ezSockets::skUDP;
   
@@ -378,8 +378,6 @@ void GameState::Draw() {
 
 void GameState::Shutdown() {
 
-	modes->Shutdown();
-
 	if (input) {
 		input->Shutdown();
 		delete input;
@@ -388,12 +386,6 @@ void GameState::Shutdown() {
 	if (modes) {
 		modes->Shutdown();
 		delete modes;
-	}
-		
-	// window destruction code must be LAST
-	if (window) {
-		window->Shutdown();
-		delete window;
 	}
 
 	if (sound) {
@@ -409,6 +401,12 @@ void GameState::Shutdown() {
 	if (socket) {
 		socket->Close();
 		delete socket;
+	}
+		
+	// window destruction code must be LAST
+	if (window) {
+		window->Shutdown();
+		delete window;
 	}
 
 	socket = NULL;

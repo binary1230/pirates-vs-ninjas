@@ -29,7 +29,7 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-m id         | specify a different mode ID to use from default.xml\n\n"
 		
 		"-r file       | record a demo to 'file'\n"
-		"-p file       | playback a demo from 'file'\n\n"
+		"-d file       | playback a demo from 'file'\n\n"
 
 		"-X            | disable sound\n\n"
 
@@ -66,7 +66,7 @@ void GameOptions::Clear() {
 	graphics_mode = MODE_DOUBLEBUFFERING;	
 
 	network_enabled = 0;
-	network_port_num = 0;
+	network_port_num = -1;
 	network_server_name = "";
 	network_start_as_server = false;
 
@@ -80,7 +80,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"t:s:m:g:r:p:fwhd2vsX")) != -1) {
+	while ( (c = getopt(argc,argv,"fwg:m:r:d:X23vsc:p:h")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -192,18 +192,23 @@ bool GameOptions::IsValid() {
 
 	if (network_enabled) {
 
-		// if we aren't to start as a server, but they didn't give us a server name
-		// (btw, ^ is XOR) [YES.]
-		if (!network_start_as_server ^ network_server_name.GetLength() <= 0) {
-			fprintf(	stderr, "Options ==> ERROR"
-												"To start with networking, you must specify ONLY ONE\n"
-												"of the following: (-c) or (-s servername)\n");
+		if (network_port_num == -1) {
+			fprintf(	stderr, 
+								"Options ==> ERROR\n You MUST specify a port with (-p).\n\n");
+			return (is_valid = false);
+		} else if (network_port_num <= 0) {
+			fprintf(	stderr, 
+								"Options ==> ERROR\n (-p) Port # out of range.\n\n");
 			return (is_valid = false);
 		}
 
-		if (network_port_num <= 0) {
-			fprintf(	stderr, 
-								"Options ==> ERROR (-n) Port # out of range.");
+
+		// if we aren't to start as a server, but they didn't give us a server name
+		// (btw, ^ is XOR) [YES.]
+		if (!(network_start_as_server ^ network_server_name.GetLength() > 0)) {
+			fprintf(	stderr, "Options ==> ERROR\n"
+												"To start with networking, you must specify ONLY ONE\n"
+												"of the following: (-c) or (-s servername)\n\n");
 			return (is_valid = false);
 		}
 	}
@@ -211,11 +216,5 @@ bool GameOptions::IsValid() {
 	return (is_valid = true);
 }
 
-GameOptions::~GameOptions() {
-	if (demo_filename)
-		delete demo_filename;
-}
-
-GameOptions::GameOptions() : demo_filename(NULL) {
-	Clear();
-}
+GameOptions::~GameOptions()	{}
+GameOptions::GameOptions() 	{ Clear(); }

@@ -1,1 +1,1 @@
-ninjas.exe -p test.demo
+ninjas.exe -d test.demo
