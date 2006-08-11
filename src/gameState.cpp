@@ -11,7 +11,7 @@
 #include "xmlParser.h"
 #include "gameSound.h"
 #include "gameModes.h"
-#include "ezSockets.h"
+#include "network.h"
 
 // Parse the master XML file
 // returns: XMLNode of first GameMode to load
@@ -92,14 +92,11 @@ int GameState::InitSystem() {
 			return -1;
 		}
 
-		if ( options->IsNetworkEnabled() ) {
-			socket = new ezSockets();
-			if (!socket || InitNetwork()) {
-				fprintf(stderr, "ERROR: InitSystem: failed to init network!\n");
-				return -1;
-			}
+		if (InitNetwork() == -1) {
+			fprintf(stderr, "ERROR: InitSystem: failed to init network!\n");
+			return -1;
 		}
-
+	
 		fprintf(stderr, "[init: input subsystem]\n");
 		if (InitInput() == -1) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init input subsystem!\n");
@@ -131,13 +128,13 @@ int GameState::LoadGameModes() {
 	return modes->Init(this, xGame);
 }
  
-#define PVN_NETWORK_MAGIC_GREETING 123454321
+/*#define PVN_NETWORK_MAGIC_GREETING 123454321
 
 int GameState::InitNetworkServer() {
 	int port = options->GetNetworkPortNumber();
   ezSocketsPacket packet;
 	
-	fprintf(stderr, "NET: Starting UDP network server on port %i\n.", port);
+	fprintf(stderr, "NET: Starting UDP network server on port %i\n", port);
 	
   socket->mode = ezSockets::skUDP;
   socket->Create(IPPROTO_UDP, SOCK_DGRAM);
@@ -164,75 +161,38 @@ int GameState::InitNetworkServer() {
     }
 	}
 
-	// Send MAGIC greeting to server
+	rest(1000);
+	packet.ClearPacket();
+
+	// Send MAGIC greeting to client
   packet.Write4(PVN_NETWORK_MAGIC_GREETING);
 	socket->SendPack(packet);
 
 	fprintf(stderr, "NET: Server: Connected to client OK!\n");
 
 	return 0;
-}
-
-int GameState::InitNetworkClient() {
-	is_network_server = true;
-
-	int port = options->GetNetworkPortNumber();
-	const char* host = options->GetNetworkServerName();
-	ezSocketsPacket packet;
-
-	fprintf(stderr, "NET: Starting UDP network client:\n"
-									"NET: Trying to connect to: %s:%i\n", host, port);
-
-  socket->mode = ezSockets::skUDP;
-  
-	if (!socket->Create( IPPROTO_UDP, SOCK_DGRAM )) {
-		fprintf(stderr, "NET: ERROR Can't create socket.\n");
-		return -1;
-	}
-
-  if (!socket->Connect(host,port)) {
-		fprintf(stderr, "NET: ERROR Can't connect to server.\n");
-		return -1;
-	} else {
-		fprintf(stderr, "NET: Connected to server.\n");
-	}
-
-	// Send MAGIC greeting to server
-  packet.Write4(PVN_NETWORK_MAGIC_GREETING);
-	socket->SendPack(packet);
-	
-	fprintf(stderr, "NET: Sent initial greeting to server.\n");
-	fprintf(stderr, "NET: Waiting for response...\n");
-
-	// Wait for the same greeting back from server
-	bool got_greeting = false;
-
-	while (!got_greeting) {
-		rest(100);
-		if (socket->ReadPack(packet)) {
-			int size = packet.Read4();
-      if (size != packet.Size-4)
-        fprintf(stderr, "NET: WARN: Merged packets!\n");
-
-			if (packet.Read4() != PVN_NETWORK_MAGIC_GREETING) {
-				fprintf(stderr, "Incorrect MAGIC recieved from server, aborting!\n");
-				return -1;	
-			} else {
-				got_greeting = true;
-			}
-    }
-	}
-		
-	fprintf(stderr, "NET: Got response! Connected OK to server!\n");
-
-	return 0;
-}
+}*/
 
 int GameState::InitNetwork() {	
-	if (options->IsNetworkServer())
-		return InitNetworkServer();
-	else 
-		return InitNetworkClient();
+	int ret;
+	int port = options->GetNetworkPortNumber();
+
+	if (!options->IsNetworkEnabled())
+		return 0;
+
+	network = new GameNetwork();
+	if (!network)
+		return -1;
+
+	fprintf(stderr, "NET: Port %i\n", port);
+	
+	if (options->IsNetworkServer()) {
+		ret = network->InitServer(this, port);
+	} else {
+		ret = network->InitClient(this, port, options->GetNetworkServerName());
+	}
+
+	return ret;
 }
 
 //! Init sound subsystem
@@ -318,6 +278,7 @@ int GameState::RunGame(GameOptions* _options) {
 		}
 	
 		Shutdown();
+		fprintf(stderr, "[Exiting]\n");	
 
 		return 0;
 }
@@ -403,10 +364,16 @@ void GameState::Draw() {
 }
 
 void GameState::Shutdown() {
+	fprintf(stderr, "[Shutting Down]\n");	
 
 	if (input) {
 		input->Shutdown();
 		delete input;
+	}
+
+	if (network) {
+		network->Shutdown();
+		delete network;
 	}
 
 	if (modes) {
@@ -424,19 +391,11 @@ void GameState::Shutdown() {
 		delete assetManager;
 	}
 	
-	if (socket) {
-		socket->Close();
-		delete socket;
-	}
-		
 	// window destruction code must be LAST
 	if (window) {
 		window->Shutdown();
 		delete window;
 	}
-
-	socket = NULL;
-	is_network_server = false;
 
 	options = NULL;
 	assetManager = NULL;
@@ -444,9 +403,9 @@ void GameState::Shutdown() {
 	window = NULL; 
 	input = NULL;  
 	sound = NULL;
+	network = NULL;
 		
 	allegro_exit();
-	fprintf(stderr, "[Exiting]\n");	
 }
 
 void GameState::SetRandomSeed(int val) { 
@@ -485,8 +444,7 @@ GameState::GameState() {
 	window = NULL; 
 	input = NULL;  
 	sound = NULL;
-	socket = NULL;
-	is_network_server = false;
+	network = NULL;
 }
 
 void GameState::SignalGameExit() {

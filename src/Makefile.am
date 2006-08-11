@@ -26,7 +26,7 @@ basename.h assetManager.h \
 animation.h animations.h sprite.h \
 StdString.h xmlParser.h objectLayer.h \
 credits.h oggFile.h gameMenu.h gameModes.h \
-objectFan.h objectDoor.h ezSockets.h
+objectFan.h objectDoor.h ezSockets.h network.h
 
 ninjas_SOURCES = \
 force.cpp forceGravity.cpp forceInput.cpp forceFactory.cpp \
@@ -41,7 +41,7 @@ basename.cpp assetManager.cpp \
 animation.cpp animations.cpp \
 xmlParser.cpp gameModes.cpp \
 credits.cpp oggFile.cpp gameMenu.cpp \
-objectFan.cpp objectDoor.cpp ezSockets.cpp \
+objectFan.cpp objectDoor.cpp ezSockets.cpp network.cpp \
 $(headers)
 
 # EXTRA_DIST = dir1 dir2
