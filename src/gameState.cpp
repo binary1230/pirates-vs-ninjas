@@ -164,6 +164,10 @@ int GameState::InitNetworkServer() {
     }
 	}
 
+	// Send MAGIC greeting to server
+  packet.Write4(PVN_NETWORK_MAGIC_GREETING);
+	socket->SendPack(packet);
+
 	fprintf(stderr, "NET: Server: Connected to client OK!\n");
 
 	return 0;
@@ -174,6 +178,7 @@ int GameState::InitNetworkClient() {
 
 	int port = options->GetNetworkPortNumber();
 	const char* host = options->GetNetworkServerName();
+	ezSocketsPacket packet;
 
 	fprintf(stderr, "NET: Starting UDP network client:\n"
 									"NET: Trying to connect to: %s:%i\n", host, port);
@@ -193,11 +198,32 @@ int GameState::InitNetworkClient() {
 	}
 
 	// Send MAGIC greeting to server
-	ezSocketsPacket packet;
   packet.Write4(PVN_NETWORK_MAGIC_GREETING);
 	socket->SendPack(packet);
-		
+	
 	fprintf(stderr, "NET: Sent initial greeting to server.\n");
+	fprintf(stderr, "NET: Waiting for response...\n");
+
+	// Wait for the same greeting back from server
+	bool got_greeting = false;
+
+	while (!got_greeting) {
+		rest(100);
+		if (socket->ReadPack(packet)) {
+			int size = packet.Read4();
+      if (size != packet.Size-4)
+        fprintf(stderr, "NET: WARN: Merged packets!\n");
+
+			if (packet.Read4() != PVN_NETWORK_MAGIC_GREETING) {
+				fprintf(stderr, "Incorrect MAGIC recieved from server, aborting!\n");
+				return -1;	
+			} else {
+				got_greeting = true;
+			}
+    }
+	}
+		
+	fprintf(stderr, "NET: Got response! Connected OK to server!\n");
 
 	return 0;
 }
