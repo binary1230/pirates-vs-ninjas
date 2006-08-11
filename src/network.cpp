@@ -20,7 +20,6 @@ int GameNetwork::WaitForHandShake() {
 	packet.ClearPacket();
 
 	while (!got_greeting) {
-		rest(100);
 		if (socket->ReadPack(packet)) {
 			int size = packet.Read4();
       if (size != packet.Size-4)
@@ -71,7 +70,7 @@ int GameNetwork::InitClient(GameState* _game_state, int _port, CString _host) {
 		Shutdown();
 		return -1;
 	}
-
+  
   if (!socket->Connect(host,port)) {
 		fprintf(stderr, "NET: ERROR Can't connect to server.\n");
 		Shutdown();
@@ -111,6 +110,7 @@ int GameNetwork::InitServer(GameState* _game_state, int _port) {
 	}
 
 	WaitForHandShake();
+	rest(1000);
 	SendHandShake();
 	
 	fprintf(stderr, "NET: Server: Client connection succeeded!\n");
