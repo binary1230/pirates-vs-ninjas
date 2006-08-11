@@ -32,7 +32,7 @@ int GameNetwork::WaitForHandShake() {
 			} else {
 				got_greeting = true;
 			}
-    }
+    } 
 	}
 		
 	fprintf(stderr, "NET: Got response! Handshake Complete!\n");
