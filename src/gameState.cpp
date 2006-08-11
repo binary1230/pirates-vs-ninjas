@@ -11,8 +11,7 @@
 #include "xmlParser.h"
 #include "gameSound.h"
 #include "gameModes.h"
-
-// TODO clean up, shouldn't pass XMLNode, should pass XMLNode*
+#include "ezSockets.h"
 
 // Parse the master XML file
 // returns: XMLNode of first GameMode to load
@@ -40,98 +39,12 @@ int GameState::LoadXMLConfig(CString xml_filename) {
 		//max, 
 		default_mode_id);
 
-	return 0;
-	
-	// Go through all the available modes and find the default mode
-	/*bool found_default_mode = false;
-	int mode_id;
-	CString mode_xml_filename;
-
-	for (i=iterator=0; i<max; i++) {
-		xMode = xGame.getChildNode("mode_file", &iterator);
-
-		if (!xMode.getAttributeInt("id", mode_id)) {
-			mode_id = 0;
-}
-		
-		if (!found_default_mode && 
-				(default_mode_id == 0 || mode_id == default_mode_id)) {
-			
-			found_default_mode = true;
-
-			// Get the filename of the XML file which contains our first mode
-			mode_xml_filename = xMode.getText();
-		}
-	}
-
-	if (!found_default_mode) {
-		if (default_mode_id == 0)
-			fprintf(stderr, " Mod ERROR: No mode tags found in default XML file!\n");
-		else
-			fprintf(stderr, " Mod ERROR: Mode ID '%i' not found in default XML file!\n", 
-				default_mode_id);
-	}
-
-	fprintf(stderr, 
-		" Mod Info: default mode filename '%s'\n",
-		mode_xml_filename.c_str());
-
-	// Open that file, return the node
-	mode_xml_filename = assetManager->GetPathOf(mode_xml_filename);
-	return XMLNode::openFileHelper(mode_xml_filename.c_str(), "gameMode" );
-	*/
+	return 0;	
 }
 
 void GameState::SignalEndCurrentMode() {
 	modes->SignalEndCurrentMode();
 }
-
-//! Initialize a "game mode" (e.g. menu, simulation, etc)
-/*int GameState::LoadGameModes() {
-		
-		GameMode* mode;
-			
-		// Get the mode type from the XML file
-		CString nodeType = xMode.getAttribute("type");
-
-		// XXX: Is it worth making a "mode factory" for this?
-
-		if (nodeType == "simulation") {
-						
-			mode = physSimulation = new PhysSimulation();
-			if ( !mode || mode->Init(this, xMode) < 0) {
-				fprintf(stderr, "ERROR: InitSystem: failed to init simulation!\n");
-				return -1;
-			}
-
-		}	else if (nodeType == "credits") {
-						
-			mode = new CreditsMode();
-			if ( !mode || mode->Init(this, xMode) < 0) {
-				fprintf(stderr, "ERROR: InitSystem: failed to init simulation!\n");
-				return -1;
-			}
-	
-		} else if (nodeType == "menu") {
-
-			mode = new GameMenu();
-			if ( !mode || mode->Init(this, xMode) < 0) {
-				fprintf(stderr, "ERROR: InitSystem: failed to init menu!\n");
-				return -1;
-			}
-		
-		} else {
-			mode = NULL;
-		}
-
-		if (mode) {
-			modes.push_back(mode);
-			return 0;
-		} else {
-			return -1;
-		}
-}*/
-
 
 //! Initialize game systems - main function
 
@@ -179,6 +92,14 @@ int GameState::InitSystem() {
 			return -1;
 		}
 
+		if ( options->IsNetworkEnabled() ) {
+			socket = new ezSockets();
+			if (!socket || InitNetwork()) {
+				fprintf(stderr, "ERROR: InitSystem: failed to init network!\n");
+				return -1;
+			}
+		}
+
 		fprintf(stderr, "[init: input subsystem]\n");
 		if (InitInput() == -1) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init input subsystem!\n");
@@ -208,6 +129,84 @@ int GameState::LoadGameModes() {
 		return -1;
 
 	return modes->Init(this, xGame);
+}
+ 
+#define PVN_NETWORK_MAGIC_GREETING 123454321
+
+int GameState::InitNetworkServer() {
+	int port = options->GetNetworkPortNumber();
+  ezSocketsPacket packet;
+	
+	fprintf(stderr, "NET: Starting UDP network server on port %i\n.", port);
+	
+  socket->mode = ezSockets::skUDP;
+  socket->Create(IPPROTO_UDP, SOCK_DGRAM);
+  socket->Bind(port);
+	
+	fprintf(stderr, "NET: Waiting for client greeting..\n");
+
+	bool got_greeting = false;
+
+	while (!got_greeting) {
+		rest(100);
+		if (socket->ReadPack(packet)) {
+			int size = packet.Read4();
+      if (size != packet.Size-4)
+        fprintf(stderr, "NET: WARN: Merged packets!\n");
+
+			// Expect MAGIC greeting from client
+			if (packet.Read4() != PVN_NETWORK_MAGIC_GREETING) {
+				fprintf(stderr, "Incorrect MAGIC recieved from client, aborting!\n");
+				return -1;	
+			} else {
+				got_greeting = true;
+			}
+    }
+	}
+
+	fprintf(stderr, "NET: Server: Connected to client OK!\n");
+
+	return 0;
+}
+
+int GameState::InitNetworkClient() {
+	is_network_server = true;
+
+	int port = options->GetNetworkPortNumber();
+	const char* host = options->GetNetworkServerName();
+
+	fprintf(stderr, "NET: Starting UDP network client: \n"
+									"Trying to connect to: %s:%i\n", host, port);
+
+  socket->mode = ezSockets::skUDP;
+  
+	if (!socket->Create( IPPROTO_UDP, SOCK_DGRAM )) {
+		fprintf(stderr, "NET: ERROR Can't create socket.\n");
+		return -1;
+	}
+
+  if (!socket->Connect(host,port)) {
+		fprintf(stderr, "NET: ERROR Can't connect to server.\n");
+		return -1;
+	} else {
+		fprintf(stderr, "NET: Connected to server.\n");
+	}
+
+	// Send MAGIC greeting to server
+	ezSocketsPacket packet;
+  packet.Write4(PVN_NETWORK_MAGIC_GREETING);
+	socket->SendPack(packet);
+		
+	fprintf(stderr, "NET: Sent initial greeting to server.\n");
+
+	return 0;
+}
+
+int GameState::InitNetwork() {	
+	if (options->IsNetworkServer())
+		return InitNetworkServer();
+	else 
+		return InitNetworkClient();
 }
 
 //! Init sound subsystem
@@ -384,15 +383,43 @@ void GameState::Shutdown() {
 	if (input) {
 		input->Shutdown();
 		delete input;
-		input = NULL;
+	}
+
+	if (modes) {
+		modes->Shutdown();
+		delete modes;
 	}
 		
 	// window destruction code must be LAST
 	if (window) {
 		window->Shutdown();
 		delete window;
-		window = NULL;
 	}
+
+	if (sound) {
+		sound->Shutdown();
+		delete sound;
+	}
+
+	if (assetManager) {
+		assetManager->Shutdown();
+		delete assetManager;
+	}
+	
+	if (socket) {
+		socket->Close();
+		delete socket;
+	}
+
+	socket = NULL;
+	is_network_server = false;
+
+	options = NULL;
+	assetManager = NULL;
+	modes = NULL;
+	window = NULL; 
+	input = NULL;  
+	sound = NULL;
 		
 	allegro_exit();
 	fprintf(stderr, "[Exiting]\n");	
@@ -428,9 +455,14 @@ uint GameState::ScreenHeight() const {
 }
 
 GameState::GameState() {
+	options = NULL;
+	assetManager = NULL;
+	modes = NULL;
 	window = NULL; 
 	input = NULL;  
 	sound = NULL;
+	socket = NULL;
+	is_network_server = false;
 }
 
 void GameState::SignalGameExit() {

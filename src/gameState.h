@@ -15,6 +15,7 @@ class AssetManager;
 class PhysSimulation;
 class GameSound;
 class GameModes;
+class ezSockets;
 
 #include "globals.h"
 #include "timer.h"
@@ -50,9 +51,14 @@ class GameState {
 		//! Collection of all game modes (e.g. menu mode, simulation mode, etc)
 		GameModes *modes;
 
-		//! Points to the active physics simulation (if there is one)
-		PhysSimulation* physSimulation;
+		//! True if we are the server
+		bool is_network_server;
 
+		//! Server network socket, if it exists
+		ezSockets* socket;
+
+		//! True if we are using the network
+		bool IsUsingNetwork() {return socket != NULL;};
 		
 		//! Initialize all game related stuff
 		int InitSystem();								
@@ -66,6 +72,10 @@ class GameState {
 		//! Init sound system
 		int InitSound();
 
+		//! Init network subsystem, if needed
+		int InitNetwork();
+		int InitNetworkClient();
+		int InitNetworkServer();
 		
 		//! Load master game config from an XML file, return an XMLNode which is
 		//! the first game Mode's config we should now load.

@@ -31,13 +31,15 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-r file       | record a demo to 'file'\n"
 		"-p file       | playback a demo from 'file'\n\n"
 
-		"-s            | disable sound\n\n"
+		"-X            | disable sound\n\n"
 
 		"-2            | (DEBUG) use 640x480 instead of 320x240\n"
-		"-d            | (DEBUG) start the game paused (press F1 and F2 in game)\n"
+		"-3            | (DEBUG) start the game paused (press F1 and F2 in game)\n"
 		"-v            | (DEBUG) show debugging messages\n\n"
 
-		"-n player_num | (EXPERIMENTAL) enable network control for player_num\n\n"
+		"-s            | (EXPERIMENTAL) start game as a server\n\n"
+		"-c servername | (EXPERIMENTAL) connect to game server [servername]\n"
+		"-p portnumber | (EXPERIMENTAL) connect to game server port\n\n"
 
 		"-h            | display this help message\n\n"
 
@@ -53,7 +55,8 @@ void GameOptions::Clear() {
 
 	record_demo = false;
 	playback_demo = false;
-	demo_filename = NULL;
+	
+	demo_filename = "";
 	
 	sound_enabled = 1;
 	
@@ -62,43 +65,30 @@ void GameOptions::Clear() {
 
 	graphics_mode = MODE_DOUBLEBUFFERING;	
 
-	network_player_num = 0;
+	network_enabled = 0;
+	network_port_num = 0;
+	network_server_name = "";
+	network_start_as_server = false;
 
 	is_valid = true;
 }
 
-#define MAX_NET_PLAYER_NUM 2
-
 bool GameOptions::ParseArguments(int argc, char* argv[]) {
 	
 	char c;
-	char* buffer;
 	bool _fullscreen_option_set = false;
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"n:m:g:r:p:fwhd2vs")) != -1) {
+	while ( (c = getopt(argc,argv,"t:s:m:g:r:p:fwhd2vsX")) != -1) {
 		switch (c) {
-
-			case 'n':
-				network_player_num = strtoul(optarg, NULL, 10);
-				if (	network_player_num <= 0 || 
-							network_player_num > MAX_NET_PLAYER_NUM) {
-
-					fprintf(	stderr, 
-										"Options ==> ERROR (-n) Number out of range "
-										"(1 to %i)\n", MAX_NET_PLAYER_NUM );
-					return (is_valid = false);
-				}
-
-				break;
 
 			case 'm':
 				default_mode_id = strtoul(optarg, NULL, 10);
 				break;
 
 			// get demo filename
-			case 'r': case 'p':
+			case 'r': case 'd':
 				if (demo_filename) {
 						fprintf(stderr,	"Options ==> ERROR "
 														"Don't give more than 1 demo filename (-r, -p)\n");
@@ -110,8 +100,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				else 
 						playback_demo = true;
 								
-				buffer = new char[strlen(optarg) + 1];
-				demo_filename = strcpy(buffer, optarg);
+				demo_filename = CString(optarg);
 				break;
 			
 			// display help
@@ -121,7 +110,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				break;
 
 			// disable sound
-			case 's':
+			case 'X':
 				sound_enabled = false;
 				break;
 	
@@ -157,7 +146,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				break;
 
 			// debug: start in 'paused' mode, press F1 to go, F2 to step
-			case 'd':
+			case '3':
 				debug_start_paused = true;
 				break;
 
@@ -166,6 +155,24 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				debug_message_level = 1;
 				break;
 	
+			// Network: Start game as server
+			case 's':
+				network_start_as_server = true;
+				network_enabled = true;
+				break;
+	
+			// Network server name
+			case 'c':
+				network_server_name = CString(optarg);
+				network_enabled = true;
+				break;
+	
+			// Network port #
+			case 'p':
+				network_port_num = strtoul(optarg, NULL, 10);
+				network_enabled = true;
+				break;
+
 			// ':' and '?' mean unrecognized
 			default:
 			case ':': case '?':
@@ -179,7 +186,29 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 }
 
 bool GameOptions::IsValid() {
-	return is_valid;
+
+	if (!is_valid)
+		return false;
+
+	if (network_enabled) {
+
+		// if we aren't to start as a server, but they didn't give us a server name
+		// (btw, ^ is XOR) [YES.]
+		if (!network_start_as_server ^ network_server_name.GetLength() <= 0) {
+			fprintf(	stderr, "Options ==> ERROR"
+												"To start with networking, you must specify ONLY ONE\n"
+												"of the following: (-c) or (-s servername)\n");
+			return (is_valid = false);
+		}
+
+		if (network_port_num <= 0) {
+			fprintf(	stderr, 
+								"Options ==> ERROR (-n) Port # out of range.");
+			return (is_valid = false);
+		}
+	}
+
+	return (is_valid = true);
 }
 
 GameOptions::~GameOptions() {

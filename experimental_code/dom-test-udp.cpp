@@ -56,7 +56,7 @@ void do_server() {
 	
 	server.mode = ezSockets::skUDP;
 	server.Create( IPPROTO_UDP, SOCK_DGRAM );
-	cout<<"Connect:"<<server.Connect( "127.0.0.1", 1234 )<<endl;
+	cout<<"Connect:"<<server.Connect( "192.168.1.40", 1234 )<<endl;
 	
 	client2server.Write2(1010);
 	client2server.Write4( 100234555 );

@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "StdString.h"
+
 //! Holds and validates the various command line and game options
 class GameOptions {
 	protected:
@@ -20,9 +22,6 @@ class GameOptions {
 		//! True if we are to attempt fullscreen display
 		bool fullscreen;
 
-		//! Network player number
-		int network_player_num;
-
 		//! True if the user wants to reccord a demo
 		bool record_demo;
 
@@ -30,7 +29,7 @@ class GameOptions {
 		bool playback_demo;
 
 		//! The demo filename if it was set
-		char* demo_filename;
+		CString demo_filename;
 
 		//! Whether to enable sound or not
 		int sound_enabled;
@@ -46,6 +45,18 @@ class GameOptions {
 
 		//! Debug message level (default is DEFAULT_DEBUG_MSG_LEVEL)
 		int debug_message_level;
+
+		//! Network server to connect to
+		CString network_server_name;
+
+		//! Network port to use
+		int network_port_num;
+
+		//! True if we are starting the game as a server
+		bool network_start_as_server;
+
+		//! True if networking is enabled
+		bool network_enabled;
 		
 	public:
 		//! Print the list of available options to stdout
@@ -69,7 +80,7 @@ class GameOptions {
 		inline bool IsFullscreen() {return fullscreen;};
 		
 		//! The demo filename if it was set
-		inline char* GetDemoFilename() {return demo_filename;};
+		inline const char* GetDemoFilename() {return demo_filename.c_str();};
 		
 		//! True if the user wants to reccord a demo
 		inline bool RecordDemo() {return record_demo;};
@@ -93,6 +104,13 @@ class GameOptions {
 		//! Return the debug message level.
 		//! Right now, 0 = no messages, 1 = all messages
 		inline int GetDebugMessageLevel() {return debug_message_level;};
+
+		inline bool		IsNetworkEnabled() {return network_enabled;};
+		inline bool 	IsNetworkServer() {return network_start_as_server;};
+		inline int 		GetNetworkPortNumber() {return network_port_num;};
+		inline const char* GetNetworkServerName() {
+			return network_server_name.c_str();
+		};
 		
 		GameOptions();
 		~GameOptions();

@@ -75,8 +75,6 @@ bool InputPlayback::InitPlayback(CString filename) {
 	return !error;
 }
 
-// pass key_buffer = NULL in order to use the default key buffer
-// (which is usually what you want)
 void InputPlayback::UseNextFrameData() {	
 	uint i;
 	for (i = 0; i < GAMEKEY_COUNT; i++) {
