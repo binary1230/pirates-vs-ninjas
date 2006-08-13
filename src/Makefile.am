@@ -2,6 +2,8 @@ SUBDIRS = tests
 
 bin_PROGRAMS = ninjas
 
+VPATH = external objects
+
 # AM_CXXFLAGS = -Wall
 
 # LDFLAGS = -ggdb -lm
@@ -10,39 +12,42 @@ bin_PROGRAMS = ninjas
 # for profiling
 # ninjas_LDFLAGS = -pg
 
-ninjas_CXXFLAGS = -Wall
+ninjas_CXXFLAGS = -Wall @ninjas_CXXFLAGS@
 
 headers = \
-globals.h timer.h \
-gameOptions.h gameState.h gameBase.h window.h \
-gameMode.h physSimulation.h \
-input.h inputLiveHandler.h inputRecord.h inputPlayback.h gameSound.h \
-object.h objectFactory.h objectIDs.h \
-objectPlayer.h objectRadiusBlock.h objectBackground.h objectController.h \
-objectStatic.h objectSpring.h objectCollectable.h\
-rect.h vector2D.h force.h forceFactory.h \
-forceGravity.h forceInput.h \
-basename.h assetManager.h \
-animation.h animations.h sprite.h \
-StdString.h xmlParser.h objectLayer.h \
-credits.h oggFile.h gameMenu.h gameModes.h \
-objectFan.h objectDoor.h ezSockets.h network.h alogg.h aloggdll.h
+external/ezSockets.h external/alogg.h external/xmlParser.h external/StdString.h\
+globals.h gameOptions.h gameState.h gameBase.h \
+timer.h rect.h vector2D.h oggFile.h network.h basename.h \
+window.h assetManager.h gameSound.h \
+gameMode.h gameModes.h \
+objectLayer.h objectFactor.h \
+objects/object.h \
+objects/objectPlayer.h objects/objectRadiusBlock.h \
+objects/objectBackground.h objects/objectController.h \
+objects/objectStatic.h objects/objectSpring.h \
+objects/objectCollectable.h objects/objectFan.h objects/objectDoor.h \
+input.h inputLiveHandler.h inputRecord.h inputPlayback.h \
+force.h forceGravity.h forceInput.h forceFactory.h \
+animation.h animations.h \
+credits.h gameMenu.h physSimulation.h 
 
 ninjas_SOURCES = \
+external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
+main.cpp gameOptions.cpp gameState.cpp gameBase.cpp \
+timer.cpp rect.cpp vector2D.cpp oggFile.cpp network.cpp basename.cpp \
+window.cpp assetManager.cpp gameSound.cpp \
+gameMode.cpp gameModes.cpp \
+objectLayer.cpp objectFactory.cpp \
+objects/object.cpp \
+objects/objectPlayer.cpp objects/objectRadiusBlock.cpp \
+objects/objectBackground.cpp objects/objectController.cpp \
+objects/objectStatic.cpp objects/objectSpring.cpp \
+objects/objectCollectable.cpp objects/objectFan.cpp objects/objectDoor.cpp \
+input.cpp inputLiveHandler.cpp inputRecord.cpp inputPlayback.cpp \
 force.cpp forceGravity.cpp forceInput.cpp forceFactory.cpp \
-gameOptions.cpp gameState.cpp main.cpp gameBase.cpp \
-gameMode.cpp physSimulation.cpp objectLayer.cpp \
-gameSound.cpp input.cpp inputLiveHandler.cpp inputRecord.cpp inputPlayback.cpp \
-object.cpp objectFactory.cpp objectPlayer.cpp objectRadiusBlock.cpp \
-objectBackground.cpp objectController.cpp objectStatic.cpp \
-objectSpring.cpp objectCollectable.cpp\
-timer.cpp rect.cpp vector2D.cpp window.cpp \
-basename.cpp assetManager.cpp \
 animation.cpp animations.cpp \
-xmlParser.cpp gameModes.cpp \
-credits.cpp oggFile.cpp gameMenu.cpp \
-objectFan.cpp objectDoor.cpp ezSockets.cpp network.cpp \
-alogg.cpp $(headers)
+credits.cpp gameMenu.cpp physSimulation.cpp \
+$(headers)
 
 # EXTRA_DIST = dir1 dir2
 EXTRA_DIST = Doxyfile Doxyfile.in
