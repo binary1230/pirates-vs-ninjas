@@ -106,11 +106,20 @@ fi
 AM_CONDITIONAL(HAVE_OGG_VORBIS, test x$OGG_VORBIS = xyes)
 
 dnl -------------------------
-dnl Check for zlib and libpng
+dnl Check for libpng
+dnl -------------------------
+AC_CHECK_HEADERS([png.h])
+AC_MSG_CHECKING(libpng)
+AC_TRY_COMPILE([#include <png.h>], 
+[png_structp png_ptr;], 
+LIBPNG='-lpng'; echo yes;
+AC_DEFINE(HAVE_PNG_H), LIBPNG=''; echo no)
+
+dnl -------------------------
+dnl Check for zlib
 dnl -------------------------
 AC_CHECK_HEADERS([zlib.h])
-AC_CHECK_HEADERS([png.h])
-
+AC_CHECK_LIB(z, deflate, ZLIB='-lz';AC_DEFINE(HAVE_ZLIB_H),ZLIB='')
 
 dnl --------------------------
 dnl Check for various things
@@ -118,7 +127,6 @@ dnl --------------------------
 AC_CHECK_HEADERS([allegro.h])
 AC_CHECK_HEADERS([vector])
 AC_CHECK_HEADERS([list])
-
 
 dnl --------------------
 dnl Cross compile stuff
@@ -149,7 +157,7 @@ ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes $OGG_CFLAGS -Iexternal -Iobjec
 ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
 
 LDFLAGS="$extra_libraries $LDFLAGS"
-LIBS="$LIBS `allegro-config --libs` $OGG_LIBS"
+LIBS="$LIBS `allegro-config --libs` $OGG_LIBS $LIBPNG $ZLIB"
 
 AC_SUBST(ninjas_CXXFLAGS)
 AC_SUBST(ninjas_LDFLAGS)

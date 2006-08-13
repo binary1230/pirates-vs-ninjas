@@ -1,9 +1,15 @@
 Currently you can build for windows, linux, or mac
 You can also build the windows packages under linux (and probably mac)
 
-NOTE: Allegro dev packages are required
-
 OUT OF DATE, CHECK THE WIKI
+
+----------------------
+Dependencies
+----------------------
+- libpng
+- libvorbis
+- zlib
+- allegro
 
 ---------------------------
 To Build from Subversion
