@@ -20,7 +20,7 @@ globals.h gameOptions.h gameState.h gameBase.h \
 timer.h rect.h vector2D.h oggFile.h network.h basename.h \
 window.h assetManager.h gameSound.h \
 gameMode.h gameModes.h \
-objectLayer.h objectFactor.h \
+objectLayer.h objectFactory.h \
 objects/object.h \
 objects/objectPlayer.h objects/objectRadiusBlock.h \
 objects/objectBackground.h objects/objectController.h \
