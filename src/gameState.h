@@ -61,8 +61,11 @@ class GameState {
 		//! Initialize all game related stuff
 		int InitSystem();								
 		
+		//! Init basic allegro stuff
+		int InitAllegro();
+
 		//! Init game timing
-		int InitTimers();								
+		int InitTimers();
 		
 		//! Init input subsystems
 		int InitInput();								

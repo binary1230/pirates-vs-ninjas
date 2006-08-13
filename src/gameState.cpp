@@ -1,5 +1,6 @@
 #include "gameState.h"
 
+#include "loadpng.h"
 #include "gameOptions.h"
 #include "input.h"
 #include "inputLiveHandler.h"
@@ -46,6 +47,29 @@ void GameState::SignalEndCurrentMode() {
 	modes->SignalEndCurrentMode();
 }
 
+//! Initialize basic allegro library stuff
+//! This must be called FIRST before ANY allegro stuff
+int GameState::InitAllegro() {
+	
+	if (allegro_init() != 0) {
+		fprintf(stderr, "-- FATAL ERROR: Allegro_init() failed.\n");
+		return -1;
+	}
+	
+	// must be called SECOND
+	if (InitTimers() < 0) {
+		fprintf(stderr, "-- FATAL ERROR: Can't init timers.\n");
+		return -1;
+	}
+
+	// register PNG as allegro filetype (see loadpng.h)
+	register_png_file_type();
+
+	SetRandomSeed(42);	// for now, makes testing easier
+
+	return 0;
+}
+
 //! Initialize game systems - main function
 
 //! This is the first init function, it needs to initialize
@@ -60,13 +84,11 @@ int GameState::InitSystem() {
 		debug_pause_toggle = false;
 
 		fprintf(stderr, "[init: allegro]\n");
-		allegro_init();			// must be called FIRST
-		
-		fprintf(stderr, "[init: timers]\n");
-		InitTimers();				// must be called SECOND
+		if (InitAllegro() < 0) {
+			fprintf(stderr, "ERROR: InitSystem: failed to init allegro!\n");
+			return -1;
+		}
 
-		SetRandomSeed(42);	// for now, makes testing easier
-		
 		fprintf(stderr, "[init: assetManager]\n");
 		assetManager = new AssetManager();
 		if (!assetManager || assetManager->Init(this) < 0) {
@@ -294,6 +316,8 @@ int GameState::RunGame(GameOptions* _options) {
 // junk.  The whole release_ thing needs to be refactored into the INPUT
 // class as well.
 void GameState::MainLoop() {
+
+	bool wait_for_updates = options->WaitForUpdates();
 				
 	int debug_update_count = 0;
 
@@ -340,7 +364,7 @@ void GameState::MainLoop() {
 		// wait for 1/60th sec to elapse (if we're on a fast computer)
 		// note: this should really be down() on a lock of some kind rather than
 		// just sleep randomly.
-		while (outstanding_updates <= 0 && !exit_game) {
+		while (wait_for_updates && outstanding_updates <= 0 && !exit_game) {
 			// rest(10);	// 1/30 sec is 33 usec, we sleep for 10
 		}
   }

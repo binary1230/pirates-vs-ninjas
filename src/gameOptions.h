@@ -121,6 +121,9 @@ class GameOptions {
 		inline const char* GetNetworkServerName() {
 			return network_server_name.c_str();
 		};
+
+		inline bool		DrawGraphics() {return draw_graphics;};
+		inline bool		WaitForUpdates() {return wait_for_updates;};
 		
 		GameOptions();
 		~GameOptions();

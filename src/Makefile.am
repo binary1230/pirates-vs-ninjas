@@ -15,13 +15,14 @@ VPATH = external objects
 ninjas_CXXFLAGS = -Wall @ninjas_CXXFLAGS@
 
 headers = \
-external/ezSockets.h external/alogg.h external/xmlParser.h external/StdString.h\
+external/ezSockets.h external/alogg.h external/xmlParser.h \
+external/StdString.h external/loadpng.h \
 globals.h gameOptions.h gameState.h gameBase.h \
 timer.h rect.h vector2D.h oggFile.h network.h basename.h \
 window.h assetManager.h gameSound.h \
 gameMode.h gameModes.h \
 objectLayer.h objectFactory.h \
-objects/object.h \
+objects/object.h object/objectEnemy.h \
 objects/objectPlayer.h objects/objectRadiusBlock.h \
 objects/objectBackground.h objects/objectController.h \
 objects/objectStatic.h objects/objectSpring.h \
@@ -33,12 +34,13 @@ credits.h gameMenu.h physSimulation.h
 
 ninjas_SOURCES = \
 external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
+external/loadpng.cpp external/regpng.cpp external/savepng.cpp \
 main.cpp gameOptions.cpp gameState.cpp gameBase.cpp \
 timer.cpp rect.cpp vector2D.cpp oggFile.cpp network.cpp basename.cpp \
 window.cpp assetManager.cpp gameSound.cpp \
 gameMode.cpp gameModes.cpp \
 objectLayer.cpp objectFactory.cpp \
-objects/object.cpp \
+objects/object.cpp objects/objectEnemy.h \
 objects/objectPlayer.cpp objects/objectRadiusBlock.cpp \
 objects/objectBackground.cpp objects/objectController.cpp \
 objects/objectStatic.cpp objects/objectSpring.cpp \

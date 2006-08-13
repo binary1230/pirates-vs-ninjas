@@ -41,6 +41,9 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-c servername | (EXPERIMENTAL) connect to game server [servername]\n"
 		"-p portnumber | (EXPERIMENTAL) connect to game server port\n\n"
 
+		"-8            | Run game as fast as possible (not for human playing)\n"
+		"-9            | Do not draw _anything_ (not for human playing)\n"
+
 		"-h            | display this help message\n\n"
 
 		, arg0);
@@ -83,7 +86,7 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"fwg:m:r:d:X23vsc:p:h")) != -1) {
+	while ( (c = getopt(argc,argv,"fwg:m:r:d:X23vsc:p:h89")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -174,6 +177,16 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 			case 'p':
 				network_port_num = strtoul(optarg, NULL, 10);
 				network_enabled = true;
+				break;
+
+			// Update as fast as possible, useful for AI training
+			case '8':
+				wait_for_updates = false;
+				break;
+
+			// Do not draw anything (for server or AI training)
+			case '9':
+				draw_graphics = false;
 				break;
 
 			// ':' and '?' mean unrecognized
