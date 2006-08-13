@@ -57,6 +57,16 @@ class GameOptions {
 
 		//! True if networking is enabled
 		bool network_enabled;
+
+		//! Whether to do any drawing at all.  If false, no window appears
+		//! (Useful for running AI training faster)
+		bool draw_graphics;
+
+		//! Whether we maintain a constant FPS or just 
+		//! run the game as fast as we can.
+		//! For normal play, this should be true
+		//! For AI training or testing, you can set this to false to run fast
+		bool wait_for_updates;
 		
 	public:
 		//! Print the list of available options to stdout

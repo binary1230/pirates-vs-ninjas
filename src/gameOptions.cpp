@@ -70,6 +70,9 @@ void GameOptions::Clear() {
 	network_server_name = "";
 	network_start_as_server = false;
 
+	draw_graphics = true;
+	wait_for_updates = true;
+
 	is_valid = true;
 }
 
