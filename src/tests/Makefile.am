@@ -1,7 +1,7 @@
 # Rules for the test code (use `make check` to execute)
 
 # all test programs to run
-TESTS = vector2D resourceLoader rect
+TESTS = vector2D assetManager rect
 check_PROGRAMS = $(TESTS)
 
 # rect unit tests
@@ -19,9 +19,9 @@ vector2D_CXXFLAGS = $(CPPUNIT_CFLAGS) -I ../ -Wall
 vector2D_LDFLAGS = $(CPPUNIT_LIBS)
 vector2D_LDADD = ../vector2D.o
 
-# resourceLoader unit tests
-resourceLoader_SOURCES = 	runner.cpp ../resourceLoader.h \
-										test_resourceLoader.cpp test_resourceLoader.h
-resourceLoader_CXXFLAGS = $(CPPUNIT_CFLAGS) -I ../ -Wall
-resourceLoader_LDFLAGS = $(CPPUNIT_LIBS)
-resourceLoader_LDADD = ../resourceLoader.o ../gameBase.o
+# assetManager unit tests
+assetManager_SOURCES = 	runner.cpp ../assetManager.h \
+										test_assetManager.cpp test_assetManager.h
+assetManager_CXXFLAGS = $(CPPUNIT_CFLAGS) -I ../ -Wall
+assetManager_LDFLAGS = $(CPPUNIT_LIBS)
+assetManager_LDADD = ../assetManager.o ../gameBase.o

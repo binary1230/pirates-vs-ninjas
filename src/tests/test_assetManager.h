@@ -1,12 +1,12 @@
-#ifndef Test_ResourceLoader_H 
-#define Test_ResourceLoader_H 
+#ifndef Test_AssetManager_H 
+#define Test_AssetManager_H 
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <stdio.h>
-#include "resourceLoader.h"
+#include "assetManager.h"
 
-class Test_ResourceLoader : public CppUnit::TestFixture {
-				CPPUNIT_TEST_SUITE( Test_ResourceLoader ); 
+class Test_AssetManager : public CppUnit::TestFixture {
+				CPPUNIT_TEST_SUITE( Test_AssetManager ); 
 				CPPUNIT_TEST( testConstructors );
 				CPPUNIT_TEST_SUITE_END(); 
 				
@@ -18,4 +18,4 @@ class Test_ResourceLoader : public CppUnit::TestFixture {
 
 }; 
 
-#endif // Test_ResourceLoader_H 
+#endif // Test_AssetManager_H 
