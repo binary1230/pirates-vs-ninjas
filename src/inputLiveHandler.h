@@ -21,6 +21,10 @@ class InputLive : public BaseInput {
 				
 		bool Key(uint gameKey);
 
+		void MouseX();
+		void MouseY();
+		void MouseClick(MouseClickType);
+
 		void BeginRecording()	{NotSupported();}
 		void EndRecording()	{NotSupported();}
 		void BeginPlayback()	{NotSupported();}

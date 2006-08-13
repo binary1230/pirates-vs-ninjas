@@ -1,10 +1,10 @@
-SUBDIRS = libs/alogg src
+SUBDIRS = src
 
 DATA_DIR = data
 EXTRA_DIST = docs $(DATA_DIR) 
 
 dist_common:
-	make -C libs/alogg clean
+# make -C libs/alogg clean
 
 # create the MAC OSX Bundle
 dist_macosx: dist_common $(DISTFILES)

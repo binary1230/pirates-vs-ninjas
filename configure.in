@@ -4,6 +4,8 @@ dnl see BUILD or the Wiki for more info
 
 dnl LARGE PARTS of this configure.in stolen from Clanlib configure.ac
 
+dnl This is still a MESS.
+
 AC_INIT(src/main.cpp)
 
 VERSION_MAJOR="0"
@@ -20,70 +22,10 @@ AC_PROG_INSTALL
 AC_LANG(C++)
 
 AM_PATH_CPPUNIT(1.9.6)
-dnl XXX todo:
 
-dnl Test for subversion presence, if so, use the subversion revision number
-if test -e ".svn"; then
-	AC_PATH_PROG(WHICH_SVN, svn, no)
-	if test "$WHICH_SVN" != "no"; then
-		SVN_VERSION=`svn info | grep Revision | cut -f2 -d ' '`
-		VERSION="$VERSION-svn$SVN_VERSION"
-		AC_DEFINE([SUBVERSION_BUILD], [], [Defined if we are building from subversion])
-	fi
-fi
-
-dnl Test if we're running on Mac, if we are, we need a tiny bit
-dnl of MAC carbon code for the package.  
-dnl
-dnl NEEDS FIXING - 'uname -s' tests the platform we are RUNNING on,
-dnl  NOT the platform we are building for.  Most of the time these are
-dnl  the same, but during cross compiles they are not.
-dnl
-dnl For example, cross compiling from Mac->Linux would currently make
-dnl our script think that we are building FOR MacOSX.
-
-AC_PATH_PROG(WHICH_UNAME, uname, no)
-if test "$WHICH_UNAME"; then
-	OUR_PLATFORM=`uname -s`
-	if test "$OUR_PLATFORM" = "Darwin"; then
-		AC_DEFINE([PLATFORM_DARWIN], [], [Defined if building for Darwin])
-	fi
-fi
-
-AM_INIT_AUTOMAKE([ninjas-engine], ${VERSION})
-
-case $target_alias in
-	*mingw*)
-		WIN32="yes"
-	;;
-	*)
-		WIN32="no"
-	;;
-esac
-
-dnl Alogg Stuff
-ALOGG_INCLUDE_DIR="../libs/alogg/include/"
-ALOGG_LIB="../libs/alogg/lib/linux/libalogg.a"
-
-# ninjas_LDFLAGS="$LDFLAGS `allegro-config --libs`"
-LIBS="$LIBS `allegro-config --libs` $ALOGG_LIB"
-
-dnl XXXX CROSS COMPILING
-if test "$WIN32" = "yes"; then
-	dnl you can try editing these 2 lines if cross compile stuff isn't working
-	dnl DON'T FORGET to re-run ./autogen.sh when you are done editing here
-	dnl also, double check your cross-configure.sh
-	LIBS="$LDFLAGS -lalleg -lmingw32"
-	ninjas_CFLAGS="-mwindows"
-fi
-dnl END CROSS COMPILING WEIRDNESS
-
-AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
-
-dnl ----------------------------------------
-dnl Additional include and library paths:
-dnl ----------------------------------------
-
+dnl --------------------------------
+dnl ./configure command line options
+dnl --------------------------------
 AC_ARG_WITH([extra-includes], AC_HELP_STRING([--with-extra-includes=DIR],[Add extra include paths]),
   use_extra_includes="$withval",
   use_extra_includes=NO
@@ -93,8 +35,6 @@ if test -n "$use_extra_includes" && test "$use_extra_includes" != "NO"; then
     extra_includes="$extra_includes -I$dir"
   done
 fi
-
-# CXXFLAGS="$CXXFLAGS $extra_includes"
 
 AC_ARG_WITH([extra-libs], AC_HELP_STRING([--with-extra-libs=DIR],[Add extra library paths]), 
   use_extra_libs="$withval",
@@ -106,28 +46,105 @@ if test -n "$use_extra_libs" && test "$use_extra_libs" != "NO"; then
    done
 fi
 
+AC_ARG_WITH(ogg,
+[  --with-ogg=DIR         Set where the Ogg library is located]) 
+AC_ARG_WITH(vorbis,
+[  --with-vorbis=DIR      Set where the Vorbis library is located])
 
-ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes"
+dnl --------------------------------
+dnl Test for subversion presence
+dnl if so, include the revision number
+dnl --------------------------------
+if test -e ".svn"; then
+	AC_PATH_PROG(WHICH_SVN, svn, no)
+	if test "$WHICH_SVN" != "no"; then
+		SVN_VERSION=`svn info | grep Revision | cut -f2 -d ' '`
+		VERSION="$VERSION-svn$SVN_VERSION"
+		AC_DEFINE([SUBVERSION_BUILD], [], [Defined if we are building from subversion])
+	fi
+fi
+
+dnl ----------------------------------------------------------------
+dnl Test if we're running on Mac, if we are, we need a tiny bit
+dnl of MAC carbon code for the package.  
+dnl
+dnl NEEDS FIXING - 'uname -s' tests the platform we are RUNNING on,
+dnl  NOT the platform we are building for.  Most of the time these are
+dnl  the same, but during cross compiles they are not.
+dnl
+dnl For example, cross compiling from Mac->Linux would currently make
+dnl our script think that we are building FOR MacOSX.
+dnl ----------------------------------------------------------------
+AC_PATH_PROG(WHICH_UNAME, uname, no)
+if test "$WHICH_UNAME"; then
+	OUR_PLATFORM=`uname -s`
+	if test "$OUR_PLATFORM" = "Darwin"; then
+		AC_DEFINE([PLATFORM_DARWIN], [], [Defined if building for Darwin])
+	fi
+fi
+
+AM_INIT_AUTOMAKE([ninjas-engine], ${VERSION})
+
+dnl -------------------
+dnl Check for OggVorbis
+dnl -------------------
+
+OGG_VORBIS=no
+XIPH_PATH_VORBIS(
+        OGG_VORBIS="yes"
+        ogg_music="enabled"
+        OGG_LIBS="$VORBISFILE_LIBS $VORBIS_LIBS"
+        OGG_CFLAGS="$VORBIS_CFLAGS",
+ 				AC_MSG_RESULT(Disabling OggVorbis support)
+        ogg_music="disabled"
+)
+
+if test x$OGG_VORBIS = xyes; then
+   AC_CHECK_HEADERS([vorbis/vorbisfile.h]) 
+fi 
+
+AM_CONDITIONAL(HAVE_OGG_VORBIS, test x$OGG_VORBIS = xyes)
+
+dnl --------------------
+dnl Cross compile stuff
+dnl --------------------
+case $target_alias in
+	*mingw*)
+		WIN32="yes"
+	;;
+	*)
+		WIN32="no"
+	;;
+esac
+
+if test "$WIN32" = "yes"; then
+	dnl you can try editing these 2 lines if cross compile stuff isn't working
+	dnl DON'T FORGET to re-run ./autogen.sh when you are done editing here
+	dnl also, double check your cross-configure.sh
+	LIBS="$LDFLAGS -lalleg -lmingw32"
+	ninjas_CFLAGS="-mwindows"
+fi
+AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
+
+dnl -----------------
+dnl Set it all up
+dnl -----------------
+
+ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes $OGG_CFLAGS"
 ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
 
 LDFLAGS="$extra_libraries $LDFLAGS"
-CXXFLAGS="$CXXFLAGS -I$ALOGG_INCLUDE_DIR"
+LIBS="$LIBS `allegro-config --libs` $OGG_LIBS"
+CXXFLAGS="$CXXFLAGS"
 
 AC_SUBST(ninjas_CXXFLAGS)
 AC_SUBST(ninjas_LDFLAGS)
 
-# LIBS="$extra_libraries"
-# CFLAGS="$CXXFLAGS"
-
-# AC_SUBST(LDFLAGS)
-
-# AC_SUBST(extra_includes)
 AC_SUBST(extra_libraries)
 
-dnl AC_SUBST(libs)
-dnl AC_SUBST(LIBS)
-
-dnl ------------------------------------------------------
+dnl AC_SUBST(OGG_CFLAGS)
+dnl AC_SUBST(OGG_LIBS)
+dnl AC_SUBST(OGG_DEFS)
 
 AM_CONFIG_HEADER(config.h)
 
@@ -138,8 +155,4 @@ AC_CHECK_HEADERS([allegro.h])
 AC_CHECK_HEADERS([vector])
 AC_CHECK_HEADERS([list])
 
-#AC_SUBST(SDL_LIBS)
-#AC_SUBST(SDL_DEFS)
-
-# These are the files which we create based on the info in THIS file.
 AC_OUTPUT(Makefile src/Makefile src/Doxyfile src/tests/Makefile)

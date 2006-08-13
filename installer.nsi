@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Pirates Vs Ninjas"
-!define PRODUCT_VERSION "0.2-beta8"
+!define PRODUCT_VERSION "0.2.1"
 !define PRODUCT_PUBLISHER "Dominic Cerquetti"
 !define PRODUCT_WEB_SITE "http://avastmateys.livejournal.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ninjas.exe"

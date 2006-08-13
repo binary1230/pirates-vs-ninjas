@@ -53,6 +53,14 @@ class BaseInput;
 //! The max number of defined keys 
 #define GAMEKEY_COUNT						15
 
+enum MouseClickType {
+	MOUSE_LEFT_BTN,
+	MOUSE_RIGHT_BTN,
+	MOUSE_MIDDLE_BTN,
+	MOUSE_SCROLL_UP,
+	MOUSE_SCROLL_DOWN
+};
+
 //! Input Base Class
  
 //! The only reason for having a base class is
@@ -96,6 +104,11 @@ class BaseInput : public GameBase {
 
 		//! Whether a key has been released after it was pressed
 		vector<int> released_key;
+
+		int mouse_x;
+		int mouse_y;
+
+		vector<bool> mouse_click_status;
 		
 		//! Load the default key mappings
 		void LoadDefaultKeyMappings();
@@ -149,12 +162,11 @@ class BaseInput : public GameBase {
 		void UpdateKeyReleases();
 
 		bool BaseInit();
-
-		//! Get the mouse X coordinate
-		// virtual int MouseX() = 0;
-
-		//! Get the mouse Y coordinates
-		// virtual int MouseY() = 0;
+		
+		//! Mouse status
+		bool MouseClick(MouseClickType);
+		int MouseX();
+		int MouseY();
 		
 		//! RECORD: Begin recording input (for demos)
 		virtual void BeginRecording() = 0;
