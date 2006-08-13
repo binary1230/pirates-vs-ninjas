@@ -16,7 +16,7 @@ void Window::Screenshot(char* filename) {
 		file = filename;
 	} else {
 		// Make one up.
-		file.Format("screenshot%i.bmp", screenshot_num++);
+		file.Format("ninjas-screenshot%i.png", screenshot_num++);
 	}
 
 	fprintf(stderr, " -- saving screenshot '%s'\n", file.c_str());
