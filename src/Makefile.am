@@ -15,14 +15,14 @@ VPATH = external objects
 ninjas_CXXFLAGS = -Wall @ninjas_CXXFLAGS@
 
 headers = \
-external/ezSockets.h external/alogg.h external/xmlParser.h \
-external/StdString.h external/loadpng.h \
+external/ezSockets.h external/alogg.h external/aloggdll.h \
+external/xmlParser.h external/StdString.h external/loadpng.h \
 globals.h gameOptions.h gameState.h gameBase.h \
 timer.h rect.h vector2D.h oggFile.h network.h basename.h \
 window.h assetManager.h gameSound.h \
 gameMode.h gameModes.h \
-objectLayer.h objectFactory.h \
-objects/object.h object/objectEnemy.h \
+objectLayer.h objectFactory.h objectIDs.h \
+objects/object.h objects/objectEnemy.h \
 objects/objectPlayer.h objects/objectRadiusBlock.h \
 objects/objectBackground.h objects/objectController.h \
 objects/objectStatic.h objects/objectSpring.h \
@@ -30,7 +30,7 @@ objects/objectCollectable.h objects/objectFan.h objects/objectDoor.h \
 input.h inputLiveHandler.h inputRecord.h inputPlayback.h \
 force.h forceGravity.h forceInput.h forceFactory.h \
 animation.h animations.h \
-credits.h gameMenu.h physSimulation.h 
+credits.h gameMenu.h physSimulation.h sprite.h
 
 ninjas_SOURCES = \
 external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
