@@ -7,10 +7,12 @@
 #ifndef EZSOCKETS_H
 #define EZSOCKETS_H
 
-// Modification by Dom
+// Pirates vs ninjas ONLY
 // SUPER-IMPORTANT: These 2 #includes must come FIRST and be in this order
 #include <allegro.h>
+#ifdef WIN32
 #include <winalleg.h>
+#endif
 
 #include <string>
 #include <fcntl.h>

@@ -95,9 +95,9 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 
 			// get demo filename
 			case 'r': case 'd':
-				if (demo_filename) {
+				if (demo_filename.length() > 0) {
 						fprintf(stderr,	"Options ==> ERROR "
-														"Don't give more than 1 demo filename (-r, -p)\n");
+														"Don't give more than 1 demo filename (-r, -d)\n");
 						return (is_valid = false);
 				}
 
