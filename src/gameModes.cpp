@@ -50,7 +50,7 @@ void GameModes::DoEndCurrentMode() {
 	}
 
 	if (!signal_game_exit)
-		if (!LoadNextMode()) 
+		if (LoadNextMode() == -1) 
 			DoGameExit();
 }
 
@@ -95,7 +95,7 @@ int GameModes::Init(GameState* gs, XMLNode _xGame) {
 		mode_files[i] = _xGame.getChildNode("mode_file", &iterator).getText();
 	}
 
- 	if (!LoadNextMode()) {
+ 	if (LoadNextMode() == -1) {
 		return -1;
 	}
 
@@ -107,7 +107,7 @@ int GameModes::Init(GameState* gs, XMLNode _xGame) {
 	return 0;
 }
 
-bool GameModes::LoadNextMode() {
+int GameModes::LoadNextMode() {
 	AssetManager* m = GetGameState()->GetAssetManager();
 	currentMode = NULL;
 
@@ -130,9 +130,10 @@ bool GameModes::LoadNextMode() {
 	if (nodeType == "simulation") {
 						
 		currentMode = new PhysSimulation();
-		if ( !currentMode || currentMode->Init(GetGameState(), xMode) < 0) {
+		if ( !currentMode || currentMode->Init(GetGameState(), xMode) == -1) {
 			fprintf(stderr, "ERROR: GameModes: failed to init simulation!\n");
 			return -1;
+			fprintf(stderr, "CRAP!\n");
 		}
 
 	}	else if (nodeType == "credits") {

@@ -24,7 +24,7 @@ class GameModes : public GameBase {
 		void DoEndCurrentMode();
 		void DoGameExit();
 
-		bool LoadNextMode();
+		int LoadNextMode();
 
 	public:
 		void Update();
