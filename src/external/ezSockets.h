@@ -7,6 +7,11 @@
 #ifndef EZSOCKETS_H
 #define EZSOCKETS_H
 
+// Modification by Dom
+// SUPER-IMPORTANT: These 2 #includes must come FIRST and be in this order
+#include <allegro.h>
+#include <winalleg.h>
+
 #include <string>
 #include <fcntl.h>
 #include <ctype.h>

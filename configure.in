@@ -47,10 +47,14 @@ if test -n "$use_extra_libs" && test "$use_extra_libs" != "NO"; then
    done
 fi
 
-AC_ARG_WITH(ogg,
-[  --with-ogg=DIR         Set where the Ogg library is located]) 
-AC_ARG_WITH(vorbis,
-[  --with-vorbis=DIR      Set where the Vorbis library is located])
+CXXFLAGS="$CXXFLAGS $extra_includes"
+CFLAGS="$CFLAGS $extra_includes"
+LDFLAGS="$LDFLAGS $extra_libraries"
+
+dnl AC_ARG_WITH(ogg,
+dnl [  --with-ogg=DIR         Set where the Ogg library is located]) 
+dnl AC_ARG_WITH(vorbis,
+dnl [   --with-vorbis=DIR      Set where the Vorbis library is located])
 
 dnl --------------------------------
 dnl Test for subversion presence
@@ -86,25 +90,76 @@ fi
 
 AM_INIT_AUTOMAKE([ninjas-engine], ${VERSION})
 
-dnl -------------------
-dnl Check for OggVorbis
-dnl -------------------
+dnl --------------------
+dnl Cross compile stuff
+dnl --------------------
+case $target_alias in
+	*mingw*)
+		WIN32="yes"
+	;;
+	*)
+		WIN32="no"
+	;;
+esac
 
-OGG_VORBIS=no
-XIPH_PATH_VORBIS(
-        OGG_VORBIS="yes"
-        ogg_music="enabled"
-        OGG_LIBS="$VORBISFILE_LIBS $VORBIS_LIBS"
-        OGG_CFLAGS="$VORBIS_CFLAGS",
- 				AC_MSG_RESULT(Disabling OggVorbis support)
-        ogg_music="disabled"
+if test "$WIN32" = "yes"; then
+	dnl you can try editing these 2 lines if cross compile stuff isn't working
+	dnl DON'T FORGET to re-run ./autogen.sh when you are done editing here
+	dnl also, double check your cross-configure.sh
+	ALLEGRO_LIBS="`allegro-config --libs --static` -lmingw32 -lwsock32"
+	ninjas_CFLAGS="-mwindows"
+else
+	ALLEGRO_LIBS="`allegro-config --libs`"
+fi
+
+AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
+
+dnl ------------------------------------------------
+dnl Check for ogg
+dnl sets $OGG_CFLAGS and $OGG_LIBS on success
+dnl ------------------------------------------------
+
+OGG=no
+
+XIPH_PATH_OGG(
+				OGG="yes",
+				AC_MSG_RESULT(libogg check Failed: Disabling OggVorbis support)
+				OGG="no"
 )
 
-if test x$OGG_VORBIS = xyes; then
-   AC_CHECK_HEADERS([vorbis/vorbisfile.h]) 
+dnl ------------------------------------------------
+dnl Check for vorbis
+dnl sets $VORBIS_CFLAGS and $VORBIS_LIBS on success
+dnl ------------------------------------------------
+
+VORBIS=no
+
+XIPH_PATH_VORBIS(
+				VORBIS="yes" VORBIS_LIBS="$VORBISFILE_LIBS $VORBIS_LIBS",
+				AC_MSG_RESULT(libvorbis check Failed: Disabling OggVorbis support)
+        VORBIS="no"
+)
+
+dnl ---------------------------
+dnl Combined ogg/vorbis support
+dnl ---------------------------
+
+dnl Both must work to enable it
+if test x$VORBIS = xyes && test x$OGG = xyes; then
+	ogg_music="enabled"
+else
+	ogg_music="disabled"
+fi
+
+if test x$ogg_music = xenabled; then
+   AC_CHECK_HEADERS([vorbis/vorbisfile.h])
+
+	 dnl The ORDER of OGGVORBIS_LIBS matters
+	 OGGVORBIS_LIBS="$VORBIS_LIBS $OGG_LIBS"
+	 OGGVORBIS_CFLAGS="$OGG_CLFAGS $VORBIS_CLFAGS"
 fi 
 
-AM_CONDITIONAL(HAVE_OGG_VORBIS, test x$OGG_VORBIS = xyes)
+AM_CONDITIONAL(HAVE_OGG_VORBIS, test x$ogg_music = xenabled)
 
 dnl -------------------------
 dnl Check for libpng
@@ -129,36 +184,15 @@ AC_CHECK_HEADERS([allegro.h])
 AC_CHECK_HEADERS([vector])
 AC_CHECK_HEADERS([list])
 
-dnl --------------------
-dnl Cross compile stuff
-dnl --------------------
-case $target_alias in
-	*mingw*)
-		WIN32="yes"
-	;;
-	*)
-		WIN32="no"
-	;;
-esac
-
-if test "$WIN32" = "yes"; then
-	dnl you can try editing these 2 lines if cross compile stuff isn't working
-	dnl DON'T FORGET to re-run ./autogen.sh when you are done editing here
-	dnl also, double check your cross-configure.sh
-	LIBS="$LDFLAGS -lalleg -lmingw32"
-	ninjas_CFLAGS="-mwindows"
-fi
-AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
-
 dnl -----------------
 dnl Set it all up
 dnl -----------------
 
-ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes $OGG_CFLAGS -Iexternal -Iobjects"
+ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects"
 ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
 
 LDFLAGS="$extra_libraries $LDFLAGS"
-LIBS="$LIBS `allegro-config --libs` $OGG_LIBS $LIBPNG $ZLIB"
+LIBS="$LIBS $ALLEGRO_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB"
 
 AC_SUBST(ninjas_CXXFLAGS)
 AC_SUBST(ninjas_LDFLAGS)
@@ -169,8 +203,8 @@ dnl DOES NOT WORK RIGHT NOW
 DATA_DIR="${prefix}/data"
 AC_DEFINE_UNQUOTED([DATA_DIR], "${DATA_DIR}", [The installer prefix e.g. /usr/local])
 
-dnl AC_SUBST(OGG_CFLAGS)
-dnl AC_SUBST(OGG_LIBS)
+AC_SUBST(OGGVORBIS_CFLAGS)
+AC_SUBST(OGGVORBIS_LIBS)
 dnl AC_SUBST(OGG_DEFS)
 
 AM_CONFIG_HEADER(config.h)
