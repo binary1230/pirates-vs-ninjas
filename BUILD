@@ -8,13 +8,14 @@ Dependencies
 ----------------------
 - libpng
 - libvorbis
+- libogg
 - zlib
 - allegro
 
 ---------------------------
 To Build from Subversion
 ---------------------------
-run ./regen.sh FIRST. then do your ./configure and make
+run ./autogen.sh FIRST. then do your ./configure and make
 
 --------------------
 LINUX BUILD (normal)
@@ -32,18 +33,20 @@ setting up allegro is tricky this way.
 ---------------------------------------------------
 untar everything somewhere (say ~/ninjas)
 
- cd ~/ninjas/src
- [edit Makefile.mgw for your paths]
- make -f Makefile.mgw
- cd ..
- [copy data/, ninjas.exe, and alleg40.dll for distribution]
+	cd ~/ninjas
+
+	Edit ./cross-configure and ./cross-make FIRST
+
+	./cross-configure
+	./cross-make
+
+	the EXE is in src/ninjas.exe
+	don't forget the DLL's (which are in dist/win32/common/)
 
 ----------------------------------------------
 WINDOWS BUILD (native)
 ----------------------------------------------
-TODO - write instructions.  easy way would
-be to copy Makefile.mgw and modify it, everything
-should be the same except for the compiler name.
+try the devc++ files
 
 ----------------------------------------------
 MAC OSX (10.3 [and others??])
