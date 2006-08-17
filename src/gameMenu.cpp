@@ -10,10 +10,10 @@
 
 void GameMenu::DoNewGame() {
 	
-	// Load the new mode:
+	// Should load the new mode:
 	// LoadNewMode(....);
 
-	// Let it roll.
+	// For now, we just Let it roll onto the next mode
 	GetGameState()->SignalEndCurrentMode();
 }
 
@@ -39,8 +39,11 @@ void GameMenu::DoMenuAction(CString action) {
 void GameMenu::Draw() {
 	 Window* window = GetGameState()->GetWindow();
 
-   window->DrawBitmap(back, 0, 0);
-	 window->DrawBitmap(selector, x_pos, y_pos[current_pos]);
+	 int x_offset = SCREEN_W/2 - back->w/2;
+	 int y_offset = SCREEN_H/2 - back->h/2;
+
+   window->DrawBitmap(back, x_offset, y_offset);
+	 window->DrawBitmap(selector, x_offset + x_pos, y_offset + y_pos[current_pos]);
 	 
 	 #ifdef DEBUG_VERSION_PRINT
 	 textprintf_right_ex(  window->GetDrawingSurface(), font, 
