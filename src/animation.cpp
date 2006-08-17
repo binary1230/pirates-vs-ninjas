@@ -104,7 +104,7 @@ bool Animation::PushImage(
 	f->sprite->bmp = GetGameState()->GetAssetManager()->LoadBitmap(_file);
 
 	if (!f->sprite->bmp) {
-		fprintf(stderr, "Can't load file: '%s' - not adding to animation\n", _file);
+		fprintf(stderr, "ERROR: Can't load image file: '%s'\n", _file);
 		return false;
 	}
 

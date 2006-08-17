@@ -505,7 +505,7 @@ int PhysSimulation::CreateObject(	XMLNode &xObject,
 
 		// create the object from the objectDefinition
 		if (LoadObjectFromXML(objectDefs[objDefName], xObject, layer) == -1) {
-			fprintf(stderr, "ERROR: Failed loading of object of type '%s'\n", 
+			fprintf(stderr, "ERROR: Failed trying to load object of type '%s'\n", 
 											objDefName.c_str());
 			return -1;
 		}
