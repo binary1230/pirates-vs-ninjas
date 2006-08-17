@@ -24,6 +24,7 @@ class OGGFILE;
 //! (e.g. maps "bad_guy_1" to its corresponding XML data)
 //! only used for parsing XML
 typedef map<const CString, XMLNode> ObjectDefMapping;
+typedef map<const CString, XMLNode>::iterator ObjectDefMappingIter;
 
 typedef list<Object*> ObjectList;
 typedef list<Object*>::iterator ObjectListIter;
@@ -84,6 +85,9 @@ class PhysSimulation : public GameMode {
 			int LoadForcesFromXML(XMLNode&);
 			int LoadObjectDefsFromXML(XMLNode&, ObjectDefMapping&);
 			int LoadLayerFromXML(XMLNode&, ObjectLayer*, ObjectDefMapping&);
+			int CreateObject(	XMLNode &xObject, 
+												ObjectLayer *layer, 
+												ObjectDefMapping &objectDefs);
 
 		public:
 			int Init(GameState*, XMLNode);

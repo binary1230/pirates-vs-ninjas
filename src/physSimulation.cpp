@@ -487,6 +487,32 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 	return 0;
 }
 
+// Creates an instance of an object on the specified layer 
+int PhysSimulation::CreateObject(	XMLNode &xObject, 
+																	ObjectLayer* layer, 
+																	ObjectDefMapping &objectDefs) {
+
+		// get the object definition name
+		CString objDefName = xObject.getAttribute("objectDef");
+
+		// try to find that object definition
+		ObjectDefMappingIter iter = objectDefs.find(objDefName);
+		if (iter == objectDefs.end()) {
+			fprintf(stderr, "ERROR: Unable to find object definition of type '%s'\n", 
+											objDefName.c_str());
+			return -1;
+		}
+
+		// create the object from the objectDefinition
+		if (LoadObjectFromXML(objectDefs[objDefName], xObject, layer) == -1) {
+			fprintf(stderr, "ERROR: Failed loading of object of type '%s'\n", 
+											objDefName.c_str());
+			return -1;
+		}
+
+		return 0;
+}
+
 //! Parse XML info from a <layer> block
 int PhysSimulation::LoadLayerFromXML(
 								XMLNode &xLayer, 
@@ -524,18 +550,13 @@ int PhysSimulation::LoadLayerFromXML(
 			return -1;
 		}
 		
+		xObject = xRepeater.getChildNode("object");
+
 		// Repeat the creation of this object the specified # of times.
-		// same exact object code as above...
 		for (j=0; j < times_to_repeat; j++) {
 
-			xObject = xRepeater.getChildNode("object");
-			objDefName = xObject.getAttribute("objectDef");
-
-			// create the object from the objectDefinition
-			if (LoadObjectFromXML(objectDefs[objDefName], xObject, layer) == -1) {
-				fprintf(stderr, "ERROR: Unable To Load  '%s'\n", objDefName.c_str());
+			if (CreateObject(xObject, layer, objectDefs) == -1)
 				return -1;
-			}
 		}	
 	}
 
@@ -545,15 +566,10 @@ int PhysSimulation::LoadLayerFromXML(
   for (i=iterator=0; i < max; i++) {
 
 		xObject = xLayer.getChildNode("object", &iterator);
-		objDefName = xObject.getAttribute("objectDef");
 
-		// create the object from the objectDefinition
-		if (LoadObjectFromXML(objectDefs[objDefName], xObject, layer) == -1) {
-			fprintf(stderr, "ERROR: Unable To Load  '%s'\n", objDefName.c_str());
+		if (CreateObject(xObject, layer, objectDefs) == -1)
 			return -1;
-		}
 	}
-
 
 	return 0;
 }
