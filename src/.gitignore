@@ -3,3 +3,5 @@
 /.deps
 /Makefile
 /ninjas
+/*.dll
+/*.exe
