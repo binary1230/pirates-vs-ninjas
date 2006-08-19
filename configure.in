@@ -115,6 +115,19 @@ fi
 AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
 
 dnl ------------------------------------------------
+dnl Check for FreeType2
+dnl define FT2_CFLAGS and FT2_LIBS.
+dnl ------------------------------------------------
+
+FT2=no
+
+AC_CHECK_FT2([9.5.3], 
+				FT2="yes",
+				AC_MSG_RESULT(libfreetype2 check Failed: Disabling FreeType2 support)
+)
+
+
+dnl ------------------------------------------------
 dnl Check for ogg
 dnl sets $OGG_CFLAGS and $OGG_LIBS on success
 dnl ------------------------------------------------
@@ -124,7 +137,6 @@ OGG=no
 XIPH_PATH_OGG(
 				OGG="yes",
 				AC_MSG_RESULT(libogg check Failed: Disabling OggVorbis support)
-				OGG="no"
 )
 
 dnl ------------------------------------------------
@@ -188,11 +200,11 @@ dnl -----------------
 dnl Set it all up
 dnl -----------------
 
-ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects"
+ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes $FT2_CFLAGS $OGGVORBIS_CFLAGS -Iexternal -Iobjects"
 ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
 
 LDFLAGS="$extra_libraries $LDFLAGS"
-LIBS="$LIBS $ALLEGRO_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB"
+LIBS="$LIBS $FT2_LIBS $ALLEGRO_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB"
 
 AC_SUBST(ninjas_CXXFLAGS)
 AC_SUBST(ninjas_LDFLAGS)

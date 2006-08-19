@@ -1,7 +1,7 @@
 SUBDIRS = src
 
 DATA_DIR = data
-EXTRA_DIST = docs $(DATA_DIR) 
+EXTRA_DIST = docs $(DATA_DIR) installer.nsi 
 
 dist_common:
 # make -C libs/alogg clean
