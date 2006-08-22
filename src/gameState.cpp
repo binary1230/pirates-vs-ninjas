@@ -96,12 +96,12 @@ int GameState::InitSystem() {
 			return -1;
 		}
 
-		assetManager->AppendToSearchPath("../");
+		assetManager->AppendToSearchPath("data/");
 
 		fprintf(stderr, "[init: xml config]\n");
 
 		// just DIES if it can't load this file (bad)
-		if (LoadXMLConfig("data/default.xml") < 0) {
+		if (LoadXMLConfig("default.xml") < 0) {
 			fprintf(stderr, "ERROR: Failed to parse default.xml");	
 			return -1;
 		}
