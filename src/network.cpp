@@ -1,4 +1,7 @@
+#ifdef NINJAS_ENGINE_NETWORKING
+
 #include "network.h"
+
 #include "ezSockets.h"
 
 #define PVN_NETWORK_MAGIC_GREETING 123454321
@@ -139,3 +142,5 @@ GameNetwork::GameNetwork() {
 	host=NULL;
 	Shutdown();
 }
+
+#endif NINJAS_ENGINE_NETWORKING

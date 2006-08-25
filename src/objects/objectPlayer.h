@@ -1,12 +1,11 @@
 #ifndef PLAYEROBJECT_H
 #define PLAYEROBJECT_H
 
-#include <allegro.h>
+#include "allegro_wrapper.h"
+#include "stl_wrapper.h"
+
 #include <math.h>
 #include <stdio.h>
-#include <vector>
-
-using namespace std;
 
 class ObjectPlayer;
 class Animation;

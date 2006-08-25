@@ -2,7 +2,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <allegro.h>
+#include "allegro_wrapper.h"
 #include <stdio.h>
 
 class GameState;

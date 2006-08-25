@@ -7,8 +7,7 @@
 
 class GameMode;
 
-#include <vector>
-using namespace std;
+#include "stl_wrapper.h"
 
 class GameModes : public GameBase {
 	protected:
@@ -17,7 +16,7 @@ class GameModes : public GameBase {
 		bool signal_end_current_mode;
 		bool signal_game_exit;
 
-		vector<CString> mode_files;
+		std::vector<CString> mode_files;
 
 		GameMode* currentMode;
 

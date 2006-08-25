@@ -31,6 +31,16 @@ void FanObject::Update() {
 	}
 }
 
+// XXX HACK If we are on MSVC define something
+#ifdef _MSC_VER
+inline float fmin(float f1, float f2) {
+	if (f1 < f2)
+		return f1;
+	else
+		return f2;
+}
+#endif
+
 void FanObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_player) {
 

@@ -1,10 +1,9 @@
 #ifndef INPUT_RECORD_HANDLER_H
 #define INPUT_RECORD_HANDLER_H
 
-#include <allegro.h>
+#include "allegro_wrapper.h"
 #include <stdio.h>
-#include <vector>
-using namespace std;
+#include "stl_wrapper.h"
 
 class InputRecord;
 
@@ -18,7 +17,7 @@ class InputRecord : public BaseInput {
 		FILE* demofile;
 		
 		//! The last state of the keys
-		vector<int> old_key;
+		std::vector<int> old_key;
 		
 		//! The frame count we are on [updated by Update()]
 		unsigned long frame_counter;

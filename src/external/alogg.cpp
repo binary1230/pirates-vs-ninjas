@@ -8,7 +8,7 @@
 
 
 #include <string.h>
-#include <allegro.h>
+#include "allegro_wrapper.h"
 #include <alogg.h>
 #include <vorbis/vorbisfile.h>
 #include <vorbis/codec.h>

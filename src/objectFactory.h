@@ -1,11 +1,9 @@
 #ifndef OBJECT_FACTORY_H
 #define OBJECT_FACTORY_H
 
-#include <allegro.h>
+#include "allegro_wrapper.h"
 #include <stdio.h>
-#include <vector>
-
-using namespace std;
+#include "stl_wrapper.h"
 
 class ObjectFactory;
 class AssetManager;

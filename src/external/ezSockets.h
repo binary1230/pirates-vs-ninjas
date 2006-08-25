@@ -3,16 +3,15 @@
 //	UDP Supporty by Adam Lowman
 //	Editor for EzSockets 1, 2 and 3: Charles Lohr
 //	Supports: OSX, Linux, Windows (NT 3.5+ or 95+), PS2, XBOX
- 
+
+#ifdef NINJAS_ENGINE_NETWORKING
+
 #ifndef EZSOCKETS_H
 #define EZSOCKETS_H
 
-// Pirates vs ninjas ONLY
-// SUPER-IMPORTANT: These 2 #includes must come FIRST and be in this order
-#include <allegro.h>
-#ifdef WIN32
-#include <winalleg.h>
-#endif
+// Pirates vs ninjas only
+#include "allegro_wrapper.h"
+#include "stl_wrapper.h"
 
 #include <string>
 #include <fcntl.h>
@@ -30,8 +29,6 @@
 #else
 #include <netinet/in.h>
 #endif
-
-using namespace std;
 
 const int ezSocketsBuffersize = 16384;
 
@@ -203,3 +200,5 @@ private:
  * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  * PERFORMANCE OF THIS SOFTWARE.
  */
+
+ #endif // NINJAS_ENGINE_NETWORKING

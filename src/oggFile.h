@@ -1,7 +1,7 @@
 #ifndef OGGFILE_H
 #define OGGFILE_H
 
-#include <allegro.h>
+#include "allegro_wrapper.h"
 #include "alogg.h"
 
 #define DATASZ  (1<<15) // (32768) amount of data to read from disk each time 

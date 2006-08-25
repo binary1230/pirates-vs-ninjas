@@ -8,6 +8,8 @@
 |   Primary Editor: Charles Lohr									|
 \*******************************************************************/
 
+#ifdef NINJAS_ENGINE_NETWORKING
+
 #include "ezSockets.h"
 
 #if defined(_MSC_VER) && !defined(_XBOX) // We need the WinSock32 Library on Windows
@@ -857,3 +859,5 @@ int ezSockets::pWriteData(const char* data, int dataSize)
  * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  * PERFORMANCE OF THIS SOFTWARE.
  */
+
+#endif NINJAS_ENGINE_NETWORKING

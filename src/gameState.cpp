@@ -196,25 +196,29 @@ int GameState::InitNetworkServer() {
 }*/
 
 int GameState::InitNetwork() {	
-	int ret;
-	int port = options->GetNetworkPortNumber();
+	#ifdef NINJAS_ENGINE_NETWORKING
+		int ret;
+		int port = options->GetNetworkPortNumber();
 
-	if (!options->IsNetworkEnabled())
+		if (!options->IsNetworkEnabled())
+			return 0;
+
+		network = new GameNetwork();
+		if (!network)
+			return -1;
+
+		fprintf(stderr, "NET: Port %i\n", port);
+
+		if (options->IsNetworkServer()) {
+			ret = network->InitServer(this, port);
+		} else {
+			ret = network->InitClient(this, port, options->GetNetworkServerName());
+		}
+
+		return ret;
+	#else
 		return 0;
-
-	network = new GameNetwork();
-	if (!network)
-		return -1;
-
-	fprintf(stderr, "NET: Port %i\n", port);
-	
-	if (options->IsNetworkServer()) {
-		ret = network->InitServer(this, port);
-	} else {
-		ret = network->InitClient(this, port, options->GetNetworkServerName());
-	}
-
-	return ret;
+	#endif // NINJAS_ENGINE_NETWORKING
 }
 
 //! Init sound subsystem
@@ -477,4 +481,5 @@ void GameState::SignalGameExit() {
 	modes->SignalGameExit();
 }
 
-GameState::~GameState() {}
+GameState::~GameState() {
+}

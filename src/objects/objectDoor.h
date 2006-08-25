@@ -2,7 +2,7 @@
 #define DOOROBJECT_H
 
 #include <stdio.h>
-#include <allegro.h>
+#include "allegro_wrapper.h"
 
 class GameState;
 class ObjectFactory;

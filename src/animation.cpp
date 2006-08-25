@@ -4,8 +4,7 @@
 #include "window.h"
 #include "assetManager.h"
 
-#include <map>
-using namespace std;
+#include "stl_wrapper.h"
 
 // XXX factory method memory leak
 // XXX memory leak if Init fails, anim never gets freed

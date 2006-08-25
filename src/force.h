@@ -1,14 +1,13 @@
 #ifndef FORCE_H
 #define FORCE_H
 
-#include <vector>
-using namespace std;
+#include "stl_wrapper.h"
 
 class Force;
 class GameState;
 class Object;
 
-typedef vector<Force*> ForceList;
+typedef std::vector<Force*> ForceList;
 
 #include "gameBase.h"
 #include "vector2D.h"

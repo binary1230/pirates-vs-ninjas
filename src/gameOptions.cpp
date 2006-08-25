@@ -3,6 +3,11 @@
 #include "window.h"
 #include "globals.h"
 
+// If compiling under visual studio
+//#ifdef _MSC_VER
+//#include "getopt.h"
+//#endif
+
 void GameOptions::PrintBanner() {
 		fprintf(stderr, 
 		"Ninja Engine (%s)\n"
@@ -80,11 +85,15 @@ void GameOptions::Clear() {
 }
 
 bool GameOptions::ParseArguments(int argc, char* argv[]) {
-	
-	char c;
-	bool _fullscreen_option_set = false;
 
 	Clear();
+
+	// Only do this if not under visual studio
+	// XXX need getop() for win32
+	#ifndef _MSC_VER
+
+	char c;
+	bool _fullscreen_option_set = false;
 
 	while ( (c = getopt(argc,argv,"fwg:m:r:d:X23vsc:p:h89")) != -1) {
 		switch (c) {
@@ -198,6 +207,8 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				break;
 		}
 	}
+	#endif // _MSC_VER
+
 	return IsValid();
 }
 
@@ -221,7 +232,7 @@ bool GameOptions::IsValid() {
 
 		// if we aren't to start as a server, but they didn't give us a server name
 		// (btw, ^ is XOR) [YES.]
-		if (!(network_start_as_server ^ network_server_name.GetLength() > 0)) {
+		if (! (network_start_as_server ^ (network_server_name.GetLength() > 0))) {
 			fprintf(	stderr, "Options ==> ERROR\n"
 												"To start with networking, you must specify ONLY ONE\n"
 												"of the following: (-c) or (-s servername)\n\n");

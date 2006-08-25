@@ -8,9 +8,13 @@
 #include <stdarg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#ifndef WIN32
 #include <unistd.h>
-#include <allegro.h>
-using namespace std;
+#endif
+
+#include "allegro_wrapper.h"
+#include "stl_wrapper.h"
 
 #include "alogg.h"
 #include "gameBase.h"
@@ -32,19 +36,19 @@ using namespace std;
  * All deletion/creation of assets are handled HERE and only HERE.
  */
 
-typedef map<CString, BITMAP*> BitmapList;
-typedef map<CString, BITMAP*>::iterator BitmapListIter;
+typedef std::map<CString, BITMAP*> BitmapList;
+typedef std::map<CString, BITMAP*>::iterator BitmapListIter;
 
-typedef map<CString, SAMPLE*> SampleList;
-typedef map<CString, SAMPLE*>::iterator SampleListIter;
+typedef std::map<CString, SAMPLE*> SampleList;
+typedef std::map<CString, SAMPLE*>::iterator SampleListIter;
 
-//typedef map<CString, OGG*> SongList;
-//typedef map<CString, OGG*>::iterator SongListIter;
+//typedef std::map<CString, OGG*> SongList;
+//typedef std::map<CString, OGG*>::iterator SongListIter;
 
 //! Manages game assets and memory
 class AssetManager : public GameBase {
 	protected:
-		vector<CString> paths;
+		std::vector<CString> paths;
 		BitmapList bitmaps;
 		SampleList samples;
 		// SongList   songs;

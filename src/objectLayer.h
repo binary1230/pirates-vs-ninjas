@@ -1,10 +1,8 @@
 #ifndef OBJECTLAYER_H
 #define OBJECTLAYER_H
 
-#include <allegro.h>
-#include <list>
-#include <algorithm>
-using namespace std;
+#include "allegro_wrapper.h"
+#include "stl_wrapper.h"
 
 #include "gameBase.h"
 
@@ -21,7 +19,7 @@ class PhysSimulation;
 //      needs rethinking
 class ObjectLayer : public GameBase {
 	protected:
-		list<Object*> objects;
+		std::list<Object*> objects;
 		bool visible;
 		float scroll_speed;
 
