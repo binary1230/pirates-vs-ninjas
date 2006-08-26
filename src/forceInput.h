@@ -1,7 +1,7 @@
 #ifndef FORCEINPUT_H
 #define FORCEINPUT_H
 
-#include "allegro_wrapper.h"
+#include <allegro.h>
 
 class ForceInput;
 class Object;

@@ -254,7 +254,6 @@
 	#pragma warning (disable : 4127) // Conditional expression is constant
 	#pragma warning (disable : 4097) // typedef name used as synonym for class name
 	#pragma warning (disable : 4512) // assignment operator could not be generated
-	#pragma warning (disable : 4267) // conversion from 'size_t' to 'int', possible loss of data
 #endif
 
 #ifndef STDSTRING_H
@@ -262,16 +261,13 @@
 
 // If they want us to use only standard C++ stuff (no Win32 stuff)
 
-#ifndef _MSC_VER
 typedef const char*		PCSTR;
 typedef char*			PSTR;
-#endif
 
 // Standard headers needed
 #include <string>			// basic_string
 #include <algorithm>		// for_each, etc.
 #include <functional>		// for StdStringLessNoCase, et al
-
 using namespace std;
 
 #if defined(WIN32)

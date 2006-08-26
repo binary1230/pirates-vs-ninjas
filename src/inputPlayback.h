@@ -1,7 +1,7 @@
 #ifndef INPUT_PLAYBACK_kHANDLER_H
 #define INPUT_PLAYBACK_kHANDLER_H
 
-#include "allegro_wrapper.h"
+#include <allegro.h>
 #include <stdio.h>
 
 class GameState;
@@ -22,7 +22,7 @@ class InputPlayback : public BaseInput {
 
 		//! The next frame for which we have data
 		unsigned long next_frame_num;
-		std::vector<int> next_frame_data;
+		vector<int> next_frame_data;
 
 		//! True if we are at the end of this file
 		bool at_eof;

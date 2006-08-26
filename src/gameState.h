@@ -1,9 +1,10 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "allegro_wrapper.h"
+#include <allegro.h>
 #include <stdio.h>
-#include "stl_wrapper.h"
+#include <vector>
+using namespace std;
 
 class GameState;
 class GameOptions;

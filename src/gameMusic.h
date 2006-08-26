@@ -2,7 +2,7 @@
 #define GAME_MUSIC_H
 
 #include "alogg.h"
-#include "allegro_wrapper.h"
+#include <allegro.h>
 
 #include "gameBase.h"
 #include "StdString.h"

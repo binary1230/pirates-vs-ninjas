@@ -1,7 +1,10 @@
 #ifndef PHYS_SYSTEM_H
 #define PHYS_SYSTEM_H
 
-#include "stl_wrapper.h"
+#include <list>
+#include <vector>
+#include <map>
+using namespace std;
 
 class PhysSimulation;
 class GameState;
@@ -20,25 +23,25 @@ class OGGFILE;
 //! Maps an object definition name to an XMLNode 
 //! (e.g. maps "bad_guy_1" to its corresponding XML data)
 //! only used for parsing XML
-typedef std::map<const CString, XMLNode> ObjectDefMapping;
-typedef std::map<const CString, XMLNode>::iterator ObjectDefMappingIter;
+typedef map<const CString, XMLNode> ObjectDefMapping;
+typedef map<const CString, XMLNode>::iterator ObjectDefMappingIter;
 
-typedef std::list<Object*> ObjectList;
-typedef std::list<Object*>::iterator ObjectListIter;
-typedef std::list<Object*>::reverse_iterator ObjectListReverseIter;
+typedef list<Object*> ObjectList;
+typedef list<Object*>::iterator ObjectListIter;
+typedef list<Object*>::reverse_iterator ObjectListReverseIter;
 
 //! Represents a physical simulation (the main game levels)
 class PhysSimulation : public GameMode {
 		protected:		
 			//! ALL objects in the scene
 			// note: list is STL's doubly linked list
-			std::list<Object*> objects;
+			list<Object*> objects;
 
 			//! Layers, which hold pointers to objects.
-			std::vector<ObjectLayer*> layers;
+			vector<ObjectLayer*> layers;
 
 			//! Collection of forces
-			std::vector<Force*> forces;
+			vector<Force*> forces;
 		
 			//! Creates new objects
 			ObjectFactory *objectFactory;
@@ -107,7 +110,7 @@ class PhysSimulation : public GameMode {
 
 			void MoveObjectsToNewPositions();
 			void CheckForCollisions();
-			void GetCollideableObjects(std::vector<Object*> &objs);
+			void GetCollideableObjects(vector<Object*> &objs);
 
 			PhysSimulation();
 			~PhysSimulation();

@@ -6,13 +6,15 @@
 #include "xmlParser.h"
 #include "StdString.h"
 
-#include "allegro_wrapper.h"
+#include <allegro.h>
 #include <stdio.h>
-#include "stl_wrapper.h"
+#include <map>
+
+using namespace std;
 
 //! Maps a sound name to it's handle (e.g. "jump" to the sample)
-typedef std::map<CString, SAMPLE*> SoundMapping;
-typedef std::map<CString, SAMPLE*>::iterator s_iter;
+typedef map<CString, SAMPLE*> SoundMapping;
+typedef map<CString, SAMPLE*>::iterator s_iter;
 
 class GameSound : public GameBase {
 				

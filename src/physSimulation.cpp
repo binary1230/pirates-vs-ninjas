@@ -17,9 +17,10 @@
 #include "gameOptions.h"
 #include "oggFile.h"
 
-#include "stl_wrapper.h"
-
 #include <stdio.h>
+#include <map>
+#include <vector>
+using namespace std;
 
 int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
 	SetGameState(gs);
@@ -189,7 +190,7 @@ void PhysSimulation::Solve() {
 	}
 }
 
-void PhysSimulation::GetCollideableObjects(std::vector<Object*> &objs) {
+void PhysSimulation::GetCollideableObjects(vector<Object*> &objs) {
 	ObjectListIter iter;
 	objs.clear();
 
@@ -207,7 +208,7 @@ void PhysSimulation::GetCollideableObjects(std::vector<Object*> &objs) {
 // probably need to optimize, but PROFILE to find out.
 void PhysSimulation::CheckForCollisions() {
 
-	std::vector<Object*> objs;
+	vector<Object*> objs;
 	Object* player;
 
 	GetCollideableObjects(objs);
@@ -369,10 +370,10 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 		xColor = xProps.getChildNode("bgcolor");
 		int r,g,b;
 	
-		if (	(!xColor.getChildNode("r").getInt(r)) ||
-					(!xColor.getChildNode("g").getInt(g)) ||
-					(!xColor.getChildNode("b").getInt(b)) ||
-					r < 0 || g < 0 || b < 0 || r > 255 || b > 255 || g > 255) {
+		if (	!xColor.getChildNode("r").getInt(r) ||
+					!xColor.getChildNode("g").getInt(g) ||
+					!xColor.getChildNode("b").getInt(b) ||
+					r < 0 || g < 0 || b < 0 || r > 255 || b > 255 | g > 255) {
 					fprintf(stderr, "-- Invalid bgcolor specified!\n");
 					return -1;
 		}

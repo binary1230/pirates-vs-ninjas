@@ -1,10 +1,11 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include "allegro_wrapper.h"
+#include <allegro.h>
+#include <vector>
 #include <assert.h>
 #include "StdString.h"
-#include "stl_wrapper.h"
+using namespace std;
 
 class BaseInput;
 
@@ -96,18 +97,18 @@ enum MouseClickType {
 class BaseInput : public GameBase {
 	protected:
 		//! The keys currently being pressed (e.g. GAMEKEY_JUMP)
-		std::vector<int> game_key;
+		vector<int> game_key;
 
 		//! The mapping of real keys to gamekeys (e.g. SPACE to GAMEKEY_JUMP)
-		std::vector<int> gamekey_to_realkey;
+		vector<int> gamekey_to_realkey;
 
 		//! Whether a key has been released after it was pressed
-		std::vector<int> released_key;
+		vector<int> released_key;
 
 		int mouse_x;
 		int mouse_y;
 
-		std::vector<bool> mouse_click_status;
+		vector<bool> mouse_click_status;
 		
 		//! Load the default key mappings
 		void LoadDefaultKeyMappings();
@@ -119,7 +120,7 @@ class BaseInput : public GameBase {
 		void ClearKeys();
 
 		//! Clear a specific keyboard buffer
-		void ClearKeys(std::vector<int> &key_buffer);
+		void ClearKeys(vector<int> &key_buffer);
 		
 	public:
 		//! Init the input system

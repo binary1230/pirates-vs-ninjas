@@ -1,7 +1,7 @@
 #ifndef INPUTLIVEHANDLER_H
 #define INPUTLIVEHANDLER_H
 
-#include "allegro_wrapper.h"
+#include <allegro.h>
 #include <stdio.h>
 
 class InputLive;

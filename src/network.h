@@ -2,7 +2,7 @@
 #define NETWORK_H
 
 #include <stdio.h>
-#include "allegro_wrapper.h"
+#include <allegro.h>
 #include <stdlib.h>
 
 #include "gameBase.h"

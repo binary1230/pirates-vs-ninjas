@@ -1,7 +1,7 @@
 #ifndef FORCE_FACTORY_H
 #define FORCE_FACTORY_H
 
-#include "allegro_wrapper.h"
+#include <allegro.h>
 #include <stdio.h>
 
 class Force;

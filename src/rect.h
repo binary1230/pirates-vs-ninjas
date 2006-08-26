@@ -5,11 +5,12 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <vector>
 
 // x1,y1 = bottom left
 // x2,y2 = top right
 
-#include "stl_wrapper.h"
+using namespace std;
 
 class Rect;
 

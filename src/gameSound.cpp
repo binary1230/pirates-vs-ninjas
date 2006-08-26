@@ -55,7 +55,7 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 		xSound = xSounds.getChildNode("sound", &iterator);
 		CString name = xSound.getAttribute("name");
 		
-		if (!LoadSound(xSound.getText(), name)) {
+		if (LoadSound(xSound.getText(), name) == -1) {
 			fprintf(stderr, "ERROR: Can't load soundfile: '%s'\n", 
 											xSound.getText());
 			return false;

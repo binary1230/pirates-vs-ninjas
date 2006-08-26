@@ -1,4 +1,4 @@
-#include "allegro_wrapper.h"
+#include <allegro.h>
 
 #include "window.h"
 #include "gameState.h"

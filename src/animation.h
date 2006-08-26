@@ -1,10 +1,11 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include "allegro_wrapper.h"
-#include "stl_wrapper.h"
-
+#include <allegro.h>
 #include <stdio.h>
+#include <vector>
+#include <map>
+using namespace std;
 
 class Sprite;
 
@@ -14,7 +15,7 @@ class Sprite;
 #include "StdString.h"
 
 //! Maps an animation name to an integer ID (e.g. "bad_guy_1" to BAD_GUY_1)
-typedef std::map<const CString, uint> AnimationMapping;
+typedef map<const CString, uint> AnimationMapping;
 
 //! An animation frame.  Each Animation is an array of these.
 struct AnimFrame {
@@ -34,7 +35,7 @@ struct AnimFrame {
 class Animation : public GameBase {
 	protected:
 		//! Collection of frames in this animation
-		std::vector<struct AnimFrame*> frames;	
+		vector<struct AnimFrame*> frames;	
 		
 		//! Points to the current frame we are drawing
 		AnimFrame* currentFrame;	

@@ -29,7 +29,7 @@ void BaseInput::ClearKeys() {
 	ClearKeys(game_key);
 }
 
-void BaseInput::ClearKeys(std::vector<int> &key_buffer) {
+void BaseInput::ClearKeys(vector<int> &key_buffer) {
 	uint i;
 	for (i = 0; i < key_buffer.size(); i++) {
 		key_buffer[i] = 0;

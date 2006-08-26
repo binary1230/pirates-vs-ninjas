@@ -1,7 +1,7 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "allegro_wrapper.h"
+#include <allegro.h>
 
 //! Drawable data with possible transparency and X,Y offsets
 class Sprite {

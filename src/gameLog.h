@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "stl_wrapper.h"
+#include <vector>
+using namespace std;
 
 #include "gameBase.h"
 

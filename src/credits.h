@@ -1,7 +1,7 @@
 #ifndef CREDITS_H
 #define CREDITS_H
 
-#include "allegro_wrapper.h"
+#include <allegro.h>
 #include <stdio.h>
 
 class GameState;

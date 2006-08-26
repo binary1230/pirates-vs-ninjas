@@ -19,7 +19,9 @@
 #include "animations.h"
 #include "gameSound.h"
 
-#include "stl_wrapper.h"
+#include <map>
+
+using namespace std;
 
 // Creates an object from an XML definition
 // in: xObjectDef - XML representation of an object's definition
@@ -33,7 +35,7 @@ Object* ObjectFactory::CreateObject(	XMLNode &xObjectDef, XMLNode &xObject) {
 
 	// XXX this shouldn't really be here...
 	// maps strings of object types to numeric ID's.
-	std::map<const CString, uint> types;
+	map<const CString, uint> types;
 	types["RadiusBlock"] 				= OBJECT_ID_RADIUS_BLOCK;
 	types["Background"] 				= OBJECT_ID_BACKGROUND;
 	types["Player"] 						= OBJECT_ID_PLAYER;

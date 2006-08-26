@@ -3,10 +3,11 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <vector>
 
 #include "globals.h"
 
-#include "stl_wrapper.h"
+using namespace std;
 
 class Vector2D;
 

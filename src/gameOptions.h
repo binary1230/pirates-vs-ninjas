@@ -5,11 +5,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-#ifndef WIN32
 #include <unistd.h>
-#endif // WIN32
+#include <string.h>
 
 #include "StdString.h"
 

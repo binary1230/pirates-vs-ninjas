@@ -3,8 +3,9 @@
 
 // Note: This class is currently PLACEHOLDER for real menu and UI stuff.
 
-#include "allegro_wrapper.h"
-#include "stl_wrapper.h"
+#include <allegro.h>
+#include <vector>
+using namespace std;
 
 #include "gameMode.h"
 #include "StdString.h"
@@ -12,12 +13,12 @@
 class GameMenu : public GameMode {
 	protected:
 		BITMAP *back, *selector;
-		std::vector<int> y_pos;
+		vector<int> y_pos;
 		int x_pos;
 
 		uint current_pos;
 
-		std::vector<CString> actions;
+		vector<CString> actions;
 
 		void DoNewGame();
 		void DoQuit();

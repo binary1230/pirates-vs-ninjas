@@ -10,8 +10,10 @@ class Sprite;
 class ObjectLayer;
 class ObjectFactory;
 
-#include "allegro_wrapper.h"
-#include "stl_wrapper.h"
+#include <allegro.h>
+#include <stdio.h>
+#include <vector>
+using namespace std;
 
 #include "globals.h"
 #include "gameBase.h"
@@ -19,8 +21,6 @@ class ObjectFactory;
 #include "vector2D.h"
 #include "xmlParser.h"
 #include "animations.h"
-
-#include <stdio.h>
 
 struct CollisionDirection {
 	unsigned up : 1;
@@ -122,7 +122,7 @@ class Object : public GameBase {
 		Animation* currentAnimation;
 
 		//! Array of all loaded animations
-		std::vector<Animation*> animations;
+		vector<Animation*> animations;
 
 		//! Points to the sprite we should draw on next Draw()
 		Sprite* currentSprite;
