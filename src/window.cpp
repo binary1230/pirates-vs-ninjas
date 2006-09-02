@@ -220,7 +220,6 @@ void Window::Shutdown() {
 	}
 	
 	drawing_surface = NULL;
-	release_screen();
 	initialized = false;
 }
 

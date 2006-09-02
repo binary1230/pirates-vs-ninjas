@@ -91,4 +91,6 @@ void GameSound::Shutdown() {
 	// do NOT free pointers in here
 	sounds.clear();
 	sound_enabled = false;
+
+	remove_sound();
 }

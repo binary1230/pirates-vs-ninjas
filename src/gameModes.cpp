@@ -49,9 +49,12 @@ void GameModes::DoEndCurrentMode() {
 		return;
 	}
 
-	if (!signal_game_exit)
+	if (!signal_game_exit) {
 		if (LoadNextMode() == -1) 
 			DoGameExit();
+	} else {
+		DoGameExit();
+	}
 }
 
 void GameModes::DoGameExit() {
@@ -165,6 +168,7 @@ int GameModes::LoadNextMode() {
 }
 
 void GameModes::Shutdown() {
+	signal_game_exit = true;	
 	DoEndCurrentMode();
 	currentModeIndex = 0;
 	currentMode = NULL;
