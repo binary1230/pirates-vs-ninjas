@@ -27,7 +27,10 @@ using namespace std;
 // in: xObjectDef - XML representation of an object's definition
 // in: xObject - XML representation of additional object paramaters
 // returns: newly create Object*, or NULL if it failed
-Object* ObjectFactory::CreateObject(	XMLNode &xObjectDef, XMLNode &xObject) {
+Object* ObjectFactory::CreateObjectFromXML(	
+					XMLNode &xObjectDef, 
+					XMLNode &xObject) 
+{
 
 	assert(physSimulation);
 
@@ -35,7 +38,7 @@ Object* ObjectFactory::CreateObject(	XMLNode &xObjectDef, XMLNode &xObject) {
 
 	// XXX this shouldn't really be here...
 	// maps strings of object types to numeric ID's.
-	map<const CString, uint> types;
+	map<const CString, OBJECTID> types;
 	types["RadiusBlock"] 				= OBJECT_ID_RADIUS_BLOCK;
 	types["Background"] 				= OBJECT_ID_BACKGROUND;
 	types["Player"] 						= OBJECT_ID_PLAYER;
@@ -48,7 +51,7 @@ Object* ObjectFactory::CreateObject(	XMLNode &xObjectDef, XMLNode &xObject) {
 	
 	CString objType = xObjectDef.getAttribute("type");
 	
-	uint id = types[objType];
+	OBJECTID id = types[objType];
 
 	switch(id) {
 					

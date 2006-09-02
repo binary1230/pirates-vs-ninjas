@@ -25,6 +25,7 @@ class PhysSimulation;
 #include "xmlParser.h"
 #include "StdString.h"
 #include "animation.h"
+#include "objectIDs.h"
 
 //! A class which creates Object classes from integer ID's
 class ObjectFactory : GameBase {
@@ -51,8 +52,13 @@ class ObjectFactory : GameBase {
 		void Shutdown();
 		
 		inline void SetPhysSimulation(PhysSimulation* p) {physSimulation = p;};
+		inline PhysSimulation* GetPhysSimulation() {return physSimulation;};
 
-		Object* CreateObject(	XMLNode &xObjectDef, XMLNode &xObject);
+		// Create an object from an XML node
+		Object* CreateObjectFromXML(	XMLNode &xObjectDef, XMLNode &xObject);
+
+		// Create an object from an ObjectID
+		Object* CreateObject(OBJECTID object_id);
 
 		ObjectFactory();
 		~ObjectFactory();

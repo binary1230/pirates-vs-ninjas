@@ -389,6 +389,64 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 	return 0;
 }
 
+/* example of how structure of our XML looks:
+ * 
+ * <mode>
+ *
+ * 	<objectDefinitions> .. .. .. </objectDefinitions>
+ * 
+ *	<map>
+ * 		<layer>
+ * 			<object type="player"> .. .. .. </object>
+ * 			<object type="enemy2"> .. .. .. </object>
+ * 		</layer>
+ * 		<layer> ... </layer>
+ * 	</map>
+ * 	
+ * </mode>
+ */
+	
+//! Master XML parsing routine for the physics simulation
+//! Calls other helpers to deal with different parts of the XML.
+int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {	
+  int i, max, iterator = 0;  
+	XMLNode xMap, xObjs, xLayer;	
+	ObjectDefMapping objectDefs; 
+
+	camera_follow = NULL;
+
+	// 1) load all "object definitions" (e.g. [bad guy 1])
+	xObjs = xMode.getChildNode("objectDefinitions");
+	LoadObjectDefsFromXML(xObjs, objectDefs);
+
+	// 2) load all the <object>s found in each <layer> in <map>
+	xMap = xMode.getChildNode("map");
+
+	max = xMap.nChildNode("layer");
+
+	// Parse each layer
+	iterator = 0;
+  for (i=0; i < max; i++) {
+		xLayer = xMap.getChildNode("layer", &iterator);
+		
+		ObjectLayer* layer = new ObjectLayer();
+		layer->Init(GetGameState(), this);
+		layers.push_back(layer);
+		
+		if (LoadLayerFromXML(xLayer, layer, objectDefs) == -1) {
+			return -1;
+		}
+	}
+
+	// Finished loading objects, do a few sanity checks
+	if (!camera_follow) {
+		fprintf(stderr, "ERROR: No <cameraFollow> found, cannot proceed.\n");
+		return -1;
+	}
+
+	return 0;
+}
+
 //! Helper function
 //! Loads Object Definitions from XML, puts them in an ObjectMapping
 int PhysSimulation::LoadObjectDefsFromXML(XMLNode &xObjs, 
@@ -430,65 +488,8 @@ int PhysSimulation::LoadObjectDefsFromXML(XMLNode &xObjs,
 	return 1;
 }
 
-/* example of how structure of our XML looks:
- * 
- * <mode>
- *
- * 	<objectDefinitions> .. .. .. </objectDefinitions>
- * 
- *	<map>
- * 		<layer>
- * 			<object type="player"> .. .. .. </object>
- * 			<object type="enemy2"> .. .. .. </object>
- * 		</layer>
- * 		<layer> ... </layer>
- * 	</map>
- * 	
- * </mode>
- */
-	
-//! Master XML parsing routine for the physics simulation
-//! Calls other helpers to deal with different parts of the XML.
-int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {	
-  int i, max, iterator = 0;  
-	XMLNode xMap, xObjs, xLayer;	
-	ObjectDefMapping objectDefs; 
-
-	camera_follow = NULL;
-
-	// 1) load all "object definitions" (e.g. [bad guy 1])
-	xObjs = xMode.getChildNode("objectDefinitions");
-	LoadObjectDefsFromXML(xObjs, objectDefs);
-
-	// 2) load all the <object>s found in each <layer> in <map>
-	xMap = xMode.getChildNode("map");
-	max = xMap.nChildNode("layer");
-
-	// Parse each layer
-	iterator = 0;
-  for (i=0; i < max; i++) {
-		xLayer = xMap.getChildNode("layer", &iterator);
-		
-		ObjectLayer* layer = new ObjectLayer();
-		layer->Init(GetGameState(), this);
-		layers.push_back(layer);
-		
-		if (LoadLayerFromXML(xLayer, layer, objectDefs) == -1) {
-			return -1;
-		}
-	}
-
-	// Finished loading objects, do a few sanity checks
-	if (!camera_follow) {
-		fprintf(stderr, "ERROR: No <cameraFollow> found, cannot proceed.\n");
-		return -1;
-	}
-
-	return 0;
-}
-
 // Creates an instance of an object on the specified layer 
-int PhysSimulation::CreateObject(	XMLNode &xObject, 
+int PhysSimulation::CreateObjectFromXML(	XMLNode &xObject, 
 																	ObjectLayer* layer, 
 																	ObjectDefMapping &objectDefs) {
 
@@ -555,7 +556,7 @@ int PhysSimulation::LoadLayerFromXML(
 		// Repeat the creation of this object the specified # of times.
 		for (j=0; j < times_to_repeat; j++) {
 
-			if (CreateObject(xObject, layer, objectDefs) == -1)
+			if (CreateObjectFromXML(xObject, layer, objectDefs) == -1)
 				return -1;
 		}	
 	}
@@ -567,7 +568,7 @@ int PhysSimulation::LoadLayerFromXML(
 
 		xObject = xLayer.getChildNode("object", &iterator);
 
-		if (CreateObject(xObject, layer, objectDefs) == -1)
+		if (CreateObjectFromXML(xObject, layer, objectDefs) == -1)
 			return -1;
 	}
 
@@ -581,7 +582,7 @@ int PhysSimulation::LoadObjectFromXML(
 								ObjectLayer* layer) {
 
 	int x,y;
-	Object* obj  = objectFactory->CreateObject(xObjectDef, xObject);
+	Object* obj  = objectFactory->CreateObjectFromXML(xObjectDef, xObject);
 
 	if (!obj) {
 		return -1;
