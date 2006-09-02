@@ -105,7 +105,7 @@ int GameState::InitSystem() {
 			fprintf(stderr, "ERROR: Failed to parse default.xml");	
 			return -1;
 		}
-		
+
 		fprintf(stderr, "[init: window]\n");
 		window = new Window();
 		if ( !window ||	window->Init(this, screen_size_x, screen_size_y, 
@@ -124,7 +124,6 @@ int GameState::InitSystem() {
 			fprintf(stderr, "ERROR: InitSystem: failed to init input subsystem!\n");
 			return -1;
 		}
-
 		fprintf(stderr, "[init: sound subsystem]\n");
 		if (InitSound() == -1) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init sound subsystem!\n");
@@ -395,6 +394,8 @@ void GameState::Shutdown() {
 		delete input;
 	}
 
+	remove_int(Timer);
+
 	if (network) {
 		network->Shutdown();
 		delete network;
@@ -428,7 +429,7 @@ void GameState::Shutdown() {
 	input = NULL;  
 	sound = NULL;
 	network = NULL;
-		
+	
 	allegro_exit();
 }
 
