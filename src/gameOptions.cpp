@@ -1,3 +1,12 @@
+/* This file contains code taken from OpenDarwin Project:
+   Create and destroy argument vectors (argv's)
+   Copyright (C) 1992, 2001 Free Software Foundation, Inc.
+   Written by Fred Fish @ Cygnus Support
+
+   This file is part of the libiberty library. (GPL)*/
+
+#include <malloc.h>
+
 #include "gameOptions.h"
 #include "basename.h"
 #include "window.h"
@@ -79,14 +88,83 @@ void GameOptions::Clear() {
 	is_valid = true;
 }
 
+/*
+
+@deftypefn Extension void freeargv (char **@var{vector})
+
+Free an argument vector that was built using @code{buildargv}.  Simply
+scans through @var{vector}, freeing the memory for each argument until
+the terminating @code{NULL} is found, and then frees @var{vector}
+itself.
+
+@end deftypefn
+
+*/
+
+void freeargv (char** vector) {
+  register char **scan;
+
+  if (vector != NULL)
+    {
+      for (scan = vector; *scan != NULL; scan++)
+	{
+	  free (*scan);
+	}
+      free (vector);
+    }
+}
+/*
+
+@deftypefn Extension char** dupargv (char **@var{vector})
+
+Duplicate an argument vector.  Simply scans through @var{vector},
+duplicating each argument until the terminating @code{NULL} is found.
+Returns a pointer to the argument vector if successful.  Returns
+@code{NULL} if there is insufficient memory to complete building the
+argument vector.
+
+@end deftypefn
+
+*/
+
+char ** dupargv (char **argv) {
+  int argc;
+  char **copy;
+  
+  if (argv == NULL)
+    return NULL;
+  
+  /* the vector */
+  for (argc = 0; argv[argc] != NULL; argc++);
+  copy = (char **) malloc ((argc + 1) * sizeof (char *));
+  if (copy == NULL)
+    return NULL;
+  
+  /* the strings */
+  for (argc = 0; argv[argc] != NULL; argc++)
+    {
+      int len = strlen (argv[argc]);
+      copy[argc] = (char*)malloc (sizeof (char *) * (len + 1));
+      if (copy[argc] == NULL)
+	{
+	  freeargv (copy);
+	  return NULL;
+	}
+      strcpy (copy[argc], argv[argc]);
+    }
+  copy[argc] = NULL;
+  return copy;
+}
+
 bool GameOptions::ParseArguments(int argc, char* argv[]) {
 	
 	char c;
 	bool _fullscreen_option_set = false;
+	char** new_argv = dupargv(argv);
 
 	Clear();
 
-	while ( (c = getopt(argc,argv,"fwg:m:r:d:X23vsc:p:h89")) != -1) {
+	while ( (c = getopt(argc,new_argv,"fwg:m:r:d:X23vsc:p:h89")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -199,6 +277,9 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				break;
 		}
 	}
+
+	freeargv(new_argv);
+
 	return IsValid();
 }
 

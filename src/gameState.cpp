@@ -438,6 +438,7 @@ void GameState::Shutdown() {
 	input = NULL;  
 	sound = NULL;
 	network = NULL;
+	xGame = XMLNode::emptyXMLNode;
 	
 	allegro_exit();
 }

@@ -5,6 +5,8 @@
 #include "gameOptions.h"
 #include "StdString.h"
 
+// TODO: Memory leaks on mutli-instances.  Stack corruption??
+
 int start_game_instance(int argc, char* argv[]) {
 	
 	// see if our command line args are OK
