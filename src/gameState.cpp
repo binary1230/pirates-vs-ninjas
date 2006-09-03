@@ -276,27 +276,26 @@ int GameState::RunGame(GameOptions* _options) {
 		if (InitSystem() == -1) {
 			fprintf(stderr, "ERROR: Failed to init game!\n");
 			return -1;	
-		} else {
-
-			if (options->GetDebugStartPaused()) 
-				debug_pause_toggle = 1;	
-
-			// XXX SHOULD NOT TEST option->is_xxx should TEST input->is_xxx()
-			if (options->RecordDemo())
-				input->BeginRecording();
-			else if (options->PlaybackDemo())
-				input->BeginPlayback();
-			
-			outstanding_updates = 0;	// reset our timer to 0.
-			
-			MainLoop();
-
-			// XXX SHOULD NOT TEST option->is_xxx should TEST input->is_xxx()
-			if (options->RecordDemo())
-				input->EndRecording();
-			else if (options->PlaybackDemo())
-				input->EndPlayback();
 		}
+
+		if (options->GetDebugStartPaused()) 
+		debug_pause_toggle = 1;	
+
+		// XXX SHOULD NOT TEST option->is_xxx should TEST input->is_xxx()
+		if (options->RecordDemo())
+			input->BeginRecording();
+		else if (options->PlaybackDemo())
+			input->BeginPlayback();
+			
+		outstanding_updates = 0;	// reset our timer to 0.
+			
+		MainLoop();
+
+		// XXX SHOULD NOT TEST option->is_xxx should TEST input->is_xxx()
+		if (options->RecordDemo())
+			input->EndRecording();
+		else if (options->PlaybackDemo())
+			input->EndPlayback();
 	
 		Shutdown();
 		fprintf(stderr, "[Exiting]\n");	
@@ -361,10 +360,17 @@ void GameState::MainLoop() {
 				window->Screenshot();
 		}
 
+		// NOT NORMALLY WHAT WE DO
+		// This is used so we don't wait for timer, but instead do everything
+		// as fast as we possibly can.  Useful for AI training
+		if (!wait_for_updates) {
+			outstanding_updates = 1;
+		}
+
 		// wait for 1/60th sec to elapse (if we're on a fast computer)
 		// note: this should really be down() on a lock of some kind rather than
 		// just sleep randomly.
-		while (wait_for_updates && outstanding_updates <= 0 && !exit_game) {
+		while (outstanding_updates <= 0 && !exit_game) {
 			// rest(10);	// 1/30 sec is 33 usec, we sleep for 10
 		}
   }
@@ -372,7 +378,6 @@ void GameState::MainLoop() {
 
 //! Update all game status
 void GameState::Update() {
-
 	if (exit_game)
 		return;
 
@@ -383,9 +388,11 @@ void GameState::Update() {
 
 //! Draw the current mode
 void GameState::Draw() {
-	window->Clear();
-	modes->Draw();
-	window->Flip();
+	if (options->DrawGraphics()) {
+		window->Clear();
+		modes->Draw();
+		window->Flip();
+	}
 }
 
 void GameState::Shutdown() {

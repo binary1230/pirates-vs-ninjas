@@ -4,6 +4,7 @@
 #include "gameState.h"
 #include "globals.h"
 #include "sprite.h"
+#include "gameOptions.h"
 
 int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
@@ -102,6 +103,15 @@ int Window::Init(	GameState* _game_state,
 	height = _height;
 	mode = _mode;
 	clear_color = 0;
+
+	// Special case: We won't be drawing _anything_
+	if (! GetGameState()->GetGameOptions()->DrawGraphics() ) {
+		fprintf(stderr, "--- NOTE: DISABLING GRAPHICS ---\n");
+		set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
+		mode = MODE_NOBUFFERING;
+		initialized = true;
+		return 0;
+	}
 	
 	if (_fullscreen)
 			gfx_mode = GFX_AUTODETECT_FULLSCREEN;

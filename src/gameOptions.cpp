@@ -42,7 +42,7 @@ void GameOptions::PrintOptions(char* arg0) {
 		"-p portnumber | (EXPERIMENTAL) connect to game server port\n\n"
 
 		"-8            | Run game as fast as possible (not for human playing)\n"
-		"-9            | Do not draw _anything_ (not for human playing)\n"
+		"-9            | Do not do anything interactive (not for human playing)\n"
 
 		"-h            | display this help message\n\n"
 
@@ -184,9 +184,10 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 				wait_for_updates = false;
 				break;
 
-			// Do not draw anything (for server or AI training)
+			// Do not do anything interactive (for server or AI training)
 			case '9':
 				draw_graphics = false;
+				sound_enabled = false;
 				break;
 
 			// ':' and '?' mean unrecognized

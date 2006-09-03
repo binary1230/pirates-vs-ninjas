@@ -5,10 +5,8 @@
 #include "gameOptions.h"
 #include "StdString.h"
 
-/// The main function
-/// IT ROCKS
-int main(int argc, char* argv[]) {
-
+int start_game_instance(int argc, char* argv[]) {
+	
 	// see if our command line args are OK
 	GameOptions options;
 	options.PrintBanner();
@@ -22,5 +20,13 @@ int main(int argc, char* argv[]) {
 		GameState gameState;
 		return gameState.RunGame(&options);
 	}
+
+}
+
+/// The main function
+/// IT ROCKS
+int main(int argc, char* argv[]) {
+
+	return start_game_instance(argc, argv);
 
 } END_OF_MAIN();
