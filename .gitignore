@@ -11,3 +11,5 @@
 /config.log
 /Makefile.in
 /configure
+/t
+/*.exe
