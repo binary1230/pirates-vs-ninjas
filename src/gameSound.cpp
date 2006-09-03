@@ -29,7 +29,8 @@ bool GameSound::LoadMusic(const char* filename) {
 	if (!sound_enabled)
 		return true;		
 
-	music = GetGameState()->GetAssetManager()->LoadMusic(filename);
+	OGGFILE* music = GetGameState()->GetAssetManager()->LoadMusic(filename);
+
 	if (!music) 
 		return false;
 	else
@@ -40,6 +41,8 @@ bool GameSound::PlayMusic(bool loop, int vol, int pan, int buflen) {
 	if (!sound_enabled)
 		return true;		
 
+	OGGFILE* music = GetGameState()->GetAssetManager()->GetMusic();	
+
 	if (!music)
 		return false;
 	else
@@ -49,6 +52,8 @@ bool GameSound::PlayMusic(bool loop, int vol, int pan, int buflen) {
 void GameSound::Update() {
 	if (!sound_enabled)
 		return;		
+	
+	OGGFILE* music = GetGameState()->GetAssetManager()->GetMusic();	
 
 	if (music)
 		music->Update();
@@ -90,7 +95,6 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 int GameSound::Init(GameState* _game_state, bool _sound_enabled) {
 	sound_enabled = _sound_enabled;
 	game_state = _game_state;
-	music = NULL;
 
 	if (!sound_enabled)
 		return 0;	
@@ -115,9 +119,11 @@ void GameSound::Shutdown() {
 	// is in the AssetManager
 	sounds.clear();
 
+	OGGFILE* music = GetGameState()->GetAssetManager()->GetMusic();
+
 	if (music) {
+		fprintf(stderr, "++++++++++++++++++ GAMESOUND: Shutting down music  ++++++++++++++\n");
 		music->Shutdown();
-		music = NULL;
 	}
 
 	remove_sound();
@@ -128,7 +134,6 @@ void GameSound::Shutdown() {
 GameSound::GameSound() {
 	sound_enabled = false;
 	game_state = NULL;
-	music = NULL;
 }
 
 GameSound::~GameSound() {}

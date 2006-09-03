@@ -26,6 +26,9 @@ bool OGGFILE::Init(const char* file) {
   char data[DEFAULT_MUSIC_DATA_SIZE];
   int len;
 
+	f = NULL;
+	s = NULL;
+
   if (!(f = pack_fopen(file, F_READ)))
     return false;
 
@@ -48,8 +51,9 @@ bool OGGFILE::Init(const char* file) {
 	// DAC: Yes - GOTO. Not evil when used _correctly_
 	// Don't believe me? Look in the linux kernel.
 	error:
-		if (f) 
+		if (f) {
 			pack_fclose(f);
+		}
 		f = NULL;
 		s = NULL;
 

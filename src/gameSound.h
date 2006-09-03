@@ -29,8 +29,6 @@ class GameSound : public GameBase {
 			//! pointers, AssetManager does that.
 			SoundMapping sounds;
 
-			OGGFILE* music;
-						
 		public:
 			//! Load a sound
 			//! example: LoadSound("sounds/jump.wav", "jump")
