@@ -5,11 +5,8 @@
 #include "gameState.h"
 
 void EnemyObject::Update() {
-	UpdateFade();
-	if (currentAnimation) {
-		currentAnimation->Update();
-		currentSprite = currentAnimation->GetCurrentSprite();
-	}
+	BaseUpdate();
+	SimpleAnimationUpdate();
 }
 
 bool EnemyObject::Init(GameState *_game_state, PhysSimulation *p) {

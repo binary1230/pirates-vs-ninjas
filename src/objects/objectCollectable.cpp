@@ -5,11 +5,8 @@
 #include "gameState.h"
 
 void CollectableObject::Update() {
-	UpdateFade();
-	if (currentAnimation) {
-		currentAnimation->Update();
-		currentSprite = currentAnimation->GetCurrentSprite();
-	}
+	BaseUpdate();
+	UpdateSimpleAnimations();
 }
 
 bool CollectableObject::Init(GameState *_game_state, PhysSimulation *p) {

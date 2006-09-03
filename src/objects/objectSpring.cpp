@@ -5,11 +5,8 @@
 #include "gameState.h"
 
 void SpringObject::Update() {
-	UpdateFade();
-	if (currentAnimation) {
-		currentAnimation->Update();
-		currentSprite = currentAnimation->GetCurrentSprite();
-	}
+	BaseUpdate();
+	UpdateSimpleAnimations();
 }
 
 bool SpringObject::Init(GameState *_game_state, PhysSimulation *p) {

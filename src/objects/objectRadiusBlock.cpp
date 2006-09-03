@@ -6,12 +6,9 @@
 #include "physSimulation.h"
 
 void RadiusBlockObject::Update() {
-	UpdateFade();
+	BaseUpdate();
+	UpdateSimpleAnimations();
 
-	if (currentAnimation) {
-		currentAnimation->Update();
-		currentSprite = currentAnimation->GetCurrentSprite();
-	}
 	theta += RADIUS_BLOCK_SPEED;
 	pos.SetX( int(sinf(theta) * radius) ); 
 	pos.SetY( int(cosf(theta) * radius) );

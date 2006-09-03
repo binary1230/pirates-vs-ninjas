@@ -3,7 +3,7 @@
 #include "animation.h"
 #include "gameState.h"
 
-// all slightly hackish for the moment.
+// all of this class is slightly hackish for the moment.
 #define FAN_DECAY_RATE 0.98f
 #define MAX_SPEED 5
 #define DEFAULT_FAN_SPEED 5.0f
@@ -12,9 +12,9 @@
 void FanObject::Update() {
 
 	int anim_speed;
-	
-	UpdateFade();
 
+	BaseUpdate();
+	
 	current_fan_speed *= FAN_DECAY_RATE;
 
 	anim_speed = max(MAX_SPEED - int(current_fan_speed), 1);

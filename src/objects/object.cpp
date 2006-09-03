@@ -13,6 +13,34 @@
 #include "gameSound.h"
 #include "objectLayer.h"
 
+// Objects can call this if they use
+// simple animations.
+void Object::UpdateSimpleAnimations() {
+	if (currentAnimation) {
+		currentAnimation->Update();
+		currentSprite = currentAnimation->GetCurrentSprite();
+	}
+}
+
+// Base update stuff used by all objects
+void Object::BaseUpdate() {
+	UpdateDisplayTime();
+	UpdateFade();
+}
+
+// Decrement the display time, when it reaches 0, we 
+// destroy this object. If it's -1, then it lives forever
+void Object::UpdateDisplayTime() {
+	if (display_time == -1)
+		return;
+
+	if (display_time > 0)
+		display_time--;
+
+	if (display_time == 0)
+		is_dead = true;
+}
+
 void Object::PlaySound(CString name) {
 	GetGameState()->GetSound()->PlaySound(name);
 }
@@ -59,6 +87,7 @@ bool Object::BaseInit() {
 	is_fading = false;
 	alpha = 255;
 	old_pos = pos;
+	display_time = -1;
 	return true;
 }
 
@@ -230,6 +259,7 @@ void Object::Shutdown() {
 
 	// just in case..
 	is_dead = true;
+	display_time = -1;
 }
 
 Object::Object() {
@@ -244,6 +274,7 @@ Object::Object() {
 	old_pos.SetX(0); old_pos.SetY(0);
 	accel.SetX(0); accel.SetY(0);
 	vel.SetX(0); vel.SetY(0);
+	display_time = -1;
 }
 
 // Return a vector with x,y set to 

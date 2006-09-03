@@ -14,10 +14,8 @@ void DoorObject::Activate() {
 }
 
 void DoorObject::Update() {
-	if (currentAnimation) {
-		currentAnimation->Update();
-		currentSprite = currentAnimation->GetCurrentSprite();
-	}
+	BaseUpdate();
+	UpdateSimpleAnimations();
 }
 
 bool DoorObject::Init(GameState *_game_state, PhysSimulation *p) {

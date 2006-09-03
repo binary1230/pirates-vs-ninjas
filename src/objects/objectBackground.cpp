@@ -7,12 +7,8 @@
 #include "window.h"
 
 void BackgroundObject::Update() {
-	UpdateFade();
-
-	if (currentAnimation) {
-		currentAnimation->Update();
-		currentSprite = currentAnimation->GetCurrentSprite();
-	}
+	BaseUpdate();
+	UpdateSimpleAnimations();
 }
 
 // We want to wrap the background around the level.  Compute the offset

@@ -5,11 +5,8 @@
 #include "gameState.h"
 
 void StaticObject::Update() {
-	UpdateFade();
-	if (currentAnimation) {
-		currentAnimation->Update();
-		currentSprite = currentAnimation->GetCurrentSprite();
-	}
+	BaseUpdate();
+	UpdateSimpleAnimations();
 }
 
 bool StaticObject::Init(GameState *_game_state, PhysSimulation *p) {

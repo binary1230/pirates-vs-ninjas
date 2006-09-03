@@ -147,6 +147,14 @@ class Object : public GameBase {
 		//! If true, this object can print debug info out if it wants to.
 		bool debug_flag;
 
+		//! How long, in frames, do we display this object.
+		//! This value is decremented each frame.  When it reaches
+		//! 0, the object is deleted.
+		//! When set to -1, this value is ignored
+		int display_time;
+
+		// -- UNUSUED BELOW --
+
 		//! Current fade-out time (0 if not active)
 		int fade_out;
 
@@ -155,6 +163,19 @@ class Object : public GameBase {
 
 		//! Alpha (transparency) of this object (0=inviz, 255=opaque)
 		int alpha;
+
+		//! Do common object updates
+		void BaseUpdate();
+
+		//! Update display times
+		void UpdateDisplayTime();
+
+		//! (optional) Do a simple update of the animations
+		//! Most objects will call this
+		void UpdateSimpleAnimations();
+
+		//! Update the fading stuff
+		void UpdateFade();
 		
 	public:
 		virtual bool Init(GameState* _game_state, PhysSimulation* p) = 0;
@@ -162,9 +183,6 @@ class Object : public GameBase {
 		
 		virtual void Update() = 0;
 		
-		//! Update the fading stuff
-		void UpdateFade();
-
 		//! Fade this object out over a given time (in frames)
 		void FadeOut(int time);
 

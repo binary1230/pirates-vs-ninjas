@@ -162,7 +162,7 @@ void PlayerObject::DoCrouchingDown() {
 }
 
 void PlayerObject::Update() {
-	UpdateFade();
+	BaseUpdate();
 	
 	assert(currentAnimation != NULL);
 	currentAnimation->Update();
