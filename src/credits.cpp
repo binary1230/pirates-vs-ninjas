@@ -3,7 +3,7 @@
 #include "input.h"
 #include "assetManager.h"
 #include "window.h"
-#include "oggFile.h"
+#include "gameSound.h"
 
 int CreditsMode::Init(GameState* gs, XMLNode xMode) {
 	SetGameState(gs);
@@ -23,26 +23,17 @@ int CreditsMode::Init(GameState* gs, XMLNode xMode) {
 
 	if (!credits_bmp)
 		return -1;
-
-	const char* music_name = m->GetPathOf(xMode.getChildNode("music").getText());
-
-	if (strlen(music_name) < 0)
-		return 0;
-
-	set_volume_per_voice(0);
-
-	music = new OGGFILE();
-	if (!music->Open(music_name))
-		fprintf(stderr, " - WARN: Can't open music file.\n");
-	music->Play();
+	
+	// Load the music
+	const char* music_file = xMode.getChildNode("music").getText();
+	GameSound* sound = GetGameState()->GetSound();
+	sound->LoadMusic(music_file);
+	sound->PlayMusic();
 
 	return 0;
 }
 
 void CreditsMode::Shutdown() {
-	if (music)
-		music->Close();
-
 	SetGameState(NULL);
 }
 
@@ -60,8 +51,6 @@ void CreditsMode::Update() {
 
 	scroll_offset -= scroll_speed;
 
-	music->Update();
-
 	// If we finished scrolling or they press the exit key, we exit
 	if (scroll_offset < -int(credits_bmp->h)
 			|| gs->GetInput()->KeyOnce(GAMEKEY_EXIT)) {
@@ -72,7 +61,6 @@ void CreditsMode::Update() {
 CreditsMode::CreditsMode() {
 	SetGameState(NULL);
 	credits_bmp = NULL;
-	music = NULL;
 }
 
 CreditsMode::~CreditsMode() {

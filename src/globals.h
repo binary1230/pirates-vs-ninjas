@@ -48,4 +48,10 @@ typedef unsigned int uint;
 //! This value is overridden by the '-m' command line switch
 #define DEFAULT_DEBUG_MSG_LEVEL 0
 
+// (65536) size of audiostream buffer for music
+#define DEFAULT_MUSIC_BUFFER_SIZE   (1<<16) 
+
+// (32768) amount of data to read from disk each time 
+#define DEFAULT_MUSIC_DATA_SIZE  (1<<15) 
+
 #endif // GLOBALS_H

@@ -1,22 +1,15 @@
 #include "gameSound.h"
 #include "gameState.h"
 #include "assetManager.h"
-
-GameSound::GameSound() {
-	sound_enabled = false;
-	game_state = NULL;
-}
-
-GameSound::~GameSound() {}
+#include "oggFile.h"
 
 //! Plays a sound
 //! Pan goes from 0-255, 128 being the center
 void GameSound::PlaySound(CString name, unsigned int pan) {
-
-	const int freq = 1000;  	// pitch to play at (1000=normal)
-	
 	if (!sound_enabled)
 		return;
+	
+	const int freq = 1000;  	// pitch to play at (1000=normal)
 	
 	s_iter s = sounds.find(name.c_str());
 
@@ -30,6 +23,35 @@ void GameSound::PlaySound(CString name, unsigned int pan) {
 
 	if (spl)
 		play_sample(spl, 255, pan, freq, 0);
+}
+
+bool GameSound::LoadMusic(const char* filename) {
+	if (!sound_enabled)
+		return true;		
+
+	music = GetGameState()->GetAssetManager()->LoadMusic(filename);
+	if (!music) 
+		return false;
+	else
+		return true;
+}
+
+bool GameSound::PlayMusic(bool loop, int vol, int pan, int buflen) {
+	if (!sound_enabled)
+		return true;		
+
+	if (!music)
+		return false;
+	else
+		return music->Play(loop, vol, pan, buflen);
+}
+
+void GameSound::Update() {
+	if (!sound_enabled)
+		return;		
+
+	if (music)
+		music->Update();
 }
 
 //! Loads a sound, you can call it later with PlaySound(sound_name)
@@ -68,6 +90,7 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 int GameSound::Init(GameState* _game_state, bool _sound_enabled) {
 	sound_enabled = _sound_enabled;
 	game_state = _game_state;
+	music = NULL;
 
 	if (!sound_enabled)
 		return 0;	
@@ -80,17 +103,32 @@ int GameSound::Init(GameState* _game_state, bool _sound_enabled) {
 	}
 
 	sounds.clear();
+	
+	set_volume_per_voice(0);
 
 	return 0;
 }
 
 void GameSound::Shutdown() {
-	s_iter s;
-	game_state = NULL;
-				
-	// do NOT free pointers in here
+	// Do NOT free any pointers in here
+	// The actual memory for sounds and music 
+	// is in the AssetManager
 	sounds.clear();
-	sound_enabled = false;
+
+	if (music) {
+		music->Shutdown();
+		music = NULL;
+	}
 
 	remove_sound();
+	sound_enabled = false;
+	game_state = NULL;
 }
+
+GameSound::GameSound() {
+	sound_enabled = false;
+	game_state = NULL;
+	music = NULL;
+}
+
+GameSound::~GameSound() {}

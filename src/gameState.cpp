@@ -311,9 +311,7 @@ int GameState::RunGame(GameOptions* _options) {
 //! at the correct speed.
 
 // XXX NOTE: This is currently a bit more complex than it should be.
-// If you are trying to understand it, ignore all the DEBUG_ and pause
-// junk.  The whole release_ thing needs to be refactored into the INPUT
-// class as well.
+// If you are trying to understand it, ignore all the DEBUG_ and pause junk.
 void GameState::MainLoop() {
 
 	bool wait_for_updates = options->WaitForUpdates();
@@ -322,7 +320,7 @@ void GameState::MainLoop() {
 
 	while (!exit_game) {
 
-		// outstanding_updates is incremented once every 1/60th of a sec.
+		// outstanding_updates is incremented once every 1/30th of a sec.
 		// We may need to update more than once on slower computers
 		// before we can draw, in order to keep the game the same speed
 		// no matter the speed of the computer
@@ -337,7 +335,10 @@ void GameState::MainLoop() {
 				debug_update_count = outstanding_updates;
 
 				while (debug_pause_toggle && !input->KeyOnce(GAMEKEY_DEBUGSTEP)) {
+					
 					input->Update();
+					sound->Update();
+					
 					Draw();
 
 					if (input->KeyOnce(GAMEKEY_SCREENSHOT))
@@ -375,6 +376,7 @@ void GameState::Update() {
 	if (exit_game)
 		return;
 
+	sound->Update();
 	input->Update();
 	modes->Update();
 }

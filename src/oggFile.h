@@ -3,9 +3,7 @@
 
 #include <allegro.h>
 #include "alogg.h"
-
-#define DATASZ  (1<<15) // (32768) amount of data to read from disk each time 
-#define BUFSZ   (1<<16) // (65536) size of audiostream buffer 
+#include "globals.h"
 
 class OGGFILE {
 	protected:
@@ -15,9 +13,9 @@ class OGGFILE {
 		int Poll();
 
 	public:
-		bool Open(const char* file);
-		bool Play(bool loop=false, int vol=255, int pan=128, int buflen=BUFSZ);
-		void Close();
+		bool Init(const char* file);
+		bool Play(bool loop=false, int vol=255, int pan=128, int buflen=DEFAULT_MUSIC_BUFFER_SIZE);
+		void Shutdown();
 
 		void Update();
 

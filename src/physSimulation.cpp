@@ -15,7 +15,7 @@
 #include "objectLayer.h"
 #include "window.h"
 #include "gameOptions.h"
-#include "oggFile.h"
+#include "gameSound.h"
 
 #include <stdio.h>
 #include <map>
@@ -108,9 +108,6 @@ void PhysSimulation::ComputeNewCamera() {
 }
 
 void PhysSimulation::Shutdown() {
-	if (music)
-		music->Close();
-
 	ObjectListIter iter;
 	int max, i;
 
@@ -293,8 +290,6 @@ void PhysSimulation::Update() {
 		return;
 	}
 	
-	music->Update();
-
 	// Do the physics simulation
 	ResetForNextFrame();					// oldpos = current_pos
 	Solve();											// Applies forces
@@ -310,8 +305,6 @@ void PhysSimulation::Update() {
 //! Load the simulation from data in an XML file
 int PhysSimulation::Load(XMLNode &xMode) {			
 
-	AssetManager* m = GetGameState()->GetAssetManager();
-
 	objects.clear();
 	forces.clear();
 	if (LoadHeaderFromXML(xMode) == -1 ||
@@ -322,18 +315,10 @@ int PhysSimulation::Load(XMLNode &xMode) {
 	camera_x = camera_follow->GetX();
 	camera_y = camera_follow->GetY();
 
-	const char* music_name = m->GetPathOf(xMode.getChildNode("music").getText());
-
-	if (strlen(music_name) < 0)
-		return 0;
-
-	set_volume_per_voice(0);
-
-	music = new OGGFILE();
-	if (!music->Open(music_name))
-		fprintf(stderr, " - WARN: Can't open music file.\n");
-	music->Play();
-
+	const char* music_file = xMode.getChildNode("music").getText();
+	GameSound* sound = GetGameState()->GetSound();
+	sound->LoadMusic(music_file);
+	sound->PlayMusic();
 	
 	return 0;	
 }
@@ -772,6 +757,5 @@ int PhysSimulation::LoadForcesFromXML(XMLNode &xMode) {
 
 PhysSimulation::PhysSimulation() : objects(0), forces(0) {
 	camera_scroll_speed = 1.0f;
-	music = NULL;
 }
 PhysSimulation::~PhysSimulation() {}

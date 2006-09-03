@@ -12,8 +12,8 @@ int OGGFILE::Poll() {
 
   data = (char *)alogg_get_oggstream_buffer(s);
   if (data) { 
-    len = pack_fread(data, DATASZ, f);
-    if (len < DATASZ)
+    len = pack_fread(data, DEFAULT_MUSIC_DATA_SIZE, f);
+    if (len < DEFAULT_MUSIC_DATA_SIZE)
       alogg_free_oggstream_buffer(s, len);
     else
       alogg_free_oggstream_buffer(s, -1);
@@ -22,23 +22,23 @@ int OGGFILE::Poll() {
   return alogg_poll_oggstream(s);
 }
 
-bool OGGFILE::Open(const char* file) {
-  char data[DATASZ];
+bool OGGFILE::Init(const char* file) {
+  char data[DEFAULT_MUSIC_DATA_SIZE];
   int len;
 
   if (!(f = pack_fopen(file, F_READ)))
     return false;
 
-  if ((len = pack_fread(data, DATASZ, f)) <= 0)
+  if ((len = pack_fread(data, DEFAULT_MUSIC_DATA_SIZE, f)) <= 0)
 		goto error;
 	
 	assert(f!=NULL);
 
-  if (len < DATASZ) {
+  if (len < DEFAULT_MUSIC_DATA_SIZE) {
     if (!(s = alogg_create_oggstream(data, len, TRUE)))
      	goto error;
   } else {
-    if (!(s = alogg_create_oggstream(data, DATASZ, FALSE)))
+    if (!(s = alogg_create_oggstream(data, DEFAULT_MUSIC_DATA_SIZE, FALSE)))
       goto error;
 	}
 
@@ -68,11 +68,11 @@ bool OGGFILE::Play(bool loop, int vol, int pan, int buflen) {
 	return true;
 }
 
-void OGGFILE::Close() {
+void OGGFILE::Shutdown() {
 	if (f)
 		pack_fclose(f);
 
-	if (s)
+	if (s) 
 		alogg_destroy_oggstream(s);
 
 	f = NULL;
@@ -90,5 +90,5 @@ OGGFILE::OGGFILE() {
 }
 
 OGGFILE::~OGGFILE() {
-	Close();
+	Shutdown();
 }

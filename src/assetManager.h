@@ -38,8 +38,7 @@ typedef map<CString, BITMAP*>::iterator BitmapListIter;
 typedef map<CString, SAMPLE*> SampleList;
 typedef map<CString, SAMPLE*>::iterator SampleListIter;
 
-//typedef map<CString, OGG*> SongList;
-//typedef map<CString, OGG*>::iterator SongListIter;
+class OGGFILE;
 
 //! Manages game assets and memory
 class AssetManager : public GameBase {
@@ -47,7 +46,7 @@ class AssetManager : public GameBase {
 		vector<CString> paths;
 		BitmapList bitmaps;
 		SampleList samples;
-		// SongList   songs;
+		OGGFILE* music;
 		
 	public:
 		int Init(GameState*);
@@ -55,6 +54,7 @@ class AssetManager : public GameBase {
 
 		void FreeBitmaps();
 		void FreeSamples();
+		void FreeMusic();
 		void Free();
 
 		//! Set the search path
@@ -85,8 +85,9 @@ class AssetManager : public GameBase {
 
 		//! Opens an ogg file, or returns NULL on failure
 		//! This function looks in the current search path
-		// OGG* LoadSong(const char* filename);
+		OGGFILE* LoadMusic(const char* filename);
 
+		inline OGGFILE* GetMusic() { return music; };
 
 		//! Returns the current working directory
 		CString GetMacOSXCurrentWorkingDir() const;

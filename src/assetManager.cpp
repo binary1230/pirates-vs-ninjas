@@ -1,4 +1,5 @@
 #include "assetManager.h"
+#include "oggFile.h"
 
 #ifdef PLATFORM_DARWIN
 #include <CoreServices/CoreServices.h>
@@ -15,6 +16,7 @@ int AssetManager::Init(GameState* _game_state) {
 void AssetManager::Free() {
 	FreeBitmaps();
 	FreeSamples();
+	FreeMusic();
 }
 
 // XXX should make these templated...
@@ -45,7 +47,13 @@ void AssetManager::FreeBitmaps() {
 	songs.clear();
 }*/
 
-
+void AssetManager::FreeMusic() {
+	if (music) {
+		music->Shutdown();
+		delete music;
+		music = NULL;
+	}
+}
 
 void AssetManager::Shutdown() {	
 	Free();
@@ -141,6 +149,35 @@ SAMPLE* AssetManager::LoadSound(const char* filename) {
 	}
 
 	return spl;
+}
+
+OGGFILE* AssetManager::LoadMusic(const char* filename) {
+	const char* music_file = GetPathOf(filename);
+
+	if (strlen(music_file) < 0) {
+		fprintf(stderr, " - WARN: Can't find music file: %s\n", filename);
+		return 0;
+	}
+
+	if (music) {
+		music->Shutdown();
+		music = NULL;
+	}
+
+	music = new OGGFILE();
+
+	if (!music) {
+		fprintf(stderr, " - ERROR: Out of memory while trying to load %s!\n", filename);
+		return NULL;
+	}
+	
+	if (!music->Init(music_file) ) {
+		fprintf(stderr, " - WARN: Invalid music file: %s\n", filename);
+		music->Shutdown();
+		return NULL;
+	}
+
+	return music;
 }
 
 AssetManager::AssetManager() {
