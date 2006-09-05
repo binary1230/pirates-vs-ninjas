@@ -21,7 +21,7 @@ void GameOptions::PrintBanner() {
 		VERSION_STRING);
 }
 
-void GameOptions::PrintOptions(char* arg0) {
+void GameOptions::PrintOptions(const char* arg0) {
 	arg0 = basename(arg0);
 	if (!show_help) {
 		fprintf(stderr, "type '%s -h' for more options..\n\n", arg0);
@@ -88,34 +88,27 @@ void GameOptions::Clear() {
 	is_valid = true;
 }
 
-/*
-
-@deftypefn Extension void freeargv (char **@var{vector})
+/* @deftypefn Extension void freeargv (char **@var{vector})
 
 Free an argument vector that was built using @code{buildargv}.  Simply
 scans through @var{vector}, freeing the memory for each argument until
 the terminating @code{NULL} is found, and then frees @var{vector}
 itself.
 
-@end deftypefn
-
-*/
-
+@end deftypefn */
 void freeargv (char** vector) {
   register char **scan;
 
-  if (vector != NULL)
-    {
-      for (scan = vector; *scan != NULL; scan++)
-	{
-	  free (*scan);
+  if (vector != NULL) {
+		for (scan = vector; *scan != NULL; scan++) {
+			free (*scan);
+		}
+    
+		free (vector);
 	}
-      free (vector);
-    }
 }
-/*
 
-@deftypefn Extension char** dupargv (char **@var{vector})
+/* @deftypefn Extension char** dupargv (char **@var{vector})
 
 Duplicate an argument vector.  Simply scans through @var{vector},
 duplicating each argument until the terminating @code{NULL} is found.
@@ -123,11 +116,8 @@ Returns a pointer to the argument vector if successful.  Returns
 @code{NULL} if there is insufficient memory to complete building the
 argument vector.
 
-@end deftypefn
-
-*/
-
-char ** dupargv (char **argv) {
+@end deftypefn */
+char ** dupargv (const char **argv) {
   int argc;
   char **copy;
   
@@ -141,26 +131,28 @@ char ** dupargv (char **argv) {
     return NULL;
   
   /* the strings */
-  for (argc = 0; argv[argc] != NULL; argc++)
-    {
-      int len = strlen (argv[argc]);
-      copy[argc] = (char*)malloc (sizeof (char *) * (len + 1));
-      if (copy[argc] == NULL)
-	{
-	  freeargv (copy);
-	  return NULL;
-	}
-      strcpy (copy[argc], argv[argc]);
-    }
+  for (argc = 0; argv[argc] != NULL; argc++) {
+    int len = strlen (argv[argc]);
+    copy[argc] = (char*)malloc (sizeof (char *) * (len + 1));
+    if (copy[argc] == NULL)	{
+		 	freeargv (copy);
+		  return NULL;
+		}
+  	strcpy (copy[argc], argv[argc]);
+  }
   copy[argc] = NULL;
   return copy;
 }
 
-bool GameOptions::ParseArguments(int argc, char* argv[]) {
+bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 	
 	char c;
 	bool _fullscreen_option_set = false;
 	char** new_argv = dupargv(argv);
+	
+	if (!new_argv) {
+		return (is_valid = false);
+	}
 
 	Clear();
 
@@ -278,7 +270,10 @@ bool GameOptions::ParseArguments(int argc, char* argv[]) {
 		}
 	}
 
-	freeargv(new_argv);
+	if (new_argv) {
+		freeargv(new_argv);
+		new_argv = NULL;
+	}
 
 	return IsValid();
 }

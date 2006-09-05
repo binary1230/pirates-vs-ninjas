@@ -182,10 +182,12 @@ OGGFILE* AssetManager::LoadMusic(const char* filename) {
 
 AssetManager::AssetManager() {
 	ResetPaths();
+	music = NULL;
 }
 
 AssetManager::~AssetManager() {
 	Shutdown();
+	music = NULL;
 }
 
 //  -------------------------------------------------------------------------

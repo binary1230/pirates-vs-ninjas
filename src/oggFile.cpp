@@ -4,6 +4,10 @@
 #include "oggFile.h"
 
 int OGGFILE::Poll() {
+
+	if (!initialized)
+		return -1;
+
 	char *data;
   long len;
 
@@ -23,6 +27,13 @@ int OGGFILE::Poll() {
 }
 
 bool OGGFILE::Init(const char* file) {
+	if (initialized) {
+		fprintf(stderr, "WARNING: Ogg File already loaded, "
+										"and we're trying to load another one!\n");
+		return false;
+	}
+
+	initialized = false;
   char data[DEFAULT_MUSIC_DATA_SIZE];
   int len;
 
@@ -46,6 +57,7 @@ bool OGGFILE::Init(const char* file) {
 	}
 
 	assert(s!=NULL);
+	initialized = true;
 	return true;
 
 	// DAC: Yes - GOTO. Not evil when used _correctly_
@@ -57,10 +69,15 @@ bool OGGFILE::Init(const char* file) {
 		f = NULL;
 		s = NULL;
 
+	initialized = false;
 	return false;
 }
 
 bool OGGFILE::Play(bool loop, int vol, int pan, int buflen) {
+	if (!initialized) {
+		return false;
+	}
+
 	assert(s!=NULL);
 	assert(f!=NULL);
 
@@ -72,7 +89,10 @@ bool OGGFILE::Play(bool loop, int vol, int pan, int buflen) {
 	return true;
 }
 
-void OGGFILE::Shutdown() {
+void OGGFILE::Shutdown() {	
+	if (!initialized)
+		return;
+
 	if (f)
 		pack_fclose(f);
 
@@ -81,14 +101,19 @@ void OGGFILE::Shutdown() {
 
 	f = NULL;
 	s = NULL;
+	initialized = false;
 }
 
 void OGGFILE::Update() {
+	if (!initialized)
+		return;
+
 	if (Poll() != ALOGG_OK) 
 		fprintf(stderr, " - MUSIC: ERR: Poll failed.\n");
 }
 
 OGGFILE::OGGFILE() {
+	initialized = false;
 	f = NULL;
 	s = NULL;
 }

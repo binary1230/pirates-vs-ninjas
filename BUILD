@@ -1,6 +1,11 @@
 Currently you can build for windows, linux, or mac
 You can also build the windows packages under linux (and probably mac)
 
+To enable debugging:
+----------
+CXXFLAGS="-ggdb" CFLAGS="-ggdb" ./configure && make
+----------
+
 OUT OF DATE, CHECK THE WIKI
 
 ----------------------

@@ -12,6 +12,8 @@ class OGGFILE {
 
 		int Poll();
 
+		bool initialized;
+
 	public:
 		bool Init(const char* file);
 		bool Play(bool loop=false, int vol=255, int pan=128, int buflen=DEFAULT_MUSIC_BUFFER_SIZE);

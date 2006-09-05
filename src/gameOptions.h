@@ -70,14 +70,14 @@ class GameOptions {
 		
 	public:
 		//! Print the list of available options to stdout
-		void PrintOptions(char* arg0);
+		void PrintOptions(const char* arg0);
 
 		//! Print the banner for the game to stdout
 		void PrintBanner();
 
 
 		//! Parse the command line arguments
-		bool ParseArguments(int argc, char* argv[]);
+		bool ParseArguments(const int argc, const char* argv[]);
 
 		//! See if the current state of our options make sense
 		bool IsValid();
