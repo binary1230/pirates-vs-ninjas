@@ -25,10 +25,12 @@ int CreditsMode::Init(GameState* gs, XMLNode xMode) {
 		return -1;
 	
 	// Load the music
-	const char* music_file = xMode.getChildNode("music").getText();
-	GameSound* sound = GetGameState()->GetSound();
-	sound->LoadMusic(music_file);
-	sound->PlayMusic();
+	if (xMode.nChildNode("music") == 1) {
+		const char* music_file = xMode.getChildNode("music").getText();
+		GameSound* sound = GetGameState()->GetSound();
+		sound->LoadMusic(music_file);
+		sound->PlayMusic();
+	}
 
 	return 0;
 }

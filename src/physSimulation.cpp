@@ -315,10 +315,12 @@ int PhysSimulation::Load(XMLNode &xMode) {
 	camera_x = camera_follow->GetX();
 	camera_y = camera_follow->GetY();
 
-	const char* music_file = xMode.getChildNode("music").getText();
-	GameSound* sound = GetGameState()->GetSound();
-	sound->LoadMusic(music_file);
-	sound->PlayMusic();
+	if (xMode.nChildNode("music") == 1) {
+		const char* music_file = xMode.getChildNode("music").getText();
+		GameSound* sound = GetGameState()->GetSound();
+		sound->LoadMusic(music_file);
+		sound->PlayMusic();
+	}
 	
 	return 0;	
 }
@@ -636,7 +638,7 @@ int PhysSimulation::LoadObjectFromXML(
 				return -1;
 			}
 				
-			// if <alignBottom> is present, we align this sprite with ITs 
+			// if <alignTop> is present, we align this sprite with ITs 
 			// bottom coordinates. (e.g. saying 0 puts the player on the floor)
 			if (xPos.nChildNode("alignTop")>0) {
 				y -= obj->GetHeight();
