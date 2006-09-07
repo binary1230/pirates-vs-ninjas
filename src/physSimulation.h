@@ -89,6 +89,9 @@ class PhysSimulation : public GameMode {
 												ObjectLayer *layer, 
 												ObjectDefMapping &objectDefs);
 
+			//! ONLY used during init, temp variables for "repeat" xml tags
+			int repeater_current_x, repeater_current_y;
+
 		public:
 			int Init(GameState*, XMLNode);
 			void Shutdown();

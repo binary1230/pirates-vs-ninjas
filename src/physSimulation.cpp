@@ -525,6 +525,9 @@ int PhysSimulation::LoadLayerFromXML(
 	// objects while only having to declare just one (combine this
 	// with random positions, and you have an interesting formula for
 	// random level generation!)
+	//
+	// Note: this whole "repeat" thing is almost a hack and won't 
+	// be needed once we have an actual map editor in place.
 	int times_to_repeat, j;
 	XMLNode xRepeater;
 	max = xLayer.nChildNode("repeat");
@@ -537,18 +540,33 @@ int PhysSimulation::LoadLayerFromXML(
 			fprintf(stderr, "-- Invalid # repeat times!\n");
 			return -1;
 		}
+
+		repeater_current_x = 0;
+		repeater_current_y = 0;
+
+		if (xRepeater.nChildNode("starting_x") == 1) {
+			if (!xRepeater.getChildNode("starting_x").getInt(repeater_current_x)) {
+				fprintf(stderr, "ERROR: Invalid starting_x specified in <repeat>\n");
+				return -1;
+			}
+		} 
 		
+		if (xRepeater.nChildNode("starting_y") == 1) {
+			if (!xRepeater.getChildNode("starting_y").getInt(repeater_current_y)) {
+				fprintf(stderr, "ERROR: Invalid starting_y specified in <repeat>\n");
+				return -1;
+			}
+		}
+
 		xObject = xRepeater.getChildNode("object");
 
 		// Repeat the creation of this object the specified # of times.
 		for (j=0; j < times_to_repeat; j++) {
-
 			if (CreateObjectFromXML(xObject, layer, objectDefs) == -1)
 				return -1;
 		}	
 	}
 
-	// 3) for every <object> we find, load it
 	max = xLayer.nChildNode("object");
 
   for (i=iterator=0; i < max; i++) {
@@ -595,14 +613,34 @@ int PhysSimulation::LoadObjectFromXML(
 
 			XMLNode xPos = xObject.getChildNode("position");
 			CString type = xPos.getAttribute("type");
+
+			// Figure out the position type.
+			// Currently 3 types exist:
+			// 1) "fixed" - regular XY position, nothing fancy
+			//
+			// 2) "random" - pick random numbers in a range for the XY position
+			// 							 (This would be useful for e.g. making 50 randomly
+			// 							 placed flowers in a level)
+			//
+			// 3) "offset" - specify the distance from which to place this object
+			//               from the last one
+			//               (This would be useful for e.g. making 20 fenceposts 
+			//               exactly 10 pixels from each other)
+			//               
+			// Note that 2) and 3) are only really useful inside an XML <repeat>
+			// tag.  You can use them to position tons of objects with only one 
+			// line of XML.  2) and 3) won't ever be used unless someone is
+			// hand-coding the XML.  Once the map editor is done, only 1) will
+			// be useful.
+
 			if (type == CString("fixed")) {
-				
+
 				if (!xPos.getChildNode("x").getInt(x)) {
 					fprintf(stderr, "-- Invalid X!\n");
 					return -1;	
 				}
 				if (!xPos.getChildNode("y").getInt(y)) {
-					fprintf(stderr, "-- Invalid X!\n");
+					fprintf(stderr, "-- Invalid Y!\n");
 					return -1;
 				}
 				
@@ -631,7 +669,24 @@ int PhysSimulation::LoadObjectFromXML(
 				}
 
 				x = Rand(xmin, xmax);
-				y = Rand(ymin, ymax);
+				y = Rand(ymin, ymax);	
+			} else if (type == CString("offset")) {
+
+				int _offset_x, _offset_y;
+				if (!xPos.getChildNode("x_offset").getInt(_offset_x)) {
+					fprintf(stderr, "-- Invalid X!\n");
+					return -1;	
+				}
+				if (!xPos.getChildNode("y_offset").getInt(_offset_y)) {
+					fprintf(stderr, "-- Invalid Y!\n");
+					return -1;
+				}
+
+				x = repeater_current_x;
+				y = repeater_current_y;
+	
+				repeater_current_x += _offset_x;
+				repeater_current_y += _offset_y;
 				
 			} else {
 				fprintf(stderr, "Unknown object position type: %s\n", type.c_str());
