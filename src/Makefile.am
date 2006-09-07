@@ -36,8 +36,7 @@ objects/objectCollectable.h objects/objectFan.h objects/objectDoor.h \
 input.h inputLiveHandler.h inputRecord.h inputPlayback.h \
 force.h forceGravity.h forceInput.h forceFactory.h \
 animation.h animations.h \
-credits.h gameMenu.h physSimulation.h sprite.h \
-stdafx.h
+credits.h gameMenu.h physSimulation.h sprite.h 
 
 ninjas_SOURCES = \
 external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
