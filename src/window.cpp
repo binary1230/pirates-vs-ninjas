@@ -6,6 +6,8 @@
 #include "sprite.h"
 #include "gameOptions.h"
 
+#define DEFAULT_COLOR_DEPTH 16
+
 int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
 
@@ -123,11 +125,11 @@ int Window::Init(	GameState* _game_state,
 	else 
 		vheight = 0;
 
-	int depth = 16;
+	int depth = DEFAULT_COLOR_DEPTH;
 	set_color_depth(depth);
-	/* This code doesn't work with allegro 4.0.x (no get_color_depth())
-	 * if (get_color_depth() != depth)
-		fprintf(stderr, "window: Warning: Asked for %i-bit color mode, got %i-bit instead.\n", depth, get_color_depth());*/
+
+	if (get_color_depth() != depth)
+		fprintf(stderr, "window: Warning: Asked for %i-bit color mode, got %i-bit instead.\n", depth, get_color_depth());
 									
 	if (set_gfx_mode(gfx_mode, width, height, 0, vheight) != 0) {
 		fprintf(stderr, 
