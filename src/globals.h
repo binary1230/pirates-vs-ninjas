@@ -3,10 +3,6 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 //! Set to '1' to run AI training functions
 #define AI_TRAINING 1
 

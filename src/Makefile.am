@@ -3,8 +3,8 @@ bin_PROGRAMS = ninjas
 
 VPATH = external objects
 
-CXXCOMPILE = 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-							$(AM_CPPFLAGS) $(CPPFLAGS) $(ninjas_CXXFLAGS) $(CXXFLAGS)
+PRE_CXXCOMPILE = 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+									$(AM_CPPFLAGS) $(CPPFLAGS) $(PRECOMPILED_CXXFLAGS) $(CXXFLAGS)
 
 # AM_CXXFLAGS = -Wall
 
@@ -14,7 +14,7 @@ CXXCOMPILE = 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 # for profiling
 # ninjas_LDFLAGS = -pg
 
-ninjas_CXXFLAGS = -Wall @ninjas_CXXFLAGS@ -include stdafx.h
+# ninjas_CXXFLAGS = @ninjas_CXXFLAGS@ -include precompiled.h
 
 # for alfont, not used right now
 # external/alfont.h external/alfontdll.h 
@@ -36,7 +36,7 @@ objects/objectCollectable.h objects/objectFan.h objects/objectDoor.h \
 input.h inputLiveHandler.h inputRecord.h inputPlayback.h \
 force.h forceGravity.h forceInput.h forceFactory.h \
 animation.h animations.h \
-credits.h gameMenu.h physSimulation.h sprite.h 
+credits.h gameMenu.h physSimulation.h sprite.h precompiled.h stdafx.h
 
 ninjas_SOURCES = \
 external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
@@ -63,17 +63,18 @@ EXTRA_DIST = Doxyfile Doxyfile.in
 # if we're using precompiled headers...
 if PRECOMPILE_ENABLE
 
-BUILT_SOURCES = stdafx.h.gch
-CLEANFILES = 		stdafx.h.gch
+BUILT_SOURCES = precompiled.h.gch
+CLEANFILES = 		precompiled.h.gch
 
-stdafx.h.gch: stdafx.h
-	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/stdafx.h.Tpo" \
-	-c -o $@ $<; then mv -f "stdafx.h.Tpo" "$(DEPDIR)/stdafx.h.Po"; \
-	else rm -f "$(DEPDIR)/stdafx.h.Tpo"; exit 1; fi;
-	$(MAKE) -C ../ clean
+include ./$(DEPDIR)/precompiled.h.Po
 
-$(DEPDIR)/stdafx.h.Po:
+$(DEPDIR)/precompiled.h.Po:
 	if test ! -d "$(DEPDIR)"; then mkdir $(DEPDIR); fi
-	touch $(DEPDIR)/stdafx.h.Po
+	touch $(DEPDIR)/precompiled.h.Po
+	
+precompiled.h.gch: precompiled.h
+	if $(PRE_CXXCOMPILE) -x c++-header -MT $@ -MD -MP -MF "$(DEPDIR)/precompiled.h.Tpo" \
+	-c -o $@ $<; then mv -f "$(DEPDIR)/precompiled.h.Tpo" "$(DEPDIR)/precompiled.h.Po"; \
+	else rm -f "$(DEPDIR)/precompiled.h.Tpo"; exit 1; fi;
 
 endif

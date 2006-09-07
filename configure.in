@@ -227,7 +227,16 @@ dnl -----------------
 
 AM_CONDITIONAL(PRECOMPILE_ENABLE, [test "$PrecompileEnable" = "yes"])
 
-ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects"
+ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects"
+
+dnl keep this SEPERATE even though here it is identical
+PRECOMPILED_CXXFLAGS="$ninjas_CXXFLAGS"
+
+if test x$PrecompileEnable = xyes; then
+ninjas_CXXFLAGS="$ninjas_CXXFLAGS -include precompiled.h"
+fi
+
+ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
 ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"
 
 LDFLAGS="$extra_libraries $LDFLAGS"
@@ -235,12 +244,17 @@ LIBS="$LIBS $ALLEGRO_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB"
 
 AC_SUBST(ninjas_CXXFLAGS)
 AC_SUBST(ninjas_LDFLAGS)
+AC_SUBST(PRECOMPILED_CXXFLAGS)
 
 AC_SUBST(extra_libraries)
 
 dnl DOES NOT WORK RIGHT NOW
 DATA_DIR="${prefix}/data"
 AC_DEFINE_UNQUOTED([DATA_DIR], "${DATA_DIR}", [The installer prefix e.g. /usr/local])
+
+if test x$PrecompileEnable = xyes; then
+	AC_DEFINE([PRECOMPILE_ENABLE], "1", [Whether we are precompiling or not])
+fi
 
 AC_SUBST(OGGVORBIS_CFLAGS)
 AC_SUBST(OGGVORBIS_LIBS)
