@@ -1,17 +1,10 @@
 #ifndef GAMESOUND_H
 #define GAMESOUND_H
 
+#include "stdafx.h"
 #include "globals.h"
 #include "gameBase.h"
-#include "xmlParser.h"
-#include "StdString.h"
 #include "globals.h"
-
-#include <allegro.h>
-#include <stdio.h>
-#include <map>
-
-using namespace std;
 
 //! Maps a sound name to it's handle (e.g. "jump" to the sample)
 typedef map<CString, SAMPLE*> SoundMapping;

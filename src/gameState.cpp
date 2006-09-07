@@ -1,6 +1,5 @@
 #include "gameState.h"
 
-#include "loadpng.h"
 #include "gameOptions.h"
 #include "input.h"
 #include "inputLiveHandler.h"

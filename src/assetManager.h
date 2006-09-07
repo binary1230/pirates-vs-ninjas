@@ -1,20 +1,9 @@
 #ifndef ASSET_MANAGER_H
 #define ASSET_MANAGER_H
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <vector>
-#include <map>
-#include <stdarg.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <allegro.h>
-using namespace std;
+#include "stdafx.h"
 
-#include "alogg.h"
 #include "gameBase.h"
-#include "StdString.h"
 #include "globals.h"
 
 /* The primary things the Asset manager does are this:

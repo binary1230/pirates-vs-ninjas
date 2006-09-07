@@ -1,11 +1,7 @@
 #ifndef OBJECT_FACTORY_H
 #define OBJECT_FACTORY_H
 
-#include <allegro.h>
-#include <stdio.h>
-#include <vector>
-
-using namespace std;
+#include "stdafx.h"
 
 class ObjectFactory;
 class AssetManager;
@@ -22,8 +18,6 @@ class ObjectSpring;
 class PhysSimulation;
 
 #include "gameBase.h"
-#include "xmlParser.h"
-#include "StdString.h"
 #include "animation.h"
 #include "objectIDs.h"
 

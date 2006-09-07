@@ -1,16 +1,12 @@
 #ifndef CREDITS_H
 #define CREDITS_H
 
-#include <allegro.h>
-#include <stdio.h>
+#include "stdafx.h"
+#include "gameBase.h"
+#include "gameMode.h"
 
 class GameState;
 class OGGFILE;
-
-#include "gameBase.h"
-#include "gameMode.h"
-#include "StdString.h"
-#include "xmlParser.h"
 
 //! Represents a physical simulation (the main game levels)
 class CreditsMode : public GameMode {

@@ -3,7 +3,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <allegro.h>
+#include "stdafx.h"
 
 //! Incremented by Timer()
 extern volatile int outstanding_updates;

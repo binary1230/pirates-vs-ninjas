@@ -1,17 +1,13 @@
 #ifndef OBJ_CONTROLLER_H
 #define OBJ_CONTROLLER_H
 
-#include <allegro.h>
-#include <vector>
-using namespace std;
+#include "stdafx.h"
+#include "object.h"
 
 class GameState;
 class Sprite;
 class ObjectFactory;
 class PhysSimulation;
-
-#include "object.h"
-#include "xmlParser.h"
 
 //! A button on the Controller and its associated sprite
 struct Button {

@@ -1,14 +1,10 @@
 #ifndef GAMEMODES_H
 #define GAMEMODES_H
 
+#include "stdafx.h"
 #include "gameBase.h"
-#include "xmlParser.h"
-#include "StdString.h"
 
 class GameMode;
-
-#include <vector>
-using namespace std;
 
 class GameModes : public GameBase {
 	protected:

@@ -1,7 +1,6 @@
 #include "physSimulation.h"
 
 #include "assetManager.h"
-#include "xmlParser.h"
 #include "globals.h"
 #include "objectFactory.h"
 #include "object.h"
@@ -16,11 +15,6 @@
 #include "window.h"
 #include "gameOptions.h"
 #include "gameSound.h"
-
-#include <stdio.h>
-#include <map>
-#include <vector>
-using namespace std;
 
 int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
 	SetGameState(gs);

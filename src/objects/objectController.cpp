@@ -1,12 +1,11 @@
 #include "objectController.h"
+
 #include "assetManager.h"
 #include "window.h"
 #include "sprite.h"
-#include "xmlParser.h"
 #include "input.h"
 #include "gameState.h"
 #include "physSimulation.h"
-#include "StdString.h"
 
 int ControllerObject::GetHeight() {
 	return controller_sprite->bmp->h;

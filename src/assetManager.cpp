@@ -1,10 +1,6 @@
 #include "assetManager.h"
 #include "oggFile.h"
 
-#ifdef PLATFORM_DARWIN
-#include <CoreServices/CoreServices.h>
-#endif 
-
 int AssetManager::Init(GameState* _game_state) {
 	SetGameState(_game_state);
 	ResetPaths();

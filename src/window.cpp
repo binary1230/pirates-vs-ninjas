@@ -1,6 +1,5 @@
-#include <allegro.h>
-
 #include "window.h"
+
 #include "gameState.h"
 #include "globals.h"
 #include "sprite.h"

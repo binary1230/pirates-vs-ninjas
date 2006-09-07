@@ -1,16 +1,11 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include <allegro.h>
-#include <vector>
-#include <assert.h>
-#include "StdString.h"
-using namespace std;
-
-class BaseInput;
-
+#include "stdafx.h"
 #include "gameBase.h"
 #include "globals.h"
+
+class BaseInput;
 
 //! The max number of "player keys" (e.g. JUMP, LEFT, etc)
 #define PLAYERKEY_COUNT					5

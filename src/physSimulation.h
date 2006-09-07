@@ -1,10 +1,9 @@
 #ifndef PHYS_SYSTEM_H
 #define PHYS_SYSTEM_H
 
-#include <list>
-#include <vector>
-#include <map>
-using namespace std;
+#include "stdafx.h"
+#include "gameBase.h"
+#include "gameMode.h"
 
 class PhysSimulation;
 class GameState;
@@ -14,11 +13,6 @@ class ObjectFactory;
 class ForceFactory;
 class ObjectLayer;
 class OGGFILE;
-
-#include "gameBase.h"
-#include "gameMode.h"
-#include "StdString.h"
-#include "xmlParser.h"
 
 //! Maps an object definition name to an XMLNode 
 //! (e.g. maps "bad_guy_1" to its corresponding XML data)

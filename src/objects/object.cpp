@@ -1,4 +1,5 @@
 #include "object.h"
+
 #include "gameState.h"
 #include "window.h"
 #include "force.h"
@@ -7,9 +8,7 @@
 #include "animation.h"
 #include "animations.h"
 #include "physSimulation.h"
-#include "xmlParser.h"
 #include "gameOptions.h"
-#include "StdString.h"
 #include "gameSound.h"
 #include "objectLayer.h"
 

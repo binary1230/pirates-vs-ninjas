@@ -14,8 +14,6 @@ Behavior is undefined if the pathname ends in a directory separator.
 
 */
 
-#include <ctype.h>
-
 #ifndef DIR_SEPARATOR
 #define DIR_SEPARATOR '/'
 #endif

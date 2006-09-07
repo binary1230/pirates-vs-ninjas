@@ -1,10 +1,7 @@
 #ifndef VECTOR2D_H
 #define VECTOR2D_H
 
-#include <stdio.h>
-#include <math.h>
-#include <vector>
-
+#include "stdafx.h"
 #include "globals.h"
 
 using namespace std;

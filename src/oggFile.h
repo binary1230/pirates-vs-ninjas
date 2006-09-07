@@ -1,8 +1,7 @@
 #ifndef OGGFILE_H
 #define OGGFILE_H
 
-#include <allegro.h>
-#include "alogg.h"
+#include "stdafx.h"
 #include "globals.h"
 
 class OGGFILE {

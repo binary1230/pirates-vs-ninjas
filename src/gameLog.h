@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <vector>
-using namespace std;
+#include "stdafx.h"
 
 #include "gameBase.h"
 

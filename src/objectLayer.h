@@ -1,11 +1,7 @@
 #ifndef OBJECTLAYER_H
 #define OBJECTLAYER_H
 
-#include <allegro.h>
-#include <list>
-#include <algorithm>
-using namespace std;
-
+#include "stdafx.h"
 #include "gameBase.h"
 
 class Object;

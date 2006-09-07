@@ -5,16 +5,13 @@
 
 #define RADIUS_BLOCK_SPEED 0.01f
 
-#include <math.h>
-#include <stdio.h>
+#include "stdafx.h"
+#include "object.h"
 
 class RadiusBlockObject;
 class GameState;
 class ObjectFactory;
 class PhysSimulation;
-
-#include "object.h"
-#include "xmlParser.h"
 
 //! An object that moves around in a circle
 

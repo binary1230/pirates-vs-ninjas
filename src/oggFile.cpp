@@ -1,6 +1,3 @@
-// OGG reading funtions based on alogg's example.c
-
-#include <assert.h>
 #include "oggFile.h"
 
 int OGGFILE::Poll() {

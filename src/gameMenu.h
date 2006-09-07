@@ -3,12 +3,9 @@
 
 // Note: This class is currently PLACEHOLDER for real menu and UI stuff.
 
-#include <allegro.h>
-#include <vector>
-using namespace std;
+#include "stdafx.h"
 
 #include "gameMode.h"
-#include "StdString.h"
 
 class GameMenu : public GameMode {
 	protected:

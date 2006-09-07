@@ -1,20 +1,14 @@
 #ifndef RECT_H
 #define RECT_H
 
+#include "stdafx.h"
 #include "vector2D.h"
-
-#include <stdio.h>
-#include <math.h>
-#include <vector>
-
-// x1,y1 = bottom left
-// x2,y2 = top right
-
-using namespace std;
 
 class Rect;
 
 //! A rectangle class, useful for bounding boxes/etc
+// x1,y1 = bottom left
+// x2,y2 = top right
 class Rect {
 	private:
 		float x1,y1,x2,y2;	

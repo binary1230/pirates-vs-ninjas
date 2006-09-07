@@ -2,6 +2,14 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include "stdafx.h"
+#include "globals.h"
+
+#include "gameBase.h"
+#include "rect.h"
+#include "vector2D.h"
+#include "animations.h"
+
 class Object;
 class Force;
 class Animation;
@@ -9,18 +17,6 @@ class PhysSimulation;
 class Sprite;
 class ObjectLayer;
 class ObjectFactory;
-
-#include <allegro.h>
-#include <stdio.h>
-#include <vector>
-using namespace std;
-
-#include "globals.h"
-#include "gameBase.h"
-#include "rect.h"
-#include "vector2D.h"
-#include "xmlParser.h"
-#include "animations.h"
 
 struct CollisionDirection {
 	unsigned up : 1;

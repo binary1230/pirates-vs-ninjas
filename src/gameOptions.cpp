@@ -5,8 +5,6 @@
 
    This file is part of the libiberty library. (GPL)*/
 
-#include <malloc.h>
-
 #include "gameOptions.h"
 #include "basename.h"
 #include "window.h"

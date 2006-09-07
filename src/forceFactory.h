@@ -1,8 +1,7 @@
 #ifndef FORCE_FACTORY_H
 #define FORCE_FACTORY_H
 
-#include <allegro.h>
-#include <stdio.h>
+#include "stdafx.h"
 
 class Force;
 class GameState;

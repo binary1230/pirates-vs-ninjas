@@ -1,8 +1,7 @@
 #ifndef FORCE_H
 #define FORCE_H
 
-#include <vector>
-using namespace std;
+#include "stdafx.h"
 
 class Force;
 class GameState;

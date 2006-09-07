@@ -1,7 +1,7 @@
 #ifndef GAMEBASE_H
 #define GAMEBASE_H
 
-#include <stdio.h>
+#include "stdafx.h"
 
 class GameState;
 

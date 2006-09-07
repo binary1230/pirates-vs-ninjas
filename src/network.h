@@ -1,12 +1,8 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-#include <stdio.h>
-#include <allegro.h>
-#include <stdlib.h>
-
+#include "stdafx.h"
 #include "gameBase.h"
-#include "StdString.h"
 
 class ezSockets;
 class GameState;

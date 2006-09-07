@@ -15,13 +15,8 @@
 #include "objectFan.h"
 #include "objectDoor.h"
 #include "assetManager.h"
-#include "StdString.h"
 #include "animations.h"
 #include "gameSound.h"
-
-#include <map>
-
-using namespace std;
 
 // Creates an object from an XML definition
 // in: xObjectDef - XML representation of an object's definition

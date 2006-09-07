@@ -1,14 +1,13 @@
 #ifndef SPRING_OBJECT_H
 #define SPRING_OBJECT_H
 
-#include <stdio.h>
+#include "stdafx.h"
+
+#include "object.h"
 
 class GameState;
 class ObjectFactory;
 class PhysSimulation;
-
-#include "object.h"
-#include "xmlParser.h"
 
 //! A "simple" Object (e.g. scenery) - No collisions
 class SpringObject : public Object {

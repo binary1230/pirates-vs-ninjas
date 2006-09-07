@@ -1,17 +1,12 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include <allegro.h>
-#include <stdio.h>
-#include <vector>
-#include <map>
-using namespace std;
+#include "stdafx.h"
 
 class Sprite;
 
 #include "globals.h"
 #include "gameBase.h"
-#include "xmlParser.h"
 #include "StdString.h"
 
 //! Maps an animation name to an integer ID (e.g. "bad_guy_1" to BAD_GUY_1)

@@ -1,10 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include <allegro.h>
-#include <stdio.h>
-#include <vector>
-using namespace std;
+#include "stdafx.h"
 
 class GameState;
 class GameOptions;
@@ -20,8 +17,6 @@ class GameNetwork;
 
 #include "globals.h"
 #include "timer.h"
-#include "StdString.h"
-#include "xmlParser.h"
 
 //! Represents the current state of the game.
 

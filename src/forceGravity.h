@@ -1,6 +1,8 @@
 #ifndef FORCEGRAV_H
 #define FORCEGRAV_H
 
+#include "stdafx.h"
+
 class ForceGravity;
 class Force;
 class Object;

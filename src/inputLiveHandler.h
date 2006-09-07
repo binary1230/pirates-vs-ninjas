@@ -1,12 +1,10 @@
 #ifndef INPUTLIVEHANDLER_H
 #define INPUTLIVEHANDLER_H
 
-#include <allegro.h>
-#include <stdio.h>
+#include "stdafx.h"
+#include "input.h"
 
 class InputLive;
-
-#include "input.h"
 
 //! Reads input devices in realtime (used for normal game play, not demos)
 class InputLive : public BaseInput {

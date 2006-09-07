@@ -1,12 +1,10 @@
 #ifndef INPUT_PLAYBACK_kHANDLER_H
 #define INPUT_PLAYBACK_kHANDLER_H
 
-#include <allegro.h>
-#include <stdio.h>
+#include "stdafx.h"
+#include "input.h"
 
 class GameState;
-
-#include "input.h"
 
 //! Play back recorded input from a file (used for playing back demos)
 class InputPlayback : public BaseInput {

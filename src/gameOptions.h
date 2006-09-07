@@ -3,12 +3,7 @@
 #ifndef ARGS_H
 #define ARGS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-
-#include "StdString.h"
+#include "stdafx.h"
 
 //! Holds and validates the various command line and game options
 class GameOptions {

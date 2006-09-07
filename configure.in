@@ -16,9 +16,34 @@ VERSION_EXTRA="-beta1"
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_FIX$VERSION_EXTRA"
 
+# Test for GCC and version
+GccVersion=0
+PrecompileEnable="yes"
+
+AC_PROG_AWK
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
+
+# stolen from Xara
+AC_MSG_CHECKING([Compiler])
+if test $ac_compiler_gnu = "yes"; then
+	GccVersion=`$CXX -v 2>&1 | $AWK '{ if ($2 ~ /version/) print $3 }'`
+	GccVersion=`echo $GccVersion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
+
+	if test -n "$GccVersion" && test "$GccVersion" -ge 3004000; then
+		AC_MSG_RESULT([gcc >= 3.4.0, PreCompiled headers enabled])
+		WARN_FLAGS="$WARNFLAGS $WARN_FLAGS34"
+		OPT_FLAGS="$OPT_FLAGS $OPT_FLAGS34"
+		PrecompileEnable="yes"
+	else
+		AC_MSG_RESULT([gcc < 3.4.0, PreCompiled headers disabled])
+		PrecompileEnable="no"
+	fi
+else
+	AC_MSG_RESULT([non-gcc, PreCompiled headers disabled])
+	PrecompileEnable="no"
+fi
 
 AC_LANG(C++)
 
@@ -199,6 +224,8 @@ AC_CHECK_HEADERS([list])
 dnl -----------------
 dnl Set it all up
 dnl -----------------
+
+AM_CONDITIONAL(PRECOMPILE_ENABLE, [test "$PrecompileEnable" = "yes"])
 
 ninjas_CXXFLAGS="$ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects"
 ninjas_LDFLGAS="$ninjas_LDFLAGS $extra_libraries"

@@ -1,9 +1,6 @@
-#include <allegro.h>
-#include <stdio.h>
-
+#include "stdafx.h"
 #include "gameState.h"
 #include "gameOptions.h"
-#include "StdString.h"
 
 int start_game_instance(const int argc, const char* argv[]) {
 	

@@ -1,12 +1,8 @@
 #ifndef PLAYEROBJECT_H
 #define PLAYEROBJECT_H
 
-#include <allegro.h>
-#include <math.h>
-#include <stdio.h>
-#include <vector>
-
-using namespace std;
+#include "stdafx.h"
+#include "object.h"
 
 class ObjectPlayer;
 class Animation;
@@ -17,9 +13,6 @@ class BaseInput;
 class ObjectFactory;
 class PhysSimulation;
 class DoorObject;
-
-#include "object.h"
-#include "xmlParser.h"
 
 enum PlayerState {
 	STANDING,

@@ -1,8 +1,8 @@
 #include "objectDoor.h"
+
 #include "globals.h"
 #include "animation.h"
 #include "gameState.h"
-#include <allegro.h>
 
 // activate the door's action
 // someday this will be a 'switch (action) {case warp: ... }' etc

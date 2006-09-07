@@ -2,15 +2,13 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <allegro.h>
-#include <stdio.h>
+#include "stdafx.h"
+#include "globals.h"
+#include "gameBase.h"
+#include "rect.h"
 
 class GameState;
 class Sprite;
-
-#include "gameBase.h"
-#include "globals.h"
-#include "rect.h"
 
 // Modes for creating the display
 // Listed in order from fastest, but nastier, to slowest, but nicest

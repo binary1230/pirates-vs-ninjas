@@ -1,15 +1,13 @@
 #ifndef DOOROBJECT_H
 #define DOOROBJECT_H
 
-#include <stdio.h>
-#include <allegro.h>
+#include "stdafx.h"
+
+#include "object.h"
 
 class GameState;
 class ObjectFactory;
 class PhysSimulation;
-
-#include "object.h"
-#include "xmlParser.h"
 
 class DoorObject : public Object {
 	protected:

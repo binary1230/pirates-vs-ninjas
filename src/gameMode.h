@@ -1,10 +1,10 @@
 #ifndef GAMEMODE_H
 #define GAMEMODE_H
 
-class GameState;
-
+#include "stdafx.h"
 #include "gameBase.h"
-#include "xmlParser.h"
+
+class GameState;
 
 //! Base class for all Modes of the game (e.g. Menu Mode, Game Mode, Bonus Level Mode)
 
