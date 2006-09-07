@@ -48,6 +48,8 @@ class Animation : public GameBase {
 		int speed_multiplier;			//! Factor to multiply the current animation 
 															//! speed by. (e.g 2 = 2x as slow)
 		
+		int width, height;				//! Animation width/height
+		
 	public:
 		void DrawAt(int _x, int _y, bool flip_x=0, bool flip_y=0);
 		void Update();
@@ -67,9 +69,9 @@ class Animation : public GameBase {
 
 		//! Used in constructing a new animation, pushes this image onto it.
 		bool PushImage(const char* filename, const int duration, bool freeze_at_end);
-
-		int GetWidth();
-		int GetHeight();
+		
+		inline int GetWidth() {return width;};
+		inline int GetHeight() {return height;};
 		
 		inline Sprite* GetCurrentSprite() {return currentFrame->sprite;}
 

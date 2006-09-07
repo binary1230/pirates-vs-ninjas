@@ -7,18 +7,6 @@
 #include <map>
 using namespace std;
 
-// XXX factory method memory leak
-// XXX memory leak if Init fails, anim never gets freed
-// EVERYTHING allocated like this (and objects) need to be fixed
-
-int Animation::GetWidth() {
-	return frames[0]->sprite->bmp->w;
-}
-
-int Animation::GetHeight() {
-	return frames[0]->sprite->bmp->h;
-}
-
 bool Animation::Init(GameState* _gameState) {
 	SetGameState(_gameState);
 	frames.clear();
@@ -127,6 +115,10 @@ bool Animation::PushImage(
 	return true;
 }
 
+// XXX factory method memory leak
+// XXX memory leak if Init fails, anim never gets freed
+// EVERYTHING allocated like this (and objects) need to be fixed
+
 //! Static helper method to create new animations from XML
 //! XXX Does not currently support frames out of order and
 //! other wackiness.  soon enough, my young apprentice - soon enough.
@@ -172,6 +164,10 @@ Animation* Animation::New(GameState* gameState, XMLNode &xAnim) {
 			return NULL;
 		}
 	}
+
+	// need to rethink where these come from
+	anim->width = anim->frames[0]->sprite->bmp->w;
+	anim->height = anim->frames[0]->sprite->bmp->h;
 	
 	return anim;
 }
