@@ -45,7 +45,7 @@ class Rect {
 		void Print(char* name = "");
 
 		//! Assign a rect's values to this rect
-		Rect Rect::operator=(Rect r);
+		Rect operator=(Rect r);
 		
 		Rect Project(Vector2D &projection) const;
 
@@ -54,8 +54,8 @@ class Rect {
 		}
 		
 		//! Compare two rectangles
-		bool Rect::operator==(const Rect &v) const;
-		bool Rect::operator!=(const Rect &v) const;
+		bool operator==(const Rect &v) const;
+		bool operator!=(const Rect &v) const;
 
 		Rect(float _x1 =0.0f, float _y1 =0.0f, float _x2 =0.0f, float _y2 =0.0f);
 		Rect(const Vector2D &v1, const Vector2D &v2);

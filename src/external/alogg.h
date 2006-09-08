@@ -10,9 +10,7 @@
 #ifndef ALOGG_H
 #define ALOGG_H
 
-
-#include <stdio.h>
-#include <allegro.h>
+#include "stdafx.h"
 
 #include "aloggdll.h"
 

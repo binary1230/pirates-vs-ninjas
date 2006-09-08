@@ -64,17 +64,22 @@ void Window::DrawRect(Rect &r, int col) {
 void Window::DrawBitmapAt(	BITMAP* bmp, int x, int y, 
 														bool flip_x, bool flip_y, int alpha) {
 	
-	// no transparency to worry about
+	// Note: transparency support is still weird.
+
 	if (alpha == 255) {
 		if (!flip_x) 
 			draw_sprite(drawing_surface, bmp, x, y);
 		else
 			draw_sprite_h_flip(drawing_surface, bmp, x, y);
 	} else {
-		// XXX DOES NOT FLIP SPRITES RIGHT NOW
-		// draw_trans_sprite(
-	}
+		// XXX DOES NOT FLIP ALPHA-BLENDED SPRITES RIGHT NOW
+		// set_alpha_blender();
+		fprintf(stderr, "ALPHA!!\n");
 
+		set_trans_blender(256,256,256,alpha);
+		draw_trans_sprite(drawing_surface, bmp, x, y);
+		set_trans_blender(256,256,256,256);
+	}
 }
 
 // public function
@@ -88,7 +93,7 @@ void Window::DrawSprite(	Sprite* sprite, int x, int y,
 													bool flip_x, bool flip_y, int alpha) {
 	DrawBitmap( sprite->bmp, 
 							x + sprite->x_offset, y + sprite->y_offset, 
-							sprite->flip_x ^ flip_x, sprite->flip_y ^ flip_y);
+							sprite->flip_x ^ flip_x, sprite->flip_y ^ flip_y, alpha);
 }
 
 int Window::Init(	GameState* _game_state, 

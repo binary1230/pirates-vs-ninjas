@@ -206,6 +206,9 @@ class Object : public GameBase {
 				pos.SetY((float)_y);
 		}
 
+		inline int GetAlpha() { return alpha; };
+		inline void SetAlpha(int a) { alpha = a; };
+
 		inline void SetFlipX(bool val) { flip_x = val; };
 		inline void SetFlipY(bool val) { flip_y = val; };
 

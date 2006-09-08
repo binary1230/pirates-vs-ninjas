@@ -22,53 +22,53 @@ class Vector2D {
 	 	inline void SetY(float _y) {y=_y;}
 		
 		//! Assign a vector's values to this vector
-		inline Vector2D Vector2D::operator=(const Vector2D &v) {
+		inline Vector2D operator=(const Vector2D &v) {
 			x = v.GetX();
 			y = v.GetY();
 			return *this;
 		}
 	
 		//! Add two vectors
-		inline Vector2D Vector2D::operator+(const Vector2D &v) const {
+		inline Vector2D operator+(const Vector2D &v) const {
 			return Vector2D(x + v.GetX(), y + v.GetY());
 		}
 
 		//! Add another vector to this one
-		inline void Vector2D::operator+=(const Vector2D &v) {
+		inline void operator+=(const Vector2D &v) {
 			x += v.GetX();
 			y += v.GetY();
 		}
 
 		//! Subtract another vector from this one
-		inline void Vector2D::operator-=(const Vector2D &v) {
+		inline void operator-=(const Vector2D &v) {
 			x -= v.GetX();
 			y -= v.GetY();
 		}
 
 		//! Subtract two vectors
-		inline Vector2D Vector2D::operator-(const Vector2D &v) const {
+		inline Vector2D operator-(const Vector2D &v) const {
 			return Vector2D(x - v.GetX(), y - v.GetY());
 		}
 		
 		//! Compare two vectors
-		inline bool Vector2D::operator==(const Vector2D &v) const {
+		inline bool operator==(const Vector2D &v) const {
 			return (x - v.GetX() < TOLERANCE && x - v.GetX() > -TOLERANCE &&
 							y - v.GetY() < TOLERANCE && y - v.GetY() > -TOLERANCE);
 		}
 		
 		//! Compare two vectors
-		inline bool Vector2D::operator!=(const Vector2D &v) const {
+		inline bool operator!=(const Vector2D &v) const {
 				return (x - v.GetX() > TOLERANCE || x - v.GetX() < -TOLERANCE ||
 								y - v.GetY() > TOLERANCE || y - v.GetY() < -TOLERANCE);
 		}
 
 		//! Scalar product (vector * number)
-		inline Vector2D Vector2D::operator*(float n) const {
+		inline Vector2D operator*(float n) const {
 			return Vector2D(x*n, y*n);
 		}
 		
 		//! Subtract another vector from this one
-		inline void Vector2D::operator*=(float n) {
+		inline void operator*=(float n) {
 			x *= n;
 			y *= n;
 		}
@@ -76,7 +76,7 @@ class Vector2D {
 
 		//! Scalar divide (vector * number)
 		//XXX need to add exception handling for DIVIDE by ZERO
-		inline Vector2D Vector2D::operator/(float n) const {
+		inline Vector2D operator/(float n) const {
 			return Vector2D(x/n, y/n);
 		}
 

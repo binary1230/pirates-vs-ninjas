@@ -7,16 +7,7 @@
 #ifndef EZSOCKETS_H
 #define EZSOCKETS_H
 
-// Pirates vs ninjas ONLY
-// SUPER-IMPORTANT: These 2 #includes must come FIRST and be in this order
-#include <allegro.h>
-#ifdef WIN32
-#include <winalleg.h>
-#endif
-
-#include <string>
-#include <fcntl.h>
-#include <ctype.h>
+#include "stdafx.h"
 
 #if defined(_XBOX)
 // Summary : WinsockX is bad, XTL is good.

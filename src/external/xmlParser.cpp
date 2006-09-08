@@ -63,6 +63,8 @@
  *
  ****************************************************************************
  */
+#include "stdafx.h"
+
 #ifdef WIN32
 //#ifdef _DEBUG
 //#define _CRTDBG_MAP_ALLOC
@@ -76,11 +78,11 @@
                      // to have "MessageBoxA" to display error messages for openFilHelper
 #endif
 
-#include <memory.h>
+/*#include <memory.h>
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+#include <stdlib.h>*/
 #include "xmlParser.h"
 
 inline int mmin( const int t1, const int t2 ) { return t1 < t2 ? t1 : t2; }

@@ -5,8 +5,7 @@
  */
 
 
-#include <png.h>
-#include <allegro.h>
+#include "stdafx.h"
 #include "loadpng.h"
 
 

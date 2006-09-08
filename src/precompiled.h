@@ -25,12 +25,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <png.h>
 
 // Unix-y?
 #include <ctype.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 // STL stuff
 #include <algorithm>
