@@ -17,7 +17,7 @@ Rect::Rect(const Vector2D &v1, const Vector2D &v2) {
 	fromVec(v1, v2);
 }
 
-void Rect::Swap(float &t1, float &t2) {
+inline void Swap(register float &t1, register float &t2) {
 	float t = t1; 
 				t1 = t2; 
 				t2 = t;
@@ -31,11 +31,13 @@ void Rect::Fix() {
 }
 
 void Rect::FixX() {
-	if (x2<x1) Swap(x2,x1);
+	if (x2<x1) 
+		Swap(x2,x1);
 }
 
 void Rect::FixY() {
-	if (y2<y1) Swap(y2,y1);
+	if (y2<y1) 
+		Swap(y2,y1);
 }
 
 void Rect::Print(char* name) {

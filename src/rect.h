@@ -13,8 +13,6 @@ class Rect {
 	private:
 		float x1,y1,x2,y2;	
 		
-		void Swap(float &t1, float &t2);
-		
 		//! Make sure x1,y1 is the top left corner
 		void FixX();
 		void FixY();
