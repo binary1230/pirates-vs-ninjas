@@ -13,3 +13,7 @@
 /configure
 /t
 /*.exe
+/report
+/gmon.out
+/AI-results.txt
+/*.swp

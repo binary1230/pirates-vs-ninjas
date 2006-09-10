@@ -6,6 +6,18 @@ To enable debugging:
 CXXFLAGS="-ggdb" CFLAGS="-ggdb" ./configure && make
 ----------
 
+To enable profiling:
+----------
+CXXFLAGS="-ggdb -pg -O2" CFLAGS="-ggdb -pg -O2" ./configure && make
+----------
+
+To profile:
+--------------
+1) Run normally 							src/ninjas
+2) Generate the report:				gprof src/ninjas gmon.out > report.txt
+3) Look inside the file report.txt for the profile info
+--------------
+
 OUT OF DATE, CHECK THE WIKI
 
 ----------------------
