@@ -1,7 +1,7 @@
 # Rules for the test code (use `make check` to execute)
 
 # all test programs to run
-TESTS = vector2D assetManager rect
+TESTS = vector2D rect #assetManager
 AM_CXXFLAGS = -I../external -I../objects -I../ -Wall $(CPPUNIT_FLAGS)
 check_PROGRAMS = $(TESTS)
 
@@ -19,7 +19,7 @@ vector2D_LDFLAGS = $(CPPUNIT_LIBS)
 vector2D_LDADD = ../vector2D.o
 
 # assetManager unit tests
-assetManager_SOURCES = 	runner.cpp ../assetManager.h \
-										test_assetManager.cpp test_assetManager.h
-assetManager_LDFLAGS = $(CPPUNIT_LIBS)
-assetManager_LDADD = ../assetManager.o ../gameBase.o
+#assetManager_SOURCES = 	runner.cpp ../assetManager.h \
+#										test_assetManager.cpp test_assetManager.h
+#assetManager_LDFLAGS = $(CPPUNIT_LIBS)
+#assetManager_LDADD = ../assetManager.o ../gameBase.o
