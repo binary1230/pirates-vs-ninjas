@@ -1,3 +1,4 @@
+#include "ai.h"
 #include "gameModes.h"
 #include "xmlParser.h"
 #include "StdString.h"
@@ -38,6 +39,7 @@ void GameModes::DoEndCurrentMode() {
 	currentModeIndex++;
 
 	if (currentMode) {
+		DoAIEndStuff();
 		currentMode->Shutdown();
 		free(currentMode);
 		currentMode = NULL;
@@ -119,6 +121,10 @@ int GameModes::LoadNextMode() {
 	
 	CString mode_xml_filename = mode_files[currentModeIndex];
 
+	#ifdef AI_TRAINING
+	fprintf(stderr, " AI: Enabling AI Training.\n");
+	#endif
+
 	fprintf(stderr, 
     " Mod Info: default mode filename '%s'\n",
     mode_xml_filename.c_str());
@@ -182,3 +188,34 @@ GameModes::GameModes() {
 GameModes::~GameModes() {
 	Shutdown();
 }
+
+// ------ EXPERIMENTAL AI STUFF ------
+
+#ifndef AI_TRAINING
+void GameModes::DoAIEndStuff() {}
+#else
+
+#define AI_RESULTS_FILE "AI-results.txt"
+
+// experimental: compute ending AI stuff for this mode
+void GameModes::DoAIEndStuff() {
+
+	// output the fitness score
+	int score = currentMode->GetAiFitnessScore();
+
+	// print it to a file
+	fprintf(stderr, "AI: Writing end-game fitness score to file '" 
+									AI_RESULTS_FILE "'.\n");
+
+	FILE* f = fopen(AI_RESULTS_FILE, "w");
+	if (!f) {
+		fprintf(stderr, "AI: ERROR: Can't open AI results file for writing!\n");
+		return;
+	}
+
+	fprintf(f, "%i\n", score);
+
+	fclose(f);
+}
+
+#endif // AI_TRAINING
