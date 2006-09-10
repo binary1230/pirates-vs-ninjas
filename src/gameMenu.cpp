@@ -22,7 +22,7 @@ void GameMenu::DoQuit() {
 }
 
 // Hardcoded for now...
-void GameMenu::DoMenuAction(CString action) {
+void GameMenu::DoMenuAction(const CString &action) {
 	if (action == "") {
 		// do nothing.
 	} else if (action == "NewGame") {
@@ -30,7 +30,7 @@ void GameMenu::DoMenuAction(CString action) {
 	} else if (action == "Quit") {
 		DoQuit();
 	} else {
-		fprintf(stderr, "-- Invalid menu action: %s\n");
+		fprintf(stderr, "-- Invalid menu action: %s\n", action.c_str());
 	}			
 }
 

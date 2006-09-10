@@ -19,7 +19,7 @@ class GameMenu : public GameMode {
 
 		void DoNewGame();
 		void DoQuit();
-		void DoMenuAction(CString action);
+		void DoMenuAction(const CString &action);
 		
 	public:
 		void Update();
