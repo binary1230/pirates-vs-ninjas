@@ -1,6 +1,8 @@
 /* AllegroFont - a wrapper for FreeType 2 */
 /* to render TTF and other font formats with Allegro */
 
+// we're not using this file rightnow.
+#ifdef PIRATES_USING_ALFONT
             
 /* FreeType 2 is copyright (c) 1996-2000 */
 /* David Turner, Robert Wilhelm, and Werner Lemberg */
@@ -997,3 +999,8 @@ void alfont_set_char_extra_spacing(ALFONT_FONT *f, int spacing) {
   else
     f->ch_spacing = spacing;
 }
+
+
+
+
+#endif // PIRATES_USING_ALFONT
