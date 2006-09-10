@@ -28,6 +28,9 @@ class GameMode : public GameBase {
 			//! Update this mode
 			virtual void Update() = 0;
 
+			//! Experimental: get the AI fitness score for AI training	
+			virtual int GetAiFitnessScore() {return 0;};
+
 			GameMode();
 			virtual ~GameMode();
 };

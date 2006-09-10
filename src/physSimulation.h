@@ -108,6 +108,9 @@ class PhysSimulation : public GameMode {
 			void MoveObjectsToNewPositions();
 			void CheckForCollisions();
 			void GetCollideableObjects(vector<Object*> &objs);
+			
+			//! Experimental: Get AI fitness score for AI traning
+			int GetAiFitnessScore();
 
 			PhysSimulation();
 			~PhysSimulation();
