@@ -73,10 +73,10 @@ void Window::DrawBitmapAt(	BITMAP* bmp, int x, int y,
 			draw_sprite_h_flip(drawing_surface, bmp, x, y);
 	} else {
 		// XXX DOES NOT FLIP ALPHA-BLENDED SPRITES RIGHT NOW
-		// set_alpha_blender();
-		fprintf(stderr, "ALPHA!!\n");
-
-		set_trans_blender(256,256,256,alpha);
+		// set_trans_blender(256,256,256,alpha);
+		set_alpha_blender();
+		//set_trans_blender(0,256,256,256);
+		// blit(bmp, drawing_surface, 0, 0, x, y, bmp->w, bmp->h);
 		draw_trans_sprite(drawing_surface, bmp, x, y);
 		set_trans_blender(256,256,256,256);
 	}
@@ -141,7 +141,11 @@ int Window::Init(	GameState* _game_state,
 						"Try setting a different graphics mode or try non-fullscreen\n",
 						width, height, _fullscreen);
 		return -1;
-	}	
+	}
+
+	// NEEDED for alpha blending
+	// XXX: In the future, move this into each sprite that needs it.
+	set_color_depth(32);
 
 	set_window_title(VERSION_STRING);
 	
