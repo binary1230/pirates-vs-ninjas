@@ -40,6 +40,7 @@ struct ObjectProperties {
 	bool is_collectable;
 	bool is_fan;
 	bool is_door;
+	bool is_ring;
 	
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -61,6 +62,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_collectable = 0;
 	p.is_fan = 0;
 	p.is_door = 0;
+	p.is_ring = 0;
 }
 
 //! A drawable entity in the physics simulation
@@ -77,9 +79,6 @@ class Object : public GameBase {
 		//! input for this object
 		int controller_num;
 		
-		//! Real Width/height of this object
-		int width, height;
-
 		//! Bounding box for this object
 		Rect bbox;
 
@@ -172,6 +171,10 @@ class Object : public GameBase {
 
 		//! Update the fading stuff
 		void UpdateFade();
+
+		//! Width and Height of the object
+		// (we may need to rethink where these come from)
+		int width, height;
 		
 	public:
 		virtual bool Init(GameState* _game_state, PhysSimulation* p) = 0;
@@ -223,8 +226,8 @@ class Object : public GameBase {
 		}
 		
 		//! Get width/height of this object
-		virtual int GetWidth(); 
-		virtual int GetHeight(); 
+		inline int GetWidth() {return width;};
+		inline int GetHeight() {return height;};
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();

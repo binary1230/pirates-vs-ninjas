@@ -44,29 +44,19 @@ void Object::PlaySound(CString name) {
 	GetGameState()->GetSound()->PlaySound(name);
 }
 
-// GetWidth() and GetHeight() need rethinking - 
-// they use the first frame's width and height
-int Object::GetWidth() { 
-	// return currentAnimation->GetWidth();
-	
-	if (animations.size() > 0 && animations[0])
-		return animations[0]->GetWidth();
-	else
-		return 0;
-}
-
-int Object::GetHeight() {	
-	// return currentAnimation->GetHeight();
-	if (animations.size() > 0 && animations[0])
-		return animations[0]->GetHeight();
-	else
-		return 0;
-}
-
 //! Cache some commonly used stuff
+// ('cause the profiler says so!)
 void Object::SetupCachedVariables() {
 	level_width  = simulation->GetWidth();
 	level_height = simulation->GetHeight();
+	
+	if (animations.size() > 0 && animations[0]) {
+		width = animations[0]->GetWidth();
+		height = animations[0]->GetHeight();
+	} else {
+		width = 0;
+		height = 0;
+	}
 }
 
 void Object::UpdateFade() {
@@ -79,7 +69,6 @@ void Object::FadeOut(int time) {
 }
 
 bool Object::BaseInit() {
-	SetupCachedVariables();
 	ClearProperties(properties);
 	is_dead = false;
 	fade_out = 0;
@@ -87,6 +76,7 @@ bool Object::BaseInit() {
 	alpha = 255;
 	old_pos = pos;
 	display_time = -1;
+	width = height = 0;
 	return true;
 }
 
@@ -120,7 +110,9 @@ void Object::Transform(int &x, int &y, int offset_x, int offset_y) {
 void Object::TransformRect(Rect &r) {
 
 	int x1, x2, y1, y2, w, h;
-	r.Fix();
+	
+	// r.Fix();
+	
 	x1 = (int)r.getx1();	
 	y1 = (int)r.gety1();	
 	x2 = (int)r.getx2();
@@ -138,8 +130,10 @@ void Object::TransformRect(Rect &r) {
 	simulation->TransformViewToScreen(x1, y1);
 	simulation->TransformViewToScreen(x2, y2);
 
-	r.setx1(x1); 	r.sety1(y1);
-	r.setx2(x2); 	r.sety2(y2);
+	r.set(x1,y1,x2,y2);
+	/*r.setx1(x1); 	r.sety1(y1);
+	r.setx2(x2); 	r.sety2(y2);*/
+	
 	// r.setx2(x1 + w); 	r.sety2(y1 + h);
 }
 
@@ -156,7 +150,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 		GetGameState()->GetWindow()->
 		DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, alpha);
 
-	#define DEBUG_DRAW_BOUNDING_BOXES 0
+	#define DEBUG_DRAW_BOUNDING_BOXES 1
 
 	if (!DEBUG_DRAW_BOUNDING_BOXES)
 		return;
@@ -166,10 +160,9 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	Rect bbox_t_old = bbox;
 
 	// get current bounding box
-	bbox_t.setx1(pos.GetX());
-	bbox_t.sety1(pos.GetY());
-	bbox_t.setx2(pos.GetX() + GetWidth());
-	bbox_t.sety2(pos.GetY() + GetHeight());
+	bbox_t.set(	pos.GetX(), pos.GetY(), 
+							pos.GetX() + GetWidth(), pos.GetY() + GetHeight()
+							);
 
 	// draw projection rectangle, blue
 	TransformRect(bbox_t);
@@ -209,16 +202,12 @@ void Object::ResetForNextFrame() {
 	accel.Clear();
 	d.up = d.down = d.left = d.right = 0;
 
-	// setup new bounding box
-	bbox.setx1(pos.GetX());
-	bbox.sety1(pos.GetY());
-	bbox.setx2(pos.GetX() + GetWidth());
-	bbox.sety2(pos.GetY() + GetHeight());
+	bbox.set(		pos.GetX(), pos.GetY(), 
+							pos.GetX() + GetWidth(), pos.GetY() + GetHeight()
+							);
 
-	bbox.Fix();
-
-	assert(bbox.getx1() <= bbox.getx2());
-	assert(bbox.gety1() <= bbox.gety2());
+	// assert(bbox.getx1() <= bbox.getx2());
+	// assert(bbox.gety1() <= bbox.gety2());
 }
 
 //! Solve for new position based on velocity
@@ -339,7 +328,8 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 // space we moved from last frame to this frame
 // based solely on velocity (not collisions)
 void Object::UpdateProjectionRectFromVelocity() {
-	projRect = bbox.Project(vel);
+	projRect = bbox;
+	projRect.Project(vel);
 }
 
 void Object::UpdateProjectionRectFromCollisions(Vector2D &newPos) {
