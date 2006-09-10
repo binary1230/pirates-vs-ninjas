@@ -35,6 +35,10 @@ class GameModes : public GameBase {
 
 		void LoadMode(int which);
 
+		// experimental, called at the end of each mode to do
+		// AI training stuff.
+		void DoAIEndStuff();
+
 		GameModes();
 		~GameModes();
 };
