@@ -54,6 +54,7 @@ class PlayerObject : public Object {
 		void DoCommonGroundStuff();
 		
 		DoorObject* door_in_front_of_us;
+		int ring_count;
 
 	public:
 		bool Init(GameState* _game_state, PhysSimulation* p);
@@ -63,6 +64,8 @@ class PlayerObject : public Object {
 		
 		void Update();
 		void Collide(Object* obj);
+		
+		int GetNumRings() {return ring_count;};
 			
 		PlayerObject();
 		~PlayerObject();

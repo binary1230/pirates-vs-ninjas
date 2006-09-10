@@ -206,6 +206,10 @@ void PlayerObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_spring) {
 		vel.SetY(obj->GetProperties().spring_strength);
 	}
+
+	if (obj->GetProperties().is_ring) {
+		ring_count++;
+	}
 }
 
 bool PlayerObject::Init(GameState* _game_state, PhysSimulation *p) {
@@ -216,6 +220,7 @@ bool PlayerObject::Init(GameState* _game_state, PhysSimulation *p) {
 	controller_num = 1;
 	state = FALLING; 
 	door_in_front_of_us = NULL;
+	ring_count = 0;
 
 	return BaseInit();
 }
@@ -227,6 +232,7 @@ PlayerObject::PlayerObject() {
 	drag = DEFAULT_DRAG;
 	state = FALLING;
 	door_in_front_of_us = NULL;
+	ring_count = 0;
 }
 
 
