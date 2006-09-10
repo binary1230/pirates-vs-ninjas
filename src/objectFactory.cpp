@@ -139,6 +139,8 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode &xObj) {
 	if (!obj->LoadPlayerProperties(xDef))
 		return NULL;
 
+	obj->SetupCachedVariables();
+
 	return obj;
 }
 
@@ -156,6 +158,8 @@ Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj) {
 
   if (!LoadObjectProperties(obj, xDef))
     return NULL;
+	
+	obj->SetupCachedVariables();
 
   return obj;
 }
@@ -176,6 +180,9 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode &xObj) {
     return NULL;
 
   obj->properties.is_collectable = 1;
+  obj->properties.is_ring = 1;
+
+	obj->SetupCachedVariables();
 
   return obj;
 }
@@ -269,6 +276,8 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode &xObj) {
   
   if (!LoadObjectProperties(obj, xDef))
     return NULL;
+	
+	obj->SetupCachedVariables();
   
   return obj;
 }
@@ -287,6 +296,8 @@ Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode &xObj) {
   if (!LoadObjectProperties(obj, xDef))
     return NULL;
   
+	obj->SetupCachedVariables();
+
   return obj;
 }
 
@@ -301,6 +312,8 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode &xObj) {
 
   if (!LoadObjectProperties(obj, xDef))
     return NULL;
+	
+	obj->SetupCachedVariables();
 
 	return obj;
 }
@@ -322,6 +335,8 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode &xObj) {
     return NULL;
 
   obj->properties.is_spring = 1;
+	
+	obj->SetupCachedVariables();
 
   return obj;
 }
@@ -340,6 +355,8 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode &xObj) {
 
 	obj->properties.is_door = 1;
 	obj->properties.is_solid = 1;
+	
+	obj->SetupCachedVariables();
 
 	return obj;
 }
@@ -358,6 +375,8 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode &xObj) {
 
 	obj->properties.is_fan = 1;
 	obj->properties.is_solid = 1;
+
+	obj->SetupCachedVariables();
 
 	return obj;
 }
