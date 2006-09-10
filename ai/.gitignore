@@ -1,0 +1,8 @@
+/Makefile.in
+/Doxyfile
+/.deps
+/Makefile
+/aitrainer
+/*.dll
+/*.exe
+/*.gch

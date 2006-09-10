@@ -1,4 +1,4 @@
-SUBDIRS = src
+SUBDIRS = src ai
 
 DATA_DIR = data
 EXTRA_DIST = docs $(DATA_DIR) installer.nsi 
