@@ -1,5 +1,6 @@
 #include "physSimulation.h"
 
+#include "ai.h"
 #include "assetManager.h"
 #include "globals.h"
 #include "objectFactory.h"
@@ -15,6 +16,7 @@
 #include "window.h"
 #include "gameOptions.h"
 #include "gameSound.h"
+#include "objectPlayer.h"
 
 int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
 	SetGameState(gs);
@@ -808,6 +810,23 @@ int PhysSimulation::LoadForcesFromXML(XMLNode &xMode) {
 	
 	return 0;
 }
+
+#ifndef AI_TRAINING
+int PhysSimulation::GetAiFitnessScore() {return 0;};
+#else
+int PhysSimulation::GetAiFitnessScore() {
+	ObjectListIter iter;
+	
+	for (iter = objects.begin(); iter != objects.end(); iter++) {
+		if (	(*iter)->GetProperties().is_player ) {
+			PlayerObject* player = (PlayerObject*)(*iter);
+			return player->GetNumRings();
+		}
+	} 
+
+	return 0;
+}
+#endif // AI_TRAINING
 
 PhysSimulation::PhysSimulation() : objects(0), forces(0) {
 	camera_scroll_speed = 1.0f;
