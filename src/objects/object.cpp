@@ -150,7 +150,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 		GetGameState()->GetWindow()->
 		DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, alpha);
 
-	#define DEBUG_DRAW_BOUNDING_BOXES 1
+	#define DEBUG_DRAW_BOUNDING_BOXES 0
 
 	if (!DEBUG_DRAW_BOUNDING_BOXES)
 		return;

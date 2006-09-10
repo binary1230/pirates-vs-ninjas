@@ -80,8 +80,10 @@ void Animation::Shutdown() {
 //! Add another frame to this animation
 //! Use for temporary loading routines, need to rethink this one.
 //! Returns false on error
-bool Animation::PushImage(
-				const char* _file, const int duration, bool freeze_at_end) {
+bool Animation::PushImage(	const char* _file, 
+														const int duration, 
+														bool freeze_at_end, 
+														bool use_alpha) {
 				
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
@@ -89,7 +91,8 @@ bool Animation::PushImage(
 	f->sprite = new Sprite();
 	assert(f->sprite != NULL);
 	
-	f->sprite->bmp = GetGameState()->GetAssetManager()->LoadBitmap(_file);
+	AssetManager *m = GetGameState()->GetAssetManager();
+	f->sprite->bmp = m->LoadBitmap(_file, use_alpha);
 
 	if (!f->sprite->bmp) {
 		fprintf(stderr, "ERROR: Can't load image file: '%s'\n", _file);
@@ -98,6 +101,7 @@ bool Animation::PushImage(
 
 	f->sprite->x_offset = 0;
 	f->sprite->y_offset = 0;
+	f->sprite->use_alpha = use_alpha;
 	f->nextFrame = NULL;
 	f->duration = duration;
 	f->freeze_at_end = freeze_at_end;
@@ -127,6 +131,7 @@ Animation* Animation::New(GameState* gameState, XMLNode &xAnim) {
 	int duration;
 	CString filename;
 	int freeze_at_end;
+	bool use_alpha = false;			// whether we use an alpha channel
 	
 	if (!anim || !anim->Init(gameState) )
 		return NULL;
@@ -150,6 +155,10 @@ Animation* Animation::New(GameState* gameState, XMLNode &xAnim) {
 
 		filename = xImg.getAttribute("name");
 		
+		if (CString("true") == CString(xImg.getAttribute("alpha_enabled"))) {
+			use_alpha = true;
+		}
+		
 		// handle 'pause' attribute
 		const char* freeze = xImg.getAttribute("pause");
 		if (!freeze)
@@ -158,7 +167,7 @@ Animation* Animation::New(GameState* gameState, XMLNode &xAnim) {
 			sscanf(freeze, "%i", &freeze_at_end);
 
 		// Create the frame
-		if (!anim->PushImage(filename, duration, (bool)freeze_at_end)) {
+		if (!anim->PushImage(filename, duration, (bool)freeze_at_end, use_alpha)) {
 			anim->Shutdown();
 			free(anim);
 			return NULL;

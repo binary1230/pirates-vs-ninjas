@@ -40,7 +40,8 @@ void Window::BlitBitmap(  BITMAP* bmp, int source_x, int source_y,
 
 // public function
 void Window::DrawBitmap(	BITMAP* bmp, int x, int y, 
-													bool flip_x, bool flip_y, int alpha) {
+													bool flip_x, bool flip_y, 
+													bool use_alpha, int alpha) {
 
 	// if its position is offscreen, don't draw it.
 	if (x + bmp->w < 0 || x >= (int)width || 
@@ -48,7 +49,7 @@ void Window::DrawBitmap(	BITMAP* bmp, int x, int y,
 			return;
 
 	// Draw the bitmap
-	DrawBitmapAt(bmp, x, y, flip_x, flip_y, alpha);
+	DrawBitmapAt(bmp, x, y, flip_x, flip_y, use_alpha, alpha);
 }
 
 void Window::DrawRect(Rect &r, int col) {
@@ -62,11 +63,12 @@ void Window::DrawRect(Rect &r, int col) {
 
 // private: only
 void Window::DrawBitmapAt(	BITMAP* bmp, int x, int y, 
-														bool flip_x, bool flip_y, int alpha) {
+														bool flip_x, bool flip_y, 
+														bool use_alpha, int alpha) {
 	
 	// Note: transparency support is still weird.
 
-	if (alpha == 255) {
+	if (!use_alpha) {
 		if (!flip_x) 
 			draw_sprite(drawing_surface, bmp, x, y);
 		else
@@ -93,7 +95,8 @@ void Window::DrawSprite(	Sprite* sprite, int x, int y,
 													bool flip_x, bool flip_y, int alpha) {
 	DrawBitmap( sprite->bmp, 
 							x + sprite->x_offset, y + sprite->y_offset, 
-							sprite->flip_x ^ flip_x, sprite->flip_y ^ flip_y, alpha);
+							sprite->flip_x ^ flip_x, sprite->flip_y ^ flip_y, 
+							sprite->use_alpha, alpha);
 }
 
 int Window::Init(	GameState* _game_state, 
@@ -142,11 +145,7 @@ int Window::Init(	GameState* _game_state,
 						width, height, _fullscreen);
 		return -1;
 	}
-
-	// NEEDED for alpha blending
-	// XXX: In the future, move this into each sprite that needs it.
-	set_color_depth(32);
-
+	
 	set_window_title(VERSION_STRING);
 	
 	if (mode == MODE_DOUBLEBUFFERING) {

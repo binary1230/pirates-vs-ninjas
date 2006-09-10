@@ -102,8 +102,11 @@ bool AssetManager::FileExists(const char* file) const {
 }
 
 //! Opens a bitmap, utilizes the search paths
-BITMAP* AssetManager::LoadBitmap(const char* filename, PALETTE* pal) {
+BITMAP* AssetManager::LoadBitmap(	const char* filename, 
+																	bool use_alpha, 
+																	PALETTE* pal) {
 	BITMAP* bmp = NULL;
+	int original_bpp = get_color_depth();
 	
 	// 1) See if this bitmap is already loaded
 	BitmapListIter i = bitmaps.find(filename);
@@ -115,7 +118,14 @@ BITMAP* AssetManager::LoadBitmap(const char* filename, PALETTE* pal) {
 	// 2) Try to open the file
 	CString file = GetPathOf(filename);
 	if (file.length() != 0) {
-		bmp = load_bitmap(file, *pal);
+
+		if (!use_alpha) {
+			bmp = load_bitmap(file, *pal);
+		} else {
+			set_color_depth(32);
+			bmp = load_bitmap(file, *pal);
+			set_color_depth(original_bpp);
+		}
 
 		// success, add it to the list
 		if (bmp)

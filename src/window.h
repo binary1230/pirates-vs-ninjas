@@ -50,7 +50,8 @@ class Window : public GameBase {
 		
 		//! Draw a bitmap, minus the clipping.
 		void DrawBitmapAt(	BITMAP* bmp, int x, int y, 
-												bool flip_x, bool flip_y, int alpha);
+												bool flip_x, bool flip_y, 
+												bool use_alpha, int alpha);
 
 		//! Background clear color
 		int clear_color;
@@ -70,10 +71,12 @@ class Window : public GameBase {
 		inline uint Height() {return height;};
 
 		void DrawSprite(	Sprite* sprite, int x, int y, 
-											bool flip_x=0, bool flip_y=0, int alpha=255);
+											bool flip_x=0, bool flip_y=0, 
+											int alpha=255);
 
 		void DrawBitmap(	BITMAP* bmp, int x, int y, 
-											bool flip_x=0, bool flip_y=0, int alpha=255);
+											bool flip_x=0, bool flip_y=0, 
+											bool use_alpha = false, int alpha=255);
 
 		//! Blit is provided if we need to do something more complex
 		void BlitBitmap(  BITMAP* bmp, int source_x, int source_y, 

@@ -66,7 +66,10 @@ class AssetManager : public GameBase {
 		//! Opens a bitmap file, or returns NULL on failure
 		//! This function looks in the current search path
 		//! it also outputs the palette in *pal
-		BITMAP* LoadBitmap(const char* filename, PALETTE* pal = NULL); 
+		//! if use_alpha is true, this bitmap is loaded as a 32bit RGBA image
+		BITMAP* LoadBitmap(	const char* filename, 
+												bool use_alpha = false, 
+												PALETTE* pal = NULL	); 
 
 		//! Opens a sound file (e.g. WAV), or returns NULL on failure
 		//! This function looks in the current search path

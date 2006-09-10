@@ -63,7 +63,8 @@ class Animation : public GameBase {
 		void Shutdown();					//! Cleanup this animation
 
 		//! Used in constructing a new animation, pushes this image onto it.
-		bool PushImage(const char* filename, const int duration, bool freeze_at_end);
+		bool PushImage(	const char* filename, const int duration, 
+										bool freeze_at_end, bool use_alpha );
 		
 		inline int GetWidth() {return width;};
 		inline int GetHeight() {return height;};
