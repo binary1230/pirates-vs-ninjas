@@ -3,9 +3,6 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-//! Set to '1' to run AI training functions
-#define AI_TRAINING 1
-
 #include <assert.h>
 #include <stdio.h>
 
