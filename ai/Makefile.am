@@ -4,10 +4,11 @@ PRE_CXXCOMPILE = 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 									$(AM_CPPFLAGS) $(CPPFLAGS) $(PRECOMPILED_CXXFLAGS) $(CXXFLAGS)
 
 headers = \
-aiTrainer.h stdafx.h precompiled.h
+geneticAlgorithm.h gene.h \
+stdafx.h precompiled.h
 
 aitrainer_SOURCES = \
-aiMain.cpp aiTrainer.cpp \
+aiMain.cpp geneticAlgorithm.cpp gene.cpp \
 $(headers)
 
 # if we're using precompiled headers...

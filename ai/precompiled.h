@@ -23,6 +23,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 
 // STL stuff
 #include <algorithm>
@@ -31,5 +32,7 @@
 #include <vector>
 
 using namespace std;
+
+#include "StdString.h"
 
 #endif // PRECOMPILED_H
