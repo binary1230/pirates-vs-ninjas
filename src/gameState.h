@@ -92,6 +92,9 @@ class GameState {
 
 		//! Draw the current state of the game
 		void Draw();
+
+		//! Output the total running time
+		void OutputTotalRunningTime();
 		
 		//! Set to TRUE to immediately shutdown the game 
 		bool exit_game;	

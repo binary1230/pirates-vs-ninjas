@@ -10,9 +10,13 @@
 ((rand() % (upper - lower + 1)) + lower)
 
 // The total count of gamekeys that we can use in the gene
-#define GAMEKEY_COUNT 10
+#define GAMEKEY_COUNT 5
 
 // The gamekey which exits the simulation
 #define GAMEKEY_EXIT 10
+
+// The random seed we are going to use for the demo file
+// This must be the same for all demo files
+#define RANDOM_SEED_FOR_ENGINE 42
 
 #endif // GLOBALS_H

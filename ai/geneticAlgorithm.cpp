@@ -4,6 +4,10 @@
 #define NINJAS_ENGINE_EXE_FILE "src/ninjas"
 #define AI_RESULTS_FILE "AI-results.txt"
 
+// UnDefine these to show the demo file being played back
+// #define RUN_DEMO_AT_NORMAL_SPEED
+// #define RUN_DEMO_AND_SHOW_GRAPHICS
+
 // run the game and determine the fitness score of this individual
 // returns -1 on error
 //
@@ -12,9 +16,11 @@
 int GeneticAlgorithm::RunGame(const Gene &gene, int demo_seq_number) const {
 
 	// generate the filename
-	CString demoFilename = "gene";
-	demoFilename += demo_seq_number;
-	demoFilename += ".demo";
+	CString demoFilename;
+	demoFilename.Format("gene%i.demo", demo_seq_number);
+
+	fprintf(stderr, "\n\n---------Starting '%s'----------\n\n", 
+									demoFilename.c_str());
 
 	// write the gene's contents to the demo file
 	if (!gene.WriteToFile(demoFilename)) {
@@ -34,7 +40,7 @@ int GeneticAlgorithm::RunGame(const Gene &gene, int demo_seq_number) const {
 
 		// make sure everything's ok
 		if (WIFEXITED(status)) {
-			if (WEXITSTATUS(status) == -1) {
+			if (WEXITSTATUS(status) != 0) {
 				fprintf(stderr, "ERROR: Child process terminated abnormally!\n");
 				return -1;
 			}
@@ -60,19 +66,40 @@ int GeneticAlgorithm::RunGame(const Gene &gene, int demo_seq_number) const {
 		}
 		
 		fclose(f);
+
+		if (fitness > 0) {
+			fprintf(stderr, "\n\n---------Finished: '%s' Score: %i----------\n\n", 
+											demoFilename.c_str(), fitness);
+		}
+
 		return fitness;
 
 	} else {
 		// we're the child
 		
+		// char* demoFile = demoFilename.c_str();
+		char* demoFile = "test.demo";
+		
 		// start the game
 		execl(	NINJAS_ENGINE_EXE_FILE, 
-						NINJAS_ENGINE_EXE_FILE,
-						"-89", "-d", demoFilename.c_str()
+						NINJAS_ENGINE_EXE_FILE, 
+
+#ifndef RUN_DEMO_AT_NORMAL_SPEED
+						"-8",
+#endif
+
+#ifndef RUN_DEMO_AND_SHOW_GRAPHICS
+						"-9",
+#endif
+						"-d", demoFile,
+						NULL
 						);
 
-		fprintf(stderr, "ERROR: Failed to execute: %s\n", NINJAS_ENGINE_EXE_FILE);
-		exit(-1);
+		char* error = strerror(errno);
+
+		fprintf(stderr, "ERROR: Failed to execute: %s: %s\n", 
+										NINJAS_ENGINE_EXE_FILE, error);
+		_exit(-1);
 	}
 }
 

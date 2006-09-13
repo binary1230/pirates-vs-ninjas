@@ -259,9 +259,26 @@ int GameState::InitTimers() {
 	fprintf(stderr, "[Init: Timers]\n");
 	install_timer();
 	LOCK_VARIABLE(outstanding_updates);
+	LOCK_VARIABLE(ticks);
 	LOCK_FUNCTION((void*)Timer);
 	return install_int_ex(Timer, BPS_TO_TIMER(FPS));
 }
+
+void GameState::OutputTotalRunningTime() {
+	int seconds_played = int((float)ticks / (float)FPS);
+	int seconds = seconds_played % 60;
+	int minutes = seconds_played / 60;
+	char* min_string = "minutes";
+
+	if (minutes == 1) 
+		min_string = "minute";
+
+	fprintf(	stderr, 
+						"[You ninja'd in the night for %i %s and %.2i seconds]\n",
+						minutes, min_string, seconds);
+}
+
+
 
 //! The 'main' function for the game
 
@@ -287,8 +304,12 @@ int GameState::RunGame(GameOptions* _options) {
 			input->BeginPlayback();
 			
 		outstanding_updates = 0;	// reset our timer to 0.
-			
+		
+		fprintf(stderr, "[running game...]\n");
 		MainLoop();
+		fprintf(stderr, "[done running game!]\n");
+
+		OutputTotalRunningTime();
 
 		// XXX SHOULD NOT TEST option->is_xxx should TEST input->is_xxx()
 		if (options->RecordDemo())

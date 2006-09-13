@@ -8,6 +8,7 @@
 
 typedef list<InputEvent> EventList;
 typedef list<InputEvent>::iterator EventListIter;
+typedef list<InputEvent>::const_iterator ConstEventListIter;
 
 // Represents an event list (e.g. a DEMO FILE)
 
@@ -15,6 +16,9 @@ class Gene {
 	private:
 		EventList events;
 		int fitness;
+
+		// Time at which the EXIT event occurs
+		unsigned long time_at_end;
 
 		// clean up the gene into a valid sequence for
 		// playing back a demo
@@ -27,10 +31,15 @@ class Gene {
 		void SetFitness(const int f) {fitness=f;};
 		int GetFitness() const {return fitness;};
 
-		Gene DoCrossoverSingle(	int start, const Gene& parent) const;
-		Gene DoCrossoverMulti(	int start, int end, const Gene& parent) const;
+		void SetTimeAtEnd(unsigned long time) {time_at_end = time;};
+		unsigned long GetTimeAtEnd() {return time_at_end;};
 
-		void Mutate(float rate);
+		Gene DoCrossoverSingle(	int start, const Gene& parent) const;
+
+		// not yet.
+		// Gene DoCrossoverMulti(	int start, int end, const Gene& parent) const;
+
+		void Mutate(float mutation_rate);
 		void Clear();
 	
 		// Create a random sequence (used for initial generation)

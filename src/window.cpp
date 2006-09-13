@@ -103,6 +103,7 @@ int Window::Init(	GameState* _game_state,
 									uint _width, uint _height, 
 									bool _fullscreen, int _mode) {
 	
+	int depth = DEFAULT_COLOR_DEPTH;
 	int gfx_mode;
 	int vheight;
 	
@@ -113,9 +114,11 @@ int Window::Init(	GameState* _game_state,
 	mode = _mode;
 	clear_color = 0;
 
+	set_color_depth(depth);
+
 	// Special case: We won't be drawing _anything_
-	if (! GetGameState()->GetGameOptions()->DrawGraphics() ) {
-		fprintf(stderr, "--- NOTE: DISABLING GRAPHICS ---\n");
+	if (!GetGameState()->GetGameOptions()->DrawGraphics() ) {
+		fprintf(stderr, "Window: DISABLING ALL GRAPHICS\n");
 		set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
 		mode = MODE_NOBUFFERING;
 		initialized = true;
@@ -131,9 +134,6 @@ int Window::Init(	GameState* _game_state,
 		vheight = height * 2;
 	else 
 		vheight = 0;
-
-	int depth = DEFAULT_COLOR_DEPTH;
-	set_color_depth(depth);
 
 	if (get_color_depth() != depth)
 		fprintf(stderr, "window: Warning: Asked for %i-bit color mode, got %i-bit instead.\n", depth, get_color_depth());
