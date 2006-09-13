@@ -93,7 +93,7 @@ void Object::Draw() {
 //
 //! This function populates x,y (reference params) with the 
 //! correctly transformed coordinates.
-void Object::Transform(int &x, int &y, int offset_x, int offset_y) {
+void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y) {
 	x = (int)pos.GetX() + offset_x;
 	y = (int)pos.GetY() + offset_y;
 

@@ -4,7 +4,7 @@ void Vector2D::Clear() {
 	x = y = 0.0f;
 }
 
-Vector2D::Vector2D(float _x, float _y) {
+Vector2D::Vector2D(const float &_x, const float &_y) {
 	x = _x; y = _y;
 }
 

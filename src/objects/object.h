@@ -191,7 +191,9 @@ class Object : public GameBase {
 
 		virtual void Draw();
 
-		void Transform(int &x, int &y, int offset_x = 0, int offset_y = 0);
+		void Transform(	int &x, int &y, 
+										const int &offset_x = 0, const int &offset_y = 0);
+
 		void TransformRect(Rect &r);
 		
 		//! Draw this object at its coordinates plus specified offset

@@ -22,7 +22,7 @@ class Vector2D {
 	 	inline void SetY(float _y) {y=_y;}
 		
 		//! Assign a vector's values to this vector
-		inline Vector2D operator=(const Vector2D &v) {
+		inline Vector2D& operator=(const Vector2D &v) {
 			x = v.GetX();
 			y = v.GetY();
 			return *this;
@@ -63,12 +63,12 @@ class Vector2D {
 		}
 
 		//! Scalar product (vector * number)
-		inline Vector2D operator*(float n) const {
+		inline Vector2D operator*(const float &n) const {
 			return Vector2D(x*n, y*n);
 		}
 		
 		//! Subtract another vector from this one
-		inline void operator*=(float n) {
+		inline void operator*=(const float &n) {
 			x *= n;
 			y *= n;
 		}
@@ -76,7 +76,7 @@ class Vector2D {
 
 		//! Scalar divide (vector * number)
 		//XXX need to add exception handling for DIVIDE by ZERO
-		inline Vector2D operator/(float n) const {
+		inline Vector2D operator/(const float &n) const {
 			return Vector2D(x/n, y/n);
 		}
 
@@ -96,7 +96,7 @@ class Vector2D {
 		}
 		
 		Vector2D();
-		Vector2D(float _x, float _y);
+		Vector2D(const float &_x, const float &_y);
 		virtual ~Vector2D();
 };
 
