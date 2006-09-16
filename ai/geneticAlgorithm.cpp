@@ -77,8 +77,7 @@ int GeneticAlgorithm::RunGame(const Gene &gene, int demo_seq_number) const {
 	} else {
 		// we're the child
 		
-		// char* demoFile = demoFilename.c_str();
-		char* demoFile = "test.demo";
+		const char* demoFile = demoFilename.c_str();
 		
 		// start the game
 		execl(	NINJAS_ENGINE_EXE_FILE, 
@@ -165,6 +164,9 @@ void GeneticAlgorithm::CreateRandomGeneration() {
 }
 
 void GeneticAlgorithm::CreateNextGeneration() {
+	
+	fprintf(stderr, "::Creating next generation.. ");
+
 	GeneList nextGeneration;
 	nextGeneration.resize(population_size);
 
@@ -187,6 +189,8 @@ void GeneticAlgorithm::CreateNextGeneration() {
 	}
 
 	currentGeneration = nextGeneration;
+	
+	fprintf(stderr, "::Done creating next generation.. ");
 }
 
 Gene GeneticAlgorithm::GetMostFitGene() const {

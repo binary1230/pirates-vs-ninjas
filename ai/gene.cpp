@@ -32,7 +32,7 @@ bool Gene::WriteToFile(CString file) const {
 	}
 
 	// write the header
-	fprintf(f, 	"DEMO:ninja-engine genetic algorithm generated demo file"
+	fprintf(f, 	"DEMO:ninja-engine GA generated demo file"
 							" '%s':%s:AI\n", file.c_str(), VERSION);
 	
 	// write the random seed
@@ -77,12 +77,13 @@ bool Gene::ReadFromFile(CString file) {
 }
 
 // XXX need to redo this. it kinda sucks from a GA perspective
+// XXX also NOT WORKING!
 Gene Gene::DoCrossoverSingle(int start, const Gene& parent) const {
 	
 	// ineffecient
 	// make a copy of US
-	Gene kid = *this;
-	kid.events = events;
+	/*Gene kid = *this;
+	// kid.events = events;
 	
 	// jump to the middle somewhere
 	// GOT TO BE A BETTER WAY...
@@ -95,11 +96,62 @@ Gene Gene::DoCrossoverSingle(int start, const Gene& parent) const {
 
 	// put buttons and states but not times from other parent into KID
 	// (this probably won't work too well...)
-	while (kid_iter != events.end() && parent_iter != parent.events.end()) {
+	while (kid_iter != kid.events.end() && parent_iter != parent.events.end()) {
 		(*kid_iter).button 	= (*parent_iter).button;
 		(*kid_iter).state 	= (*parent_iter).state;
 		kid_iter++;
 		parent_iter++;
+	}*/
+
+	Gene kid;
+	kid.Clear();
+	kid.time_at_end = time_at_end;
+
+	ConstEventListIter p1_iter = parent.events.begin();
+	ConstEventListIter p2_iter = this->events.begin();
+	InputEvent event;
+
+	int position = 0;
+	unsigned long time_fudge = 0;
+
+	// first copy from the other parent
+	while (p1_iter != parent.events.end() && position < start) {
+		
+		event.time 		= (*p1_iter).time;
+		event.button 	= (*p1_iter).button;
+		event.state 	=	(*p1_iter).state;
+
+		kid.events.push_front(event);
+
+		p1_iter++;	p2_iter++;
+		position++;
+	}
+
+	// don't go on if there's nothing else to copy
+	if (p2_iter == this->events.end()) {
+		return kid;
+	}
+
+	// TAKE INTO ACCOUNT TIME DIFFERENCES
+	if (position > 0) {
+
+		// see if the next event occurs in the past
+		// if so we need to move its time further ahead
+		if (event.time > (*p2_iter).time) {
+			time_fudge = event.time - (*p2_iter).time + 1;
+		}
+	}
+	
+	// then copy the rest from us
+	while (p2_iter != this->events.end()) {
+		event.time 		= (*p2_iter).time;
+		event.button 	= (*p2_iter).button;
+		event.state 	=	(*p2_iter).state;
+
+		kid.events.push_front(event);
+
+		p2_iter++;
+		position++;
 	}
 
 	return kid;
@@ -132,12 +184,14 @@ void Gene::Mutate(float mutation_rate) {
 }
 
 void Gene::Clear() {
-
+	events.clear();
+	fitness = 0;
+	time_at_end = 0;
 }
 
 void Gene::CreateRandom(int max_time) {
 	SetTimeAtEnd(max_time);
-	int time = 0;
+	int time = 1;
 
 	InputEvent event;
 
@@ -152,6 +206,13 @@ void Gene::CreateRandom(int max_time) {
 	}
 }
 		
+Gene::Gene(const Gene& g) {
+	Clear();
+	events = g.events;
+	fitness = g.fitness;
+	time_at_end = g.time_at_end;
+}
+
 Gene::Gene() {
 	Clear();
 }

@@ -48,6 +48,7 @@ class Gene {
 		void CreateRandom(int time);
 		
 		Gene();
+		Gene(const Gene&);
 		~Gene();
 };
 
