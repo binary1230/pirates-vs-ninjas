@@ -4,18 +4,18 @@
 #include "stdafx.h"
 #include "vector2D.h"
 
-class Rect;
+class _Rect;
 
 // NOTES:
-// Rect::getx,y methods are GUARANTEED to look like this:
+// _Rect::getx,y methods are GUARANTEED to look like this:
 // x1,y1 = bottom left
 // x2,y2 = top right
 //
-// Rect::setx,y methods will swap values things to make sure 
+// _Rect::setx,y methods will swap values things to make sure 
 // (x1<x2) and (y1<y2)
 
 //! A rectangle class, useful for bounding boxes/etc
-class Rect {
+class _Rect {
 	private:
 		float x1,y1,x2,y2;	
 		
@@ -84,12 +84,12 @@ class Rect {
 		//! Create a rect from 2 vectors
 		// void fromVec(const Vector2D &v1, const Vector2D &v2);
 
-		bool Overlaps(const Rect &rect) const;
+		bool Overlaps(const _Rect &rect) const;
 		
 		void Print(char* name = "");
 
 		//! Assign a rect's values to this rect
-		Rect& operator=(const Rect &r);
+		_Rect& operator=(const _Rect &r);
 		
 		//! Use a vector to expand one of the corners of this
 		//! rectangle.
@@ -100,15 +100,15 @@ class Rect {
 		}
 		
 		//! Compare two rectangles
-		bool operator==(const Rect &v) const;
-		bool operator!=(const Rect &v) const;
+		bool operator==(const _Rect &v) const;
+		bool operator!=(const _Rect &v) const;
 
-		Rect(	const float &_x1, const float &_y1, 
+		_Rect(	const float &_x1, const float &_y1, 
 					const float &_x2, const float &_y2	);
 
-		Rect(const Vector2D &v1, const Vector2D &v2);
-		Rect(const Rect &r);
-		Rect() { Clear(); };
+		_Rect(const Vector2D &v1, const Vector2D &v2);
+		_Rect(const _Rect &r);
+		_Rect() { Clear(); };
 
 		void print(FILE* f = stderr);
 };

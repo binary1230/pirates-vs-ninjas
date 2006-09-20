@@ -83,7 +83,7 @@ class Window : public GameBase {
 											int dest_x, int dest_y, int width, int height);
 
 		//! Debug only - draw a bounding rectangle
-		void DrawRect(Rect &r, int col);
+		void DrawRect(_Rect &r, int col);
 
 		inline void SetClearColor(int col) {clear_color = col;};
 

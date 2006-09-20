@@ -41,6 +41,7 @@ void GameOptions::PrintOptions(const char* arg0) {
 		"-X            | disable sound\n\n"
 
 		"-2            | (DEBUG) use 640x480 instead of 320x240\n"
+		"-z            | (DEBUG) use 800x600 (z?? z?? wtf.)\n"
 		"-3            | (DEBUG) start the game paused (press F1 and F2 in game)\n"
 		"-v            | (DEBUG) show debugging messages\n\n"
 
@@ -154,7 +155,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,new_argv,"fwg:m:r:d:X23vsc:p:h89")) != -1) {
+	while ( (c = getopt(argc,new_argv,"fzwg:m:r:d:X23vsc:p:h89")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -217,6 +218,13 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 			case '2':
 				screen_size_x = 640;
 				screen_size_y = 480;
+				break;
+			
+			// debug: hack - '2x size'
+			// ZZZZ?? WHY Z? WHAT THE SHITTING BITCH CAT, DOM.
+			case 'z':
+				screen_size_x = 800;
+				screen_size_y = 600;
 				break;
 
 			// debug: start in 'paused' mode, press F1 to go, F2 to step

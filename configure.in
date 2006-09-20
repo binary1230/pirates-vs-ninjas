@@ -47,7 +47,7 @@ fi
 
 AC_LANG(C++)
 
-AM_PATH_CPPUNIT(1.9.6)
+dnl AM_PATH_CPPUNIT(1.9.6)
 
 dnl --------------------------------
 dnl ./configure command line options

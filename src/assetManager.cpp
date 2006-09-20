@@ -215,10 +215,12 @@ AssetManager::~AssetManager() {
 //! if not on Mac, it just returns ""
 CString AssetManager::GetMacOSXCurrentWorkingDir() const {
 #ifdef PLATFORM_DARWIN 
+	fprintf(stderr, "Assetmanager: Using MacOSX Carbon stuff.\n");
 	CFBundleRef mainBundle = CFBundleGetMainBundle();
 	CFURLRef url = CFBundleCopyBundleURL(mainBundle);
 	CFStringRef cfStr = CFURLCopyPath(url);
 	CString path = CFStringGetCStringPtr(cfStr, CFStringGetSystemEncoding());
+	fprintf(stderr, "Assetmanager: Adding path: '%s'\n", path.c_str());
 	return CString(path + "Resources/");
 #else
 	return "";

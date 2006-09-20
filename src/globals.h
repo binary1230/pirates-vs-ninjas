@@ -3,8 +3,9 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#include <assert.h>
-#include <stdio.h>
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 typedef unsigned int uint;
 

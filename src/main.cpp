@@ -2,6 +2,9 @@
 #include "gameState.h"
 #include "gameOptions.h"
 
+#define REDIRECT_STDERR 1
+#define REDIRECT_STDERR_FILENAME "/Users/dcerquetti/game.log"
+
 int start_game_instance(const int argc, const char* argv[]) {
 	
 	// see if our command line args are OK
@@ -32,6 +35,16 @@ int start_game_instance(const int argc, const char* argv[]) {
 /// The main function
 /// IT ROCKS
 int main(const int argc, const char* argv[]) {
+
+#	ifdef REDIRECT_STDERR
+	fprintf(stderr, "Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
+
+	if (!freopen(REDIRECT_STDERR_FILENAME, "wt", stderr)) {
+		printf("Couldn't redirect stderr to "REDIRECT_STDERR_FILENAME "!");
+	}
+	
+	fprintf(stderr, "Main: redirected output.\n");
+# endif
 
 	return start_game_instance(argc, argv);
 

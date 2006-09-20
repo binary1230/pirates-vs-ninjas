@@ -7,6 +7,10 @@
 #ifndef PRECOMPILED_H
 #define PRECOMPILED_H
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 // The order of these two is SUPER-IMPORTANT
 #include <allegro.h>
 #ifdef WIN32
@@ -15,12 +19,15 @@
 
 #ifdef PLATFORM_DARWIN
 #include <CoreServices/CoreServices.h>
+#include <sys/malloc.h>
+#else
+#include <malloc.h>
 #endif // PLATFORM_DARWIN
 
+
 // Common to everything
-#include <assert.h>
-#include <malloc.h>
 #include <stdarg.h>
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

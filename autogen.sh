@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EXTRA_ACLOCAL_PATH="/opt/xmingw/i386-mingw32msvc/share/aclocal"
+EXTRA_ACLOCAL_PATH="/usr/local/share/aclocal"
 
 echo "Regenerating autoconf/automake stuff.."
 

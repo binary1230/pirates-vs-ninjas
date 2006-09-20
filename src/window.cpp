@@ -52,7 +52,7 @@ void Window::DrawBitmap(	BITMAP* bmp, int x, int y,
 	DrawBitmapAt(bmp, x, y, flip_x, flip_y, use_alpha, alpha);
 }
 
-void Window::DrawRect(Rect &r, int col) {
+void Window::DrawRect(_Rect &r, int col) {
 	rect(drawing_surface, 
 									(int)r.getx1(), 
 									(int)r.gety1(), 

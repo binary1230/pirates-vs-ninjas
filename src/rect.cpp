@@ -1,20 +1,20 @@
 #include "rect.h"
 
-/*void Rect::fromVec(const Vector2D &v1, const Vector2D &v2) {
+/*void _Rect::fromVec(const Vector2D &v1, const Vector2D &v2) {
 	set(v1.GetX(), v1.GetY(), v2.GetX(), v2.GetY());
 }*/
 
-Rect::Rect( const float &_x1, const float &_y1,
+_Rect::_Rect( const float &_x1, const float &_y1,
       			const float &_x2, const float &_y2 ) {
 	set(_x1, _y1, _x2, _y2);
 }
 
 // copy constructor
-Rect::Rect(const Rect &r) {
+_Rect::_Rect(const _Rect &r) {
 	set(r.x1, r.y1, r.x2, r.y2);
 }
 
-/*Rect::Rect(const Vector2D &v1, const Vector2D &v2) {
+/*_Rect::_Rect(const Vector2D &v1, const Vector2D &v2) {
 	fromVec(v1, v2);
 }*/
 
@@ -27,27 +27,27 @@ inline void Swap(register float &t1, register float &t2) {
 		
 //! Make sure x1,y1 is the bottom left corner
 //! and that x2,y2 is the top right corner
-/*void Rect::Fix() {
+/*void _Rect::Fix() {
 	FixX();
 	FixY();
 }
 
-void Rect::FixX() {
+void _Rect::FixX() {
 	if (x2<x1) 
 		Swap(x2,x1);
 }
 
-void Rect::FixY() {
+void _Rect::FixY() {
 	if (y2<y1) 
 		Swap(y2,y1);
 }*/
 
-void Rect::Print(char* name) {
+void _Rect::Print(char* name) {
 	fprintf(stderr, "%s\t x1 = %f, y1 = %f, x2 = %f, y2 = %f\n", 
 					name, x1, y1, x2, y2);
 }
 
-bool Rect::Overlaps(const Rect &rect) const {	
+bool _Rect::Overlaps(const _Rect &rect) const {	
 	if (gety1() > rect.gety2() 	||
 			gety2() < rect.gety1() 	||
 			getx2() < rect.getx1()	||
@@ -57,7 +57,7 @@ bool Rect::Overlaps(const Rect &rect) const {
 	return true;
 }
 
-Rect& Rect::operator=(const Rect &r) {
+_Rect& _Rect::operator=(const _Rect &r) {
 			x1 = r.x1;
 			y1 = r.y1;
 			x2 = r.x2;
@@ -65,7 +65,7 @@ Rect& Rect::operator=(const Rect &r) {
 			return *this;
 }
 
-void Rect::Project(const Vector2D &projection) {
+void _Rect::Project(const Vector2D &projection) {
 	if (projection.GetX() >= 0.0f) {
 		x2 += projection.GetX();	// GetX() is positive
 	} else {
@@ -80,7 +80,7 @@ void Rect::Project(const Vector2D &projection) {
 }
 
 //! Compare two rectangles
-bool Rect::operator==(const Rect &r) const {
+bool _Rect::operator==(const _Rect &r) const {
 	return (getx1() - r.getx1() < TOLERANCE && getx1() - r.getx1() > -TOLERANCE &&
 					gety1() - r.gety1() < TOLERANCE && gety1() - r.gety1() > -TOLERANCE &&
 					getx2() - r.getx2() < TOLERANCE && getx2() - r.getx2() > -TOLERANCE &&
@@ -88,14 +88,14 @@ bool Rect::operator==(const Rect &r) const {
 }
 		
 //! Compare two rectangles
-bool Rect::operator!=(const Rect &r) const {
+bool _Rect::operator!=(const _Rect &r) const {
 	return (getx1() - r.getx1() > TOLERANCE && getx1() - r.getx1() < -TOLERANCE &&
 					gety1() - r.gety1() > TOLERANCE && gety1() - r.gety1() < -TOLERANCE &&
 					getx2() - r.getx2() > TOLERANCE && getx2() - r.getx2() < -TOLERANCE &&
 					gety2() - r.gety2() > TOLERANCE && gety2() - r.gety2() < -TOLERANCE );
 }
 
-void Rect::print(FILE* f) {
+void _Rect::print(FILE* f) {
 	fprintf(f, 	"+ + + + + + + + + + + + + + + + + + + + +\n"
 							"++ x1,y1 = %f, %f\n"
 							"++ x2,y2 = %f, %f\n"

@@ -107,7 +107,7 @@ void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y)
 }
 
 // Same as Transform(), just for rectangles only.
-void Object::TransformRect(Rect &r) {
+void Object::TransformRect(_Rect &r) {
 
 	int x1, x2, y1, y2, w, h;
 	
@@ -155,9 +155,9 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	if (!DEBUG_DRAW_BOUNDING_BOXES)
 		return;
 
-	Rect bbox_t;
-	Rect projRect_t = projRect;
-	Rect bbox_t_old = bbox;
+	_Rect bbox_t;
+	_Rect projRect_t = projRect;
+	_Rect bbox_t_old = bbox;
 
 	// get current bounding box
 	bbox_t.set(	pos.GetX(), pos.GetY(), 

@@ -80,10 +80,10 @@ class Object : public GameBase {
 		int controller_num;
 		
 		//! Bounding box for this object
-		Rect bbox;
+		_Rect bbox;
 
 		//! Projection rectange (for collisions)
-		Rect projRect;
+		_Rect projRect;
 
 		//! CACHED level width and height
 		int level_width, level_height;
@@ -194,7 +194,7 @@ class Object : public GameBase {
 		void Transform(	int &x, int &y, 
 										const int &offset_x = 0, const int &offset_y = 0);
 
-		void TransformRect(Rect &r);
+		void TransformRect(_Rect &r);
 		
 		//! Draw this object at its coordinates plus specified offset
 		//! Optionally, you can pass in a specific sprite to draw, otherwise
@@ -271,7 +271,7 @@ class Object : public GameBase {
 		void UpdateProjectionRectFromVelocity();
 		void UpdateProjectionRectFromCollisions(Vector2D &newPos);
 
-		Rect GetProjectionRect() {return projRect;}
+		_Rect GetProjectionRect() {return projRect;}
 
 		//! Plays a sound, or does nothing if that sound is not loaded
 		void PlaySound(CString name);
