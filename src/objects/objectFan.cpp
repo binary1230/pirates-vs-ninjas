@@ -44,10 +44,9 @@ void FanObject::Collide(Object* obj) {
 	}
 }
 
-bool FanObject::Init(GameState *_game_state, PhysSimulation *p) {
+bool FanObject::Init(PhysSimulation *p) {
 	current_fan_speed = 0.0f;
 
-	SetGameState(_game_state);
 	simulation = p;
 	return BaseInit();
 }

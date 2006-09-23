@@ -2,11 +2,10 @@
 #define PHYS_SYSTEM_H
 
 #include "stdafx.h"
-#include "gameBase.h"
+#include "singleton.h"
 #include "gameMode.h"
 
 class PhysSimulation;
-class GameState;
 class Force;
 class Object;
 class ObjectFactory;
@@ -87,7 +86,7 @@ class PhysSimulation : public GameMode {
 			int repeater_current_x, repeater_current_y;
 
 		public:
-			int Init(GameState*, XMLNode);
+			int Init(XMLNode);
 			void Shutdown();
 
 			void Draw();

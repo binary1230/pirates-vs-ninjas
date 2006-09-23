@@ -32,8 +32,7 @@ void GameModes::Draw() {
 }
 
 void GameModes::DoEndCurrentMode() {
-	AssetManager* m = GetGameState()->GetAssetManager();
-	m->Free();
+	ASSETMANAGER->Free();
 
 	signal_end_current_mode = false;
 	currentModeIndex++;
@@ -62,7 +61,7 @@ void GameModes::DoEndCurrentMode() {
 void GameModes::DoGameExit() {
 	signal_game_exit = true;
 	signal_end_current_mode = true;
-	GetGameState()->SignalGameExit();
+	GAMESTATE->SignalGameExit();
 }
 
 void GameModes::SignalEndCurrentMode() {
@@ -73,11 +72,10 @@ void GameModes::SignalGameExit() {
 	signal_game_exit = true;
 }
 
-int GameModes::Init(GameState* gs, XMLNode _xGame) {
+int GameModes::Init(XMLNode _xGame) {
 
 	fprintf(stderr, " Modes: Starting init.\n");
 
-	SetGameState(gs);
 	currentMode = NULL;
 	currentModeIndex = 0;
 	
@@ -113,7 +111,6 @@ int GameModes::Init(GameState* gs, XMLNode _xGame) {
 }
 
 int GameModes::LoadNextMode() {
-	AssetManager* m = GetGameState()->GetAssetManager();
 	currentMode = NULL;
 
 	// Get the mode type from the XML file
@@ -129,7 +126,7 @@ int GameModes::LoadNextMode() {
     " Mod Info: default mode filename '%s'\n",
     mode_xml_filename.c_str());
 
-	mode_xml_filename = m->GetPathOf(mode_xml_filename);
+	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename);
 	XMLNode xMode = XMLNode::openFileHelper(mode_xml_filename.c_str(), "gameMode");
 	CString nodeType = xMode.getAttribute("type");
 	
@@ -139,7 +136,7 @@ int GameModes::LoadNextMode() {
 	if (nodeType == "simulation") {
 						
 		currentMode = new PhysSimulation();
-		if ( !currentMode || currentMode->Init(GetGameState(), xMode) == -1) {
+		if ( !currentMode || currentMode->Init(xMode) == -1) {
 			fprintf(stderr, "ERROR: GameModes: failed to init simulation!\n");
 			return -1;
 			fprintf(stderr, "CRAP!\n");
@@ -148,7 +145,7 @@ int GameModes::LoadNextMode() {
 	}	else if (nodeType == "credits") {
 						
 		currentMode = new CreditsMode();
-		if ( !currentMode || currentMode->Init(GetGameState(), xMode) < 0) {
+		if ( !currentMode || currentMode->Init( xMode) < 0) {
 			fprintf(stderr, "ERROR: GameModes: failed to init simulation!\n");
 			return -1;
 		}
@@ -156,7 +153,7 @@ int GameModes::LoadNextMode() {
 	} else if (nodeType == "menu") {
 
 		currentMode = new GameMenu();
-		if ( !currentMode || currentMode->Init(GetGameState(), xMode) < 0) {
+		if ( !currentMode || currentMode->Init(xMode) < 0) {
 			fprintf(stderr, "ERROR: GameModes: failed to init menu!\n");
 			return -1;
 		}

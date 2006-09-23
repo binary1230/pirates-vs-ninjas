@@ -5,7 +5,6 @@
 #include "assetManager.h"
 #include "window.h"
 #include "gameMenu.h"
-#include "gameBase.h"
 #include "globals.h"
 
 void GameMenu::DoNewGame() {
@@ -14,11 +13,11 @@ void GameMenu::DoNewGame() {
 	// LoadNewMode(....);
 
 	// For now, we just Let it roll onto the next mode
-	GetGameState()->SignalEndCurrentMode();
+	GAMESTATE->SignalEndCurrentMode();
 }
 
 void GameMenu::DoQuit() {
-	GetGameState()->SignalGameExit();
+	GAMESTATE->SignalGameExit();
 }
 
 // Hardcoded for now...
@@ -37,59 +36,52 @@ void GameMenu::DoMenuAction(const CString &action) {
 // #define DEBUG_VERSION_PRINT 1
 
 void GameMenu::Draw() {
-	 Window* window = GetGameState()->GetWindow();
-
 	 int x_offset = SCREEN_W/2 - back->w/2;
 	 int y_offset = SCREEN_H/2 - back->h/2;
 
-   window->DrawBitmap(back, x_offset, y_offset);
-	 window->DrawBitmap(selector, x_offset + x_pos, y_offset + y_pos[current_pos]);
+   WINDOW->DrawBitmap(back, x_offset, y_offset);
+	 WINDOW->DrawBitmap(selector, x_offset + x_pos, y_offset + y_pos[current_pos]);
 	 
 	 #ifdef DEBUG_VERSION_PRINT
-	 textprintf_right_ex(  window->GetDrawingSurface(), font, 
+	 textprintf_right_ex(  WINDOW->GetDrawingSurface(), font, 
                         SCREEN_W, SCREEN_H - 10, makecol(255, 255, 255), -1, 
                         VERSION_STRING);
 	 #endif
 }
 
 void GameMenu::Update() {
-	BaseInput* input = GetGameState()->GetInput();
-
-	if (input->KeyOnce(PLAYERKEY_UP, 1)) {
+	if (INPUT->KeyOnce(PLAYERKEY_UP, 1)) {
 		if ((current_pos--) == 0) {
 			current_pos = y_pos.size() - 1;
 		}
   }
 
-	if (input->KeyOnce(PLAYERKEY_DOWN, 1)) {
+	if (INPUT->KeyOnce(PLAYERKEY_DOWN, 1)) {
 		if ((++current_pos) == y_pos.size())
 			current_pos = 0;
 	}
 	
-	if (input->KeyOnce(GAMEKEY_EXIT)) {
+	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
     DoQuit();
   }
 	
 	assert(current_pos >= 0 || current_pos < y_pos.size());
 
-	if (input->KeyOnce(GAMEKEY_START)) {
+	if (INPUT->KeyOnce(GAMEKEY_START)) {
 		DoMenuAction(actions[current_pos]);
 	}
 }
 
-int GameMenu::Init(GameState* gs, XMLNode xMode) {
-	SetGameState(gs);
-	AssetManager* m = GetGameState()->GetAssetManager();
-	
+int GameMenu::Init(XMLNode xMode) {
 	current_pos = 0;
 
-	back = m->LoadBitmap(xMode.getChildNode("bgPic").getText());
+	back = ASSETMANAGER->LoadBitmap(xMode.getChildNode("bgPic").getText());
 	if (!back) {
 		fprintf(stderr, "-- MENU ERROR: Couldn't load bgPic.\n");
 		return -1;
 	}
 	
-	selector = m->LoadBitmap(xMode.getChildNode("selectorPic").getText());
+	selector = ASSETMANAGER->LoadBitmap(xMode.getChildNode("selectorPic").getText());
 	if (!selector) {
 		fprintf(stderr, "-- MENU ERROR: Couldn't load selectorPic\n");
 		return -1;

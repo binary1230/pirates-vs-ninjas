@@ -18,11 +18,9 @@
 #include "gameSound.h"
 #include "objectPlayer.h"
 
-int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
-	SetGameState(gs);
-
+int PhysSimulation::Init(XMLNode xMode) {
 	objectFactory = new ObjectFactory();
-	if ( !objectFactory || objectFactory->Init(GetGameState()) < 0 ) {
+	if ( !objectFactory || objectFactory->Init() < 0 ) {
 		fprintf(stderr, "ERROR: InitSystem: failed to init objectFactory!\n");
 		return -1;
 	}
@@ -30,7 +28,7 @@ int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
 	objectFactory->SetPhysSimulation(this);
 
 	forceFactory = new ForceFactory();
-	if ( !forceFactory || forceFactory->Init(GetGameState()) < 0 ) {
+	if ( !forceFactory || forceFactory->Init() < 0 ) {
 		fprintf(stderr, "ERROR: InitSystem: failed to init forceFactory!\n");
 		return -1;
 	}
@@ -44,7 +42,7 @@ int PhysSimulation::Init(GameState* gs, XMLNode xMode) {
 //! Transforms view coordinates into absolute screen coordinates
 //! e.g. flip the Y axis mostly.
 void PhysSimulation::TransformViewToScreen(	int &x, int &y ) {
-	y = game_state->ScreenHeight() - y;
+	y = GAMESTATE->ScreenHeight() - y;
 }
 
 //! Transforms an object's coordinates from its world coordinates
@@ -78,11 +76,11 @@ void PhysSimulation::ComputeNewCamera() {
 				
 	int ox = camera_follow->GetX();
 	int ow = camera_follow->GetWidth();
-	int sw = GetGameState()->ScreenWidth();
+	int sw = GAMESTATE->ScreenWidth();
 	
 	int oy = camera_follow->GetY();
 	int oh = camera_follow->GetHeight();
-	int sh = GetGameState()->ScreenHeight();
+	int sh = GAMESTATE->ScreenHeight();
 	
 	camera_x = CAM_MOVE_TO_CENTER(camera_x, ox, ow, sw);
 	camera_y = CAM_MOVE_TO_CENTER(camera_y, oy, oh, sh);
@@ -137,8 +135,6 @@ void PhysSimulation::Shutdown() {
 		delete forceFactory;
 		forceFactory = NULL;
 	}
-
-	game_state = NULL;
 }
 
 //! Draw all objects in this physics simulation
@@ -158,7 +154,7 @@ void PhysSimulation::Draw() {
 void PhysSimulation::ResetForNextFrame() {
 	ObjectListIter iter;
 
-	int debug = GetGameState()->GetGameOptions()->GetDebugMessageLevel();
+	int debug = GAMESTATE->GetGameOptions()->GetDebugMessageLevel();
 
 	if (debug)
 		fprintf(stderr, CLEAR_SCREEN_STRING);
@@ -277,11 +273,11 @@ void PhysSimulation::Update() {
 	
 	// If they pressed the 'exit' key (typically ESCAPE)
 	// Then end the physics simulation
-	if (GetGameState()->GetInput()->KeyOnce(GAMEKEY_EXIT)) {
+	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
 		
-		// Should be.. but until we get a 'goal'
+		// use one or the other, SignalGameExit() is "right"
     // GetGameState()->SignalGameExit();
-    GetGameState()->SignalEndCurrentMode();
+    GAMESTATE->SignalEndCurrentMode();
     
 		return;
 	}
@@ -313,9 +309,8 @@ int PhysSimulation::Load(XMLNode &xMode) {
 
 	if (xMode.nChildNode("music") == 1) {
 		const char* music_file = xMode.getChildNode("music").getText();
-		GameSound* sound = GetGameState()->GetSound();
-		sound->LoadMusic(music_file);
-		sound->PlayMusic();
+		SOUND->LoadMusic(music_file);
+		SOUND->PlayMusic();
 	}
 	
 	return 0;	
@@ -367,7 +362,7 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 	}
 
 	// XXX make clear_color it a class memeber
-	GetGameState()->GetWindow()->SetClearColor(clear_color);
+	WINDOW->SetClearColor(clear_color);
 
 	return 0;
 }
@@ -413,7 +408,7 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 		xLayer = xMap.getChildNode("layer", &iterator);
 		
 		ObjectLayer* layer = new ObjectLayer();
-		layer->Init(GetGameState(), this);
+		layer->Init(this);
 		layers.push_back(layer);
 		
 		if (LoadLayerFromXML(xLayer, layer, objectDefs) == -1) {
@@ -460,7 +455,7 @@ int PhysSimulation::LoadObjectDefsFromXML(XMLNode &xObjs,
 		file = xObjs.getChildNode("include_xml_file", &iterator).getText();
 		
 		// open that file, get the objectDef
-		file = GetGameState()->GetAssetManager()->GetPathOf(file);
+		file = ASSETMANAGER->GetPathOf(file);
 		xObjectDef = XMLNode::openFileHelper(file.c_str(), "objectDef");
 
 		// save it
@@ -704,13 +699,13 @@ int PhysSimulation::LoadObjectFromXML(
 			// if <alignScreenRight> is present, we align this sprite
 			// to the SCREEN's right (useful only for overlays)
 			if (xPos.nChildNode("alignScreenRight")>0) {
-				x = GetGameState()->GetWindow()->Width() - obj->GetWidth() - x;
+				x = WINDOW->Width() - obj->GetWidth() - x;
 			}
 
 			// if <alignScreenBottom> is present, we align this sprite
 			// to the SCREEN's bottom (useful only for overlays)
 			if (xPos.nChildNode("alignScreenBottom")>0) {
-				y = GetGameState()->GetWindow()->Height() - obj->GetHeight() - y;
+				y = WINDOW->Height() - obj->GetHeight() - y;
 			}
 
 			// One last position calculation:

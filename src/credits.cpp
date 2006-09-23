@@ -5,21 +5,18 @@
 #include "window.h"
 #include "gameSound.h"
 
-int CreditsMode::Init(GameState* gs, XMLNode xMode) {
-	SetGameState(gs);
-
-	AssetManager* m = GetGameState()->GetAssetManager();
-	Window* window = GetGameState()->GetWindow();
-
-	credits_bmp = m->LoadBitmap(xMode.getChildNode("scrollPic").getText());
+int CreditsMode::Init(XMLNode xMode) {
+	credits_bmp = ASSETMANAGER->LoadBitmap(
+		xMode.getChildNode("scrollPic").getText()
+	);
 
 	if (!xMode.getChildNode("scrollSpeed").getInt(scroll_speed)) {
 		fprintf(stderr, " -- Invalid scroll speed!\n");
 		return -1;
 	}
-	scroll_offset = window->Height();
+	scroll_offset = WINDOW->Height();
 
-	window->SetClearColor(0);
+	WINDOW->SetClearColor(0);
 
 	if (!credits_bmp)
 		return -1;
@@ -27,41 +24,33 @@ int CreditsMode::Init(GameState* gs, XMLNode xMode) {
 	// Load the music
 	if (xMode.nChildNode("music") == 1) {
 		const char* music_file = xMode.getChildNode("music").getText();
-		GameSound* sound = GetGameState()->GetSound();
-		sound->LoadMusic(music_file);
-		sound->PlayMusic();
+		SOUND->LoadMusic(music_file);
+		SOUND->PlayMusic();
 	}
 
 	return 0;
 }
 
 void CreditsMode::Shutdown() {
-	SetGameState(NULL);
 }
 
 void CreditsMode::Draw() {
-	Window* window = GetGameState()->GetWindow();
-
 	// XXX Should use window->Blit()...
-	window->DrawBitmap(	credits_bmp, 
-											window->Width()/2 - credits_bmp->w/2, 
+	WINDOW->DrawBitmap(	credits_bmp, 
+											WINDOW->Width()/2 - credits_bmp->w/2, 
 											scroll_offset );
 }
 
 void CreditsMode::Update() {
-	GameState* gs = GetGameState();
-
 	scroll_offset -= scroll_speed;
 
 	// If we finished scrolling or they press the exit key, we exit
-	if (scroll_offset < -int(credits_bmp->h)
-			|| gs->GetInput()->KeyOnce(GAMEKEY_EXIT)) {
-		    GetGameState()->SignalEndCurrentMode();
+	if (	scroll_offset < -int(credits_bmp->h) || INPUT->KeyOnce(GAMEKEY_EXIT)) {
+   	GAMESTATE->SignalEndCurrentMode();
 	}
 }
 
 CreditsMode::CreditsMode() {
-	SetGameState(NULL);
 	credits_bmp = NULL;
 }
 

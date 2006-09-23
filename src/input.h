@@ -2,10 +2,8 @@
 #define INPUT_H
 
 #include "stdafx.h"
-#include "gameBase.h"
+#include "singleton.h"
 #include "globals.h"
-
-class BaseInput;
 
 //! The max number of "player keys" (e.g. JUMP, LEFT, etc)
 #define PLAYERKEY_COUNT					5
@@ -56,6 +54,13 @@ enum MouseClickType {
 	MOUSE_SCROLL_DOWN
 };
 
+// The input can come from 3 places:
+enum InputType {
+	INPUT_RECORDED,			// recorded input, written to a demo file
+	INPUT_PLAYBACK,			// played back input, read from a demo file
+	INPUT_LIVE					// live input right from the mouse/keyboard
+};
+
 //! Input Base Class
  
 //! The only reason for having a base class is
@@ -89,8 +94,16 @@ enum MouseClickType {
 //! -
 //! The class also saves random seed during recording to make playback
 //! be deterministic
-class BaseInput : public GameBase {
+class Input {
+	
+	DECLARE_SINGLETON_CLASS(Input)
+
 	protected:
+		// -- COMMON STUFF -- //
+
+		// The input type (e.g. playback, record, or live)
+		InputType type;
+		
 		//! The keys currently being pressed (e.g. GAMEKEY_JUMP)
 		vector<int> game_key;
 
@@ -117,15 +130,84 @@ class BaseInput : public GameBase {
 		//! Clear a specific keyboard buffer
 		void ClearKeys(vector<int> &key_buffer);
 		
+		//! The current demo file being read from, if any
+		FILE* demofile;
+		
+		//! Update key release info
+		void UpdateKeyReleases();
+
+		//! Init common stuff for all input types
+		bool CommonInit();
+
+		// -- LIVE INPUT STUFF -- //
+
+		//! Init live input stuff
+		bool InitLive();
+
+		//! Update live input stuff
+		void UpdateLive();
+
+		// -- DEMO PLAYBACK STUFF --	//
+		
+		//! Init demo playback stuff
+		bool InitPlayback(CString filename);
+
+		//! The frame count we are on [updated by Update()]
+		unsigned long frame_counter;
+
+		//! The next frame for which we have data
+		unsigned long next_frame_num;
+
+		//! The next frame's data
+		vector<int> next_frame_data;
+
+		//! True if we are at the end of this file
+		bool at_eof;
+
+		//! Reads the next frame from a file
+		void GetNextFrameData();
+
+		//! Uses the new frame data as the current data
+		void UseNextFrameData();
+		
+		//! Update playback stuff
+		void UpdatePlayback();
+
+		void BeginPlayback();
+		void EndPlayback();
+		
+		// -- DEMO RECORD STUFF -- //
+		
+		//! The last state of the keys
+		vector<int> old_key;
+		
+		//! Initialize demo recording stuff
+		bool InitRecorder(CString filename);
+		
+		//! Update demofile recorder
+		void UpdateRecord();
+		
+		void BeginRecording();
+		void EndRecording();
+		
 	public:
 		//! Init the input system
-		virtual int Init(GameState* _game_state, CString _demo_file) = 0;
+		int Init();
+
+		//! Start using this input
+		void Begin();
+
+		//! End using this input
+		void End();
+
+		//! Get the input type
+		inline InputType GetInputType() {return type;};
 
 		//! Shutdown the input system
-		virtual void Shutdown() = 0;
+		void Shutdown();
 
 		//! Update the inputs (mice/keys)
-		virtual void Update() = 0;
+		void Update();
 
 		//! Get the status of a key on a specified controller
 		//! note: for player keys (e.g. player 1 JUMP), with this method you 
@@ -149,34 +231,19 @@ class BaseInput : public GameBase {
 		//! the key before KeyOnce will return true again
 		void HandleKeyOnce(uint gameKey, uint controller_number = 0);
 
-		//! Calls CheckKeyOnce() and HandleKeyOnce()
+		//! Calls CheckKeyOnce() and HandleKeyOnce() in that order
 		bool KeyOnce(uint gameKey, uint controller_number = 0);
 
 		int ResolveControllerKey(uint gameKey, uint controller_number);
-
-		void UpdateKeyReleases();
-
-		bool BaseInit();
-		
+	
 		//! Mouse status
 		bool MouseClick(MouseClickType);
 		int MouseX();
 		int MouseY();
-		
-		//! RECORD: Begin recording input (for demos)
-		virtual void BeginRecording() = 0;
-
-		//! RECORD: End Recording input (for demos)
-		virtual void EndRecording() = 0;
-		
-		//! PLAYBACK: Begin playback of input (for demos)
-		virtual void BeginPlayback() = 0;
-
-		//! PLAYBACK: End playback of input (for demos)
-		virtual void EndPlayback() = 0;
-
-		BaseInput();
-		virtual ~BaseInput() = 0;
+			
+		virtual ~Input();
 };
+
+#define INPUT Input::GetInstance()
 
 #endif // INPUT_H

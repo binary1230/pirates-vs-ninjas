@@ -17,6 +17,7 @@ class GameNetwork;
 
 #include "globals.h"
 #include "timer.h"
+#include "singleton.h"
 
 //! Represents the current state of the game.
 
@@ -25,6 +26,8 @@ class GameNetwork;
 //! the entire game.  Anything of importance starts in this
 //! class somewhere.
 class GameState {
+	DECLARE_SINGLETON_CLASS(GameState)
+
 	protected:	
 		//! Holds options which were parsed from the command line
 		GameOptions *options;
@@ -32,18 +35,6 @@ class GameState {
 		//! Holds the current game's parsed XML data
 		XMLNode xGame;
 		
-		//! Loads things and knows about path handling
-		AssetManager* assetManager;
-		
-		//! The game's on-screen window
-		Window *window;								
-				
-		//! The active input class
-		BaseInput *input;
-
-		//! The sound class
-		GameSound *sound;
-
 		//! Collection of all game modes (e.g. menu mode, simulation mode, etc)
 		GameModes *modes;
 
@@ -123,9 +114,6 @@ class GameState {
 		//! Returns true if we are playing back a demo
 		bool IsPlayingBackDemo() {return is_playing_back_demo;};
 
-		//! Return a surface which we can draw on
-		BITMAP* GetDrawingSurface();
-
 		//! Returns true if the given key is being pressed, false otherwise
 		bool GetKey(uint which_key) const;
 
@@ -139,9 +127,6 @@ class GameState {
 		//! Return screen height
 		uint ScreenHeight() const;
 
-		//! Get our resource loader.
-		inline AssetManager* GetAssetManager() const {return assetManager;};
-
 		//! Unconditionally exit game
 		void SignalGameExit();
 		
@@ -151,20 +136,12 @@ class GameState {
 		//! Returns the currently active physics simulation (if there is one)
 		PhysSimulation* GetPhysSimulation();
 
-		//! Get the current window
-		inline Window* GetWindow() {return window;};
-
 		//! Gets the game options
 		inline GameOptions* GetGameOptions() {return options;};
 
-		//! Gets the sound class
-		inline GameSound* GetSound() {return sound;};
-		
-		//! Gets the input class
-		inline BaseInput* GetInput() {return input;};
-
-		GameState();
 		~GameState();
 };
+
+#define GAMESTATE GameState::GetInstance()
 
 #endif

@@ -2,12 +2,11 @@
 #define NETWORK_H
 
 #include "stdafx.h"
-#include "gameBase.h"
+#include "singleton.h"
 
 class ezSockets;
-class GameState;
 
-class GameNetwork : GameBase {
+class GameNetwork {
 	protected:
 		bool is_server;
 		ezSockets* socket;
@@ -19,8 +18,8 @@ class GameNetwork : GameBase {
 		int CommonInit(int _port, CString _host);
 
 	public:
-		int InitClient(GameState* _game_state, int _port, CString _host);
-		int InitServer(GameState* _game_state, int _port);
+		int InitClient(int _port, CString _host);
+		int InitServer(int _port);
 
 		void Shutdown();
 

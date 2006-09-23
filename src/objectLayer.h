@@ -2,7 +2,6 @@
 #define OBJECTLAYER_H
 
 #include "stdafx.h"
-#include "gameBase.h"
 
 class Object;
 class PhysSimulation;
@@ -15,7 +14,7 @@ class PhysSimulation;
 //
 // TODO The layers holding pointers to objects is a bit complex and probably
 //      needs rethinking
-class ObjectLayer : public GameBase {
+class ObjectLayer {
 	protected:
 		list<Object*> objects;
 		bool visible;
@@ -24,7 +23,7 @@ class ObjectLayer : public GameBase {
 		PhysSimulation* simulation;
 	
 	public:
-		bool Init(GameState*, PhysSimulation*);
+		bool Init(PhysSimulation*);
 		void Shutdown();
 
 		//! Get/set layer scroll speed

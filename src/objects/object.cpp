@@ -4,7 +4,6 @@
 #include "window.h"
 #include "force.h"
 #include "globals.h"
-#include "gameBase.h"
 #include "animation.h"
 #include "animations.h"
 #include "physSimulation.h"
@@ -41,7 +40,7 @@ void Object::UpdateDisplayTime() {
 }
 
 void Object::PlaySound(CString name) {
-	GetGameState()->GetSound()->PlaySound(name);
+	SOUND->PlaySound(name);
 }
 
 //! Cache some commonly used stuff
@@ -147,8 +146,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 		sprite_to_draw = currentSprite;
 
 	if (sprite_to_draw)
-		GetGameState()->GetWindow()->
-		DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, alpha);
+		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, alpha);
 
 	#define DEBUG_DRAW_BOUNDING_BOXES 0
 
@@ -174,16 +172,13 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 				properties.is_collectable) {
 
 		// draw old bounding rectangle, dark pink
-		GetGameState()->GetWindow()->
-		DrawRect(bbox_t_old, makecol(127,0,127));
+		WINDOW->DrawRect(bbox_t_old, makecol(127,0,127));
 	
 		// draw current bounding rectangle, pink
-		GetGameState()->GetWindow()->
-		DrawRect(bbox_t, makecol(255,0,255));
+		WINDOW->DrawRect(bbox_t, makecol(255,0,255));
 
 		// draw projection rectangle, blue
-		GetGameState()->GetWindow()->
-		DrawRect(projRect_t, makecol(0, 0, 255));
+		WINDOW->DrawRect(projRect_t, makecol(0, 0, 255));
 	}
 }
 
@@ -271,7 +266,7 @@ Object::Object() {
 // XXX BIG MESS and NOT FINISHED, not even close.
 CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	
-	int debug = GetGameState()->GetGameOptions()->GetDebugMessageLevel();
+	int debug = GAMESTATE->GetGameOptions()->GetDebugMessageLevel();
 
 	bool check_up = false, check_right = false;
 	CollisionDirection d; d.up = d.down = d.left = d.right = 0;

@@ -14,8 +14,7 @@ void RadiusBlockObject::Update() {
 	pos.SetY( int(cosf(theta) * radius) );
 }
 
-bool RadiusBlockObject::Init(GameState *_game_state, PhysSimulation *p) {
-	SetGameState(_game_state);
+bool RadiusBlockObject::Init(PhysSimulation *p) {
 	simulation = p;
 	return BaseInit();
 }

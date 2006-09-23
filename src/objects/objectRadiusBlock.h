@@ -9,7 +9,6 @@
 #include "object.h"
 
 class RadiusBlockObject;
-class GameState;
 class ObjectFactory;
 class PhysSimulation;
 
@@ -22,7 +21,7 @@ class RadiusBlockObject : public Object {
 		int radius;
 
 	public:
-		bool Init(GameState* _game_state, PhysSimulation *p);
+		bool Init(PhysSimulation *p);
 
 		void Update();
 

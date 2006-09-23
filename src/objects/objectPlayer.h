@@ -6,7 +6,6 @@
 
 class ObjectPlayer;
 class Animation;
-class GameState;
 class BaseInput;
 class Animation;
 class BaseInput;
@@ -34,7 +33,6 @@ class PlayerObject : public Object {
 		float drag;
 
 		PlayerState state;
-		BaseInput* input;
 	
 		void UpdateState();
 
@@ -57,7 +55,7 @@ class PlayerObject : public Object {
 		int ring_count;
 
 	public:
-		bool Init(GameState* _game_state, PhysSimulation* p);
+		bool Init(PhysSimulation* p);
 		
 		//! Load object properties from XML
 		bool LoadPlayerProperties(XMLNode &xDef);		

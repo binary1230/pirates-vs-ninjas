@@ -16,13 +16,14 @@ Force* ForceFactory::CreateForce(ForceType type) {
 		case FORCE_INPUT1:
 		case FORCE_INPUT2:
 						
-			if (type == FORCE_INPUT1)
+			if (type == FORCE_INPUT1) {
 				controller_num = 1;
-			else if (type == FORCE_INPUT2)
+			} else if (type == FORCE_INPUT2) {
 				controller_num = 2;
+			}
 							
 			inputForce = new ForceInput();
-			if ( inputForce && inputForce->Init(GetGameState()) ) {
+			if ( inputForce && inputForce->Init() ) {
 				
 				inputForce->SetControllerNum(controller_num);
 			
@@ -39,7 +40,7 @@ Force* ForceFactory::CreateForce(ForceType type) {
 
 		case FORCE_GRAVITY:
 			gravityForce = new ForceGravity();
-			if ( gravityForce && gravityForce->Init(GetGameState()) ) {
+			if ( gravityForce && gravityForce->Init() ) {
 
 				// Initialize it here
 				// gravityForce->SetSomething(...)
@@ -67,8 +68,7 @@ Force* ForceFactory::CreateForce(ForceType type) {
 	delete obj;
 }*/
 
-int ForceFactory::Init(GameState* _game_state) {
-	SetGameState(_game_state);
+int ForceFactory::Init() {
 	return 0;
 }
 

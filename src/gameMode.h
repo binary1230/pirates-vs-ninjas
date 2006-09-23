@@ -2,9 +2,6 @@
 #define GAMEMODE_H
 
 #include "stdafx.h"
-#include "gameBase.h"
-
-class GameState;
 
 //! Base class for all Modes of the game (e.g. Menu Mode, Game Mode, Bonus Level Mode)
 
@@ -15,11 +12,11 @@ class GameState;
 //! the fact that all modes need to be able to Update() and Draw(), among
 //! other things.  It also acts as a node in a linked list in order to hold
 //! all the game modes.
-class GameMode : public GameBase {
+class GameMode {
 		protected:
 
 		public:
-			virtual int Init(GameState*, XMLNode) = 0;
+			virtual int Init(XMLNode) = 0;
 			virtual void Shutdown() = 0;
 
 			//! Draw this mode

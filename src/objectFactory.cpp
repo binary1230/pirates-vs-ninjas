@@ -100,15 +100,12 @@ Object* ObjectFactory::CreateObjectFromXML(
 	return obj;
 }
 
-int ObjectFactory::Init(GameState* _game_state) {
-	SetGameState(_game_state);
+int ObjectFactory::Init() {
 	physSimulation = NULL;
 	return 0;
 }
 
-void ObjectFactory::Shutdown() {
-	SetGameState(NULL);
-}
+void ObjectFactory::Shutdown() {}
 
 //! Factory method, creates new PlayerObjects from XML files
 //
@@ -120,7 +117,7 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode &xObj) {
 	PlayerObject* obj = new PlayerObject();
 
 	// init the object
-	if (!obj || !obj->Init(GetGameState(), physSimulation) )
+	if (!obj || !obj->Init(physSimulation) )
 		return NULL;
 
 	// load the animations
@@ -147,7 +144,7 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj) {
 	RadiusBlockObject* obj = new RadiusBlockObject();
 
-  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+  if (!obj || !obj->Init(physSimulation) )
     return NULL;
 
   obj->SetTheta(Rand(0,360));
@@ -167,7 +164,7 @@ Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode &xObj) {
   CollectableObject* obj = new CollectableObject();
 
-  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+  if (!obj || !obj->Init(physSimulation) )
     return NULL;
 
   if (!LoadObjectSounds(obj,xDef))
@@ -190,7 +187,7 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode &xObj) {
   ControllerObject* obj = new ControllerObject();
 
-  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+  if (!obj || !obj->Init(physSimulation) )
     return NULL;
 
   ObjectProperties props;
@@ -214,7 +211,7 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode &xObj) {
   obj->controller_sprite = new Sprite();
   
   obj->controller_sprite->bmp = 
-  GetGameState()->GetAssetManager()->LoadBitmap(filename.c_str());
+  ASSETMANAGER->LoadBitmap(filename.c_str());
     
   if (!obj->controller_sprite->bmp) {
     fprintf(stderr, "-- ERROR: Can't load file '%s'\n", filename.c_str() );
@@ -250,8 +247,7 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode &xObj) {
       b->sprite = new Sprite();
       b->active = 0;
     
-      b->sprite->bmp = 
-      GetGameState()->GetAssetManager()->LoadBitmap(filename.c_str());
+      b->sprite->bmp = ASSETMANAGER->LoadBitmap(filename.c_str());
       
       if (!b->sprite->bmp) {
         fprintf(stderr,"-- ERROR: Can't load file '%s'\n",filename.c_str());
@@ -285,7 +281,7 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode &xObj) {
   BackgroundObject* obj = new BackgroundObject();
   
-  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+  if (!obj || !obj->Init(physSimulation) )
     return NULL;
 
   obj->SetXY(0,0);
@@ -304,7 +300,7 @@ Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode &xObj) {
 	StaticObject* obj = new StaticObject();
 
-  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+  if (!obj || !obj->Init(physSimulation) )
     return NULL;
 
   if (!LoadObjectAnimations(obj,xDef))
@@ -322,7 +318,7 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode &xObj) {
   SpringObject* obj = new SpringObject();
   obj->properties.spring_strength = 20; // default
 
-  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+  if (!obj || !obj->Init(physSimulation) )
     return NULL;
 
   if (!LoadObjectSounds(obj,xDef))
@@ -344,7 +340,7 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode &xObj) {
 	DoorObject* obj = new DoorObject();
 
-  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+  if (!obj || !obj->Init(physSimulation) )
     return NULL;
 
   if (!LoadObjectAnimations(obj,xDef))
@@ -364,7 +360,7 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode &xObj) {
 Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode &xObj) {
 	FanObject* obj = new FanObject();
 
-  if (!obj || !obj->Init(GetGameState(), physSimulation) )
+  if (!obj || !obj->Init(physSimulation) )
     return NULL;
 
   if (!LoadObjectAnimations(obj,xDef))
@@ -434,7 +430,7 @@ bool ObjectFactory::LoadObjectAnimations(
 		xAnim = xAnims.getChildNode("animation", &iterator);
 		anim_name = xAnim.getAttribute("name");
 		
-		anim = Animation::New(GetGameState(), xAnim);
+		anim = Animation::New(xAnim);
 
 		if (!anim) {
 			return false;
@@ -475,11 +471,9 @@ bool ObjectFactory::LoadObjectAnimations(
 // (obj not used)
 bool ObjectFactory::LoadObjectSounds(Object* obj, XMLNode &xDef) {
 				
-	GameSound* sound = GetGameState()->GetSound();
-
 	if (xDef.nChildNode("sounds")) {
 		XMLNode xSounds = xDef.getChildNode("sounds");
-		if (!sound->LoadSounds(xSounds))
+		if (!SOUND->LoadSounds(xSounds))
 			return false;
 	}
 

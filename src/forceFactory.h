@@ -6,15 +6,15 @@
 class Force;
 class GameState;
 
-#include "gameBase.h"
+#include "singleton.h"
 #include "force.h"
 
 //! A class which produces new Force objects from ID's
-class ForceFactory : public GameBase {
+class ForceFactory {
 	protected:
 
 	public:
-		int Init(GameState* _game_state);
+		int Init();
 		void Shutdown();
 
 		Force* CreateForce(ForceType type);

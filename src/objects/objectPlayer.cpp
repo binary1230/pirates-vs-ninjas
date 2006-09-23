@@ -74,12 +74,12 @@ void PlayerObject::DoCommonGroundStuff() {
 		return;
 	}	
 
-	if (door_in_front_of_us && input->KeyOnce(PLAYERKEY_UP, controller_num)) {
+	if (door_in_front_of_us && INPUT->KeyOnce(PLAYERKEY_UP, controller_num)) {
 		DoWalkThroughDoor();
 		return;
 	}
 
-	if (input->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
+	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
 		vel.SetY(jump_velocity);
 		PlaySound("jump");
 		DoJumping();
@@ -212,10 +212,8 @@ void PlayerObject::Collide(Object* obj) {
 	}
 }
 
-bool PlayerObject::Init(GameState* _game_state, PhysSimulation *p) {
-	SetGameState(_game_state);
+bool PlayerObject::Init(PhysSimulation *p) {
 	simulation = p;
-	input = GetGameState()->GetInput();
 	
 	controller_num = 1;
 	state = FALLING; 

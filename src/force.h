@@ -9,7 +9,6 @@ class Object;
 
 typedef vector<Force*> ForceList;
 
-#include "gameBase.h"
 #include "vector2D.h"
 
 //! All the different types of forces.
@@ -27,12 +26,12 @@ enum ForceType {
 
 //! A newtonian force that acts on an object.  It computes a vector representing
 //! the acceleration of a given phenomena (gravity, input, etc) on an object.
-class Force : public GameBase {
+class Force {
 	protected:
 		ForceType type;
 				
 	public:
-		bool Init(GameState* _game_state);
+		bool Init();
 		void Shutdown();
 		
 		//! Compute the force vector that is created

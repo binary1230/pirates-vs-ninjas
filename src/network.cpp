@@ -54,9 +54,8 @@ int GameNetwork::CommonInit(int _port, CString _host) {
 	return 0;
 }
 
-int GameNetwork::InitClient(GameState* _game_state, int _port, CString _host) {
+int GameNetwork::InitClient(int _port, CString _host) {
 	Shutdown();
-	SetGameState(_game_state);
 
 	fprintf(stderr, "NET: Starting UDP network client:\n");
 
@@ -87,9 +86,8 @@ int GameNetwork::InitClient(GameState* _game_state, int _port, CString _host) {
 	return 0;
 }
 
-int GameNetwork::InitServer(GameState* _game_state, int _port) {
+int GameNetwork::InitServer(int _port) {
 	Shutdown();
-	SetGameState(_game_state);
 
 	is_server = true;
 

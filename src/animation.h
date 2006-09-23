@@ -6,7 +6,6 @@
 class Sprite;
 
 #include "globals.h"
-#include "gameBase.h"
 #include "StdString.h"
 
 //! Maps an animation name to an integer ID (e.g. "bad_guy_1" to BAD_GUY_1)
@@ -27,7 +26,7 @@ struct AnimFrame {
 //! Typically, objects have a few different 'animations', for example,
 //! a player object might have 2 animations - a walking and jumping animation
 //! EACH of these would be seperate instances of the animation class.
-class Animation : public GameBase {
+class Animation {
 	protected:
 		//! Collection of frames in this animation
 		vector<struct AnimFrame*> frames;	
@@ -59,7 +58,7 @@ class Animation : public GameBase {
 		inline void Freeze() {freeze_animation = true;};
 		inline void ToggleFreeze() {freeze_animation = !freeze_animation;};
 
-		bool Init(GameState*);		//! Initialize the animation
+		bool Init();							//! Initialize the animation
 		void Shutdown();					//! Cleanup this animation
 
 		//! Used in constructing a new animation, pushes this image onto it.
@@ -75,7 +74,7 @@ class Animation : public GameBase {
 		~Animation();
 
 		//! Static factory method
-		static Animation* New(GameState* gameState, XMLNode &xAnim);
+		static Animation* New(XMLNode &xAnim);
 };
 
 #endif // ANIMATION_H

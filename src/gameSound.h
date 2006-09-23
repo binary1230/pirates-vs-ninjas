@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "globals.h"
-#include "gameBase.h"
+#include "singleton.h"
 #include "globals.h"
 
 //! Maps a sound name to it's handle (e.g. "jump" to the sample)
@@ -12,7 +12,9 @@ typedef map<CString, SAMPLE*>::iterator s_iter;
 
 class OGGFILE;
 
-class GameSound : public GameBase {
+class GameSound {
+
+		DECLARE_SINGLETON_CLASS(GameSound)
 				
 		protected:
 			//! If false, then this class doesn't output any sound
@@ -46,15 +48,16 @@ class GameSound : public GameBase {
 			void PlaySound(CString name, unsigned int pan = 128);
 
 			//! Init the sound system
-			int Init(GameState* _game_state, bool _sound_enabled);
+			int Init(bool _sound_enabled);
 
 			void Update();
 
 			//! Shutdown the sound system
 			void Shutdown();
 
-			GameSound();
 			~GameSound();
 };
+
+#define SOUND GameSound::GetInstance()
 
 #endif // GAMESOUND_H

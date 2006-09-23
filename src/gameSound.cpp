@@ -3,6 +3,8 @@
 #include "assetManager.h"
 #include "oggFile.h"
 
+DECLARE_SINGLETON(GameSound)
+
 //! Plays a sound
 //! Pan goes from 0-255, 128 being the center
 void GameSound::PlaySound(CString name, unsigned int pan) {
@@ -29,7 +31,7 @@ bool GameSound::LoadMusic(const char* filename) {
 	if (!sound_enabled)
 		return true;		
 
-	OGGFILE* music = GetGameState()->GetAssetManager()->LoadMusic(filename);
+	OGGFILE* music = ASSETMANAGER->LoadMusic(filename);
 
 	if (!music) 
 		return false;
@@ -41,7 +43,7 @@ bool GameSound::PlayMusic(bool loop, int vol, int pan, int buflen) {
 	if (!sound_enabled)
 		return true;		
 
-	OGGFILE* music = GetGameState()->GetAssetManager()->GetMusic();	
+	OGGFILE* music = ASSETMANAGER->GetMusic();	
 
 	if (!music)
 		return false;
@@ -53,7 +55,7 @@ void GameSound::Update() {
 	if (!sound_enabled)
 		return;		
 	
-	OGGFILE* music = GetGameState()->GetAssetManager()->GetMusic();	
+	OGGFILE* music = ASSETMANAGER->GetMusic();	
 
 	if (music)
 		music->Update();
@@ -64,7 +66,7 @@ bool GameSound::LoadSound(const char* filename, const char* sound_name) {
 	if (!sound_enabled)
 		return true;
 
-	SAMPLE* spl = game_state->GetAssetManager()->LoadSound(filename);
+	SAMPLE* spl = ASSETMANAGER->LoadSound(filename);
 
 	if (!spl)
 		return false;
@@ -92,9 +94,8 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 	return true;
 }
 
-int GameSound::Init(GameState* _game_state, bool _sound_enabled) {
+int GameSound::Init(bool _sound_enabled) {
 	sound_enabled = _sound_enabled;
-	game_state = _game_state;
 
 	if (!sound_enabled)
 		return 0;	
@@ -119,7 +120,7 @@ void GameSound::Shutdown() {
 	// is in the AssetManager
 	sounds.clear();
 
-	OGGFILE* music = GetGameState()->GetAssetManager()->GetMusic();
+	OGGFILE* music = ASSETMANAGER->GetMusic();
 
 	if (music) {
 		fprintf(stderr, "++++++++++++++++++ GAMESOUND: Shutting down music  ++++++++++++++\n");
@@ -128,12 +129,10 @@ void GameSound::Shutdown() {
 
 	remove_sound();
 	sound_enabled = false;
-	game_state = NULL;
 }
 
 GameSound::GameSound() {
 	sound_enabled = false;
-	game_state = NULL;
 }
 
 GameSound::~GameSound() {}

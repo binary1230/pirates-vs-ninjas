@@ -2,11 +2,11 @@
 #define GAMEMODES_H
 
 #include "stdafx.h"
-#include "gameBase.h"
+#include "singleton.h"
 
 class GameMode;
 
-class GameModes : public GameBase {
+class GameModes {
 	protected:
 		unsigned int currentModeIndex;
 
@@ -27,7 +27,7 @@ class GameModes : public GameBase {
 		void Draw();
 
 		//! Should point to a <game> element with <mode_file> tags
-		int Init(GameState* gs, XMLNode _xGame);
+		int Init(XMLNode _xGame);
 		void Shutdown();
 
 		void SignalEndCurrentMode();

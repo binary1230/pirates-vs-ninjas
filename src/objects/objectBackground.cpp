@@ -24,16 +24,14 @@ void BackgroundObject::Draw() {
 		x = - ( GetWidth() - ( x % GetWidth()) ) + i;
 		// fprintf(stderr, "x,y=(%i,%i) ", x ,y);
 	
-		GetGameState()->GetWindow()->
-    DrawSprite(currentSprite, x, y, flip_x, flip_y);
+		WINDOW->DrawSprite(currentSprite, x, y, flip_x, flip_y);
 
 		i += GetWidth();
 		
-	} while ( x < (int)game_state->ScreenWidth() );
+	} while ( x < (int)GAMESTATE->ScreenWidth() );
 }
 
-bool BackgroundObject::Init(GameState *_game_state, PhysSimulation *p) {
-		SetGameState(_game_state);
+bool BackgroundObject::Init(PhysSimulation *p) {
 		simulation = p;
 		return BaseInit();
 }

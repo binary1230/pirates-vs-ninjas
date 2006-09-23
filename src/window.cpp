@@ -7,6 +7,8 @@
 
 #define DEFAULT_COLOR_DEPTH 16
 
+DECLARE_SINGLETON(Window)
+
 int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
 
@@ -99,16 +101,13 @@ void Window::DrawSprite(	Sprite* sprite, int x, int y,
 							sprite->use_alpha, alpha);
 }
 
-int Window::Init(	GameState* _game_state, 
-									uint _width, uint _height, 
+int Window::Init( uint _width, uint _height, 
 									bool _fullscreen, int _mode) {
 	
 	int depth = DEFAULT_COLOR_DEPTH;
 	int gfx_mode;
 	int vheight;
 	
-	SetGameState(_game_state);
-
 	width = _width;
 	height = _height;
 	mode = _mode;
@@ -117,7 +116,7 @@ int Window::Init(	GameState* _game_state,
 	set_color_depth(depth);
 
 	// Special case: We won't be drawing _anything_
-	if (!GetGameState()->GetGameOptions()->DrawGraphics() ) {
+	if (!GAMESTATE->GetGameOptions()->DrawGraphics() ) {
 		fprintf(stderr, "Window: DISABLING ALL GRAPHICS\n");
 		set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
 		mode = MODE_NOBUFFERING;

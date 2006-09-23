@@ -9,8 +9,7 @@ void SpringObject::Update() {
 	UpdateSimpleAnimations();
 }
 
-bool SpringObject::Init(GameState *_game_state, PhysSimulation *p) {
-	SetGameState(_game_state);
+bool SpringObject::Init(PhysSimulation *p) {
 	simulation = p;
 	return BaseInit();
 }

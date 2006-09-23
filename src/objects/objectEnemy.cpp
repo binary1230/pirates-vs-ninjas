@@ -9,8 +9,7 @@ void EnemyObject::Update() {
 	SimpleAnimationUpdate();
 }
 
-bool EnemyObject::Init(GameState *_game_state, PhysSimulation *p) {
-	SetGameState(_game_state);
+bool EnemyObject::Init(PhysSimulation *p) {
 	simulation = p;
 	return BaseInit();
 }

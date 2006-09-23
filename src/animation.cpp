@@ -7,8 +7,7 @@
 #include <map>
 using namespace std;
 
-bool Animation::Init(GameState* _gameState) {
-	SetGameState(_gameState);
+bool Animation::Init() {
 	frames.clear();
 	currentFrame = NULL;
 	elapsed_time = 0;
@@ -20,7 +19,7 @@ bool Animation::Init(GameState* _gameState) {
 // Draw current frame at specified position, flipping if requested
 void Animation::DrawAt(int x, int y, bool flip_x, bool flip_y) {
 	assert(currentFrame != NULL);
-	GetGameState()->GetWindow()->DrawSprite(currentFrame->sprite, x, y);
+	WINDOW->DrawSprite(currentFrame->sprite, x, y);
 }
 
 //! Update the animation, advancing to the next frame
@@ -91,8 +90,7 @@ bool Animation::PushImage(	const char* _file,
 	f->sprite = new Sprite();
 	assert(f->sprite != NULL);
 	
-	AssetManager *m = GetGameState()->GetAssetManager();
-	f->sprite->bmp = m->LoadBitmap(_file, use_alpha);
+	f->sprite->bmp = ASSETMANAGER->LoadBitmap(_file, use_alpha);
 
 	if (!f->sprite->bmp) {
 		fprintf(stderr, "ERROR: Can't load image file: '%s'\n", _file);
@@ -126,14 +124,14 @@ bool Animation::PushImage(	const char* _file,
 //! Static helper method to create new animations from XML
 //! XXX Does not currently support frames out of order and
 //! other wackiness.  soon enough, my young apprentice - soon enough.
-Animation* Animation::New(GameState* gameState, XMLNode &xAnim) {
+Animation* Animation::New(XMLNode &xAnim) {
 	Animation* anim = new Animation();
 	int duration;
 	CString filename;
 	int freeze_at_end;
 	bool use_alpha = false;			// whether we use an alpha channel
 	
-	if (!anim || !anim->Init(gameState) )
+	if (!anim || !anim->Init() )
 		return NULL;
 
 	XMLNode xFrames, xImg;

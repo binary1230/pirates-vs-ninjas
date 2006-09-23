@@ -17,12 +17,12 @@ class ObjectStatic;
 class ObjectSpring;
 class PhysSimulation;
 
-#include "gameBase.h"
+#include "singleton.h"
 #include "animation.h"
 #include "objectIDs.h"
 
 //! A class which creates Object classes from integer ID's
-class ObjectFactory : GameBase {
+class ObjectFactory {
 	protected:
 		Object* NewPlayerObject(XMLNode &xDef, XMLNode &xObj);
 		Object* NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj);
@@ -42,7 +42,7 @@ class ObjectFactory : GameBase {
 		PhysSimulation *physSimulation;
 
 	public:
-		int Init(GameState* _game_state);
+		int Init();
 		void Shutdown();
 		
 		inline void SetPhysSimulation(PhysSimulation* p) {physSimulation = p;};

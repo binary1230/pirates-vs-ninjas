@@ -1,8 +1,9 @@
 #include "assetManager.h"
 #include "oggFile.h"
 
-int AssetManager::Init(GameState* _game_state) {
-	SetGameState(_game_state);
+DECLARE_SINGLETON(AssetManager)
+
+int AssetManager::Init() {
 	ResetPaths();
 	bitmaps.clear();
 	samples.clear();

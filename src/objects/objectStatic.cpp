@@ -9,8 +9,7 @@ void StaticObject::Update() {
 	UpdateSimpleAnimations();
 }
 
-bool StaticObject::Init(GameState *_game_state, PhysSimulation *p) {
-	SetGameState(_game_state);
+bool StaticObject::Init(PhysSimulation *p) {
 	simulation = p;
 	return BaseInit();
 }

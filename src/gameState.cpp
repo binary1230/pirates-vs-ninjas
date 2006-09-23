@@ -2,9 +2,6 @@
 
 #include "gameOptions.h"
 #include "input.h"
-#include "inputLiveHandler.h"
-#include "inputRecord.h"
-#include "inputPlayback.h"
 #include "window.h"
 #include "gameMode.h"
 #include "assetManager.h"
@@ -13,6 +10,8 @@
 #include "gameModes.h"
 #include "network.h"
 
+DECLARE_SINGLETON(GameState)
+	
 // Parse the master XML file
 // returns: XMLNode of first GameMode to load
 int GameState::LoadXMLConfig(CString xml_filename) {
@@ -20,7 +19,7 @@ int GameState::LoadXMLConfig(CString xml_filename) {
 	int default_mode_id = options->GetDefaultModeId();
 
 	// XXX xmlParser just DIES on error
-	xml_filename = assetManager->GetPathOf(xml_filename.c_str());
+	xml_filename = ASSETMANAGER->GetPathOf(xml_filename.c_str());
 	xGame = XMLNode::openFileHelper(xml_filename.c_str(), "game");
 	
 	XMLNode xInfo = xGame.getChildNode("info");
@@ -89,13 +88,13 @@ int GameState::InitSystem() {
 		}
 
 		fprintf(stderr, "[init: assetManager]\n");
-		assetManager = new AssetManager();
-		if (!assetManager || assetManager->Init(this) < 0) {
+		ASSETMANAGER->CreateInstance();
+		if (!ASSETMANAGER || ASSETMANAGER->Init() < 0) {
 			fprintf(stderr, "ERROR: InitSystem: failed to create assetManager!\n");
 			return -1;
 		}
 
-		assetManager->AppendToSearchPath("data/");
+		ASSETMANAGER->AppendToSearchPath("data/");
 
 		fprintf(stderr, "[init: xml config]\n");
 
@@ -106,8 +105,8 @@ int GameState::InitSystem() {
 		}
 
 		fprintf(stderr, "[init: window]\n");
-		window = new Window();
-		if ( !window ||	window->Init(this, screen_size_x, screen_size_y, 
+		WINDOW->CreateInstance();
+		if ( !WINDOW ||	WINDOW->Init(screen_size_x, screen_size_y, 
 										options->IsFullscreen(), options->GraphicsMode()) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init window!\n");
 			return -1;
@@ -123,6 +122,7 @@ int GameState::InitSystem() {
 			fprintf(stderr, "ERROR: InitSystem: failed to init input subsystem!\n");
 			return -1;
 		}
+
 		fprintf(stderr, "[init: sound subsystem]\n");
 		if (InitSound() == -1) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init sound subsystem!\n");
@@ -145,54 +145,9 @@ int GameState::LoadGameModes() {
 	if (!modes)
 		return -1;
 
-	return modes->Init(this, xGame);
+	return modes->Init(xGame);
 }
  
-/*#define PVN_NETWORK_MAGIC_GREETING 123454321
-
-int GameState::InitNetworkServer() {
-	int port = options->GetNetworkPortNumber();
-  ezSocketsPacket packet;
-	
-	fprintf(stderr, "NET: Starting UDP network server on port %i\n", port);
-	
-  socket->mode = ezSockets::skUDP;
-  socket->Create(IPPROTO_UDP, SOCK_DGRAM);
-  socket->Bind(port);
-	
-	fprintf(stderr, "NET: Waiting for client greeting..\n");
-
-	bool got_greeting = false;
-
-	while (!got_greeting) {
-		rest(100);
-		if (socket->ReadPack(packet)) {
-			int size = packet.Read4();
-      if (size != packet.Size-4)
-        fprintf(stderr, "NET: WARN: Merged packets!\n");
-
-			// Expect MAGIC greeting from client
-			if (packet.Read4() != PVN_NETWORK_MAGIC_GREETING) {
-				fprintf(stderr, "Incorrect MAGIC recieved from client, aborting!\n");
-				return -1;	
-			} else {
-				got_greeting = true;
-			}
-    }
-	}
-
-	rest(1000);
-	packet.ClearPacket();
-
-	// Send MAGIC greeting to client
-  packet.Write4(PVN_NETWORK_MAGIC_GREETING);
-	socket->SendPack(packet);
-
-	fprintf(stderr, "NET: Server: Connected to client OK!\n");
-
-	return 0;
-}*/
-
 int GameState::InitNetwork() {	
 	int ret;
 	int port = options->GetNetworkPortNumber();
@@ -207,9 +162,9 @@ int GameState::InitNetwork() {
 	fprintf(stderr, "NET: Port %i\n", port);
 	
 	if (options->IsNetworkServer()) {
-		ret = network->InitServer(this, port);
+		ret = network->InitServer(port);
 	} else {
-		ret = network->InitClient(this, port, options->GetNetworkServerName());
+		ret = network->InitClient(port, options->GetNetworkServerName());
 	}
 
 	return ret;
@@ -219,34 +174,28 @@ int GameState::InitNetwork() {
 //TODO if sound init fails, make it just keep going instead of erroring out.
 int GameState::InitSound() {
 
-	sound = new GameSound();
+	SOUND->CreateInstance();
+
+	if (!SOUND) {
+		fprintf(stderr, " Failed to create sound instance.\n");
+		return -1;
+	}
 
 	if (!options->SoundEnabled())
 		fprintf(stderr, " Sound disabled.\n");
 
-	if ( !sound || (sound->Init(this, options->SoundEnabled()) == -1) ) {
+	if ( !SOUND || (SOUND->Init(options->SoundEnabled()) == -1) ) {
 		return -1;
 	}
 				
 	return 0;
 }
 
-//! Init input subsystems
-// a little hackish... just a bit.
+//! Init input subsystem
 int GameState::InitInput() {
-				
-	// init the right kind of class based on
-	// whether or not we are recording/playing back a demo
-	if ( options->RecordDemo() ) {
-		input = new InputRecord();	
-	} else if ( options->PlaybackDemo() ) {
-		is_playing_back_demo = true;
-		input = new InputPlayback();
-	} else {
-		input = new InputLive();
-	}
-		
-	if ( !input || (input->Init(this, options->GetDemoFilename()) == -1) ) {
+	Input::CreateInstance();
+	
+	if ( !INPUT || (INPUT->Init() == -1) ) {
 		return -1;
 	}
 
@@ -297,11 +246,7 @@ int GameState::RunGame(GameOptions* _options) {
 		if (options->GetDebugStartPaused()) 
 		debug_pause_toggle = 1;	
 
-		// XXX SHOULD NOT TEST option->is_xxx should TEST input->is_xxx()
-		if (options->RecordDemo())
-			input->BeginRecording();
-		else if (options->PlaybackDemo())
-			input->BeginPlayback();
+		INPUT->Begin();
 			
 		outstanding_updates = 0;	// reset our timer to 0.
 		
@@ -311,11 +256,7 @@ int GameState::RunGame(GameOptions* _options) {
 
 		OutputTotalRunningTime();
 
-		// XXX SHOULD NOT TEST option->is_xxx should TEST input->is_xxx()
-		if (options->RecordDemo())
-			input->EndRecording();
-		else if (options->PlaybackDemo())
-			input->EndPlayback();
+		INPUT->End();
 	
 		Shutdown();
 		fprintf(stderr, "[Exiting]\n");	
@@ -346,24 +287,24 @@ void GameState::MainLoop() {
 		while (outstanding_updates > 0 && !exit_game) {
 			Update();	// mode signals handled here
 
-			if (input->KeyOnce(GAMEKEY_DEBUGPAUSE))
+			if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
 				debug_pause_toggle = !debug_pause_toggle;
 
 			if (debug_pause_toggle) {
 			
 				debug_update_count = outstanding_updates;
 
-				while (debug_pause_toggle && !input->KeyOnce(GAMEKEY_DEBUGSTEP)) {
+				while (debug_pause_toggle && !INPUT->KeyOnce(GAMEKEY_DEBUGSTEP)) {
 					
-					input->Update();
-					sound->Update();
+					INPUT->Update();
+					SOUND->Update();
 					
 					Draw();
 
-					if (input->KeyOnce(GAMEKEY_SCREENSHOT))
-						window->Screenshot();
+					if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
+						WINDOW->Screenshot();
 
-					if (input->KeyOnce(GAMEKEY_DEBUGPAUSE))
+					if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
 						debug_pause_toggle = !debug_pause_toggle;
 				}
 
@@ -376,8 +317,8 @@ void GameState::MainLoop() {
 		if (!exit_game) {
 			Draw();
 
-			if (input->KeyOnce(GAMEKEY_SCREENSHOT))
-				window->Screenshot();
+			if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
+				WINDOW->Screenshot();
 		}
 
 		// NOT NORMALLY WHAT WE DO
@@ -401,26 +342,26 @@ void GameState::Update() {
 	if (exit_game)
 		return;
 
-	sound->Update();
-	input->Update();
+	SOUND->Update();
+	INPUT->Update();
 	modes->Update();
 }
 
 //! Draw the current mode
 void GameState::Draw() {
 	if (options->DrawGraphics()) {
-		window->Clear();
+		WINDOW->Clear();
 		modes->Draw();
-		window->Flip();
+		WINDOW->Flip();
 	}
 }
 
 void GameState::Shutdown() {
 	fprintf(stderr, "[Shutting Down]\n");	
 
-	if (input) {
-		input->Shutdown();
-		delete input;
+	if (INPUT) {
+		INPUT->Shutdown();
+		INPUT->FreeInstance();
 	}
 
 	remove_int(Timer);
@@ -435,28 +376,24 @@ void GameState::Shutdown() {
 		delete modes;
 	}
 
-	if (sound) {
-		sound->Shutdown();
-		delete sound;
+	if (SOUND) {
+		SOUND->Shutdown();
+		SOUND->FreeInstance();
 	}
 
-	if (assetManager) {
-		assetManager->Shutdown();
-		delete assetManager;
+	if (ASSETMANAGER) {
+		ASSETMANAGER->Shutdown();
+		ASSETMANAGER->FreeInstance();
 	}
 	
 	// window destruction code must be LAST
-	if (window) {
-		window->Shutdown();
-		delete window;
+	if (WINDOW) {
+		WINDOW->Shutdown();
+		WINDOW->FreeInstance();
 	}
 
 	options = NULL;
-	assetManager = NULL;
 	modes = NULL;
-	window = NULL; 
-	input = NULL;  
-	sound = NULL;
 	network = NULL;
 	xGame = XMLNode::emptyXMLNode;
 	
@@ -473,32 +410,24 @@ int GameState::GetRandomSeed() const {
 };
 
 bool GameState::GetKey(uint which_key) const	{ 
-	return input->Key(which_key); 
+	return INPUT->Key(which_key); 
 };
 
 bool GameState::GetKey(uint which_key, uint which_controller) const	{ 
-	return input->Key(which_key, which_controller); 
-};
-
-BITMAP* GameState::GetDrawingSurface() { 
-	return window->GetDrawingSurface(); 
+	return INPUT->Key(which_key, which_controller); 
 };
 
 uint GameState::ScreenWidth() const {
-	return window->Width();
+	return WINDOW->Width();
 }
 
 uint GameState::ScreenHeight() const {
-	return window->Height();
+	return WINDOW->Height();
 }
 
 GameState::GameState() {
 	options = NULL;
-	assetManager = NULL;
 	modes = NULL;
-	window = NULL; 
-	input = NULL;  
-	sound = NULL;
 	network = NULL;
 }
 
@@ -509,3 +438,50 @@ void GameState::SignalGameExit() {
 }
 
 GameState::~GameState() {}
+
+/*#define PVN_NETWORK_MAGIC_GREETING 123454321
+
+int GameState::InitNetworkServer() {
+	int port = options->GetNetworkPortNumber();
+  ezSocketsPacket packet;
+	
+	fprintf(stderr, "NET: Starting UDP network server on port %i\n", port);
+	
+  socket->mode = ezSockets::skUDP;
+  socket->Create(IPPROTO_UDP, SOCK_DGRAM);
+  socket->Bind(port);
+	
+	fprintf(stderr, "NET: Waiting for client greeting..\n");
+
+	bool got_greeting = false;
+
+	while (!got_greeting) {
+		rest(100);
+		if (socket->ReadPack(packet)) {
+			int size = packet.Read4();
+      if (size != packet.Size-4)
+        fprintf(stderr, "NET: WARN: Merged packets!\n");
+
+			// Expect MAGIC greeting from client
+			if (packet.Read4() != PVN_NETWORK_MAGIC_GREETING) {
+				fprintf(stderr, "Incorrect MAGIC recieved from client, aborting!\n");
+				return -1;	
+			} else {
+				got_greeting = true;
+			}
+    }
+	}
+
+	rest(1000);
+	packet.ClearPacket();
+
+	// Send MAGIC greeting to client
+  packet.Write4(PVN_NETWORK_MAGIC_GREETING);
+	socket->SendPack(packet);
+
+	fprintf(stderr, "NET: Server: Connected to client OK!\n");
+
+	return 0;
+}*/
+
+

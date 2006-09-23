@@ -2,10 +2,12 @@
 #include "gameState.h"
 #include "gameOptions.h"
 
-#define REDIRECT_STDERR 1
+// #define REDIRECT_STDERR 1
 #define REDIRECT_STDERR_FILENAME "/Users/dcerquetti/game.log"
 
 int start_game_instance(const int argc, const char* argv[]) {
+
+	int ret_val = 0;
 	
 	// see if our command line args are OK
 	GameOptions* options = new GameOptions();
@@ -18,12 +20,15 @@ int start_game_instance(const int argc, const char* argv[]) {
 		options = NULL;
 		return -1;
 	} else {
+		
 		// if OK, run the actual game
-		GameState *gameState = new GameState();
-		int ret_val = gameState->RunGame(options);
 
-		delete gameState;
-		gameState = NULL;
+		GAMESTATE->CreateInstance();
+
+		if (GAMESTATE)
+			ret_val = GAMESTATE->RunGame(options);
+
+		GAMESTATE->FreeInstance();
 
 		delete options;
 		options = NULL;

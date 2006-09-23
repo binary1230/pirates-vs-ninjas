@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 #include "globals.h"
-#include "gameBase.h"
+#include "singleton.h"
 #include "rect.h"
 
 class GameState;
@@ -31,7 +31,10 @@ extern int screen_size_x;
 extern int screen_size_y;
 
 //! The onscreen window
-class Window : public GameBase {
+class Window {
+
+	DECLARE_SINGLETON_CLASS(Window)
+
 	protected:
 		bool initialized;
 		uint width, height;
@@ -57,8 +60,7 @@ class Window : public GameBase {
 		int clear_color;
 		
 	public:
-		int Init(	GameState* _game_state, 
-							uint _width, uint _height, bool _fullscreen = 0,
+		int Init(	uint _width, uint _height, bool _fullscreen = 0,
 							int _mode = MODE_DOUBLEBUFFERING);
 
 		void Shutdown();
@@ -91,8 +93,9 @@ class Window : public GameBase {
 		//! Leave the filename NULL to use an automatic one
 		void Screenshot(char* filename = NULL);
 
-		Window();
-		~Window();
+		virtual ~Window();
 };
+
+#define WINDOW Window::GetInstance()
 
 #endif // WINDOW_H

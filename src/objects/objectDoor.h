@@ -5,7 +5,6 @@
 
 #include "object.h"
 
-class GameState;
 class ObjectFactory;
 class PhysSimulation;
 
@@ -14,7 +13,7 @@ class DoorObject : public Object {
 		// e.g. What action happens on Activate()
 	
 	public:
-		bool Init(GameState* _game_state, PhysSimulation *p);
+		bool Init(PhysSimulation *p);
 		
 		void Update();
 

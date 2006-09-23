@@ -32,11 +32,10 @@ void ObjectLayer::RemoveObject(Object* obj) {
 		fprintf(stderr, " WARN: memmgmt: asked to remove an object that's not here.\n");
 }
 
-bool ObjectLayer::Init(GameState* gs, PhysSimulation* p) {
+bool ObjectLayer::Init(PhysSimulation* p) {
 	simulation = p;
 	scroll_speed = 1;
 	visible = true;
-	SetGameState(gs);
 	objects.clear();
 	return true;
 }
@@ -44,7 +43,6 @@ bool ObjectLayer::Init(GameState* gs, PhysSimulation* p) {
 void ObjectLayer::Shutdown() {
 	// we do NOT delete these Object's, as they are held somewhere else
 	objects.clear();	
-	SetGameState(NULL);
 }
 
 ObjectLayer::ObjectLayer() {

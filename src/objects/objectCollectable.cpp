@@ -9,8 +9,7 @@ void CollectableObject::Update() {
 	UpdateSimpleAnimations();
 }
 
-bool CollectableObject::Init(GameState *_game_state, PhysSimulation *p) {
-	SetGameState(_game_state);
+bool CollectableObject::Init(PhysSimulation *p) {
 	simulation = p;
 	return BaseInit();
 }

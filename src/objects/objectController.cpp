@@ -17,7 +17,7 @@ int ControllerObject::GetWidth() {
 
 void ControllerObject::Draw() {
 
-	if (only_show_during_demo && !GetGameState()->IsPlayingBackDemo()) {
+	if (only_show_during_demo && INPUT->GetInputType() != INPUT_PLAYBACK) {
 		return;
 	}
 				
@@ -27,7 +27,7 @@ void ControllerObject::Draw() {
 	int bx, by;
 
 	// Draw the base controller
-	GetGameState()->GetWindow()->DrawSprite(controller_sprite, x, y);
+	WINDOW->DrawSprite(controller_sprite, x, y);
 
 	// Draw each button if it is active
 	int i, max = buttons.size();
@@ -35,7 +35,7 @@ void ControllerObject::Draw() {
 		if (buttons[i].active) {
 			bx = buttons[i].sprite->x_offset + x;
 			by = buttons[i].sprite->y_offset + y;
-			GetGameState()->GetWindow()->DrawBitmap(buttons[i].sprite->bmp, bx, by);
+			WINDOW->DrawBitmap(buttons[i].sprite->bmp, bx, by);
 		}
 	}
 }
@@ -57,16 +57,14 @@ void ControllerObject::Update() {
 	int i, max = buttons.size();
 
 	for (i = 0; i < max && keys[i] != -1; i++) {
-		if (GetGameState()->GetKey(keys[i], controller_num))
+		if (GAMESTATE->GetKey(keys[i], controller_num))
 			buttons[i].active = 1;
 		else 
 			buttons[i].active = 0;
 	}
 }
 
-bool ControllerObject::Init(GameState* _game_state, PhysSimulation *p) {
-	SetGameState(_game_state);
-
+bool ControllerObject::Init(PhysSimulation *p) {
 	simulation = p;
 	
 	buttons.clear();

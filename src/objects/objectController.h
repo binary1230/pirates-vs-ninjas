@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "object.h"
 
-class GameState;
 class Sprite;
 class ObjectFactory;
 class PhysSimulation;
@@ -24,7 +23,7 @@ class ControllerObject : public Object {
 		bool only_show_during_demo;
 		
 	public:
-		bool Init(GameState* _game_state, PhysSimulation *p);
+		bool Init(PhysSimulation *p);
 		
 		void Shutdown();
 

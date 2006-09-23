@@ -14,7 +14,7 @@ class BackgroundObject : public Object {
 	protected:
 				
 	public:
-		bool Init(GameState* _game_state, PhysSimulation *p);
+		bool Init(PhysSimulation *p);
 
 		void Update();
 		void Draw();

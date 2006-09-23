@@ -26,8 +26,7 @@ class GameMenu : public GameMode {
 
 		void Draw();
 
-		//! Init the sound system
-		int Init(GameState* _game_state, XMLNode xMode);
+		int Init(XMLNode xMode);
 
 		//! Shutdown the sound system
 		void Shutdown();

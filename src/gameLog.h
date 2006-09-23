@@ -1,9 +1,9 @@
 #include "stdafx.h"
 
-#include "gameBase.h"
+#include "singleton.h"
 
 //! Logging facilities for the game
-class GameLog : public GameBase {
+class GameLog {
 	private:
 			// we want vprintf()
 	public:

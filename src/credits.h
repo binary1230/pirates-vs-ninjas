@@ -2,7 +2,7 @@
 #define CREDITS_H
 
 #include "stdafx.h"
-#include "gameBase.h"
+#include "singleton.h"
 #include "gameMode.h"
 
 class GameState;
@@ -17,7 +17,7 @@ class CreditsMode : public GameMode {
 			OGGFILE* music;
 
 		public:
-			int Init(GameState*, XMLNode);
+			int Init(XMLNode);
 			void Shutdown();
 
 			void Draw();

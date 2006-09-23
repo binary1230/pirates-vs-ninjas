@@ -10,7 +10,7 @@ void DoorObject::Activate() {
 
 	// XXX perhaps fade, or SOMETHING here instead of just exiting.
 	
-	GetGameState()->SignalEndCurrentMode();
+	GAMESTATE->SignalEndCurrentMode();
 }
 
 void DoorObject::Update() {
@@ -18,8 +18,7 @@ void DoorObject::Update() {
 	UpdateSimpleAnimations();
 }
 
-bool DoorObject::Init(GameState *_game_state, PhysSimulation *p) {
-	SetGameState(_game_state);
+bool DoorObject::Init(PhysSimulation *p) {
 	simulation = p;
 	return BaseInit();
 }

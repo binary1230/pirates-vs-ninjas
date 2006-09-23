@@ -5,7 +5,6 @@
 #include "stdafx.h"
 #include "globals.h"
 
-#include "gameBase.h"
 #include "rect.h"
 #include "vector2D.h"
 #include "animations.h"
@@ -69,7 +68,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 
 //! Objects have physical properties associated with them, but do
 //! not always have to take part in the physics simulation.
-class Object : public GameBase {
+class Object {
 	protected:
 
 		//! A pointer to the layer this object is on
@@ -177,7 +176,7 @@ class Object : public GameBase {
 		int width, height;
 		
 	public:
-		virtual bool Init(GameState* _game_state, PhysSimulation* p) = 0;
+		virtual bool Init(PhysSimulation* p) = 0;
 		virtual void Shutdown();
 		
 		virtual void Update() = 0;

@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 
-#include "gameBase.h"
+#include "singleton.h"
 #include "globals.h"
 
 /* The primary things the Asset manager does are this:
@@ -30,7 +30,10 @@ typedef map<CString, SAMPLE*>::iterator SampleListIter;
 class OGGFILE;
 
 //! Manages game assets and memory
-class AssetManager : public GameBase {
+class AssetManager {
+
+	DECLARE_SINGLETON_CLASS(AssetManager)
+
 	protected:
 		vector<CString> paths;
 		BitmapList bitmaps;
@@ -38,7 +41,7 @@ class AssetManager : public GameBase {
 		OGGFILE* music;
 		
 	public:
-		int Init(GameState*);
+		int Init();
 		void Shutdown();
 
 		void FreeBitmaps();
@@ -84,8 +87,9 @@ class AssetManager : public GameBase {
 		//! Returns the current working directory
 		CString GetMacOSXCurrentWorkingDir() const;
 
-		AssetManager();
-		~AssetManager();
+		virtual ~AssetManager();
 };
+
+#define ASSETMANAGER AssetManager::GetInstance()
 
 #endif // ASSET_MANAGER_H
