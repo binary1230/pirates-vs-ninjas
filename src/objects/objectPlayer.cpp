@@ -12,10 +12,15 @@
 #include "animations.h"
 #include "physSimulation.h"
 #include "objectDoor.h"
+#include "objectFactory.h"
 
 #define DEFAULT_JUMP_VELOCITY 8.0f
 #define DEFAULT_DRAG 0.95f
 #define DEFAULT_MIN_VELOCITY 0.3f
+
+// The name of the object to spawn for "skidding"
+// like the white puffs when you skid
+#define SKID_OBJECT_TYPE "skid"
 
 void PlayerObject::ScreenBoundsConstraint() {
 	if (pos.GetX() < 0) {
@@ -105,14 +110,41 @@ void PlayerObject::DoStanding() {
 
 void PlayerObject::DoWalking() {
 	state = WALKING;
+	
+	if (next_skid_time > 0)
+		next_skid_time--;
 
 	DoCommonGroundStuff();
 	
 	currentAnimation = animations[PLAYER_WALKING];
 
+	// if we go too slow, then stop us and make us STANDING
 	if (accel.GetX() == 0.0f && fabs(vel.GetX()) < min_velocity) {
 		vel.SetX(0);
 		DoStanding();
+	}
+
+	// If acceleration and velocity are in the opposite directions,
+	// then we are skidding and trying to turn around
+	if (	(accel.GetX() > 0.0f && vel.GetX() < 0.0f) ||
+				(accel.GetX() < 0.0f && vel.GetX() > 0.0f) ) {
+
+		if (next_skid_time == 0) {
+			next_skid_time = 1;
+			Object* objSkid = OBJECT_FACTORY->CreateObject(SKID_OBJECT_TYPE);
+			
+			float skid_vel_x = 8.0f;
+
+			if (vel.GetX() < 0.0f)
+				skid_vel_x *= -1.0f;
+
+			objSkid->SetDisplayTime(2);
+			objSkid->SetXY(pos);
+			objSkid->SetVelXY(skid_vel_x, 0.0f);
+			
+			if (objSkid)
+				simulation->AddObject(objSkid, layer);
+		}
 	}
 		
 	UpdateRunningAnimationSpeed();
@@ -213,6 +245,7 @@ void PlayerObject::Collide(Object* obj) {
 }
 
 bool PlayerObject::Init(PhysSimulation *p) {
+	next_skid_time = 0;
 	simulation = p;
 	
 	controller_num = 1;
@@ -231,6 +264,7 @@ PlayerObject::PlayerObject() {
 	state = FALLING;
 	door_in_front_of_us = NULL;
 	ring_count = 0;
+	next_skid_time = 0;
 }
 
 

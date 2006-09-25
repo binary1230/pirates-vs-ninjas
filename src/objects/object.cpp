@@ -68,6 +68,7 @@ void Object::FadeOut(int time) {
 }
 
 bool Object::BaseInit() {
+	tmp_debug_flag = 0;
 	ClearProperties(properties);
 	is_dead = false;
 	fade_out = 0;
@@ -81,6 +82,10 @@ bool Object::BaseInit() {
 
 void Object::Draw() {
 	assert(simulation != NULL);
+
+	if (tmp_debug_flag)
+		fprintf(stderr, "DEBUG FLAG!!\n");
+
 	DrawAtOffset(0,0);
 }
 
@@ -246,6 +251,7 @@ void Object::Shutdown() {
 }
 
 Object::Object() {
+	layer = NULL;
 	currentSprite = NULL;
 	currentAnimation = NULL;
 	flip_x = false; 

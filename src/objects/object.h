@@ -176,6 +176,8 @@ class Object {
 		int width, height;
 		
 	public:
+		int tmp_debug_flag;
+
 		virtual bool Init(PhysSimulation* p) = 0;
 		virtual void Shutdown();
 		
@@ -194,7 +196,14 @@ class Object {
 										const int &offset_x = 0, const int &offset_y = 0);
 
 		void TransformRect(_Rect &r);
-		
+
+		inline void SetDisplayTime(int time) {
+			display_time = time;
+		}
+		inline int GetDisplayTime() {
+			return display_time;
+		}
+	
 		//! Draw this object at its coordinates plus specified offset
 		//! Optionally, you can pass in a specific sprite to draw, otherwise
 		//! It'll just use the current sprite (most cases)
@@ -208,6 +217,9 @@ class Object {
 		inline void SetXY(int _x, int _y) {
 				pos.SetX((float)_x);	
 				pos.SetY((float)_y);
+		}
+		inline void SetXY(Vector2D _pos) {
+			pos = _pos;
 		}
 
 		inline int GetAlpha() { return alpha; };
@@ -225,7 +237,10 @@ class Object {
 				vel.SetX(_vx);
 				vel.SetY(_vy);
 		}
-		
+		inline void SetVelXY(Vector2D _vel) {
+			vel = _vel;
+		}	
+
 		//! Get width/height of this object
 		inline int GetWidth() {return width;};
 		inline int GetHeight() {return height;};

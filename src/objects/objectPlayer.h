@@ -31,6 +31,9 @@ class PlayerObject : public Object {
 		float jump_velocity;
 		float min_velocity;
 		float drag;
+	
+		// How long until we are allowed to draw another "skid" object
+		int next_skid_time;
 
 		PlayerState state;
 	

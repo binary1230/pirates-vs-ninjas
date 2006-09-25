@@ -79,6 +79,8 @@ class PhysSimulation : public GameMode {
 		public:
 			int Init(XMLNode);
 			void Shutdown();
+			
+			void AddObject(Object* obj, ObjectLayer* layer);
 
 			void Draw();
 			void Update();
@@ -98,7 +100,7 @@ class PhysSimulation : public GameMode {
 			void MoveObjectsToNewPositions();
 			void CheckForCollisions();
 			void GetCollideableObjects(vector<Object*> &objs);
-			
+				
 			//! Experimental: Get AI fitness score for AI traning
 			int GetAiFitnessScore();
 

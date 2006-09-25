@@ -730,13 +730,16 @@ int PhysSimulation::LoadObjectFromXML(
 		}
 
 		// Everything loaded OK, now we add it to the simulation
-		objects.push_front(obj);
-		layer->AddObject(obj);
+		AddObject(obj, layer);
 	}
 
 	return 0;
 }
 
+void PhysSimulation::AddObject(Object* obj, ObjectLayer* layer) {
+	objects.push_front(obj);
+	layer->AddObject(obj);
+}
 
 // loads the forces from the XML file
 int PhysSimulation::LoadForcesFromXML(XMLNode &xMode) {
