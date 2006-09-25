@@ -30,6 +30,20 @@
 #include "gameSound.h"
 
 DECLARE_SINGLETON(ObjectFactory)
+		
+Object* ObjectFactory::CreateObject(CString objDefName) {
+	XMLNode* xObjectDef = FindObjectDefinition(objDefName);
+
+	if (!xObjectDef) {
+		fprintf(stderr, "ObjectFactory: Unable to instantiate "
+										"object definition: '%s'\n", objDefName.c_str());
+		return NULL;
+	}
+	
+	OBJECTID id = GetObjectIDFromXML(*xObjectDef);
+	
+	return CreateObject(id, *xObjectDef, NULL);
+}
 
 bool ObjectFactory::AddObjectDefinition(const CString &objDefName, 	
 																				const XMLNode &xObjectDef) {
@@ -121,6 +135,16 @@ void ObjectFactory::SetupTypes() {
 	objectDefTypes["Collectable"]				= OBJECT_ID_COLLECTABLE;
 }
 
+// Get the object ID from an XML object definition
+OBJECTID ObjectFactory::GetObjectIDFromXML(XMLNode &xObjectDef) {
+	return objectDefTypes[GetObjectTypeFromXML(xObjectDef)];
+}
+
+// Get the object ID from an XML object definition
+CString ObjectFactory::GetObjectTypeFromXML(XMLNode &xObjectDef) {
+	return xObjectDef.getAttribute("type");
+}
+
 // Creates an object from an XML definition
 // in: xObjectDef - XML representation of an object's definition
 // in: xObject - XML representation of additional object paramaters
@@ -131,14 +155,20 @@ Object* ObjectFactory::CreateObjectFromXML(
 {
 	assert(physSimulation);
 
-	CString objType = xObjectDef.getAttribute("type");
-	OBJECTID id = objectDefTypes[objType];
+	OBJECTID id = GetObjectIDFromXML(xObjectDef);
 
+	if (id < 1) {
+		fprintf(stderr, "ObjectFactory: ERROR: Unable to find specified "
+										"object type '%s'\n", 
+										GetObjectTypeFromXML(xObjectDef).c_str() );
+		return NULL;
+	}
+	
 	Object* obj = CreateObject(id, xObjectDef, &xObject);
 
 	if (!obj) {
-		fprintf(stderr, "ERROR: Specified object type doesn't exist - '%s'.\n",
-										objType.c_str());
+		fprintf(stderr, "ERROR: Unable to instantiate object of type: '%s'.\n",
+										GetObjectTypeFromXML(xObjectDef).c_str() );
 		return NULL;
 	}
 	

@@ -33,15 +33,20 @@ class ObjectFactory {
 	DECLARE_SINGLETON_CLASS(ObjectFactory)
 
 	protected:
-		Object* NewPlayerObject(XMLNode &xDef, XMLNode *xObj);
-		Object* NewRadiusBlockObject(XMLNode &xDef, XMLNode *xObj);
-		Object* NewCollectableObject(XMLNode &xDef, XMLNode *xObj);
-		Object* NewControllerObject(XMLNode &xDef, XMLNode *xObj);
-		Object* NewBackgroundObject(XMLNode &xDef, XMLNode *xObj);
-		Object* NewStaticObject(XMLNode &xDef, XMLNode *xObj);
-		Object* NewSpringObject(XMLNode &xDef, XMLNode *xObj);
-		Object* NewFanObject(XMLNode &xDef, XMLNode *xObj);
-		Object* NewDoorObject(XMLNode &xDef, XMLNode *xObj);
+
+		// These create objects of different types
+		// xDef is the Object Definition XML (frames, colors, speeds, etc)
+		// xObj is a pointer to the XML of the Object Instance (x,y,layer,etc)
+		// xObj may be null, and should be ignored if so.
+		Object* NewPlayerObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewRadiusBlockObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewCollectableObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewControllerObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewBackgroundObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewStaticObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewSpringObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewFanObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewDoorObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		
 		bool LoadObjectSounds(Object* obj, XMLNode &xDef);
 		bool LoadObjectProperties(Object* obj, XMLNode &xDef);
@@ -59,9 +64,14 @@ class ObjectFactory {
 		//! Maps object def types to OBJECTID's
 		map<const CString, OBJECTID> objectDefTypes;
 
-		Object* CreateObject(OBJECTID id, XMLNode &xObjectDef, XMLNode *xObject);
+		Object* CreateObject(	OBJECTID id, 
+													XMLNode &xObjectDef, 
+													XMLNode *xObject=NULL	);
 
 		void SetupTypes();
+
+		OBJECTID GetObjectIDFromXML(XMLNode &xObjectDef);
+		CString GetObjectTypeFromXML(XMLNode &xObjectDef);
 
 	public:
 		int Init();
@@ -73,8 +83,8 @@ class ObjectFactory {
 		// Create an object from an XML node
 		Object* CreateObjectFromXML(XMLNode &xObjectDef, XMLNode &xObject);
 
-		// Create an object from an ObjectID
-		Object* CreateObject(OBJECTID id);
+		// Create an object from a string
+		Object* CreateObject(CString objDefName);
 
 		bool AddObjectDefinition(	const CString &objDefName, 
 															const XMLNode &xObjectDef);
