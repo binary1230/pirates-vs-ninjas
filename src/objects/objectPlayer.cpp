@@ -111,9 +111,6 @@ void PlayerObject::DoStanding() {
 void PlayerObject::DoWalking() {
 	state = WALKING;
 	
-	if (next_skid_time > 0)
-		next_skid_time--;
-
 	DoCommonGroundStuff();
 	
 	currentAnimation = animations[PLAYER_WALKING];
@@ -124,6 +121,15 @@ void PlayerObject::DoWalking() {
 		DoStanding();
 	}
 
+	UpdateSkidding();
+
+	UpdateRunningAnimationSpeed();
+}
+
+void PlayerObject::UpdateSkidding() {
+	if (next_skid_time > 0)
+		next_skid_time--;
+
 	// If acceleration and velocity are in the opposite directions,
 	// then we are skidding and trying to turn around
 	if (	(accel.GetX() > 0.0f && vel.GetX() < 0.0f) ||
@@ -131,6 +137,8 @@ void PlayerObject::DoWalking() {
 
 		if (next_skid_time == 0) {
 			next_skid_time = 1;
+
+			// Create a "skid" object (little white whisp at player's feet)
 			Object* objSkid = OBJECT_FACTORY->CreateObject(SKID_OBJECT_TYPE);
 			
 			float skid_vel_x = 8.0f;
@@ -146,8 +154,6 @@ void PlayerObject::DoWalking() {
 				simulation->AddObject(objSkid, layer);
 		}
 	}
-		
-	UpdateRunningAnimationSpeed();
 }
 
 // no distinction from walking yet.

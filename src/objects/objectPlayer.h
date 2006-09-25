@@ -53,6 +53,7 @@ class PlayerObject : public Object {
 		void UpdateSpriteFlip();
 		void UpdateRunningAnimationSpeed();
 		void DoCommonGroundStuff();
+		void UpdateSkidding();
 		
 		DoorObject* door_in_front_of_us;
 		int ring_count;
