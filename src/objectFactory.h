@@ -33,15 +33,15 @@ class ObjectFactory {
 	DECLARE_SINGLETON_CLASS(ObjectFactory)
 
 	protected:
-		Object* NewPlayerObject(XMLNode &xDef, XMLNode &xObj);
-		Object* NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj);
-		Object* NewCollectableObject(XMLNode &xDef, XMLNode &xObj);
-		Object* NewControllerObject(XMLNode &xDef, XMLNode &xObj);
-		Object* NewBackgroundObject(XMLNode &xDef, XMLNode &xObj);
-		Object* NewStaticObject(XMLNode &xDef, XMLNode &xObj);
-		Object* NewSpringObject(XMLNode &xDef, XMLNode &xObj);
-		Object* NewFanObject(XMLNode &xDef, XMLNode &xObj);
-		Object* NewDoorObject(XMLNode &xDef, XMLNode &xObj);
+		Object* NewPlayerObject(XMLNode &xDef, XMLNode *xObj);
+		Object* NewRadiusBlockObject(XMLNode &xDef, XMLNode *xObj);
+		Object* NewCollectableObject(XMLNode &xDef, XMLNode *xObj);
+		Object* NewControllerObject(XMLNode &xDef, XMLNode *xObj);
+		Object* NewBackgroundObject(XMLNode &xDef, XMLNode *xObj);
+		Object* NewStaticObject(XMLNode &xDef, XMLNode *xObj);
+		Object* NewSpringObject(XMLNode &xDef, XMLNode *xObj);
+		Object* NewFanObject(XMLNode &xDef, XMLNode *xObj);
+		Object* NewDoorObject(XMLNode &xDef, XMLNode *xObj);
 		
 		bool LoadObjectSounds(Object* obj, XMLNode &xDef);
 		bool LoadObjectProperties(Object* obj, XMLNode &xDef);
@@ -56,6 +56,13 @@ class ObjectFactory {
 		//! is which frames it has, movement speed, etc
 		ObjectDefMapping objectDefs;
 
+		//! Maps object def types to OBJECTID's
+		map<const CString, OBJECTID> objectDefTypes;
+
+		Object* CreateObject(OBJECTID id, XMLNode &xObjectDef, XMLNode *xObject);
+
+		void SetupTypes();
+
 	public:
 		int Init();
 		void Shutdown();
@@ -64,16 +71,19 @@ class ObjectFactory {
 		inline PhysSimulation* GetPhysSimulation() {return physSimulation;};
 
 		// Create an object from an XML node
-		Object* CreateObjectFromXML(	XMLNode &xObjectDef, XMLNode &xObject);
+		Object* CreateObjectFromXML(XMLNode &xObjectDef, XMLNode &xObject);
 
 		// Create an object from an ObjectID
-		Object* CreateObject(OBJECTID object_id);
+		Object* CreateObject(OBJECTID id);
 
 		bool AddObjectDefinition(	const CString &objDefName, 
 															const XMLNode &xObjectDef);
 
 		// Return the XML associated with an object definition
 		XMLNode* FindObjectDefinition(const CString &objDefName);
+
+		//! Load all object definitions from root <objectDefinitions> node
+		int LoadObjectDefsFromXML(XMLNode &xObjDefs);
 
 		~ObjectFactory();
 };

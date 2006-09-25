@@ -70,7 +70,6 @@ class PhysSimulation : public GameMode {
 			int LoadObjectsFromXML(XMLNode&);
 			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer*);
 			int LoadForcesFromXML(XMLNode&);
-			int LoadObjectDefsFromXML(XMLNode&);
 			int LoadLayerFromXML(XMLNode&, ObjectLayer*);
 			int CreateObjectFromXML(XMLNode &xObject, ObjectLayer *layer);
 

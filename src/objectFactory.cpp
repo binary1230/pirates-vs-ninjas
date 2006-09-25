@@ -1,5 +1,16 @@
 #include "objectFactory.h"
 
+// TODO NOTES: ObjectFactory
+// This class was recently refactored from physSimulation.h
+// There are a LOT of things it does redundantly now that all
+// the object creation info is stored here.  Fix them all.
+//
+// First:
+// OBJECTID's are WRONG, they are more like OBJECT_TYPE_IDS
+//
+// OBJECTID's should not be types like "player" or "spring" or "static"
+// but more like "sonic", "mario", "crazyspring43", "flower2"
+
 #include "globals.h"
 #include "gameState.h"
 #include "sprite.h"
@@ -39,6 +50,77 @@ XMLNode* ObjectFactory::FindObjectDefinition(const CString &objDefName) {
 	return &(iter->second);
 }
 
+	
+//! Loads Object Definitions from XML, puts them in an ObjectMapping
+int ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
+
+	// Object definitions can take 2 forms in the XML file
+	// 1) an <objectDef> tag
+	// 2) an <include_xml_file> tag which we then open and get an <objectDef>
+	
+	int i, max, iterator;
+	XMLNode xObjectDef;
+	CString objName, file;
+	
+	// 1) handle <objectDef> tags
+	max = xObjDefs.nChildNode("objectDef");
+	iterator = 0;
+	for (i = iterator = 0; i < max; i++) {
+		xObjectDef = xObjDefs.getChildNode("objectDef", &iterator);
+		objName = xObjectDef.getAttribute("name");
+		
+		if (!FindObjectDefinition(objName)) {
+			AddObjectDefinition(objName, xObjectDef);
+		} else {
+			fprintf(stderr, "ObjectFactory: ERROR: Duplicate object "
+											"definitions found for object name: '%s'\n", 
+											objName.c_str());
+			return 0;
+		}
+	}
+
+	// 2) handle <include_xml_file> tags (more common)
+	max = xObjDefs.nChildNode("include_xml_file");
+	
+	for (i = iterator = 0; i < max; i++) {
+					
+		// get the filename
+		file = xObjDefs.getChildNode("include_xml_file", &iterator).getText();
+		
+		// open that file, get the objectDef
+		file = ASSETMANAGER->GetPathOf(file);
+		xObjectDef = XMLNode::openFileHelper(file.c_str(), "objectDef");
+
+		// save it
+		objName = xObjectDef.getAttribute("name");
+
+		if (!FindObjectDefinition(objName)) {
+			AddObjectDefinition(objName, xObjectDef);
+		} else {
+			fprintf(stderr, "ObjectFactory: ERROR: Duplicate object "
+											"definitions found for object name: '%s'\n", 
+											objName.c_str());
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
+// XXX this shouldn't really be here...
+void ObjectFactory::SetupTypes() {
+	// maps strings of object types to numeric ID's.
+	objectDefTypes["RadiusBlock"] 			= OBJECT_ID_RADIUS_BLOCK;
+	objectDefTypes["Background"] 				= OBJECT_ID_BACKGROUND;
+	objectDefTypes["Player"] 						= OBJECT_ID_PLAYER;
+	objectDefTypes["ControllerDisplay"]	= OBJECT_ID_CONTROLLER;
+	objectDefTypes["Static"] 						= OBJECT_ID_STATIC;
+	objectDefTypes["Fan"]								= OBJECT_ID_FAN;
+	objectDefTypes["Door"]							= OBJECT_ID_DOOR;
+	objectDefTypes["Spring"]						= OBJECT_ID_SPRING;
+	objectDefTypes["Collectable"]				= OBJECT_ID_COLLECTABLE;
+}
+
 // Creates an object from an XML definition
 // in: xObjectDef - XML representation of an object's definition
 // in: xObject - XML representation of additional object paramaters
@@ -47,27 +129,26 @@ Object* ObjectFactory::CreateObjectFromXML(
 					XMLNode &xObjectDef, 
 					XMLNode &xObject) 
 {
-
 	assert(physSimulation);
 
-	Object* obj = NULL;
-
-	// XXX this shouldn't really be here...
-	// maps strings of object types to numeric ID's.
-	map<const CString, OBJECTID> types;
-	types["RadiusBlock"] 				= OBJECT_ID_RADIUS_BLOCK;
-	types["Background"] 				= OBJECT_ID_BACKGROUND;
-	types["Player"] 						= OBJECT_ID_PLAYER;
-	types["ControllerDisplay"] 	= OBJECT_ID_CONTROLLER;
-	types["Static"] 						= OBJECT_ID_STATIC;
-	types["Fan"]								= OBJECT_ID_FAN;
-	types["Door"]								= OBJECT_ID_DOOR;
-	types["Spring"]							= OBJECT_ID_SPRING;
-	types["Collectable"]				= OBJECT_ID_COLLECTABLE;
-	
 	CString objType = xObjectDef.getAttribute("type");
+	OBJECTID id = objectDefTypes[objType];
+
+	Object* obj = CreateObject(id, xObjectDef, &xObject);
+
+	if (!obj) {
+		fprintf(stderr, "ERROR: Specified object type doesn't exist - '%s'.\n",
+										objType.c_str());
+		return NULL;
+	}
 	
-	OBJECTID id = types[objType];
+	return obj;
+}
+
+Object* ObjectFactory::CreateObject(	OBJECTID id, 
+																			XMLNode &xObjectDef,
+																			XMLNode *xObject) {
+	Object* obj = NULL;
 
 	switch(id) {
 					
@@ -108,14 +189,13 @@ Object* ObjectFactory::CreateObjectFromXML(
 			break;
 
 		case 0:
-			fprintf(stderr, "ERROR: Specified object doesn't exist - '%s'.\n",
-											objType.c_str());
-			return NULL;
+			obj = NULL;
 			break;
 			
 		default:
 			fprintf(stderr, "ERROR: Unknown Object ID passed?? [%i]\n", id);
-			return NULL;
+			obj = NULL;
+			break;
 	}
 
 	return obj;
@@ -124,19 +204,21 @@ Object* ObjectFactory::CreateObjectFromXML(
 int ObjectFactory::Init() {
 	physSimulation = NULL;
 	objectDefs.clear();
+	SetupTypes();
 	return 0;
 }
 
 void ObjectFactory::Shutdown() {
 	physSimulation = NULL;
 	objectDefs.clear();
+	objectDefTypes.clear();
 }
 
 //! Factory method, creates new PlayerObjects from XML files
 //
 //! NOTE: this only takes an ObjectDefinition XML fragment,
 // memory leaks on failures here.. CLEAN IT.
-Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode &xObj) {
+Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	// ObjectProperties props;
 	PlayerObject* obj = new PlayerObject();
@@ -166,7 +248,7 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode &xObj) {
 	return obj;
 }
 
-Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj) {
+Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode *xObj) {
 	RadiusBlockObject* obj = new RadiusBlockObject();
 
   if (!obj || !obj->Init(physSimulation) )
@@ -186,7 +268,7 @@ Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode &xObj) {
   return obj;
 }
 
-Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode &xObj) {
+Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
   CollectableObject* obj = new CollectableObject();
 
   if (!obj || !obj->Init(physSimulation) )
@@ -209,7 +291,7 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode &xObj) {
   return obj;
 }
 
-Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode &xObj) {
+Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
   ControllerObject* obj = new ControllerObject();
 
   if (!obj || !obj->Init(physSimulation) )
@@ -303,7 +385,7 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode &xObj) {
   return obj;
 }
 
-Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode &xObj) {
+Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
   BackgroundObject* obj = new BackgroundObject();
   
   if (!obj || !obj->Init(physSimulation) )
@@ -322,7 +404,7 @@ Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode &xObj) {
   return obj;
 }
 
-Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode &xObj) {
+Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 	StaticObject* obj = new StaticObject();
 
   if (!obj || !obj->Init(physSimulation) )
@@ -339,7 +421,7 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode &xObj) {
 	return obj;
 }
 
-Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode &xObj) { 
+Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) { 
   SpringObject* obj = new SpringObject();
   obj->properties.spring_strength = 20; // default
 
@@ -362,7 +444,7 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode &xObj) {
   return obj;
 }
 
-Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode &xObj) {
+Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	DoorObject* obj = new DoorObject();
 
   if (!obj || !obj->Init(physSimulation) )
@@ -382,7 +464,7 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode &xObj) {
 	return obj;
 }
 
-Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode &xObj) {
+Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	FanObject* obj = new FanObject();
 
   if (!obj || !obj->Init(physSimulation) )
@@ -474,7 +556,7 @@ bool ObjectFactory::LoadObjectAnimations(
 		}
 	}
 
-	// set the default animation XXX error check? how?
+	// set the default animation XXX error check?
 	CString default_name;
 	int default_index; 
 

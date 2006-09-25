@@ -388,13 +388,13 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 //! Calls other helpers to deal with different parts of the XML.
 int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {	
   int i, max, iterator = 0;  
-	XMLNode xMap, xObjs, xLayer;
+	XMLNode xMap, xObjDefs, xLayer;
 
 	camera_follow = NULL;
 
 	// 1) load all "object definitions" (e.g. [bad guy 1])
-	xObjs = xMode.getChildNode("objectDefinitions");
-	LoadObjectDefsFromXML(xObjs);
+	xObjDefs = xMode.getChildNode("objectDefinitions");
+	OBJECT_FACTORY->LoadObjectDefsFromXML(xObjDefs);
 
 	// 2) load all the <object>s found in each <layer> in <map>
 	xMap = xMode.getChildNode("map");
@@ -422,47 +422,6 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 	}
 
 	return 0;
-}
-
-//! Helper function
-//! Loads Object Definitions from XML, puts them in an ObjectMapping
-int PhysSimulation::LoadObjectDefsFromXML(XMLNode &xObjs) {
-
-	// Object definitions can take 2 forms in the XML file
-	// 1) an <objectDef> tag
-	// 2) an <include_xml_file> tag which we then open and get an <objectDef>
-	
-	int i, max, iterator;
-	XMLNode xObjectDef;
-	CString objName, file;
-	
-	// 1) handle <objectDef> tags
-	max = xObjs.nChildNode("objectDef");
-	iterator = 0;
-	for (i = iterator = 0; i < max; i++) {
-		xObjectDef = xObjs.getChildNode("objectDef", &iterator);
-		objName = xObjectDef.getAttribute("name");
-		OBJECT_FACTORY->AddObjectDefinition(objName, xObjectDef);
-	}
-
-	// 2) handle <include_xml_file> tags (more common)
-	max = xObjs.nChildNode("include_xml_file");
-	
-	for (i = iterator = 0; i < max; i++) {
-					
-		// get the filename
-		file = xObjs.getChildNode("include_xml_file", &iterator).getText();
-		
-		// open that file, get the objectDef
-		file = ASSETMANAGER->GetPathOf(file);
-		xObjectDef = XMLNode::openFileHelper(file.c_str(), "objectDef");
-
-		// save it
-		objName = xObjectDef.getAttribute("name");
-		OBJECT_FACTORY->AddObjectDefinition(objName, xObjectDef);
-	}
-
-	return 1;
 }
 
 // Creates an instance of an object on the specified layer 
