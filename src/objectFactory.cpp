@@ -18,6 +18,27 @@
 #include "animations.h"
 #include "gameSound.h"
 
+DECLARE_SINGLETON(ObjectFactory)
+
+bool ObjectFactory::AddObjectDefinition(const CString &objDefName, 	
+																				const XMLNode &xObjectDef) {
+	if (objDefName == "" || objDefName.length() < 1)
+		return false;
+
+	objectDefs[objDefName] = xObjectDef;
+
+	return true;
+}
+
+XMLNode* ObjectFactory::FindObjectDefinition(const CString &objDefName) {
+	ObjectDefMappingIter iter = objectDefs.find(objDefName);
+
+	if (iter == objectDefs.end())
+		return NULL;
+	
+	return &(iter->second);
+}
+
 // Creates an object from an XML definition
 // in: xObjectDef - XML representation of an object's definition
 // in: xObject - XML representation of additional object paramaters
@@ -102,10 +123,14 @@ Object* ObjectFactory::CreateObjectFromXML(
 
 int ObjectFactory::Init() {
 	physSimulation = NULL;
+	objectDefs.clear();
 	return 0;
 }
 
-void ObjectFactory::Shutdown() {}
+void ObjectFactory::Shutdown() {
+	physSimulation = NULL;
+	objectDefs.clear();
+}
 
 //! Factory method, creates new PlayerObjects from XML files
 //

@@ -13,12 +13,6 @@ class ForceFactory;
 class ObjectLayer;
 class OGGFILE;
 
-//! Maps an object definition name to an XMLNode 
-//! (e.g. maps "bad_guy_1" to its corresponding XML data)
-//! only used for parsing XML
-typedef map<const CString, XMLNode> ObjectDefMapping;
-typedef map<const CString, XMLNode>::iterator ObjectDefMappingIter;
-
 typedef list<Object*> ObjectList;
 typedef list<Object*>::iterator ObjectListIter;
 typedef list<Object*>::reverse_iterator ObjectListReverseIter;
@@ -76,11 +70,9 @@ class PhysSimulation : public GameMode {
 			int LoadObjectsFromXML(XMLNode&);
 			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer*);
 			int LoadForcesFromXML(XMLNode&);
-			int LoadObjectDefsFromXML(XMLNode&, ObjectDefMapping&);
-			int LoadLayerFromXML(XMLNode&, ObjectLayer*, ObjectDefMapping&);
-			int CreateObjectFromXML(	XMLNode &xObject, 
-												ObjectLayer *layer, 
-												ObjectDefMapping &objectDefs);
+			int LoadObjectDefsFromXML(XMLNode&);
+			int LoadLayerFromXML(XMLNode&, ObjectLayer*);
+			int CreateObjectFromXML(XMLNode &xObject, ObjectLayer *layer);
 
 			//! ONLY used during init, temp variables for "repeat" xml tags
 			int repeater_current_x, repeater_current_y;

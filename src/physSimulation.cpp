@@ -19,13 +19,14 @@
 #include "objectPlayer.h"
 
 int PhysSimulation::Init(XMLNode xMode) {
-	objectFactory = new ObjectFactory();
-	if ( !objectFactory || objectFactory->Init() < 0 ) {
-		fprintf(stderr, "ERROR: InitSystem: failed to init objectFactory!\n");
+	
+	OBJECT_FACTORY->CreateInstance();
+	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) {
+		fprintf(stderr, "ERROR: InitSystem: failed to init OBJECT_FACTORY!\n");
 		return -1;
 	}
 
-	objectFactory->SetPhysSimulation(this);
+	OBJECT_FACTORY->SetPhysSimulation(this);
 
 	forceFactory = new ForceFactory();
 	if ( !forceFactory || forceFactory->Init() < 0 ) {
@@ -123,10 +124,9 @@ void PhysSimulation::Shutdown() {
 	forces.clear();
 			
 	// delete the object factory
-	if (objectFactory) {
-		objectFactory->Shutdown();
-		delete objectFactory;
-		objectFactory = NULL;
+	if (OBJECT_FACTORY) {
+		OBJECT_FACTORY->Shutdown();
+		OBJECT_FACTORY->FreeInstance();
 	}
 
 	// delete the force factory
@@ -388,14 +388,13 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 //! Calls other helpers to deal with different parts of the XML.
 int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {	
   int i, max, iterator = 0;  
-	XMLNode xMap, xObjs, xLayer;	
-	ObjectDefMapping objectDefs; 
+	XMLNode xMap, xObjs, xLayer;
 
 	camera_follow = NULL;
 
 	// 1) load all "object definitions" (e.g. [bad guy 1])
 	xObjs = xMode.getChildNode("objectDefinitions");
-	LoadObjectDefsFromXML(xObjs, objectDefs);
+	LoadObjectDefsFromXML(xObjs);
 
 	// 2) load all the <object>s found in each <layer> in <map>
 	xMap = xMode.getChildNode("map");
@@ -411,7 +410,7 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 		layer->Init(this);
 		layers.push_back(layer);
 		
-		if (LoadLayerFromXML(xLayer, layer, objectDefs) == -1) {
+		if (LoadLayerFromXML(xLayer, layer) == -1) {
 			return -1;
 		}
 	}
@@ -427,8 +426,8 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 
 //! Helper function
 //! Loads Object Definitions from XML, puts them in an ObjectMapping
-int PhysSimulation::LoadObjectDefsFromXML(XMLNode &xObjs, 
-																					ObjectDefMapping &objectDefs) {
+int PhysSimulation::LoadObjectDefsFromXML(XMLNode &xObjs) {
+
 	// Object definitions can take 2 forms in the XML file
 	// 1) an <objectDef> tag
 	// 2) an <include_xml_file> tag which we then open and get an <objectDef>
@@ -443,10 +442,10 @@ int PhysSimulation::LoadObjectDefsFromXML(XMLNode &xObjs,
 	for (i = iterator = 0; i < max; i++) {
 		xObjectDef = xObjs.getChildNode("objectDef", &iterator);
 		objName = xObjectDef.getAttribute("name");
-		objectDefs[objName] = xObjectDef;
+		OBJECT_FACTORY->AddObjectDefinition(objName, xObjectDef);
 	}
 
-	// 2) handle <include_xml_file> tags
+	// 2) handle <include_xml_file> tags (more common)
 	max = xObjs.nChildNode("include_xml_file");
 	
 	for (i = iterator = 0; i < max; i++) {
@@ -460,30 +459,29 @@ int PhysSimulation::LoadObjectDefsFromXML(XMLNode &xObjs,
 
 		// save it
 		objName = xObjectDef.getAttribute("name");
-		objectDefs[objName] = xObjectDef;
+		OBJECT_FACTORY->AddObjectDefinition(objName, xObjectDef);
 	}
 
 	return 1;
 }
 
 // Creates an instance of an object on the specified layer 
-int PhysSimulation::CreateObjectFromXML(	XMLNode &xObject, 
-																	ObjectLayer* layer, 
-																	ObjectDefMapping &objectDefs) {
+int PhysSimulation::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* layer) {
 
 		// get the object definition name
 		CString objDefName = xObject.getAttribute("objectDef");
 
 		// try to find that object definition
-		ObjectDefMappingIter iter = objectDefs.find(objDefName);
-		if (iter == objectDefs.end()) {
+		XMLNode* xObjectDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
+
+		if (!xObjectDef) {
 			fprintf(stderr, "ERROR: Unable to find object definition of type '%s'\n", 
 											objDefName.c_str());
 			return -1;
 		}
 
 		// create the object from the objectDefinition
-		if (LoadObjectFromXML(objectDefs[objDefName], xObject, layer) == -1) {
+		if (LoadObjectFromXML(*xObjectDef, xObject, layer) == -1) {
 			fprintf(stderr, "ERROR: Failed trying to load object of type '%s'\n", 
 											objDefName.c_str());
 			return -1;
@@ -493,10 +491,7 @@ int PhysSimulation::CreateObjectFromXML(	XMLNode &xObject,
 }
 
 //! Parse XML info from a <layer> block
-int PhysSimulation::LoadLayerFromXML(
-								XMLNode &xLayer, 
-								ObjectLayer* layer, 
-								ObjectDefMapping &objectDefs) {
+int PhysSimulation::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* layer) {
 
 	int i, iterator, max;
 	XMLNode xObject;
@@ -553,7 +548,7 @@ int PhysSimulation::LoadLayerFromXML(
 
 		// Repeat the creation of this object the specified # of times.
 		for (j=0; j < times_to_repeat; j++) {
-			if (CreateObjectFromXML(xObject, layer, objectDefs) == -1)
+			if (CreateObjectFromXML(xObject, layer) == -1)
 				return -1;
 		}	
 	}
@@ -564,7 +559,7 @@ int PhysSimulation::LoadLayerFromXML(
 
 		xObject = xLayer.getChildNode("object", &iterator);
 
-		if (CreateObjectFromXML(xObject, layer, objectDefs) == -1)
+		if (CreateObjectFromXML(xObject, layer) == -1)
 			return -1;
 	}
 
@@ -578,7 +573,9 @@ int PhysSimulation::LoadObjectFromXML(
 								ObjectLayer* layer) {
 
 	int x,y;
-	Object* obj  = objectFactory->CreateObjectFromXML(xObjectDef, xObject);
+
+	// Really create the instance of this object, it is BORN here:
+	Object* obj = OBJECT_FACTORY->CreateObjectFromXML(xObjectDef, xObject);
 
 	if (!obj) {
 		return -1;
