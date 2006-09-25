@@ -11,8 +11,8 @@ AC_PREFIX_DEFAULT(/usr/local/)
 
 VERSION_MAJOR="0"
 VERSION_MINOR="2"
-VERSION_FIX="1"
-VERSION_EXTRA="-beta1"
+VERSION_FIX="2"
+VERSION_EXTRA="-pre-alpha"
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_FIX$VERSION_EXTRA"
 
@@ -47,7 +47,7 @@ fi
 
 AC_LANG(C++)
 
-dnl AM_PATH_CPPUNIT(1.9.6)
+AM_PATH_CPPUNIT(1.9.6)
 
 dnl --------------------------------
 dnl ./configure command line options
