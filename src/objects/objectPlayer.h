@@ -39,6 +39,8 @@ class PlayerObject : public Object {
 	
 		void UpdateState();
 
+		void DoCommonStuff();
+
 		void DoStanding();
 		void DoWalking();
 		void DoRunning();

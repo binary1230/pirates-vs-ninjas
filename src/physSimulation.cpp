@@ -198,25 +198,26 @@ void PhysSimulation::GetCollideableObjects(vector<Object*> &objs) {
 void PhysSimulation::CheckForCollisions() {
 
 	vector<Object*> objs;
-	Object* player;
+	Object* target;
 
 	GetCollideableObjects(objs);
 	
 	int i, j, max = objs.size();
 	
 	for (i = 0; i < max; i++) {
-		if (objs[i]->GetProperties().is_player) {
+		if (	objs[i]->GetProperties().is_player || 
+					objs[i]->GetProperties().is_ball ) {
 			
-			player = objs[i];
+			target = objs[i];
 
 			for (j = 0; j < max; j++) {
-				if (	objs[j] != player && 
+				if (	objs[j] != target && 
 							(	objs[j]->GetProperties().is_solid || 
 								objs[j]->GetProperties().is_collectable ) &&
-								objs[j]->IsColliding(player)) {
+								objs[j]->IsColliding(target)) {
 
-					objs[j]->Collide(player);
-					player->Collide(objs[j]);
+					objs[j]->Collide(target);
+					target->Collide(objs[j]);
 				}
 			}
 		}

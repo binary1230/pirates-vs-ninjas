@@ -9,7 +9,7 @@ class AssetManager;
 // All must declare objectFactory as friend classes
 class Object;
 class ObjectPlayer;
-class ObjectRadiusBlock;
+class BounceObject;
 class ObjectCollectable;
 class ObjectController;
 class ObjectBackground;
@@ -39,7 +39,7 @@ class ObjectFactory {
 		// xObj is a pointer to the XML of the Object Instance (x,y,layer,etc)
 		// xObj may be null, and should be ignored if so.
 		Object* NewPlayerObject(XMLNode &xDef, XMLNode *xObj=NULL);
-		Object* NewRadiusBlockObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewBounceObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewCollectableObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewControllerObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewBackgroundObject(XMLNode &xDef, XMLNode *xObj=NULL);

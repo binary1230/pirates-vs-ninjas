@@ -40,6 +40,7 @@ struct ObjectProperties {
 	bool is_fan;
 	bool is_door;
 	bool is_ring;
+	bool is_ball;
 	
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -62,6 +63,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_fan = 0;
 	p.is_door = 0;
 	p.is_ring = 0;
+	p.is_ball = 0;
 }
 
 //! A drawable entity in the physics simulation
@@ -254,7 +256,7 @@ class Object {
 		inline float GetMass() 					{ return mass; }
 		inline void SetMass(float m) 		{ mass = m; }
 		
-		inline struct ObjectProperties GetProperties() { return properties; }
+		struct ObjectProperties& GetProperties() { return properties; };
 		inline void SetProperties(struct ObjectProperties p) { properties = p;}
 
 		//! Setup some commonly used variables

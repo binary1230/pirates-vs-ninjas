@@ -29,7 +29,7 @@ window.h assetManager.h gameSound.h \
 gameMode.h gameModes.h \
 objectLayer.h objectFactory.h objectIDs.h \
 objects/object.h objects/objectEnemy.h \
-objects/objectPlayer.h objects/objectRadiusBlock.h \
+objects/objectPlayer.h objects/objectBounce.h \
 objects/objectBackground.h objects/objectController.h \
 objects/objectStatic.h objects/objectSpring.h \
 objects/objectCollectable.h objects/objectFan.h objects/objectDoor.h \
@@ -47,7 +47,7 @@ window.cpp assetManager.cpp gameSound.cpp \
 gameMode.cpp gameModes.cpp \
 objectLayer.cpp objectFactory.cpp \
 objects/object.cpp objects/objectEnemy.h \
-objects/objectPlayer.cpp objects/objectRadiusBlock.cpp \
+objects/objectPlayer.cpp objects/objectBounce.cpp \
 objects/objectBackground.cpp objects/objectController.cpp \
 objects/objectStatic.cpp objects/objectSpring.cpp \
 objects/objectCollectable.cpp objects/objectFan.cpp objects/objectDoor.cpp \

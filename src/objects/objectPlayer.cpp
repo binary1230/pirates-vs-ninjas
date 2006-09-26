@@ -141,17 +141,18 @@ void PlayerObject::UpdateSkidding() {
 			// Create a "skid" object (little white whisp at player's feet)
 			Object* objSkid = OBJECT_FACTORY->CreateObject(SKID_OBJECT_TYPE);
 			
-			float skid_vel_x = 8.0f;
+			if (objSkid) {
+				float skid_vel_x = 8.0f;
 
-			if (vel.GetX() < 0.0f)
-				skid_vel_x *= -1.0f;
+				if (vel.GetX() < 0.0f)
+					skid_vel_x *= -1.0f;
 
-			objSkid->SetDisplayTime(2);
-			objSkid->SetXY(pos);
-			objSkid->SetVelXY(skid_vel_x, 0.0f);
+				objSkid->SetDisplayTime(2);
+				objSkid->SetXY(pos);
+				objSkid->SetVelXY(skid_vel_x, 0.0f);
 			
-			if (objSkid)
 				simulation->AddObject(objSkid, layer);
+			}
 		}
 	}
 }
@@ -197,6 +198,30 @@ void PlayerObject::DoLookingUp() {
 }
 void PlayerObject::DoCrouchingDown() {
 	state = CROUCHINGDOWN;
+}
+
+// Do things common to most every state
+void PlayerObject::DoCommonStuff() {
+	
+	// Let's do... oh.. bouncy balls?? Why not?
+	if (	state != WALKING_THRU_DOOR && 
+				INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num)) {
+			
+		Object* objBall = OBJECT_FACTORY->CreateObject("ball");
+			
+		if (objBall) {
+			//float skid_vel_x = 8.0f;
+
+			//if (vel.GetX() < 0.0f)
+			//	skid_vel_x *= -1.0f;
+
+			objBall->SetDisplayTime(200);
+			objBall->SetXY(pos);
+			objBall->SetVelXY(vel.GetX(), 0.0f);
+
+			simulation->AddObject(objBall, layer);
+		}
+	}
 }
 
 void PlayerObject::Update() {
@@ -273,7 +298,6 @@ PlayerObject::PlayerObject() {
 	next_skid_time = 0;
 }
 
-
 PlayerObject::~PlayerObject() {}
 
 bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
@@ -288,6 +312,9 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 }
 
 void PlayerObject::UpdateState() {
+
+	DoCommonStuff();
+
 	switch (state) {
 		case STANDING:
 			DoStanding();

@@ -17,7 +17,7 @@
 #include "object.h"
 #include "objectIDs.h"
 #include "objectPlayer.h"
-#include "objectRadiusBlock.h"
+#include "objectBounce.h"
 #include "objectBackground.h"
 #include "objectController.h"
 #include "objectStatic.h"
@@ -124,7 +124,7 @@ int ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 // XXX this shouldn't really be here...
 void ObjectFactory::SetupTypes() {
 	// maps strings of object types to numeric ID's.
-	objectDefTypes["RadiusBlock"] 			= OBJECT_ID_RADIUS_BLOCK;
+	objectDefTypes["Bounce"] 						= OBJECT_ID_BOUNCE;
 	objectDefTypes["Background"] 				= OBJECT_ID_BACKGROUND;
 	objectDefTypes["Player"] 						= OBJECT_ID_PLAYER;
 	objectDefTypes["ControllerDisplay"]	= OBJECT_ID_CONTROLLER;
@@ -190,8 +190,8 @@ Object* ObjectFactory::CreateObject(	OBJECTID id,
 			obj = NewPlayerObject(xObjectDef, xObject);
 			break;
 			
-		case OBJECT_ID_RADIUS_BLOCK:
-			obj = NewRadiusBlockObject(xObjectDef, xObject);
+		case OBJECT_ID_BOUNCE:
+			obj = NewBounceObject(xObjectDef, xObject);
 			break;
 			
 		case OBJECT_ID_CONTROLLER:
@@ -278,14 +278,11 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	return obj;
 }
 
-Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode *xObj) {
-	RadiusBlockObject* obj = new RadiusBlockObject();
+Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
+	BounceObject* obj = new BounceObject();
 
   if (!obj || !obj->Init(physSimulation) )
     return NULL;
-
-  obj->SetTheta(Rand(0,360));
-  obj->SetRadius(Rand(20,300));
 
   if (!LoadObjectAnimations(obj, xDef))
     return NULL;
@@ -294,6 +291,9 @@ Object* ObjectFactory::NewRadiusBlockObject(XMLNode &xDef, XMLNode *xObj) {
     return NULL;
 	
 	obj->SetupCachedVariables();
+
+	obj->properties.is_ball = 1;
+	obj->properties.is_solid = 1;
 
   return obj;
 }
