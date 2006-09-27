@@ -28,13 +28,16 @@
 #include <math.h>
 #include <png.h>
 
+#ifndef WIN32
+#include <sys/wait.h>
+#endif
+
 // Unix-y?
 #include <ctype.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/wait.h>
 #include <errno.h>
 
 // STL stuff
