@@ -13,6 +13,7 @@ VERSION_MAJOR="0"
 VERSION_MINOR="2"
 VERSION_FIX="2"
 VERSION_EXTRA="-pre-alpha"
+PACKAGE_NAME="ninjas-engine"
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_FIX$VERSION_EXTRA"
 
@@ -113,7 +114,9 @@ if test "$WHICH_UNAME"; then
 	fi
 fi
 
-AM_INIT_AUTOMAKE([ninjas-engine], ${VERSION})
+dnl PACKAGE_NAME = "ninjas-engine"
+
+AM_INIT_AUTOMAKE(${PACKAGE_NAME}, ${VERSION})
 
 dnl --------------------
 dnl Cross compile stuff
@@ -246,6 +249,7 @@ ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries"
 LDFLAGS="$extra_libraries $LDFLAGS"
 LIBS="$LIBS $ALLEGRO_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB"
 
+AC_SUBST(PACKAGE_NAME)
 AC_SUBST(ninjas_CXXFLAGS)
 AC_SUBST(ninjas_LDFLAGS)
 AC_SUBST(aitrainer_CXXFLAGS)

@@ -2,12 +2,11 @@ SUBDIRS = src ai
 
 DATA_DIR = data
 EXTRA_DIST = docs $(DATA_DIR) installer.nsi 
-
-dist_common:
-# make -C libs/alogg clean
+	
+DIST_DIR = dist/win32/$(PACKAGE_NAME)-$(VERSION)
 
 # create the MAC OSX Bundle
-dist_macosx: dist_common $(DISTFILES)
+dist_macosx: $(DISTFILES)
 	rm -rf dist/darwin/*
 	mkdir -p dist/darwin/ninjas.app/Contents/MacOS
 	mkdir dist/darwin/ninjas.app/PkgInfo
@@ -16,19 +15,27 @@ dist_macosx: dist_common $(DISTFILES)
 	cp -r $(DATA_DIR) dist/darwin/ninjas.app/Resources
 	hdiutil create -fs HFS+ -volname PiratesVersusNinjas-$(VERSION) -srcfolder dist/darwin/ PiratesVersusNinjas-$(VERSION)
 
+
+# common win32 packaging stuff
+dist_win32_common: $(DISTFILES)
+	rm -rf dist/win32/$(PACKAGE_NAME)-*
+	mkdir -p $(DIST_DIR)/data
+	cp src/ninjas.exe $(DIST_DIR)
+	strip $(DIST_DIR)/ninjas.exe
+	cp LICENSE README $(DIST_DIR)
+	cp dist/win32/common/* $(DIST_DIR)
+	cp -r $(DATA_DIR) $(DIST_DIR)
+
+
+# create the windows NSIS self-installer
+dist_win32_installer: dist_win32_common 
+
 # create the windows .zip file
-dist_win32: dist_common $(DISTFILES) 
-	rm -rf dist/win32/ninjas-engine-*
-	mkdir -p dist/win32/ninjas-engine-$(VERSION)/data
-	
-	cp src/ninjas.exe dist/win32/ninjas-engine-$(VERSION)
-	strip dist/win32/ninjas-engine-$(VERSION)/ninjas.exe
-	cp LICENSE README dist/win32/ninjas-engine-$(VERSION)
-	cp dist/win32/common/* dist/win32/ninjas-engine-$(VERSION)
-	cp -r $(DATA_DIR) dist/win32/ninjas-engine-$(VERSION)
+dist_win32_zip: dist_win32_common 
 	cd dist/win32/ && zip -r ninjas-engine-$(VERSION).zip ninjas-engine-$(VERSION) -x \*.svn\*
 	
-	@echo -en "\n\nWindows version packaged: dist/win32/ninjas-engine-$(VERSION).zip\n\n"
+	@echo -en "\n\nWindows version packaged: $(DIST_DIR).zip\n\n"
+
 
 doc: src/Doxyfile
 	cd src && doxygen
