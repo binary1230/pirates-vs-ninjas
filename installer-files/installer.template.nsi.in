@@ -105,7 +105,7 @@ var ICONS_GROUP
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "PiratesVsNinjas-Setup-0.2.1.exe"
+OutFile "PiratesVsNinjas-Setup-${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES\Pirates Vs Ninjas"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -117,7 +117,8 @@ FunctionEnd
 
 Section "Game Files" SEC01
 
-; -- REPLACE:installer_files/installer_part1.txt
+; -- REPLACE:installer-files/installer_part1.txt
+	SetOutPath "$INSTDIR\"
 
 ; Shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -163,7 +164,7 @@ Section Uninstall
   !insertmacro MUI_STARTMENU_GETFOLDER "Application" $ICONS_GROUP
   Delete "$INSTDIR\uninst.exe"
 
-; -- REPLACE:installer_files/installer_part2.txt
+; -- REPLACE:installer-files/installer_part2.txt
 
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
   Delete "$DESKTOP\Pirates Vs Ninjas.lnk"
@@ -171,7 +172,7 @@ Section Uninstall
 
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
 
-; -- REPLACE:installer_files/installer_part3.txt
+; -- REPLACE:installer-files/installer_part3.txt
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
