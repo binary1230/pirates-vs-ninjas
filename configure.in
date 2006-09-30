@@ -275,4 +275,4 @@ AM_CONFIG_HEADER(config.h)
 AC_OBJEXT
 AC_EXEEXT
 
-AC_OUTPUT(Makefile src/Makefile src/Doxyfile src/tests/Makefile ai/Makefile installer.nsi)
+AC_OUTPUT(Makefile src/Makefile src/Doxyfile src/tests/Makefile ai/Makefile installer-files/installer.static.1.in)
