@@ -251,7 +251,7 @@ void PlayerObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_fan) 
 		return;
 
-  if (obj->GetProperties().is_solid) {
+  if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
     
 		Vector2D newpos;
     d = GetBound(obj, newpos);
