@@ -60,8 +60,8 @@ void PhysSimulation::TransformWorldToView(int &x, int &y) {
 
 //! Weighted average nums for the 'floaty' camera
 //! Increase CAM_WEIGHT_CAM to make the camera 'snap' quicker
-#define CAM_WEIGHT_POS 1.0f // why bother to mess with this one
-#define CAM_WEIGHT_CAM 3.0f	// change this one
+#define CAM_WEIGHT_POS 1.0f // DON'T CHANGE.
+#define CAM_WEIGHT_CAM 3.0f	// change this one for faster camera 'slides'
 
 //! Function which moves the camera according to a weight, shown above
 //! Uses a weighted average of the object coordinates and the new camera coords
@@ -71,6 +71,7 @@ void PhysSimulation::TransformWorldToView(int &x, int &y) {
 			((cam) * CAM_WEIGHT_CAM) 																			\
 		) / (CAM_WEIGHT_CAM + CAM_WEIGHT_POS) )
 
+// Oy, vey, this is a bit more complex than it needs to be?
 void PhysSimulation::ComputeNewCamera() {
 	
 	assert(camera_follow);
@@ -99,7 +100,7 @@ void PhysSimulation::ComputeNewCamera() {
 	if (camera_x < 0) camera_x = 0;
 	if (camera_x > width - sw) camera_x = width - sw;
 	if (camera_y < 0) camera_y = 0;
-	if (camera_y > height - sh) camera_x = height - sh;
+	if (camera_y > height - sh) camera_y = height - sh;
 }
 
 void PhysSimulation::Shutdown() {
