@@ -7,15 +7,15 @@
 #include "gameState.h"
 #include "physSimulation.h"
 
-int ControllerObject::GetHeight() {
+int ObjectController::GetHeight() {
 	return controller_sprite->bmp->h;
 }
 
-int ControllerObject::GetWidth() {
+int ObjectController::GetWidth() {
 	return controller_sprite->bmp->w;
 }
 
-void ControllerObject::Draw() {
+void ObjectController::Draw() {
 
 	if (only_show_during_demo && INPUT->GetInputType() != INPUT_PLAYBACK) {
 		return;
@@ -40,7 +40,7 @@ void ControllerObject::Draw() {
 	}
 }
 
-void ControllerObject::Update() {
+void ObjectController::Update() {
 
 	BaseUpdate();
 
@@ -64,7 +64,7 @@ void ControllerObject::Update() {
 	}
 }
 
-bool ControllerObject::Init(PhysSimulation *p) {
+bool ObjectController::Init(PhysSimulation *p) {
 	simulation = p;
 	
 	buttons.clear();
@@ -76,7 +76,7 @@ bool ControllerObject::Init(PhysSimulation *p) {
 	return BaseInit();
 }
 
-void ControllerObject::Shutdown() {
+void ObjectController::Shutdown() {
 	int i, max = buttons.size();
 	
 	for (i = 0; i < max; i++) {
@@ -92,8 +92,8 @@ void ControllerObject::Shutdown() {
 	}
 }
 
-ControllerObject::ControllerObject() {
+ObjectController::ObjectController() {
 	controller_sprite = NULL;
 }
 
-ControllerObject::~ControllerObject() {}
+ObjectController::~ObjectController() {}

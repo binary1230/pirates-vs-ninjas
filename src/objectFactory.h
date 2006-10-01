@@ -7,14 +7,15 @@ class ObjectFactory;
 class AssetManager;
 
 // All must declare objectFactory as friend classes
-class Object;
+class Object;/*
 class ObjectPlayer;
-class BounceObject;
+class ObjectBounce;
 class ObjectCollectable;
 class ObjectController;
 class ObjectBackground;
 class ObjectStatic;
 class ObjectSpring;
+class ObjectTxtOverlay;*/
 class PhysSimulation;
 
 #include "singleton.h"
@@ -47,7 +48,11 @@ class ObjectFactory {
 		Object* NewSpringObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewFanObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewDoorObject(XMLNode &xDef, XMLNode *xObj=NULL);
-		
+		Object* NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj=NULL);
+	
+		bool LoadCommonObjectStuff(	Object* obj, XMLNode &xDef, 
+																XMLNode *xObj, bool loadAnimations = true);
+
 		bool LoadObjectSounds(Object* obj, XMLNode &xDef);
 		bool LoadObjectProperties(Object* obj, XMLNode &xDef);
 		bool LoadObjectAnimations(Object* obj, XMLNode &xDef, 

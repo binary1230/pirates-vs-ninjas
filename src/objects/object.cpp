@@ -46,6 +46,7 @@ void Object::PlaySound(CString name) {
 //! Cache some commonly used stuff
 // ('cause the profiler says so!)
 void Object::SetupCachedVariables() {
+	assert(simulation);
 	level_width  = simulation->GetWidth();
 	level_height = simulation->GetHeight();
 	

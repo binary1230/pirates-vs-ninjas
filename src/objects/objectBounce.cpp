@@ -5,7 +5,7 @@
 #include "gameState.h"
 #include "physSimulation.h"
 
-void BounceObject::Update() {
+void ObjectBounce::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
 
@@ -14,12 +14,12 @@ void BounceObject::Update() {
 		vel.SetX(vel.GetX() * 0.90f);
 }
 
-bool BounceObject::Init(PhysSimulation *p) {
+bool ObjectBounce::Init(PhysSimulation *p) {
 	simulation = p;
 	return BaseInit();
 }
 
-void BounceObject::Collide(Object* obj) {
+void ObjectBounce::Collide(Object* obj) {
 	if (!properties.is_solid || obj->GetProperties().is_ball)
 		return;
 
@@ -38,5 +38,5 @@ void BounceObject::Collide(Object* obj) {
   }
 }
 
-BounceObject::BounceObject() {}
-BounceObject::~BounceObject() {}
+ObjectBounce::ObjectBounce() {}
+ObjectBounce::~ObjectBounce() {}

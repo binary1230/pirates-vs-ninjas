@@ -7,7 +7,7 @@
 class ObjectFactory;
 class PhysSimulation;
 
-class BounceObject : public Object {
+class ObjectBounce : public Object {
 	protected:
 
 	public:
@@ -16,11 +16,11 @@ class BounceObject : public Object {
 
 		void Collide(Object* obj);
 		
-		BounceObject();
-		~BounceObject();
+		ObjectBounce();
+		~ObjectBounce();
 			
 		//! Factory method to create a new radius block object
 		friend class ObjectFactory;
 };
 
-#endif // BounceObject_H   
+#endif // ObjectBounce_H   

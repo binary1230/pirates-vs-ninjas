@@ -64,6 +64,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_door = 0;
 	p.is_ring = 0;
 	p.is_ball = 0;
+	p.spring_strength = 20;
 }
 
 //! A drawable entity in the physics simulation
@@ -256,7 +257,7 @@ class Object {
 		inline float GetMass() 					{ return mass; }
 		inline void SetMass(float m) 		{ mass = m; }
 		
-		struct ObjectProperties& GetProperties() { return properties; };
+		struct ObjectProperties GetProperties() { return properties; };
 		inline void SetProperties(struct ObjectProperties p) { properties = p;}
 
 		//! Setup some commonly used variables

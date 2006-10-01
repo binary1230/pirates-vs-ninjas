@@ -25,6 +25,7 @@
 #include "objectCollectable.h"
 #include "objectFan.h"
 #include "objectDoor.h"
+#include "objectTxtOverlay.h"
 #include "assetManager.h"
 #include "animations.h"
 #include "gameSound.h"
@@ -133,6 +134,7 @@ void ObjectFactory::SetupTypes() {
 	objectDefTypes["Door"]							= OBJECT_ID_DOOR;
 	objectDefTypes["Spring"]						= OBJECT_ID_SPRING;
 	objectDefTypes["Collectable"]				= OBJECT_ID_COLLECTABLE;
+	objectDefTypes["TextOverlay"]				= OBJECT_ID_TXTOVERLAY;
 }
 
 // Get the object ID from an XML object definition
@@ -217,6 +219,10 @@ Object* ObjectFactory::CreateObject(	OBJECTID id,
 		case OBJECT_ID_FAN:
 			obj = NewFanObject(xObjectDef, xObject);
 			break;
+		
+		case OBJECT_ID_TXTOVERLAY:
+			obj = NewTxtOverlayObject(xObjectDef, xObject);
+			break;
 
 		case 0:
 			obj = NULL;
@@ -250,47 +256,26 @@ void ObjectFactory::Shutdown() {
 // memory leaks on failures here.. CLEAN IT.
 Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	
-	// ObjectProperties props;
 	PlayerObject* obj = new PlayerObject();
-
-	// init the object
-	if (!obj || !obj->Init(physSimulation) )
-		return NULL;
-
-	// load the animations
+	LoadCommonObjectStuff(obj, xDef, xObj, false);
+	
 	AnimationMapping animation_map = GetPlayerAnimationMappings();
 	if (!LoadObjectAnimations(obj, xDef, &animation_map))
-		return NULL;
-
-	// load the sounds
-	if (!LoadObjectSounds(obj,xDef))
-		return NULL;
-	
-	// get the object properties
-	if (!LoadObjectProperties(obj, xDef))
 		return NULL;
 
 	if (!obj->LoadPlayerProperties(xDef))
 		return NULL;
 
+	// need to do it again to catch the new animations
 	obj->SetupCachedVariables();
 
 	return obj;
 }
 
 Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
-	BounceObject* obj = new BounceObject();
-
-  if (!obj || !obj->Init(physSimulation) )
-    return NULL;
-
-  if (!LoadObjectAnimations(obj, xDef))
-    return NULL;
-
-  if (!LoadObjectProperties(obj, xDef))
-    return NULL;
 	
-	obj->SetupCachedVariables();
+	ObjectBounce* obj = new ObjectBounce();
+	LoadCommonObjectStuff(obj, xDef, xObj);
 
 	obj->properties.is_ball = 1;
 	obj->properties.is_solid = 1;
@@ -299,37 +284,34 @@ Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
 }
 
 Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
-  CollectableObject* obj = new CollectableObject();
-
-  if (!obj || !obj->Init(physSimulation) )
-    return NULL;
-
-  if (!LoadObjectSounds(obj,xDef))
-    return NULL;
-  
-  if (!LoadObjectAnimations(obj,xDef))
-    return NULL;
-  
-  if (!LoadObjectProperties(obj, xDef))
-    return NULL;
+	
+	CollectableObject* obj = new CollectableObject();
+	LoadCommonObjectStuff(obj, xDef, xObj);
 
   obj->properties.is_collectable = 1;
   obj->properties.is_ring = 1;
 
-	obj->SetupCachedVariables();
-
   return obj;
 }
 
+Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
+	
+	ObjectText* obj = new ObjectText();	
+	LoadCommonObjectStuff(obj, xDef, xObj, false);
+
+	// XXX ADD MORE STUFF XXX
+
+	obj->properties.is_overlay = 1;
+
+	return obj;
+}
+
 Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
-  ControllerObject* obj = new ControllerObject();
+ 
+ 	ObjectController* obj = new ObjectController();
+	LoadCommonObjectStuff(obj, xDef, xObj, false);
 
-  if (!obj || !obj->Init(physSimulation) )
-    return NULL;
-
-  ObjectProperties props;
-  props.is_overlay = 1;
-  obj->SetProperties(props);
+	obj->properties.is_overlay = 1;
 
   // XXX READ which controller we monitor from XML file
   // but not in this method
@@ -407,109 +389,57 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
   if (xDef.nChildNode("showDuringDemoOnly") > 0)
     obj->only_show_during_demo = true;
   
-  if (!LoadObjectProperties(obj, xDef))
-    return NULL;
-	
 	obj->SetupCachedVariables();
   
   return obj;
 }
 
 Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
-  BackgroundObject* obj = new BackgroundObject();
-  
-  if (!obj || !obj->Init(physSimulation) )
-    return NULL;
+ 
+	BackgroundObject* obj = new BackgroundObject();	
+	LoadCommonObjectStuff(obj, xDef, xObj);
 
   obj->SetXY(0,0);
-
-  if (!LoadObjectAnimations(obj,xDef) )
-    return NULL;
-  
-  if (!LoadObjectProperties(obj, xDef))
-    return NULL;
-  
-	obj->SetupCachedVariables();
 
   return obj;
 }
 
 Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
-	StaticObject* obj = new StaticObject();
-
-  if (!obj || !obj->Init(physSimulation) )
-    return NULL;
-
-  if (!LoadObjectAnimations(obj,xDef))
-    return NULL;
-
-  if (!LoadObjectProperties(obj, xDef))
-    return NULL;
 	
-	obj->SetupCachedVariables();
-
+	StaticObject* obj = new StaticObject();
+	LoadCommonObjectStuff(obj, xDef, xObj);
+	
 	return obj;
 }
 
 Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) { 
-  SpringObject* obj = new SpringObject();
-  obj->properties.spring_strength = 20; // default
-
-  if (!obj || !obj->Init(physSimulation) )
-    return NULL;
-
-  if (!LoadObjectSounds(obj,xDef))
-    return NULL;
   
-  if (!LoadObjectAnimations(obj,xDef))
-    return NULL;
-  
-  if (!LoadObjectProperties(obj, xDef))
-    return NULL;
+	SpringObject* obj = new SpringObject();
+	LoadCommonObjectStuff(obj, xDef, xObj);
 
   obj->properties.is_spring = 1;
-	
-	obj->SetupCachedVariables();
 
   return obj;
 }
 
 Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
+	
 	DoorObject* obj = new DoorObject();
-
-  if (!obj || !obj->Init(physSimulation) )
-    return NULL;
-
-  if (!LoadObjectAnimations(obj,xDef))
-    return NULL;
-
-  if (!LoadObjectProperties(obj, xDef))
-    return NULL;
+	LoadCommonObjectStuff(obj, xDef, xObj);
 
 	obj->properties.is_door = 1;
 	obj->properties.is_solid = 1;
-	
-	obj->SetupCachedVariables();
 
 	return obj;
 }
 
 Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
+	
 	FanObject* obj = new FanObject();
-
-  if (!obj || !obj->Init(physSimulation) )
-    return NULL;
-
-  if (!LoadObjectAnimations(obj,xDef))
-    return NULL;
-
-  if (!LoadObjectProperties(obj, xDef))
-    return NULL;
+	LoadCommonObjectStuff(obj, xDef, xObj);
 
 	obj->properties.is_fan = 1;
 	obj->properties.is_solid = 1;
-
-	obj->SetupCachedVariables();
 
 	return obj;
 }
@@ -617,6 +547,30 @@ bool ObjectFactory::LoadObjectSounds(Object* obj, XMLNode &xDef) {
 	return true;
 }
 
+bool ObjectFactory::LoadCommonObjectStuff(	Object* obj, 
+																						XMLNode &xDef, 
+																						XMLNode *xObj, 
+																						bool loadAnimations) {
+
+  if (!obj || !obj->Init(physSimulation) )
+    return false;
+	
+	if (!LoadObjectProperties(obj, xDef))
+		return false;	
+
+  if (!LoadObjectSounds(obj,xDef))
+    return false;
+
+	if (loadAnimations) {
+		if (!LoadObjectAnimations(obj,xDef)) {
+	    return false;
+		}
+	}
+
+	obj->SetupCachedVariables();
+
+	return true;
+}	
 
 ObjectFactory::ObjectFactory() {}
 ObjectFactory::~ObjectFactory() {} 
