@@ -28,7 +28,7 @@ void BackgroundObject::Draw() {
 
 		i += GetWidth();
 		
-	} while ( x < (int)GAMESTATE->ScreenWidth() );
+	} while ( x < (int)WINDOW->Width() );
 }
 
 bool BackgroundObject::Init(PhysSimulation *p) {

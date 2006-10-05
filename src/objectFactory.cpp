@@ -299,9 +299,11 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 	ObjectText* obj = new ObjectText();	
 	LoadCommonObjectStuff(obj, xDef, xObj, false);
 
-	// XXX ADD MORE STUFF XXX
+	obj->SetModalActive();
+	obj->SetAvatarFilename("alien.png");
 
 	obj->properties.is_overlay = 1;
+	obj->properties.is_solid = 0;
 
 	return obj;
 }

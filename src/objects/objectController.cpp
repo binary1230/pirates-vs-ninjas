@@ -57,7 +57,7 @@ void ObjectController::Update() {
 	int i, max = buttons.size();
 
 	for (i = 0; i < max && keys[i] != -1; i++) {
-		if (GAMESTATE->GetKey(keys[i], controller_num))
+		if (INPUT->Key(keys[i], controller_num))
 			buttons[i].active = 1;
 		else 
 			buttons[i].active = 0;

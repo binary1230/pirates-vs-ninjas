@@ -150,8 +150,9 @@ void PlayerObject::UpdateSkidding() {
 				objSkid->SetDisplayTime(2);
 				objSkid->SetXY(pos);
 				objSkid->SetVelXY(skid_vel_x, 0.0f);
-			
-				simulation->AddObject(objSkid, layer);
+				objSkid->SetLayer(layer);
+		
+				simulation->AddObject(objSkid);
 			}
 		}
 	}
@@ -218,8 +219,9 @@ void PlayerObject::DoCommonStuff() {
 			objBall->SetDisplayTime(200);
 			objBall->SetXY(pos);
 			objBall->SetVelXY(vel.GetX(), 0.0f);
+			objBall->SetLayer(layer);
 
-			simulation->AddObject(objBall, layer);
+			simulation->AddObject(objBall);
 		}
 	}
 }

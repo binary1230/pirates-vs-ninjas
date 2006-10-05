@@ -277,7 +277,7 @@ class Object {
 
 		bool const IsColliding(Object *obj);
 
-		inline bool IsDead() {return is_dead;};
+		inline bool IsDead() const {return is_dead;};
 
 		//! Returns a vector used for collision detection
 		//! This vector will be have a position that is guaranteed
@@ -298,6 +298,9 @@ class Object {
 		
 		Object();
 		virtual ~Object();
+
+		//! Returns true if this type of object is able to collide with another
+		static bool CanCollide(Object* obj);
 
 		friend class ObjectFactory;
 };

@@ -12,7 +12,8 @@ class ObjectFactory;
 class ForceFactory;
 class ObjectLayer;
 class OGGFILE;
-
+			
+// note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
 typedef list<Object*>::iterator ObjectListIter;
 typedef list<Object*>::reverse_iterator ObjectListReverseIter;
@@ -21,28 +22,28 @@ typedef list<Object*>::reverse_iterator ObjectListReverseIter;
 class PhysSimulation : public GameMode {
 		protected:		
 			//! ALL objects in the scene
-			// note: list is STL's doubly linked list
-			list<Object*> objects;
+			ObjectList objects;
 
 			//! Layers, which hold pointers to objects.
 			vector<ObjectLayer*> layers;
 
 			//! Collection of forces
 			vector<Force*> forces;
+
+			//! Force factory: TODO singleton
+			ForceFactory* forceFactory;
 		
-			//! Creates new objects
-			ObjectFactory *objectFactory;
-
-			//! Creates new forces
-			ForceFactory *forceFactory;
-
 			//! Temporary. Belongs in GameMusic
 			OGGFILE* music;
+
+			//! List of objects to add on next Update()
+			ObjectList objectAddList;
 
 			//! Width and height of the entire level
 			//! (usually much bigger than screen width/height)
 			int width, height;
 
+			//! Current camera XY position
 			int camera_x, camera_y;
 
 			//! Which object the camera should follow
@@ -54,15 +55,15 @@ class PhysSimulation : public GameMode {
 			float camera_scroll_speed;
 
 			//! Physics functions
-			void ResetForNextFrame();
-			void Solve();
+			void Solve(Object* obj);
+			void CheckForCollisions(ObjectList &collideableObjects, 
+															Object* obj);
+			void GetCollideableObjects(ObjectList &objs);
+			bool CleanupObject(ObjectListIter &obj);
 
 			//! Game update functions
 			void UpdateObjects();
 
-			//! Update an object, return false if we need to delete it
-			bool UpdateObject(Object* obj);
-		
 			//! Sets up simulation from an XML file
 			//XXX should be moved into a friend factory class, or something.
 			int Load(XMLNode&);
@@ -73,15 +74,34 @@ class PhysSimulation : public GameMode {
 			int LoadLayerFromXML(XMLNode&, ObjectLayer*);
 			int CreateObjectFromXML(XMLNode &xObject, ObjectLayer *layer);
 
+			//! Check and see if an object is dead and needs to be cleaned up
+			bool CheckIsDead(Object* obj);
+
 			//! ONLY used during init, temp variables for "repeat" xml tags
 			int repeater_current_x, repeater_current_y;
+
+			//! Modal object
+			//! If a modal object (e.g. on-screen text) is active
+			//! then the rest of the game pauses until it responds
+			Object* modal_active;
+			
+			//! Do the real work of adding an object to the global object list
+			void DoAddObject(Object* obj);
+		
+			void DoCleaning();
 
 		public:
 			int Init(XMLNode);
 			void Shutdown();
-			
-			void AddObject(Object* obj, ObjectLayer* layer);
 
+			void SetModalObject(Object* obj) {modal_active = obj;};
+
+			//! Add an object to the world
+			// if addImmediately is false, this goes on the objectAddList
+			// if addImmediately is true, this goes directly on the object list
+			// NOTE you CANNOT directly add objects to the world during Update()'s
+			void AddObject(	Object* obj, bool addImmediately = false);
+			
 			void Draw();
 			void Update();
 
@@ -96,11 +116,7 @@ class PhysSimulation : public GameMode {
 			
 			void TransformWorldToView(int &x, int &y);
 			void TransformViewToScreen(int &x, int &y);
-
-			void MoveObjectsToNewPositions();
-			void CheckForCollisions();
-			void GetCollideableObjects(vector<Object*> &objs);
-				
+			
 			//! Experimental: Get AI fitness score for AI traning
 			int GetAiFitnessScore();
 

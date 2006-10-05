@@ -12,12 +12,12 @@ Vector2D ForceInput::GetForce(Object* obj) {
 		return Vector2D(0,0);
 
 	// return a force based on 2 inputs.
-	if (GAMESTATE->GetKey(PLAYERKEY_LEFT, controller_num) && 
-			!GAMESTATE->GetKey(PLAYERKEY_RIGHT, controller_num)) 
+	if (INPUT->Key(PLAYERKEY_LEFT, controller_num) && 
+			!INPUT->Key(PLAYERKEY_RIGHT, controller_num)) 
 		return Vector2D(-MAGNITUDE * TIMESTEP, 0.0f);
 
-	else if (GAMESTATE->GetKey(PLAYERKEY_RIGHT, controller_num) && 
-					!GAMESTATE->GetKey(PLAYERKEY_LEFT, controller_num)) 
+	else if (INPUT->Key(PLAYERKEY_RIGHT, controller_num) && 
+					!INPUT->Key(PLAYERKEY_LEFT, controller_num)) 
 		return Vector2D( MAGNITUDE * TIMESTEP, 0.0f);
 
 	else

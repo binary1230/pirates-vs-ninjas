@@ -193,7 +193,7 @@ int GameState::InitSound() {
 
 //! Init input subsystem
 int GameState::InitInput() {
-	Input::CreateInstance();
+	INPUT->CreateInstance();
 	
 	if ( !INPUT || (INPUT->Init() == -1) ) {
 		return -1;
@@ -286,10 +286,10 @@ void GameState::MainLoop() {
 		// no matter the speed of the computer
 		while (outstanding_updates > 0 && !exit_game) {
 			Update();	// mode signals handled here
-
+	
 			if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
 				debug_pause_toggle = !debug_pause_toggle;
-
+			
 			if (debug_pause_toggle) {
 			
 				debug_update_count = outstanding_updates;
@@ -344,15 +344,18 @@ void GameState::Update() {
 
 	SOUND->Update();
 	INPUT->Update();
+
 	modes->Update();
 }
 
 //! Draw the current mode
 void GameState::Draw() {
 	if (options->DrawGraphics()) {
+		WINDOW->BeginDrawing();
 		WINDOW->Clear();
 		modes->Draw();
 		WINDOW->Flip();
+		WINDOW->EndDrawing();
 	}
 }
 
@@ -408,22 +411,6 @@ void GameState::SetRandomSeed(int val) {
 int GameState::GetRandomSeed() const { 
 	return random_seed; 
 };
-
-bool GameState::GetKey(uint which_key) const	{ 
-	return INPUT->Key(which_key); 
-};
-
-bool GameState::GetKey(uint which_key, uint which_controller) const	{ 
-	return INPUT->Key(which_key, which_controller); 
-};
-
-uint GameState::ScreenWidth() const {
-	return WINDOW->Width();
-}
-
-uint GameState::ScreenHeight() const {
-	return WINDOW->Height();
-}
 
 GameState::GameState() {
 	options = NULL;

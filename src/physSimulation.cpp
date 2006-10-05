@@ -19,6 +19,12 @@
 #include "objectPlayer.h"
 
 int PhysSimulation::Init(XMLNode xMode) {
+	modal_active = NULL;
+	music = NULL;
+	width = height = 0;
+	camera_x = camera_y = 0;
+	camera_follow = NULL;
+	camera_scroll_speed = 1.0f;
 	
 	OBJECT_FACTORY->CreateInstance();
 	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) {
@@ -34,8 +40,10 @@ int PhysSimulation::Init(XMLNode xMode) {
 		return -1;
 	}
 
+	objectAddList.clear();
 	objects.clear();
 	forces.clear();
+	layers.clear();
 	
 	return Load(xMode);
 }
@@ -43,7 +51,7 @@ int PhysSimulation::Init(XMLNode xMode) {
 //! Transforms view coordinates into absolute screen coordinates
 //! e.g. flip the Y axis mostly.
 void PhysSimulation::TransformViewToScreen(	int &x, int &y ) {
-	y = GAMESTATE->ScreenHeight() - y;
+	y = WINDOW->Height() - y;
 }
 
 //! Transforms an object's coordinates from its world coordinates
@@ -78,11 +86,11 @@ void PhysSimulation::ComputeNewCamera() {
 				
 	int ox = camera_follow->GetX();
 	int ow = camera_follow->GetWidth();
-	int sw = GAMESTATE->ScreenWidth();
+	int sw = WINDOW->Width();
 	
 	int oy = camera_follow->GetY();
 	int oh = camera_follow->GetHeight();
-	int sh = GAMESTATE->ScreenHeight();
+	int sh = WINDOW->Height();
 	
 	camera_x = CAM_MOVE_TO_CENTER(camera_x, ox, ow, sw);
 	camera_y = CAM_MOVE_TO_CENTER(camera_y, oy, oh, sh);
@@ -114,6 +122,14 @@ void PhysSimulation::Shutdown() {
 		(*iter) = NULL;
 	}
 	objects.clear();
+	
+	// delete all the objects
+	for (iter = objectAddList.begin(); iter != objectAddList.end(); iter++) {
+		(*iter)->Shutdown();
+		delete (*iter);
+		(*iter) = NULL;
+	}
+	objectAddList.clear();
 
 	// delete all the forces
 	max = forces.size();
@@ -145,50 +161,72 @@ void PhysSimulation::Draw() {
 	for (i = 0; i < max; i++) {
 		layers[i]->Draw();
 	}
-
-	
 }
 
 #define CLEAR_SCREEN_STRING "\033[H\033[J\r\n"
 
-//! Reset all objects for the next frame
-void PhysSimulation::ResetForNextFrame() {
-	ObjectListIter iter;
+// Returns true if we deleted the object
+// Returns false if the Object is still valid
+bool PhysSimulation::CleanupObject(ObjectListIter &iter) {
+	ObjectListIter erased;
+	Object* obj = *iter;
 
-	int debug = GAMESTATE->GetGameOptions()->GetDebugMessageLevel();
+	assert(obj != NULL);
 
-	if (debug)
-		fprintf(stderr, CLEAR_SCREEN_STRING);
+	// if it's dead _after_ the update, clean it up
+	if (obj->IsDead()) {
+		
+		if (modal_active == obj)
+			modal_active = NULL;
 
-	for (iter = objects.begin(); iter != objects.end(); iter++) {
-		(*iter)->ResetForNextFrame();
+		// Delete ths object.
+		obj->Shutdown();
+		delete obj; 
+
+		// Delete the object's place in the list
+		/**iter = NULL;
+		erased = iter;
+		iter++;
+		objects.erase(erased);
+		iter--;
+		
+		erased = iter;
+		iter++;*/
+
+		//objects.erase(iter);
+		//++iter;
+
+		// SANITY CHECK
+		if (obj == camera_follow) {
+			assert(0 && "ERROR: CheckIsDead(): Deleted camera object!!");
+			camera_follow = NULL;
+		}
+		
+		return true;
 	}
+
+	return false;
 }
 
 //! Solve for next frame
-void PhysSimulation::Solve() {
-	ObjectListIter iter;
-	int j, max;
+void PhysSimulation::Solve(Object *obj) {
 	
-	max = forces.size();
+	assert(obj != NULL);
+	int j, max = forces.size();
 
 	// apply each force to the object
-	for (iter = objects.begin(); iter != objects.end(); iter++) {
-		for (j = 0; j < max; j++) {
-			(*iter)->ApplyForce(forces[j]);
-		}
+	for (j = 0; j < max; j++) {
+		obj->ApplyForce(forces[j]);
 	}
 }
 
-void PhysSimulation::GetCollideableObjects(vector<Object*> &objs) {
+void PhysSimulation::GetCollideableObjects(ObjectList &objs) {
 	ObjectListIter iter;
 	objs.clear();
 
 	// optimization: only allow collisions on certain layers?
-
 	for (iter = objects.begin(); iter != objects.end(); iter++) {
-		if (	(*iter)->GetProperties().is_solid || 
-					(*iter)->GetProperties().is_collectable)
+		if (Object::CanCollide(*iter))
 			objs.push_back(*iter);
 	}
 }
@@ -196,103 +234,141 @@ void PhysSimulation::GetCollideableObjects(vector<Object*> &objs) {
 
 // TODO: probably a BIG source of CPU here.
 // probably need to optimize, but PROFILE to find out.
-void PhysSimulation::CheckForCollisions() {
+void PhysSimulation::CheckForCollisions(	ObjectList &collideableObjects, 
+																					Object* obj) {
+	assert(obj != NULL);
 
-	vector<Object*> objs;
 	Object* target;
-
-	GetCollideableObjects(objs);
-	
-	int i, j, max = objs.size();
-	
-	for (i = 0; i < max; i++) {
-		if (	objs[i]->GetProperties().is_player || 
-					objs[i]->GetProperties().is_ball ) {
-			
-			target = objs[i];
-
-			for (j = 0; j < max; j++) {
-				if (	objs[j] != target && 
-							(	objs[j]->GetProperties().is_solid || 
-								objs[j]->GetProperties().is_collectable ) &&
-								objs[j]->IsColliding(target)) {
-
-					objs[j]->Collide(target);
-					target->Collide(objs[j]);
-				}
-			}
-		}
-	}	
-}
-
-//! Move all objects to newly computed positions.
-//! NO COLLISION DETECTION HAPPENS YET
-void PhysSimulation::MoveObjectsToNewPositions() {			
 	ObjectListIter iter;
-	for (iter = objects.begin(); iter != objects.end(); iter++) {
-		(*iter)->MoveToNewPosition();
+
+	// Don't bother to check if we can't be collided with.
+	if (!Object::CanCollide(obj))
+		return;
+	
+	// Loop over all collectable objects, see if we collide with any
+	for (	iter = collideableObjects.begin(); 
+				iter != collideableObjects.end(); 
+				iter++) {
+
+		target = *iter;
+
+		// Skip ourselves
+		if (target == obj)
+			continue;
+
+		if (target->IsColliding(obj)) {
+			target->Collide(obj);
+			obj->Collide(target);
+		}
 	}
 }
 
-//! Update a specific object
-//! Returns true if we need to delete it afterwards
-bool PhysSimulation::UpdateObject(Object* obj) {
+bool ObjectDeadCriteria(const Object* obj) {
+	return obj->IsDead();
+}
 
-	// if it's not dead, update it
-	if (!obj->IsDead()) {
-		obj->Update();
-	} 
+// A generic template to delete a collection of pointers
+/*void objects_purge(ObjectListIter begin, ObjectListIter end)
+{
+}*/
 
-	// if it's dead _after_ the update, clean it up
-	if (obj->IsDead()) {
-		obj->Shutdown();
-		delete obj; 
-		obj = NULL;
-		return false;
+void PhysSimulation::DoCleaning() {
+	ObjectListIter last;
+	
+	// Remove these elements
+	last = partition(objects.begin(), objects.end(), ObjectDeadCriteria);
+
+	// delete the pointers
+	for (ObjectListIter i = last; i != objects.end(); ++i) {
+		if (modal_active == (*i))
+			modal_active = NULL;
+
+		(*i)->Shutdown();
+		delete (*i);
 	}
 
-	return true;
+	// remove the items from the list
+	objects.erase(last, objects.end());
 }
 
 //! Update all objects
 void PhysSimulation::UpdateObjects() {
-	ObjectListIter iter, erased;
+	ObjectList collideableObjects;
+	ObjectListIter iter;
 	Object* obj;
 
+	static int ucount = 0;
+	ucount++;
+	
+	fprintf(stderr, "starting update %i\n", ucount);
+
+	// Add any New Objects
+	for (iter = objectAddList.begin(); iter != objectAddList.end(); iter++) {
+		obj = *iter;
+		assert(obj != NULL);
+		DoAddObject(obj);
+	}
+	
+	DoCleaning();
+
+	// Cleanup Dead Objects
+	/*for (iter = last; iter != objects.end(); iter++) {
+		assert(*iter != NULL);
+		CleanupObject(iter);
+	}*/
+	
+	fprintf(stderr, "mid update %i\n", ucount);
+
+	// Get collideable objects
+	GetCollideableObjects(collideableObjects);
+	
+	fprintf(stderr, "mid2 update %i\n", ucount);
+
+	// Do the physics simulation + update
 	for (iter = objects.begin(); iter != objects.end(); iter++) {
 		obj = *iter;
+		assert(obj != NULL);
 
-		// if UpdateObject was false, we need to remove this from the list
-		if (obj && !UpdateObject(obj)) {
-			erased = iter++;
-			objects.erase(erased);
+		// If there is a 'modal' object, then don't update anything
+		// EXCEPT that. (usually text boxes/etc)
+		if (!modal_active) {
+			obj->ResetForNextFrame();				// oldpos = current_pos
+			Solve(obj);											// Applies forces
+			obj->MoveToNewPosition();
+			CheckForCollisions(collideableObjects, obj);		// newpos = oldpos
 		}
+ 
+		if (!modal_active || obj == modal_active)
+			obj->Update();
 	}
+	
+	fprintf(stderr, "end update %i\n", ucount);
 }
 
 //! Master update for the Physics simulation
 void PhysSimulation::Update() {
-	
+
 	// If they pressed the 'exit' key (typically ESCAPE)
 	// Then end the physics simulation
 	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
-		
 		// use one or the other, SignalGameExit() is "right"
-    // GetGameState()->SignalGameExit();
-    GAMESTATE->SignalEndCurrentMode();
-    
+		// SignalEndCurrentMode() goes to the next level.
+
+    // GAMESTATE->SignalGameExit();			// for real
+    GAMESTATE->SignalEndCurrentMode(); 	// for debugging
 		return;
 	}
-	
-	// Do the physics simulation
-	ResetForNextFrame();					// oldpos = current_pos
-	Solve();											// Applies forces
-	MoveObjectsToNewPositions();	// newpos
-	CheckForCollisions();					// newpos = oldpos
-	UpdateObjects();
+
+	// If something modal is active, do NOT do physics stuff, 
+	// just update this ONE object.
+	//if (modal_active) {
+		//modal_active->Update();
+		//fprintf(stderr, "modal done!\n");
+		//return;
+	//}
 		
-	// Calc where to put the camera now
-	ComputeNewCamera();
+	UpdateObjects();
+	ComputeNewCamera();						// Calc where to put the camera now
 }
 
 //! MASTER LOAD FUNCTION:
@@ -300,6 +376,7 @@ void PhysSimulation::Update() {
 int PhysSimulation::Load(XMLNode &xMode) {			
 
 	objects.clear();
+	objectAddList.clear();
 	forces.clear();
 	if (LoadHeaderFromXML(xMode) == -1 ||
 			LoadObjectsFromXML(xMode) == -1 ||
@@ -542,6 +619,8 @@ int PhysSimulation::LoadObjectFromXML(
 		return -1;
 	} else {
 
+		obj->SetLayer(layer);
+
 		// if we have a <cameraFollow>, then we follow this object
 		if (xObject.nChildNode("cameraFollow") == 1) {
 			if (!camera_follow) {
@@ -732,15 +811,28 @@ int PhysSimulation::LoadObjectFromXML(
 		}
 
 		// Everything loaded OK, now we add it to the simulation
-		AddObject(obj, layer);
+		DoAddObject(obj);
 	}
 
 	return 0;
 }
 
-void PhysSimulation::AddObject(Object* obj, ObjectLayer* layer) {
+void PhysSimulation::AddObject(	Object* obj, bool addImmediately) {
+	assert(obj != NULL);
+	assert(obj->GetLayer() != NULL);
+
+	if (addImmediately) {
+		DoAddObject(obj);
+	} else {
+		objectAddList.push_back(obj);
+	}
+}
+
+void PhysSimulation::DoAddObject(Object* obj) {
+	assert(obj != NULL);
+	assert(obj->GetLayer() != NULL);
 	objects.push_front(obj);
-	layer->AddObject(obj);
+	obj->GetLayer()->AddObject(obj);
 }
 
 // loads the forces from the XML file
@@ -774,6 +866,7 @@ int PhysSimulation::GetAiFitnessScore() {
 	ObjectListIter iter;
 	
 	for (iter = objects.begin(); iter != objects.end(); iter++) {
+		assert(*iter != NULL);
 		if (	(*iter)->GetProperties().is_player ) {
 			PlayerObject* player = (PlayerObject*)(*iter);
 			return player->GetNumRings();
@@ -784,7 +877,5 @@ int PhysSimulation::GetAiFitnessScore() {
 }
 #endif // AI_TRAINING
 
-PhysSimulation::PhysSimulation() : objects(0), forces(0) {
-	camera_scroll_speed = 1.0f;
-}
+PhysSimulation::PhysSimulation() {}
 PhysSimulation::~PhysSimulation() {}

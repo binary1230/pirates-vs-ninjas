@@ -13,7 +13,13 @@ class ObjectText : public Object {
 	protected:
 		Sprite* avatar_sprite;
 		CString text;
-		
+
+		int box_color; 
+		int box_margin; 
+		int box_height; 
+
+		bool is_modal;
+
 	public:
 		bool Init(PhysSimulation *p);
 		
@@ -21,6 +27,9 @@ class ObjectText : public Object {
 
 		void Update();
 		void Draw();
+
+		bool SetAvatarFilename(CString file);
+		void SetModalActive(bool state = true);
 
 		int GetWidth();		// need to override, default ones grab the animation
 		int GetHeight();

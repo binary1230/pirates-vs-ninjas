@@ -60,7 +60,6 @@ void Object::SetupCachedVariables() {
 }
 
 void Object::UpdateFade() {
-	
 }
 
 void Object::FadeOut(int time) {
@@ -78,6 +77,9 @@ bool Object::BaseInit() {
 	old_pos = pos;
 	display_time = -1;
 	width = height = 0;
+	controller_num = 0;
+	level_width = 0;
+	level_height = 0;
 	return true;
 }
 
@@ -228,6 +230,19 @@ Vector2D Object::Solve() {
 	}*/
 
 	return pos;
+}
+
+// static: Returns true if this type of object is able to collide with anything
+bool Object::CanCollide(Object* obj) { 
+	assert(obj != NULL);
+	return 	obj->properties.is_solid ||
+					obj->properties.is_player || 
+					obj->properties.is_spring ||
+					obj->properties.is_collectable || 
+					obj->properties.is_fan ||
+					obj->properties.is_door ||
+					obj->properties.is_ring ||
+					obj->properties.is_ball;
 }
 
 void Object::Shutdown() {

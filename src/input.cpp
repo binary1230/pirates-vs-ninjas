@@ -6,7 +6,7 @@
 // Default (hardcoded) key mappings
 // - - - - - - - - - - - - - - - - - - 
 
-// Player 1 default game keys (total count must = PLAYER_KEYS_COUNT)
+// Player 1 default game keys (total count must = PLAYERKEY_COUNT)
 #define DEFAULT_PLAYERKEY_P1_JUMP			KEY_C
 #define DEFAULT_PLAYERKEY_P1_LEFT			KEY_LEFT
 #define DEFAULT_PLAYERKEY_P1_RIGHT 		KEY_RIGHT
@@ -48,10 +48,15 @@ void Input::ClearKeys(vector<int> &key_buffer) {
 int Input::ResolveControllerKey(uint gameKey, uint controller_number) {
 	assert(controller_number >= 0 && controller_number < GAMEKEY_COUNT);
 
-	if (!controller_number)
-		return gameKey;
-	else 
-		return gameKey + ((controller_number - 1) * PLAYERKEY_COUNT);
+	int outKey = gameKey;
+
+	if (controller_number > 0)
+		outKey = gameKey + ((controller_number - 1) * PLAYERKEY_COUNT);
+
+	assert(outKey >= 0);
+	assert(outKey < GAMEKEY_COUNT);
+
+	return outKey;
 }
 
 // REMEMBER, controller numbers start at 1
@@ -67,17 +72,30 @@ bool Input::Key(uint gameKey, uint controller_number) {
 //! Can be used to make sure that a player is pressing and releasing
 //! a key, instead of just holding it down.  Make sure to call HandleKeyOnce()
 //! to update this appropriately.
-bool Input::CheckKeyOnce(uint gameKey, uint controller_number) {
-	int i = ResolveControllerKey(gameKey, controller_number);
-	if (released_key[i] && game_key[i])
+bool Input::CheckKeyOnce(uint playerKey, uint controller_number) {
+	
+	if (controller_number > 0) {
+		assert(playerKey >= 0);
+		assert(playerKey < PLAYERKEY_COUNT);
+	}
+
+	int gameKey = ResolveControllerKey(playerKey, controller_number);
+
+	if (released_key[gameKey] && game_key[gameKey])
 		return true;
 	else 
 		return false;
 }
 
-void Input::HandleKeyOnce(uint gameKey, uint controller_number) {
-	int i = ResolveControllerKey(gameKey, controller_number);
-	released_key[i] = false;
+void Input::HandleKeyOnce(uint playerKey, uint controller_number) {
+	
+	if (controller_number > 0) {
+		assert(playerKey >= 0);
+		assert(playerKey < PLAYERKEY_COUNT);
+	}
+	
+	int gameKey = ResolveControllerKey(playerKey, controller_number);
+	released_key[gameKey] = false;
 }
 
 bool Input::KeyOnce(uint gameKey, uint controller_number) {
@@ -350,6 +368,10 @@ void Input::Shutdown() {
 }
 
 void Input::Update() {
+
+	poll_mouse();
+	poll_keyboard();
+
 	switch (type) {
 		case INPUT_RECORDED:
 			UpdateRecord();

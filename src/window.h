@@ -84,10 +84,20 @@ class Window {
 		void BlitBitmap(  BITMAP* bmp, int source_x, int source_y, 
 											int dest_x, int dest_y, int width, int height);
 
-		//! Debug only - draw a bounding rectangle
+		//! Draw text at specified XY
+		void DrawText(int x, int y, CString text);
+
+		//! Draw a solid rectange
 		void DrawRect(_Rect &r, int col);
+		void DrawRect(int x1, int y1, int x2, int y2, int color);
+
+		//! Draw a filled rectangle
+		void DrawFillRect(int x1, int y1, int x2, int y2, int color);
 
 		inline void SetClearColor(int col) {clear_color = col;};
+
+		void BeginDrawing();
+		void EndDrawing();
 
 		//! Take a screenshot, call after Draw()
 		//! Leave the filename NULL to use an automatic one

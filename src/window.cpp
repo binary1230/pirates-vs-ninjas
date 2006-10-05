@@ -5,7 +5,11 @@
 #include "sprite.h"
 #include "gameOptions.h"
 
-#define DEFAULT_COLOR_DEPTH 16
+// #define DEFAULT_COLOR_DEPTH 16
+#define DEFAULT_COLOR_DEPTH desktop_color_depth()
+
+// leave this undefined usually.
+// #define ALTERNATE_GFX_MODE GFX_XDGA2
 
 DECLARE_SINGLETON(Window)
 
@@ -55,15 +59,28 @@ void Window::DrawBitmap(	BITMAP* bmp, int x, int y,
 }
 
 void Window::DrawRect(_Rect &r, int col) {
-	rect(drawing_surface, 
-									(int)r.getx1(), 
-									(int)r.gety1(), 
-									(int)r.getx2(), 
-									(int)r.gety2(), 
-									col);
+	rect(	drawing_surface, 
+				(int)r.getx1(), 
+				(int)r.gety1(), 
+				(int)r.getx2(), 
+				(int)r.gety2(), 
+				col);
 }
 
-// private: only
+void Window::DrawRect(int x1, int y1, int x2, int y2, int col) {
+	rect(drawing_surface, x1, y1, x2, y2, col);
+}
+
+void Window::DrawFillRect(int x1, int y1, int x2, int y2, int col) {
+	rectfill(drawing_surface, x1, y1, x2, y2, col);
+}
+
+void Window::DrawText(int x, int y, CString text) {
+	textout_ex(	drawing_surface, font, text.c_str(), 
+							x, y, makecol(255,255,255), -1);
+}
+
+// private internal method only
 void Window::DrawBitmapAt(	BITMAP* bmp, int x, int y, 
 														bool flip_x, bool flip_y, 
 														bool use_alpha, int alpha) {
@@ -129,6 +146,10 @@ int Window::Init( uint _width, uint _height,
 	else
 			gfx_mode = GFX_AUTODETECT_WINDOWED;
 
+#	ifdef ALTERNATE_GFX_MODE
+	gfx_mode = ALTERNATE_GFX_MODE;
+# endif // ALTERNATE_GFX_MODE
+
 	if (mode == MODE_PAGEFLIPPING || mode == MODE_TRIPLEBUFFERING)
 		vheight = height * 2;
 	else 
@@ -140,8 +161,9 @@ int Window::Init( uint _width, uint _height,
 	if (set_gfx_mode(gfx_mode, width, height, 0, vheight) != 0) {
 		fprintf(stderr, 
 						"window: Can't set graphics mode! (%i, %i, fullscreen = %i) \n"
-						"Try setting a different graphics mode or try non-fullscreen\n",
-						width, height, _fullscreen);
+						"Try setting a different graphics mode or try non-fullscreen\n"
+						"Allegro error says: '%s'\n",
+						width, height, _fullscreen, allegro_error);
 		return -1;
 	}
 	
@@ -205,6 +227,14 @@ void Window::Clear() {
 		default:
 			fprintf(stderr, "ERROR: Unkown buffering mode %u\n", mode);
 	}
+}
+
+void Window::BeginDrawing() {
+	acquire_screen();
+}
+
+void Window::EndDrawing() {
+	release_screen();
 }
 
 // draws the backbuffer to the screen and erases the backbuffer

@@ -5,6 +5,7 @@
 
 void ObjectLayer::Draw() {
 	ObjectListReverseIter rev_iter;
+	Object* obj;
 
 	// set scroll speed for this layer
 	simulation->SetCameraScrollSpeed(scroll_speed);
@@ -12,13 +13,16 @@ void ObjectLayer::Draw() {
 	// ORDER IS IMPORTANT
 	// we draw starting at the end, going to the beginning
 	// things at the end were put there FIRST to be drawn FIRST.
-	for (rev_iter = objects.rbegin(); rev_iter != objects.rend(); rev_iter++)
-		(*rev_iter)->Draw();
+	for (rev_iter = objects.rbegin(); rev_iter != objects.rend(); rev_iter++) {
+		obj = *rev_iter;
+
+		if (!obj->IsDead())
+			obj->Draw();
+	}
 }
 
 void ObjectLayer::AddObject(Object* obj) {
 	objects.push_front(obj);
-	obj->SetLayer(this);
 }
 
 // Does not free any memory, just removes from our list

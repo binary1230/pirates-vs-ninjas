@@ -114,19 +114,6 @@ class GameState {
 		//! Returns true if we are playing back a demo
 		bool IsPlayingBackDemo() {return is_playing_back_demo;};
 
-		//! Returns true if the given key is being pressed, false otherwise
-		bool GetKey(uint which_key) const;
-
-		//! Returns true if the given key is being pressed 
-		//! on a given controller, false otherwise
-		bool GetKey(uint which_key, uint which_controller) const;
-	
-		//! Return screen width
-		uint ScreenWidth()  const;
-		
-		//! Return screen height
-		uint ScreenHeight() const;
-
 		//! Unconditionally exit game
 		void SignalGameExit();
 		
