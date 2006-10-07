@@ -293,8 +293,8 @@ class Object {
 		//! Plays a sound, or does nothing if that sound is not loaded
 		void PlaySound(CString name);
 
-		ObjectLayer* GetLayer() {return layer;};
-		void SetLayer(ObjectLayer* l) {layer = l;};
+		ObjectLayer* const GetLayer() const {return layer;};
+		void SetLayer(ObjectLayer* const l) {layer = l;};
 		
 		Object();
 		virtual ~Object();

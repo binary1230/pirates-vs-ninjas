@@ -69,10 +69,10 @@ class PhysSimulation : public GameMode {
 			int Load(XMLNode&);
 			int LoadHeaderFromXML(XMLNode&);
 			int LoadObjectsFromXML(XMLNode&);
-			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer*);
+			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer* const);
 			int LoadForcesFromXML(XMLNode&);
-			int LoadLayerFromXML(XMLNode&, ObjectLayer*);
-			int CreateObjectFromXML(XMLNode &xObject, ObjectLayer *layer);
+			int LoadLayerFromXML(XMLNode&, ObjectLayer* const);
+			int CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const);
 
 			//! Check and see if an object is dead and needs to be cleaned up
 			bool CheckIsDead(Object* obj);
@@ -101,6 +101,9 @@ class PhysSimulation : public GameMode {
 			// if addImmediately is true, this goes directly on the object list
 			// NOTE you CANNOT directly add objects to the world during Update()'s
 			void AddObject(	Object* obj, bool addImmediately = false);
+
+			//! Delete an object from it's layer
+			void DeleteObjectFromLayer(Object* obj);
 			
 			void Draw();
 			void Update();

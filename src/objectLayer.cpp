@@ -13,8 +13,10 @@ void ObjectLayer::Draw() {
 	// ORDER IS IMPORTANT
 	// we draw starting at the end, going to the beginning
 	// things at the end were put there FIRST to be drawn FIRST.
-	for (rev_iter = objects.rbegin(); rev_iter != objects.rend(); rev_iter++) {
+	for (rev_iter = objects.rbegin(); rev_iter != objects.rend(); ++rev_iter) {
 		obj = *rev_iter;
+
+		assert(obj != NULL);
 
 		if (!obj->IsDead())
 			obj->Draw();
@@ -28,12 +30,14 @@ void ObjectLayer::AddObject(Object* obj) {
 // Does not free any memory, just removes from our list
 // This is a bit silly... layers need rethinking.
 void ObjectLayer::RemoveObject(Object* obj) {
+	assert(obj != NULL);
 	ObjectListIter iter = find(objects.begin(), objects.end(), obj);
 
 	if (iter != objects.end())
 		objects.erase(iter);
 	else
-		fprintf(stderr, " WARN: memmgmt: asked to remove an object that's not here.\n");
+		fprintf(stderr, " WARN: ObjectLayer: asked to remove an"
+										" object which isn't on this layer.\n");
 }
 
 bool ObjectLayer::Init(PhysSimulation* p) {

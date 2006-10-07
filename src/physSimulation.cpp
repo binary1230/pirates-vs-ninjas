@@ -167,7 +167,7 @@ void PhysSimulation::Draw() {
 
 // Returns true if we deleted the object
 // Returns false if the Object is still valid
-bool PhysSimulation::CleanupObject(ObjectListIter &iter) {
+/*bool PhysSimulation::CleanupObject(ObjectListIter &iter) {
 	ObjectListIter erased;
 	Object* obj = *iter;
 
@@ -184,14 +184,14 @@ bool PhysSimulation::CleanupObject(ObjectListIter &iter) {
 		delete obj; 
 
 		// Delete the object's place in the list
-		/**iter = NULL;
+		*iter = NULL;
 		erased = iter;
 		iter++;
 		objects.erase(erased);
 		iter--;
 		
 		erased = iter;
-		iter++;*/
+		iter++;
 
 		//objects.erase(iter);
 		//++iter;
@@ -206,7 +206,7 @@ bool PhysSimulation::CleanupObject(ObjectListIter &iter) {
 	}
 
 	return false;
-}
+}*/
 
 //! Solve for next frame
 void PhysSimulation::Solve(Object *obj) {
@@ -263,32 +263,39 @@ void PhysSimulation::CheckForCollisions(	ObjectList &collideableObjects,
 	}
 }
 
-bool ObjectDeadCriteria(const Object* obj) {
+static bool ObjectIsDead(Object* obj) {
+	assert(obj != NULL);
 	return obj->IsDead();
 }
 
-// A generic template to delete a collection of pointers
-/*void objects_purge(ObjectListIter begin, ObjectListIter end)
-{
-}*/
-
 void PhysSimulation::DoCleaning() {
-	ObjectListIter last;
+	Object* obj;
 	
-	// Remove these elements
-	last = partition(objects.begin(), objects.end(), ObjectDeadCriteria);
+	ObjectListIter iter, erased;
+	iter = find_if(objects.begin(), objects.end(), ObjectIsDead);
+	
+	while (iter != objects.end()) {
+		obj = *iter;
+		assert(obj != NULL);
 
-	// delete the pointers
-	for (ObjectListIter i = last; i != objects.end(); ++i) {
-		if (modal_active == (*i))
+		if (modal_active == obj)
 			modal_active = NULL;
 
-		(*i)->Shutdown();
-		delete (*i);
-	}
+		if (obj == camera_follow) {
+			assert(0 && "ERROR: CheckIsDead(): Deleted camera object!!");
+			camera_follow = NULL;
+		}
 
-	// remove the items from the list
-	objects.erase(last, objects.end());
+		obj->Shutdown();
+		delete obj;
+		*iter = NULL;
+
+		erased = iter;
+		++iter;
+		objects.erase(erased);
+	
+		iter = find_if(iter, objects.end(), ObjectIsDead);
+	}
 }
 
 //! Update all objects
@@ -297,33 +304,20 @@ void PhysSimulation::UpdateObjects() {
 	ObjectListIter iter;
 	Object* obj;
 
-	static int ucount = 0;
-	ucount++;
-	
-	fprintf(stderr, "starting update %i\n", ucount);
-
 	// Add any New Objects
 	for (iter = objectAddList.begin(); iter != objectAddList.end(); iter++) {
 		obj = *iter;
 		assert(obj != NULL);
 		DoAddObject(obj);
 	}
-	
-	DoCleaning();
 
-	// Cleanup Dead Objects
-	/*for (iter = last; iter != objects.end(); iter++) {
-		assert(*iter != NULL);
-		CleanupObject(iter);
-	}*/
-	
-	fprintf(stderr, "mid update %i\n", ucount);
+	objectAddList.clear();
+
+	DoCleaning();
 
 	// Get collideable objects
 	GetCollideableObjects(collideableObjects);
 	
-	fprintf(stderr, "mid2 update %i\n", ucount);
-
 	// Do the physics simulation + update
 	for (iter = objects.begin(); iter != objects.end(); iter++) {
 		obj = *iter;
@@ -331,18 +325,16 @@ void PhysSimulation::UpdateObjects() {
 
 		// If there is a 'modal' object, then don't update anything
 		// EXCEPT that. (usually text boxes/etc)
-		if (!modal_active) {
+		//if (!modal_active) {
 			obj->ResetForNextFrame();				// oldpos = current_pos
 			Solve(obj);											// Applies forces
 			obj->MoveToNewPosition();
 			CheckForCollisions(collideableObjects, obj);		// newpos = oldpos
-		}
+		//}
  
-		if (!modal_active || obj == modal_active)
+		// if (!modal_active || obj == modal_active)
 			obj->Update();
 	}
-	
-	fprintf(stderr, "end update %i\n", ucount);
 }
 
 //! Master update for the Physics simulation
@@ -486,6 +478,8 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 		xLayer = xMap.getChildNode("layer", &iterator);
 		
 		ObjectLayer* layer = new ObjectLayer();
+		assert(layer != NULL);
+
 		layer->Init(this);
 		layers.push_back(layer);
 		
@@ -504,7 +498,7 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 }
 
 // Creates an instance of an object on the specified layer 
-int PhysSimulation::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* layer) {
+int PhysSimulation::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
 
 		// get the object definition name
 		CString objDefName = xObject.getAttribute("objectDef");
@@ -529,7 +523,7 @@ int PhysSimulation::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* layer) {
 }
 
 //! Parse XML info from a <layer> block
-int PhysSimulation::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* layer) {
+int PhysSimulation::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 
 	int i, iterator, max;
 	XMLNode xObject;
@@ -608,7 +602,7 @@ int PhysSimulation::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* layer) {
 int PhysSimulation::LoadObjectFromXML(
 								XMLNode &xObjectDef,
 								XMLNode &xObject,
-								ObjectLayer* layer) {
+								ObjectLayer* const layer) {
 
 	int x,y;
 
@@ -831,6 +825,7 @@ void PhysSimulation::AddObject(	Object* obj, bool addImmediately) {
 void PhysSimulation::DoAddObject(Object* obj) {
 	assert(obj != NULL);
 	assert(obj->GetLayer() != NULL);
+
 	objects.push_front(obj);
 	obj->GetLayer()->AddObject(obj);
 }
