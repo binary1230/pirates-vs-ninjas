@@ -296,14 +296,27 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 
 Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 	
+	CString txt, avatar;
 	ObjectText* obj = new ObjectText();	
 	LoadCommonObjectStuff(obj, xDef, xObj, false);
 
+	// Really, shouldn't set this.
 	obj->SetModalActive();
-	obj->SetAvatarFilename("alien.png");
 
 	obj->properties.is_overlay = 1;
 	obj->properties.is_solid = 0;
+
+	if (!xObj) 
+		return obj;
+
+	if (xObj->nChildNode("text"))
+		txt = xObj->getChildNode("text").getText();
+
+	if (xObj->nChildNode("avatar"))
+		avatar = xObj->getChildNode("avatar").getText();
+	
+	obj->SetText(txt);
+	obj->SetAvatarFilename(avatar);
 
 	return obj;
 }

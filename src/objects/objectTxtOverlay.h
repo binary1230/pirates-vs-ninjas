@@ -31,6 +31,8 @@ class ObjectText : public Object {
 		bool SetAvatarFilename(CString file);
 		void SetModalActive(bool state = true);
 
+		void SetText(CString txt);
+
 		int GetWidth();		// need to override, default ones grab the animation
 		int GetHeight();
 

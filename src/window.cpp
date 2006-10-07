@@ -75,9 +75,39 @@ void Window::DrawFillRect(int x1, int y1, int x2, int y2, int col) {
 	rectfill(drawing_surface, x1, y1, x2, y2, col);
 }
 
+// HACK HACK HACK - get this from somewhere!!
+#define FONT_HEIGHT 10
+
+static void StringSplit(CString str, CString delim, vector<CString> &results) {
+	uint cutAt;
+	results.clear();
+	while( (cutAt = str.find_first_of(delim)) != str.npos ) {
+		if(cutAt > 0) {
+			results.push_back(str.substr(0,cutAt));
+		}
+
+		str = str.substr(cutAt+1);
+	}
+	
+	if(str.length() > 0)	{
+		results.push_back(str);
+	}
+}
+
 void Window::DrawText(int x, int y, CString text) {
-	textout_ex(	drawing_surface, font, text.c_str(), 
-							x, y, makecol(255,255,255), -1);
+
+	vector<CString> lines;
+	StringSplit(text, "|", lines);
+	int i, max = lines.size();
+
+	int _x = x;
+	int _y = y;
+
+	for (i = 0; i < max; i++) {
+		textout_ex(	drawing_surface, font, lines[i].c_str(), 
+								_x, _y, makecol(255,255,255), -1);
+		_y += FONT_HEIGHT;
+	}
 }
 
 // private internal method only

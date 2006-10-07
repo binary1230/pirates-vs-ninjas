@@ -26,17 +26,27 @@ void ObjectText::Draw() {
 	const int box_x2 = WINDOW->Width() - (box_margin * 2);
 	const int box_y2 = WINDOW->Height() - box_margin;
 
+	int txt_x;
+	int txt_y;
+
 	/* draw underlying box */
 	WINDOW->DrawFillRect(	box_x1,	box_y1, 
 												box_x2,	box_y2,
 												box_color);
 
-	/* draw avatar */
-	WINDOW->DrawSprite(avatar_sprite, box_x1, box_y1);
+	// - draw avatar -
+	if (avatar_sprite)
+		WINDOW->DrawSprite(avatar_sprite, box_x1, box_y1);
 
-	/* draw text */
-	WINDOW->DrawText(	box_x1 + box_margin + avatar_sprite->bmp->w, 
-										box_y1 + box_margin, text);
+	// - draw text -
+	txt_x = box_x1 + box_margin;
+	txt_y = box_y1 + box_margin;
+
+	if (avatar_sprite && avatar_sprite->bmp)
+		txt_x += avatar_sprite->bmp->w;
+
+	if (text.length() > 0)
+		WINDOW->DrawText(txt_x, txt_y, text);
 }
 
 void ObjectText::Update() {
@@ -49,6 +59,14 @@ void ObjectText::Update() {
 			SetModalActive(false);
 			is_dead = true;
 		}
+	}
+}
+
+void ObjectText::SetText(CString txt) {
+	text = txt;
+	
+	if (text.length() <= 0) {
+		text = "-INVALID TEXT-";
 	}
 }
 
@@ -68,12 +86,16 @@ bool ObjectText::Init(PhysSimulation *p) {
 	box_margin 	= DEFAULT_BOX_MARGIN;
 	box_color		=	DEFAULT_BOX_COLOR;
 	box_height	= DEFAULT_BOX_HEIGHT;
-	text = "TEST: All your base are belong to us.";
+	SetText("");
+	SetAvatarFilename("");
 
 	return BaseInit();
 }
 
 bool ObjectText::SetAvatarFilename(CString file) {
+	if (file.length() <= 0)
+		return false;
+
 	if (!avatar_sprite)
 		avatar_sprite = new Sprite();
 
