@@ -165,49 +165,6 @@ void PhysSimulation::Draw() {
 
 #define CLEAR_SCREEN_STRING "\033[H\033[J\r\n"
 
-// Returns true if we deleted the object
-// Returns false if the Object is still valid
-/*bool PhysSimulation::CleanupObject(ObjectListIter &iter) {
-	ObjectListIter erased;
-	Object* obj = *iter;
-
-	assert(obj != NULL);
-
-	// if it's dead _after_ the update, clean it up
-	if (obj->IsDead()) {
-		
-		if (modal_active == obj)
-			modal_active = NULL;
-
-		// Delete ths object.
-		obj->Shutdown();
-		delete obj; 
-
-		// Delete the object's place in the list
-		*iter = NULL;
-		erased = iter;
-		iter++;
-		objects.erase(erased);
-		iter--;
-		
-		erased = iter;
-		iter++;
-
-		//objects.erase(iter);
-		//++iter;
-
-		// SANITY CHECK
-		if (obj == camera_follow) {
-			assert(0 && "ERROR: CheckIsDead(): Deleted camera object!!");
-			camera_follow = NULL;
-		}
-		
-		return true;
-	}
-
-	return false;
-}*/
-
 //! Solve for next frame
 void PhysSimulation::Solve(Object *obj) {
 	
@@ -325,14 +282,14 @@ void PhysSimulation::UpdateObjects() {
 
 		// If there is a 'modal' object, then don't update anything
 		// EXCEPT that. (usually text boxes/etc)
-		//if (!modal_active) {
+		if (!modal_active) {
 			obj->ResetForNextFrame();				// oldpos = current_pos
 			Solve(obj);											// Applies forces
 			obj->MoveToNewPosition();
 			CheckForCollisions(collideableObjects, obj);		// newpos = oldpos
-		//}
+		}
  
-		// if (!modal_active || obj == modal_active)
+		if (!modal_active || obj == modal_active)
 			obj->Update();
 	}
 }
@@ -351,14 +308,6 @@ void PhysSimulation::Update() {
 		return;
 	}
 
-	// If something modal is active, do NOT do physics stuff, 
-	// just update this ONE object.
-	//if (modal_active) {
-		//modal_active->Update();
-		//fprintf(stderr, "modal done!\n");
-		//return;
-	//}
-		
 	UpdateObjects();
 	ComputeNewCamera();						// Calc where to put the camera now
 }
