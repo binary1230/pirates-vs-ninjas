@@ -33,11 +33,13 @@ void ObjectLayer::RemoveObject(Object* obj) {
 	assert(obj != NULL);
 	ObjectListIter iter = find(objects.begin(), objects.end(), obj);
 
-	if (iter != objects.end())
+	if (iter != objects.end()) {
+		*iter = NULL;
 		objects.erase(iter);
-	else
+	} else {
 		fprintf(stderr, " WARN: ObjectLayer: asked to remove an"
 										" object which isn't on this layer.\n");
+	}
 }
 
 bool ObjectLayer::Init(PhysSimulation* p) {

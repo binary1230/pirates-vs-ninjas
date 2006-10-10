@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "animation.h"
 #include "gameState.h"
+#include "gameSound.h"
 
 void SpringObject::Update() {
 	BaseUpdate();
@@ -20,7 +21,7 @@ SpringObject::~SpringObject() {}
 void SpringObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_player) {
 		currentAnimation->Unfreeze();
-		PlaySound("spring");
+		SOUND->PlaySound("spring");
 	}
 }
 

@@ -67,6 +67,9 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.spring_strength = 20;
 }
 
+// Used for find()
+bool ObjectIsDead(Object* obj);
+
 //! A drawable entity in the physics simulation
 
 //! Objects have physical properties associated with them, but do
@@ -291,7 +294,7 @@ class Object {
 		_Rect GetProjectionRect() {return projRect;}
 
 		//! Plays a sound, or does nothing if that sound is not loaded
-		void PlaySound(CString name);
+		// void PlaySound(CString name);
 
 		ObjectLayer* const GetLayer() const {return layer;};
 		void SetLayer(ObjectLayer* const l) {layer = l;};

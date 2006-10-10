@@ -45,6 +45,8 @@ void ObjectText::Draw() {
 	if (avatar_sprite && avatar_sprite->bmp)
 		txt_x += avatar_sprite->bmp->w;
 
+	CString text = page_texts[text_index];
+
 	if (text.length() > 0)
 		WINDOW->DrawText(txt_x, txt_y, text);
 }
@@ -56,18 +58,30 @@ void ObjectText::Update() {
 	// until the user presses a key
 	if (is_modal) {
 		if (INPUT->KeyOnce(PLAYERKEY_JUMP, 1)) {
-			SetModalActive(false);
-			is_dead = true;
+			
+			++text_index;		// go to the next page
+
+			// If no more pages...
+			if (text_index >= page_texts.size()) {
+				SetModalActive(false);
+				is_dead = true;
+			}
 		}
 	}
 }
 
 void ObjectText::SetText(CString txt) {
-	text = txt;
+	page_texts.clear();
+	text_index = 0;
 	
-	if (text.length() <= 0) {
-		text = "-INVALID TEXT-";
+	if (txt.length() <= 0) {
+		txt = "-INVALID TEXT-";
+		page_texts.push_back(txt);
+		return;
 	}
+
+	// Split up the pages based on the delimiter (currently a tilda "~")
+	StringSplit(txt, OBJECT_TXT_PAGE_DELIM, page_texts);
 }
 
 void ObjectText::SetModalActive(bool state) {
@@ -107,6 +121,8 @@ bool ObjectText::SetAvatarFilename(CString file) {
 }
 
 void ObjectText::Shutdown() {
+	text_index = 0;
+	page_texts.clear();
 	if (avatar_sprite)
 		delete avatar_sprite;
 }

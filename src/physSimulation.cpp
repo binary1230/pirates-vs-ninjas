@@ -220,11 +220,6 @@ void PhysSimulation::CheckForCollisions(	ObjectList &collideableObjects,
 	}
 }
 
-static bool ObjectIsDead(Object* obj) {
-	assert(obj != NULL);
-	return obj->IsDead();
-}
-
 void PhysSimulation::DoCleaning() {
 	Object* obj;
 	
@@ -324,8 +319,8 @@ int PhysSimulation::Load(XMLNode &xMode) {
 			LoadForcesFromXML(xMode) == -1 )
 		return -1;
 
-	camera_x = camera_follow->GetX();
-	camera_y = camera_follow->GetY();
+	//camera_x = camera_follow->GetX();
+	//camera_y = camera_follow->GetY();
 
 	if (xMode.nChildNode("music") == 1) {
 		const char* music_file = xMode.getChildNode("music").getText();

@@ -78,26 +78,10 @@ void Window::DrawFillRect(int x1, int y1, int x2, int y2, int col) {
 // HACK HACK HACK - get this from somewhere!!
 #define FONT_HEIGHT 10
 
-static void StringSplit(CString str, CString delim, vector<CString> &results) {
-	uint cutAt;
-	results.clear();
-	while( (cutAt = str.find_first_of(delim)) != str.npos ) {
-		if(cutAt > 0) {
-			results.push_back(str.substr(0,cutAt));
-		}
-
-		str = str.substr(cutAt+1);
-	}
-	
-	if(str.length() > 0)	{
-		results.push_back(str);
-	}
-}
-
 void Window::DrawText(int x, int y, CString text) {
 
 	vector<CString> lines;
-	StringSplit(text, "|", lines);
+	StringSplit(text, OBJECT_TXT_LINE_DELIM, lines);
 	int i, max = lines.size();
 
 	int _x = x;

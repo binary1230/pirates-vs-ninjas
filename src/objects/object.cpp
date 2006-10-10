@@ -11,6 +11,12 @@
 #include "gameSound.h"
 #include "objectLayer.h"
 
+// Used as criteria for STL find()
+bool ObjectIsDead(Object* obj) {
+	assert(obj != NULL);
+	return obj->IsDead();
+}
+
 // Objects can call this if they use
 // simple animations.
 void Object::UpdateSimpleAnimations() {
@@ -37,10 +43,6 @@ void Object::UpdateDisplayTime() {
 
 	if (display_time == 0)
 		is_dead = true;
-}
-
-void Object::PlaySound(CString name) {
-	SOUND->PlaySound(name);
 }
 
 //! Cache some commonly used stuff

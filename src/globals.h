@@ -48,4 +48,15 @@ typedef unsigned int uint;
 // (32768) amount of data to read from disk each time 
 #define DEFAULT_MUSIC_DATA_SIZE  (1<<15) 
 
+// Misc: Take a string and split it based on a delimiter, put the
+// resulting strings into a list.
+// 
+// For example: StringSplit("Hey|what's|up","|", out_list) will
+// put 3 things, "Hey", "what's", and "Up", into out_list.
+void StringSplit(CString str, CString delim, vector<CString> &results);
+
+// TxtObject delimiters (see objectTxtOverlay.cpp)
+#define OBJECT_TXT_PAGE_DELIM "~"			// Which char goes to the next page
+#define OBJECT_TXT_LINE_DELIM "|"			// Which char goes to the next line
+
 #endif // GLOBALS_H

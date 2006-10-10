@@ -41,7 +41,7 @@ credits.h gameMenu.h physSimulation.h sprite.h precompiled.h stdafx.h
 ninjas_SOURCES = \
 external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
 external/loadpng.cpp external/regpng.cpp external/savepng.cpp \
-main.cpp gameOptions.cpp gameState.cpp \
+main.cpp gameOptions.cpp gameState.cpp globals.cpp \
 timer.cpp rect.cpp vector2D.cpp oggFile.cpp network.cpp basename.cpp \
 window.cpp assetManager.cpp gameSound.cpp \
 gameMode.cpp gameModes.cpp \

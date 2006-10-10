@@ -13,6 +13,7 @@
 #include "physSimulation.h"
 #include "objectDoor.h"
 #include "objectFactory.h"
+#include "gameSound.h"
 
 #define DEFAULT_JUMP_VELOCITY 8.0f
 #define DEFAULT_DRAG 0.95f
@@ -86,7 +87,7 @@ void PlayerObject::DoCommonGroundStuff() {
 
 	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
 		vel.SetY(jump_velocity);
-		PlaySound("jump");
+		SOUND->PlaySound("jump");
 		DoJumping();
 		return;
   }	

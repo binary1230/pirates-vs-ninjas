@@ -8,11 +8,39 @@ class Sprite;
 class ObjectFactory;
 class PhysSimulation;
 
-//! A drawable on-screen joystick Object that is shown during demo playback
+//! A text box that can show an avatar
+//! It can be "modal" which means that nothing can happen in the game
+//! until the user presses a button
+//! It can be multi-page and multi-lines per screen.
+//
+// To tell the text to go to the next line, use a pipe '|'
+// character (located above the backslash), and to seperated "pages" of
+// text, use the tilda '~'
+//
+// For example:
+// Setting the text to "Wait a sec!|Something is wrong~Oh no!!|We're doomed"
+// will make a textbox that displays:
+//
+// --------------------
+// Wait a sec!
+// Something is wrong
+// --------------------
+//
+// and when the user presses a button, it will go to the next page 
+// which will show:
+//
+// --------------------
+// Oh no!!
+// We're doomed
+// --------------------
+//
+// When the user presses a key again, it will close the textbox
 class ObjectText : public Object {
 	protected:
 		Sprite* avatar_sprite;
-		CString text;
+		
+		vector<CString> page_texts;		// holds each "page" full of text
+		uint text_index;							// which "page" we're on
 
 		int box_color; 
 		int box_margin; 
