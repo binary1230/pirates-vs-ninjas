@@ -5,13 +5,22 @@
 
 DECLARE_SINGLETON(GameSound)
 
+#define USE_VARIABLE_PITCH
+
 //! Plays a sound
 //! Pan goes from 0-255, 128 being the center
 void GameSound::PlaySound(CString name, unsigned int pan) {
 	if (!sound_enabled)
 		return;
 	
-	const int freq = 1000;  	// pitch to play at (1000=normal)
+	// modifying the pitch randomly produces weird variations
+	// for the same sound.  slight pitch changes == good
+	int freq = 1000;  							// pitch to play at (1000=normal)
+	const int freq_range = 800;			// how far we can stretch it
+
+	#ifdef USE_VARIABLE_PITCH
+	freq += Rand(0, freq_range) - (freq_range / 2);
+	#endif // USE_VARIABLE_PITCH
 	
 	s_iter s = sounds.find(name.c_str());
 
