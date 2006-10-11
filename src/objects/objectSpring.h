@@ -11,6 +11,7 @@ class PhysSimulation;
 //! A "simple" Object (e.g. scenery) - No collisions
 class SpringObject : public Object {
 	protected:
+		uint time_to_wait_before_sound;
 				
 	public:
 		bool Init(PhysSimulation *p);
