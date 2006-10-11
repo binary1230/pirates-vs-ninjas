@@ -70,6 +70,7 @@ void Object::FadeOut(int time) {
 }
 
 bool Object::BaseInit() {
+	LogObjectEvent(OBJECT_INIT);
 	tmp_debug_flag = 0;
 	ClearProperties(properties);
 	is_dead = false;
@@ -247,7 +248,8 @@ bool Object::CanCollide(Object* obj) {
 					obj->properties.is_ball;
 }
 
-void Object::Shutdown() {
+void Object::BaseShutdown() {
+	LogObjectEvent(OBJECT_SHUTDOWN);
 
 	layer->RemoveObject(this);
 
@@ -268,7 +270,11 @@ void Object::Shutdown() {
 	display_time = -1;
 }
 
+unsigned long Object::debug_object_id = 0;
+
 Object::Object() {
+	LogObjectEvent(OBJECT_NEW);
+	unique_id = Object::debug_object_id++;
 	layer = NULL;
 	currentSprite = NULL;
 	currentAnimation = NULL;
@@ -376,4 +382,6 @@ void Object::MoveToNewPosition() {
 	pos = Solve();
 }
 
-Object::~Object() {}
+Object::~Object() {
+	LogObjectEvent(OBJECT_DELETE);
+}

@@ -1,4 +1,8 @@
+if DEBUG
 SUBDIRS = src ai
+else
+SUBDIRS = src
+endif
 
 DATA_DIR = data
 EXTRA_DIST = docs $(DATA_DIR) installer.nsi 

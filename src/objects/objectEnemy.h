@@ -13,6 +13,7 @@ class EnemyObject : public Object {
 				
 	public:
 		bool Init(PhysSimulation *p);
+		void Shutdown();
 		
 		void Update();
 

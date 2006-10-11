@@ -5,6 +5,10 @@
 #include "gameState.h"
 #include "gameSound.h"
 
+void SpringObject::Shutdown() {
+	BaseShutdown();
+}
+
 void SpringObject::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();

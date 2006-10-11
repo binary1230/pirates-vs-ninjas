@@ -59,4 +59,22 @@ void StringSplit(CString str, CString delim, vector<CString> &results);
 #define OBJECT_TXT_PAGE_DELIM "~"			// Which char goes to the next page
 #define OBJECT_TXT_LINE_DELIM "|"			// Which char goes to the next line
 
+// DEBUG HACK NASTY STUFF
+class Object;
+#define LogObjectEvent(Event) LogEvent(Event, this)
+enum LOGTYPE {
+	OBJECT_NEW,
+	OBJECT_INIT,
+	OBJECT_SHUTDOWN,
+	OBJECT_DELETE,
+	OBJECT_LAYERADD,
+	OBJECT_LAYERREMOVE
+};
+void LogEvent(LOGTYPE event, Object* obj);
+
+#ifdef DEBUG_HACK_NASTY_STUFF
+void InitDebugHackLog();
+void ShutdownDebugHackLog();
+#endif // DEBUG_HACK_NASTY_STUFF
+
 #endif // GLOBALS_H

@@ -5,6 +5,10 @@
 #include "gameState.h"
 #include "gameSound.h"
 
+void CollectableObject::Shutdown() {
+	BaseShutdown();
+}
+
 void CollectableObject::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();

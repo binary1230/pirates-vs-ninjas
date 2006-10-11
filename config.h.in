@@ -3,6 +3,9 @@
 /* The installer prefix e.g. /usr/local */
 #undef DATA_DIR
 
+/* Defined if this is a debug build */
+#undef DEBUG
+
 /* Define to 1 if you have the <allegro.h> header file. */
 #undef HAVE_ALLEGRO_H
 
@@ -71,6 +74,9 @@
 
 /* Whether we are precompiling or not */
 #undef PRECOMPILE_ENABLE
+
+/* Defined if this is a release build */
+#undef RELEASE
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS

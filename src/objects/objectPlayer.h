@@ -62,6 +62,7 @@ class PlayerObject : public Object {
 
 	public:
 		bool Init(PhysSimulation* p);
+		void Shutdown();
 		
 		//! Load object properties from XML
 		bool LoadPlayerProperties(XMLNode &xDef);		

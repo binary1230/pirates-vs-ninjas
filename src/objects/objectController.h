@@ -23,8 +23,7 @@ class ObjectController : public Object {
 		bool only_show_during_demo;
 		
 	public:
-		bool Init(PhysSimulation *p);
-		
+		bool Init(PhysSimulation *p);	
 		void Shutdown();
 
 		void Update();

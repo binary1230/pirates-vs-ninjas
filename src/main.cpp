@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "gameState.h"
 #include "gameOptions.h"
+#include "globals.h"
 
 // #define REDIRECT_STDERR 1
 #define REDIRECT_STDERR_FILENAME "/Users/dcerquetti/game.log"
@@ -41,6 +42,8 @@ int start_game_instance(const int argc, const char* argv[]) {
 /// IT ROCKS
 int main(const int argc, const char* argv[]) {
 
+	// InitDebugHackLog();
+
 #	ifdef REDIRECT_STDERR
 	fprintf(stderr, "Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
 
@@ -52,5 +55,7 @@ int main(const int argc, const char* argv[]) {
 # endif
 
 	return start_game_instance(argc, argv);
+
+	// ShutdownDebugHackLog();
 
 } END_OF_MAIN();

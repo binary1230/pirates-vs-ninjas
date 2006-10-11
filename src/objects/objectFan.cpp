@@ -10,6 +10,10 @@
 #define DEFAULT_FAN_SPEED 5.0f
 #define MAX_PLAYER_SPEED 10.0f
 
+void FanObject::Shutdown() {
+	BaseShutdown();
+}
+
 void FanObject::Update() {
 
 	int anim_speed;

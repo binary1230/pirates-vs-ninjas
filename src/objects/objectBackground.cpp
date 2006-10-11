@@ -32,8 +32,12 @@ void BackgroundObject::Draw() {
 }
 
 bool BackgroundObject::Init(PhysSimulation *p) {
-		simulation = p;
-		return BaseInit();
+	simulation = p;
+	return BaseInit();
+}
+
+void BackgroundObject::Shutdown() {
+	BaseShutdown();
 }
 
 BackgroundObject::BackgroundObject() {}

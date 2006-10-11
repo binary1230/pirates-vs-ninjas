@@ -5,6 +5,10 @@
 #include "gameState.h"
 #include "physSimulation.h"
 
+void ObjectBounce::Shutdown() {
+	BaseShutdown();
+}
+
 void ObjectBounce::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();

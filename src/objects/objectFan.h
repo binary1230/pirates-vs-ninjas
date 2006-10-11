@@ -13,6 +13,7 @@ class FanObject : public Object {
 	
 	public:
 		bool Init(PhysSimulation *p);
+		void Shutdown();
 		
 		void Update();
 		void Collide(Object* obj);

@@ -4,12 +4,14 @@
 #include "animation.h"
 #include "gameState.h"
 
+void DoorObject::Shutdown() {
+	BaseShutdown();
+}
+
 // activate the door's action
 // someday this will be a 'switch (action) {case warp: ... }' etc
 void DoorObject::Activate() {
-
-	// XXX perhaps fade, or SOMETHING here instead of just exiting.
-	
+	// XXX perhaps fade, or SOMETHING here instead of just exiting.	
 	GAMESTATE->SignalEndCurrentMode();
 }
 

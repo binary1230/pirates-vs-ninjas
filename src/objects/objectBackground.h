@@ -15,6 +15,7 @@ class BackgroundObject : public Object {
 				
 	public:
 		bool Init(PhysSimulation *p);
+		void Shutdown();
 
 		void Update();
 		void Draw();

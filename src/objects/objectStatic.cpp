@@ -4,6 +4,10 @@
 #include "animation.h"
 #include "gameState.h"
 
+void StaticObject::Shutdown() {
+	BaseShutdown();
+}
+
 void StaticObject::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();

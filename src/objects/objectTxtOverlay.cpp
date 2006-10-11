@@ -125,6 +125,8 @@ void ObjectText::Shutdown() {
 	page_texts.clear();
 	if (avatar_sprite)
 		delete avatar_sprite;
+
+	BaseShutdown();
 }
 
 ObjectText::ObjectText() {

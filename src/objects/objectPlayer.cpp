@@ -23,6 +23,10 @@
 // like the white puffs when you skid
 #define SKID_OBJECT_TYPE "skid"
 
+void PlayerObject::Shutdown() {
+	BaseShutdown();
+}
+
 void PlayerObject::ScreenBoundsConstraint() {
 	if (pos.GetX() < 0) {
 		// vel.SetX(-vel.GetX()); // flip velocity

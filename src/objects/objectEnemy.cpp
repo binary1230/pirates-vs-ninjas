@@ -4,6 +4,10 @@
 #include "animation.h"
 #include "gameState.h"
 
+void EnemyObject::Shutdown() {
+	BaseShutdown();
+}
+
 void EnemyObject::Update() {
 	BaseUpdate();
 	SimpleAnimationUpdate();

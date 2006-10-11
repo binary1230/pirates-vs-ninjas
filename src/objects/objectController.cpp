@@ -90,6 +90,8 @@ void ObjectController::Shutdown() {
 		delete controller_sprite;
 		controller_sprite = NULL;
 	}
+
+	BaseShutdown();
 }
 
 ObjectController::ObjectController() {

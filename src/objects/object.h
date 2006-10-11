@@ -137,9 +137,8 @@ class Object {
 		//! Solve for the new position of this object
 		Vector2D Solve();
 
-
-		//! Base class initialization
 		bool BaseInit();	
+		void BaseShutdown();
 
 		//! True if this object is no longer in play and needs to be cleaned up
 		bool is_dead;
@@ -181,11 +180,21 @@ class Object {
 		// (we may need to rethink where these come from)
 		int width, height;
 		
+		// Protected constructur, this means we can't directly
+		// instantiate Object's, we need to use a higher class.
+		Object();
+		
 	public:
 		int tmp_debug_flag;
+		
+		// DEBUG ONLY: A unqiue ID that is incremented every time an object
+		// is created.  The amount of created objects should match the amount
+		// of free'd objects.
+		static unsigned long debug_object_id;
+		unsigned long unique_id;
 
 		virtual bool Init(PhysSimulation* p) = 0;
-		virtual void Shutdown();
+		virtual void Shutdown() = 0;
 		
 		virtual void Update() = 0;
 		
@@ -299,7 +308,6 @@ class Object {
 		ObjectLayer* const GetLayer() const {return layer;};
 		void SetLayer(ObjectLayer* const l) {layer = l;};
 		
-		Object();
 		virtual ~Object();
 
 		//! Returns true if this type of object is able to collide with another
