@@ -279,6 +279,7 @@ Object::Object() {
 	currentSprite = NULL;
 	currentAnimation = NULL;
 	flip_x = false; 
+	flip_y = false; 
 	is_dead = true;
 	mass = 1.0f;
 	simulation = NULL;

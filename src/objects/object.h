@@ -46,8 +46,6 @@ struct ObjectProperties {
 	//! e.g. not IN the world, but on top it,
 	//! like our status bar or health or something.
 	bool is_overlay;
-
-	int spring_strength;
 };
 
 //! Clears property masks
@@ -64,7 +62,6 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_door = 0;
 	p.is_ring = 0;
 	p.is_ball = 0;
-	p.spring_strength = 20;
 }
 
 // Used for find()

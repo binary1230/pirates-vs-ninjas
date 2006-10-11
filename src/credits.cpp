@@ -42,7 +42,14 @@ void CreditsMode::Draw() {
 }
 
 void CreditsMode::Update() {
-	scroll_offset -= scroll_speed;
+
+	// Hehehe.. weird scrolling hacks, try it.
+	if (INPUT->Key(PLAYERKEY1_DOWN))
+		scroll_offset+=10;
+	else if (INPUT->Key(PLAYERKEY1_UP))
+		scroll_offset-=10;
+	else
+		scroll_offset -= scroll_speed;		// NORMAL
 
 	// If we finished scrolling or they press the exit key, we exit
 	if (	scroll_offset < -int(credits_bmp->h) || INPUT->KeyOnce(GAMEKEY_EXIT)) {

@@ -5,7 +5,7 @@
 #include "gameState.h"
 #include "gameSound.h"
 
-#define DEFAULT_TIME_TO_WAIT_BEFORE_SOUND 10
+#define DEFAULT_SPRING_RESET_TIME 6
 
 void SpringObject::Shutdown() {
 	BaseShutdown();
@@ -15,13 +15,30 @@ void SpringObject::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
 
-	if (time_to_wait_before_sound > 0)
-		time_to_wait_before_sound--;
+	if (spring_reset_time == DEFAULT_SPRING_RESET_TIME)
+		spring_is_active = false;
+
+	if (spring_reset_time > 0) {
+		spring_reset_time--;
+		return;
+	} 
+	
+	if (spring_reset_time == 0) {
+		spring_is_active = true;
+	}
+
+	/*else
+		spring_is_active = true;
+
+	// We were just sprung last Collide()
+	if (!spring_is_active && spring_reset_time == 0)
+		spring_reset_time = DEFAULT_SPRING_RESET_TIME;*/
 }
 
 bool SpringObject::Init(PhysSimulation *p) {
 	simulation = p;
-	time_to_wait_before_sound = 0;
+	spring_reset_time = 0;
+	spring_is_active = true;
 	return BaseInit();
 }
 
@@ -30,10 +47,12 @@ SpringObject::~SpringObject() {}
 
 void SpringObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_player) {
-		currentAnimation->Unfreeze();
-		if (time_to_wait_before_sound == 0) {
+		
+		// Spring it!
+		if (spring_reset_time == 0) {
+			currentAnimation->Unfreeze();
 			SOUND->PlaySound("spring");
-			time_to_wait_before_sound = DEFAULT_TIME_TO_WAIT_BEFORE_SOUND;
+			spring_reset_time = DEFAULT_SPRING_RESET_TIME;
 		}
 	}
 }

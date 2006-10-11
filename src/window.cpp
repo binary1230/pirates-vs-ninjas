@@ -100,12 +100,20 @@ void Window::DrawBitmapAt(	BITMAP* bmp, int x, int y,
 														bool use_alpha, int alpha) {
 	
 	// Note: transparency support is still weird.
+	// Note: some of the flipx/y stuff uses OR for short circuit
+	// and is more complex than it needs to be
 
 	if (!use_alpha) {
-		if (!flip_x) 
+
+		if (!(flip_x || flip_y)) 
 			draw_sprite(drawing_surface, bmp, x, y);
-		else
+		else if (flip_x && !flip_y)
 			draw_sprite_h_flip(drawing_surface, bmp, x, y);
+		else if (flip_y && !flip_x)
+			draw_sprite_v_flip(drawing_surface, bmp, x, y);
+		else
+			draw_sprite_vh_flip(drawing_surface, bmp, x, y);
+			
 	} else {
 		// XXX DOES NOT FLIP ALPHA-BLENDED SPRITES RIGHT NOW
 		// set_trans_blender(256,256,256,alpha);

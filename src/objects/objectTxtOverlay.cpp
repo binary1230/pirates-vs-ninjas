@@ -57,7 +57,10 @@ void ObjectText::Update() {
 	// if we're modal, NOTHING else can happen
 	// until the user presses a key
 	if (is_modal) {
-		if (INPUT->KeyOnce(PLAYERKEY_JUMP, 1)) {
+		if (INPUT->KeyOnce(PLAYERKEY_ACTION1, 1)) {
+			SetModalActive(false);
+			is_dead = true;
+		} else if (INPUT->KeyOnce(PLAYERKEY_JUMP, 1)) {
 			
 			++text_index;		// go to the next page
 

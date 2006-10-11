@@ -429,10 +429,45 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 
 Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) { 
   
+	XMLNode xSpringDirection;
+	bool using_default = true;
+
 	SpringObject* obj = new SpringObject();
 	LoadCommonObjectStuff(obj, xDef, xObj);
+  
+	obj->properties.is_spring = 1;
 
-  obj->properties.is_spring = 1;
+	// order we search for the spring strength:
+	// 1) Object Instance
+	// 2) Object definition
+	// 3) default value of (DEFAULT_SPRING_STRENGTH)
+	if (xObj && xObj->nChildNode("springDirection") == 1) {
+		xSpringDirection = xObj->getChildNode("springDirection");
+		using_default = false;
+	} else if (xDef.nChildNode("springDirection") == 1) {
+		xSpringDirection = xDef.getChildNode("springDirection");
+		using_default = false;
+	}
+
+	float x_strength = DEFAULT_SPRING_STRENGTH_X;
+	float y_strength = DEFAULT_SPRING_STRENGTH_Y;
+
+	if (!using_default) {
+		if ( xSpringDirection.nChildNode("x") != 1 ||  
+				!xSpringDirection.getChildNode("x").getFloat(x_strength)) {
+			fprintf(stderr, " -- invalid spring strength (x)!\n");
+			return false;
+		}
+	
+		if ( xSpringDirection.nChildNode("y") != 1 ||  
+				!xSpringDirection.getChildNode("y").getFloat(y_strength)) {
+			fprintf(stderr, " -- invalid spring strength (y)!\n");
+			return NULL;
+		}
+	}
+
+	obj->spring_vector.SetX(x_strength);
+	obj->spring_vector.SetY(y_strength);
 
   return obj;
 }
@@ -481,13 +516,13 @@ bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 		obj->properties.is_overlay = 1;
 	}
 
-	if ( xProps.nChildNode("springStrength") && 
+	/*if ( xProps.nChildNode("springStrength") && 
 			!xProps.getChildNode("springStrength").getInt(
 			obj->properties.spring_strength)		) {
 
 		fprintf(stderr, " -- invalid spring strength!\n");
 		return false;
-	}
+	}*/
 
 	return true;
 }

@@ -13,6 +13,7 @@
 #include "physSimulation.h"
 #include "objectDoor.h"
 #include "objectFactory.h"
+#include "objectSpring.h"
 #include "gameSound.h"
 
 #define DEFAULT_JUMP_VELOCITY 8.0f
@@ -274,7 +275,10 @@ void PlayerObject::Collide(Object* obj) {
   }
 
 	if (obj->GetProperties().is_spring) {
-		vel.SetY(obj->GetProperties().spring_strength);
+		SpringObject* sObj = (SpringObject*)obj;
+		
+		if (sObj->IsSpringActive())
+			vel = sObj->GetSpringVector();
 	}
 
 	if (obj->GetProperties().is_ring) {
