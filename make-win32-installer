@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo "FULLY AUTOMATED Win32 Installer build"
+echo "This script is a HACK!"
+echo ""
+echo "It does everything the way you'd normally do it, but it probably"
+echo "won't work on anyone's machine other than Dom's. YMMV"
+echo ""
+echo "This is going to take a while..."
+
+sleep 1
+
+./autogen.sh && \
+./cross-configure.sh --enable-release-build && \
+./cross-make.sh clean all && \
+make dist_win32_installer
+
+echo -en "\n\n\n\n\n\n\t\t\tDone\n\n\n\n"

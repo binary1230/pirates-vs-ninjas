@@ -121,3 +121,11 @@ read and edit cross-configure.sh
 OLD STUPID INSTRUCTIONS:
 
 ./configure --target=i586-mingw32msvc --host=i586-mingw32msvc --build=linux-i386 --with-extra-includes=/home/dcerquet/i586/include --with-extra-libs=/home/dcerquet/lib/i586-mingw32msvc/
+
+
+------------------------------
+EXPERIMENTAL PYTHON EMBEDDING:
+------------------------------
+
+-I/usr/include/python2.3 -ldl -lutil -lm 
+-lpython2.3 -lpthread -L/usr/lib/python2.3/config

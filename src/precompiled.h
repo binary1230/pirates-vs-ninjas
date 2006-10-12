@@ -7,10 +7,6 @@
 #ifndef PRECOMPILED_H
 #define PRECOMPILED_H
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 // The order of these two is SUPER-IMPORTANT
 #include <allegro.h>
 #ifdef WIN32
@@ -48,6 +44,10 @@
 #include <vector>
 
 using namespace std;
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 // Our rarely-modified engine stuff
 #include "StdString.h"

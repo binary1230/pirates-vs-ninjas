@@ -42,7 +42,7 @@ WIN32_INCLUDES=$COMMON_PATH/include
 OGG_PREFIX=$COMMON_PATH
 OGG_INCLUDES=$WIN32_INCLUDES
 VORBIS_PREFIX=$COMMON_PATH
-OGG_INCLUDES=$WIN32_INCLUDES
+VORBIS_INCLUDES=$WIN32_INCLUDES
 
 # ---------------------------------------------------------------
 # DON'T MESS WITH ANYTHING BELOW HERE UNLESS YOU ARE REALLY SMART
@@ -53,5 +53,5 @@ export PATH="$WIN32_PATH:$BASE_PATH/bin:$PATH"
 ./configure --target=$TARGET --host=$TARGET --build=linux-i386 \
 --with-extra-includes=$WIN32_INCLUDES --with-extra-libs=$WIN32_LIBS \
 --with-ogg=$OGG_PREFIX --with-ogg-includes=$OGG_INCLUDES \
---with-vorbis=$VORBIS_PREFIX  --with-vorbis-includes=$VORBIS_INCLUDES\
-$*
+--with-vorbis=$VORBIS_PREFIX  --with-vorbis-includes=$VORBIS_INCLUDES \
+ $*
