@@ -127,5 +127,5 @@ OLD STUPID INSTRUCTIONS:
 EXPERIMENTAL PYTHON EMBEDDING:
 ------------------------------
 
--I/usr/include/python2.3 -ldl -lutil -lm 
--lpython2.3 -lpthread -L/usr/lib/python2.3/config
+gcc t.c -I/usr/include/python2.3 -lm -lpython2.3 -lpthread  
+-lutil -ldl  -L/usr/lib/python2.3/config -export-dynamic
