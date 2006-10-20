@@ -67,7 +67,7 @@ void GameMenu::Update() {
 	
 	assert(current_pos >= 0 || current_pos < y_pos.size());
 
-	if (INPUT->KeyOnce(GAMEKEY_START)) {
+	if (INPUT->KeyOnce(GAMEKEY_START) || INPUT->KeyOnce(PLAYERKEY_JUMP, 1)) {
 		DoMenuAction(actions[current_pos]);
 	}
 }

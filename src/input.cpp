@@ -526,8 +526,6 @@ void Input::DoJoystickUpdateHack() {
 			if (!joystick.button[j].b) 
 				continue;
 
-			key = -1;
-
 			// map various joystick buttons to game keys
 			// a bit clumsy...
 			switch (j) {
