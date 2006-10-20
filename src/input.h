@@ -192,6 +192,10 @@ class Input {
 		
 		void BeginRecording();
 		void EndRecording();
+
+		//! Do joystick updates
+		//! Implemented as a quick hack for now
+		void DoJoystickUpdateHack();
 		
 	public:
 		//! Init the input system
@@ -221,6 +225,9 @@ class Input {
 		//!
 		//! Controller numbers start with 1.
 		bool Key(uint gameKey, uint controller_number = 0);
+
+		//! Same as Key(), but Sets the status
+		void SetKey(uint gameKey, uint controller_number = 0, bool value = 1);
 
 		//! Returns true if a key was first released, then pressed.
 		//! Can be used to make sure that a player is pressing and releasing

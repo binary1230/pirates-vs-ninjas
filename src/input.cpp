@@ -2,6 +2,9 @@
 #include "gameState.h"
 #include "gameOptions.h"
 
+// Maximum numbers of players allowed (arbitrary so far)
+#define MAX_PLAYERS 	2
+
 // - - - - - - - - - - - - - - - - - - 
 // Default (hardcoded) key mappings
 // - - - - - - - - - - - - - - - - - - 
@@ -66,6 +69,14 @@ int Input::ResolveControllerKey(uint gameKey, uint controller_number) {
 bool Input::Key(uint gameKey, uint controller_number) {
 	int i = ResolveControllerKey(gameKey, controller_number);
 	return game_key[i];
+}
+
+// Rarely, if ever, called.  Mostly used by joystick stuff
+//
+// Sets a specific key.  Same semantics as Key()
+void Input::SetKey(uint gameKey, uint controller_number, bool value) {
+	int i = ResolveControllerKey(gameKey, controller_number);
+	game_key[i] = value;
 }
 
 //! Returns true if a key was first released, then pressed.
@@ -303,6 +314,13 @@ bool Input::InitLive() {
 bool Input::CommonInit() {
 	install_mouse();
 	install_keyboard();
+	install_joystick(JOY_TYPE_AUTODETECT);
+
+	// num_joysticks is a global allegro variable
+	if (num_joysticks == 0)
+		fprintf(stderr, " Input: No joysticks found\n");
+	else
+		fprintf(stderr, " Input: %i joystick(s) found\n", num_joysticks);
 
 	gamekey_to_realkey.resize(GAMEKEY_COUNT);
 	game_key.resize(GAMEKEY_COUNT);
@@ -313,7 +331,7 @@ bool Input::CommonInit() {
 	}
 
 	demofile = NULL;
-	
+
 	LoadDefaultKeyMappings();
 	return true;
 }
@@ -365,12 +383,14 @@ void Input::Shutdown() {
 
 	remove_mouse();
 	remove_keyboard();
+	remove_joystick();
 }
 
 void Input::Update() {
 
 	poll_mouse();
 	poll_keyboard();
+	poll_joystick();
 
 	switch (type) {
 		case INPUT_RECORDED:
@@ -459,7 +479,83 @@ void Input::UpdateLive() {
 		game_key[i] = key[gamekey_to_realkey[i]];
 	}
 
+	DoJoystickUpdateHack();
+
 	UpdateKeyReleases();
+}
+
+// These are for an XBOX controller
+// really we need to have a "calibration" screen
+// to map these properly.
+//
+// TODO: Move this to another file. please.
+#define XBOX_CONTROLLER_A 0
+#define XBOX_CONTROLLER_B 1
+#define XBOX_CONTROLLER_DPAD_X_AXIS 0
+#define XBOX_CONTROLLER_DPAD_Y_AXIS 1
+
+// map joystick buttons to physical joystick
+#define JOY_BTN_JUMP				XBOX_CONTROLLER_A
+#define JOY_BTN_ACTION1			XBOX_CONTROLLER_B
+#define JOY_AXIS_UPDOWN			XBOX_CONTROLLER_DPAD_X_AXIS
+#define JOY_AXIS_LEFTRIGHT	XBOX_CONTROLLER_DPAD_Y_AXIS
+
+//! OK, a quick hack for joysticks
+//! rather than define joystick buttons
+//! as their own things, we merely dump their state into
+//! game_key[].  E.g. 'A' button on the joystick
+//! just maps to PLAYERKEY_JUMP
+void Input::DoJoystickUpdateHack() {
+
+	int player, j, key, max_joysticks;
+	JOYSTICK_INFO joystick;
+
+	// num_joysticks is a GLOBAL read-only variable from allegro
+	if (num_joysticks == 0)
+		return;
+
+	if (num_joysticks < MAX_PLAYERS)
+		max_joysticks = num_joysticks;
+	else
+		max_joysticks = MAX_PLAYERS;
+
+	// handle all joysticks
+	for (player = 0; player < max_joysticks; ++player) {
+		joystick = joy[player];
+
+		// do joystick buttons
+		for (j = 0; j < joystick.num_buttons; ++j) {
+
+			if (!joystick.button[j].b) 
+				continue;
+
+			key = -1;
+
+			// map various joystick buttons to game keys
+			// a bit clumsy...
+			switch (j) {
+				case JOY_BTN_JUMP:
+					key = PLAYERKEY_JUMP;
+					break;
+
+				case JOY_BTN_ACTION1:
+					key = PLAYERKEY_ACTION1;
+					break;
+
+				default:	// then we don't care
+					key = -1;	
+					break;
+			}
+
+			if (key != -1)
+				SetKey(key, player+1);
+		}
+	}	
+
+	// do joystick axes (more complex)
+	// TODO
+	// TODO
+	// TODO
 }
 
 void Input::BeginRecording()	{				
