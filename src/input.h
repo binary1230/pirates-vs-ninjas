@@ -64,6 +64,9 @@ enum InputType {
 	INPUT_LIVE					// live input right from the mouse/keyboard
 };
 
+// 'Key' type
+typedef vector<int> KeyList;
+
 //! Input Base Class
  
 //! The only reason for having a base class is
@@ -108,13 +111,13 @@ class Input {
 		InputType type;
 		
 		//! The keys currently being pressed (e.g. GAMEKEY_JUMP)
-		vector<int> game_key;
+		KeyList game_key;
 
 		//! The mapping of real keys to gamekeys (e.g. SPACE to GAMEKEY_JUMP)
-		vector<int> gamekey_to_realkey;
+		KeyList gamekey_to_realkey;
 
 		//! Whether a key has been released after it was pressed
-		vector<int> released_key;
+		KeyList released_key;
 
 		int mouse_x;
 		int mouse_y;
@@ -131,7 +134,7 @@ class Input {
 		void ClearKeys();
 
 		//! Clear a specific keyboard buffer
-		void ClearKeys(vector<int> &key_buffer);
+		void ClearKeys(KeyList &key_buffer);
 		
 		//! The current demo file being read from, if any
 		FILE* demofile;
@@ -162,7 +165,7 @@ class Input {
 		unsigned long next_frame_num;
 
 		//! The next frame's data
-		vector<int> next_frame_data;
+		KeyList next_frame_data;
 
 		//! True if we are at the end of this file
 		bool at_eof;
@@ -182,7 +185,7 @@ class Input {
 		// -- DEMO RECORD STUFF -- //
 		
 		//! The last state of the keys
-		vector<int> old_key;
+		KeyList old_key;
 		
 		//! Initialize demo recording stuff
 		bool InitRecorder(CString filename);

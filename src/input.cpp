@@ -38,7 +38,7 @@ void Input::ClearKeys() {
 	ClearKeys(game_key);
 }
 
-void Input::ClearKeys(vector<int> &key_buffer) {
+void Input::ClearKeys(KeyList &key_buffer) {
 	uint i;
 	for (i = 0; i < key_buffer.size(); i++) {
 		key_buffer[i] = 0;
@@ -415,18 +415,19 @@ void Input::UpdateRecord() {
 	bool keys_changed = false;
 	
 	// TODO: check to make sure this doesn't get too big.
-	frame_counter++;
+	++frame_counter;
 	
-	for (i = 0; i < GAMEKEY_COUNT; i++) {
-		// Save the old keys
+	// Save the old keys
+	/*for (i = 0; i < GAMEKEY_COUNT; ++i) {
 		old_key[i] = game_key[i];
+	}*/
+	//memcpy(old_key, game_key, GAMEKEY_COUNT * sizeof()
+	old_key = game_key;
 
-		// Get new keys
-		if ( key[gamekey_to_realkey[i]] )
-			game_key[i] = 1;
-		else 
-			game_key[i] = 0;
+	// Update from Live input
+	UpdateLive();
 
+	for (i = 0; i < GAMEKEY_COUNT; ++i) {
 		// Output any differences between the old keys and the new keys to a file
 		if ( demofile && (old_key[i] != game_key[i]) ) {
 				if (!keys_changed) {
@@ -436,15 +437,13 @@ void Input::UpdateRecord() {
 
 				// remember, we are writing out GAMEKEYs not REAL keys.
 				// e.g. KEY_JUMP, not KEY_SPACEBAR
-				fprintf(demofile, " %u %u", i, game_key[i]);
+				fprintf(demofile, " %u %u", i, (uint)game_key[i]);
 		}
 	}
 	
 	if (keys_changed && demofile) {
 			fprintf(demofile, "\n");
 	}
-
-	UpdateKeyReleases();
 }
 
 //! Update the state of the input
@@ -473,9 +472,11 @@ void Input::UpdatePlayback() {
 //! freeze the current state of the input into gamekey[].
 //! key[] is from allegro, it is the current state of what 
 //! is currently being pressed
+//
+// NOTE: UpdateRecord() also calls this method for recording demos
+// 
 void Input::UpdateLive() {
-	uint i;
-	for (i = 0; i < GAMEKEY_COUNT; i++) {
+	for (uint i = 0; i < GAMEKEY_COUNT; i++) {
 		game_key[i] = key[gamekey_to_realkey[i]];
 	}
 
