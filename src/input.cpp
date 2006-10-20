@@ -486,16 +486,15 @@ void Input::UpdateLive() {
 // to map these properly.
 //
 // TODO: Move this to another file. please.
-#define XBOX_CONTROLLER_A 0
-#define XBOX_CONTROLLER_B 1
-#define XBOX_CONTROLLER_DPAD_X_AXIS 0
-#define XBOX_CONTROLLER_DPAD_Y_AXIS 1
+#define XBOX_CONTROLLER_A 					0
+#define XBOX_CONTROLLER_B 					1
+
+#define XBOX_CONTROLLER_LEFT_STICK 	0
 
 // map joystick buttons to physical joystick
 #define JOY_BTN_JUMP				XBOX_CONTROLLER_A
 #define JOY_BTN_ACTION1			XBOX_CONTROLLER_B
-#define JOY_AXIS_UPDOWN			XBOX_CONTROLLER_DPAD_X_AXIS
-#define JOY_AXIS_LEFTRIGHT	XBOX_CONTROLLER_DPAD_Y_AXIS
+#define JOY_AXIS_DPAD				XBOX_CONTROLLER_LEFT_STICK
 
 //! OK, a quick hack for joysticks
 //! rather than define joystick buttons
@@ -506,6 +505,7 @@ void Input::DoJoystickUpdateHack() {
 
 	int player, j, key, max_joysticks;
 	JOYSTICK_INFO joystick;
+	JOYSTICK_STICK_INFO stick;
 
 	// num_joysticks is a GLOBAL read-only variable from allegro
 	if (num_joysticks == 0)
@@ -547,12 +547,28 @@ void Input::DoJoystickUpdateHack() {
 			if (key != -1)
 				SetKey(key, player+1);
 		}
-	}	
 
-	// do joystick axes (more complex)
-	// TODO
-	// TODO
-	// TODO
+		// do joystick sticks (up/down/left/right)
+		// each "stick" can have 1-3 axes. for example, the D-PAD has 2 axes
+		for (j = 0; j < joystick.num_sticks; ++j) {
+			stick = joystick.stick[j];
+
+			if (j != JOY_AXIS_DPAD || stick.num_axis != 2)
+				continue;
+
+			if (stick.axis[0].d1) 
+				SetKey(PLAYERKEY_LEFT, player+1);
+
+			if (stick.axis[0].d2) 
+				SetKey(PLAYERKEY_RIGHT, player+1);
+
+			if (stick.axis[1].d1) 
+				SetKey(PLAYERKEY_DOWN, player+1);
+
+			if (stick.axis[1].d2) 
+				SetKey(PLAYERKEY_UP, player+1);
+		}
+	}	
 }
 
 void Input::BeginRecording()	{				
