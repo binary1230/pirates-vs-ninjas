@@ -416,15 +416,11 @@ void Input::UpdateRecord() {
 	
 	// TODO: check to make sure this doesn't get too big.
 	++frame_counter;
-	
-	// Save the old keys
-	/*for (i = 0; i < GAMEKEY_COUNT; ++i) {
-		old_key[i] = game_key[i];
-	}*/
-	//memcpy(old_key, game_key, GAMEKEY_COUNT * sizeof()
+
+	// save old keys
 	old_key = game_key;
 
-	// Update from Live input
+	// Update game_key from Live input
 	UpdateLive();
 
 	for (i = 0; i < GAMEKEY_COUNT; ++i) {
