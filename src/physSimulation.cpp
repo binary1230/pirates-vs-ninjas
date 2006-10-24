@@ -298,8 +298,8 @@ void PhysSimulation::Update() {
 		// use one or the other, SignalGameExit() is "right"
 		// SignalEndCurrentMode() goes to the next level.
 
-    // GAMESTATE->SignalGameExit();			// for real
-    GAMESTATE->SignalEndCurrentMode(); 	// for debugging
+    GAMESTATE->SignalGameExit();			// for real
+    // GAMESTATE->SignalEndCurrentMode(); 	// for debugging
 		return;
 	}
 
