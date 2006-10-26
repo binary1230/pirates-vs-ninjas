@@ -474,11 +474,11 @@ typedef enum Attrib
 
 // Enumeration used when parsing elements to dictate whether we are currently
 // inside a tag
-typedef enum Status
+typedef enum _Status
 {
     eInsideTag = 0,
     eOutsideTag
-} Status;
+} _Status;
 
 // private (used while rendering):
 XMLSTR toXMLString(XMLSTR dest,XMLCSTR source)
@@ -1059,7 +1059,7 @@ int XMLNode::ParseXMLElement(void *pa)
     int nDeclaration;
     XMLCSTR lpszText=NULL;
     XMLNode pNew;
-    enum Status status; // inside or outside a tag
+    enum _Status status; // inside or outside a tag
     enum Attrib attrib = eAttribName;
 
     assert(pXML);

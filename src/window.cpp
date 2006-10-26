@@ -11,12 +11,12 @@
 // leave this undefined usually.
 // #define ALTERNATE_GFX_MODE GFX_XDGA2
 
-DECLARE_SINGLETON(Window)
+DECLARE_SINGLETON(GameWindow)
 
 int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
 
-void Window::Screenshot(char* filename) {
+void GameWindow::Screenshot(char* filename) {
 	CString file;
 	static int screenshot_num = 0;
 
@@ -29,99 +29,53 @@ void Window::Screenshot(char* filename) {
 
 	fprintf(stderr, " -- saving screenshot '%s'\n", file.c_str());
 
-	save_bitmap(file.c_str(), GetDrawingSurface(), NULL);
+	save_bitmap(file.c_str(), screen, NULL);
 }
 
-void Window::BlitBitmap(  BITMAP* bmp, int source_x, int source_y, 
-									int dest_x, int dest_y, int width, int height) {
-
-	// if its position is offscreen, don't draw it.
-	if (dest_x + bmp->w < 0 || dest_x >= (int)width ||
-			dest_y + bmp->h < 0 || dest_y >= (int)height )
-			return;
-
-	blit(bmp, drawing_surface, source_x, source_y, dest_x, dest_y, width, height);
+void GameWindow::DrawRect(_Rect &r, int col, bool filled) {
+	DrawRect(	(int)r.getx1(), (int)r.gety1(), 
+						(int)r.getx2(), (int)r.gety2(), 
+						col, filled);
 }
 
+void GameWindow::DrawRect(	int x1, int y1, 
+														int x2, int y2, 
+														int col, bool filled) {
 
-// public function
-void Window::DrawBitmap(	BITMAP* bmp, int x, int y, 
-													bool flip_x, bool flip_y, 
-													bool use_alpha, int alpha) {
+	glColor4ub(getr(col), getg(col), getb(col), 255);
+	glDisable(GL_TEXTURE_2D);
 
-	// if its position is offscreen, don't draw it.
-	if (x + bmp->w < 0 || x >= (int)width || 
-			y + bmp->h < 0 || y >= (int)height ) 
-			return;
+	if (filled)
+		glBegin(GL_QUADS); 
+	else
+		glBegin(GL_LINES);
 
-	// Draw the bitmap
-	DrawBitmapAt(bmp, x, y, flip_x, flip_y, use_alpha, alpha);
-}
+	glVertex2f(x1, y1);
+	glVertex2f(x2, y1);
+	glVertex2f(x2, y2);
+	glVertex2f(x1, y2);
 
-void Window::DrawRect(_Rect &r, int col) {
-	rect(	drawing_surface, 
-				(int)r.getx1(), 
-				(int)r.gety1(), 
-				(int)r.getx2(), 
-				(int)r.gety2(), 
-				col);
-}
+	glEnd();
 
-void Window::DrawRect(int x1, int y1, int x2, int y2, int col) {
-	rect(drawing_surface, x1, y1, x2, y2, col);
-}
-
-void Window::DrawFillRect(int x1, int y1, int x2, int y2, int col) {
-	rectfill(drawing_surface, x1, y1, x2, y2, col);
+	glEnable(GL_TEXTURE_2D);
+	glColor4ub(255, 255, 255, 255);
 }
 
 // HACK HACK HACK - get this from somewhere!!
 #define FONT_HEIGHT 10
 
-void Window::DrawText(int x, int y, CString text) {
-
+void GameWindow::DrawText(int x, int y, CString text) {
 	vector<CString> lines;
 	StringSplit(text, OBJECT_TXT_LINE_DELIM, lines);
 	int i, max = lines.size();
 
 	int _x = x;
 	int _y = y;
+	int col = makecol(255,255,255);	// white text color
 
 	for (i = 0; i < max; i++) {
-		textout_ex(	drawing_surface, font, lines[i].c_str(), 
-								_x, _y, makecol(255,255,255), -1);
+		allegro_gl_printf(main_font, _x, _y, 0.0f, col, lines[i].c_str());
 		_y += FONT_HEIGHT;
-	}
-}
-
-// private internal method only
-void Window::DrawBitmapAt(	BITMAP* bmp, int x, int y, 
-														bool flip_x, bool flip_y, 
-														bool use_alpha, int alpha) {
-	
-	// Note: transparency support is still weird.
-	// Note: some of the flipx/y stuff uses OR for short circuit
-	// and is more complex than it needs to be
-
-	if (!use_alpha) {
-
-		if (!(flip_x || flip_y)) 
-			draw_sprite(drawing_surface, bmp, x, y);
-		else if (flip_x && !flip_y)
-			draw_sprite_h_flip(drawing_surface, bmp, x, y);
-		else if (flip_y && !flip_x)
-			draw_sprite_v_flip(drawing_surface, bmp, x, y);
-		else
-			draw_sprite_vh_flip(drawing_surface, bmp, x, y);
-			
-	} else {
-		// XXX DOES NOT FLIP ALPHA-BLENDED SPRITES RIGHT NOW
-		// set_trans_blender(256,256,256,alpha);
-		set_alpha_blender();
-		//set_trans_blender(0,256,256,256);
-		// blit(bmp, drawing_surface, 0, 0, x, y, bmp->w, bmp->h);
-		draw_trans_sprite(drawing_surface, bmp, x, y);
-		set_trans_blender(256,256,256,256);
 	}
 }
 
@@ -132,169 +86,180 @@ void Window::DrawBitmapAt(	BITMAP* bmp, int x, int y,
 // NOT flip it at all) 
 //
 // Holy sweetness. Remember that '^' is XOR, and XOR rocks.
-void Window::DrawSprite(	Sprite* sprite, int x, int y, 
+void GameWindow::DrawSprite(	Sprite* sprite, int x, int y, 
 													bool flip_x, bool flip_y, int alpha) {
-	DrawBitmap( sprite->bmp, 
-							x + sprite->x_offset, y + sprite->y_offset, 
-							sprite->flip_x ^ flip_x, sprite->flip_y ^ flip_y, 
-							sprite->use_alpha, alpha);
+	int rx = x + sprite->x_offset;
+	int ry = y + sprite->y_offset;
+
+	// texture coords
+	// we mess with them if flipping
+	float tx1 = 0.0f, ty1 = 0.0f;
+	float tx2 = 0.0f, ty2 = 1.0f;
+	float tx3 = 1.0f, ty3 = 1.0f;
+	float tx4 = 1.0f, ty4 = 0.0f;
+
+	// flip X if needed
+	if (sprite->flip_x ^ flip_x) {
+		tx1 = tx2 = 1.0f;
+		tx3 = tx4 = 0.0f;
+	}
+
+	// flip Y if needed
+	if (sprite->flip_y ^ flip_y) {
+		ty1 = ty4 = 1.0f;
+		ty2 = ty3 = 0.0f;
+	}
+
+	glBindTexture(GL_TEXTURE_2D, sprite->texture);
+
+	glBegin(GL_QUADS); 
+    glTexCoord2f(tx1, ty1);
+  	glVertex2f(rx, ry + sprite->bmp->h);
+
+    glTexCoord2f(tx2, ty2);
+    glVertex2f(rx, ry);
+
+    glTexCoord2f(tx3, ty3);
+    glVertex2f(rx + sprite->bmp->w, ry);
+
+    glTexCoord2f(tx4, ty4);
+    glVertex2f(rx + sprite->bmp->w, ry + sprite->bmp->h);
+	glEnd();
+
+	// extra params not used yet:
+	// sprite->use_alpha, alpha 
 }
 
-int Window::Init( uint _width, uint _height, 
+void GameWindow::SetClearColor(uint r, uint g, uint b) {
+	glClearColor(	float(r)/256.0f, 
+								float(g)/256.0f, 
+								float(b)/256.0f,
+								1.0f );
+}
+
+int GameWindow::Init( uint _width, uint _height, 
 									bool _fullscreen, int _mode) {
 	
 	int depth = DEFAULT_COLOR_DEPTH;
 	int gfx_mode;
-	int vheight;
 	
 	width = _width;
 	height = _height;
-	mode = _mode;
-	clear_color = 0;
-
-	set_color_depth(depth);
 
 	// Special case: We won't be drawing _anything_
 	if (!GAMESTATE->GetGameOptions()->DrawGraphics() ) {
-		fprintf(stderr, "Window: DISABLING ALL GRAPHICS\n");
+		fprintf(stderr, "GameWindow: DISABLING ALL GRAPHICS\n");
 		set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
-		mode = MODE_NOBUFFERING;
 		initialized = true;
 		return 0;
 	}
+
+	install_allegro_gl();
+	allegro_gl_clear_settings();
+	
+	set_color_depth(depth);
+	allegro_gl_set(AGL_COLOR_DEPTH, depth);
+  allegro_gl_set(AGL_DOUBLEBUFFER, 1);
+  allegro_gl_set(AGL_Z_DEPTH, 24);
+  allegro_gl_set(AGL_WINDOWED, TRUE);
+  allegro_gl_set(AGL_RENDERMETHOD, 1);
+  allegro_gl_set(AGL_SUGGEST, AGL_COLOR_DEPTH | AGL_DOUBLEBUFFER
+         | AGL_RENDERMETHOD /* | AGL_Z_DEPTH*/ | AGL_WINDOWED);
 	
 	if (_fullscreen)
-			gfx_mode = GFX_AUTODETECT_FULLSCREEN;
-	else
-			gfx_mode = GFX_AUTODETECT_WINDOWED;
+      gfx_mode = GFX_OPENGL_FULLSCREEN;
+  else
+      gfx_mode = GFX_OPENGL;
 
 #	ifdef ALTERNATE_GFX_MODE
 	gfx_mode = ALTERNATE_GFX_MODE;
 # endif // ALTERNATE_GFX_MODE
 
-	if (mode == MODE_PAGEFLIPPING || mode == MODE_TRIPLEBUFFERING)
-		vheight = height * 2;
-	else 
-		vheight = 0;
-
 	if (get_color_depth() != depth)
-		fprintf(stderr, "window: Warning: Asked for %i-bit color mode, got %i-bit instead.\n", depth, get_color_depth());
+		fprintf(stderr, "window: Warning: Asked for %i-bit color mode"
+										", got %i-bit instead.\n", depth, get_color_depth());
 									
-	if (set_gfx_mode(gfx_mode, width, height, 0, vheight) != 0) {
+	if (set_gfx_mode(gfx_mode, width, height, 0, 0) != 0) {
 		fprintf(stderr, 
 						"window: Can't set graphics mode! (%i, %i, fullscreen = %i) \n"
 						"Try setting a different graphics mode or try non-fullscreen\n"
-						"Allegro error says: '%s'\n",
-						width, height, _fullscreen, allegro_error);
+						"Allegro error says: '%s'\n"
+						"AllegoGL error says: '%s'\n",
+						width, height, _fullscreen, allegro_error, allegro_gl_error);
 		return -1;
 	}
 	
 	set_window_title(VERSION_STRING);
+
+	main_font = allegro_gl_convert_allegro_font(
+								font, AGL_FONT_TYPE_TEXTURED, -1.0
+							);
+
+	assert(main_font != NULL);
 	
-	if (mode == MODE_DOUBLEBUFFERING) {
-		clear_to_color(screen, clear_color);
-		
-		// initialize back buffering
-		backbuf = create_bitmap(width, height);
-		if (!backbuf) {
-			fprintf(stderr, "window: can't create back buffer!\n");
-			return -2;
-		}
-		
-		clear_to_color(backbuf, clear_color);
-		drawing_surface = backbuf;
-		
-	} else if (mode == MODE_PAGEFLIPPING) {
-	
-		// set up page flipping
-		page[0] = create_video_bitmap(width, height);
-		page[1] = create_video_bitmap(width, height);
-
-		if ((!page[0]) || (!page[1])) {
-			fprintf(stderr, "window: can't setup page flipping!\n");
-			return -2;
-		}
-
-		active_page = 0;
-		drawing_surface = page[active_page];
-		
-	} else if (mode == MODE_NOBUFFERING) {
-
-		clear_to_color(screen, clear_color);
-		drawing_surface = screen;
-		
-	} else {
-		
-		fprintf(stderr, "window: specified mode not supported!\n");
-		return -2;
-		
-	}
-
-	initialized = true;
+	if (InitGL())
+		initialized = true;
+	else
+		initialized = false;
 
 	return 0;
 }
 
-void Window::Clear() {
-	switch (mode) {
-		case MODE_PAGEFLIPPING:
-			clear_to_color(page[active_page], clear_color);
-			break;
-		case MODE_DOUBLEBUFFERING:
-			clear_to_color(backbuf, clear_color);
-			break;
-		case MODE_NOBUFFERING:
-			clear_to_color(screen, clear_color);
-			break;
-		default:
-			fprintf(stderr, "ERROR: Unkown buffering mode %u\n", mode);
-	}
+bool GameWindow::InitGL() {
+	glEnable(GL_TEXTURE_2D);
+	
+	// glAlphaFunc(GL_GREATER, 0.5);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	glShadeModel(GL_FLAT);
+	glPolygonMode(GL_FRONT, GL_FILL);
+
+	glViewport(0, 0, SCREEN_W, SCREEN_H);
+	glMatrixMode(GL_PROJECTION); 
+	glLoadIdentity();
+	
+	glOrtho(0, SCREEN_W, 0, SCREEN_H, -10, 10);
+	
+	// flip the Y axis
+	glScalef(1.0f, -1.0f, 1.0f);
+
+	// move the origin to bottom left
+	glTranslatef(0, -SCREEN_H, 0);
+
+  glMatrixMode(GL_MODELVIEW);
+
+	return true;
 }
 
-void Window::BeginDrawing() {
-	acquire_screen();
+void GameWindow::Clear() {
+	// XXX: use clear_color too.
+	glClear(GL_COLOR_BUFFER_BIT /*| GL_DEPTH_BUFFER_BIT*/);
+  glLoadIdentity();
 }
 
-void Window::EndDrawing() {
-	release_screen();
+void GameWindow::BeginDrawing() {
+	glEnable(GL_ALPHA_TEST);
+}
+
+void GameWindow::EndDrawing() {
 }
 
 // draws the backbuffer to the screen and erases the backbuffer
-void Window::Flip() {
-	if (mode == MODE_PAGEFLIPPING) {
-		show_video_bitmap(page[active_page]);
-	
-		if (active_page == 1)
-			active_page = 0;
-		else 
-			active_page = 1;
-	
-		drawing_surface = page[active_page];
-	} else if (mode == MODE_DOUBLEBUFFERING) {
-		vsync();
-		blit(backbuf, screen, 0, 0, 0, 0, width, height);
-	} else if (mode == MODE_NOBUFFERING) {
-		// do nothing	
-	}
+void GameWindow::Flip() {
+	allegro_gl_flip();
 }
 
-void Window::Shutdown() {
+void GameWindow::Shutdown() {
 	if (!initialized)
 			return;
 
-	if (mode == MODE_PAGEFLIPPING) {
-		destroy_bitmap(page[0]);
-		destroy_bitmap(page[1]);
-	} else if (mode == MODE_DOUBLEBUFFERING) {
-		destroy_bitmap(backbuf);
-	}
-	
-	drawing_surface = NULL;
+	allegro_gl_destroy_font(main_font);
+
 	initialized = false;
 }
 
-Window::Window() : initialized(false), drawing_surface(NULL) {
-	page[0] = NULL;
-	page[1] = NULL;
+GameWindow::GameWindow() : initialized(false) {
 }
-Window::~Window() {}
+
+GameWindow::~GameWindow() {}

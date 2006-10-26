@@ -35,7 +35,7 @@ void ObjectController::Draw() {
 		if (buttons[i].active) {
 			bx = buttons[i].sprite->x_offset + x;
 			by = buttons[i].sprite->y_offset + y;
-			WINDOW->DrawBitmap(buttons[i].sprite->bmp, bx, by);
+			WINDOW->DrawSprite(buttons[i].sprite, x, y);
 		}
 	}
 }
@@ -77,19 +77,9 @@ bool ObjectController::Init(PhysSimulation *p) {
 }
 
 void ObjectController::Shutdown() {
-	int i, max = buttons.size();
-	
-	for (i = 0; i < max; i++) {
-		if (buttons[i].sprite) {
-			delete buttons[i].sprite;
-			buttons[i].sprite = NULL;
-		}
-	}
-
-	if (controller_sprite) {
-		delete controller_sprite;
-		controller_sprite = NULL;
-	}
+	// Don't explicitly free stuff here
+	buttons.clear();
+	controller_sprite = NULL;
 
 	BaseShutdown();
 }

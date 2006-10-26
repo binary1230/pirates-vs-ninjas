@@ -14,15 +14,17 @@
  *
  * 2) Handle duplicate assets (bitmaps/sounds/etc) efficiently
  * 		Example: if something asks for "ring.bmp", we load it the first time,
- * 		         we store it in bitmaps["ring.bmp"]. The second time something 
+ * 		         we store it in sprites["ring.bmp"]. The second time something 
  * 		         asks for "ring.bmp", we find the copy we already loaded, and
  * 		         use that.
  *
  * All deletion/creation of assets are handled HERE and only HERE.
  */
 
-typedef map<CString, BITMAP*> BitmapList;
-typedef map<CString, BITMAP*>::iterator BitmapListIter;
+class Sprite;
+
+typedef map<CString, Sprite*> SpriteList;
+typedef map<CString, Sprite*>::iterator SpriteListIter;
 
 typedef map<CString, SAMPLE*> SampleList;
 typedef map<CString, SAMPLE*>::iterator SampleListIter;
@@ -36,7 +38,7 @@ class AssetManager {
 
 	protected:
 		vector<CString> paths;
-		BitmapList bitmaps;
+		SpriteList sprites;
 		SampleList samples;
 		OGGFILE* music;
 		
@@ -44,7 +46,7 @@ class AssetManager {
 		int Init();
 		void Shutdown();
 
-		void FreeBitmaps();
+		void FreeSprites();
 		void FreeSamples();
 		void FreeMusic();
 		void Free();
@@ -70,7 +72,7 @@ class AssetManager {
 		//! This function looks in the current search path
 		//! it also outputs the palette in *pal
 		//! if use_alpha is true, this bitmap is loaded as a 32bit RGBA image
-		BITMAP* LoadBitmap(	const char* filename, 
+		Sprite* LoadSprite(	const char* filename, 
 												bool use_alpha = false, 
 												PALETTE* pal = NULL	); 
 

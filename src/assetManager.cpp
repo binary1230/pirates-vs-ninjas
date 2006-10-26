@@ -1,17 +1,18 @@
 #include "assetManager.h"
 #include "oggFile.h"
+#include "sprite.h"
 
 DECLARE_SINGLETON(AssetManager)
 
 int AssetManager::Init() {
 	ResetPaths();
-	bitmaps.clear();
+	sprites.clear();
 	samples.clear();
 	return true;
 }
 
 void AssetManager::Free() {
-	FreeBitmaps();
+	FreeSprites();
 	FreeSamples();
 	FreeMusic();
 }
@@ -26,13 +27,21 @@ void AssetManager::FreeSamples() {
 	samples.clear();
 }
 
-void AssetManager::FreeBitmaps() {
-	BitmapListIter i;
-	for (i = bitmaps.begin(); i != bitmaps.end(); i++) {
-		if (i->second)
-			destroy_bitmap(i->second);
+void AssetManager::FreeSprites() {
+	SpriteListIter i;
+	Sprite* sprite;
+	for (i = sprites.begin(); i != sprites.end(); i++) {
+		
+		sprite = i->second;
+
+		if (!sprite)
+			continue;
+
+		// TODO: probably something in here about freeing GL textures
+		destroy_bitmap(sprite->bmp);
+		sprite->bmp = NULL;
 	}
-	bitmaps.clear();
+	sprites.clear();
 }
 
 /*void AssetManager::FreeSongs() {
@@ -103,16 +112,19 @@ bool AssetManager::FileExists(const char* file) const {
 }
 
 //! Opens a bitmap, utilizes the search paths
-BITMAP* AssetManager::LoadBitmap(	const char* filename, 
+// XXX: Need to fix alpha blending
+Sprite* AssetManager::LoadSprite(	const char* filename, 
 																	bool use_alpha, 
 																	PALETTE* pal) {
-	BITMAP* bmp = NULL;
+	
+	Sprite* sprite = NULL;
+	
 	int original_bpp = get_color_depth();
 	
 	// 1) See if this bitmap is already loaded
-	BitmapListIter i = bitmaps.find(filename);
+	SpriteListIter i = sprites.find(filename);
 
-	if (i != bitmaps.end()) {
+	if (i != sprites.end()) {
 		return i->second;		// return the already loaded bitmap
 	}
 
@@ -120,20 +132,30 @@ BITMAP* AssetManager::LoadBitmap(	const char* filename,
 	CString file = GetPathOf(filename);
 	if (file.length() != 0) {
 
-		if (!use_alpha) {
-			bmp = load_bitmap(file, *pal);
-		} else {
+		sprite = new Sprite();
+	
+		if (use_alpha) {
 			set_color_depth(32);
-			bmp = load_bitmap(file, *pal);
-			set_color_depth(original_bpp);
 		}
+			
+		sprite->bmp = load_bitmap(file, *pal);
+	
+		// make the OpenGL texture
+		if (!use_alpha)
+			sprite->texture = allegro_gl_make_masked_texture(sprite->bmp);
+		else
+			sprite->texture = allegro_gl_make_texture_ex(
+				AGL_TEXTURE_HAS_ALPHA, sprite->bmp, GL_RGBA
+			);
+		
+		set_color_depth(original_bpp);
 
 		// success, add it to the list
-		if (bmp)
-			bitmaps[filename] = bmp;
+		if (sprite->bmp)
+			sprites[filename] = sprite;
 	}
 	
-	return bmp;
+	return sprite;
 }
 
 SAMPLE* AssetManager::LoadSound(const char* filename) {

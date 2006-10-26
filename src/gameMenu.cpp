@@ -36,11 +36,11 @@ void GameMenu::DoMenuAction(const CString &action) {
 // #define DEBUG_VERSION_PRINT 1
 
 void GameMenu::Draw() {
-	 int x_offset = SCREEN_W/2 - back->w/2;
-	 int y_offset = SCREEN_H/2 - back->h/2;
+	 int x_offset = SCREEN_W/2 - back->bmp->w/2;
+	 int y_offset = SCREEN_H/2 - back->bmp->h/2;
 
-   WINDOW->DrawBitmap(back, x_offset, y_offset);
-	 WINDOW->DrawBitmap(selector, x_offset + x_pos, y_offset + y_pos[current_pos]);
+   WINDOW->DrawSprite(back, x_offset, y_offset);
+	 WINDOW->DrawSprite(selector, x_offset + x_pos, y_offset + y_pos[current_pos]);
 	 
 	 #ifdef DEBUG_VERSION_PRINT
 	 textprintf_right_ex(  WINDOW->GetDrawingSurface(), font, 
@@ -75,13 +75,13 @@ void GameMenu::Update() {
 int GameMenu::Init(XMLNode xMode) {
 	current_pos = 0;
 
-	back = ASSETMANAGER->LoadBitmap(xMode.getChildNode("bgPic").getText());
+	back = ASSETMANAGER->LoadSprite(xMode.getChildNode("bgPic").getText());
 	if (!back) {
 		fprintf(stderr, "-- MENU ERROR: Couldn't load bgPic.\n");
 		return -1;
 	}
 	
-	selector = ASSETMANAGER->LoadBitmap(xMode.getChildNode("selectorPic").getText());
+	selector = ASSETMANAGER->LoadSprite(xMode.getChildNode("selectorPic").getText());
 	if (!selector) {
 		fprintf(stderr, "-- MENU ERROR: Couldn't load selectorPic\n");
 		return -1;

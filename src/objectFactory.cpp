@@ -342,21 +342,15 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
   obj->buttons.resize(max);
 
   filename = xImages.getChildNode("base").getText();
-  obj->controller_sprite = new Sprite();
   
-  obj->controller_sprite->bmp = 
-  ASSETMANAGER->LoadBitmap(filename.c_str());
+  obj->controller_sprite = ASSETMANAGER->LoadSprite(filename.c_str());
     
-  if (!obj->controller_sprite->bmp) {
+  if (!obj->controller_sprite) {
     fprintf(stderr, "-- ERROR: Can't load file '%s'\n", filename.c_str() );
-    delete obj->controller_sprite;
     delete obj;
     return NULL;
   }
   
-  obj->controller_sprite->x_offset = 0;
-  obj->controller_sprite->y_offset = 0;
-
   int x1,y1;
   if (!xImages.getChildNode("base").getChildNode("x").getInt(x1)) {
     fprintf(stderr, "Invalid controller base X!\n");
@@ -378,12 +372,11 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
       b = &obj->buttons[i];
       
       filename = xBtn.getText();
-      b->sprite = new Sprite();
       b->active = 0;
     
-      b->sprite->bmp = ASSETMANAGER->LoadBitmap(filename.c_str());
+      b->sprite = ASSETMANAGER->LoadSprite(filename.c_str());
       
-      if (!b->sprite->bmp) {
+      if (!b->sprite) {
         fprintf(stderr,"-- ERROR: Can't load file '%s'\n",filename.c_str());
         return NULL;
       }

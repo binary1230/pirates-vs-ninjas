@@ -30,9 +30,9 @@ void ObjectText::Draw() {
 	int txt_y;
 
 	/* draw underlying box */
-	WINDOW->DrawFillRect(	box_x1,	box_y1, 
-												box_x2,	box_y2,
-												box_color);
+	WINDOW->DrawRect(	box_x1,	box_y1, 
+										box_x2,	box_y2,
+										box_color, true);
 
 	// - draw avatar -
 	if (avatar_sprite)
@@ -113,21 +113,21 @@ bool ObjectText::SetAvatarFilename(CString file) {
 	if (file.length() <= 0)
 		return false;
 
+	avatar_sprite = ASSETMANAGER->LoadSprite(file.c_str());
+	
 	if (!avatar_sprite)
-		avatar_sprite = new Sprite();
+		return false;
 
-	avatar_sprite->bmp = ASSETMANAGER->LoadBitmap(file.c_str());
 	avatar_sprite->x_offset = 5;
 	avatar_sprite->y_offset = 5;
 
-	return (avatar_sprite->bmp != NULL);
+	return true;
 }
 
 void ObjectText::Shutdown() {
 	text_index = 0;
 	page_texts.clear();
-	if (avatar_sprite)
-		delete avatar_sprite;
+	avatar_sprite = NULL;
 
 	BaseShutdown();
 }

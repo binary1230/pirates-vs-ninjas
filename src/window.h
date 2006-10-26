@@ -31,33 +31,17 @@ extern int screen_size_x;
 extern int screen_size_y;
 
 //! The onscreen window
-class Window {
+class GameWindow {
 
-	DECLARE_SINGLETON_CLASS(Window)
+	DECLARE_SINGLETON_CLASS(GameWindow)
 
 	protected:
 		bool initialized;
 		uint width, height;
-		int mode;
-
-		//! Points to a surface we can draw to.
-		BITMAP* drawing_surface;
-		
-		// For page flipping
-		BITMAP* page[2];
-		uint active_page;			// index of the page NOT being
-													// displayed (ok to draw on)
-		
-		// For double buffering
-		BITMAP* backbuf;
-		
-		//! Draw a bitmap, minus the clipping.
-		void DrawBitmapAt(	BITMAP* bmp, int x, int y, 
-												bool flip_x, bool flip_y, 
-												bool use_alpha, int alpha);
-
-		//! Background clear color
-		int clear_color;
+		FONT* main_font;
+			
+		//! Init openGL stuff
+		bool InitGL();
 		
 	public:
 		int Init(	uint _width, uint _height, bool _fullscreen = 0,
@@ -65,7 +49,6 @@ class Window {
 
 		void Shutdown();
 
-		inline BITMAP* GetDrawingSurface() {return drawing_surface;};
 		void Clear();
 		void Flip();
 
@@ -75,37 +58,27 @@ class Window {
 		void DrawSprite(	Sprite* sprite, int x, int y, 
 											bool flip_x=0, bool flip_y=0, 
 											int alpha=255);
-
-		void DrawBitmap(	BITMAP* bmp, int x, int y, 
-											bool flip_x=0, bool flip_y=0, 
-											bool use_alpha = false, int alpha=255);
-
-		//! Blit is provided if we need to do something more complex
-		void BlitBitmap(  BITMAP* bmp, int source_x, int source_y, 
-											int dest_x, int dest_y, int width, int height);
-
+	
 		//! Draw text at specified XY
 		void DrawText(int x, int y, CString text);
 
 		//! Draw a solid rectange
-		void DrawRect(_Rect &r, int col);
-		void DrawRect(int x1, int y1, int x2, int y2, int color);
+		void DrawRect(_Rect &r, int col,bool filled=false);
+		void DrawRect(int x1, int y1, int x2, int y2, int color, bool filled=false);
 
-		//! Draw a filled rectangle
-		void DrawFillRect(int x1, int y1, int x2, int y2, int color);
-
-		inline void SetClearColor(int col) {clear_color = col;};
+		void SetClearColor(uint r, uint g, uint b);
 
 		void BeginDrawing();
 		void EndDrawing();
 
-		//! Take a screenshot, call after Draw()
-		//! Leave the filename NULL to use an automatic one
+		//! Take a screenshot, call directly after Draw()
+		//! Leave the filename NULL to guess an 
+		//! automatically incrementing filename
 		void Screenshot(char* filename = NULL);
 
-		virtual ~Window();
+		virtual ~GameWindow();
 };
 
-#define WINDOW Window::GetInstance()
+#define WINDOW GameWindow::GetInstance()
 
 #endif // WINDOW_H

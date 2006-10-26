@@ -6,10 +6,11 @@
 #include "stdafx.h"
 
 #include "gameMode.h"
+#include "sprite.h"
 
 class GameMenu : public GameMode {
 	protected:
-		BITMAP *back, *selector;
+		Sprite *back, *selector;
 		vector<int> y_pos;
 		int x_pos;
 

@@ -371,13 +371,12 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 					return -1;
 		}
 
-		clear_color = makecol(r,g,b);
+		WINDOW->SetClearColor(r,g,b);
 	} else {
 		clear_color = 0;
+		WINDOW->SetClearColor(0,0,0);
 	}
 
-	// XXX make clear_color it a class memeber
-	WINDOW->SetClearColor(clear_color);
 
 	return 0;
 }

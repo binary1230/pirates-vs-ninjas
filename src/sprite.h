@@ -12,10 +12,13 @@ class Sprite {
 		bool flip_x, flip_y;
 		bool use_alpha;
 
+		GLuint texture;	// only used for 3d
+
 		Sprite() {
 			x_offset = y_offset = 0;
 			flip_x = flip_y = false;
 			use_alpha = false;
+			texture = 0;
 		}
 };
 

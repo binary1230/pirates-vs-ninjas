@@ -6,7 +6,6 @@
 class GameState;
 class GameOptions;
 class BaseInput;
-class Window;
 class GameMode;
 class AssetManager;
 class PhysSimulation;

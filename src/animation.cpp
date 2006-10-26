@@ -61,14 +61,10 @@ void Animation::ResetAnimation() {
 void Animation::Shutdown() {
 	int i, max = frames.size();
 
+	// DO NOT FREE SPRITES
+
 	for (i = 0; i < max; i++) {
 		if (frames[i]) {
-			
-			if (frames[i]->sprite) {
-				delete frames[i]->sprite;
-				frames[i]->sprite = NULL;
-			}
-
 			delete frames[i];
 			frames[i] = NULL;
 		}
@@ -87,12 +83,9 @@ bool Animation::PushImage(	const char* _file,
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
 
-	f->sprite = new Sprite();
-	assert(f->sprite != NULL);
-	
-	f->sprite->bmp = ASSETMANAGER->LoadBitmap(_file, use_alpha);
+	f->sprite = ASSETMANAGER->LoadSprite(_file, use_alpha);
 
-	if (!f->sprite->bmp) {
+	if (!f->sprite) {
 		fprintf(stderr, "ERROR: Can't load image file: '%s'\n", _file);
 		return false;
 	}
@@ -172,7 +165,10 @@ Animation* Animation::New(XMLNode &xAnim) {
 		}
 	}
 
-	// need to rethink where these come from
+	// XXX: need to rethink where these come from
+	assert(anim->frames[0]->sprite);
+	assert(anim->frames[0]->sprite->bmp);
+
 	anim->width = anim->frames[0]->sprite->bmp->w;
 	anim->height = anim->frames[0]->sprite->bmp->h;
 	

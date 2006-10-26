@@ -264,8 +264,6 @@ void Object::BaseShutdown() {
 	currentAnimation = NULL;
 	currentSprite = NULL;
 	layer = NULL;
-
-	// just in case..
 	is_dead = true;
 	display_time = -1;
 }

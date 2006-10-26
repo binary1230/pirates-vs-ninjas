@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "singleton.h"
 #include "gameMode.h"
+#include "sprite.h"
 
 class GameState;
 class OGGFILE;
@@ -11,7 +12,7 @@ class OGGFILE;
 //! Represents a physical simulation (the main game levels)
 class CreditsMode : public GameMode {
 		protected:		
-			BITMAP* credits_bmp;
+			Sprite* credits_sprite;
 			int scroll_speed;
 			int scroll_offset;
 			OGGFILE* music;

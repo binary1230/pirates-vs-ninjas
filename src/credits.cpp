@@ -6,9 +6,12 @@
 #include "gameSound.h"
 
 int CreditsMode::Init(XMLNode xMode) {
-	credits_bmp = ASSETMANAGER->LoadBitmap(
-		xMode.getChildNode("scrollPic").getText()
-	);
+	CString file = xMode.getChildNode("scrollPic").getText();
+	
+	credits_sprite = ASSETMANAGER->LoadSprite(file);
+
+	if (!credits_sprite)
+		return -1;
 
 	if (!xMode.getChildNode("scrollSpeed").getInt(scroll_speed)) {
 		fprintf(stderr, " -- Invalid scroll speed!\n");
@@ -16,10 +19,7 @@ int CreditsMode::Init(XMLNode xMode) {
 	}
 	scroll_offset = WINDOW->Height();
 
-	WINDOW->SetClearColor(0);
-
-	if (!credits_bmp)
-		return -1;
+	WINDOW->SetClearColor(0,0,0);
 	
 	// Load the music
 	if (xMode.nChildNode("music") == 1) {
@@ -36,8 +36,8 @@ void CreditsMode::Shutdown() {
 
 void CreditsMode::Draw() {
 	// XXX Should use window->Blit()...
-	WINDOW->DrawBitmap(	credits_bmp, 
-											WINDOW->Width()/2 - credits_bmp->w/2, 
+	WINDOW->DrawSprite(	credits_sprite, 
+											WINDOW->Width()/2 - credits_sprite->bmp->w/2, 
 											scroll_offset );
 }
 
@@ -52,13 +52,14 @@ void CreditsMode::Update() {
 		scroll_offset -= scroll_speed;		// NORMAL
 
 	// If we finished scrolling or they press the exit key, we exit
-	if (	scroll_offset < -int(credits_bmp->h) || INPUT->KeyOnce(GAMEKEY_EXIT)) {
+	if (	scroll_offset < -int(credits_sprite->bmp->h) || 
+				INPUT->KeyOnce(GAMEKEY_EXIT))	{
    	GAMESTATE->SignalEndCurrentMode();
 	}
 }
 
 CreditsMode::CreditsMode() {
-	credits_bmp = NULL;
+	credits_sprite = NULL;
 }
 
 CreditsMode::~CreditsMode() {

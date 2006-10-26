@@ -12,6 +12,7 @@
 #ifdef WIN32
 #include <winalleg.h>
 #endif
+#include <alleggl.h>
 
 #ifdef PLATFORM_DARWIN
 #include <CoreServices/CoreServices.h>
