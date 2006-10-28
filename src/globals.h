@@ -9,7 +9,7 @@
 
 typedef unsigned int uint;
 
-// lameass .dat file functions
+// OLD UNUSUED [stupid] .dat file functions
 //#define E(x) ((BITMAP*)e[x].dat)
 //#define S(x) ((BITMAP*)s[x].dat)
 //#define SOUNDS(x) ((SAMPLE*)sounds[x].dat)

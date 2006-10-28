@@ -37,11 +37,15 @@ void CreditsMode::Shutdown() {
 void CreditsMode::Draw() {
 	// XXX Should use window->Blit()...
 	WINDOW->DrawSprite(	credits_sprite, 
-											WINDOW->Width()/2 - credits_sprite->bmp->w/2, 
+											WINDOW->Width()/2 - credits_sprite->width/2, 
 											scroll_offset );
 }
 
 void CreditsMode::Update() {
+
+	// If they are pressing Jump, pause the scroll
+	if (INPUT->Key(PLAYERKEY1_JUMP))
+		return;
 
 	// Hehehe.. weird scrolling hacks, try it.
 	if (INPUT->Key(PLAYERKEY1_DOWN))
@@ -52,7 +56,7 @@ void CreditsMode::Update() {
 		scroll_offset -= scroll_speed;		// NORMAL
 
 	// If we finished scrolling or they press the exit key, we exit
-	if (	scroll_offset < -int(credits_sprite->bmp->h) || 
+	if (	scroll_offset < -int(credits_sprite->height) || 
 				INPUT->KeyOnce(GAMEKEY_EXIT))	{
    	GAMESTATE->SignalEndCurrentMode();
 	}

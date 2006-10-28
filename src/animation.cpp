@@ -165,12 +165,14 @@ Animation* Animation::New(XMLNode &xAnim) {
 		}
 	}
 
-	// XXX: need to rethink where these come from
 	assert(anim->frames[0]->sprite);
-	assert(anim->frames[0]->sprite->bmp);
 
-	anim->width = anim->frames[0]->sprite->bmp->w;
-	anim->height = anim->frames[0]->sprite->bmp->h;
+	// TODO: Currently this just gets the width and height from the
+	// first frame.  However, we may want to get it from any
+	// frame, not just the first one.  In the future, we should make
+	// that an option in XML
+	anim->width = anim->frames[0]->sprite->width;
+	anim->height = anim->frames[0]->sprite->height;
 	
 	return anim;
 }

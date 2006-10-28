@@ -8,11 +8,11 @@
 #include "physSimulation.h"
 
 int ObjectController::GetHeight() {
-	return controller_sprite->bmp->h;
+	return controller_sprite->height;
 }
 
 int ObjectController::GetWidth() {
-	return controller_sprite->bmp->w;
+	return controller_sprite->width;
 }
 
 void ObjectController::Draw() {

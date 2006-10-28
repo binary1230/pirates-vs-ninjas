@@ -28,7 +28,7 @@ void AssetManager::FreeSamples() {
 }
 
 void AssetManager::FreeSprites() {
-	SpriteListIter i;
+	/*SpriteListIter i;
 	Sprite* sprite;
 	for (i = sprites.begin(); i != sprites.end(); i++) {
 		
@@ -38,9 +38,8 @@ void AssetManager::FreeSprites() {
 			continue;
 
 		// TODO: probably something in here about freeing GL textures
-		destroy_bitmap(sprite->bmp);
-		sprite->bmp = NULL;
 	}
+	*/
 	sprites.clear();
 }
 
@@ -133,26 +132,52 @@ Sprite* AssetManager::LoadSprite(	const char* filename,
 	if (file.length() != 0) {
 
 		sprite = new Sprite();
+		assert(sprite && "ERROR: Out of memory, can't allocate sprite!\n");
 	
 		if (use_alpha) {
 			set_color_depth(32);
 		}
 			
-		sprite->bmp = load_bitmap(file, *pal);
+		BITMAP* bmp = load_bitmap(file, *pal);
 	
+		if (!bmp) {
+			fprintf(stderr, "ERROR: Can't load bitmap file: '%s'\n", file.c_str());
+			delete sprite;
+			return NULL;
+		}
+
+		sprite->width = bmp->w;
+		sprite->height = bmp->h;
+
 		// make the OpenGL texture
+		// this makes a copy of the bitmap
 		if (!use_alpha)
-			sprite->texture = allegro_gl_make_masked_texture(sprite->bmp);
+			sprite->texture = allegro_gl_make_masked_texture(bmp);
 		else
 			sprite->texture = allegro_gl_make_texture_ex(
-				AGL_TEXTURE_HAS_ALPHA, sprite->bmp, GL_RGBA
+				AGL_TEXTURE_HAS_ALPHA | AGL_TEXTURE_FLIP, bmp, GL_RGBA
 			);
+				
+		// don't need the original Allegro bitmap anymore
+		destroy_bitmap(bmp);
+		bmp = NULL;
 		
 		set_color_depth(original_bpp);
 
-		// success, add it to the list
-		if (sprite->bmp)
+		// add to the loaded sprites list
+		if (sprite->texture != 0) {
 			sprites[filename] = sprite;
+		} else {
+			fprintf(stderr, 	"ERROR: Failed making texture for '%s'\n"
+												"-NOTE: Make sure texture size is a multiple of 2!\n",
+												file.c_str());
+
+			if (allegro_gl_error && strlen(allegro_gl_error))
+				fprintf(stderr, "       AllegroGL says: %s\n", allegro_gl_error);
+
+			delete sprite;
+			return NULL;
+		}
 	}
 	
 	return sprite;

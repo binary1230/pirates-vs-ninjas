@@ -5,8 +5,16 @@
 #include "sprite.h"
 #include "gameOptions.h"
 
-// #define DEFAULT_COLOR_DEPTH 16
-#define DEFAULT_COLOR_DEPTH desktop_color_depth()
+// DOES NOT USE THE DEPTH BUFFER
+// relies on Drawing order (we are 2d after all.)
+
+#define USE_DESKTOP_COLOR_DEPTH
+
+#ifndef USE_DESKTOP_COLOR_DEPTH
+#	define DEFAULT_COLOR_DEPTH 16
+#else
+#	define DEFAULT_COLOR_DEPTH desktop_color_depth()
+#endif
 
 // leave this undefined usually.
 // #define ALTERNATE_GFX_MODE GFX_XDGA2
@@ -88,9 +96,6 @@ void GameWindow::DrawText(int x, int y, CString text) {
 // Holy sweetness. Remember that '^' is XOR, and XOR rocks.
 void GameWindow::DrawSprite(	Sprite* sprite, int x, int y, 
 													bool flip_x, bool flip_y, int alpha) {
-	int rx = x + sprite->x_offset;
-	int ry = y + sprite->y_offset;
-
 	// texture coords
 	// we mess with them if flipping
 	float tx1 = 0.0f, ty1 = 0.0f;
@@ -98,13 +103,25 @@ void GameWindow::DrawSprite(	Sprite* sprite, int x, int y,
 	float tx3 = 1.0f, ty3 = 1.0f;
 	float tx4 = 1.0f, ty4 = 0.0f;
 
-	// flip X if needed
+	int rx = x + sprite->x_offset;
+
+	// clip if needed
+	if (rx + sprite->width < 0 || rx > SCREEN_W)
+		return;
+
+	// flip x if needed
 	if (sprite->flip_x ^ flip_x) {
 		tx1 = tx2 = 1.0f;
 		tx3 = tx4 = 0.0f;
 	}
 
-	// flip Y if needed
+	int ry = y + sprite->y_offset;
+
+	// clip if needed
+	if (ry + sprite->height < 0 || ry > SCREEN_H)
+		return;
+
+	// flip y if needed
 	if (sprite->flip_y ^ flip_y) {
 		ty1 = ty4 = 1.0f;
 		ty2 = ty3 = 0.0f;
@@ -114,16 +131,16 @@ void GameWindow::DrawSprite(	Sprite* sprite, int x, int y,
 
 	glBegin(GL_QUADS); 
     glTexCoord2f(tx1, ty1);
-  	glVertex2f(rx, ry + sprite->bmp->h);
+  	glVertex2f(rx, ry + sprite->height);
 
     glTexCoord2f(tx2, ty2);
     glVertex2f(rx, ry);
 
     glTexCoord2f(tx3, ty3);
-    glVertex2f(rx + sprite->bmp->w, ry);
+    glVertex2f(rx + sprite->width, ry);
 
     glTexCoord2f(tx4, ty4);
-    glVertex2f(rx + sprite->bmp->w, ry + sprite->bmp->h);
+    glVertex2f(rx + sprite->width, ry + sprite->height);
 	glEnd();
 
 	// extra params not used yet:
@@ -158,13 +175,18 @@ int GameWindow::Init( uint _width, uint _height,
 	allegro_gl_clear_settings();
 	
 	set_color_depth(depth);
+
+	uint gl_flags = AGL_COLOR_DEPTH | AGL_DOUBLEBUFFER | AGL_RENDERMETHOD;
+
+	if (!_fullscreen)
+		gl_flags |= AGL_WINDOWED;
+
 	allegro_gl_set(AGL_COLOR_DEPTH, depth);
   allegro_gl_set(AGL_DOUBLEBUFFER, 1);
-  allegro_gl_set(AGL_Z_DEPTH, 24);
-  allegro_gl_set(AGL_WINDOWED, TRUE);
+  // allegro_gl_set(AGL_Z_DEPTH, 24);
+  allegro_gl_set(AGL_WINDOWED, !_fullscreen);
   allegro_gl_set(AGL_RENDERMETHOD, 1);
-  allegro_gl_set(AGL_SUGGEST, AGL_COLOR_DEPTH | AGL_DOUBLEBUFFER
-         | AGL_RENDERMETHOD /* | AGL_Z_DEPTH*/ | AGL_WINDOWED);
+  allegro_gl_set(AGL_SUGGEST, gl_flags);
 	
 	if (_fullscreen)
       gfx_mode = GFX_OPENGL_FULLSCREEN;
@@ -191,10 +213,10 @@ int GameWindow::Init( uint _width, uint _height,
 	
 	set_window_title(VERSION_STRING);
 
+	// XXX: Font stuff should go in asset manager
 	main_font = allegro_gl_convert_allegro_font(
 								font, AGL_FONT_TYPE_TEXTURED, -1.0
 							);
-
 	assert(main_font != NULL);
 	
 	if (InitGL())
@@ -208,7 +230,7 @@ int GameWindow::Init( uint _width, uint _height,
 bool GameWindow::InitGL() {
 	glEnable(GL_TEXTURE_2D);
 	
-	// glAlphaFunc(GL_GREATER, 0.5);
+	// SET_DEFAULT_GL_ALPHA();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
@@ -233,8 +255,7 @@ bool GameWindow::InitGL() {
 }
 
 void GameWindow::Clear() {
-	// XXX: use clear_color too.
-	glClear(GL_COLOR_BUFFER_BIT /*| GL_DEPTH_BUFFER_BIT*/);
+	glClear(GL_COLOR_BUFFER_BIT);
   glLoadIdentity();
 }
 

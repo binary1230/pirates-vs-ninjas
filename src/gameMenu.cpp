@@ -36,8 +36,8 @@ void GameMenu::DoMenuAction(const CString &action) {
 // #define DEBUG_VERSION_PRINT 1
 
 void GameMenu::Draw() {
-	 int x_offset = SCREEN_W/2 - back->bmp->w/2;
-	 int y_offset = SCREEN_H/2 - back->bmp->h/2;
+	 int x_offset = SCREEN_W/2 - back->width/2;
+	 int y_offset = SCREEN_H/2 - back->height/2;
 
    WINDOW->DrawSprite(back, x_offset, y_offset);
 	 WINDOW->DrawSprite(selector, x_offset + x_pos, y_offset + y_pos[current_pos]);

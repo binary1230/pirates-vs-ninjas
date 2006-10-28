@@ -42,8 +42,8 @@ void ObjectText::Draw() {
 	txt_x = box_x1 + box_margin;
 	txt_y = box_y1 + box_margin;
 
-	if (avatar_sprite && avatar_sprite->bmp)
-		txt_x += avatar_sprite->bmp->w;
+	if (avatar_sprite)
+		txt_x += avatar_sprite->width;
 
 	CString text = page_texts[text_index];
 

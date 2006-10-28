@@ -111,10 +111,6 @@ class Object {
 		//! Object properties
 		struct ObjectProperties properties;
 		
-		//! XXX OLD Bitmap to draw when this object is drawn
-		// BITMAP* bitmap;
-		// bool bitmap_is_deleteable;
-
 		//! Points to the current animation
 		Animation* currentAnimation;
 
