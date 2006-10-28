@@ -182,6 +182,74 @@ fi
 AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
 
 dnl ------------------------------------------------
+dnl X11 stuff (Unix ONLY) Needed for OpenGL stuff.
+dnl ------------------------------------------------
+
+AC_PATH_X
+if test -n "$x_includes"; then
+  CPPFLAGS="-I$x_includes $CPPFLAGS"
+fi
+if test -n "$x_libraries"; then
+  LDFLAGS="-L$x_libraries $LDFLAGS"
+fi
+LIBS="-lXext -lX11 -lm $LIBS"
+
+dnl Test for VidMode extension
+AC_CHECK_LIB(Xxf86vm, XF86VidModeQueryExtension,
+LIBS="-lXxf86vm $LIBS",
+,
+$LIBS
+) 
+
+dnl Check if the dynamic loading library (libdl.so) is available
+AH_TEMPLATE([ALLEGROGL_HAVE_DYNAMIC_LINK], [Define if dynamic linking is suppo
+rted.])
+  AC_CHECK_HEADER(dlfcn.h,
+    AC_CHECK_LIB(dl, dlsym,
+      LIBS="-ldl $LIBS"
+      AC_DEFINE(ALLEGROGL_HAVE_DYNAMIC_LINK),
+      fail_dl=y
+    )
+  )
+
+dnl ------------------------------------------------
+dnl Check for OpenGL stuff
+dnl Set OPENGL_LIBS
+dnl ------------------------------------------------
+
+dnl - GL stuff
+
+AC_CHECK_HEADER(GL/glx.h, , gl_fail=y)
+AC_CHECK_HEADER(GL/gl.h, , gl_fail=y)
+AC_CHECK_LIB(GL, glBlendFunc, LIBS="-lGL $LIBS", gl_fail=y, "-lGL")
+
+if test -n "$gl_fail"; then
+	AC_MSG_ERROR([Unable to locate required OpenGL headers/libraries])
+fi
+
+dnl - GLU stuff
+
+AC_CHECK_HEADER(GL/glu.h, , fail_glu=y)
+AC_CHECK_LIB(GLU, gluSphere, LIBS="-lGLU $LIBS", fail_glu=y, -lGLU)
+if test -n "$fail_glu"; then
+	AC_MSG_ERROR([Unable to locate required GLU headers/libraries])
+fi
+
+dnl ------------------------------------------------
+dnl Check for alleggl stuff
+dnl ------------------------------------------------
+
+LIBS="$ALLEGRO_LIBS $LIBS"
+
+AC_CHECK_HEADER(alleggl.h, , alleggl_fail=y)
+AC_CHECK_LIB(agl, install_allegro_gl, LIBS="-lagl $LIBS $ALLEGRO_LIBS", alleggl_fail=y, $ALLERGRO_LIBS)
+
+if test -n "$alleggl_fail"; then
+	AC_MSG_ERROR([Unable to locate required AllegroGL headers/libraries])
+fi
+
+
+dnl ------------------------------------------------
 dnl Check for FreeType2
 dnl define FT2_CFLAGS and FT2_LIBS.
 dnl ------------------------------------------------
@@ -283,7 +351,7 @@ ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries"
 ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries"
 
 LDFLAGS="$extra_libraries $LDFLAGS"
-LIBS="$LIBS $ALLEGRO_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB"
+LIBS="$LIBS $OGGVORBIS_LIBS $LIBPNG	$ZLIB"
 
 AC_SUBST(PACKAGE_NAME)
 AC_SUBST(ninjas_CXXFLAGS)
