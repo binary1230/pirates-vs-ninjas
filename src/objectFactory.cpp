@@ -257,7 +257,9 @@ void ObjectFactory::Shutdown() {
 Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	PlayerObject* obj = new PlayerObject();
-	LoadCommonObjectStuff(obj, xDef, xObj, false);
+	
+	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+		return NULL;
 	
 	AnimationMapping animation_map = GetPlayerAnimationMappings();
 	if (!LoadObjectAnimations(obj, xDef, &animation_map))
@@ -275,7 +277,8 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	ObjectBounce* obj = new ObjectBounce();
-	LoadCommonObjectStuff(obj, xDef, xObj);
+	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+		return NULL;
 
 	obj->properties.is_ball = 1;
 	obj->properties.is_solid = 1;
@@ -286,7 +289,8 @@ Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	CollectableObject* obj = new CollectableObject();
-	LoadCommonObjectStuff(obj, xDef, xObj);
+	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+		return NULL;
 
   obj->properties.is_collectable = 1;
   obj->properties.is_ring = 1;
@@ -298,7 +302,8 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	CString txt, avatar;
 	ObjectText* obj = new ObjectText();	
-	LoadCommonObjectStuff(obj, xDef, xObj, false);
+	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+		return NULL;
 
 	// Really, shouldn't set this.
 	obj->SetModalActive();
@@ -324,7 +329,8 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
  
  	ObjectController* obj = new ObjectController();
-	LoadCommonObjectStuff(obj, xDef, xObj, false);
+	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+		return NULL;
 
 	obj->properties.is_overlay = 1;
 
@@ -405,7 +411,8 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
  
 	BackgroundObject* obj = new BackgroundObject();	
-	LoadCommonObjectStuff(obj, xDef, xObj);
+	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+		return NULL;
 
   obj->SetXY(0,0);
 
@@ -415,7 +422,8 @@ Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	StaticObject* obj = new StaticObject();
-	LoadCommonObjectStuff(obj, xDef, xObj);
+	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+		return NULL;
 	
 	return obj;
 }
@@ -426,7 +434,8 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) {
 	bool using_default = true;
 
 	SpringObject* obj = new SpringObject();
-	LoadCommonObjectStuff(obj, xDef, xObj);
+	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+		return NULL;
   
 	obj->properties.is_spring = 1;
 
@@ -468,7 +477,9 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	DoorObject* obj = new DoorObject();
-	LoadCommonObjectStuff(obj, xDef, xObj);
+	
+	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+		return NULL;
 
 	obj->properties.is_door = 1;
 	obj->properties.is_solid = 1;
@@ -479,7 +490,9 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	FanObject* obj = new FanObject();
-	LoadCommonObjectStuff(obj, xDef, xObj);
+	
+	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+		return NULL;
 
 	obj->properties.is_fan = 1;
 	obj->properties.is_solid = 1;
