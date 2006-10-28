@@ -21,6 +21,9 @@ class GameMenu : public GameMode {
 		void DoNewGame();
 		void DoQuit();
 		void DoMenuAction(const CString &action);
+
+		void MenuPress();
+		void CheckKeys();
 		
 	public:
 		void Update();

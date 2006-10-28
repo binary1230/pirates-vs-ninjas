@@ -7,6 +7,8 @@
 #include "gameMenu.h"
 #include "globals.h"
 
+// TODO: Move this all into python scripts.
+
 void GameMenu::DoNewGame() {
 	
 	// Should load the new mode:
@@ -36,20 +38,50 @@ void GameMenu::DoMenuAction(const CString &action) {
 // #define DEBUG_VERSION_PRINT 1
 
 void GameMenu::Draw() {
-	 int x_offset = SCREEN_W/2 - back->width/2;
-	 int y_offset = SCREEN_H/2 - back->height/2;
+	int x_offset = SCREEN_W/2 - back->width/2;
+	int y_offset = SCREEN_H/2 - back->height/2;
 
-   WINDOW->DrawSprite(back, x_offset, y_offset);
-	 WINDOW->DrawSprite(selector, x_offset + x_pos, y_offset + y_pos[current_pos]);
+	int x_pos1 = x_pos;
+	int x_pos2 = SCREEN_W/2 + back->width/2 - x_pos - selector->width;
+		
+	WINDOW->DrawSprite(back, x_offset, y_offset);
+
+	WINDOW->DrawSprite(	selector, 
+	 										x_offset + x_pos1, 
+											y_offset + y_pos[current_pos]	);
+
+	WINDOW->DrawSprite(	selector, 
+	 										x_offset + x_pos2, 
+											y_offset + y_pos[current_pos], true	);
 	 
-	 #ifdef DEBUG_VERSION_PRINT
-	 textprintf_right_ex(  WINDOW->GetDrawingSurface(), font, 
+	#ifdef DEBUG_VERSION_PRINT
+	textprintf_right_ex(  WINDOW->GetDrawingSurface(), font, 
                         SCREEN_W, SCREEN_H - 10, makecol(255, 255, 255), -1, 
                         VERSION_STRING);
-	 #endif
+	#endif
+}
+
+void GameMenu::MenuPress() {
+	// start animation = true
+	// ...
+	
+	// when animation is finished, do this:
+	DoMenuAction(actions[current_pos]);
 }
 
 void GameMenu::Update() {
+	// if animation is playing..
+	// UpdateAnimation();
+	
+	// else if animation is done...
+	// DoMenuAction()
+	
+	// else if no animation is playing then
+	CheckKeys();
+}
+
+// check and see if they pressed anthing
+void GameMenu::CheckKeys() {
 	if (INPUT->KeyOnce(PLAYERKEY_UP, 1)) {
 		if ((current_pos--) == 0) {
 			current_pos = y_pos.size() - 1;
@@ -68,7 +100,7 @@ void GameMenu::Update() {
 	assert(current_pos >= 0 || current_pos < y_pos.size());
 
 	if (INPUT->KeyOnce(GAMEKEY_START) || INPUT->KeyOnce(PLAYERKEY_JUMP, 1)) {
-		DoMenuAction(actions[current_pos]);
+		MenuPress();
 	}
 }
 
