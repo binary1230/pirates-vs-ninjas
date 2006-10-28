@@ -62,10 +62,22 @@ void Object::SetupCachedVariables() {
 }
 
 void Object::UpdateFade() {
+	if (!is_fading)
+		return;
+
+	if (!fade_out_time_remaining) {
+		is_fading = false;
+	} else {
+		--fade_out_time_remaining;
+	}
+	
+	alpha = uint(	( (float)fade_out_time_remaining / (float)fade_out_time_total)
+								* 255.0f);
 }
 
 void Object::FadeOut(int time) {
-	fade_out = time;
+	fade_out_time_total = fade_out_time_remaining = time;
+	alpha = 255;
 	is_fading = true;
 }
 
@@ -74,7 +86,7 @@ bool Object::BaseInit() {
 	tmp_debug_flag = 0;
 	ClearProperties(properties);
 	is_dead = false;
-	fade_out = 0;
+	fade_out_time_total = fade_out_time_remaining = 0;
 	is_fading = false;
 	alpha = 255;
 	old_pos = pos;

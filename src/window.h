@@ -57,7 +57,7 @@ class GameWindow {
 
 		void DrawSprite(	Sprite* sprite, int x, int y, 
 											bool flip_x=0, bool flip_y=0, 
-											int alpha=255);
+											GLuint alpha=255);
 	
 		//! Draw text at specified XY
 		void DrawText(int x, int y, CString text);

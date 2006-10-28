@@ -147,8 +147,9 @@ class Object {
 
 		// -- UNUSUED BELOW --
 
-		//! Current fade-out time (0 if not active)
-		int fade_out;
+		//! Current fade-out time
+		int fade_out_time_total;
+		int fade_out_time_remaining;
 
 		//! True if the object is fading in or out
 		bool is_fading;

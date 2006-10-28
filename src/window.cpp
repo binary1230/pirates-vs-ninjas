@@ -95,7 +95,7 @@ void GameWindow::DrawText(int x, int y, CString text) {
 //
 // Holy sweetness. Remember that '^' is XOR, and XOR rocks.
 void GameWindow::DrawSprite(	Sprite* sprite, int x, int y, 
-													bool flip_x, bool flip_y, int alpha) {
+													bool flip_x, bool flip_y, GLuint alpha) {
 	// texture coords
 	// we mess with them if flipping
 	float tx1 = 0.0f, ty1 = 0.0f;
@@ -128,6 +128,7 @@ void GameWindow::DrawSprite(	Sprite* sprite, int x, int y,
 	}
 
 	glBindTexture(GL_TEXTURE_2D, sprite->texture);
+	glColor4ub(255,255,255,alpha);
 
 	glBegin(GL_QUADS); 
     glTexCoord2f(tx1, ty1);

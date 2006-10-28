@@ -148,15 +148,16 @@ void PlayerObject::UpdateSkidding() {
 			Object* objSkid = OBJECT_FACTORY->CreateObject(SKID_OBJECT_TYPE);
 			
 			if (objSkid) {
-				float skid_vel_x = 8.0f;
+				float skid_vel_x = 6.0f;
 
 				if (vel.GetX() < 0.0f)
 					skid_vel_x *= -1.0f;
 
-				objSkid->SetDisplayTime(2);
+				objSkid->SetDisplayTime(8);
 				objSkid->SetXY(pos);
 				objSkid->SetVelXY(skid_vel_x, 0.0f);
 				objSkid->SetLayer(layer);
+				objSkid->FadeOut(8);
 		
 				simulation->AddObject(objSkid);
 			}
@@ -226,6 +227,7 @@ void PlayerObject::DoCommonStuff() {
 			objBall->SetXY(pos);
 			objBall->SetVelXY(vel.GetX(), 0.0f);
 			objBall->SetLayer(layer);
+			objBall->FadeOut(210);
 
 			simulation->AddObject(objBall);
 		}
