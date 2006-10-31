@@ -9,7 +9,7 @@
 
 #define DEFAULT_BOX_COLOR	 	makecol(172, 20, 31)
 #define DEFAULT_BOX_MARGIN	10
-#define DEFAULT_BOX_HEIGHT	100
+#define DEFAULT_BOX_HEIGHT	110
 
 int ObjectText::GetHeight() {
 	return box_height;
