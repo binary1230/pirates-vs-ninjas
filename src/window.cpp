@@ -130,18 +130,37 @@ void GameWindow::DrawSprite(	Sprite* sprite, int x, int y,
 	glBindTexture(GL_TEXTURE_2D, sprite->texture);
 	glColor4ub(255,255,255,alpha);
 
+	glLoadIdentity();
+
+	static float angle = 0.0f;
+	angle+=0.1f;
+
+//	if (sprite->use_rotation)
+		//glRotatef(sprite->rotate_angle, 0.0f, 0.0f, 1.0f);
+
+	glTranslatef(rx, ry, 0.0f);
+	glScalef(sprite->width, sprite->height, 1.0f);
+
+	//glTranslatef(-0.5, -0.5, 0.0f);
+	//glRotatef(angle, 0.0f, 0.0f, 1.0f);
+	//glTranslatef(0.5, 0.5, 0.0f);
+
 	glBegin(GL_QUADS); 
     glTexCoord2f(tx1, ty1);
-  	glVertex2f(rx, ry + sprite->height);
+		glVertex2f(0,1);
+  	//glVertex2f(rx, ry + sprite->height);
 
     glTexCoord2f(tx2, ty2);
-    glVertex2f(rx, ry);
+		glVertex2f(0,0);
+    //glVertex2f(rx, ry);
 
     glTexCoord2f(tx3, ty3);
-    glVertex2f(rx + sprite->width, ry);
+		glVertex2f(1,0);
+    //glVertex2f(rx + sprite->width, ry);
 
     glTexCoord2f(tx4, ty4);
-    glVertex2f(rx + sprite->width, ry + sprite->height);
+		glVertex2f(1,1);
+    //glVertex2f(rx + sprite->width, ry + sprite->height);
 	glEnd();
 
 	// extra params not used yet:
