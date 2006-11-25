@@ -305,8 +305,8 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
 		return NULL;
 
-	// Really, shouldn't set this.
-	obj->SetModalActive();
+	// Really, shouldn't set this here...
+	obj->SetModalActive(true);
 
 	obj->properties.is_overlay = 1;
 	obj->properties.is_solid = 0;

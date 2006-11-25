@@ -68,9 +68,6 @@ class GameState {
 		//! Load a game mode from an XML config file
 		int LoadGameModes();
 
-		//! Load the default configuration
-		int LoadDefaultConfig();				
-		
 		//! Shutdown the game
 		void Shutdown();
 
@@ -120,6 +117,7 @@ class GameState {
 		void SignalEndCurrentMode();
 
 		//! Returns the currently active physics simulation (if there is one)
+		// XXX needs to be a singleton eventually.
 		PhysSimulation* GetPhysSimulation();
 
 		//! Gets the game options

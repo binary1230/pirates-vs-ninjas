@@ -4,14 +4,14 @@ dnl see BUILD or the Wiki for more info
 
 dnl LARGE PARTS of this configure.in stolen from Clanlib configure.ac
 
-dnl This is still a MESS.
+dnl This is still, and will always be, a MESS.
 
 AC_INIT(src/main.cpp)
 AC_PREFIX_DEFAULT(/usr/local/)
 
 VERSION_MAJOR="0"
-VERSION_MINOR="2"
-VERSION_FIX="4"
+VERSION_MINOR="3"
+VERSION_FIX="0"
 VERSION_EXTRA="-pre-alpha"
 PACKAGE_NAME="ninjas-engine"
 
@@ -64,6 +64,7 @@ fi
 AC_LANG(C++)
 
 AM_PATH_CPPUNIT(1.9.6)
+dnl AC_PROG_SWIG(1.3.25)
 
 dnl --------------------------------
 dnl ./configure command line options
@@ -111,6 +112,10 @@ if test "$RELEASE" == "1"; then
 	DEBUG=0
 	AC_DEFINE([RELEASE], [], [Defined if this is a release build])
 	AC_MSG_RESULT([Enabling RELEASE build])
+	if test "$CXXFLAGS" != ""; then
+		CXXFLAGS="-O2"
+		CFLAGS="-O2"
+	fi
 else
 	DEBUG=1
 	AC_DEFINE([DEBUG], [], [Defined if this is a debug build])
@@ -167,15 +172,17 @@ case $target_alias in
 esac
 
 if test "$WIN32" = "yes"; then
+	AC_MSG_RESULT([Building for Win32])
 	dnl you can try editing these 2 lines if cross compile stuff isn't working
 	dnl DON'T FORGET to re-run ./autogen.sh when you are done editing here
 	dnl also, double check your cross-configure.sh
-	ALLEGRO_LIBS="`allegro-config --libs --static` -lmingw32 -lwsock32"
+	ALLEGRO_LIBS="`allegro-config --libs --static` -lmingw32 -lwsock32 -luser32 -lgdi32"
 	ninjas_CFLAGS="-mwindows"
 	ninjas_CXXFLAGS="-mwindows"
 	aitrainer_CFLAGS="-mwindows"
 	aitrainer_CXXFLAGS="-mwindows"
 else
+	AC_MSG_RESULT([Not building for Win32])
 	ALLEGRO_LIBS="`allegro-config --libs`"
 fi
 
@@ -185,32 +192,39 @@ dnl ------------------------------------------------
 dnl X11 stuff (Unix ONLY) Needed for OpenGL stuff.
 dnl ------------------------------------------------
 
-AC_PATH_X
-if test -n "$x_includes"; then
-  CPPFLAGS="-I$x_includes $CPPFLAGS"
-fi
-if test -n "$x_libraries"; then
-  LDFLAGS="-L$x_libraries $LDFLAGS"
-fi
-LIBS="-lXext -lX11 -lm $LIBS"
+LIBS="-lm $LIBS"
 
-dnl Test for VidMode extension
-AC_CHECK_LIB(Xxf86vm, XF86VidModeQueryExtension,
-LIBS="-lXxf86vm $LIBS",
-,
-$LIBS
-) 
+AC_PATH_X
+
+if test "$WIN32" = "no"; then
+	
+	if test -n "$x_includes"; then
+	  CPPFLAGS="-I$x_includes $CPPFLAGS"
+	fi
+	if test -n "$x_libraries"; then
+ 	 LDFLAGS="-L$x_libraries $LDFLAGS"
+	fi
+	LIBS="-lXext -lX11 $LIBS"
+
+	dnl Test for VidMode extension
+	AC_CHECK_LIB(Xxf86vm, XF86VidModeQueryExtension,
+	LIBS="-lXxf86vm $LIBS",	,
+	) 
+
+dnl Is any of this dynamic linking stuff needed??
 
 dnl Check if the dynamic loading library (libdl.so) is available
-AH_TEMPLATE([ALLEGROGL_HAVE_DYNAMIC_LINK], [Define if dynamic linking is suppo
-rted.])
-  AC_CHECK_HEADER(dlfcn.h,
-    AC_CHECK_LIB(dl, dlsym,
-      LIBS="-ldl $LIBS"
-      AC_DEFINE(ALLEGROGL_HAVE_DYNAMIC_LINK),
-      fail_dl=y
-    )
-  )
+dnl	AH_TEMPLATE([ALLEGROGL_HAVE_DYNAMIC_LINK], [Define if dynamic linking is supported.])
+
+dnl  AC_CHECK_HEADER(dlfcn.h,
+dnl    AC_CHECK_LIB(dl, dlsym,
+dnl      LIBS="-ldl $LIBS"
+dnl      AC_DEFINE(ALLEGROGL_HAVE_DYNAMIC_LINK),
+dnl      fail_dl=y
+dnl    )
+dnl  )
+
+fi # win32 stuff
 
 dnl ------------------------------------------------
 dnl Check for OpenGL stuff
@@ -219,20 +233,49 @@ dnl ------------------------------------------------
 
 dnl - GL stuff
 
-AC_CHECK_HEADER(GL/glx.h, , gl_fail=y)
 AC_CHECK_HEADER(GL/gl.h, , gl_fail=y)
-AC_CHECK_LIB(GL, glBlendFunc, LIBS="-lGL $LIBS", gl_fail=y, "-lGL")
+if test "$WIN32" = "no"; then
+	AC_CHECK_HEADER(GL/glx.h, , gl_fail=y)
+fi
 
 if test -n "$gl_fail"; then
-	AC_MSG_ERROR([Unable to locate required OpenGL headers/libraries])
+	AC_MSG_ERROR([Unable to locate required OpenGL headers])
+fi
+
+if test "$WIN32" = "no"; then
+	AC_CHECK_LIB(GL, glBegin, LIBS="-lGL $LIBS", gl_fail=y, "-lGL")
+else
+	dnl XXX change 'main' back to 'glBegin'.  WHY main??
+	dnl everyone else uses 'main' and I can't get any _actual_
+	dnl GL functions to work.  this will probably always 
+	dnl be TRUE.
+	AC_CHECK_LIB(opengl32, main, LIBS="-lopengl32 $LIBS", gl_fail=y, "-lopengl32")
+fi
+
+if test -n "$gl_fail"; then
+	AC_MSG_ERROR([Unable to locate required OpenGL libraries])
 fi
 
 dnl - GLU stuff
 
 AC_CHECK_HEADER(GL/glu.h, , fail_glu=y)
-AC_CHECK_LIB(GLU, gluSphere, LIBS="-lGLU $LIBS", fail_glu=y, -lGLU)
+
 if test -n "$fail_glu"; then
-	AC_MSG_ERROR([Unable to locate required GLU headers/libraries])
+	AC_MSG_ERROR([Unable to locate required GLU headers])
+fi
+
+if test "$WIN32" = "no"; then
+	AC_CHECK_LIB(GLU, gluSphere, LIBS="-lGLU $LIBS", fail_glu=y, -lGLU)
+else
+	dnl XXX change 'main' back to 'gluSphere'.  WHY main??
+	dnl everyone else uses 'main' and I can't get any _actual_
+	dnl GL functions to work.  this will probably always 
+	dnl be TRUE.
+	AC_CHECK_LIB(glu32, main, LIBS="-lglu32 $LIBS", fail_glu=y, -lglu32)
+fi
+
+if test -n "$fail_glu"; then
+	AC_MSG_ERROR([Unable to locate required GLU libraries])
 fi
 
 dnl ------------------------------------------------
@@ -242,10 +285,23 @@ dnl ------------------------------------------------
 LIBS="$ALLEGRO_LIBS $LIBS"
 
 AC_CHECK_HEADER(alleggl.h, , alleggl_fail=y)
-AC_CHECK_LIB(agl, install_allegro_gl, LIBS="-lagl $LIBS $ALLEGRO_LIBS", alleggl_fail=y, $ALLERGRO_LIBS)
 
 if test -n "$alleggl_fail"; then
-	AC_MSG_ERROR([Unable to locate required AllegroGL headers/libraries])
+	AC_MSG_ERROR([Unable to locate required AllegroGL headers])
+fi
+
+if test "$WIN32" = "no"; then
+	AC_CHECK_LIB(agl, install_allegro_gl, LIBS="-lagl $LIBS $ALLEGRO_LIBS", alleggl_fail=y, $ALLERGRO_LIBS)
+else
+	dnl XXX change 'main' back to 'gluSphere'.  WHY main??
+	dnl everyone else uses 'main' and I can't get any _actual_
+	dnl GL functions to work.  this will probably always 
+	dnl be TRUE.
+	AC_CHECK_LIB(agl, main, LIBS="-lagl $LIBS $ALLEGRO_LIBS", alleggl_fail=y, $ALLERGRO_LIBS)
+fi
+
+if test -n "$alleggl_fail"; then
+	AC_MSG_ERROR([Unable to locate required AllegroGL library])
 fi
 
 

@@ -35,7 +35,9 @@ dist_win32_common: $(DISTFILES)
 # TODO: Remove wine hardcoded NSIS path
 dist_win32_installer: dist_win32_common 
 	./makensis.sh dist/win32/ninjas-engine-$(VERSION)
-	wine ~/.wine/drive_c/Program\ Files/NSIS/makensis.exe installer.nsi
+#	makensis installer.nsi
+	wine C:/Program\ Files/NSIS/makensis.exe installer.nsi
+	
 
 # create the windows .zip file
 dist_win32_zip: dist_win32_common 

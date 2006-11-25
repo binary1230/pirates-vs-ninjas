@@ -10,6 +10,7 @@
 #include "gameOptions.h"
 #include "gameSound.h"
 #include "objectLayer.h"
+#include "sprite.h"
 
 // Used as criteria for STL find()
 bool ObjectIsDead(Object* obj) {
@@ -20,16 +21,22 @@ bool ObjectIsDead(Object* obj) {
 // Objects can call this if they use
 // simple animations.
 void Object::UpdateSimpleAnimations() {
-	if (currentAnimation) {
-		currentAnimation->Update();
-		currentSprite = currentAnimation->GetCurrentSprite();
-	}
+	if (!currentAnimation)
+		return;
+
+	currentAnimation->Update();
+	currentSprite = currentAnimation->GetCurrentSprite();
 }
 
 // Base update stuff used by all objects
 void Object::BaseUpdate() {
 	UpdateDisplayTime();
 	UpdateFade();
+
+//		fprintf(stderr, "Vel_rotate = '%f', angle='%f'!\n\n", rotate_velocity, rotate_angle);
+
+	if (use_rotation)
+		rotate_angle += rotate_velocity;
 }
 
 // Decrement the display time, when it reaches 0, we 
@@ -95,6 +102,8 @@ bool Object::BaseInit() {
 	controller_num = 0;
 	level_width = 0;
 	level_height = 0;
+	rotate_angle = rotate_velocity = 0.0f;
+	use_rotation = false;
 	return true;
 }
 
@@ -169,7 +178,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 		sprite_to_draw = currentSprite;
 
 	if (sprite_to_draw)
-		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, alpha);
+		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha);
 
 	#define DEBUG_DRAW_BOUNDING_BOXES 0
 
@@ -299,6 +308,8 @@ Object::Object() {
 	accel.SetX(0); accel.SetY(0);
 	vel.SetX(0); vel.SetY(0);
 	display_time = -1;
+	rotate_angle = rotate_velocity = 0.0f;
+	use_rotation = false;
 }
 
 // Return a vector with x,y set to 

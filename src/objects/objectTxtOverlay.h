@@ -56,7 +56,7 @@ class ObjectText : public Object {
 		void Draw();
 
 		bool SetAvatarFilename(CString file);
-		void SetModalActive(bool state = true);
+		void SetModalActive(bool state);
 
 		void SetText(CString txt);
 

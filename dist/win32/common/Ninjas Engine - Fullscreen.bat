@@ -1,1 +1,1 @@
-ninjas.exe -f
+ninjas.exe -fz

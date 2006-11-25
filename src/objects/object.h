@@ -173,6 +173,10 @@ class Object {
 		//! Width and Height of the object
 		// (we may need to rethink where these come from)
 		int width, height;
+
+		//! Rotational parameters
+		float rotate_angle, rotate_velocity;
+		bool use_rotation;
 		
 		// Protected constructur, this means we can't directly
 		// instantiate Object's, we need to use a higher class.
@@ -248,7 +252,14 @@ class Object {
 		}
 		inline void SetVelXY(Vector2D _vel) {
 			vel = _vel;
-		}	
+		}
+		inline void SetVelRotate(float vel) {
+			rotate_velocity = vel;
+		}
+
+		inline void SetUseRotation(bool state) {
+			use_rotation = state;
+		}
 
 		//! Get width/height of this object
 		inline int GetWidth() {return width;};

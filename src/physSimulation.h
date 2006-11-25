@@ -119,6 +119,10 @@ class PhysSimulation : public GameMode {
 			
 			void TransformWorldToView(int &x, int &y);
 			void TransformViewToScreen(int &x, int &y);
+
+			void ShowText(	const char* txt, 
+											const char* avatar_filename = 0, 
+											bool modal_active = false);
 			
 			//! Experimental: Get AI fitness score for AI traning
 			int GetAiFitnessScore();

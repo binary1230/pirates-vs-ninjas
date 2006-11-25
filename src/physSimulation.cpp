@@ -6,6 +6,7 @@
 #include "objectFactory.h"
 #include "object.h"
 #include "objectIDs.h"
+#include "objectTxtOverlay.h"
 #include "forceFactory.h"
 #include "force.h"
 #include "forceInput.h"
@@ -18,10 +19,31 @@
 #include "gameSound.h"
 #include "objectPlayer.h"
 
+#define OBJECT_TEXT	"text_txt"
+
+void PhysSimulation::ShowText(	const char* txt, 
+																const char* avatar_filename, 
+																bool modal_active) {
+	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT);
+
+	if (!obj) {
+		fprintf(stderr, "ERROR: Failed to create Txt object in ShowText()\n");
+		return;
+	}
+
+	obj->SetText(txt);
+	obj->SetModalActive(false);
+
+	if (avatar_filename && strlen(avatar_filename) > 0)
+		obj->SetAvatarFilename(avatar_filename);
+
+	AddObject(obj);
+}
+
 int PhysSimulation::Init(XMLNode xMode) {
 	modal_active = NULL;
 	music = NULL;
-	width = height = 0;
+					width = height = 0;
 	camera_x = camera_y = 0;
 	camera_follow = NULL;
 	camera_scroll_speed = 1.0f;
@@ -552,205 +574,216 @@ int PhysSimulation::LoadObjectFromXML(
 	// Really create the instance of this object, it is BORN here:
 	Object* obj = OBJECT_FACTORY->CreateObjectFromXML(xObjectDef, xObject);
 
-	if (!obj) {
+	if (!obj)
 		return -1;
-	} else {
 
-		obj->SetLayer(layer);
+	obj->SetLayer(layer);
 
-		// if we have a <cameraFollow>, then we follow this object
-		if (xObject.nChildNode("cameraFollow") == 1) {
-			if (!camera_follow) {
-				camera_follow = obj;
-			} else {
-				fprintf(stderr, "ERROR: multiple camera targets in map\n");
-				return -1;
-			}
+	// if we have a <cameraFollow>, then we follow this object
+	if (xObject.nChildNode("cameraFollow") == 1) {
+		if (!camera_follow) {
+			camera_follow = obj;
+		} else {
+			fprintf(stderr, "ERROR: multiple camera targets in map\n");
+			return -1;
 		}
-
-		// SPECIAL debug flag.  IF it is set, the object MAY print debug message
-		if (xObject.nChildNode("debug") == 1) {
-			fprintf(stderr, "-- Enabling debug mode.\n");
-			obj->SetDebugFlag(true);
-		}
-
-		if (xObject.nChildNode("position") == 1) {
-
-			XMLNode xPos = xObject.getChildNode("position");
-			CString type = xPos.getAttribute("type");
-
-			// Figure out the position type.
-			// Currently 3 types exist:
-			// 1) "fixed" - regular XY position, nothing fancy
-			//
-			// 2) "random" - pick random numbers in a range for the XY position
-			// 							 (This would be useful for e.g. making 50 randomly
-			// 							 placed flowers in a level)
-			//
-			// 3) "offset" - specify the distance from which to place this object
-			//               from the last one
-			//               (This would be useful for e.g. making 20 fenceposts 
-			//               exactly 10 pixels from each other)
-			//               
-			// Note that 2) and 3) are only really useful inside an XML <repeat>
-			// tag.  You can use them to position tons of objects with only one 
-			// line of XML.  2) and 3) won't ever be used unless someone is
-			// hand-coding the XML.  Once the map editor is done, only 1) will
-			// be useful.
-
-			if (type == CString("fixed")) {
-
-				if (!xPos.getChildNode("x").getInt(x)) {
-					fprintf(stderr, "-- Invalid X!\n");
-					return -1;	
-				}
-				if (!xPos.getChildNode("y").getInt(y)) {
-					fprintf(stderr, "-- Invalid Y!\n");
-					return -1;
-				}
-				
-			} else if (type == CString("random")) {
-
-				int xmin, ymin, xmax, ymax;
-
-				if (!xPos.getChildNode("xmin").getInt(xmin)) {
-					fprintf(stderr, "-- Invalid xmin!\n");
-					return -1;
-				}
-
-				if (!xPos.getChildNode("ymin").getInt(ymin)) {
-					fprintf(stderr, "-- Invalid ymin!\n");
-					return -1;
-				}
-
-				if (!xPos.getChildNode("xmax").getInt(xmax)) {
-					fprintf(stderr, "-- Invalid xmax!\n");
-					return -1;
-				}
-
-				if (!xPos.getChildNode("ymax").getInt(ymax)) {
-					fprintf(stderr, "-- Invalid ymax!\n");
-					return -1;
-				}
-
-				x = Rand(xmin, xmax);
-				y = Rand(ymin, ymax);	
-			} else if (type == CString("offset")) {
-
-				int _offset_x, _offset_y;
-				if (!xPos.getChildNode("x_offset").getInt(_offset_x)) {
-					fprintf(stderr, "-- Invalid X!\n");
-					return -1;	
-				}
-				if (!xPos.getChildNode("y_offset").getInt(_offset_y)) {
-					fprintf(stderr, "-- Invalid Y!\n");
-					return -1;
-				}
-
-				x = repeater_current_x;
-				y = repeater_current_y;
-	
-				repeater_current_x += _offset_x;
-				repeater_current_y += _offset_y;
-				
-			} else {
-				fprintf(stderr, "Unknown object position type: %s\n", type.c_str());
-				return -1;
-			}
-				
-			// if <alignTop> is present, we align this sprite with ITs 
-			// bottom coordinates. (e.g. saying 0 puts the player on the floor)
-			if (xPos.nChildNode("alignTop")>0) {
-				y -= obj->GetHeight();
-			}
-			
-			// if <alignRight> is present, we take the X coordinate from the
-			// right side instead of the left.
-			if (xPos.nChildNode("alignRight")>0) {
-				x -= obj->GetWidth();
-			}
-
-			// if <alignScreenRight> is present, we align this sprite
-			// to the SCREEN's right (useful only for overlays)
-			if (xPos.nChildNode("alignScreenRight")>0) {
-				x = WINDOW->Width() - obj->GetWidth() - x;
-			}
-
-			// if <alignScreenBottom> is present, we align this sprite
-			// to the SCREEN's bottom (useful only for overlays)
-			if (xPos.nChildNode("alignScreenBottom")>0) {
-				y = WINDOW->Height() - obj->GetHeight() - y;
-			}
-
-			// One last position calculation:
-			// We need to undo the offset of the background here
-			// So users don't have to compensate in their data files
-			if (layer->GetScrollSpeed() > 0.01f) {
-				x = int( float(x) / layer->GetScrollSpeed() );
-				y = int( float(y) / layer->GetScrollSpeed() );
-			}
-
-			// flipping
-			if (xPos.nChildNode("flipx")>0) {
-				obj->SetFlipX(true);
-			}
-
-			if (xPos.nChildNode("flipy")>0) {
-				obj->SetFlipY(true);
-			}
-		
-			obj->SetXY(x,y);
-
-			// check for velocity - <velx> and <vely>
-			if (xPos.nChildNode("velx")>0) {
-				float velx;
-				if (!xPos.getChildNode("velx").getFloat(velx)) {
-					fprintf(stderr, "-- Invalid velx!\n");
-					return -1;
-				}
-				obj->SetVelX(velx);
-			}
-			if (xPos.nChildNode("vely")>0) {
-				float vely;
-				if (!xPos.getChildNode("vely").getFloat(vely)) {
-					fprintf(stderr, "-- Invalid vely!\n");
-					return -1;
-				}
-				obj->SetVelY(vely);
-			}
-		}
-			
-		if (xObject.nChildNode("inputController") == 1) {
-			int controller_num;
-			if (!xObject.getChildNode("inputController").getInt(controller_num)) {
-				fprintf(stderr, "-- Invalid controller number!\n");
-				return -1;
-			}
-			obj->SetControllerNum(controller_num);
-		}
-
-		if (xObject.nChildNode("alpha") == 1) {
-			int alpha;
-			if (!xObject.getChildNode("alpha").getInt(alpha) || alpha > 255) {
-				fprintf(stderr, "-- Invalid alpha!\n");
-				return -1;
-			}
-			obj->SetAlpha(alpha);
-		}
-
-		if (xObject.nChildNode("fadeout") == 1) {
-			int fadeout_time;
-			if (!xObject.getChildNode("fadeout").getInt(fadeout_time)) {
-				fprintf(stderr, "-- Invalid fadeout time!\n");
-				return -1;
-			}
-			if (fadeout_time > 0)
-				obj->FadeOut(fadeout_time);
-		}
-
-		// Everything loaded OK, now we add it to the simulation
-		DoAddObject(obj);
 	}
+
+	// SPECIAL debug flag.  IF it is set, the object MAY print debug message
+	if (xObject.nChildNode("debug") == 1) {
+		fprintf(stderr, "-- Enabling debug mode.\n");
+		obj->SetDebugFlag(true);
+	}
+
+	if (xObject.nChildNode("position") == 1) {
+		XMLNode xPos = xObject.getChildNode("position");
+		CString type = xPos.getAttribute("type");
+		// Figure out the position type.
+		// Currently 3 types exist:
+		// 1) "fixed" - regular XY position, nothing fancy
+		//
+		// 2) "random" - pick random numbers in a range for the XY position
+		// 							 (This would be useful for e.g. making 50 randomly
+		// 							 placed flowers in a level)
+		//
+		// 3) "offset" - specify the distance from which to place this object
+		//               from the last one
+		//               (This would be useful for e.g. making 20 fenceposts 
+		//               exactly 10 pixels from each other)
+		//               
+		// Note that 2) and 3) are only really useful inside an XML <repeat>
+		// tag.  You can use them to position tons of objects with only one 
+		// line of XML.  2) and 3) won't ever be used unless someone is
+		// hand-coding the XML.  Once the map editor is done, only 1) will
+		// be useful.
+
+		if (type == CString("fixed")) {
+
+			if (!xPos.getChildNode("x").getInt(x)) {
+				fprintf(stderr, "-- Invalid X!\n");
+				return -1;	
+			}
+
+			if (!xPos.getChildNode("y").getInt(y)) {
+				fprintf(stderr, "-- Invalid Y!\n");
+				return -1;
+			}
+				
+		} else if (type == CString("random")) {
+
+			int xmin, ymin, xmax, ymax;
+
+			if (!xPos.getChildNode("xmin").getInt(xmin)) {
+				fprintf(stderr, "-- Invalid xmin!\n");
+				return -1;
+			}
+
+			if (!xPos.getChildNode("ymin").getInt(ymin)) {
+				fprintf(stderr, "-- Invalid ymin!\n");
+				return -1;
+			}
+
+			if (!xPos.getChildNode("xmax").getInt(xmax)) {
+				fprintf(stderr, "-- Invalid xmax!\n");
+				return -1;
+			}
+
+			if (!xPos.getChildNode("ymax").getInt(ymax)) {
+				fprintf(stderr, "-- Invalid ymax!\n");
+				return -1;
+			}
+
+			x = Rand(xmin, xmax);
+			y = Rand(ymin, ymax);	
+
+		} else if (type == CString("offset")) {
+
+			int _offset_x, _offset_y;
+			if (!xPos.getChildNode("x_offset").getInt(_offset_x)) {
+				fprintf(stderr, "-- Invalid X!\n");
+				return -1;	
+			}
+			if (!xPos.getChildNode("y_offset").getInt(_offset_y)) {
+				fprintf(stderr, "-- Invalid Y!\n");
+				return -1;
+			}
+
+			x = repeater_current_x;
+			y = repeater_current_y;
+
+			repeater_current_x += _offset_x;
+			repeater_current_y += _offset_y;
+				
+		} else {
+			fprintf(stderr, "Unknown object position type: %s\n", type.c_str());
+			return -1;
+		}
+				
+		// if <alignTop> is present, we align this sprite with ITs 
+		// bottom coordinates. (e.g. saying 0 puts the player on the floor)
+		if (xPos.nChildNode("alignTop")>0) {
+			y -= obj->GetHeight();
+		}
+			
+		// if <alignRight> is present, we take the X coordinate from the
+		// right side instead of the left.
+		if (xPos.nChildNode("alignRight")>0) {
+			x -= obj->GetWidth();
+		}
+
+		// if <alignScreenRight> is present, we align this sprite
+		// to the SCREEN's right (useful only for overlays)
+		if (xPos.nChildNode("alignScreenRight")>0) {
+			x = WINDOW->Width() - obj->GetWidth() - x;
+		}
+
+		// if <alignScreenBottom> is present, we align this sprite
+		// to the SCREEN's bottom (useful only for overlays)
+		if (xPos.nChildNode("alignScreenBottom")>0) {
+			y = WINDOW->Height() - obj->GetHeight() - y;
+		}
+
+		// One last position calculation:
+		// We need to undo the offset of the background here
+		// So users don't have to compensate in their data files
+		if (layer->GetScrollSpeed() > 0.01f) {
+			x = int( float(x) / layer->GetScrollSpeed() );
+			y = int( float(y) / layer->GetScrollSpeed() );
+		}
+
+		// flipping
+		if (xPos.nChildNode("flipx")>0) {
+			obj->SetFlipX(true);
+		}
+
+		if (xPos.nChildNode("flipy")>0) {
+			obj->SetFlipY(true);
+		}
+		
+		obj->SetXY(x,y);
+
+		// check for velocity - <velx>, <vely>, and <vel_rotate>
+		if (xPos.nChildNode("velx")>0) {
+			float velx;
+			if (!xPos.getChildNode("velx").getFloat(velx)) {
+				fprintf(stderr, "-- Invalid velx!\n");
+				return -1;
+			}
+			obj->SetVelX(velx);
+		}
+
+		if (xPos.nChildNode("vely")>0) {
+			float vely;
+			if (!xPos.getChildNode("vely").getFloat(vely)) {
+				fprintf(stderr, "-- Invalid vely!\n");
+				return -1;
+			}
+			obj->SetVelY(vely);
+		}
+
+		if (xPos.nChildNode("vel_rotate")>0) {
+			float vel_rotate;
+			if (!xPos.getChildNode("vel_rotate").getFloat(vel_rotate)) {
+				fprintf(stderr, "-- Invalid vel_rotate!\n");
+				return -1;
+			}
+			obj->SetUseRotation(true);
+			obj->SetVelRotate(vel_rotate);
+		}
+
+	}	// end of <position> stuff
+			
+	if (xObject.nChildNode("inputController") == 1) {
+		int controller_num;
+		if (!xObject.getChildNode("inputController").getInt(controller_num)) {
+			fprintf(stderr, "-- Invalid controller number!\n");
+			return -1;
+		}
+		obj->SetControllerNum(controller_num);
+	}
+
+	if (xObject.nChildNode("alpha") == 1) {
+		int alpha;
+		if (!xObject.getChildNode("alpha").getInt(alpha) || alpha > 255) {
+			fprintf(stderr, "-- Invalid alpha!\n");
+			return -1;
+		}
+		obj->SetAlpha(alpha);
+	}
+
+	if (xObject.nChildNode("fadeout") == 1) {
+		int fadeout_time;
+		if (!xObject.getChildNode("fadeout").getInt(fadeout_time)) {
+			fprintf(stderr, "-- Invalid fadeout time!\n");
+			return -1;
+		}
+
+		if (fadeout_time > 0)
+			obj->FadeOut(fadeout_time);
+	}
+
+	// Everything loaded OK, now we add it to the simulation
+	DoAddObject(obj);
 
 	return 0;
 }
