@@ -22,8 +22,8 @@
 # set the following variables (you don't _have_ to set them all,
 # but weird things can happen if you don't)
 
-TARGET=i386-mingw32msvc
-BASE_PATH=/opt/xmingw
+TARGET=i586-mingw32msvc
+BASE_PATH=/opt/i586-mingw32msvc
 COMMON_PATH=$BASE_PATH/$TARGET
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

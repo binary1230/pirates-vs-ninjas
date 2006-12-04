@@ -60,6 +60,9 @@ class PlayerObject : public Object {
 		DoorObject* door_in_front_of_us;
 		int ring_count;
 
+		// If the running animation is a skateboard (only set at init time)
+		bool on_skateboard;
+
 	public:
 		bool Init(PhysSimulation* p);
 		void Shutdown();

@@ -138,11 +138,12 @@ void PlayerObject::UpdateSkidding() {
 
 	// If acceleration and velocity are in the opposite directions,
 	// then we are skidding and trying to turn around
-	if (	(accel.GetX() > 0.0f && vel.GetX() < 0.0f) ||
+	if (	on_skateboard || 
+				(accel.GetX() > 0.0f && vel.GetX() < 0.0f) ||
 				(accel.GetX() < 0.0f && vel.GetX() > 0.0f) ) {
 
 		if (next_skid_time == 0) {
-			next_skid_time = 1;
+			next_skid_time = 0;
 
 			// Create a "skid" object (little white whisp at player's feet)
 			Object* objSkid = OBJECT_FACTORY->CreateObject(SKID_OBJECT_TYPE);
@@ -153,11 +154,11 @@ void PlayerObject::UpdateSkidding() {
 				if (vel.GetX() < 0.0f)
 					skid_vel_x *= -1.0f;
 
-				objSkid->SetDisplayTime(8);
+				objSkid->SetDisplayTime(Rand(1,10));
 				objSkid->SetXY(pos);
 				objSkid->SetVelXY(skid_vel_x, 0.0f);
 				objSkid->SetLayer(layer);
-				objSkid->FadeOut(8);
+				objSkid->FadeOut(Rand(4,10));
 		
 				simulation->AddObject(objSkid);
 			}
@@ -318,6 +319,10 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 
 	properties.is_player = 1;
 	properties.is_solid = 1;
+	on_skateboard = false;
+
+	if (xProps.nChildNode("onSkateboard"))
+		on_skateboard = true;
 
 	return (xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
 					xProps.getChildNode("minVelocity").getFloat(min_velocity) &&

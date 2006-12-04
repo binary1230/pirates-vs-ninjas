@@ -30,6 +30,7 @@
 #include <string.h>
 #include <math.h>
 #include <png.h>
+#include <GL/gl.h>
 
 // Unix-y?
 #include <ctype.h>
@@ -55,5 +56,6 @@ using namespace std;
 #include "xmlParser.h"
 #include "alogg.h"
 #include "loadpng.h"
+#include "Model_3DS.h"
 
 #endif // PRECOMPILED_H

@@ -194,9 +194,9 @@ dnl ------------------------------------------------
 
 LIBS="-lm $LIBS"
 
-AC_PATH_X
+if test "$WIN32" != "yes"; then
 
-if test "$WIN32" = "no"; then
+	dnl AC_PATH_X
 	
 	if test -n "$x_includes"; then
 	  CPPFLAGS="-I$x_includes $CPPFLAGS"
@@ -242,7 +242,7 @@ if test -n "$gl_fail"; then
 	AC_MSG_ERROR([Unable to locate required OpenGL headers])
 fi
 
-if test "$WIN32" = "no"; then
+if test "$WIN32" != "yes"; then
 	AC_CHECK_LIB(GL, glBegin, LIBS="-lGL $LIBS", gl_fail=y, "-lGL")
 else
 	dnl XXX change 'main' back to 'glBegin'.  WHY main??
@@ -290,7 +290,7 @@ if test -n "$alleggl_fail"; then
 	AC_MSG_ERROR([Unable to locate required AllegroGL headers])
 fi
 
-if test "$WIN32" = "no"; then
+if test "$WIN32" != "yes"; then
 	AC_CHECK_LIB(agl, install_allegro_gl, LIBS="-lagl $LIBS $ALLEGRO_LIBS", alleggl_fail=y, $ALLERGRO_LIBS)
 else
 	dnl XXX change 'main' back to 'gluSphere'.  WHY main??
