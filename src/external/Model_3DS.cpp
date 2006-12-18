@@ -75,9 +75,11 @@
 #define warn( x )  message( __FILE__LINE__ #x "\n" ) 
 
 // You need to uncomment this if you are using MFC
-#pragma warn( You need to uncomment this if you are using MFC )
+// #pragma warn( You need to uncomment this if you are using MFC )
 
 #include "stdafx.h"
+#include "sprite.h"
+#include "assetManager.h"
 
 // The chunk's id numbers
 #define MAIN3DS				0x4D4D
@@ -153,7 +155,7 @@ Model_3DS::Model_3DS()
 
 	// Set up the path
 	path = new char[80];
-	sprintf(path, "");
+	path[0] = 0;
 
 	// Zero out our counters for MFC
 	numObjects = 0;
@@ -257,17 +259,17 @@ void Model_3DS::Load(char *name)
 	}
 
 	// Let's build simple colored textures for the materials w/o a texture
-	for (int j = 0; j < numMaterials; j++)
+	/*for (int j = 0; j < numMaterials; j++)
 	{
 		if (Materials[j].textured == false)
 		{
 			unsigned char r = Materials[j].color.r;
 			unsigned char g = Materials[j].color.g;
 			unsigned char b = Materials[j].color.b;
-			Materials[j].tex.BuildColorTexture(r, g, b);
-			Materials[j].textured = true;
+			// XXX Materials[j].tex.BuildColorTexture(r, g, b);
+			Materials[j].textured = false;
 		}
-	}
+	}*/
 }
 
 void Model_3DS::Draw()
@@ -292,6 +294,9 @@ void Model_3DS::Draw()
 			// Enable texture coordiantes, normals, and vertices arrays
 			if (Objects[i].textured)
 				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			else
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
 			if (lit)
 				glEnableClientState(GL_NORMAL_ARRAY);
 			glEnableClientState(GL_VERTEX_ARRAY);
@@ -307,7 +312,18 @@ void Model_3DS::Draw()
 			for (int j = 0; j < Objects[i].numMatFaces; j ++)
 			{
 				// Use the material's texture
-				Materials[Objects[i].MatFaces[j].MatIndex].tex.Use();
+				if (Materials[Objects[i].MatFaces[j].MatIndex].textured) {
+					glEnable(GL_TEXTURE_2D);              
+					Sprite* s = Materials[Objects[i].MatFaces[j].MatIndex].sprite;
+					assert(s);
+				  glBindTexture(GL_TEXTURE_2D, s->texture);
+					glColor3f(1.0f, 1.0f, 1.0f);
+				} else {
+					glDisable(GL_TEXTURE_2D);
+					glColor3ub(	Materials[Objects[i].MatFaces[j].MatIndex].color.r,
+											Materials[Objects[i].MatFaces[j].MatIndex].color.g,
+											Materials[Objects[i].MatFaces[j].MatIndex].color.b );
+				}
 
 				glPushMatrix();
 
@@ -315,10 +331,6 @@ void Model_3DS::Draw()
 					glTranslatef(Objects[i].pos.x, Objects[i].pos.y, Objects[i].pos.z);
 
 					// Rotate the model
-					//glRotatef(Objects[i].rot.x, 1.0f, 0.0f, 0.0f);
-					//glRotatef(Objects[i].rot.y, 0.0f, 1.0f, 0.0f);
-					//glRotatef(Objects[i].rot.z, 0.0f, 0.0f, 1.0f);
-
 					glRotatef(Objects[i].rot.z, 0.0f, 0.0f, 1.0f);
 					glRotatef(Objects[i].rot.y, 0.0f, 1.0f, 0.0f);
 					glRotatef(Objects[i].rot.x, 1.0f, 0.0f, 0.0f);
@@ -330,7 +342,7 @@ void Model_3DS::Draw()
 			}
 
 			// Show the normals?
-			if (shownormals)
+			/*if (shownormals)
 			{
 				// Loop through the vertices and normals and draw the normal
 				for (int k = 0; k < Objects[i].numVerts * 3; k += 3)
@@ -355,7 +367,7 @@ void Model_3DS::Draw()
 					if (lit)
 						glEnable(GL_LIGHTING);
 				}
-			}
+			}*/
 		}
 
 	glPopMatrix();
@@ -760,7 +772,12 @@ void Model_3DS::MapNameChunkProcessor(long length, long findex, int matindex)
 	// Load the name and indicate that the material has a texture
 	char fullname[80];
 	sprintf(fullname, "%s%s", path, name);
-	Materials[matindex].tex.Load(fullname);
+	Sprite* s = ASSETMANAGER->LoadSprite(fullname);
+
+	fprintf(stderr, "Can't load 3ds tex: %s\n", fullname);
+	assert(s != NULL && "Can't load 3ds model texture!");
+
+	Materials[matindex].sprite = s;
 	Materials[matindex].textured = true;
 
 	// move the file pointer back to where we got it so

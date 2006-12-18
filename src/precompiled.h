@@ -56,6 +56,6 @@ using namespace std;
 #include "xmlParser.h"
 #include "alogg.h"
 #include "loadpng.h"
-#include "Model_3DS.h"
+// #include "Model_3DS.h"
 
 #endif // PRECOMPILED_H

@@ -45,6 +45,7 @@ class ObjectFactory {
 		Object* NewControllerObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewBackgroundObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewStaticObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* New3dObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewSpringObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewFanObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewDoorObject(XMLNode &xDef, XMLNode *xObj=NULL);

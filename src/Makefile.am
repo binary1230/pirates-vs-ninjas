@@ -23,13 +23,14 @@ PRE_CXXCOMPILE = 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 headers = \
 external/ezSockets.h external/alogg.h external/aloggdll.h \
 external/xmlParser.h external/StdString.h external/loadpng.h \
+external/Model_3DS.h \
 globals.h gameOptions.h gameState.h \
 timer.h rect.h vector2D.h oggFile.h network.h basename.h \
 window.h assetManager.h gameSound.h \
 gameMode.h gameModes.h \
 objectLayer.h objectFactory.h objectIDs.h \
 objects/object.h objects/objectEnemy.h \
-objects/objectPlayer.h objects/objectBounce.h \
+objects/objectPlayer.h objects/objectBounce.h objects/object3d.h \
 objects/objectBackground.h objects/objectController.h \
 objects/objectStatic.h objects/objectSpring.h objects/objectTxtOverlay.h \
 objects/objectCollectable.h objects/objectFan.h objects/objectDoor.h \
@@ -41,13 +42,14 @@ credits.h gameMenu.h physSimulation.h sprite.h precompiled.h stdafx.h
 ninjas_SOURCES = \
 external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
 external/loadpng.cpp external/regpng.cpp external/savepng.cpp \
+external/Model_3DS.cpp \
 main.cpp gameOptions.cpp gameState.cpp globals.cpp \
 timer.cpp rect.cpp vector2D.cpp oggFile.cpp network.cpp basename.cpp \
 window.cpp assetManager.cpp gameSound.cpp \
 gameMode.cpp gameModes.cpp \
 objectLayer.cpp objectFactory.cpp \
 objects/object.cpp objects/objectEnemy.h \
-objects/objectPlayer.cpp objects/objectBounce.cpp \
+objects/objectPlayer.cpp objects/objectBounce.cpp objects/object3d.cpp \
 objects/objectBackground.cpp objects/objectController.cpp \
 objects/objectStatic.cpp objects/objectSpring.cpp objects/objectTxtOverlay.cpp \
 objects/objectCollectable.cpp objects/objectFan.cpp objects/objectDoor.cpp \

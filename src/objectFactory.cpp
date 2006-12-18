@@ -26,6 +26,7 @@
 #include "objectFan.h"
 #include "objectDoor.h"
 #include "objectTxtOverlay.h"
+#include "object3d.h"
 #include "assetManager.h"
 #include "animations.h"
 #include "gameSound.h"
@@ -184,6 +185,10 @@ Object* ObjectFactory::CreateObject(	OBJECTID id,
 
 	switch(id) {
 					
+		case OBJECT_ID_3D:
+			obj = New3dObject(xObjectDef, xObject);
+			break;
+
 		case OBJECT_ID_BACKGROUND:
 			obj = NewBackgroundObject(xObjectDef, xObject);
 			break;
@@ -424,6 +429,16 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 	StaticObject* obj = new StaticObject();
 	if (!LoadCommonObjectStuff(obj, xDef, xObj))
 		return NULL;
+	
+	return obj;
+}
+
+Object* ObjectFactory::New3dObject(XMLNode &xDef, XMLNode *xObj) {
+	
+	ModelObject* obj = new ModelObject();
+
+	//if (!LoadCommonObjectStuff(obj, xDef, xObj))
+	//	return NULL;
 	
 	return obj;
 }

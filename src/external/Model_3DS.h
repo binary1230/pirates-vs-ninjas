@@ -73,6 +73,8 @@
 
 #include <stdio.h>
 
+class Sprite;
+
 class Model_3DS  
 {
 public:
@@ -103,8 +105,7 @@ public:
 	// TODO: add color support for non textured polys
 	struct Material {
 		char name[80];	// The material's name
-		// GLTexture tex;	// The texture (this is the only outside reference in this class)
-		int tex;
+		Sprite* sprite;
 		bool textured;	// whether or not it is textured
 		Color4i color;
 	};
