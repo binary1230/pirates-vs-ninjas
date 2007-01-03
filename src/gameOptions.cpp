@@ -1,14 +1,23 @@
-/* This file contains code taken from OpenDarwin Project:
-   Create and destroy argument vectors (argv's)
-   Copyright (C) 1992, 2001 Free Software Foundation, Inc.
-   Written by Fred Fish @ Cygnus Support
-
-   This file is part of the libiberty library. (GPL)*/
+/* GameOptions.cpp
+ * (c) 2007 Dominic Cerquetti, licensed under the GPL v2
+ *
+ * Handles command line runtime switches (like '-h' '-v' etc)
+ *
+ * ---------------------------------------------------------
+ * This file contains code taken from OpenDarwin Project:
+ * ---------------------------------------------------------
+ *  Create and destroy argument vectors (argv's)
+ *  Copyright (C) 1992, 2001 Free Software Foundation, Inc.
+ *  Written by Fred Fish @ Cygnus Support
+ *
+ *  This file contains part of the libiberty library. (GPL)*/
 
 #include "gameOptions.h"
 #include "basename.h"
 #include "window.h"
 #include "globals.h"
+
+DECLARE_SINGLETON(GameOptions)
 
 void GameOptions::PrintBanner() {
 		fprintf(stderr, 
@@ -39,6 +48,8 @@ void GameOptions::PrintOptions(const char* arg0) {
 		"-d file       | playback a demo from 'file'\n\n"
 
 		"-X            | disable sound\n\n"
+
+		"-e            | (EXPERIMENTAL) start [loser] map editor\n\n"
 
 		"-2            | (DEBUG) use 640x480 instead of 320x240\n"
 		"-z            | (DEBUG) use 800x600 (z?? z?? wtf.)\n"
@@ -83,6 +94,7 @@ void GameOptions::Clear() {
 
 	draw_graphics = true;
 	wait_for_updates = true;
+	map_editor_enabled = false;
 
 	is_valid = true;
 }
@@ -155,11 +167,15 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 
 	Clear();
 
-	while ( (c = getopt(argc,new_argv,"fzwg:m:r:d:X23vsc:p:h89")) != -1) {
+	while ( (c = getopt(argc,new_argv,"fzwg:m:r:d:X23vsc:p:h89e")) != -1) {
 		switch (c) {
 
 			case 'm':
 				default_mode_id = strtoul(optarg, NULL, 10);
+				break;
+
+			case 'e':
+				map_editor_enabled = true;
 				break;
 
 			// get demo filename

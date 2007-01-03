@@ -20,11 +20,18 @@ class ObjectLayer {
 		bool visible;
 		float scroll_speed;
 
+		// really should be a singleton
 		PhysSimulation* simulation;
+
+		// the following are rarely used so are stored as pointers
+		// XML props
+		CString* name;
 	
 	public:
 		bool Init(PhysSimulation*);
 		void Shutdown();
+
+		void SetName(const char*);
 
 		//! Get/set layer scroll speed
 		void SetScrollSpeed(float _scroll_speed) { scroll_speed = _scroll_speed ;};
@@ -45,6 +52,8 @@ class ObjectLayer {
 		
 		ObjectLayer();
 		virtual ~ObjectLayer();
+
+		friend class MapSaver;
 };
 
 #endif // OBJECTLAYER_H

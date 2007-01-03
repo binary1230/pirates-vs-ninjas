@@ -29,10 +29,7 @@ Force* ForceFactory::CreateForce(ForceType type) {
 			
 			} else {
 				fprintf(stderr, "ForceFactory: Failed to create new Input Force\n");
-				if (inputForce) {
-						free(inputForce);
-						inputForce = NULL;
-				}	
+				SAFE_DELETE(inputForce);
 			}
 
 			force = inputForce;
@@ -47,10 +44,7 @@ Force* ForceFactory::CreateForce(ForceType type) {
 			
 			} else {
 				fprintf(stderr, "ForceFactory: Failed to create new Input Force\n");
-				if (gravityForce) {
-						free(gravityForce);
-						gravityForce = NULL;
-				}	
+				SAFE_DELETE(gravityForce);
 			}
 
 			force = gravityForce;

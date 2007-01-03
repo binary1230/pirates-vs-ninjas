@@ -2,7 +2,6 @@
 #define CREDITS_H
 
 #include "stdafx.h"
-#include "singleton.h"
 #include "gameMode.h"
 #include "sprite.h"
 

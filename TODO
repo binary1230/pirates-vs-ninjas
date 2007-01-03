@@ -19,7 +19,7 @@ Implement GameMusic class
 Make OGG Files repeat (oggFile.cpp)
 Make OGG Files not display error messages on stop
 Restrcuture ObjectLayer Object* pointers
-Make Objects able to be instantiated without XML (done?)
+:DONE: Make Objects able to be instantiated without XML
 Network support (also, fix EzSockets)
 Make input classes able to record demos just for certain modes
 GameSound buffering, volume
@@ -34,4 +34,5 @@ Re-organize assets
 
 Map Editor Tasks
 ----------------
-Start it!
+Start it! JAVA + GTK + GLADE! maybe? or C# + GTK# ? 
+Cross platform a requirement

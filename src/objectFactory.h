@@ -3,22 +3,11 @@
 
 #include "stdafx.h"
 
+class Object;
 class ObjectFactory;
 class AssetManager;
-
-// All must declare objectFactory as friend classes
-class Object;/*
-class ObjectPlayer;
-class ObjectBounce;
-class ObjectCollectable;
-class ObjectController;
-class ObjectBackground;
-class ObjectStatic;
-class ObjectSpring;
-class ObjectTxtOverlay;*/
 class PhysSimulation;
 
-#include "singleton.h"
 #include "animation.h"
 #include "objectIDs.h"
 

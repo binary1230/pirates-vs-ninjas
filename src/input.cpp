@@ -291,11 +291,11 @@ int Input::Init() {
 		return -1;
 	}
 
-	if (GAMESTATE->GetGameOptions()->RecordDemo()) {
-		if (!InitRecorder(GAMESTATE->GetGameOptions()->GetDemoFilename()))
+	if (OPTIONS->RecordDemo()) {
+		if (!InitRecorder(OPTIONS->GetDemoFilename()))
 			return -1;
-	} else if (GAMESTATE->GetGameOptions()->PlaybackDemo()) {
-		if (!InitPlayback(GAMESTATE->GetGameOptions()->GetDemoFilename()))
+	} else if (OPTIONS->PlaybackDemo()) {
+		if (!InitPlayback(OPTIONS->GetDemoFilename()))
 			return -1;
 	} else {
 		if (!InitLive())

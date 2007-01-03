@@ -16,11 +16,12 @@ class OGGFILE;
 // note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
 typedef list<Object*>::iterator ObjectListIter;
+typedef list<Object*>::const_iterator ObjectConstListIter;
 typedef list<Object*>::reverse_iterator ObjectListReverseIter;
 
 //! Represents a physical simulation (the main game levels)
 class PhysSimulation : public GameMode {
-		protected:		
+		protected:
 			//! ALL objects in the scene
 			ObjectList objects;
 
@@ -90,9 +91,14 @@ class PhysSimulation : public GameMode {
 		
 			void DoCleaning();
 
+			bool is_loading;
+
 		public:
 			int Init(XMLNode);
 			void Shutdown();
+
+			//! True if we are in the middle of the initial load
+			inline bool IsLoading() {return is_loading;}
 
 			void SetModalObject(Object* obj) {modal_active = obj;};
 
@@ -107,6 +113,8 @@ class PhysSimulation : public GameMode {
 			
 			void Draw();
 			void Update();
+
+			void DoMainGameUpdate();
 
 			int GetWidth() {return width;};
 			int GetHeight() {return height;};
@@ -129,6 +137,8 @@ class PhysSimulation : public GameMode {
 
 			PhysSimulation();
 			~PhysSimulation();
+
+			friend class MapSaver;
 };
 
 #endif

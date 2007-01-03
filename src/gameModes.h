@@ -2,9 +2,9 @@
 #define GAMEMODES_H
 
 #include "stdafx.h"
-#include "singleton.h"
 
 class GameMode;
+class GameModeExitInfo;
 
 class GameModes {
 	protected:
@@ -20,7 +20,8 @@ class GameModes {
 		void DoEndCurrentMode();
 		void DoGameExit();
 
-		int LoadNextMode();
+		int LoadMode(CString, const GameModeExitInfo& exitInfo);
+		CString PickNextMode(const GameModeExitInfo& exitInfo);
 
 	public:
 		void Update();

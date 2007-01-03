@@ -4,7 +4,6 @@
 
 #include "stdafx.h"
 #include "globals.h"
-#include "singleton.h"
 #include "rect.h"
 
 class GameState;
@@ -78,6 +77,8 @@ class GameWindow {
 		void Screenshot(char* filename = NULL);
 
 		virtual ~GameWindow();
+
+		friend class MapSaver;
 };
 
 #define WINDOW GameWindow::GetInstance()

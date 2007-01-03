@@ -7,6 +7,9 @@
 
 //! Holds and validates the various command line and game options
 class GameOptions {
+
+	DECLARE_SINGLETON_CLASS(GameOptions)
+
 	protected:
 		//! True if the combinations of options we have selected is valid
 		bool is_valid;
@@ -62,6 +65,8 @@ class GameOptions {
 		//! For normal play, this should be true
 		//! For AI training or testing, you can set this to false to run fast
 		bool wait_for_updates;
+
+		bool map_editor_enabled;
 		
 	public:
 		//! Print the list of available options to stdout
@@ -82,46 +87,49 @@ class GameOptions {
 
 		
 		//! True if the combinations of options we have selected is valid
-		inline bool IsFullscreen() {return fullscreen;};
+		inline bool IsFullscreen() {return fullscreen;}
 		
 		//! The demo filename if it was set
-		inline const char* GetDemoFilename() {return demo_filename.c_str();};
+		inline const char* GetDemoFilename() {return demo_filename.c_str();}
 		
 		//! True if the user wants to reccord a demo
-		inline bool RecordDemo() {return record_demo;};
+		inline bool RecordDemo() {return record_demo;}
 		
 		//! True if the user wants to playback a demo
-		inline bool PlaybackDemo() {return playback_demo;};
+		inline bool PlaybackDemo() {return playback_demo;}
 		
 		//! Requested graphics mode (double buffering, pageflipping, nothing, etc)
 		//! (used for the Window class)
-		inline int GraphicsMode() {return graphics_mode;};
+		inline int GraphicsMode() {return graphics_mode;}
 
 		//! Get the default mode ID
-		inline int GetDefaultModeId() {return default_mode_id;};
+		inline int GetDefaultModeId() {return default_mode_id;}
 
 		//! Get whether sound is enabled or not
-		inline int SoundEnabled() {return sound_enabled;};
+		inline int SoundEnabled() {return sound_enabled;}
 		
 		//! Return whether we are starting the game in 'debug pause mode'
-		inline bool GetDebugStartPaused() {return debug_start_paused;};
+		inline bool GetDebugStartPaused() {return debug_start_paused;}
 
 		//! Return the debug message level.
 		//! Right now, 0 = no messages, 1 = all messages
-		inline int GetDebugMessageLevel() {return debug_message_level;};
+		inline int GetDebugMessageLevel() {return debug_message_level;}
 
-		inline bool		IsNetworkEnabled() {return network_enabled;};
-		inline bool 	IsNetworkServer() {return network_start_as_server;};
-		inline int 		GetNetworkPortNumber() {return network_port_num;};
+		inline bool		IsNetworkEnabled() {return network_enabled;}
+		inline bool 	IsNetworkServer() {return network_start_as_server;}
+		inline int 		GetNetworkPortNumber() {return network_port_num;}
 		inline const char* GetNetworkServerName() {
 			return network_server_name.c_str();
-		};
+		}
 
-		inline bool		DrawGraphics() {return draw_graphics;};
-		inline bool		WaitForUpdates() {return wait_for_updates;};
+		inline bool		DrawGraphics() {return draw_graphics;}
+		inline bool		WaitForUpdates() {return wait_for_updates;}
+
+		inline bool 	MapEditorEnabled() {return map_editor_enabled;}
 		
-		GameOptions();
-		~GameOptions();
+		virtual ~GameOptions();
 };
+
+#define OPTIONS (GameOptions::GetInstance())
 
 #endif // ARGS_H

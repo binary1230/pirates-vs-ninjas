@@ -16,7 +16,7 @@ DECLARE_SINGLETON(GameState)
 // returns: XMLNode of first GameMode to load
 int GameState::LoadXMLConfig(CString xml_filename) {
 				
-	int default_mode_id = options->GetDefaultModeId();
+	int default_mode_id = OPTIONS->GetDefaultModeId();
 
 	// XXX xmlParser just DIES on error
 	xml_filename = ASSETMANAGER->GetPathOf(xml_filename.c_str());
@@ -107,7 +107,7 @@ int GameState::InitSystem() {
 		fprintf(stderr, "[init: window]\n");
 		WINDOW->CreateInstance();
 		if ( !WINDOW ||	WINDOW->Init(screen_size_x, screen_size_y, 
-										options->IsFullscreen(), options->GraphicsMode()) < 0 ) {
+										OPTIONS->IsFullscreen(), OPTIONS->GraphicsMode()) < 0 ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init window!\n");
 			return -1;
 		}
@@ -150,9 +150,9 @@ int GameState::LoadGameModes() {
  
 int GameState::InitNetwork() {	
 	int ret;
-	int port = options->GetNetworkPortNumber();
+	int port = OPTIONS->GetNetworkPortNumber();
 
-	if (!options->IsNetworkEnabled())
+	if (!OPTIONS->IsNetworkEnabled())
 		return 0;
 
 	network = new GameNetwork();
@@ -161,10 +161,10 @@ int GameState::InitNetwork() {
 
 	fprintf(stderr, "NET: Port %i\n", port);
 	
-	if (options->IsNetworkServer()) {
+	if (OPTIONS->IsNetworkServer()) {
 		ret = network->InitServer(port);
 	} else {
-		ret = network->InitClient(port, options->GetNetworkServerName());
+		ret = network->InitClient(port, OPTIONS->GetNetworkServerName());
 	}
 
 	return ret;
@@ -181,10 +181,10 @@ int GameState::InitSound() {
 		return -1;
 	}
 
-	if (!options->SoundEnabled())
+	if (!OPTIONS->SoundEnabled())
 		fprintf(stderr, " Sound disabled.\n");
 
-	if ( !SOUND || (SOUND->Init(options->SoundEnabled()) == -1) ) {
+	if ( !SOUND || (SOUND->Init(OPTIONS->SoundEnabled()) == -1) ) {
 		return -1;
 	}
 				
@@ -234,16 +234,14 @@ void GameState::OutputTotalRunningTime() {
 //! It takes a pointer to the game options (fullscreen/etc).
 //! It initializes everything, and returns 0 if successful
 //! or 1 on error.
-int GameState::RunGame(GameOptions* _options) {
-		
-		options = _options;
+int GameState::RunGame() {
 		
 		if (InitSystem() == -1) {
 			fprintf(stderr, "ERROR: Failed to init game!\n");
 			return -1;	
 		}
 
-		if (options->GetDebugStartPaused()) 
+		if (OPTIONS->GetDebugStartPaused()) 
 		debug_pause_toggle = 1;	
 
 		INPUT->Begin();
@@ -274,7 +272,7 @@ int GameState::RunGame(GameOptions* _options) {
 // If you are trying to understand it, ignore all the DEBUG_ and pause junk.
 void GameState::MainLoop() {
 
-	bool wait_for_updates = options->WaitForUpdates();
+	bool wait_for_updates = OPTIONS->WaitForUpdates();
 				
 	int debug_update_count = 0;
 
@@ -350,7 +348,7 @@ void GameState::Update() {
 
 //! Draw the current mode
 void GameState::Draw() {
-	if (options->DrawGraphics()) {
+	if (OPTIONS->DrawGraphics()) {
 		WINDOW->BeginDrawing();
 		WINDOW->Clear();
 		modes->Draw();
@@ -395,7 +393,6 @@ void GameState::Shutdown() {
 		WINDOW->FreeInstance();
 	}
 
-	options = NULL;
 	modes = NULL;
 	network = NULL;
 	xGame = XMLNode::emptyXMLNode;
@@ -413,7 +410,6 @@ int GameState::GetRandomSeed() const {
 };
 
 GameState::GameState() {
-	options = NULL;
 	modes = NULL;
 	network = NULL;
 }
@@ -429,7 +425,7 @@ GameState::~GameState() {}
 /*#define PVN_NETWORK_MAGIC_GREETING 123454321
 
 int GameState::InitNetworkServer() {
-	int port = options->GetNetworkPortNumber();
+	int port = OPTIONS->GetNetworkPortNumber();
   ezSocketsPacket packet;
 	
 	fprintf(stderr, "NET: Starting UDP network server on port %i\n", port);

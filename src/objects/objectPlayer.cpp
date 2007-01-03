@@ -15,6 +15,7 @@
 #include "objectFactory.h"
 #include "objectSpring.h"
 #include "gameSound.h"
+#include "effectsManager.h"
 
 #define DEFAULT_JUMP_VELOCITY 8.0f
 #define DEFAULT_DRAG 0.95f
@@ -146,7 +147,7 @@ void PlayerObject::UpdateSkidding() {
 			next_skid_time = 0;
 
 			// Create a "skid" object (little white whisp at player's feet)
-			Object* objSkid = OBJECT_FACTORY->CreateObject(SKID_OBJECT_TYPE);
+			Object* objSkid = EFFECTS->Trigger(this, "skid");
 			
 			if (objSkid) {
 				float skid_vel_x = 6.0f;
@@ -155,12 +156,8 @@ void PlayerObject::UpdateSkidding() {
 					skid_vel_x *= -1.0f;
 
 				objSkid->SetDisplayTime(Rand(1,10));
-				objSkid->SetXY(pos);
 				objSkid->SetVelXY(skid_vel_x, 0.0f);
-				objSkid->SetLayer(layer);
 				objSkid->FadeOut(Rand(4,10));
-		
-				simulation->AddObject(objSkid);
 			}
 		}
 	}
@@ -192,6 +189,7 @@ void PlayerObject::DoJumping() {
 void PlayerObject::DoFalling() {
 	state = FALLING;
 
+	// XXX: should be PLAYER_FALLING when we have one.
 	currentAnimation = animations[PLAYER_JUMPING];
 
 	if (d.down) {
@@ -212,26 +210,20 @@ void PlayerObject::DoCrouchingDown() {
 // Do things common to most every state
 void PlayerObject::DoCommonStuff() {
 	
-	// Let's do... oh.. bouncy balls?? Why not?
-	if (	state != WALKING_THRU_DOOR && 
-				INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num)) {
+	// let's do something interesting and random here, why not?
+	// if they press a key here, then drop a bouncy ball.
+
+	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num) && 
+			state != WALKING_THRU_DOOR) {
+		
+		Object* objBall = EFFECTS->Trigger(this, "ball");	
 			
-		Object* objBall = OBJECT_FACTORY->CreateObject("ball");
-			
-		if (objBall) {
-			//float skid_vel_x = 8.0f;
+		if (!objBall)
+			return;
 
-			//if (vel.GetX() < 0.0f)
-			//	skid_vel_x *= -1.0f;
-
-			objBall->SetDisplayTime(200);
-			objBall->SetXY(pos);
-			objBall->SetVelXY(vel.GetX(), 0.0f);
-			objBall->SetLayer(layer);
-			objBall->FadeOut(210);
-
-			simulation->AddObject(objBall);
-		}
+		objBall->SetDisplayTime(200);
+		objBall->SetVelXY(vel.GetX(), 0.0f);
+		objBall->FadeOut(210);
 	}
 }
 

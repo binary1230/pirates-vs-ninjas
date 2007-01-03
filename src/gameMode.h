@@ -3,6 +3,33 @@
 
 #include "stdafx.h"
 
+//! Holds info about the last mode completed (if wanted)
+struct GameModeExitInfo {
+
+	bool useExitInfo;					//! Whether to use any of this info at all.
+
+	CString lastModeName;			//! The name of the mode that is exiting 
+														//! (e.g. "level1.xml") 
+
+	CString nextModeToLoad;		//! If not empty, holds the name of the
+														//! next mode to run. (e.g. "level2.xml")
+
+	CString lastPortalName;		//! The last portal we went through
+														//! (allows player to spawn at a specific door)
+	
+	bool useNextModeToLoad;
+	bool useLastPortalName;
+
+	bool showInitialText;			//! sorta-hack.  set to false to disable initial
+														//! text.  useful for portal warping
+
+	GameModeExitInfo() {
+		nextModeToLoad = lastPortalName = lastModeName = "";
+		useExitInfo = useNextModeToLoad = useLastPortalName = false;
+		showInitialText = true;
+	}
+};
+
 //! Base class for all Modes of the game (e.g. Menu Mode, Game Mode, Bonus Level Mode)
 
 //! For example, a level is a "mode", the menu screen is a "mode"
@@ -15,6 +42,14 @@
 class GameMode {
 		protected:
 
+			// our exit info that we will return 
+			// upon ending this mode
+			GameModeExitInfo exitInfo;				
+
+			// the exit info the last mode returned
+			// or NULL if there was none
+			GameModeExitInfo lastExitInfo;		
+
 		public:
 			virtual int Init(XMLNode) = 0;
 			virtual void Shutdown() = 0;
@@ -26,7 +61,16 @@ class GameMode {
 			virtual void Update() = 0;
 
 			//! Experimental: get the AI fitness score for AI training	
-			virtual int GetAiFitnessScore() {return 0;};
+			virtual int GetAiFitnessScore() {return 0;}
+
+			//! Get the exit info from this mode
+			//! NOTE: Not all modes return meaningful exit info
+			void SetExitInfo(const GameModeExitInfo& info) {exitInfo = info;}
+			const GameModeExitInfo& GetExitInfo() {return exitInfo;}
+
+			//! Return the exit info from the LAST mode, NOT us. NULL if none exists
+			void SetOldExitInfo(const GameModeExitInfo& info) {lastExitInfo = info;}
+			const GameModeExitInfo& GetOldExitInfo() {return lastExitInfo;}
 
 			GameMode();
 			virtual ~GameMode();

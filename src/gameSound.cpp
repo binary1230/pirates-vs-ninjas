@@ -132,7 +132,6 @@ void GameSound::Shutdown() {
 	OGGFILE* music = ASSETMANAGER->GetMusic();
 
 	if (music) {
-		fprintf(stderr, "++++++++++++++++++ GAMESOUND: Shutting down music  ++++++++++++++\n");
 		music->Shutdown();
 	}
 

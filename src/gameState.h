@@ -4,7 +4,6 @@
 #include "stdafx.h"
 
 class GameState;
-class GameOptions;
 class BaseInput;
 class GameMode;
 class AssetManager;
@@ -28,9 +27,6 @@ class GameState {
 	DECLARE_SINGLETON_CLASS(GameState)
 
 	protected:	
-		//! Holds options which were parsed from the command line
-		GameOptions *options;
-	
 		//! Holds the current game's parsed XML data
 		XMLNode xGame;
 		
@@ -98,8 +94,7 @@ class GameState {
 		bool is_playing_back_demo;
 					
 	public:
-		//! Main function - run the game
-		int RunGame(GameOptions *_options);
+		int RunGame();
 
 		//! Set the random seed value
  		void SetRandomSeed(int);
@@ -119,9 +114,6 @@ class GameState {
 		//! Returns the currently active physics simulation (if there is one)
 		// XXX needs to be a singleton eventually.
 		PhysSimulation* GetPhysSimulation();
-
-		//! Gets the game options
-		inline GameOptions* GetGameOptions() {return options;};
 
 		~GameState();
 };

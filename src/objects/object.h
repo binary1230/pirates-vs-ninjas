@@ -1,4 +1,3 @@
-// \todo Free all animations that are loaded.
 #ifndef OBJECT_H
 #define OBJECT_H
 
@@ -145,6 +144,9 @@ class Object {
 		//! When set to -1, this value is ignored
 		int display_time;
 
+		// XML Props, rarely ever used.
+		CString* objectDefName;
+
 		// -- UNUSUED BELOW --
 
 		//! Current fade-out time
@@ -156,6 +158,8 @@ class Object {
 
 		//! Alpha (transparency) of this object (0=inviz, 255=opaque)
 		int alpha;
+
+		// -- END UNUSED --
 
 		//! Do common object updates
 		void BaseUpdate();
@@ -181,7 +185,7 @@ class Object {
 		// Protected constructur, this means we can't directly
 		// instantiate Object's, we need to use a higher class.
 		Object();
-		
+	
 	public:
 		int tmp_debug_flag;
 		
@@ -223,47 +227,49 @@ class Object {
 		void DrawAtOffset(int x, int y, Sprite* = NULL);	
 		
 		//! Functions to get/set position
-		inline int GetX() 					{ return (int)pos.GetX(); }
-		inline int GetY() 					{ return (int)pos.GetY(); }
-		inline void SetX(int _x) 		{ pos.SetX((float)_x);  }
-		inline void SetY(int _y) 		{ pos.SetY((float)_y);	}
-		inline void SetXY(int _x, int _y) {
+		inline int GetX() 						{ return (int)pos.GetX(); }
+		inline int GetY() 						{ return (int)pos.GetY(); }
+		inline Vector2D GetXY() const { return pos; }; 
+
+		inline void SetX(const int _x) 		{ pos.SetX((float)_x);  }
+		inline void SetY(const int _y) 		{ pos.SetY((float)_y);	}
+		inline void SetXY(const int _x, const int _y) {
 				pos.SetX((float)_x);	
 				pos.SetY((float)_y);
 		}
-		inline void SetXY(Vector2D _pos) {
+		inline void SetXY(const Vector2D &_pos) {
 			pos = _pos;
 		}
 
 		inline int GetAlpha() { return alpha; };
-		inline void SetAlpha(int a) { alpha = a; };
+		inline void SetAlpha(const int a) { alpha = a; };
 
-		inline void SetFlipX(bool val) { flip_x = val; };
-		inline void SetFlipY(bool val) { flip_y = val; };
+		inline void SetFlipX(const bool val) { flip_x = val; };
+		inline void SetFlipY(const bool val) { flip_y = val; };
 
 		//! Functions to get/set velocity
 		inline float GetVelX() 					{ return vel.GetX(); }
 		inline float GetVelY() 					{ return vel.GetY(); }
-		inline void SetVelX(float _vx) 		{ vel.SetX(_vx); }
-		inline void SetVelY(float _vy) 		{ vel.SetY(_vy);	}
-		inline void SetVelXY(float _vx, float _vy) {
+		inline void SetVelX(const float _vx) 		{ vel.SetX(_vx); }
+		inline void SetVelY(const float _vy) 		{ vel.SetY(_vy);	}
+		inline void SetVelXY(const float _vx, const float _vy) {
 				vel.SetX(_vx);
 				vel.SetY(_vy);
 		}
-		inline void SetVelXY(Vector2D _vel) {
+		inline void SetVelXY(const Vector2D &_vel) {
 			vel = _vel;
 		}
-		inline void SetVelRotate(float vel) {
+		inline void SetVelRotate(const float vel) {
 			rotate_velocity = vel;
 		}
 
-		inline void SetUseRotation(bool state) {
+		inline void SetUseRotation(const bool state) {
 			use_rotation = state;
 		}
 
 		//! Get width/height of this object
-		inline int GetWidth() {return width;};
-		inline int GetHeight() {return height;};
+		inline int GetWidth() const {return width;};
+		inline int GetHeight() const {return height;};
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();
@@ -271,10 +277,10 @@ class Object {
 		//! Apply a force to this object
 		void ApplyForce(Force* f);
 		
-		inline float GetMass() 					{ return mass; }
+		inline float GetMass() const		{ return mass; }
 		inline void SetMass(float m) 		{ mass = m; }
 		
-		struct ObjectProperties GetProperties() { return properties; };
+		struct ObjectProperties GetProperties() const { return properties; };
 		inline void SetProperties(struct ObjectProperties p) { properties = p;}
 
 		//! Setup some commonly used variables
@@ -284,15 +290,15 @@ class Object {
 		void SetControllerNum(uint _c) {controller_num = _c;};
 		
 		//! Return which controller we monitor
-		uint GetControllerNum() {return controller_num;};
+		uint GetControllerNum() const {return controller_num;};
 		
 		void SetDebugFlag(bool d) {debug_flag = d;};
-		bool GetDebugFlag() {return debug_flag;};
+		bool GetDebugFlag() const {return debug_flag;};
 		
 		//! Handle collisions with another object
 		virtual void Collide(Object* obj);
 
-		bool const IsColliding(Object *obj);
+		bool IsColliding(Object *obj) const;
 
 		inline bool IsDead() const {return is_dead;};
 
@@ -305,7 +311,7 @@ class Object {
 		void UpdateProjectionRectFromVelocity();
 		void UpdateProjectionRectFromCollisions(Vector2D &newPos);
 
-		_Rect GetProjectionRect() {return projRect;}
+		_Rect GetProjectionRect() const {return projRect;}
 
 		//! Plays a sound, or does nothing if that sound is not loaded
 		// void PlaySound(CString name);
@@ -313,12 +319,15 @@ class Object {
 		ObjectLayer* const GetLayer() const {return layer;};
 		void SetLayer(ObjectLayer* const l) {layer = l;};
 		
-		virtual ~Object();
-
 		//! Returns true if this type of object is able to collide with another
 		static bool CanCollide(Object* obj);
 
+		void SetObjectDefName(const char*);
+		
+		virtual ~Object();
+
 		friend class ObjectFactory;
+		friend class MapSaver;
 };
 
 #endif // OBJECT_H

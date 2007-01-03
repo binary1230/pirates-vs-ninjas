@@ -3,6 +3,11 @@
 #include "object.h"
 #include "physSimulation.h"
 
+void ObjectLayer::SetName(const char* _name) {
+	SAFE_DELETE(name);
+	name = new CString(_name);
+}
+
 void ObjectLayer::Draw() {
 	ObjectListReverseIter rev_iter;
 	Object* obj;
@@ -59,11 +64,13 @@ ObjectLayer::ObjectLayer() {
 	scroll_speed = 1.0f;
 	visible = true;	
 	simulation = NULL;
+	name = NULL;
 	objects.clear();
 }
 
 ObjectLayer::~ObjectLayer() {
 	Shutdown();
 	simulation = NULL;
+	SAFE_DELETE(name);
 }
 

@@ -2,7 +2,6 @@
 #define NETWORK_H
 
 #include "stdafx.h"
-#include "singleton.h"
 
 class ezSockets;
 

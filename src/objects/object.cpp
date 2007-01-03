@@ -12,6 +12,11 @@
 #include "objectLayer.h"
 #include "sprite.h"
 
+void Object::SetObjectDefName(const char* _name) {
+	SAFE_DELETE(objectDefName);
+	objectDefName = new CString(_name);
+}
+
 // Used as criteria for STL find()
 bool ObjectIsDead(Object* obj) {
 	assert(obj != NULL);
@@ -32,8 +37,6 @@ void Object::UpdateSimpleAnimations() {
 void Object::BaseUpdate() {
 	UpdateDisplayTime();
 	UpdateFade();
-
-//		fprintf(stderr, "Vel_rotate = '%f', angle='%f'!\n\n", rotate_velocity, rotate_angle);
 
 	if (use_rotation)
 		rotate_angle += rotate_velocity;
@@ -277,8 +280,7 @@ void Object::BaseShutdown() {
 	int i, max = animations.size();
 	for (i = 0; i < max; i++) {
 		animations[i]->Shutdown();
-		delete animations[i];
-		animations[i] = NULL;
+		SAFE_DELETE(animations[i]);
 	}
 	animations.clear();
 	
@@ -287,12 +289,15 @@ void Object::BaseShutdown() {
 	layer = NULL;
 	is_dead = true;
 	display_time = -1;
+
+	SAFE_DELETE(objectDefName);
 }
 
 unsigned long Object::debug_object_id = 0;
 
 Object::Object() {
 	LogObjectEvent(OBJECT_NEW);
+	objectDefName = NULL;
 	unique_id = Object::debug_object_id++;
 	layer = NULL;
 	currentSprite = NULL;
@@ -318,7 +323,7 @@ Object::Object() {
 // XXX BIG MESS and NOT FINISHED, not even close.
 CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	
-	int debug = GAMESTATE->GetGameOptions()->GetDebugMessageLevel();
+	int debug = OPTIONS->GetDebugMessageLevel();
 
 	bool check_up = false, check_right = false;
 	CollisionDirection d; d.up = d.down = d.left = d.right = 0;
@@ -388,7 +393,7 @@ void Object::UpdateProjectionRectFromCollisions(Vector2D &newPos) {
 }
 
 // rough, fast collision detection phase
-bool const Object::IsColliding(Object *obj) {
+bool Object::IsColliding(Object *obj) const {
 	if (obj->properties.is_player) {
 		//projRect.print();
 		//obj->projRect.print();
@@ -406,4 +411,5 @@ void Object::MoveToNewPosition() {
 
 Object::~Object() {
 	LogObjectEvent(OBJECT_DELETE);
+	SAFE_DELETE(objectDefName);
 }

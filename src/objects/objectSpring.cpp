@@ -51,7 +51,6 @@ void SpringObject::Collide(Object* obj) {
 		// Spring it!
 		if (spring_reset_time == 0) {
 			currentAnimation->Unfreeze();
-			SOUND->PlaySound("spring");
 			spring_reset_time = DEFAULT_SPRING_RESET_TIME;
 		}
 	}

@@ -18,6 +18,9 @@
 #include "gameOptions.h"
 #include "gameSound.h"
 #include "objectPlayer.h"
+#include "effectsManager.h"
+#include "objectDoor.h"
+#include "mapSaver.h"
 
 #define OBJECT_TEXT	"text_txt"
 
@@ -32,7 +35,7 @@ void PhysSimulation::ShowText(	const char* txt,
 	}
 
 	obj->SetText(txt);
-	obj->SetModalActive(false);
+	obj->SetModalActive(modal_active);
 
 	if (avatar_filename && strlen(avatar_filename) > 0)
 		obj->SetAvatarFilename(avatar_filename);
@@ -43,11 +46,11 @@ void PhysSimulation::ShowText(	const char* txt,
 int PhysSimulation::Init(XMLNode xMode) {
 	modal_active = NULL;
 	music = NULL;
-					width = height = 0;
+	width = height = 0;
 	camera_x = camera_y = 0;
 	camera_follow = NULL;
 	camera_scroll_speed = 1.0f;
-	
+		
 	OBJECT_FACTORY->CreateInstance();
 	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) {
 		fprintf(stderr, "ERROR: InitSystem: failed to init OBJECT_FACTORY!\n");
@@ -62,12 +65,27 @@ int PhysSimulation::Init(XMLNode xMode) {
 		return -1;
 	}
 
+	EFFECTS->CreateInstance();
+	if ( !EFFECTS || !EFFECTS->Init(this) ) {
+		fprintf(stderr, "ERROR: InitSystem: failed to init EffectsManager!\n");
+		return -1;
+	}
+
 	objectAddList.clear();
 	objects.clear();
 	forces.clear();
 	layers.clear();
 	
-	return Load(xMode);
+	int ret_val = Load(xMode);
+
+	// HACKISH EXPERIMENTAL DONT USE
+	if (OPTIONS->MapEditorEnabled()) {
+		MapSaver mapSaver;
+		mapSaver.SaveEverything(this, "test-map.xml");
+	}
+	// END HACKISH EXPERIMENTAL DONT USE
+
+	return ret_val;
 }
 
 //! Transforms view coordinates into absolute screen coordinates
@@ -174,6 +192,12 @@ void PhysSimulation::Shutdown() {
 		delete forceFactory;
 		forceFactory = NULL;
 	}
+
+	// delete the effects manager
+	if (EFFECTS) {
+		EFFECTS->Shutdown();
+		EFFECTS->FreeInstance();
+	}
 }
 
 //! Draw all objects in this physics simulation
@@ -279,7 +303,7 @@ void PhysSimulation::UpdateObjects() {
 	Object* obj;
 
 	// Add any New Objects
-	for (iter = objectAddList.begin(); iter != objectAddList.end(); iter++) {
+	for (iter = objectAddList.begin(); iter != objectAddList.end(); ++iter) {
 		obj = *iter;
 		assert(obj != NULL);
 		DoAddObject(obj);
@@ -293,7 +317,7 @@ void PhysSimulation::UpdateObjects() {
 	GetCollideableObjects(collideableObjects);
 	
 	// Do the physics simulation + update
-	for (iter = objects.begin(); iter != objects.end(); iter++) {
+	for (iter = objects.begin(); iter != objects.end(); ++iter) {
 		obj = *iter;
 		assert(obj != NULL);
 
@@ -314,14 +338,15 @@ void PhysSimulation::UpdateObjects() {
 //! Master update for the Physics simulation
 void PhysSimulation::Update() {
 
+	DoMainGameUpdate();
+}
+
+void PhysSimulation::DoMainGameUpdate() {
+
 	// If they pressed the 'exit' key (typically ESCAPE)
 	// Then end the physics simulation
 	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
-		// use one or the other, SignalGameExit() is "right"
-		// SignalEndCurrentMode() goes to the next level.
-
     GAMESTATE->SignalGameExit();			// for real
-    // GAMESTATE->SignalEndCurrentMode(); 	// for debugging
 		return;
 	}
 
@@ -331,7 +356,9 @@ void PhysSimulation::Update() {
 
 //! MASTER LOAD FUNCTION:
 //! Load the simulation from data in an XML file
-int PhysSimulation::Load(XMLNode &xMode) {			
+int PhysSimulation::Load(XMLNode &xMode) {
+
+	is_loading = true;
 
 	objects.clear();
 	objectAddList.clear();
@@ -349,6 +376,43 @@ int PhysSimulation::Load(XMLNode &xMode) {
 		SOUND->LoadMusic(music_file);
 		SOUND->PlayMusic();
 	}
+	
+	exitInfo.useExitInfo = true;
+
+	// special case: if we're coming back from a portal, find it and put the players
+	// at that portal's position on the map
+	if (lastExitInfo.useExitInfo && lastExitInfo.useLastPortalName) {
+		ObjectListIter iter;
+		Vector2D portal_pos;
+		Object* player;
+		bool found;
+
+		// find the portal with the specified name 
+		for (iter = objects.begin(); iter != objects.end(); iter++) {
+			if ((*iter)->GetProperties().is_door && ((DoorObject*)(*iter))->GetName() == lastExitInfo.lastPortalName) {
+				found = true;
+				portal_pos = (*iter)->GetXY();
+				break;
+			}
+		}
+
+		if (!found) {
+			fprintf(stderr, "ERROR: Tried to jump back to a portal "
+											"that doesn't exist named '%s'!\n", 
+											lastExitInfo.lastPortalName.c_str());
+			return -1;
+		}
+
+		// find the player obejcts, set their XY to the portal's XY
+		for (iter = objects.begin(); iter != objects.end(); iter++) {
+			if ((*iter)->GetProperties().is_player) {
+				player = *iter;
+				player->SetXY(portal_pos);
+			}
+		} 
+	}
+
+	is_loading = false;
 	
 	return 0;	
 }
@@ -502,6 +566,7 @@ int PhysSimulation::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) 
 	}
 
 	layer->SetScrollSpeed(scroll_speed);
+	layer->SetName(xLayer.getAttribute("name"));
 	
 	// 2) NEW: special case.  Because I, Dom, am LAZY as HELL, I have
 	// added a <REPEAT> tag which allows us to create, say, 50
@@ -620,12 +685,12 @@ int PhysSimulation::LoadObjectFromXML(
 		if (type == CString("fixed")) {
 
 			if (!xPos.getChildNode("x").getInt(x)) {
-				fprintf(stderr, "-- Invalid X!\n");
+				fprintf(stderr, "-- Invalid X coordinate specified (or did you want <x> instead of <x_offset> ?\n");
 				return -1;	
 			}
 
 			if (!xPos.getChildNode("y").getInt(y)) {
-				fprintf(stderr, "-- Invalid Y!\n");
+				fprintf(stderr, "-- Invalid Y coordinate specified (or did you want <y> instead of <y_offset> ?\n");
 				return -1;
 			}
 				
@@ -849,5 +914,8 @@ int PhysSimulation::GetAiFitnessScore() {
 }
 #endif // AI_TRAINING
 
-PhysSimulation::PhysSimulation() {}
+PhysSimulation::PhysSimulation() {
+	is_loading = false;
+}
+
 PhysSimulation::~PhysSimulation() {}

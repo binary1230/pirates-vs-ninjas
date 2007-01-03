@@ -255,6 +255,13 @@ typedef struct XMLNode
     XMLClear     *addClear(XMLCSTR lpszValue, XMLCSTR lpszOpen=XMLClearTags[0].lpszOpen, XMLCSTR lpszClose=XMLClearTags[0].lpszClose);
     XMLNode       addChild(XMLNode nodeToAdd);          // If the "nodeToAdd" has some parents, it will be detached
                                                         // from it's parents before being attached to the current XMLNode
+	
+		// Dom's helpers	
+		XMLCSTR       addText(const float& val);
+		XMLCSTR       addText(const int& val);
+    XMLAttribute *addAttribute(XMLCSTR lpszName, const float& val);
+    XMLAttribute *addAttribute(XMLCSTR lpszName, const int& val);
+
     // Some update functions:
     XMLCSTR       updateName(XMLCSTR lpszName);                                                    // change node's name
     XMLAttribute *updateAttribute(XMLAttribute *newAttribute, XMLAttribute *oldAttribute);         // if the attribute to update is missing, a new one will be added

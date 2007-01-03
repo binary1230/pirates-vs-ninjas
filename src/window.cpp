@@ -181,7 +181,7 @@ int GameWindow::Init( uint _width, uint _height,
 	height = _height;
 
 	// Special case: We won't be drawing _anything_
-	if (!GAMESTATE->GetGameOptions()->DrawGraphics() ) {
+	if (!OPTIONS->DrawGraphics() ) {
 		fprintf(stderr, "GameWindow: DISABLING ALL GRAPHICS\n");
 		set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
 		initialized = true;

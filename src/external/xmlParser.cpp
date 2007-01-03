@@ -1,3 +1,4 @@
+#define STRICT_PARSING 1
 /**
  ****************************************************************************
  * <P> XML.c - implementation file for basic XML parser written in ANSI C++
@@ -348,7 +349,7 @@ XMLNode XMLNode::openFileHelper(const char *filename, XMLCSTR tag)
 #ifdef WIN32
         MessageBoxA(NULL,message,"XML Parsing error",MB_OK|MB_ICONERROR|MB_TOPMOST);
 #else
-        printf("%s",message);
+        fprintf(stderr, "%s\n\nERROR: Error parsing xml invloving file '%s'\n",message, filename);
 #endif
         exit(255);
     }
@@ -2516,6 +2517,21 @@ char *base64Decode(XMLCSTR data,unsigned int *outlen, XMLError *xe)
     if(!base64Decode(data,buf,len,xe)){free(buf);return NULL;}
     return buf;
 }
+
+XMLCSTR XMLNode::addText(const int &val) 
+{
+	char buf[256];
+	sprintf(buf, "%i", val);
+	return addText(buf);	
+}
+
+XMLCSTR XMLNode::addText(const float &val) 
+{
+	char buf[256];
+	sprintf(buf, "%f", val);
+	return addText(buf);	
+}
+
 bool XMLNode::getInt(int &result, int i) 
 {
 	const char* s = getText(i);
@@ -2549,3 +2565,17 @@ int XMLNode::getAttributeFloat(XMLCSTR lpszAttrib, float &result) {
 	else 
 		return false;
 }
+
+XMLAttribute *XMLNode::addAttribute(XMLCSTR lpszName, const float &val) {
+	char buf[256];
+	sprintf(buf, "%f", val);
+	return addAttribute(lpszName, buf);
+}
+
+XMLAttribute *XMLNode::addAttribute(XMLCSTR lpszName, const int &val) {
+	char buf[256];
+	sprintf(buf, "%i", val);
+	return addAttribute(lpszName, buf);
+}
+
+

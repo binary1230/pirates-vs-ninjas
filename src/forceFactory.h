@@ -6,7 +6,6 @@
 class Force;
 class GameState;
 
-#include "singleton.h"
 #include "force.h"
 
 //! A class which produces new Force objects from ID's

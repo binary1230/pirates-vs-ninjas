@@ -8,34 +8,26 @@
 
 int start_game_instance(const int argc, const char* argv[]) {
 
-	int ret_val = 0;
+	int ret_val = -1;
 	
-	// see if our command line args are OK
-	GameOptions* options = new GameOptions();
-	options->PrintBanner();
-	options->ParseArguments(argc, argv);
-	options->PrintOptions(argv[0]);
+	OPTIONS->CreateInstance();
+	assert(OPTIONS);
 
-	if (!options->IsValid())	{
-		delete options;
-		options = NULL;
-		return -1;
-	} else {
-		
-		// if OK, run the actual game
+	OPTIONS->PrintBanner();
+	OPTIONS->ParseArguments(argc, argv);
+	OPTIONS->PrintOptions(argv[0]);
 
+	if (OPTIONS->IsValid())	{
 		GAMESTATE->CreateInstance();
+		assert(GAMESTATE != NULL && "ERROR: Can't create gamestate instance!\n");
 
-		if (GAMESTATE)
-			ret_val = GAMESTATE->RunGame(options);
-
-		GAMESTATE->FreeInstance();
-
-		delete options;
-		options = NULL;
-
-		return ret_val;
+		ret_val = GAMESTATE->RunGame();
 	}
+
+	GAMESTATE->FreeInstance();
+	OPTIONS->FreeInstance();
+
+	return ret_val;
 }
 
 /// The main function

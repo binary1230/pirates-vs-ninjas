@@ -78,4 +78,7 @@ void InitDebugHackLog();
 void ShutdownDebugHackLog();
 #endif // DEBUG_HACK_NASTY_STUFF
 
+#define SAFE_DELETE(x) \
+				if (x) delete x; x = NULL
+
 #endif // GLOBALS_H

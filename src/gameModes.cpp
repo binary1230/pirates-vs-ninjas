@@ -32,30 +32,103 @@ void GameModes::Draw() {
 }
 
 void GameModes::DoEndCurrentMode() {
-	ASSETMANAGER->Free();
+	GameModeExitInfo exitInfo;
 
 	signal_end_current_mode = false;
-	currentModeIndex++;
 
+	// actually end the mode
 	if (currentMode) {
 		DoAIEndStuff();
+		exitInfo = currentMode->GetExitInfo();
 		currentMode->Shutdown();
-		free(currentMode);
-		currentMode = NULL;
+		SAFE_DELETE(currentMode);
 	}
+	
+	ASSETMANAGER->Free();
 
-	// went through all the modes, now exit.
-	if (currentModeIndex == mode_files.size()) {
-		signal_game_exit = true;
+	if (signal_game_exit)
 		return;
+
+	CString mode_to_load = PickNextMode(exitInfo);
+
+	if (mode_to_load.size() == 0 || LoadMode(mode_to_load, exitInfo) == -1)
+		signal_game_exit = true;
+}
+
+// Pick the next mode we should load.
+// Returns an empty string if we should exit
+CString GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
+
+	// if the exit info tells us explicitly to use a mode, then do it.
+	if (exitInfo.useExitInfo && exitInfo.nextModeToLoad.size() > 0)
+		return exitInfo.nextModeToLoad;
+
+	// if exitInfo doesn't specify which mode to use, 
+	// grab the next one from the master list.
+		
+	++currentModeIndex;
+	
+	// make sure we didn't run out of modes in the list
+	if (currentModeIndex >= mode_files.size()) {
+		return "";
+	} else {
+		return mode_files[currentModeIndex];
+	}
+}
+
+//! Load a new mode up from the specified XML file
+//! Use the specified mode exit info from the last mode that exited
+//! If there was no mode exit info, just pass in a blank oldExitInfo and
+//! the new mode will ignore it.
+int GameModes::LoadMode(	CString mode_xml_filename, 
+													const GameModeExitInfo& oldExitInfo ) {
+	currentMode = NULL;
+
+	#ifdef AI_TRAINING
+	fprintf(stderr, " AI: Enabling AI Training.\n");
+	#endif
+
+	fprintf(stderr, " Mode Info: filename '%s'\n",
+							    mode_xml_filename.c_str() );
+
+	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename);
+	XMLNode xMode = XMLNode::openFileHelper(	mode_xml_filename.c_str(), 
+																						"gameMode"	);
+
+	CString modeType = xMode.getAttribute("type");
+	fprintf(stderr, " Mode Info: type = '%s'\n", modeType.c_str());
+
+	// actually create the new mode
+	if (modeType == "simulation")
+		currentMode = new PhysSimulation();
+	else if (modeType == "credits")
+		currentMode = new CreditsMode();
+	else if (modeType == "menu")
+		currentMode = new GameMenu();
+	else
+		currentMode = NULL;
+
+	bool error = false;
+
+	if (!currentMode) {
+		error = true;
+	} else {
+		// pass on the old exit info
+		currentMode->SetOldExitInfo(oldExitInfo); 
+
+		// setup the new exit info
+		GameModeExitInfo exitInfo = currentMode->GetExitInfo();
+		exitInfo.lastModeName = mode_xml_filename;
+		currentMode->SetExitInfo(exitInfo);
 	}
 
-	if (!signal_game_exit) {
-		if (LoadNextMode() == -1) 
-			DoGameExit();
-	} else {
-		DoGameExit();
+	if (error || currentMode->Init(xMode) == -1) {
+			fprintf(stderr, "ERROR: GameModes: failed to init mode type '%s'!\n",
+											modeType.c_str());
+			return -1;
 	}
+		
+	return 0;
 }
 
 void GameModes::DoGameExit() {
@@ -98,76 +171,16 @@ int GameModes::Init(XMLNode _xGame) {
 		mode_files[i] = _xGame.getChildNode("mode_file", &iterator).getText();
 	}
 
- 	if (LoadNextMode() == -1) {
+	// actually load up the first mode
+ 	if (LoadMode(mode_files[currentModeIndex], GameModeExitInfo() ) == -1) {
 		return -1;
 	}
 
-	if (!currentMode)
-	assert(currentMode);
+	assert(currentMode != NULL);
 	
 	fprintf(stderr, " Modes: Init complete.\n");
 
 	return 0;
-}
-
-int GameModes::LoadNextMode() {
-	currentMode = NULL;
-
-	// Get the mode type from the XML file
-	assert(mode_files.size() > 0);
-	
-	CString mode_xml_filename = mode_files[currentModeIndex];
-
-	#ifdef AI_TRAINING
-	fprintf(stderr, " AI: Enabling AI Training.\n");
-	#endif
-
-	fprintf(stderr, 
-    " Mod Info: default mode filename '%s'\n",
-    mode_xml_filename.c_str());
-
-	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename);
-	XMLNode xMode = XMLNode::openFileHelper(mode_xml_filename.c_str(), "gameMode");
-	CString nodeType = xMode.getAttribute("type");
-	
-	fprintf(stderr, " Mod Info: type = '%s'\n", nodeType.c_str());
-
-
-	if (nodeType == "simulation") {
-						
-		currentMode = new PhysSimulation();
-		if ( !currentMode || currentMode->Init(xMode) == -1) {
-			fprintf(stderr, "ERROR: GameModes: failed to init simulation!\n");
-			return -1;
-			fprintf(stderr, "CRAP!\n");
-		}
-
-	}	else if (nodeType == "credits") {
-						
-		currentMode = new CreditsMode();
-		if ( !currentMode || currentMode->Init( xMode) < 0) {
-			fprintf(stderr, "ERROR: GameModes: failed to init simulation!\n");
-			return -1;
-		}
-	
-	} else if (nodeType == "menu") {
-
-		currentMode = new GameMenu();
-		if ( !currentMode || currentMode->Init(xMode) < 0) {
-			fprintf(stderr, "ERROR: GameModes: failed to init menu!\n");
-			return -1;
-		}
-		
-	} else {
-		currentMode = NULL;
-	}
-
-	if (currentMode) {
-		return true;
-	} else {
-		fprintf(stderr, " ERROR: No current mode!.\n");
-		return false;
-	}
 }
 
 void GameModes::Shutdown() {

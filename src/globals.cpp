@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "globals.h"
-#include "object.h"
 
 // DEBUG HACK STUFF
 #ifndef DEBUG_HACK_NASTY_STUFF
@@ -8,6 +7,7 @@ void LogEvent(LOGTYPE event, Object* obj) {
 	// Do nothing.
 }
 #else
+#include "object.h"
 FILE* fObjectEventLog;
 
 void LogEvent(LOGTYPE event, Object* obj) {

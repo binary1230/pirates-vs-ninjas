@@ -89,6 +89,11 @@ The game initial reads data/default.xml and includes the other XML files.
 You can customize pretty much everything by modifying things in those XML
 files.
 
+There's not really an documentation yet for modders because at this point
+things are changing quite rapidly in the engine.  However, if you'd
+like some, feel free to send an angry email to binary1230 at yahoo d0t com,
+saying something like "MORON! Write some docs! Clean your code up!"
+
 Happy hacking! Have fun!
 
 -------

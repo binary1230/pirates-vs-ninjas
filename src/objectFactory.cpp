@@ -26,7 +26,7 @@
 #include "objectFan.h"
 #include "objectDoor.h"
 #include "objectTxtOverlay.h"
-#include "object3d.h"
+// #include "object3d.h" // not yet.
 #include "assetManager.h"
 #include "animations.h"
 #include "gameSound.h"
@@ -184,10 +184,11 @@ Object* ObjectFactory::CreateObject(	OBJECTID id,
 	Object* obj = NULL;
 
 	switch(id) {
-					
-		case OBJECT_ID_3D:
-			obj = New3dObject(xObjectDef, xObject);
-			break;
+			
+		// not working yet.		
+		//case OBJECT_ID_3D:
+		//	obj = New3dObject(xObjectDef, xObject);
+		//	break;
 
 		case OBJECT_ID_BACKGROUND:
 			obj = NewBackgroundObject(xObjectDef, xObject);
@@ -237,6 +238,10 @@ Object* ObjectFactory::CreateObject(	OBJECTID id,
 			fprintf(stderr, "ERROR: Unknown Object ID passed?? [%i]\n", id);
 			obj = NULL;
 			break;
+	}
+
+	if (xObject) {
+		obj->SetObjectDefName(xObject->getAttribute("objectDef"));
 	}
 
 	return obj;
@@ -304,14 +309,11 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 }
 
 Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
-	
+
 	CString txt, avatar;
 	ObjectText* obj = new ObjectText();	
 	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
 		return NULL;
-
-	// Really, shouldn't set this here...
-	obj->SetModalActive(true);
 
 	obj->properties.is_overlay = 1;
 	obj->properties.is_solid = 0;
@@ -433,15 +435,15 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 	return obj;
 }
 
-Object* ObjectFactory::New3dObject(XMLNode &xDef, XMLNode *xObj) {
-	
-	ModelObject* obj = new ModelObject();
-
-	//if (!LoadCommonObjectStuff(obj, xDef, xObj))
-	//	return NULL;
-	
-	return obj;
-}
+//Object* ObjectFactory::New3dObject(XMLNode &xDef, XMLNode *xObj) {
+//
+//	ModelObject* obj = new ModelObject();
+//
+//	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+//		return NULL;
+//	
+//	return obj;
+//}
 
 Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) { 
   
@@ -489,16 +491,57 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) {
   return obj;
 }
 
+#define DEFAULT_DOOR_TYPE "exit"
+
 Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	DoorObject* obj = new DoorObject();
 	
-	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+		return NULL;	
+	
+	AnimationMapping animation_map = GetDoorAnimationMappings();
+	if (!LoadObjectAnimations(obj, xDef, &animation_map))
 		return NULL;
 
 	obj->properties.is_door = 1;
 	obj->properties.is_solid = 1;
+	
+	obj->SetupCachedVariables();
 
+	// doors have 3 attributes they can use:
+	//
+	// type - the type of this door (level exit, warp, return to last mode, etc)
+	// 
+	// the following are used for the appropriate types:
+	//
+	// name - name of this door, used when jumping back to it from another mode 
+	//        (like jumping back to a door outside after exiting a house)
+	//
+	// modeToTrigger - the name of the mode to trigger when this door activates
+	
+	if (!xObj)
+		return obj;
+
+	CString door_type = xObj->getAttribute("type");
+
+	if (door_type.size() == 0)
+		door_type = DEFAULT_DOOR_TYPE;
+
+	if (door_type == "exit")
+		obj->door_type = LEVEL_EXIT;
+	else if (door_type == "warp")
+		obj->door_type = WARP_TO_ANOTHER_PORTAL;
+	else if (door_type == "switchToNewMode")
+		obj->door_type = SWITCH_TO_ANOTHER_MODE;
+	else if (door_type == "return")
+		obj->door_type = RETURN_TO_LAST_MODE;
+	else
+		obj->door_type = INVALID_TYPE;
+
+	obj->door_name = xObj->getAttribute("name");
+	obj->mode_to_jump_to_on_activate = xObj->getAttribute("modeToTrigger");
+	
 	return obj;
 }
 
@@ -567,27 +610,29 @@ bool ObjectFactory::LoadObjectAnimations(
 	for (i=iterator=0; i<max; i++) {
 		xAnim = xAnims.getChildNode("animation", &iterator);
 		anim_name = xAnim.getAttribute("name");
-		
-		anim = Animation::New(xAnim);
+	
+		// Load the animation	
+		anim = Animation::Load(xAnim, obj);
 
-		if (!anim) {
+		if (!anim)
 			return false;
-		} else {
-			// if we have animation names (e.g. "walking") then use them to figure
-			// out which index we store this animation at
-			// if not, just put it in the next available index
-			int index;
+
+		// if we have animation names (e.g. "walking") then use them to figure
+		// out which index we store this animation at
+		// if not, just put it in the next available index
+		int index;
 			
-			if (animation_lookup)
-				index = (*animation_lookup)[anim_name];
-			else 
-				index = i;
+		if (animation_lookup)
+			index = (*animation_lookup)[anim_name];
+		else 
+			index = i;
 			
-			obj->animations[index] = anim;
-		}
+		obj->animations[index] = anim;
 	}
 
-	// set the default animation XXX error check?
+	// set the default animation 
+	// XXX error check this!
+	
 	CString default_name;
 	int default_index; 
 

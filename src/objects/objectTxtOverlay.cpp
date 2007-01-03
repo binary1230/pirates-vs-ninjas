@@ -106,7 +106,25 @@ bool ObjectText::Init(PhysSimulation *p) {
 	SetText("");
 	SetAvatarFilename("");
 
-	return BaseInit();
+	// really shouldn't assume this...
+	SetModalActive(true);
+	
+	bool noError = BaseInit();
+
+	// slight hack. if the previous mode requested no initial text
+	// and we are initial text then die now.
+	if (	noError && 
+				simulation->IsLoading() && 
+				simulation->GetOldExitInfo().useExitInfo && 
+				!simulation->GetOldExitInfo().showInitialText) {
+
+		SetModalActive(false);
+		is_dead = true;
+
+		Update();
+	}
+
+	return noError;
 }
 
 bool ObjectText::SetAvatarFilename(CString file) {
