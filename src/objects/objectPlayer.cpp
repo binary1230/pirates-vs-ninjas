@@ -16,6 +16,7 @@
 #include "objectSpring.h"
 #include "gameSound.h"
 #include "effectsManager.h"
+#include "globalDefines.h"
 
 #define DEFAULT_JUMP_VELOCITY 8.0f
 #define DEFAULT_DRAG 0.95f
@@ -34,10 +35,10 @@ void PlayerObject::ScreenBoundsConstraint() {
 		// vel.SetX(-vel.GetX()); // flip velocity
 		vel.SetX(0); 							// stop
 		pos.SetX(0);
-	} else if (pos.GetX() > (simulation->GetWidth() - GetWidth()) ) {
+	} else if (pos.GetX() > (WORLD->GetWidth() - GetWidth()) ) {
 		// vel.SetX(-vel.GetX());	// flip velocity
 		vel.SetX(0);							// stop
-		pos.SetX(simulation->GetWidth() - GetWidth());
+		pos.SetX(WORLD->GetWidth() - GetWidth());
 	}
 }
 
@@ -147,7 +148,7 @@ void PlayerObject::UpdateSkidding() {
 			next_skid_time = 0;
 
 			// Create a "skid" object (little white whisp at player's feet)
-			Object* objSkid = EFFECTS->Trigger(this, "skid");
+			Object* objSkid = EFFECTS->TriggerObject(this, "skid");
 			
 			if (objSkid) {
 				float skid_vel_x = 6.0f;
@@ -216,14 +217,33 @@ void PlayerObject::DoCommonStuff() {
 	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num) && 
 			state != WALKING_THRU_DOOR) {
 		
-		Object* objBall = EFFECTS->Trigger(this, "ball");	
+		Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
 			
 		if (!objBall)
 			return;
 
-		objBall->SetDisplayTime(200);
-		objBall->SetVelXY(vel.GetX(), 0.0f);
-		objBall->FadeOut(210);
+		int strength;
+		if (!GLOBALS->Value("bomb_throw_strength", strength))
+			return;
+
+		float sign;
+		if (flip_x)
+			sign = -1;
+		else
+			sign = 1;
+
+
+		if (INPUT->Key(PLAYERKEY_UP, controller_num))
+			objBall->SetVelXY(0.0f, vel.GetY() + strength*1.7);
+
+		else if (INPUT->Key(PLAYERKEY_DOWN, controller_num))
+			objBall->SetVelXY(0.0f, vel.GetY() - strength);
+
+		else
+			objBall->SetVelXY(	sign * strength + vel.GetX(), 
+													vel.GetY() + 6.0f);
+
+		//objBall->SetVelXY(vel.GetX(), 0.0f);
 	}
 }
 
@@ -251,7 +271,7 @@ void PlayerObject::Collide(Object* obj) {
 		return;
 	}
 		
-	if (obj->GetProperties().is_fan) 
+	if (obj->GetProperties().is_fan || obj->GetProperties().is_ball)  
 		return;
 
   if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
@@ -277,13 +297,12 @@ void PlayerObject::Collide(Object* obj) {
 	}
 
 	if (obj->GetProperties().is_ring) {
-		ring_count++;
+		++ring_count;
 	}
 }
 
-bool PlayerObject::Init(PhysSimulation *p) {
+bool PlayerObject::Init() {
 	next_skid_time = 0;
-	simulation = p;
 	
 	controller_num = 1;
 	state = FALLING; 

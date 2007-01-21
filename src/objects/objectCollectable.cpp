@@ -14,8 +14,7 @@ void CollectableObject::Update() {
 	UpdateSimpleAnimations();
 }
 
-bool CollectableObject::Init(PhysSimulation *p) {
-	simulation = p;
+bool CollectableObject::Init() {
 	return BaseInit();
 }
 

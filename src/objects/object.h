@@ -11,7 +11,6 @@
 class Object;
 class Force;
 class Animation;
-class PhysSimulation;
 class Sprite;
 class ObjectLayer;
 class ObjectFactory;
@@ -33,6 +32,14 @@ struct ObjectProperties {
 
 	//! If solid, another solid object cannot move through it
 	bool is_solid;
+
+	//! true if this object is an overlay
+	//! e.g. not IN the world, but on top it,
+	//! like our status bar or health or something.
+	//! Overlays ignore camera information
+	bool is_overlay;
+
+	//! Object "types" (really should use RTTI or something.)
 	bool is_player;
 	bool is_spring;
 	bool is_collectable;
@@ -40,11 +47,6 @@ struct ObjectProperties {
 	bool is_door;
 	bool is_ring;
 	bool is_ball;
-	
-	//! true if this object is an overlay
-	//! e.g. not IN the world, but on top it,
-	//! like our status bar or health or something.
-	bool is_overlay;
 };
 
 //! Clears property masks
@@ -66,10 +68,10 @@ inline void ClearProperties(struct ObjectProperties& p) {
 // Used for find()
 bool ObjectIsDead(Object* obj);
 
-//! A drawable entity in the physics simulation
+//! A drawable entity in the world
 
 //! Objects have physical properties associated with them, but do
-//! not always have to take part in the physics simulation.
+//! not always have to take part in the world
 class Object {
 	protected:
 
@@ -89,9 +91,6 @@ class Object {
 		//! CACHED level width and height
 		int level_width, level_height;
 		
-		//! CACHED simulation this object is a part of
-		PhysSimulation* simulation;
-					
 		//! Current position
 		Vector2D pos;
 
@@ -188,6 +187,7 @@ class Object {
 	
 	public:
 		int tmp_debug_flag;
+		static bool debug_draw_bounding_boxes;
 		
 		// DEBUG ONLY: A unqiue ID that is incremented every time an object
 		// is created.  The amount of created objects should match the amount
@@ -195,7 +195,7 @@ class Object {
 		static unsigned long debug_object_id;
 		unsigned long unique_id;
 
-		virtual bool Init(PhysSimulation* p) = 0;
+		virtual bool Init() = 0;
 		virtual void Shutdown() = 0;
 		
 		virtual void Update() = 0;
@@ -227,8 +227,8 @@ class Object {
 		void DrawAtOffset(int x, int y, Sprite* = NULL);	
 		
 		//! Functions to get/set position
-		inline int GetX() 						{ return (int)pos.GetX(); }
-		inline int GetY() 						{ return (int)pos.GetY(); }
+		inline int GetX() const				{ return (int)pos.GetX(); }
+		inline int GetY() const				{ return (int)pos.GetY(); }
 		inline Vector2D GetXY() const { return pos; }; 
 
 		inline void SetX(const int _x) 		{ pos.SetX((float)_x);  }

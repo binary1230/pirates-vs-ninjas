@@ -6,7 +6,6 @@
 class Object;
 class ObjectFactory;
 class AssetManager;
-class PhysSimulation;
 
 #include "animation.h"
 #include "objectIDs.h"
@@ -39,6 +38,7 @@ class ObjectFactory {
 		Object* NewFanObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewDoorObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewCutBarObject(XMLNode &xDef, XMLNode *xObj=NULL);
 	
 		bool LoadCommonObjectStuff(	Object* obj, XMLNode &xDef, 
 																XMLNode *xObj, bool loadAnimations = true);
@@ -47,9 +47,6 @@ class ObjectFactory {
 		bool LoadObjectProperties(Object* obj, XMLNode &xDef);
 		bool LoadObjectAnimations(Object* obj, XMLNode &xDef, 
 															AnimationMapping *animation_lookup = NULL);
-
-		// XXX remove once PhysSimulation is a singleton
-		PhysSimulation *physSimulation;
 
 		//! Holds object definitions
 		//! e.g. the definition of e.g. a "player" object 
@@ -72,9 +69,6 @@ class ObjectFactory {
 		int Init();
 		void Shutdown();
 		
-		inline void SetPhysSimulation(PhysSimulation* p) {physSimulation = p;};
-		inline PhysSimulation* GetPhysSimulation() {return physSimulation;};
-
 		// Create an object from an XML node
 		Object* CreateObjectFromXML(XMLNode &xObjectDef, XMLNode &xObject);
 
@@ -88,7 +82,7 @@ class ObjectFactory {
 		XMLNode* FindObjectDefinition(const CString &objDefName);
 
 		//! Load all object definitions from root <objectDefinitions> node
-		int LoadObjectDefsFromXML(XMLNode &xObjDefs);
+		bool LoadObjectDefsFromXML(XMLNode &xObjDefs);
 
 		~ObjectFactory();
 };

@@ -4,6 +4,10 @@
 #include "animation.h"
 #include "gameState.h"
 
+bool StaticObject::Init() {
+	return BaseInit();
+}
+
 void StaticObject::Shutdown() {
 	BaseShutdown();
 }
@@ -11,11 +15,6 @@ void StaticObject::Shutdown() {
 void StaticObject::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
-}
-
-bool StaticObject::Init(PhysSimulation *p) {
-	simulation = p;
-	return BaseInit();
 }
 
 StaticObject::StaticObject() {}

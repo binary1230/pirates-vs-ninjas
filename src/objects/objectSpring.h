@@ -6,7 +6,6 @@
 #include "object.h"
 
 class ObjectFactory;
-class PhysSimulation;
 
 #define DEFAULT_SPRING_STRENGTH_X 0.0f
 #define DEFAULT_SPRING_STRENGTH_Y 20.0f
@@ -22,7 +21,7 @@ class SpringObject : public Object {
 		Vector2D spring_vector;
 				
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 		void Update();
 
@@ -35,6 +34,7 @@ class SpringObject : public Object {
 		const Vector2D& GetSpringVector() const {return spring_vector;};
 			
 		friend class ObjectFactory;
+		friend class MapSaver;
 };
 
 #endif // SpringObject_H   

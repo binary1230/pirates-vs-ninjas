@@ -17,6 +17,8 @@ class ForceInput : public Force {
 		//! Which controller we look at
 		uint controller_num;
 
+		float magnitude;
+
 		//! Set which controller we look at
 		void SetControllerNum(uint _c) {controller_num = _c;};
 		

@@ -5,14 +5,13 @@
 #include "object.h"
 
 class ObjectFactory;
-class PhysSimulation;
 
 //! An enemy object that interacts with the player
 class EnemyObject : public Object {
 	protected:
 				
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 		
 		void Update();

@@ -13,8 +13,7 @@ void EnemyObject::Update() {
 	SimpleAnimationUpdate();
 }
 
-bool EnemyObject::Init(PhysSimulation *p) {
-	simulation = p;
+bool EnemyObject::Init() {
 	return BaseInit();
 }
 

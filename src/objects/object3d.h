@@ -5,7 +5,6 @@
 #include "object.h"
 
 class ObjectFactory;
-class PhysSimulation;
 class Model_3DS;
 
 //! A "simple" Object (e.g. scenery) - No collisions
@@ -14,7 +13,7 @@ class ModelObject : public Object {
 		Model_3DS* model;
 				
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 		
 		void Update();

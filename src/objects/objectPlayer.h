@@ -10,7 +10,6 @@ class BaseInput;
 class Animation;
 class BaseInput;
 class ObjectFactory;
-class PhysSimulation;
 class DoorObject;
 
 enum PlayerState {
@@ -64,7 +63,7 @@ class PlayerObject : public Object {
 		bool on_skateboard;
 
 	public:
-		bool Init(PhysSimulation* p);
+		bool Init();
 		void Shutdown();
 		
 		//! Load object properties from XML

@@ -2,20 +2,16 @@
 #define GAMESTATE_H
 
 #include "stdafx.h"
+#include "timer.h"
 
 class GameState;
 class BaseInput;
 class GameMode;
 class AssetManager;
-class PhysSimulation;
 class GameSound;
 class GameModes;
 class ezSockets;
 class GameNetwork;
-
-#include "globals.h"
-#include "timer.h"
-#include "singleton.h"
 
 //! Represents the current state of the game.
 
@@ -111,9 +107,10 @@ class GameState {
 		//! The current mode calls this to signal it wants to end
 		void SignalEndCurrentMode();
 
-		//! Returns the currently active physics simulation (if there is one)
-		// XXX needs to be a singleton eventually.
-		PhysSimulation* GetPhysSimulation();
+		//! Sets the accumulated time to zero
+		//! Useful for loading stuff so we don't jump 20-30 frames
+		//! after waiting for a level load
+		void ResetAccumulatedTime();
 
 		~GameState();
 };

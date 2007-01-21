@@ -15,7 +15,7 @@ typedef unsigned int uint;
 //#define SOUNDS(x) ((SAMPLE*)sounds[x].dat)
 
 #define Rand(lower, upper) \
-((rand() % (upper - lower + 1)) + lower)
+((rand() % (int(upper) - int(lower) + 1)) + int(lower))
 
 #define DEFAULT_SCREEN_SIZE_X	640
 #define DEFAULT_SCREEN_SIZE_Y 480

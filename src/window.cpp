@@ -40,18 +40,69 @@ void GameWindow::Screenshot(char* filename) {
 	save_bitmap(file.c_str(), screen, NULL);
 }
 
-void GameWindow::DrawRect(_Rect &r, int col, bool filled) {
+void GameWindow::DrawRect(_Rect &r, int col, bool filled, int alpha) {
 	DrawRect(	(int)r.getx1(), (int)r.gety1(), 
 						(int)r.getx2(), (int)r.gety2(), 
-						col, filled);
+						col, filled, alpha);
 }
 
-void GameWindow::DrawRect(	int x1, int y1, 
-														int x2, int y2, 
-														int col, bool filled) {
+// Draws a level-sized gradient
+// The idea is that the gradient is the height of the LEVEL not the SCREEN
+// So we have to figure out given the level height, screen height, and current
+// position of the camera, what two colors we need to draw on a quad in order
+// to make it look like there is one continuous gradient going up the level
 
+// Usually the screen height is smaller than the level height
+void GameWindow::DrawBackgroundGradient(	int bottom_col, int top_col, 
+																					int bottom_y, int top_y, 
+																					int level_height) {
+	
+	// get the color differences for computing the new colors
+	int col_diff_r = getr(top_col) - getr(bottom_col);
+	int col_diff_g = getg(top_col) - getg(bottom_col);
+	int col_diff_b = getb(top_col) - getb(bottom_col);
+
+	// sanity check.
+	if (top_y > level_height)
+		top_y = level_height;
+	else if (top_y < 0)
+		top_y = 0;
+
+	// sanity check.
+	if (bottom_y > level_height)
+		bottom_y = level_height;
+	else if (bottom_y < 0)
+		bottom_y = 0;
+
+	float top_col_percent = float(top_y) / float(level_height);
+	float bottom_col_percent = float(bottom_y) / float(level_height);
+
+	// compute the final top color
+	int final_top_col = makecol(
+									getr(bottom_col) + int(float(col_diff_r) * top_col_percent),
+									getg(bottom_col) + int(float(col_diff_g) * top_col_percent),
+									getb(bottom_col) + int(float(col_diff_b) * top_col_percent)
+								);
+
+	// compute the final bottom color
+	int final_bottom_col = makecol(
+									getr(bottom_col) +int(float(col_diff_r) * bottom_col_percent),
+									getg(bottom_col) +int(float(col_diff_g) * bottom_col_percent),
+									getb(bottom_col) +int(float(col_diff_b) * bottom_col_percent)
+								);
+
+	// draw the quad with the two new colors
+	DrawQuad(	0, 0, width, height,
+						final_bottom_col, final_bottom_col, final_top_col, final_top_col,
+						true, 255);
+}
+
+// Colors start at the bottom left and go counter-clockwise
+// Color order: (bottom left, bottom right, top right, top left)
+void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2, 
+														int col1, int col2, int col3, int col4,
+														bool filled, int alpha ) {
 	glLoadIdentity();
-	glColor4ub(getr(col), getg(col), getb(col), 255);
 	glDisable(GL_TEXTURE_2D);
 
 	if (filled)
@@ -59,15 +110,27 @@ void GameWindow::DrawRect(	int x1, int y1,
 	else
 		glBegin(GL_LINES);
 
+	glColor4ub(getr(col1), getg(col1), getb(col1), alpha);
 	glVertex2f(x1, y1);
+	glColor4ub(getr(col2), getg(col2), getb(col2), alpha);
 	glVertex2f(x2, y1);
+	glColor4ub(getr(col3), getg(col3), getb(col3), alpha);
 	glVertex2f(x2, y2);
+	glColor4ub(getr(col4), getg(col4), getb(col4), alpha);
 	glVertex2f(x1, y2);
 
 	glEnd();
 
 	glEnable(GL_TEXTURE_2D);
 	glColor4ub(255, 255, 255, 255);
+
+}
+
+void GameWindow::DrawRect(	int x1, int y1, 
+														int x2, int y2, 
+														int col, bool filled, int alpha) {
+
+	DrawQuad(x1, y1, x2, y2, col, col, col, col, filled, alpha);
 }
 
 // HACK HACK HACK - get this from somewhere!!

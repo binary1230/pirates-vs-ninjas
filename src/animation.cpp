@@ -72,47 +72,47 @@ void Animation::Update() {
 }
 
 // Switch this animation to its next frame
+// (maybe this is too complicated.)
 void Animation::SwitchToNextFrame() {
+
+	// special cases:
+	// if the frame is an EFFECT frame or a SOUND frame, then
+	// trigger that EFFECT or SOUND, and then immediately advance
+	// to the next frame in the animation
+
+	CString soundName, effectName;
+	Object* obj;
+	AnimFrame* oldFrame = currentFrame;
 
 	// NOTE: if no currentFrame->nextFrame, NEVER advance it until reset
 	if (currentFrame->nextFrame)
 		currentFrame = currentFrame->nextFrame;
-	else
-		return;
 
-	// if the next frame is a SPRITE (normally what happens) 
-	// then we're done
-	if (currentFrame->frame_type == ANIMFRAME_SPRITE)
-		return;
+	switch (oldFrame->frame_type) {
+		case ANIMFRAME_SPRITE:
+			if (currentFrame->frame_type != ANIMFRAME_SPRITE)
+				SwitchToNextFrame();
+			break;
 
-	// special cases:
-	// 2) if the frame is an EFFECT frame or a SOUND frame, then
-	// trigger that EFFECT or SOUND, and then immediately advance
-	// to the next frame in the animation
-	
-	CString soundName, effectName;
-	Object* obj;
-
-	switch (currentFrame->frame_type) {
 		case ANIMFRAME_SOUND:
-			soundName = currentFrame->extraData;
+			soundName = oldFrame->extraData;
 
 			if (soundName.size() == 0)
 				fprintf(stderr, 	"ERROR: No sound name specified "
-													"in animation sound frame");
+													"in animation sound frame\n");
 
 			SOUND->PlaySound(soundName);
 			SwitchToNextFrame();
 			break;
 
 		case ANIMFRAME_EFFECT:
-			effectName = currentFrame->extraData;
+			effectName = oldFrame->extraData;
 
 			if (effectName.size() == 0)
 				fprintf(stderr, 	"ERROR: No sound name specified "
-													"in animation sound frame");
+													"in animation sound frame\n");
 
-			obj = EFFECTS->Trigger( attachedObject, effectName );
+			obj = EFFECTS->TriggerEffect( attachedObject, effectName );
 
 			SwitchToNextFrame();
 			break;
@@ -122,6 +122,9 @@ void Animation::SwitchToNextFrame() {
 			assert(0 && "ERROR: Got an invalid frame type!");
 			break;
 	}
+
+	// the next frame MUST BE a sprite frame.
+	assert(currentFrame->frame_type == ANIMFRAME_SPRITE);
 }
 
 //! Reset this animation back to the first frame
@@ -229,6 +232,7 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
 	XMLNode xFrames, xFrame;
 	int i, iterator, numFrames, numSpriteFrames = 0;
 	bool use_alpha = false;			// whether we use the sprite's alpha channel
+	int first_sprite_frame = -1; // which frame is the first sprite frame
 	
 	Animation* anim = new Animation();
 	
@@ -285,6 +289,9 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
 				return NULL;
 			}
 
+			if (first_sprite_frame == -1)
+				first_sprite_frame = i;
+
 			++numSpriteFrames;
 
 		} else if (frame_type == "effect") {
@@ -331,8 +338,10 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
 	// first frame.  However, we may want to get it from any
 	// frame, not just the first one.  In the future, we should make
 	// that an option in XML
-	anim->width = anim->frames[0]->sprite->width;
-	anim->height = anim->frames[0]->sprite->height;
+	assert(first_sprite_frame != -1);
+
+	anim->width = anim->frames[first_sprite_frame]->sprite->width;
+	anim->height = anim->frames[first_sprite_frame]->sprite->height;
 
 	if (anim->currentFrame->freeze_at_end)	
 		anim->freeze_animation = true;

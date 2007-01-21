@@ -94,6 +94,9 @@ things are changing quite rapidly in the engine.  However, if you'd
 like some, feel free to send an angry email to binary1230 at yahoo d0t com,
 saying something like "MORON! Write some docs! Clean your code up!"
 
+NOTE: You MUST have the following at the top of EVERY XML FILE:
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
 Happy hacking! Have fun!
 
 -------

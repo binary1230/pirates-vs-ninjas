@@ -27,9 +27,11 @@
 #include "objectDoor.h"
 #include "objectTxtOverlay.h"
 // #include "object3d.h" // not yet.
+#include "objectCutBars.h"
 #include "assetManager.h"
 #include "animations.h"
 #include "gameSound.h"
+#include "physSimulation.h"
 
 DECLARE_SINGLETON(ObjectFactory)
 		
@@ -67,20 +69,23 @@ XMLNode* ObjectFactory::FindObjectDefinition(const CString &objDefName) {
 }
 
 	
-//! Loads Object Definitions from XML, puts them in an ObjectMapping
-int ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
+//! Recursively loads Object Definitions from XML, 
+//! puts them into an ObjectMapping
+bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 
 	// Object definitions can take 2 forms in the XML file
 	// 1) an <objectDef> tag
 	// 2) an <include_xml_file> tag which we then open and get an <objectDef>
 	
 	int i, max, iterator;
-	XMLNode xObjectDef;
+	static const char* parent_include = "The Toplevel XML file";
+	static int recurse_level = 0;
+
+	XMLNode xObjectDef, xObjectDefFile;
 	CString objName, file;
 	
 	// 1) handle <objectDef> tags
 	max = xObjDefs.nChildNode("objectDef");
-	iterator = 0;
 	for (i = iterator = 0; i < max; i++) {
 		xObjectDef = xObjDefs.getChildNode("objectDef", &iterator);
 		objName = xObjectDef.getAttribute("name");
@@ -88,14 +93,13 @@ int ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		if (!FindObjectDefinition(objName)) {
 			AddObjectDefinition(objName, xObjectDef);
 		} else {
-			fprintf(stderr, "ObjectFactory: ERROR: Duplicate object "
-											"definitions found for object name: '%s'\n", 
+			fprintf(stderr, "ObjectFactory: WARNING: Duplicate object "
+											"definitions found for object name: '%s', ignoring.\n",
 											objName.c_str());
-			return 0;
 		}
 	}
 
-	// 2) handle <include_xml_file> tags (more common)
+	// 2) handle <include_xml_file> tags 
 	max = xObjDefs.nChildNode("include_xml_file");
 	
 	for (i = iterator = 0; i < max; i++) {
@@ -104,23 +108,39 @@ int ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		file = xObjDefs.getChildNode("include_xml_file", &iterator).getText();
 		
 		// open that file, get the objectDef
-		file = ASSETMANAGER->GetPathOf(file);
-		xObjectDef = XMLNode::openFileHelper(file.c_str(), "objectDef");
+		CString fileNew = ASSETMANAGER->GetPathOf(file);
+	
+		if (!fileNew.size()) {
+			fprintf(stderr, "ObjectFactory: ERROR: Can't open "
+											"requested XML file for inclusion: '%s'\n", 
+											file.c_str() );
+			return false;
+		}	
 
-		// save it
-		objName = xObjectDef.getAttribute("name");
+		// this method is recursive, let's make sure
+		// we don't fall into any infinite loops.
+		if (++recurse_level > 99) {
+			fprintf(stderr, 	"ERROR: Infinite loop while reading object\n"
+												"       definitions!!  Make sure that that\n"
+												"       '%s' does not include itself!\n", 
+												parent_include);
 
-		if (!FindObjectDefinition(objName)) {
-			AddObjectDefinition(objName, xObjectDef);
-		} else {
-			fprintf(stderr, "ObjectFactory: ERROR: Duplicate object "
-											"definitions found for object name: '%s'\n", 
-											objName.c_str());
-			return 0;
+			return false;
 		}
+		
+		parent_include = fileNew.c_str();
+
+		xObjectDefFile = XMLNode::openFileHelper(	fileNew.c_str(), 
+																							"objectDefinitions");
+
+		// recursively call ourself to handle this
+		if (!LoadObjectDefsFromXML(xObjectDefFile))
+			return false;
+
+		--recurse_level;
 	}
 
-	return 1;
+	return true;
 }
 
 // XXX this shouldn't really be here...
@@ -136,6 +156,7 @@ void ObjectFactory::SetupTypes() {
 	objectDefTypes["Spring"]						= OBJECT_ID_SPRING;
 	objectDefTypes["Collectable"]				= OBJECT_ID_COLLECTABLE;
 	objectDefTypes["TextOverlay"]				= OBJECT_ID_TXTOVERLAY;
+	objectDefTypes["CutBars"]						= OBJECT_ID_CUTBARS;
 }
 
 // Get the object ID from an XML object definition
@@ -156,7 +177,7 @@ Object* ObjectFactory::CreateObjectFromXML(
 					XMLNode &xObjectDef, 
 					XMLNode &xObject) 
 {
-	assert(physSimulation);
+	assert(WORLD != NULL);
 
 	OBJECTID id = GetObjectIDFromXML(xObjectDef);
 
@@ -230,6 +251,10 @@ Object* ObjectFactory::CreateObject(	OBJECTID id,
 			obj = NewTxtOverlayObject(xObjectDef, xObject);
 			break;
 
+		case OBJECT_ID_CUTBARS:
+			obj = NewCutBarObject(xObjectDef, xObject);
+			break;
+
 		case 0:
 			obj = NULL;
 			break;
@@ -240,22 +265,19 @@ Object* ObjectFactory::CreateObject(	OBJECTID id,
 			break;
 	}
 
-	if (xObject) {
+	if (obj && xObject) 
 		obj->SetObjectDefName(xObject->getAttribute("objectDef"));
-	}
 
 	return obj;
 }
 
 int ObjectFactory::Init() {
-	physSimulation = NULL;
 	objectDefs.clear();
 	SetupTypes();
 	return 0;
 }
 
 void ObjectFactory::Shutdown() {
-	physSimulation = NULL;
 	objectDefs.clear();
 	objectDefTypes.clear();
 }
@@ -282,6 +304,22 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->SetupCachedVariables();
 
 	return obj;
+}
+
+Object* ObjectFactory::NewCutBarObject(XMLNode &xDef, XMLNode *xObj) {
+	CutBarObject* obj = new CutBarObject();
+
+	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+		return NULL;
+
+	if (xObj->nChildNode("text"))
+		obj->SetText(xObj->getChildNode("text").getText());
+
+  obj->properties.is_overlay = true;
+	obj->Start();
+
+  return obj;
+
 }
 
 Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
@@ -668,7 +706,7 @@ bool ObjectFactory::LoadCommonObjectStuff(	Object* obj,
 																						XMLNode *xObj, 
 																						bool loadAnimations) {
 
-  if (!obj || !obj->Init(physSimulation) )
+  if (!obj || !obj->Init() )
     return false;
 	
 	if (!LoadObjectProperties(obj, xDef))
@@ -677,10 +715,8 @@ bool ObjectFactory::LoadCommonObjectStuff(	Object* obj,
   if (!LoadObjectSounds(obj,xDef))
     return false;
 
-	if (loadAnimations) {
-		if (!LoadObjectAnimations(obj,xDef)) {
-	    return false;
-		}
+	if (loadAnimations && !LoadObjectAnimations(obj,xDef)) {
+		return false;
 	}
 
 	obj->SetupCachedVariables();

@@ -7,14 +7,13 @@
 class BackgroundObject;
 class GameState;
 class ObjectFactory;
-class PhysSimulation;
 
 //! An Object which repeats itself, usually used for backgrounds
 class BackgroundObject : public Object {
 	protected:
 				
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 
 		void Update();

@@ -63,8 +63,24 @@ class GameWindow {
 		void DrawText(int x, int y, CString text);
 
 		//! Draw a solid rectange
-		void DrawRect(_Rect &r, int col,bool filled=false);
-		void DrawRect(int x1, int y1, int x2, int y2, int color, bool filled=false);
+		//! use makecol(r,g,b) for color
+		void DrawRect(	_Rect &r, int col, 
+										bool filled=false, int alpha=255);
+
+		void DrawRect(	int x1, int y1, int x2, int y2, 
+										int color, bool filled=false, int alpha=255);
+
+
+		//! Draw a quad (includes LOTS of other params)
+		void DrawQuad(	int x1, int y1, int x2, int y2, 
+										int col1, int col2, int col3, int col4,
+										bool filled, int alpha );
+
+		//! Draw quad with specified vertical gradient, 
+		//! which is interpolated between the two points
+		void DrawBackgroundGradient(	int bottom_col, int top_col, 
+																	int bottom_y, int top_y, 
+																	int level_height );
 
 		void SetClearColor(uint r, uint g, uint b);
 

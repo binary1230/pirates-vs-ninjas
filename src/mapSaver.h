@@ -12,7 +12,7 @@
 
 #include "precompiled.h"
 
-class PhysSimulation;
+class GameWorld;
 class ObjectLayer;
 class Object;
 
@@ -22,13 +22,17 @@ class MapSaver {
 
 		// Save everything in this physics simulation
 		// to the already named XML file.
-		bool SaveEverything(const PhysSimulation* p, const CString file);
+		bool SaveEverything(	const GameWorld* p, 
+													const CString file, 
+													XMLNode& xObjDefs);
 
 		MapSaver();
 		~MapSaver();
 
 	protected:
-		void OutputLayers(const PhysSimulation* p, XMLNode &xMap);
+		const GameWorld* simulation;
+
+		void OutputLayers(XMLNode &xMap);
 		void OutputLayer(const ObjectLayer* layer, XMLNode &xLayer);
 		void OutputObject(const Object* obj, XMLNode &xObj);
 };

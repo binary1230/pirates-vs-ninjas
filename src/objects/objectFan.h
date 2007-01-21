@@ -5,14 +5,13 @@
 #include "object.h"
 
 class ObjectFactory;
-class PhysSimulation;
 
 class FanObject : public Object {
 	protected:
 		float current_fan_speed;
 	
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 		
 		void Update();

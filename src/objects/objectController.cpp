@@ -64,9 +64,7 @@ void ObjectController::Update() {
 	}
 }
 
-bool ObjectController::Init(PhysSimulation *p) {
-	simulation = p;
-	
+bool ObjectController::Init() {
 	buttons.clear();
 	controller_sprite = NULL;
 	controller_num = 1; // we'll set this later

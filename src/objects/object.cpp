@@ -12,6 +12,8 @@
 #include "objectLayer.h"
 #include "sprite.h"
 
+bool Object::debug_draw_bounding_boxes = 0;
+
 void Object::SetObjectDefName(const char* _name) {
 	SAFE_DELETE(objectDefName);
 	objectDefName = new CString(_name);
@@ -58,9 +60,9 @@ void Object::UpdateDisplayTime() {
 //! Cache some commonly used stuff
 // ('cause the profiler says so!)
 void Object::SetupCachedVariables() {
-	assert(simulation);
-	level_width  = simulation->GetWidth();
-	level_height = simulation->GetHeight();
+	assert(WORLD != NULL);
+	level_width  = WORLD->GetWidth();
+	level_height = WORLD->GetHeight();
 	
 	if (animations.size() > 0 && animations[0]) {
 		width = animations[0]->GetWidth();
@@ -111,7 +113,7 @@ bool Object::BaseInit() {
 }
 
 void Object::Draw() {
-	assert(simulation != NULL);
+	assert(WORLD != NULL);
 
 	if (tmp_debug_flag)
 		fprintf(stderr, "DEBUG FLAG!!\n");
@@ -123,7 +125,7 @@ void Object::Draw() {
 //! to draw the sprite.  To get to those from the object's "world" coordinates
 //! as computed by the physics engine, we need to take into account the 
 //! position of the camera, and we need to flip the Y axis.  These
-//! things are handled by the simulation->TransformXXX() methods.
+//! things are handled by the WORLD->TransformXXX() methods.
 //
 //! This function populates x,y (reference params) with the 
 //! correctly transformed coordinates.
@@ -133,11 +135,11 @@ void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y)
 
 	// take into account the camera now.
 	if (!properties.is_overlay)
-		simulation->TransformWorldToView(x, y);
+		WORLD->TransformWorldToView(x, y);
 	
 	// compute absolute x,y coordinates on the screen
 	y = y + GetHeight();
-	simulation->TransformViewToScreen(x, y);
+	WORLD->TransformViewToScreen(x, y);
 }
 
 // Same as Transform(), just for rectangles only.
@@ -156,13 +158,13 @@ void Object::TransformRect(_Rect &r) {
 
 	// take into account the camera now.
 	if (!properties.is_overlay) {
-		simulation->TransformWorldToView(x1, y1);
-		simulation->TransformWorldToView(x2, y2);
+		WORLD->TransformWorldToView(x1, y1);
+		WORLD->TransformWorldToView(x2, y2);
 	}
 	
 	// compute absolute x,y coordinates on the screen
-	simulation->TransformViewToScreen(x1, y1);
-	simulation->TransformViewToScreen(x2, y2);
+	WORLD->TransformViewToScreen(x1, y1);
+	WORLD->TransformViewToScreen(x2, y2);
 
 	r.set(x1,y1,x2,y2);
 	/*r.setx1(x1); 	r.sety1(y1);
@@ -183,9 +185,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	if (sprite_to_draw)
 		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha);
 
-	#define DEBUG_DRAW_BOUNDING_BOXES 0
-
-	if (!DEBUG_DRAW_BOUNDING_BOXES)
+	if (!debug_draw_bounding_boxes)
 		return;
 
 	_Rect bbox_t;
@@ -306,7 +306,6 @@ Object::Object() {
 	flip_y = false; 
 	is_dead = true;
 	mass = 1.0f;
-	simulation = NULL;
 	debug_flag = false;
 	pos.SetX(0); pos.SetY(0);
 	old_pos.SetX(0); old_pos.SetY(0);

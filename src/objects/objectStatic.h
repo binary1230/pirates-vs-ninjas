@@ -5,14 +5,13 @@
 #include "object.h"
 
 class ObjectFactory;
-class PhysSimulation;
 
 //! A "simple" Object (e.g. scenery) - No collisions
 class StaticObject : public Object {
 	protected:
 				
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 		
 		void Update();

@@ -118,10 +118,9 @@ class Input {
 		//! Whether a key has been released after it was pressed
 		KeyList released_key;
 
-		int mouse_x;
-		int mouse_y;
-
-		vector<bool> mouse_click_status;
+		int mouse_x_pos;
+		int mouse_y_pos;
+		int mouse_buttons;
 		
 		//! Load the default key mappings
 		void LoadDefaultKeyMappings();
@@ -249,7 +248,7 @@ class Input {
 		int ResolveControllerKey(uint gameKey, uint controller_number);
 	
 		//! Mouse status
-		bool MouseClick(MouseClickType);
+		bool MouseButton(MouseClickType);
 		int MouseX();
 		int MouseY();
 			

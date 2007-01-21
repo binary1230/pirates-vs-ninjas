@@ -6,7 +6,6 @@
 #include "object.h"
 
 class ObjectFactory;
-class PhysSimulation;
 
 enum DoorType {
 	INVALID_TYPE = -1,
@@ -32,7 +31,7 @@ class DoorObject : public Object {
 		void DoDoorAction();
 	
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 		
 		void Update();
@@ -47,6 +46,7 @@ class DoorObject : public Object {
 		inline const CString& GetName() {return door_name;}
 			
 		friend class ObjectFactory;
+		friend class MapSaver;
 };
 
 #endif // DoorObject_H   

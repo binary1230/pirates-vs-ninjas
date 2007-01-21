@@ -1,3 +1,4 @@
+// TODO: Rename this file to gameWorld.cpp
 #include "physSimulation.h"
 
 #include "ai.h"
@@ -20,11 +21,25 @@
 #include "objectPlayer.h"
 #include "effectsManager.h"
 #include "objectDoor.h"
-#include "mapSaver.h"
+#include "globalDefines.h"
+
+DECLARE_SINGLETON(GameWorld)
 
 #define OBJECT_TEXT	"text_txt"
 
-void PhysSimulation::ShowText(	const char* txt, 
+#define CAMERA_SHAKE false
+#define CAMERA_SHAKE_X_MAGNITUDE 15
+#define CAMERA_SHAKE_Y_MAGNITUDE 15
+
+int GameWorld::GetCameraX() {
+	return camera_x + camera_shake_x;
+}
+
+int GameWorld::GetCameraY() {
+	return camera_y + camera_shake_y;
+}
+
+void GameWorld::ShowText(	const char* txt, 
 																const char* avatar_filename, 
 																bool modal_active) {
 	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT);
@@ -43,9 +58,9 @@ void PhysSimulation::ShowText(	const char* txt,
 	AddObject(obj);
 }
 
-int PhysSimulation::Init(XMLNode xMode) {
+int GameWorld::Init(XMLNode xMode) {
+	camera_shake_time_total = -1;
 	modal_active = NULL;
-	music = NULL;
 	width = height = 0;
 	camera_x = camera_y = 0;
 	camera_follow = NULL;
@@ -57,8 +72,6 @@ int PhysSimulation::Init(XMLNode xMode) {
 		return -1;
 	}
 
-	OBJECT_FACTORY->SetPhysSimulation(this);
-
 	forceFactory = new ForceFactory();
 	if ( !forceFactory || forceFactory->Init() < 0 ) {
 		fprintf(stderr, "ERROR: InitSystem: failed to init forceFactory!\n");
@@ -66,7 +79,7 @@ int PhysSimulation::Init(XMLNode xMode) {
 	}
 
 	EFFECTS->CreateInstance();
-	if ( !EFFECTS || !EFFECTS->Init(this) ) {
+	if ( !EFFECTS || !EFFECTS->Init() ) {
 		fprintf(stderr, "ERROR: InitSystem: failed to init EffectsManager!\n");
 		return -1;
 	}
@@ -75,54 +88,74 @@ int PhysSimulation::Init(XMLNode xMode) {
 	objects.clear();
 	forces.clear();
 	layers.clear();
-	
-	int ret_val = Load(xMode);
 
-	// HACKISH EXPERIMENTAL DONT USE
-	if (OPTIONS->MapEditorEnabled()) {
-		MapSaver mapSaver;
-		mapSaver.SaveEverything(this, "test-map.xml");
-	}
-	// END HACKISH EXPERIMENTAL DONT USE
-
-	return ret_val;
+	return Load(xMode);
 }
 
 //! Transforms view coordinates into absolute screen coordinates
 //! e.g. flip the Y axis mostly.
-void PhysSimulation::TransformViewToScreen(	int &x, int &y ) {
+void GameWorld::TransformViewToScreen(	int &x, int &y ) {
 	y = WINDOW->Height() - y;
 }
 
 //! Transforms an object's coordinates from its world coordinates
 //! Into "view" coordinates (e.g. x < screen.width, y < screen.height)
-void PhysSimulation::TransformWorldToView(int &x, int &y) {
+void GameWorld::TransformWorldToView(int &x, int &y) {
 	x = int((x - GetCameraX() ) * camera_scroll_speed);
 	y = int((y - GetCameraY() ) * camera_scroll_speed);
 	// y = y - GetCameraY();
 }
 
-//! Camera paramater: Absolute amount of pixels that 
-//! the camera_follow object will be bounded at
-#define CAM_ABS_THRESHOLD 40
-
 //! Weighted average nums for the 'floaty' camera
 //! Increase CAM_WEIGHT_CAM to make the camera 'snap' quicker
 #define CAM_WEIGHT_POS 1.0f // DON'T CHANGE.
-#define CAM_WEIGHT_CAM 3.0f	// change this one for faster camera 'slides'
 
 //! Function which moves the camera according to a weight, shown above
 //! Uses a weighted average of the object coordinates and the new camera coords
 #define CAM_MOVE_TO_CENTER(cam, o, o_size, s_size) 									\
 	int( float( 																											\
 			(((o + o_size / 2.0f) - (s_size / 2.0f)) * CAM_WEIGHT_POS) + 	\
-			((cam) * CAM_WEIGHT_CAM) 																			\
-		) / (CAM_WEIGHT_CAM + CAM_WEIGHT_POS) )
+			((cam) * camera_snap_rate) 																			\
+		) / (camera_snap_rate + CAM_WEIGHT_POS) )
+
+// Snap the camera to its target object
+// Useful when switching targets
+void GameWorld::SnapCamera() {
+
+	// center the camera on this object
+	camera_x = 	int(
+							(
+								 float(camera_follow->GetX()) + 
+								(float(camera_follow->GetWidth()) / 2.0f)
+							) -	(
+								(float(WINDOW->Height()) / 2.0f)
+							));
+
+	camera_y = 	int(
+							(
+						 		 float(camera_follow->GetY()) + 
+								(float(camera_follow->GetHeight()) / 2.0f)
+							) -	(
+								(float(WINDOW->Width()) / 2.0f)
+							));
+
+	// now do the nice computations
+	ComputeNewCamera();
+}
+
+void GameWorld::SetCameraShake(bool state, int fadeout_time) {
+	camera_shake_time = 0;
+	camera_shake_time_total = fadeout_time;
+	is_camera_shaking = state;
+
+	if (!is_camera_shaking)
+		camera_shake_time_total = -1;
+}
 
 // Oy, vey, this is a bit more complex than it needs to be?
-void PhysSimulation::ComputeNewCamera() {
+void GameWorld::ComputeNewCamera() {
 	
-	assert(camera_follow);
+	assert(camera_follow != NULL);
 				
 	int ox = camera_follow->GetX();
 	int ow = camera_follow->GetWidth();
@@ -132,26 +165,50 @@ void PhysSimulation::ComputeNewCamera() {
 	int oh = camera_follow->GetHeight();
 	int sh = WINDOW->Height();
 	
+	// compute the next interpolated position
 	camera_x = CAM_MOVE_TO_CENTER(camera_x, ox, ow, sw);
 	camera_y = CAM_MOVE_TO_CENTER(camera_y, oy, oh, sh);
 	
-	if (ox - camera_x < CAM_ABS_THRESHOLD)
-		camera_x = ox - CAM_ABS_THRESHOLD;
-	else if ( (camera_x + sw) - (ox + ow) < CAM_ABS_THRESHOLD )
-		camera_x = ox + ow + CAM_ABS_THRESHOLD - sw;
+	// keep it within a certain margin of the sides
+	if (ox - camera_x < camera_side_margins)
+		camera_x = ox - camera_side_margins;
+	else if ( (camera_x + sw) - (ox + ow) < camera_side_margins )
+		camera_x = ox + ow + camera_side_margins - sw;
 								
-	if (oy - camera_y < CAM_ABS_THRESHOLD)
-		camera_y = oy - CAM_ABS_THRESHOLD;
-	else if ( (camera_y + sh) - (oy + oh) < CAM_ABS_THRESHOLD )
-		camera_y  = oy + oh + CAM_ABS_THRESHOLD - sh;
+	if (oy - camera_y < camera_side_margins)
+		camera_y = oy - camera_side_margins;
+	else if ( (camera_y + sh) - (oy + oh) < camera_side_margins )
+		camera_y  = oy + oh + camera_side_margins - sh;
 	
+	// keep it from getting off screen
 	if (camera_x < 0) camera_x = 0;
 	if (camera_x > width - sw) camera_x = width - sw;
 	if (camera_y < 0) camera_y = 0;
 	if (camera_y > height - sh) camera_y = height - sh;
+
+	// do the camera shake
+	if (!is_camera_shaking) {
+		camera_shake_x = 0;
+		camera_shake_y = 0;
+	} else {
+		float multiplier = 1.0f;
+
+		if (camera_shake_time_total != -1) {
+			if (camera_shake_time >= camera_shake_time_total) {
+				is_camera_shaking = false;
+				multiplier = 0.0f;
+			} else {
+				++camera_shake_time;
+				multiplier = 1.0f - float(camera_shake_time) / float(camera_shake_time_total);
+			}
+		}
+
+		camera_shake_x = Rand(0, float(CAMERA_SHAKE_X_MAGNITUDE) * multiplier);
+		camera_shake_y = Rand(0, float(CAMERA_SHAKE_Y_MAGNITUDE) * multiplier);
+	}
 }
 
-void PhysSimulation::Shutdown() {
+void GameWorld::Shutdown() {
 	ObjectListIter iter;
 	int max, i;
 
@@ -201,7 +258,14 @@ void PhysSimulation::Shutdown() {
 }
 
 //! Draw all objects in this physics simulation
-void PhysSimulation::Draw() {
+void GameWorld::Draw() {
+
+	// Draw the background gradient first
+	/*WINDOW->DrawBackgroundGradient(	bg_color, makecol(0,0,0), 
+																		camera_y, 
+																		camera_y + WINDOW->Height(), 
+																		height);*/
+
 	int i, max = layers.size();
 
 	for (i = 0; i < max; i++) {
@@ -212,7 +276,7 @@ void PhysSimulation::Draw() {
 #define CLEAR_SCREEN_STRING "\033[H\033[J\r\n"
 
 //! Solve for next frame
-void PhysSimulation::Solve(Object *obj) {
+void GameWorld::Solve(Object *obj) {
 	
 	assert(obj != NULL);
 	int j, max = forces.size();
@@ -223,7 +287,7 @@ void PhysSimulation::Solve(Object *obj) {
 	}
 }
 
-void PhysSimulation::GetCollideableObjects(ObjectList &objs) {
+void GameWorld::GetCollideableObjects(ObjectList &objs) {
 	ObjectListIter iter;
 	objs.clear();
 
@@ -237,7 +301,7 @@ void PhysSimulation::GetCollideableObjects(ObjectList &objs) {
 
 // TODO: probably a BIG source of CPU here.
 // probably need to optimize, but PROFILE to find out.
-void PhysSimulation::CheckForCollisions(	ObjectList &collideableObjects, 
+void GameWorld::CheckForCollisions(	ObjectList &collideableObjects, 
 																					Object* obj) {
 	assert(obj != NULL);
 
@@ -266,7 +330,7 @@ void PhysSimulation::CheckForCollisions(	ObjectList &collideableObjects,
 	}
 }
 
-void PhysSimulation::DoCleaning() {
+void GameWorld::DoCleaning() {
 	Object* obj;
 	
 	ObjectListIter iter, erased;
@@ -297,7 +361,7 @@ void PhysSimulation::DoCleaning() {
 }
 
 //! Update all objects
-void PhysSimulation::UpdateObjects() {
+void GameWorld::UpdateObjects() {
 	ObjectList collideableObjects;
 	ObjectListIter iter;
 	Object* obj;
@@ -306,7 +370,7 @@ void PhysSimulation::UpdateObjects() {
 	for (iter = objectAddList.begin(); iter != objectAddList.end(); ++iter) {
 		obj = *iter;
 		assert(obj != NULL);
-		DoAddObject(obj);
+		AddObject(obj, true);
 	}
 
 	objectAddList.clear();
@@ -335,13 +399,12 @@ void PhysSimulation::UpdateObjects() {
 	}
 }
 
-//! Master update for the Physics simulation
-void PhysSimulation::Update() {
-
+//! Master update 
+void GameWorld::Update() {
 	DoMainGameUpdate();
 }
 
-void PhysSimulation::DoMainGameUpdate() {
+void GameWorld::DoMainGameUpdate() {
 
 	// If they pressed the 'exit' key (typically ESCAPE)
 	// Then end the physics simulation
@@ -354,9 +417,16 @@ void PhysSimulation::DoMainGameUpdate() {
 	ComputeNewCamera();						// Calc where to put the camera now
 }
 
+void GameWorld::LoadMusic(const char* music_file) {
+	if (music_file) {
+		SOUND->LoadMusic(music_file);
+		SOUND->PlayMusic();
+	}
+}
+
 //! MASTER LOAD FUNCTION:
 //! Load the simulation from data in an XML file
-int PhysSimulation::Load(XMLNode &xMode) {
+int GameWorld::Load(XMLNode &xMode) {
 
 	is_loading = true;
 
@@ -368,15 +438,27 @@ int PhysSimulation::Load(XMLNode &xMode) {
 			LoadForcesFromXML(xMode) == -1 )
 		return -1;
 
-	//camera_x = camera_follow->GetX();
-	//camera_y = camera_follow->GetY();
 
-	if (xMode.nChildNode("music") == 1) {
-		const char* music_file = xMode.getChildNode("music").getText();
-		SOUND->LoadMusic(music_file);
-		SOUND->PlayMusic();
+	if (xMode.nChildNode("effects") == 1) {
+		XMLNode xEffects = xMode.getChildNode("effects");
+		if (!EFFECTS->LoadEffectsFromXML(xEffects)) {
+			fprintf(stderr, "ERROR: Can't load Effects XML!\n");
+			return -1;
+		}
 	}
 	
+	if (!GLOBALS->Value(	"debug_draw_bounding_boxes", 
+												Object::debug_draw_bounding_boxes	))
+		Object::debug_draw_bounding_boxes = false;
+
+	assert(GLOBALS->Value("camera_side_margins", camera_side_margins));
+	assert(GLOBALS->Value("camera_snap_rate", camera_snap_rate));
+
+	if (xMode.nChildNode("music") == 1) {
+		music_file = xMode.getChildNode("music").getText();
+		LoadMusic(music_file);
+	}
+
 	exitInfo.useExitInfo = true;
 
 	// special case: if we're coming back from a portal, find it and put the players
@@ -412,21 +494,23 @@ int PhysSimulation::Load(XMLNode &xMode) {
 		} 
 	}
 
+	// Make sure the camera is centered on 
+	// the target right now.
+	SnapCamera();
+
 	is_loading = false;
 	
 	return 0;	
 }
 
 // Loads the header info from the Mode XML file
-int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
+int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 	XMLNode xInfo = xMode.getChildNode("info");
 
 	fprintf(stderr, " Loading Level: '%s'\n", xInfo.getChildNode("description").getText() );
 
 	XMLNode xProps = xMode.getChildNode("properties");
 	XMLNode xColor;
-	int clear_color;
-
 	// get width/height/camera xy
 	if (!xProps.getChildNode("width").getInt(width)) {
 		fprintf(stderr, "-- Invalid width!\n");
@@ -436,14 +520,8 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 		fprintf(stderr, "-- Invalid height!\n");
 		return -1;
 	}
-	if (!xProps.getChildNode("camera_x").getInt(camera_x)) {
-		fprintf(stderr, "-- Invalid camera_x!\n");
-		return -1;
-	}
-	if (!xProps.getChildNode("camera_y").getInt(camera_y)) {
-		fprintf(stderr, "-- Invalid camera_y!\n");
-		return -1;
-	}
+
+	bg_color = 0;
 
 	if (xProps.nChildNode("bgcolor") == 1) {
 		xColor = xProps.getChildNode("bgcolor");
@@ -457,9 +535,9 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
 					return -1;
 		}
 
+		bg_color = makecol(r,g,b);
 		WINDOW->SetClearColor(r,g,b);
 	} else {
-		clear_color = 0;
 		WINDOW->SetClearColor(0,0,0);
 	}
 
@@ -483,10 +561,17 @@ int PhysSimulation::LoadHeaderFromXML(XMLNode &xMode) {
  * 	
  * </mode>
  */
-	
+
+int GameWorld::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
+	if (!OBJECT_FACTORY->LoadObjectDefsFromXML(xObjDefs)) 
+		return -1;
+	else
+		return 0;
+}
+
 //! Master XML parsing routine for the physics simulation
 //! Calls other helpers to deal with different parts of the XML.
-int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {	
+int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {	
   int i, max, iterator = 0;  
 	XMLNode xMap, xObjDefs, xLayer;
 
@@ -494,7 +579,9 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 
 	// 1) load all "object definitions" (e.g. [bad guy 1])
 	xObjDefs = xMode.getChildNode("objectDefinitions");
-	OBJECT_FACTORY->LoadObjectDefsFromXML(xObjDefs);
+
+	if (LoadObjectDefsFromXML(xObjDefs) != 0)
+		return -1;
 
 	// 2) load all the <object>s found in each <layer> in <map>
 	xMap = xMode.getChildNode("map");
@@ -509,7 +596,7 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 		ObjectLayer* layer = new ObjectLayer();
 		assert(layer != NULL);
 
-		layer->Init(this);
+		layer->Init();
 		layers.push_back(layer);
 		
 		if (LoadLayerFromXML(xLayer, layer) == -1) {
@@ -527,7 +614,7 @@ int PhysSimulation::LoadObjectsFromXML(XMLNode &xMode) {
 }
 
 // Creates an instance of an object on the specified layer 
-int PhysSimulation::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
+int GameWorld::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
 
 		// get the object definition name
 		CString objDefName = xObject.getAttribute("objectDef");
@@ -552,7 +639,7 @@ int PhysSimulation::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const lay
 }
 
 //! Parse XML info from a <layer> block
-int PhysSimulation::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
+int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 
 	int i, iterator, max;
 	XMLNode xObject;
@@ -629,7 +716,7 @@ int PhysSimulation::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) 
 }
 
 // Do the REAL work of loading an object from XML
-int PhysSimulation::LoadObjectFromXML(
+int GameWorld::LoadObjectFromXML(
 								XMLNode &xObjectDef,
 								XMLNode &xObject,
 								ObjectLayer* const layer) {
@@ -848,12 +935,12 @@ int PhysSimulation::LoadObjectFromXML(
 	}
 
 	// Everything loaded OK, now we add it to the simulation
-	DoAddObject(obj);
+	AddObject(obj, true);
 
 	return 0;
 }
 
-void PhysSimulation::AddObject(	Object* obj, bool addImmediately) {
+void GameWorld::AddObject(	Object* obj, bool addImmediately) {
 	assert(obj != NULL);
 	assert(obj->GetLayer() != NULL);
 
@@ -864,16 +951,13 @@ void PhysSimulation::AddObject(	Object* obj, bool addImmediately) {
 	}
 }
 
-void PhysSimulation::DoAddObject(Object* obj) {
-	assert(obj != NULL);
-	assert(obj->GetLayer() != NULL);
-
+void GameWorld::DoAddObject(Object* obj) {
 	objects.push_front(obj);
 	obj->GetLayer()->AddObject(obj);
 }
 
 // loads the forces from the XML file
-int PhysSimulation::LoadForcesFromXML(XMLNode &xMode) {
+int GameWorld::LoadForcesFromXML(XMLNode &xMode) {
 	
 	// XXX need to actually load from XML instead of hardcoding...
 	Force* new_force = NULL;
@@ -897,9 +981,9 @@ int PhysSimulation::LoadForcesFromXML(XMLNode &xMode) {
 }
 
 #ifndef AI_TRAINING
-int PhysSimulation::GetAiFitnessScore() {return 0;};
+int GameWorld::GetAiFitnessScore() {return 0;};
 #else
-int PhysSimulation::GetAiFitnessScore() {
+int GameWorld::GetAiFitnessScore() {
 	ObjectListIter iter;
 	
 	for (iter = objects.begin(); iter != objects.end(); iter++) {
@@ -914,8 +998,10 @@ int PhysSimulation::GetAiFitnessScore() {
 }
 #endif // AI_TRAINING
 
-PhysSimulation::PhysSimulation() {
+GameWorld::GameWorld() {
 	is_loading = false;
+	is_camera_shaking = CAMERA_SHAKE; //temp, usually false
+	camera_shake_time_total = -1;
 }
 
-PhysSimulation::~PhysSimulation() {}
+GameWorld::~GameWorld() {}

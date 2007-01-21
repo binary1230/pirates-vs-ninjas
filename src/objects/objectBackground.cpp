@@ -13,26 +13,64 @@ void BackgroundObject::Update() {
 }
 
 // We want to wrap the background around the level.  Compute the offset
+// NOTE: Maybe we should really just move this code into the code
+// common for any object.
 void BackgroundObject::Draw() {
-	int x,y, i = 0;
-				
-	// XXX THIS CAN DEFINITELY BE SIMPLIFIED
-	// Draw it a few times in case so we can "wrap" around
-	// the screen
-	do {
-		Transform(x,y);
-		x = - ( GetWidth() - ( x % GetWidth()) ) + i;
-		// fprintf(stderr, "x,y=(%i,%i) ", x ,y);
+
+	int x, y, w, h, current_x, current_y, screen_w, screen_h;
 	
+	// TODO: Get From XML
+	const bool tile_vertical = false;
+	const bool tile_horizontal = true;
+	
+	h = GetHeight();
+	w = GetWidth();
+	x = GetX();
+	y = GetY();
+	screen_w = (int)WINDOW->Width();
+	screen_h = (int)WINDOW->Height();
+
+	assert(h > 0 && w > 0 && "Invalid (non-positive) dimension for bg image!\n");
+
+	Transform(x,y);
+
+	// For loop bodies
+	#define TILE_VERTICAL 	current_y = (y % h) - h; \
+													current_y < screen_h; \
+													current_y += h
+	#define TILE_HORIZONTAL current_x = (x % w) - w; \
+													current_x < screen_w; \
+													current_x += w
+
+	if (!tile_vertical && !tile_horizontal) {
+
+		// why even bother using a background object for this??
 		WINDOW->DrawSprite(currentSprite, x, y, flip_x, flip_y);
 
-		i += GetWidth();
+	} else if (tile_vertical && !tile_horizontal) {
+
+		for (TILE_VERTICAL) {
+			WINDOW->DrawSprite(currentSprite, x, current_y, flip_x, flip_y);
+		}
+
+	} else if (!tile_vertical && tile_horizontal) {
+
+		for (TILE_HORIZONTAL) {
+			WINDOW->DrawSprite(currentSprite, current_x, y, flip_x, flip_y);
+		}
+
+	} else if (tile_vertical && tile_horizontal) {
 		
-	} while ( x < (int)WINDOW->Width() );
+		for (TILE_VERTICAL) {
+			for (TILE_HORIZONTAL) {
+				WINDOW->DrawSprite(currentSprite, current_x, current_y, flip_x, flip_y);
+			}
+		}
+
+	}
 }
 
-bool BackgroundObject::Init(PhysSimulation *p) {
-	simulation = p;
+bool BackgroundObject::Init() {
 	return BaseInit();
 }
 

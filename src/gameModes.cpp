@@ -8,13 +8,14 @@
 #include "physSimulation.h"
 #include "gameMenu.h"
 #include "credits.h"
+#include "gameOptions.h"
+#include "mapEditor.h"
 
 void GameModes::Update() {
 	if (signal_game_exit)
 		return;
 
-	assert(currentMode);
-	
+	assert(currentMode != NULL);
 	currentMode->Update();
 
 	if (signal_end_current_mode) {
@@ -27,7 +28,7 @@ void GameModes::Update() {
 }
 
 void GameModes::Draw() {
-	assert(currentMode);
+	assert(currentMode != NULL);
 	currentMode->Draw();
 }
 
@@ -41,7 +42,12 @@ void GameModes::DoEndCurrentMode() {
 		DoAIEndStuff();
 		exitInfo = currentMode->GetExitInfo();
 		currentMode->Shutdown();
-		SAFE_DELETE(currentMode);
+
+		// the WORLD singleton is a special case here
+		if (WORLD)
+			WORLD->FreeInstance();
+		else
+			SAFE_DELETE(currentMode);
 	}
 	
 	ASSETMANAGER->Free();
@@ -99,14 +105,24 @@ int GameModes::LoadMode(	CString mode_xml_filename,
 	fprintf(stderr, " Mode Info: type = '%s'\n", modeType.c_str());
 
 	// actually create the new mode
-	if (modeType == "simulation")
-		currentMode = new PhysSimulation();
-	else if (modeType == "credits")
+	if (modeType == "simulation") {
+
+		// slight singleton hack.
+		if (!OPTIONS->MapEditorEnabled()) {
+			WORLD->CreateInstance();
+		} else {
+			WORLD->SetInstance(new MapEditor());
+		}
+
+		currentMode = WORLD;
+
+	} else if (modeType == "credits") {
 		currentMode = new CreditsMode();
-	else if (modeType == "menu")
+	} else if (modeType == "menu") {
 		currentMode = new GameMenu();
-	else
+	} else {
 		currentMode = NULL;
+	}
 
 	bool error = false;
 
@@ -127,6 +143,8 @@ int GameModes::LoadMode(	CString mode_xml_filename,
 											modeType.c_str());
 			return -1;
 	}
+
+	GAMESTATE->ResetAccumulatedTime();
 		
 	return 0;
 }
@@ -171,8 +189,15 @@ int GameModes::Init(XMLNode _xGame) {
 		mode_files[i] = _xGame.getChildNode("mode_file", &iterator).getText();
 	}
 
+	const char* firstModeToLoad = mode_files[currentModeIndex];
+
+	// user can override the first mode's filename on the command line
+	if (OPTIONS->GetFirstModeOverride()) {
+		firstModeToLoad = OPTIONS->GetFirstModeOverride();
+	}
+
 	// actually load up the first mode
- 	if (LoadMode(mode_files[currentModeIndex], GameModeExitInfo() ) == -1) {
+ 	if (LoadMode(firstModeToLoad, GameModeExitInfo() ) == -1) {
 		return -1;
 	}
 

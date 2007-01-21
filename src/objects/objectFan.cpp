@@ -39,8 +39,7 @@ void FanObject::Collide(Object* obj) {
 	}
 }
 
-bool FanObject::Init(PhysSimulation *p) {
-	simulation = p;
+bool FanObject::Init() {
 	return BaseInit();
 }
 

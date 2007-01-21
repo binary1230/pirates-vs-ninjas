@@ -9,15 +9,18 @@
 #include "gameSound.h"
 #include "gameModes.h"
 #include "network.h"
+#include "globalDefines.h"
 
 DECLARE_SINGLETON(GameState)
-	
+
+void GameState::ResetAccumulatedTime() {
+	outstanding_updates = 0;
+}
+
 // Parse the master XML file
 // returns: XMLNode of first GameMode to load
 int GameState::LoadXMLConfig(CString xml_filename) {
 				
-	int default_mode_id = OPTIONS->GetDefaultModeId();
-
 	// XXX xmlParser just DIES on error
 	xml_filename = ASSETMANAGER->GetPathOf(xml_filename.c_str());
 	xGame = XMLNode::openFileHelper(xml_filename.c_str(), "game");
@@ -28,15 +31,19 @@ int GameState::LoadXMLConfig(CString xml_filename) {
 		" Mod Info: requires engine version '%s'\n"
 		" Mod Info: map version '%s'\n"
 		" Mod Info: map author '%s'\n"
-		" Mod Info: Description: '%s'\n"
+		" Mod Info: Description: '%s'\n",
 		// " Mod Info: Number of modes: '%i'\n"
-		" Mod Info: Default Mode ID: '%i'\n",
 		xInfo.getChildNode("requires_engine_version").getText(),
 		xInfo.getChildNode("game_version").getText(),
 		xInfo.getChildNode("author").getText(),
-		xInfo.getText(),
+		xInfo.getText()
 		//max, 
-		default_mode_id);
+		);
+
+	// Init globals XML stuff
+	XMLNode xGlobalVars = xGame.getChildNode("global_vars");
+	GLOBALS->CreateInstance();
+	GLOBALS->Init(xGlobalVars);
 
 	return 0;	
 }
@@ -235,7 +242,7 @@ void GameState::OutputTotalRunningTime() {
 //! It initializes everything, and returns 0 if successful
 //! or 1 on error.
 int GameState::RunGame() {
-		
+	
 		if (InitSystem() == -1) {
 			fprintf(stderr, "ERROR: Failed to init game!\n");
 			return -1;	
@@ -246,8 +253,6 @@ int GameState::RunGame() {
 
 		INPUT->Begin();
 			
-		outstanding_updates = 0;	// reset our timer to 0.
-		
 		fprintf(stderr, "[running game...]\n");
 		MainLoop();
 		fprintf(stderr, "[done running game!]\n");
@@ -309,7 +314,7 @@ void GameState::MainLoop() {
 				outstanding_updates = debug_update_count;
 			}
 
-			outstanding_updates--;
+			--outstanding_updates;
 		}
 
 		if (!exit_game) {
@@ -319,7 +324,7 @@ void GameState::MainLoop() {
 				WINDOW->Screenshot();
 		}
 
-		// NOT NORMALLY WHAT WE DO
+		// NOT NORMALLY WHAT WE DO - ALSO, A HACK
 		// This is used so we don't wait for timer, but instead do everything
 		// as fast as we possibly can.  Useful for AI training
 		if (!wait_for_updates) {
@@ -330,7 +335,7 @@ void GameState::MainLoop() {
 		// note: this should really be down() on a lock of some kind rather than
 		// just sleep randomly.
 		while (outstanding_updates <= 0 && !exit_game) {
-			// rest(10);	// 1/30 sec is 33 usec, we sleep for 10
+			rest(5);	// 1/30 sec is 33 usec, we sleep for 5 to be conservative
 		}
   }
 }
@@ -392,6 +397,8 @@ void GameState::Shutdown() {
 		WINDOW->Shutdown();
 		WINDOW->FreeInstance();
 	}
+
+	GLOBALS->Shutdown();
 
 	modes = NULL;
 	network = NULL;

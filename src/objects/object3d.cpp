@@ -13,8 +13,7 @@ void ModelObject::Update() {
 	BaseUpdate();
 }
 
-bool ModelObject::Init(PhysSimulation *p) {
-	simulation = p;
+bool ModelObject::Init() {
 	return BaseInit();
 }
 

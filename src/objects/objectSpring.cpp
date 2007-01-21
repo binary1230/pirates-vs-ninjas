@@ -35,8 +35,7 @@ void SpringObject::Update() {
 		spring_reset_time = DEFAULT_SPRING_RESET_TIME;*/
 }
 
-bool SpringObject::Init(PhysSimulation *p) {
-	simulation = p;
+bool SpringObject::Init() {
 	spring_reset_time = 0;
 	spring_is_active = true;
 	return BaseInit();

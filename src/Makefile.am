@@ -30,9 +30,9 @@ external/ezSockets.h external/alogg.h external/aloggdll.h \
 external/xmlParser.h external/StdString.h external/loadpng.h \
 globals.h gameOptions.h gameState.h \
 timer.h rect.h vector2D.h oggFile.h network.h basename.h \
-window.h assetManager.h gameSound.h \
-gameMode.h gameModes.h \
-objectLayer.h objectFactory.h objectIDs.h \
+window.h assetManager.h gameSound.h mapEditor.h \
+gameMode.h gameModes.h globalDefines.h \
+objectLayer.h objectFactory.h objectIDs.h objects/objectCutBars.h \
 objects/object.h objects/objectEnemy.h \
 objects/objectPlayer.h objects/objectBounce.h \
 objects/objectBackground.h objects/objectController.h \
@@ -48,11 +48,11 @@ external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
 external/loadpng.cpp external/regpng.cpp external/savepng.cpp \
 main.cpp gameOptions.cpp gameState.cpp globals.cpp \
 timer.cpp rect.cpp vector2D.cpp oggFile.cpp network.cpp basename.cpp \
-window.cpp assetManager.cpp gameSound.cpp \
-gameMode.cpp gameModes.cpp \
+window.cpp assetManager.cpp gameSound.cpp mapEditor.cpp \
+gameMode.cpp gameModes.cpp globalDefines.cpp \
 objectLayer.cpp objectFactory.cpp \
 objects/object.cpp objects/objectEnemy.h \
-objects/objectPlayer.cpp objects/objectBounce.cpp \
+objects/objectPlayer.cpp objects/objectBounce.cpp objects/objectCutBars.cpp \
 objects/objectBackground.cpp objects/objectController.cpp \
 objects/objectStatic.cpp objects/objectSpring.cpp objects/objectTxtOverlay.cpp \
 objects/objectCollectable.cpp objects/objectFan.cpp objects/objectDoor.cpp \

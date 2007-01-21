@@ -15,7 +15,7 @@ void DoorObject::Shutdown() {
 // activate the door.
 void DoorObject::Activate() {
 	door_open_time = 0;
-	simulation->SetModalObject(this);
+	WORLD->SetModalObject(this);
 
 	currentAnimation = animations[DOOR_OPENING];
 }
@@ -23,11 +23,11 @@ void DoorObject::Activate() {
 void DoorObject::DoDoorAction() {
 	
 	// this door now no longer grabs exlusive control of the level.	
-	simulation->SetModalObject(NULL);
+	WORLD->SetModalObject(NULL);
 			
 	GameModeExitInfo exitInfo, oldExitInfo;
-	exitInfo = simulation->GetExitInfo();
-	oldExitInfo = simulation->GetOldExitInfo();
+	exitInfo = WORLD->GetExitInfo();
+	oldExitInfo = WORLD->GetOldExitInfo();
 	
 	// figure out what to do based on the door type
 	switch (door_type) {
@@ -51,7 +51,7 @@ void DoorObject::DoDoorAction() {
 
 			exitInfo.showInitialText = false;
 
-			simulation->SetExitInfo(exitInfo);
+			WORLD->SetExitInfo(exitInfo);
 			GAMESTATE->SignalEndCurrentMode();
 			break;
 
@@ -69,7 +69,7 @@ void DoorObject::DoDoorAction() {
 			
 			exitInfo.showInitialText = false;
 	
-			simulation->SetExitInfo(exitInfo);
+			WORLD->SetExitInfo(exitInfo);
 			GAMESTATE->SignalEndCurrentMode();
 			break;
 
@@ -98,8 +98,7 @@ void DoorObject::Update() {
 		DoDoorAction();
 }
 
-bool DoorObject::Init(PhysSimulation *p) {
-	simulation = p;
+bool DoorObject::Init() {
 	door_open_time = -1;
 	return BaseInit();
 }

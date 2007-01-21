@@ -5,7 +5,6 @@
 #include "object.h"
 
 class ObjectFactory;
-class PhysSimulation;
 
 class ObjectBounce : public Object {
 	protected:
@@ -13,7 +12,7 @@ class ObjectBounce : public Object {
 		bool collided_last_frame;
 
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 		void Update();
 

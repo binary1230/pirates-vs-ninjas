@@ -2,9 +2,6 @@
 #define GAMESOUND_H
 
 #include "stdafx.h"
-#include "globals.h"
-#include "singleton.h"
-#include "globals.h"
 
 //! Maps a sound name to it's handle (e.g. "jump" to the sample)
 typedef map<CString, SAMPLE*> SoundMapping;
@@ -23,6 +20,10 @@ class GameSound {
 			//! Holds pointers to SAMPLE's.  Do NOT create or free these
 			//! pointers, AssetManager does that.
 			SoundMapping sounds;
+
+			//! Pitch altering params
+			bool use_variable_pitch;
+			int freq_range;
 
 		public:
 			//! Load a sound

@@ -62,6 +62,18 @@ int Input::ResolveControllerKey(uint gameKey, uint controller_number) {
 	return outKey;
 }
 
+int Input::MouseY() {
+	return mouse_y_pos;
+}
+
+bool Input::MouseButton(MouseClickType t) {
+	return mouse_buttons & t;
+}
+
+int Input::MouseX() {
+	return mouse_x_pos;
+}
+
 // REMEMBER, controller numbers start at 1
 // 
 // This function computes an offset into game_key that represents
@@ -477,6 +489,11 @@ void Input::UpdateLive() {
 	}
 
 	DoJoystickUpdateHack();
+
+	// get the mouse from global allegro variables
+	mouse_x_pos = ::mouse_x;
+	mouse_y_pos = ::mouse_y;
+	mouse_buttons = ::mouse_b;
 
 	UpdateKeyReleases();
 }

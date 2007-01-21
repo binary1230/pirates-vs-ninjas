@@ -35,8 +35,8 @@ class GameOptions {
 		//! Requested graphics mode (double buffering, pageflipping, nothing, etc)
 		int graphics_mode;
 
-		//! The default mode ID to use (leave 0 to select the first mode)
-		int default_mode_id;
+		//! The first mode we should use (leave "" to select the default mode)
+		CString first_mode;
 
 		//! If true, start the game in debug pause mode
 		bool debug_start_paused;
@@ -102,8 +102,13 @@ class GameOptions {
 		//! (used for the Window class)
 		inline int GraphicsMode() {return graphics_mode;}
 
-		//! Get the default mode ID
-		inline int GetDefaultModeId() {return default_mode_id;}
+		//! Get the user-overridden mode XML filename, or "" if none
+		inline const char* GetFirstModeOverride() {
+			if (first_mode.size() > 0)
+				return first_mode.c_str();
+		 	else 
+				return NULL;
+		}
 
 		//! Get whether sound is enabled or not
 		inline int SoundEnabled() {return sound_enabled;}

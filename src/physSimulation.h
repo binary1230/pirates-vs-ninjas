@@ -1,27 +1,36 @@
 #ifndef PHYS_SYSTEM_H
 #define PHYS_SYSTEM_H
 
+// TODO: Rename this file to gameWorld.h
+
 #include "stdafx.h"
-#include "singleton.h"
 #include "gameMode.h"
 
-class PhysSimulation;
 class Force;
 class Object;
 class ObjectFactory;
 class ForceFactory;
 class ObjectLayer;
-class OGGFILE;
 			
 // note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
 typedef list<Object*>::iterator ObjectListIter;
 typedef list<Object*>::const_iterator ObjectConstListIter;
 typedef list<Object*>::reverse_iterator ObjectListReverseIter;
+typedef list<Object*>::const_reverse_iterator ObjectListConstReverseIter;
 
 //! Represents a physical simulation (the main game levels)
-class PhysSimulation : public GameMode {
+class GameWorld : public GameMode {
+
+		DECLARE_SINGLETON_CLASS(GameWorld)
+
 		protected:
+			//! Filename of music, or NULL if none
+			const char* music_file;
+
+			//! Background color (use makecol())
+			int bg_color;
+
 			//! ALL objects in the scene
 			ObjectList objects;
 
@@ -34,9 +43,6 @@ class PhysSimulation : public GameMode {
 			//! Force factory: TODO singleton
 			ForceFactory* forceFactory;
 		
-			//! Temporary. Belongs in GameMusic
-			OGGFILE* music;
-
 			//! List of objects to add on next Update()
 			ObjectList objectAddList;
 
@@ -47,8 +53,22 @@ class PhysSimulation : public GameMode {
 			//! Current camera XY position
 			int camera_x, camera_y;
 
+			//! Whether the camera is currently shaking or not
+			bool is_camera_shaking;
+
+			int camera_shake_time_total;
+			int camera_shake_time;;
+
 			//! Which object the camera should follow
 			Object* camera_follow;
+
+			//! Camera threshold - how far it should slide before snapping
+			// you can use this to make sure we're, say, 60 units from the sides
+			// at all times.
+			int camera_side_margins;
+
+			//! Camera snap rate - how fast the camera should "snap" to new targets
+			float camera_snap_rate;
 
 			//! How much to scale the X coordinate of the camera.
 			//! MOSTLY used for scrolling backgrounds at different speeds
@@ -73,6 +93,10 @@ class PhysSimulation : public GameMode {
 			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer* const);
 			int LoadForcesFromXML(XMLNode&);
 			int LoadLayerFromXML(XMLNode&, ObjectLayer* const);
+			// these virtuals might be overridden by the map editor
+			virtual int LoadObjectDefsFromXML(XMLNode&);
+			virtual void LoadMusic(const char* filename);
+
 			int CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const);
 
 			//! Check and see if an object is dead and needs to be cleaned up
@@ -93,9 +117,13 @@ class PhysSimulation : public GameMode {
 
 			bool is_loading;
 
+			int camera_shake_x;
+			int camera_shake_y;
+			int camera_shake_fade_time_left;
+
 		public:
-			int Init(XMLNode);
-			void Shutdown();
+			virtual int Init(XMLNode);
+			virtual void Shutdown();
 
 			//! True if we are in the middle of the initial load
 			inline bool IsLoading() {return is_loading;}
@@ -111,8 +139,8 @@ class PhysSimulation : public GameMode {
 			//! Delete an object from it's layer
 			void DeleteObjectFromLayer(Object* obj);
 			
-			void Draw();
-			void Update();
+			virtual void Draw();
+			virtual void Update();
 
 			void DoMainGameUpdate();
 
@@ -122,8 +150,10 @@ class PhysSimulation : public GameMode {
 			void ComputeNewCamera();
 			void SetCameraScrollSpeed(float s) {camera_scroll_speed = s;};
 
-			int GetCameraX() {return camera_x;};
-			int GetCameraY() {return camera_y;};
+			int GetCameraX(); 
+			int GetCameraY();
+
+			void SetCameraShake(bool state, int fade_out_time = -1);
 			
 			void TransformWorldToView(int &x, int &y);
 			void TransformViewToScreen(int &x, int &y);
@@ -131,14 +161,20 @@ class PhysSimulation : public GameMode {
 			void ShowText(	const char* txt, 
 											const char* avatar_filename = 0, 
 											bool modal_active = false);
+
+			//! Make the camera snap IMMEDIATELY to its
+			//! target's position rather than doing the nice
+			//! floaty thing
+			void SnapCamera();
 			
 			//! Experimental: Get AI fitness score for AI traning
 			int GetAiFitnessScore();
 
-			PhysSimulation();
-			~PhysSimulation();
+			virtual ~GameWorld();
 
 			friend class MapSaver;
 };
+
+#define WORLD (GameWorld::GetInstance())
 
 #endif

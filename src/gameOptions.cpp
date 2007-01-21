@@ -42,7 +42,7 @@ void GameOptions::PrintOptions(const char* arg0) {
 		"-g mode       | 0 = no buffering, 1 = double buffer [default]\n"
 		"              | 2 = page flipping, 3 = triple buffering\n\n"
 		
-		"-m id         | specify a different mode ID to use from default.xml\n\n"
+		"-m xmlfile    | specify a different mode to use on startup\n\n"
 		
 		"-r file       | record a demo to 'file'\n"
 		"-d file       | playback a demo from 'file'\n\n"
@@ -73,7 +73,7 @@ void GameOptions::Clear() {
 	fullscreen = false;
 	show_help = false;
 	
-	default_mode_id = 0;
+	first_mode = "";
 
 	record_demo = false;
 	playback_demo = false;
@@ -171,7 +171,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 		switch (c) {
 
 			case 'm':
-				default_mode_id = strtoul(optarg, NULL, 10);
+				first_mode = optarg;
 				break;
 
 			case 'e':

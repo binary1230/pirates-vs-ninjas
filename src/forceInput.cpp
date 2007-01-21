@@ -3,8 +3,7 @@
 #include "input.h"
 #include "gameState.h"
 #include "object.h"
-
-#define MAGNITUDE 40.0f
+#include "globalDefines.h"
 
 Vector2D ForceInput::GetForce(Object* obj) {
 				
@@ -14,11 +13,11 @@ Vector2D ForceInput::GetForce(Object* obj) {
 	// return a force based on 2 inputs.
 	if (INPUT->Key(PLAYERKEY_LEFT, controller_num) && 
 			!INPUT->Key(PLAYERKEY_RIGHT, controller_num)) 
-		return Vector2D(-MAGNITUDE * TIMESTEP, 0.0f);
+		return Vector2D(-magnitude * TIMESTEP, 0.0f);
 
 	else if (INPUT->Key(PLAYERKEY_RIGHT, controller_num) && 
 					!INPUT->Key(PLAYERKEY_LEFT, controller_num)) 
-		return Vector2D( MAGNITUDE * TIMESTEP, 0.0f);
+		return Vector2D( magnitude * TIMESTEP, 0.0f);
 
 	else
 		return Vector2D( 0.0f, 0.0f);	
@@ -27,6 +26,8 @@ Vector2D ForceInput::GetForce(Object* obj) {
 ForceInput::ForceInput() {
 	type = FORCE_INPUT;
 	controller_num = 1;	// default
+
+	assert(GLOBALS->Value("player_acceleration", magnitude));
 }
 
 ForceInput::~ForceInput() {}

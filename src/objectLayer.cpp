@@ -13,7 +13,7 @@ void ObjectLayer::Draw() {
 	Object* obj;
 
 	// set scroll speed for this layer
-	simulation->SetCameraScrollSpeed(scroll_speed);
+	WORLD->SetCameraScrollSpeed(scroll_speed);
 	
 	// ORDER IS IMPORTANT
 	// we draw starting at the end, going to the beginning
@@ -47,8 +47,7 @@ void ObjectLayer::RemoveObject(Object* obj) {
 	}
 }
 
-bool ObjectLayer::Init(PhysSimulation* p) {
-	simulation = p;
+bool ObjectLayer::Init() {
 	scroll_speed = 1;
 	visible = true;
 	objects.clear();
@@ -63,14 +62,12 @@ void ObjectLayer::Shutdown() {
 ObjectLayer::ObjectLayer() {
 	scroll_speed = 1.0f;
 	visible = true;	
-	simulation = NULL;
 	name = NULL;
 	objects.clear();
 }
 
 ObjectLayer::~ObjectLayer() {
 	Shutdown();
-	simulation = NULL;
 	SAFE_DELETE(name);
 }
 

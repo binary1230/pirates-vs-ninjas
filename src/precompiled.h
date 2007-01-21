@@ -56,6 +56,7 @@ using namespace std;
 #include "xmlParser.h"
 #include "alogg.h"
 #include "loadpng.h"
+#include "globals.h"
 #include "singleton.h"
 
 // 3d model support not ready yet.

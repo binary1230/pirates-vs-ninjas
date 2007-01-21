@@ -6,6 +6,9 @@
 #include "physSimulation.h"
 #include "gameSound.h"
 
+#define MIN_VELOCITY 0.34f
+#define FRICTION_MULTIPLIER 0.70f
+
 void ObjectBounce::Shutdown() {
 	BaseShutdown();
 }
@@ -22,22 +25,25 @@ void ObjectBounce::Update() {
 	collided_last_frame = d.down;
 
 	// ghettoooooooo friction.
-	if (d.down)
-		vel.SetX(vel.GetX() * 0.90f);
+	if (d.down) {
+		vel.SetX(vel.GetX() * FRICTION_MULTIPLIER);
+		if (fabs(vel.GetX()) < MIN_VELOCITY) {
+			vel.SetX(0);
+		}
+	}
 }
 
-bool ObjectBounce::Init(PhysSimulation *p) {
-	simulation = p;
+bool ObjectBounce::Init() {
 	play_hit_sound = false;
 	collided_last_frame = false;
 	return BaseInit();
 }
 
 void ObjectBounce::Collide(Object* obj) {
-	if (!properties.is_solid || obj->GetProperties().is_ball)
+	if (!properties.is_solid || obj->GetProperties().is_ball || obj->GetProperties().is_fan)
 		return;
 
-	if (obj->GetProperties().is_solid) {
+	if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
     Vector2D newpos;
     d = GetBound(obj, newpos);
 
@@ -49,7 +55,7 @@ void ObjectBounce::Collide(Object* obj) {
 		}
 
     if (d.down || d.up) {
-      vel.SetY( -vel.GetY()*0.83f );
+      vel.SetY( -vel.GetY()*0.61f );
 			if (!collided_last_frame)
 				play_hit_sound = true;
 			collided_last_frame = true;

@@ -7,14 +7,13 @@
 
 class GameState;
 class ObjectFactory;
-class PhysSimulation;
 
 //! A "simple" Object (e.g. scenery) - No collisions
 class CollectableObject : public Object {
 	protected:
 				
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 		
 		void Update();

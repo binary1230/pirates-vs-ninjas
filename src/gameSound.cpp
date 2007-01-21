@@ -2,10 +2,9 @@
 #include "gameState.h"
 #include "assetManager.h"
 #include "oggFile.h"
+#include "globalDefines.h"
 
 DECLARE_SINGLETON(GameSound)
-
-#define USE_VARIABLE_PITCH
 
 //! Plays a sound
 //! Pan goes from 0-255, 128 being the center
@@ -16,11 +15,9 @@ void GameSound::PlaySound(CString name, unsigned int pan) {
 	// modifying the pitch randomly produces weird variations
 	// for the same sound.  slight pitch changes == good
 	int freq = 1000;  							// pitch to play at (1000=normal)
-	const int freq_range = 800;			// how far we can stretch it
 
-	#ifdef USE_VARIABLE_PITCH
-	freq += Rand(0, freq_range) - (freq_range / 2);
-	#endif // USE_VARIABLE_PITCH
+	if (use_variable_pitch)
+		freq += Rand(0, freq_range) - (freq_range / 2);
 	
 	s_iter s = sounds.find(name.c_str());
 
@@ -119,6 +116,9 @@ int GameSound::Init(bool _sound_enabled) {
 	sounds.clear();
 	
 	set_volume_per_voice(0);
+
+	assert(GLOBALS->Value("sound_use_variable_pitch", use_variable_pitch));
+	assert(GLOBALS->Value("sound_freq_range", freq_range));
 
 	return 0;
 }

@@ -7,8 +7,8 @@
 // Typically everything needs access to the global-ish
 // classes like GameState, Physics, Sound, and AssetManager
 //
-// But what a pain it is to keep a pointer to these in all
-// of our objects.  For instance, all the Objects need access to
+// But what a _pain_ it is to keep a pointer to these in all
+// of our objects!  For instance, all the Objects need access to
 // Sound, but we don't like storing a Sound* in every object because
 // it's redundant.
 //
@@ -51,9 +51,7 @@
 		};																	\
 																				\
 		static void FreeInstance() {				\
-			if (CLASS::instance)							\
-				delete CLASS::instance;					\
-			CLASS::instance = NULL;						\
+			SAFE_DELETE(CLASS::instance);			\
 		};																	\
 																				\
 	private:															\

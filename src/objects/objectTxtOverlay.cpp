@@ -91,13 +91,12 @@ void ObjectText::SetModalActive(bool state) {
 	is_modal = state;
 
 	if (is_modal)
-		simulation->SetModalObject(this);
+		WORLD->SetModalObject(this);
 	else
-		simulation->SetModalObject(NULL);
+		WORLD->SetModalObject(NULL);
 }
 
-bool ObjectText::Init(PhysSimulation *p) {
-	simulation = p;
+bool ObjectText::Init() {
 	is_modal = false;
 	avatar_sprite = NULL;
 	box_margin 	= DEFAULT_BOX_MARGIN;
@@ -114,9 +113,9 @@ bool ObjectText::Init(PhysSimulation *p) {
 	// slight hack. if the previous mode requested no initial text
 	// and we are initial text then die now.
 	if (	noError && 
-				simulation->IsLoading() && 
-				simulation->GetOldExitInfo().useExitInfo && 
-				!simulation->GetOldExitInfo().showInitialText) {
+				WORLD->IsLoading() && 
+				WORLD->GetOldExitInfo().useExitInfo && 
+				!WORLD->GetOldExitInfo().showInitialText) {
 
 		SetModalActive(false);
 		is_dead = true;

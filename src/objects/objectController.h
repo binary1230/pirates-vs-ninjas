@@ -6,7 +6,6 @@
 
 class Sprite;
 class ObjectFactory;
-class PhysSimulation;
 
 //! A button on the Controller and its associated sprite
 struct Button {
@@ -23,7 +22,7 @@ class ObjectController : public Object {
 		bool only_show_during_demo;
 		
 	public:
-		bool Init(PhysSimulation *p);	
+		bool Init();	
 		void Shutdown();
 
 		void Update();

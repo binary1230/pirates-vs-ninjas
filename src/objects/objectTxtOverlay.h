@@ -6,7 +6,6 @@
 
 class Sprite;
 class ObjectFactory;
-class PhysSimulation;
 
 //! A text box that can show an avatar
 //! It can be "modal" which means that nothing can happen in the game
@@ -49,7 +48,7 @@ class ObjectText : public Object {
 		bool is_modal;
 
 	public:
-		bool Init(PhysSimulation *p);
+		bool Init();
 		void Shutdown();
 
 		void Update();
