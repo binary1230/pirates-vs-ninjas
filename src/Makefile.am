@@ -41,7 +41,7 @@ objects/objectCollectable.h objects/objectFan.h objects/objectDoor.h \
 input.h effectsManager.h mapSaver.h\
 force.h forceGravity.h forceInput.h forceFactory.h \
 animation.h animations.h singleton.h \
-credits.h gameMenu.h physSimulation.h sprite.h precompiled.h stdafx.h 
+credits.h gameMenu.h gameWorld.h sprite.h precompiled.h stdafx.h 
 
 ninjas_SOURCES = \
 external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
@@ -59,7 +59,7 @@ objects/objectCollectable.cpp objects/objectFan.cpp objects/objectDoor.cpp \
 input.cpp effectsManager.cpp \
 force.cpp forceGravity.cpp forceInput.cpp forceFactory.cpp \
 animation.cpp animations.cpp mapSaver.cpp \
-credits.cpp gameMenu.cpp physSimulation.cpp \
+credits.cpp gameMenu.cpp gameWorld.cpp \
 $(headers)
 
 # EXTRA_DIST = dir1 dir2

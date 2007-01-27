@@ -1,7 +1,7 @@
 #include "objectFactory.h"
 
 // TODO NOTES: ObjectFactory
-// This class was recently refactored from physSimulation.h
+// This class was recently refactored from gameWorld.h
 // There are a LOT of things it does redundantly now that all
 // the object creation info is stored here.  Fix them all.
 //
@@ -31,7 +31,7 @@
 #include "assetManager.h"
 #include "animations.h"
 #include "gameSound.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 
 DECLARE_SINGLETON(ObjectFactory)
 		

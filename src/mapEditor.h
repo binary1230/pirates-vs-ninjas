@@ -2,7 +2,7 @@
 #define MAP_EDITOR_H
 
 #include "stdafx.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 
 class Sprite;
 

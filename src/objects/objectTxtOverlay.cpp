@@ -5,7 +5,7 @@
 #include "sprite.h"
 #include "input.h"
 #include "gameState.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 
 #define DEFAULT_BOX_COLOR	 	makecol(172, 20, 31)
 #define DEFAULT_BOX_MARGIN	10

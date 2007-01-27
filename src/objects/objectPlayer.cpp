@@ -10,7 +10,7 @@
 #include "vector2D.h"
 #include "animation.h"
 #include "animations.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 #include "objectDoor.h"
 #include "objectFactory.h"
 #include "objectSpring.h"

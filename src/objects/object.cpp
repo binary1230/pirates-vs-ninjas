@@ -6,7 +6,7 @@
 #include "globals.h"
 #include "animation.h"
 #include "animations.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 #include "gameOptions.h"
 #include "gameSound.h"
 #include "objectLayer.h"

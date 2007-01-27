@@ -5,7 +5,7 @@
 #include "assetManager.h"
 #include "gameMode.h"
 #include "gameState.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 #include "gameMenu.h"
 #include "credits.h"
 #include "gameOptions.h"

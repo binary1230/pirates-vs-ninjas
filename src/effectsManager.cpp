@@ -1,6 +1,6 @@
 #include "effectsManager.h"
 #include "globals.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 #include "object.h"
 #include "objectFactory.h"
 #include "assetManager.h"

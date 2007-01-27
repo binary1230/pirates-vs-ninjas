@@ -1,5 +1,5 @@
 #include "mapSaver.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 #include "object.h"
 #include "window.h"
 #include "gameSound.h"

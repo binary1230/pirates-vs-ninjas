@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "gameState.h"
 #include "animation.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 #include "object.h"
 #include "window.h"
 

@@ -1,7 +1,7 @@
 #include "objectLayer.h"
 #include "gameState.h"
 #include "object.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 
 void ObjectLayer::SetName(const char* _name) {
 	SAFE_DELETE(name);

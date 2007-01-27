@@ -5,7 +5,7 @@
 #include "sprite.h"
 #include "input.h"
 #include "gameState.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 
 int ObjectController::GetHeight() {
 	return controller_sprite->height;

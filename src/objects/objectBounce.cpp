@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "animation.h"
 #include "gameState.h"
-#include "physSimulation.h"
+#include "gameWorld.h"
 #include "gameSound.h"
 
 #define MIN_VELOCITY 0.34f
