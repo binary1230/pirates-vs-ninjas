@@ -51,6 +51,16 @@ using namespace std;
 #include "config.h"
 #endif
 
+#define ENGINE_EMBEDDED_LUA
+
+#ifdef ENGINE_EMBEDDED_LUA
+extern "C" {
+	#include <lua.h>
+	#include <lualib.h>
+	#include <lauxlib.h>
+}
+#endif
+
 // Our rarely-modified engine stuff
 #include "StdString.h"
 #include "xmlParser.h"

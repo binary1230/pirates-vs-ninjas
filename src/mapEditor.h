@@ -24,7 +24,13 @@ class MapEditor : public GameWorld {
 	protected:
 		Sprite* cursor_sprite;
 
+		Object* selection;
+
 		XMLNode xObjDefs;
+
+		void Select(Object* obj);
+
+		void UpdateIdle();
 };
 
 #endif // MAP_EDITOR_H

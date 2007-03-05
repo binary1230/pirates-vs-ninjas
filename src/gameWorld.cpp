@@ -1,4 +1,3 @@
-// TODO: Rename this file to gameWorld.cpp
 #include "gameWorld.h"
 
 #include "ai.h"
@@ -59,6 +58,7 @@ void GameWorld::ShowText(	const char* txt,
 }
 
 int GameWorld::Init(XMLNode xMode) {
+	use_scroll_speed = true;
 	camera_shake_time_total = -1;
 	modal_active = NULL;
 	width = height = 0;

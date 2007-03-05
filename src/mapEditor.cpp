@@ -22,7 +22,16 @@ int MapEditor::Init(XMLNode xMode) {
 	cursor_sprite = ASSETMANAGER->LoadSprite("cursor.png", true);
 	assert(cursor_sprite && "Unable to load cursor");
 
+	// Makes all layers scroll at the same rate instead of in parallax
+	use_scroll_speed = false;
+
+	selection = NULL;
+
 	return ret_val;
+}
+
+void MapEditor::Select(Object* obj) {
+	selection = obj;
 }
 
 void MapEditor::Shutdown() {
@@ -60,13 +69,17 @@ void MapEditor::ComputeNewScrolling() {
 			camera_y = height - WINDOW->Height();
 }
 
+void MapEditor::UpdateIdle() {
+	
+}
+
 void MapEditor::Update() {
 	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
 		GAMESTATE->SignalGameExit();      // for real
 		return;
 	}
 
-	//UpdateSelectMode();
+	ComputeNewScrolling();
 }
 
 /*void MapEditor::UpdateSelectMode() {

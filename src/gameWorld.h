@@ -116,6 +116,7 @@ class GameWorld : public GameMode {
 			void DoCleaning();
 
 			bool is_loading;
+			bool use_scroll_speed;
 
 			int camera_shake_x;
 			int camera_shake_y;
@@ -124,6 +125,8 @@ class GameWorld : public GameMode {
 		public:
 			virtual int Init(XMLNode);
 			virtual void Shutdown();
+
+			bool UseScrollSpeed() {return use_scroll_speed;}
 
 			//! True if we are in the middle of the initial load
 			inline bool IsLoading() {return is_loading;}

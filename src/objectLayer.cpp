@@ -13,7 +13,8 @@ void ObjectLayer::Draw() {
 	Object* obj;
 
 	// set scroll speed for this layer
-	WORLD->SetCameraScrollSpeed(scroll_speed);
+	if (WORLD->UseScrollSpeed())
+		WORLD->SetCameraScrollSpeed(scroll_speed);
 	
 	// ORDER IS IMPORTANT
 	// we draw starting at the end, going to the beginning

@@ -105,7 +105,7 @@ class Input {
 
 	protected:
 		// -- COMMON STUFF -- //
-
+		
 		// The input type (e.g. playback, record, or live)
 		InputType type;
 		

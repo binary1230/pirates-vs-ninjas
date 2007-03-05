@@ -10,6 +10,7 @@
 #include "gameModes.h"
 #include "network.h"
 #include "globalDefines.h"
+#include "luaManager.h"
 
 DECLARE_SINGLETON(GameState)
 
@@ -134,6 +135,17 @@ int GameState::InitSystem() {
 		if (InitSound() == -1) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init sound subsystem!\n");
 		}
+
+		fprintf(stderr, "[init: embedded lua scripting]\n");
+		LUA->CreateInstance();
+		if ( !LUA || !LUA->Init() ) {
+			fprintf(stderr, "ERROR: InitSystem: failed to init lua scripting!\n");
+			return -1;
+		}
+
+		// TEST ONLY
+		LUA->DoFile("scripts/test.lua");
+		// END TEST ONLY
 
 		fprintf(stderr, "[init: loading game modes]\n");
 		if (LoadGameModes() == -1) {
@@ -380,6 +392,10 @@ void GameState::Shutdown() {
 	if (modes) {
 		modes->Shutdown();
 		delete modes;
+	}
+
+	if (LUA) {
+		LUA->Shutdown();
 	}
 
 	if (SOUND) {

@@ -180,13 +180,18 @@ class Object {
 		//! Rotational parameters
 		float rotate_angle, rotate_velocity;
 		bool use_rotation;
+
+		//! Whether to draw the bounding box or not
+		bool draw_bounding_box;
 		
 		// Protected constructur, this means we can't directly
-		// instantiate Object's, we need to use a higher class.
+		// instantiate Object's, we need to use a friend or derived class.
 		Object();
 	
 	public:
 		int tmp_debug_flag;
+
+		// Whether to draw ALL the different rectangles or not (DEBUG)
 		static bool debug_draw_bounding_boxes;
 		
 		// DEBUG ONLY: A unqiue ID that is incremented every time an object
@@ -199,6 +204,8 @@ class Object {
 		virtual void Shutdown() = 0;
 		
 		virtual void Update() = 0;
+
+		void DrawBoundingRect(bool state) {draw_bounding_box = true;}
 		
 		//! Fade this object out over a given time (in frames)
 		void FadeOut(int time);

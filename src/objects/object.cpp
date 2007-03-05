@@ -95,6 +95,7 @@ void Object::FadeOut(int time) {
 
 bool Object::BaseInit() {
 	LogObjectEvent(OBJECT_INIT);
+	draw_bounding_box = false;
 	tmp_debug_flag = 0;
 	ClearProperties(properties);
 	is_dead = false;
@@ -185,35 +186,39 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 	if (sprite_to_draw)
 		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha);
 
-	if (!debug_draw_bounding_boxes)
-		return;
+	// bounding box stuff below.
 
-	_Rect bbox_t;
-	_Rect projRect_t = projRect;
-	_Rect bbox_t_old = bbox;
+	if (draw_bounding_box) {
+		_Rect bbox_t;
 
-	// get current bounding box
-	bbox_t.set(	pos.GetX(), pos.GetY(), 
-							pos.GetX() + GetWidth(), pos.GetY() + GetHeight()
-							);
+		// get current bounding box
+		bbox_t.set(	pos.GetX(), pos.GetY(), 
+								pos.GetX() + GetWidth(), pos.GetY() + GetHeight() );
 
-	// draw projection rectangle, blue
-	TransformRect(bbox_t);
-	TransformRect(bbox_t_old);
-	TransformRect(projRect_t);
-
-	if (	properties.is_player || 
-				properties.is_solid || 
-				properties.is_collectable) {
-
-		// draw old bounding rectangle, dark pink
-		WINDOW->DrawRect(bbox_t_old, makecol(127,0,127));
-	
 		// draw current bounding rectangle, pink
+		TransformRect(bbox_t);
 		WINDOW->DrawRect(bbox_t, makecol(255,0,255));
+	}
+
+	if (debug_draw_bounding_boxes) {
+
+		_Rect projRect_t = projRect;
+		_Rect bbox_t_old = bbox;
 
 		// draw projection rectangle, blue
-		WINDOW->DrawRect(projRect_t, makecol(0, 0, 255));
+		TransformRect(bbox_t_old);
+		TransformRect(projRect_t);
+
+		if (	properties.is_player || 
+					properties.is_solid || 
+					properties.is_collectable) {
+
+			// draw old bounding rectangle, dark pink
+			WINDOW->DrawRect(bbox_t_old, makecol(127,0,127));
+	
+			// draw projection rectangle, blue
+			WINDOW->DrawRect(projRect_t, makecol(0, 0, 255));
+		}
 	}
 }
 
@@ -314,6 +319,7 @@ Object::Object() {
 	display_time = -1;
 	rotate_angle = rotate_velocity = 0.0f;
 	use_rotation = false;
+	draw_bounding_box = false;
 }
 
 // Return a vector with x,y set to 

@@ -393,7 +393,12 @@ dnl -----------------
 
 AM_CONDITIONAL(PRECOMPILE_ENABLE, [test "$PrecompileEnable" = "yes"])
 
-ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects"
+dnl HACK!
+LUA_CXXFLAGS="-I/usr/include/lua50/"
+LUA_LDFLAGS="-llua50 -llualib50"
+
+dnl LUA_CXXFLAGS is a hack.
+ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects $LUA_CXXFLAGS"
 
 dnl keep this SEPERATE even though here it is identical
 PRECOMPILED_CXXFLAGS="$ninjas_CXXFLAGS"
@@ -403,8 +408,8 @@ ninjas_CXXFLAGS="$ninjas_CXXFLAGS -include precompiled.h"
 aitrainer_CXXFLAGS="$aitrainer_CXXFLAGS -include precompiled.h"
 fi
 
-ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries"
-ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries"
+dnl LUA_LDFLAGS is a hack.
+ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries $LUA_LDFLAGS"
 
 LDFLAGS="$extra_libraries $LDFLAGS"
 LIBS="$LIBS $OGGVORBIS_LIBS $LIBPNG	$ZLIB"
