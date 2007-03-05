@@ -102,6 +102,10 @@ bool ObjectText::Init() {
 	box_margin 	= DEFAULT_BOX_MARGIN;
 	box_color		=	DEFAULT_BOX_COLOR;
 	box_height	= DEFAULT_BOX_HEIGHT;
+
+	properties.is_overlay = 1;
+	properties.is_solid = 0;
+
 	SetText("");
 	SetAvatarFilename("");
 

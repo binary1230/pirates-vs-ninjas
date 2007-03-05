@@ -143,10 +143,6 @@ int GameState::InitSystem() {
 			return -1;
 		}
 
-		// TEST ONLY
-		LUA->DoFile("scripts/test.lua");
-		// END TEST ONLY
-
 		fprintf(stderr, "[init: loading game modes]\n");
 		if (LoadGameModes() == -1) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init default game mode!\n");

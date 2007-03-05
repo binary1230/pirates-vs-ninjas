@@ -14,8 +14,14 @@ class LuaManager {
 		bool Init();
 		void Shutdown();
 
+		// Clear out any lua state
+		void Clear();
+
 		// Run a .lua file with our engine calls exposed
 		bool DoFile(const char* filename);
+
+		bool RunVoidFunctionNoArgs(	const char* functionName, 
+																bool errorMsgOnFunctionNotFound = true);
 
 	protected:
 		lua_State* lua; 

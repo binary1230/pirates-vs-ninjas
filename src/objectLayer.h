@@ -28,6 +28,7 @@ class ObjectLayer {
 		void Shutdown();
 
 		void SetName(const char*);
+		CString GetName() {return *name;};
 
 		//! Get/set layer scroll speed
 		void SetScrollSpeed(float _scroll_speed) { scroll_speed = _scroll_speed ;};

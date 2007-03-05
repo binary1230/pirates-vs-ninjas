@@ -353,9 +353,6 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
 		return NULL;
 
-	obj->properties.is_overlay = 1;
-	obj->properties.is_solid = 0;
-
 	if (!xObj) 
 		return obj;
 

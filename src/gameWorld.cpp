@@ -1,5 +1,6 @@
 #include "gameWorld.h"
 
+#include "luaManager.h"
 #include "ai.h"
 #include "assetManager.h"
 #include "globals.h"
@@ -435,9 +436,10 @@ int GameWorld::Load(XMLNode &xMode) {
 	forces.clear();
 	if (LoadHeaderFromXML(xMode) == -1 ||
 			LoadObjectsFromXML(xMode) == -1 ||
-			LoadForcesFromXML(xMode) == -1 )
+			LoadForcesFromXML(xMode) == -1 ) {
+		printf("HARG!\n");
 		return -1;
-
+	}
 
 	if (xMode.nChildNode("effects") == 1) {
 		XMLNode xEffects = xMode.getChildNode("effects");
@@ -498,7 +500,16 @@ int GameWorld::Load(XMLNode &xMode) {
 	// the target right now.
 	SnapCamera();
 
+	// Load the LUA file if there is one
+	if (xMode.nChildNode("luaScript") == 1) {
+		const char* lua_script = xMode.getChildNode("luaScript").getText();
+		LUA->DoFile(lua_script);
+	}
+
 	is_loading = false;
+
+	// Do the lua OnLoad function
+	LUA->RunVoidFunctionNoArgs("Level_OnLoad", false);
 	
 	return 0;	
 }
@@ -940,7 +951,16 @@ int GameWorld::LoadObjectFromXML(
 	return 0;
 }
 
-void GameWorld::AddObject(	Object* obj, bool addImmediately) {
+ObjectLayer* GameWorld::FindLayer(const char* name) {
+	for (uint i = 0; i < layers.size(); ++i) {
+		if (layers[i]->GetName() == name)
+			return layers[i];
+	}
+
+	return NULL;
+}
+
+void GameWorld::AddObject(Object* obj, bool addImmediately) {
 	assert(obj != NULL);
 	assert(obj->GetLayer() != NULL);
 

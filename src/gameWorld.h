@@ -141,6 +141,9 @@ class GameWorld : public GameMode {
 
 			//! Delete an object from it's layer
 			void DeleteObjectFromLayer(Object* obj);
+
+			//! Find a layer by name
+			ObjectLayer* FindLayer(const char* name);
 			
 			virtual void Draw();
 			virtual void Update();

@@ -10,6 +10,7 @@
 #include "credits.h"
 #include "gameOptions.h"
 #include "mapEditor.h"
+#include "luaManager.h"
 
 void GameModes::Update() {
 	if (signal_game_exit)
@@ -42,6 +43,7 @@ void GameModes::DoEndCurrentMode() {
 		DoAIEndStuff();
 		exitInfo = currentMode->GetExitInfo();
 		currentMode->Shutdown();
+		LUA->Clear();
 
 		// the WORLD singleton is a special case here
 		if (WORLD)
