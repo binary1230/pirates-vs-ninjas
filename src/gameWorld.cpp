@@ -22,6 +22,7 @@
 #include "effectsManager.h"
 #include "objectDoor.h"
 #include "globalDefines.h"
+#include "eventManager.h"
 
 DECLARE_SINGLETON(GameWorld)
 
@@ -59,6 +60,7 @@ void GameWorld::ShowText(	const char* txt,
 }
 
 int GameWorld::Init(XMLNode xMode) {
+	allow_player_offscreen = false;
 	use_scroll_speed = true;
 	camera_shake_time_total = -1;
 	modal_active = NULL;
@@ -89,6 +91,12 @@ int GameWorld::Init(XMLNode xMode) {
 	objects.clear();
 	forces.clear();
 	layers.clear();
+
+	EVENTS->CreateInstance();
+	if (!EVENTS || !EVENTS->Init()) {
+		fprintf(stderr, "ERROR: InitSystem: failed to init EventsManager!\n");
+		return -1;
+	}
 
 	return Load(xMode);
 }
@@ -213,6 +221,12 @@ void GameWorld::Shutdown() {
 	ObjectListIter iter;
 	int max, i;
 
+	if (EVENTS) {
+		EVENTS->OnUnLoad();
+		EVENTS->Shutdown();
+		EVENTS->FreeInstance();
+	}
+
 	// delete all the objects
 	for (iter = objects.begin(); iter != objects.end(); iter++) {
 		(*iter)->Shutdown();
@@ -261,7 +275,10 @@ void GameWorld::Shutdown() {
 //! Draw all objects in this physics simulation
 void GameWorld::Draw() {
 
+	//
 	// Draw the background gradient first
+	// TODO: TURN THIS BACK ON. It works again.
+	// 
 	/*WINDOW->DrawBackgroundGradient(	bg_color, makecol(0,0,0), 
 																		camera_y, 
 																		camera_y + WINDOW->Height(), 
@@ -508,8 +525,7 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	is_loading = false;
 
-	// Do the lua OnLoad function
-	LUA->RunVoidFunctionNoArgs("Level_OnLoad", false);
+	EVENTS->OnLoad();
 	
 	return 0;	
 }

@@ -1,6 +1,7 @@
 #include "input.h"
 #include "gameState.h"
 #include "gameOptions.h"
+#include "eventManager.h"
 
 // Maximum numbers of players allowed (arbitrary so far)
 #define MAX_PLAYERS 	2
@@ -137,7 +138,7 @@ void Input::UpdateKeyReleases() {
 	}
 }
 
-bool Input::InitPlayback(CString filename) {
+bool Input::InitPlayback(CString filename, bool seed_engine) {
 	type = INPUT_PLAYBACK;
 
 	const uint BUF_SIZE = 256; 
@@ -162,8 +163,8 @@ bool Input::InitPlayback(CString filename) {
 			return false;
 	}
 	
-	fprintf(stderr, "InputRecord: Playing back demo from file '%s'.\n", 
-							filename.c_str());
+	//fprintf(stderr, "InputRecord: Playing back demo from file '%s'.\n", 
+	//						filename.c_str());
 
 	// 1st line2: 'DEMO' header + version info
 	// (todo.. we could check for engine version numbers in this line2)
@@ -176,8 +177,10 @@ bool Input::InitPlayback(CString filename) {
 							|| sscanf(line2, "%u\n", &seed) != 1) {
 		error = true;
 	} else {
-		GAMESTATE->SetRandomSeed(seed);
-		fprintf(stderr, "InputPlayback: Using random seed %u\n", seed);
+		if (seed_engine) {
+			GAMESTATE->SetRandomSeed(seed);
+			fprintf(stderr, "InputPlayback: Using random seed %u\n", seed);
+		}
 	}
 
 	if (error) {
@@ -445,7 +448,7 @@ void Input::UpdateRecord() {
 
 				// remember, we are writing out GAMEKEYs not REAL keys.
 				// e.g. KEY_JUMP, not KEY_SPACEBAR
-				fprintf(demofile, " %u %u", i, (uint)game_key[i]);
+				fprintf(demofile, " %u %u", i, game_key[i] != 0);
 		}
 	}
 	
@@ -465,6 +468,11 @@ void Input::UpdatePlayback() {
 			UseNextFrameData();	
 			GetNextFrameData();
 	}	
+
+	// Once we're finished this playback
+	// Switch back to Live Mode
+	if (at_eof)
+		EndPlayback();
 
 	// SPECIAL EXCEPTION
 	// everything comes back from the demo file,
@@ -631,6 +639,9 @@ void Input::BeginPlayback()	{
 void Input::EndPlayback()	{
 	fclose(demofile);
 	demofile = NULL;
+	type = INPUT_LIVE;
+
+	EVENTS->OnInputEndedPlayback();
 }
 
 Input::Input() : demofile(NULL) {}

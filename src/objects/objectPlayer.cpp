@@ -31,6 +31,9 @@ void PlayerObject::Shutdown() {
 }
 
 void PlayerObject::ScreenBoundsConstraint() {
+	if (WORLD->PlayerAllowedOffscreen())
+		return;
+
 	if (pos.GetX() < 0) {
 		// vel.SetX(-vel.GetX()); // flip velocity
 		vel.SetX(0); 							// stop

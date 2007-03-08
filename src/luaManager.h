@@ -22,6 +22,10 @@ class LuaManager {
 
 		bool RunVoidFunctionNoArgs(	const char* functionName, 
 																bool errorMsgOnFunctionNotFound = true);
+		
+		bool RunVoidFunction1Args(	const char* functionName, 
+																const char* arg1,
+																bool errorMsgOnFunctionNotFound = true);
 
 	protected:
 		lua_State* lua; 

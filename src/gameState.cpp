@@ -355,6 +355,7 @@ void GameState::Update() {
 
 	SOUND->Update();
 	INPUT->Update();
+	WINDOW->Update(); // update fades.
 
 	modes->Update();
 }
@@ -364,7 +365,11 @@ void GameState::Draw() {
 	if (OPTIONS->DrawGraphics()) {
 		WINDOW->BeginDrawing();
 		WINDOW->Clear();
+
+		// Tell everything to draw itself
 		modes->Draw();
+		WINDOW->Draw();
+
 		WINDOW->Flip();
 		WINDOW->EndDrawing();
 	}

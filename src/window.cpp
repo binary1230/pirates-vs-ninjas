@@ -39,6 +39,59 @@ void GameWindow::Screenshot(char* filename) {
 
 	save_bitmap(file.c_str(), screen, NULL);
 }
+	
+void GameWindow::DrawFade() {
+	if (fading_state == FADED_NONE)
+		return;
+
+	DrawRect(0,0,width,height,0,true,fade_alpha);
+}
+
+void GameWindow::Draw() {
+	DrawFade();
+}
+
+void GameWindow::Update() {
+	UpdateFade();
+}
+
+void GameWindow::UpdateFade() {
+
+	if (fading_state == FADED_NONE || fading_state == FADED_OUT)
+		return;
+
+	if (fading_state == FADING_IN) {
+		fade_alpha -= fade_rate;
+		if (fade_alpha <= 0)
+			fading_state = FADED_NONE;
+	} else if (fading_state == FADING_OUT) {
+		fade_alpha += fade_rate;
+		if (fade_alpha >= 255)
+			fading_state = FADED_OUT;
+	}
+}
+
+void GameWindow::SetFadedIn() {
+	fade_alpha = 0;
+	fading_state = FADED_NONE;
+}
+
+void GameWindow::SetFadedOut() {
+	fade_alpha = 255;
+	fading_state = FADED_OUT;
+}
+
+void GameWindow::FadeOut(int rate /*=1*/) {
+	fade_rate = rate;
+	fade_alpha = 0;
+	fading_state = FADING_OUT;
+}
+
+void GameWindow::FadeIn(int rate /*=1*/) {
+	fade_rate = rate;
+	fade_alpha = 255;
+	fading_state = FADING_IN;
+}
 
 void GameWindow::DrawRect(_Rect &r, int col, bool filled, int alpha) {
 	DrawRect(	(int)r.getx1(), (int)r.gety1(), 
@@ -240,6 +293,10 @@ int GameWindow::Init( uint _width, uint _height,
 	int depth = DEFAULT_COLOR_DEPTH;
 	int gfx_mode;
 	
+	fade_rate = 0;
+	fade_alpha = 255;
+	fading_state = FADED_NONE;
+
 	width = _width;
 	height = _height;
 

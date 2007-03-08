@@ -312,7 +312,7 @@ Object* ObjectFactory::NewCutBarObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
 		return NULL;
 
-	if (xObj->nChildNode("text"))
+	if (xObj && xObj->nChildNode("text"))
 		obj->SetText(xObj->getChildNode("text").getText());
 
   obj->properties.is_overlay = true;

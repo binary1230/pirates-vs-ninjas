@@ -40,6 +40,36 @@ void LuaManager::Clear() {
 	Init();
 }
 
+/*bool LuaManager::RunVoidFunction1Args(	const char* functionName, 
+																				const char* arg1,
+																				bool errorMsgOnFunctionNotFound ) {
+	const int numArgs = 1;	
+	const int numResults = 0;
+
+	lua_getglobal(lua, functionName);
+
+	// not using args right now
+  lua_pushnumber(lua, arg1);   // push 1st argument 
+
+  if (lua_pcall(lua, numArgs, numResults, 0) != 0) {
+		if (errorMsgOnFunctionNotFound)
+			fprintf(stderr, "LUA: Error running function `%s': %s", 
+							functionName, lua_tostring(lua, -1));
+		return false;
+	}
+
+	// retrieve result 
+  // if (!lua_isnumber(lua, -1))
+	//   fprintf(stderr, "function `add_two_things' must return a number");
+
+	// get the return value
+  // int result = lua_tonumber(lua, -1);
+  // lua_pop(lua, 1);
+
+	return true;
+
+}*/
+
 // Example demonstrating how to call a LUA function from
 // C++ with no arguments that returns an int
 // Returns true if everything went OK.

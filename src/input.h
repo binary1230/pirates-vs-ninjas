@@ -153,9 +153,6 @@ class Input {
 
 		// -- DEMO PLAYBACK STUFF --	//
 		
-		//! Init demo playback stuff
-		bool InitPlayback(CString filename);
-
 		//! The frame count we are on [updated by Update()]
 		unsigned long frame_counter;
 
@@ -201,6 +198,9 @@ class Input {
 	public:
 		//! Init the input system
 		int Init();
+
+		//! Init demo playback stuff
+		bool InitPlayback(CString filename, bool seed_engine = true);
 
 		//! Start using this input
 		void Begin();

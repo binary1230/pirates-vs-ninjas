@@ -29,6 +29,14 @@ class Sprite;
 extern int screen_size_x;
 extern int screen_size_y;
 
+enum FADE_STATE {
+	FADING_IN,	// alpha decreasing
+	FADING_OUT, // alpha increasing
+	FADED_OUT,	// alpha at 255 and staying there
+	FADED_NONE	// alpha at 0 and staying there
+};
+
+
 //! The onscreen window
 class GameWindow {
 
@@ -38,10 +46,20 @@ class GameWindow {
 		bool initialized;
 		uint width, height;
 		FONT* main_font;
-			
+		
+		uint fade_rate;
+		int fade_alpha;
+		FADE_STATE fading_state;
+
 		//! Init openGL stuff
 		bool InitGL();
-		
+
+		//! Draw the fade
+		void DrawFade();
+
+		//! Update the fade
+		void UpdateFade();
+
 	public:
 		int Init(	uint _width, uint _height, bool _fullscreen = 0,
 							int _mode = MODE_DOUBLEBUFFERING);
@@ -91,6 +109,28 @@ class GameWindow {
 		//! Leave the filename NULL to guess an 
 		//! automatically incrementing filename
 		void Screenshot(char* filename = NULL);
+
+		//! Start a fade out to black
+		void FadeOut(int rate = 1);
+
+		//! Start a fade in from black
+		void FadeIn(int rate = 1);
+
+		//! Set the screen to be faded in (e.g. no fade)
+		void SetFadedIn();
+
+		//! Set the screen to be faded out (e.g. black)
+		void SetFadedOut();
+
+		//! Draw window-specific stuff per frame
+		//! (e.g. fades)
+		//! Call LAST after all other drawing for the frame
+		void Draw();
+
+		//! Update window-specific stuff per frae
+		//! (e.g. fades)
+		//! Call LAST after all other drawing for the frame
+		void Update();
 
 		virtual ~GameWindow();
 

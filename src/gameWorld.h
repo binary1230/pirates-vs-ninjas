@@ -121,6 +121,8 @@ class GameWorld : public GameMode {
 			int camera_shake_x;
 			int camera_shake_y;
 			int camera_shake_fade_time_left;
+				
+			bool allow_player_offscreen;
 
 		public:
 			virtual int Init(XMLNode);
@@ -175,6 +177,17 @@ class GameWorld : public GameMode {
 			
 			//! Experimental: Get AI fitness score for AI traning
 			int GetAiFitnessScore();
+
+			//! Allows the player to remain offscreen
+			//! Only use for cinematics.
+			inline void AllowPlayerOffscreen(bool state) {
+				allow_player_offscreen = state;
+			}
+
+			bool PlayerAllowedOffscreen() {
+				return allow_player_offscreen;
+			}
+
 
 			virtual ~GameWorld();
 

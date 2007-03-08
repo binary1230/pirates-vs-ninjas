@@ -111,7 +111,7 @@ class GameState {
 		//! Useful for loading stuff so we don't jump 20-30 frames
 		//! after waiting for a level load
 		void ResetAccumulatedTime();
-
+		
 		~GameState();
 };
 

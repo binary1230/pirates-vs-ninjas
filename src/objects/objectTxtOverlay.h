@@ -36,7 +36,10 @@ class ObjectFactory;
 // When the user presses a key again, it will close the textbox
 class ObjectText : public Object {
 	protected:
-		Sprite* avatar_sprite;
+		Sprite *avatar_sprite, *wait_sprite;
+
+		int time_until_next_blink;
+		bool blink;
 		
 		vector<CString> page_texts;		// holds each "page" full of text
 		uint text_index;							// which "page" we're on

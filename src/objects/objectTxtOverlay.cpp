@@ -6,10 +6,13 @@
 #include "input.h"
 #include "gameState.h"
 #include "gameWorld.h"
+#include "eventManager.h"
 
 #define DEFAULT_BOX_COLOR	 	makecol(172, 20, 31)
 #define DEFAULT_BOX_MARGIN	10
 #define DEFAULT_BOX_HEIGHT	110
+
+#define BLINK_TIME 10
 
 int ObjectText::GetHeight() {
 	return box_height;
@@ -21,10 +24,17 @@ int ObjectText::GetWidth() {
 
 void ObjectText::Draw() {
 
+	// Really... should go in Update().
 	const int box_x1 = box_margin;
-	const int box_y1 = WINDOW->Height() - (box_margin + box_height);
 	const int box_x2 = WINDOW->Width() - (box_margin * 2);
-	const int box_y2 = WINDOW->Height() - box_margin;
+
+	// Top of screen:
+	const int box_y1 = box_margin; 
+	const int box_y2 = box_margin + box_height;
+
+	// or, Bottom of screen:
+	// const int box_y1 = WINDOW->Height() - (box_margin + box_height);
+	// const int box_y2 = WINDOW->Height() - box_margin;
 
 	int txt_x;
 	int txt_y;
@@ -47,6 +57,26 @@ void ObjectText::Draw() {
 
 	CString text = page_texts[text_index];
 
+
+	time_until_next_blink--;
+
+	if (time_until_next_blink == 0) {
+		blink = !blink;
+
+		// make the cursor blink a little longer when it's on.
+		if (blink)
+			time_until_next_blink = int(float(BLINK_TIME * 1.5f));
+		else
+			time_until_next_blink = BLINK_TIME;
+	}
+
+	if (wait_sprite && blink) {
+		WINDOW->DrawSprite(wait_sprite, 
+				box_x2 - box_margin - wait_sprite->width, 
+				box_y2 - box_margin - wait_sprite->height
+			);
+	}
+
 	if (text.length() > 0)
 		WINDOW->DrawText(txt_x, txt_y, text);
 }
@@ -57,10 +87,11 @@ void ObjectText::Update() {
 	// if we're modal, NOTHING else can happen
 	// until the user presses a key
 	if (is_modal) {
-		if (INPUT->KeyOnce(PLAYERKEY_ACTION1, 1)) {
+
+		/*if (INPUT->KeyOnce(PLAYERKEY_ACTION1, 1)) {
 			SetModalActive(false);
 			is_dead = true;
-		} else if (INPUT->KeyOnce(PLAYERKEY_JUMP, 1)) {
+		} else */if (INPUT->KeyOnce(PLAYERKEY_JUMP, 1)) {
 			
 			++text_index;		// go to the next page
 
@@ -70,6 +101,9 @@ void ObjectText::Update() {
 				is_dead = true;
 			}
 		}
+
+		if (is_dead)
+			EVENTS->OnTextboxDone();
 	}
 }
 
@@ -103,11 +137,16 @@ bool ObjectText::Init() {
 	box_color		=	DEFAULT_BOX_COLOR;
 	box_height	= DEFAULT_BOX_HEIGHT;
 
+	blink = false;
+	time_until_next_blink = BLINK_TIME;
+
 	properties.is_overlay = 1;
 	properties.is_solid = 0;
 
 	SetText("");
 	SetAvatarFilename("");
+
+	wait_sprite = ASSETMANAGER->LoadSprite("wait1.png", true);
 
 	// really shouldn't assume this...
 	SetModalActive(true);
