@@ -5,6 +5,7 @@
 #include "objectFactory.h"
 #include "objectCutBars.h"
 #include "window.h"
+#include "gameSound.h"
 
 // LUA: Debug only - print something to stderr from lua
 // through the engine.  Use for testing lua only really.
@@ -107,6 +108,39 @@ int LUAAPI lua_play_input_script(lua_State* lua) {
 	return 1;
 }
 
+int LUAAPI lua_music_play(lua_State* lua) {
+	const char* music_file = lua_tostring(lua, -1);
+	int retval = 0;
+
+	if (!SOUND)
+		retval = -1;
+
+	if (retval != -1 && music_file) {
+		SOUND->LoadMusic(music_file);
+		SOUND->PlayMusic();
+	}
+
+	lua_pushnumber(lua, retval);
+	return 1;
+}
+
+// XXX TODO: Not implemented yet.
+int LUAAPI lua_music_stop(lua_State* lua) {
+	int retval = 0;
+
+	if (!SOUND)
+		retval = -1;
+
+	if (retval != -1) {
+		// SOUND->StopMusic();
+	}
+
+	lua_pushnumber(lua, retval);
+	return 1;
+}
+
+
+
 int LUAAPI lua_window_fadein(lua_State* lua) {
 	int rate = (int)lua_tonumber(lua, -1);
 	int retval = 0;
@@ -172,6 +206,10 @@ static struct LuaApiFunction LuaApiFunctionList[] = {
 	{ "window_fadein",  lua_window_fadein  },
 	{ "window_set_faded_out", lua_window_set_faded_out },
 	{ "window_set_faded_in",  lua_window_set_faded_in  },
+	{ "music_play", lua_music_play },
+
+	// XXX TODO: Not implemented yet.
+	{ "music_stop", lua_music_stop },
 
 	// terminating null entry
 	{ 0, 0 } 
