@@ -23,34 +23,34 @@
 # but weird things can happen if you don't)
 
 TARGET=i586-mingw32msvc
-BASE_PATH=/opt/i586-mingw32msvc
-COMMON_PATH=$BASE_PATH/$TARGET
+BASE_PATH=/usr/
+COMMON_PATH=$BASE_PATH/$TARGET/bin
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # the following _should_ be OK, but adjust if you need to
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # should contain cross compiled 'allegro-config'
-WIN32_PATH=$COMMON_PATH/bin
+WIN32_PATH=`pwd`/
 
-# should contain cross compiled liballeg.a
-WIN32_LIBS=$COMMON_PATH/lib
+# should contain cross compiled 
+WIN32_LIBS=$WIN32_PATH/win32/lib
 
 # should contain cross compiled allegro.h
-WIN32_INCLUDES=$COMMON_PATH/include
+WIN32_INCLUDES=$WIN32_PATH/win32/include
 
-OGG_PREFIX=$COMMON_PATH
-OGG_INCLUDES=$WIN32_INCLUDES
-VORBIS_PREFIX=$COMMON_PATH
-VORBIS_INCLUDES=$WIN32_INCLUDES
+OGG_PREFIX=$WIN32_PATH/win32
+OGG_INCLUDES=$WIN32_PATH/win32/include
+VORBIS_PREFIX=$WIN32_PATH/win32
+VORBIS_INCLUDES=$WIN32_PATH/win32/include
 
 # ---------------------------------------------------------------
 # DON'T MESS WITH ANYTHING BELOW HERE UNLESS YOU ARE REALLY SMART
 # ---------------------------------------------------------------
 
-export PATH="$WIN32_PATH:$BASE_PATH/bin:$PATH"
+export PATH="$BASE_PATH/bin:$PATH"
 
-./configure --target=$TARGET --host=$TARGET --build=linux-i386 \
+./configure --target=$TARGET --host=$TARGET --build=i386-linux \
 --with-extra-includes=$WIN32_INCLUDES --with-extra-libs=$WIN32_LIBS \
 --with-ogg=$OGG_PREFIX --with-ogg-includes=$OGG_INCLUDES \
 --with-vorbis=$VORBIS_PREFIX  --with-vorbis-includes=$VORBIS_INCLUDES \

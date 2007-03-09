@@ -18,12 +18,8 @@ bool LuaManager::Init() {
      return false;
   }
 
-  // initialize lua standard library functions
-
-  lua_baselibopen(lua);
-  lua_iolibopen(lua);
-  lua_strlibopen(lua);
-  lua_mathlibopen(lua);
+	// init standard lua stuff.
+	luaL_openlibs(lua);
 	
 	if (!BindLuaCalls()) {
 		fprintf(stderr, "LUA: Failed to bind C++ calls to Lua!\n");
@@ -112,7 +108,7 @@ bool LuaManager::DoFile(const char* _filename) {
 		return false;
 	}
 
-	if (lua_dofile(lua, filename.c_str()) != 0)
+	if (luaL_dofile(lua, filename.c_str()) != 0)
 		return false;
 
 	return true;

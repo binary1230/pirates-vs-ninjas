@@ -7,14 +7,14 @@
 
 # variables you can modify
 
-output_file=installer.nsi
+output_file="installer.nsi"
 
-template_file=installer-files/installer.template.nsi
+template_file="installer-files/installer.template.nsi"
 
-installerfile_part1=installer-files/installer_part1.txt
-installerfile_part2=installer-files/installer_part2.txt
-installerfile_part3=installer-files/installer_part3.txt
-tmpfile=installer-files/tmpfile
+installerfile_part1="installer-files/installer_part1.txt"
+installerfile_part2="installer-files/installer_part2.txt"
+installerfile_part3="installer-files/installer_part3.txt"
+tmpfile="installer-files/tmpfile"
 
 if [ "$#" != 1 ]; then
 	echo "ERROR: Expected a path to distributable dir (e.g. dist/win32/ninjas-engine-xyz/)"

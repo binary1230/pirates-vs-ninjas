@@ -11,8 +11,8 @@ AC_PREFIX_DEFAULT(/usr/local/)
 
 VERSION_MAJOR="0"
 VERSION_MINOR="3"
-VERSION_FIX="0"
-VERSION_EXTRA="-pre-alpha"
+VERSION_FIX="1"
+VERSION_EXTRA="-test1"
 PACKAGE_NAME="ninjas-engine"
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_FIX$VERSION_EXTRA"
@@ -89,10 +89,6 @@ if test -n "$use_extra_libs" && test "$use_extra_libs" != "NO"; then
    done
 fi
 
-CXXFLAGS="$CXXFLAGS $extra_includes"
-CFLAGS="$CFLAGS $extra_includes"
-LDFLAGS="$LDFLAGS $extra_libraries"
-
 dnl AC_ARG_WITH(ogg,
 dnl [  --with-ogg=DIR         Set where the Ogg library is located]) 
 dnl AC_ARG_WITH(vorbis,
@@ -121,6 +117,11 @@ else
 	AC_DEFINE([DEBUG], [], [Defined if this is a debug build])
 	AC_MSG_RESULT([Enabling DEBUG build])
 fi
+
+CPPFLAGS="$CPPFLAGS $extra_includes"
+CXXFLAGS="$CXXFLAGS $extra_includes"
+CFLAGS="$CFLAGS $extra_includes"
+LDFLAGS="$LDFLAGS $extra_libraries"
 
 AM_CONDITIONAL(DEBUG, [test "$DEBUG" = "1"])
 AM_CONDITIONAL(RELEASE, [test "$RELEASE" = "1"])
@@ -176,11 +177,15 @@ if test "$WIN32" = "yes"; then
 	dnl you can try editing these 2 lines if cross compile stuff isn't working
 	dnl DON'T FORGET to re-run ./autogen.sh when you are done editing here
 	dnl also, double check your cross-configure.sh
-	ALLEGRO_LIBS="`allegro-config --libs --static` -lmingw32 -lwsock32 -luser32 -lgdi32"
-	ninjas_CFLAGS="-mwindows"
-	ninjas_CXXFLAGS="-mwindows"
-	aitrainer_CFLAGS="-mwindows"
-	aitrainer_CXXFLAGS="-mwindows"
+	WIN_INCLUDES="-I win32/include/ -mwindows" 
+	WIN_LIBS="-L win32/lib/ -lalleg_s -mwindows -lmingw32 -lwsock32 -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lole32 -ldinput -lddraw -ldxguid -lwinmm -ldsound"
+	
+	ALLEGRO_LIBS="$WIN_LIBS"
+
+	ninjas_CFLAGS="$WIN_INCLUDES"
+	ninjas_CXXFLAGS="$WIN_INCLUDES"
+	aitrainer_CFLAGS="$WIN_INCLUDES"
+	aitrainer_CXXFLAGS="$WIN_INCLUDES"
 else
 	AC_MSG_RESULT([Not building for Win32])
 	ALLEGRO_LIBS="`allegro-config --libs`"
@@ -191,8 +196,6 @@ AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
 dnl ------------------------------------------------
 dnl X11 stuff (Unix ONLY) Needed for OpenGL stuff.
 dnl ------------------------------------------------
-
-LIBS="-lm $LIBS"
 
 if test "$WIN32" != "yes"; then
 
@@ -243,13 +246,13 @@ if test -n "$gl_fail"; then
 fi
 
 if test "$WIN32" != "yes"; then
-	AC_CHECK_LIB(GL, glBegin, LIBS="-lGL $LIBS", gl_fail=y, "-lGL")
+	AC_CHECK_LIB(GL, glBegin, GL_LIBS="-lGL", gl_fail=y, "-lGL")
 else
 	dnl XXX change 'main' back to 'glBegin'.  WHY main??
 	dnl everyone else uses 'main' and I can't get any _actual_
 	dnl GL functions to work.  this will probably always 
 	dnl be TRUE.
-	AC_CHECK_LIB(opengl32, main, LIBS="-lopengl32 $LIBS", gl_fail=y, "-lopengl32")
+	AC_CHECK_LIB(opengl32, main, GL_LIBS="-lopengl32", gl_fail=y, "-lopengl32")
 fi
 
 if test -n "$gl_fail"; then
@@ -265,13 +268,13 @@ if test -n "$fail_glu"; then
 fi
 
 if test "$WIN32" = "no"; then
-	AC_CHECK_LIB(GLU, gluSphere, LIBS="-lGLU $LIBS", fail_glu=y, -lGLU)
+	AC_CHECK_LIB(GLU, gluSphere, GL_LIBS="$GL_LIBS -lGLU", fail_glu=y, -lGLU)
 else
 	dnl XXX change 'main' back to 'gluSphere'.  WHY main??
 	dnl everyone else uses 'main' and I can't get any _actual_
 	dnl GL functions to work.  this will probably always 
 	dnl be TRUE.
-	AC_CHECK_LIB(glu32, main, LIBS="-lglu32 $LIBS", fail_glu=y, -lglu32)
+	AC_CHECK_LIB(glu32, main, GL_LIBS="$GL_LIBS -lglu32", fail_glu=y, -lglu32)
 fi
 
 if test -n "$fail_glu"; then
@@ -282,7 +285,7 @@ dnl ------------------------------------------------
 dnl Check for alleggl stuff
 dnl ------------------------------------------------
 
-LIBS="$ALLEGRO_LIBS $LIBS"
+# LIBS="$ALLEGRO_LIBS $LIBS $GL_LIBS"
 
 AC_CHECK_HEADER(alleggl.h, , alleggl_fail=y)
 
@@ -290,14 +293,15 @@ if test -n "$alleggl_fail"; then
 	AC_MSG_ERROR([Unable to locate required AllegroGL headers])
 fi
 
-if test "$WIN32" != "yes"; then
-	AC_CHECK_LIB(agl, install_allegro_gl, LIBS="-lagl $LIBS $ALLEGRO_LIBS", alleggl_fail=y, $ALLERGRO_LIBS)
+if test "$WIN32" = "no"; then
+	LIBS="$LIBS $GL_LIBS"
+	AC_CHECK_LIB(agl, install_allegro_gl, AGL_LIBS="-lagl", alleggl_fail=y, $ALLEGRO_LIBS)
 else
 	dnl XXX change 'main' back to 'gluSphere'.  WHY main??
 	dnl everyone else uses 'main' and I can't get any _actual_
 	dnl GL functions to work.  this will probably always 
 	dnl be TRUE.
-	AC_CHECK_LIB(agl, main, LIBS="-lagl $LIBS $ALLEGRO_LIBS", alleggl_fail=y, $ALLERGRO_LIBS)
+	AC_CHECK_LIB(agl_s, main, AGL_LIBS="-lagl_s", alleggl_fail=y, $ALLERGRO_LIBS)
 fi
 
 if test -n "$alleggl_fail"; then
@@ -393,9 +397,14 @@ dnl -----------------
 
 AM_CONDITIONAL(PRECOMPILE_ENABLE, [test "$PrecompileEnable" = "yes"])
 
-dnl HACK!
-LUA_CXXFLAGS="-I/usr/include/lua50/"
-LUA_LDFLAGS="-llua50 -llualib50"
+dnl TOTAL HACK! TODO: CHECK THIS THE RIGHT WAY.
+if test "$WIN32" = "no"; then
+dnl Ubuntu...
+LUA_CXXFLAGS="-I/usr/include/lua5.1/"
+LUA_LDFLAGS="-llua5.1"
+else
+LUA_LDFLAGS="-llua"
+fi
 
 dnl LUA_CXXFLAGS is a hack.
 ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects $LUA_CXXFLAGS"
@@ -411,8 +420,8 @@ fi
 dnl LUA_LDFLAGS is a hack.
 ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries $LUA_LDFLAGS"
 
-LDFLAGS="$extra_libraries $LDFLAGS"
-LIBS="$LIBS $OGGVORBIS_LIBS $LIBPNG	$ZLIB"
+LDFLAGS="$extra_libraries $LDFLAGS $LUA_LDFLAGS"
+LIBS="$ALLEGRO_LIBS -lm $AGL_LIBS $GL_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB $LUA_LDFLAGS"
 
 AC_SUBST(PACKAGE_NAME)
 AC_SUBST(ninjas_CXXFLAGS)

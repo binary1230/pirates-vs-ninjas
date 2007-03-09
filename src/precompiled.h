@@ -8,10 +8,14 @@
 #define PRECOMPILED_H
 
 // The order of these two is SUPER-IMPORTANT
+#ifdef WIN32
+#define  ALLEGRO_STATICLINK
+#endif // WIN32
+
 #include <allegro.h>
 #ifdef WIN32
 #include <winalleg.h>
-#endif
+#endif // WIN32
 #include <alleggl.h>
 
 #ifdef PLATFORM_DARWIN

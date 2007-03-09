@@ -1,5 +1,5 @@
 if DEBUG
-SUBDIRS = src ai
+SUBDIRS = src # ai
 else
 SUBDIRS = src
 endif
