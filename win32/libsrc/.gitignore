@@ -1,0 +1,10 @@
+/CEGUI*
+/pthread*
+/*.tar.*
+/xmake.sh
+/*lua*
+/*vorbis*
+/*png*-1.2.16
+/*zlib*
+/*ogg*
+/alleg*
