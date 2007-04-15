@@ -26,6 +26,7 @@ dist_win32_common: $(DISTFILES)
 	mkdir -p $(DIST_DIR)/data
 	cp src/ninjas.exe $(DIST_DIR)
 	strip $(DIST_DIR)/ninjas.exe
+	upx  $(DIST_DIR)/ninjas.exe
 	cp LICENSE README $(DIST_DIR)
 	cp dist/win32/common/* $(DIST_DIR)
 	cp -r $(DATA_DIR) $(DIST_DIR)
