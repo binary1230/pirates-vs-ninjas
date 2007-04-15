@@ -1,5 +1,6 @@
 #include "gameState.h"
 
+#include "gui.h"
 #include "gameOptions.h"
 #include "input.h"
 #include "window.h"
@@ -140,6 +141,13 @@ int GameState::InitSystem() {
 		LUA->CreateInstance();
 		if ( !LUA || !LUA->Init() ) {
 			fprintf(stderr, "ERROR: InitSystem: failed to init lua scripting!\n");
+			return -1;
+		}
+		
+		fprintf(stderr, "[init: gui manager]\n");
+		GUI->CreateInstance();
+		if ( !GUI || !GUI->Init() ) {
+			fprintf(stderr, "ERROR: InitSystem: failed to init gui!\n");
 			return -1;
 		}
 
@@ -355,6 +363,7 @@ void GameState::Update() {
 
 	SOUND->Update();
 	INPUT->Update();
+	GUI->Update();
 	WINDOW->Update(); // update fades.
 
 	modes->Update();
@@ -369,6 +378,7 @@ void GameState::Draw() {
 		// Tell everything to draw itself
 		modes->Draw();
 		WINDOW->Draw();
+		GUI->Draw();
 
 		WINDOW->Flip();
 		WINDOW->EndDrawing();
@@ -393,6 +403,11 @@ void GameState::Shutdown() {
 	if (modes) {
 		modes->Shutdown();
 		delete modes;
+	}
+
+	if (GUI) {
+		GUI->Shutdown();
+		GUI->FreeInstance();
 	}
 
 	if (LUA) {

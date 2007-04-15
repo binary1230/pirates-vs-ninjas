@@ -42,7 +42,7 @@ input.h effectsManager.h mapSaver.h\
 force.h forceGravity.h forceInput.h forceFactory.h \
 animation.h animations.h singleton.h \
 credits.h gameMenu.h gameWorld.h sprite.h precompiled.h stdafx.h \
-luaManager.h luaApi.h eventManager.h
+luaManager.h luaApi.h eventManager.h gui.h
 
 ninjas_SOURCES = \
 external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
@@ -60,7 +60,7 @@ objects/objectCollectable.cpp objects/objectFan.cpp objects/objectDoor.cpp \
 input.cpp effectsManager.cpp \
 force.cpp forceGravity.cpp forceInput.cpp forceFactory.cpp \
 animation.cpp animations.cpp mapSaver.cpp eventManager.cpp \
-credits.cpp gameMenu.cpp gameWorld.cpp luaManager.cpp luaApi.cpp \
+credits.cpp gameMenu.cpp gameWorld.cpp luaManager.cpp luaApi.cpp gui.cpp \
 $(headers)
 
 # EXTRA_DIST = dir1 dir2

@@ -14,6 +14,7 @@ typedef unsigned int uint;
 //#define S(x) ((BITMAP*)s[x].dat)
 //#define SOUNDS(x) ((SAMPLE*)sounds[x].dat)
 
+// Not a great rand... only uses lower bits, not good.
 #define Rand(lower, upper) \
 ((rand() % (int(upper) - int(lower) + 1)) + int(lower))
 

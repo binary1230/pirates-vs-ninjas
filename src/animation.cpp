@@ -6,9 +6,6 @@
 #include "gameSound.h"
 #include "effectsManager.h"
 
-#include <map>
-using namespace std;
-
 AnimFrame::AnimFrame() { 
 	Clear();
 }

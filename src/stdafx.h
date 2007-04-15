@@ -15,4 +15,9 @@
 #include "precompiled.h"
 #endif
 
+using namespace std;
+
+#include "globals.h"
+#include "singleton.h"
+
 #endif // STDAFX_H

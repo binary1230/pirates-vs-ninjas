@@ -4,8 +4,6 @@
 #include "stdafx.h"
 #include "globals.h"
 
-using namespace std;
-
 class Vector2D;
 
 //! A 2 Dimensional Vector

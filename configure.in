@@ -43,22 +43,32 @@ dnl Precompiled header support
 dnl ------------------------------------
 
 AC_MSG_CHECKING([Compiler])
-if test $ac_compiler_gnu = "yes"; then
-	GccVersion=`$CXX -v 2>&1 | $AWK '{ if ($2 ~ /version/) print $3 }'`
-	GccVersion=`echo $GccVersion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
 
-	if test -n "$GccVersion" && test "$GccVersion" -ge 3004000; then
-		AC_MSG_RESULT([gcc >= 3.4.0, PreCompiled headers enabled])
-		WARN_FLAGS="$WARNFLAGS $WARN_FLAGS34"
-		OPT_FLAGS="$OPT_FLAGS $OPT_FLAGS34"
-		PrecompileEnable="yes"
+DO_PRECOMPILED="no"
+
+AC_ARG_ENABLE([precompiled-headers],   [--disable-precompiled-headers    Don't use precompiled headers], DO_PRECOMPILED="no", DO_PRECOMPILED="yes")
+
+if test "$DO_PRECOMPILED" = "no"; then
+	AC_MSG_RESULT([disabled, PreCompiled headers disabled])
+	PrecompileEnable="no"
+else
+	if test $ac_compiler_gnu = "yes"; then
+		GccVersion=`$CXX -v 2>&1 | $AWK '{ if ($2 ~ /version/) print $3 }'`
+		GccVersion=`echo $GccVersion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
+
+		if test -n "$GccVersion" && test "$GccVersion" -ge 3004000; then
+			AC_MSG_RESULT([gcc >= 3.4.0, PreCompiled headers enabled])
+			WARN_FLAGS="$WARNFLAGS $WARN_FLAGS34"
+			OPT_FLAGS="$OPT_FLAGS $OPT_FLAGS34"
+			PrecompileEnable="yes"
+		else
+			AC_MSG_RESULT([gcc < 3.4.0, PreCompiled headers disabled])
+			PrecompileEnable="no"
+		fi
 	else
-		AC_MSG_RESULT([gcc < 3.4.0, PreCompiled headers disabled])
+		AC_MSG_RESULT([non-gcc, PreCompiled headers disabled])
 		PrecompileEnable="no"
 	fi
-else
-	AC_MSG_RESULT([non-gcc, PreCompiled headers disabled])
-	PrecompileEnable="no"
 fi
 
 AC_LANG(C++)
@@ -406,22 +416,32 @@ else
 LUA_LDFLAGS="-llua"
 fi
 
-dnl LUA_CXXFLAGS is a hack.
-ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects $LUA_CXXFLAGS"
+dnl TOTAL HACK! TODO: CHECK THIS THE RIGHT WAY.
+if test "$WIN32" = "no"; then
+dnl Ubuntu...
+CEGUI_CXXFLAGS="-I/usr/local/include/CEGUI/"
+CEGUI_LDFLAGS="-L/usr/local/lib -lCEGUIBase -lCEGUIOpenGLRenderer"
+else
+dnl TEMP HACK DISABLE THESE
+CEGUI_CXXFLAGS="-I../win32/include/CEGUI/"
+dnl CEGUI_LDFLAGS="-lCEGUIBase -lCEGUIOpenGLRenderer"
+fi
+
+
+ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects $LUA_CXXFLAGS $CEGUI_CXXFLAGS"
 
 dnl keep this SEPERATE even though here it is identical
 PRECOMPILED_CXXFLAGS="$ninjas_CXXFLAGS"
 
-if test x$PrecompileEnable = xyes; then
+if test "$PrecompileEnable" = "yes"; then
 ninjas_CXXFLAGS="$ninjas_CXXFLAGS -include precompiled.h"
 aitrainer_CXXFLAGS="$aitrainer_CXXFLAGS -include precompiled.h"
 fi
 
-dnl LUA_LDFLAGS is a hack.
-ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries $LUA_LDFLAGS"
+ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries $LUA_LDFLAGS $CEGUI_LDFLAGS"
 
-LDFLAGS="$extra_libraries $LDFLAGS $LUA_LDFLAGS"
-LIBS="$ALLEGRO_LIBS -lm $AGL_LIBS $GL_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB $LUA_LDFLAGS"
+LDFLAGS="$extra_libraries $LDFLAGS $LUA_LDFLAGS $CEGUI_LDFLAGS"
+LIBS="$ALLEGRO_LIBS -lm $AGL_LIBS $GL_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB $LUA_LDFLAGS $CEGUI_LDFLAGS"
 
 AC_SUBST(PACKAGE_NAME)
 AC_SUBST(ninjas_CXXFLAGS)
@@ -436,7 +456,7 @@ dnl DOES NOT WORK RIGHT NOW
 DATA_DIR="${prefix}/data"
 AC_DEFINE_UNQUOTED([DATA_DIR], "${DATA_DIR}", [The installer prefix e.g. /usr/local])
 
-if test x$PrecompileEnable = xyes; then
+if test "$PrecompileEnable" = "yes"; then
 	AC_DEFINE([PRECOMPILE_ENABLE], "1", [Whether we are precompiling or not])
 fi
 

@@ -4,6 +4,10 @@
  * This file is hereby placed in the public domain.
  */
 
+// REMOVE ME!!
+#include <vector>
+#include <iostream>
+// using namespace std;
 
 #include <png.h>
 #include <allegro.h>

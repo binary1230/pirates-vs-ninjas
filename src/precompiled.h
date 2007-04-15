@@ -7,11 +7,21 @@
 #ifndef PRECOMPILED_H
 #define PRECOMPILED_H
 
-// The order of these two is SUPER-IMPORTANT
+#ifndef WIN32
+#define ENGINE_USES_CEGUI
+#endif
+
+#ifdef ENGINE_USES_CEGUI
+#include <CEGUI.h>
+#include <CEGUIWindowManager.h>
+#include <RendererModules/OpenGLGUIRenderer/openglrenderer.h>
+#include <CEGUIDefaultResourceProvider.h>
+#endif // ENGINE_USES_CEGUI
+
+// The order of the allegro stuff is SUPER-IMPORTANT
 #ifdef WIN32
 #define  ALLEGRO_STATICLINK
 #endif // WIN32
-
 #include <allegro.h>
 #ifdef WIN32
 #include <winalleg.h>
@@ -25,6 +35,21 @@
 #include <malloc.h>
 #endif // PLATFORM_DARWIN
 
+#define ENGINE_EMBEDDED_LUA
+
+#ifdef ENGINE_EMBEDDED_LUA
+extern "C" {
+	#include <lua.h>
+	#include <lualib.h>
+	#include <lauxlib.h>
+}
+#endif
+
+// Our rarely-modified engine stuff
+#include "StdString.h"
+#include "xmlParser.h"
+#include "alogg.h"
+#include "loadpng.h"
 
 // Common to everything
 #include <stdarg.h>
@@ -49,29 +74,9 @@
 #include <map>
 #include <vector>
 
-using namespace std;
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-
-#define ENGINE_EMBEDDED_LUA
-
-#ifdef ENGINE_EMBEDDED_LUA
-extern "C" {
-	#include <lua.h>
-	#include <lualib.h>
-	#include <lauxlib.h>
-}
-#endif
-
-// Our rarely-modified engine stuff
-#include "StdString.h"
-#include "xmlParser.h"
-#include "alogg.h"
-#include "loadpng.h"
-#include "globals.h"
-#include "singleton.h"
 
 // 3d model support not ready yet.
 // #include "Model_3DS.h"

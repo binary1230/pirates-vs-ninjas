@@ -22,8 +22,6 @@
 #include <netinet/in.h>
 #endif
 
-using namespace std;
-
 const int ezSocketsBuffersize = 16384;
 
 class ezSocketsPacket

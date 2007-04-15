@@ -43,16 +43,15 @@ void CreditsMode::Draw() {
 
 void CreditsMode::Update() {
 
-	// If they are pressing Jump, pause the scroll
-	if (INPUT->Key(PLAYERKEY1_JUMP))
-		return;
 
 	// Hehehe.. weird scrolling hacks, try it.
 	if (INPUT->Key(PLAYERKEY1_DOWN))
 		scroll_offset+=10;
 	else if (INPUT->Key(PLAYERKEY1_UP))
 		scroll_offset-=10;
-	else
+
+	// Do it normally, if they're not pressing the JUMP key
+	else if (!INPUT->Key(PLAYERKEY1_JUMP))
 		scroll_offset -= scroll_speed;		// NORMAL
 
 	// If we finished scrolling or they press the exit key, we exit

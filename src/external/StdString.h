@@ -268,7 +268,6 @@ typedef char*			PSTR;
 #include <string>			// basic_string
 #include <algorithm>		// for_each, etc.
 #include <functional>		// for StdStringLessNoCase, et al
-using namespace std;
 
 #if defined(WIN32)
 #include <malloc.h>			// _alloca
@@ -621,7 +620,7 @@ public:
 			// must be a valid length), we must adjust the length here to a safe
 			// value.  Thanks to Ullrich Pollähne for catching this bug
 
-			nChars		= min(nChars, str.length() - nStart);
+			nChars		= std::min(nChars, str.length() - nStart);
 
 			// Watch out for assignment to self
 
@@ -652,7 +651,7 @@ public:
 			// must be a valid length), we must adjust the length here to a safe
 			// value. Thanks to Ullrich Pollähne for catching this bug
 
-			nChars		= min(nChars, str.length() - nStart);
+			nChars		= std::min(nChars, str.length() - nStart);
 
 			// Watch out for assignment to self
 
@@ -885,7 +884,7 @@ public:
 
 			// Ensure proper NULL termination.
 
-			nActual			= nUsed == -1 ? nChars-1 : min(nUsed, nChars-1);
+			nActual			= nUsed == -1 ? nChars-1 : std::min(nUsed, nChars-1);
 			pBuf[nActual+1]= '\0';
 		} while ( nUsed < 0 && nTry++ < MAX_FMT_TRIES );
 
@@ -1020,7 +1019,7 @@ public:
 	{
         // Range check the count.
 
-		nCount = max(0, min(nCount, static_cast<int>(this->size())));
+		nCount = std::max(0, std::min(nCount, static_cast<int>(this->size())));
 		return this->substr(0, static_cast<MYSIZE>(nCount)); 
 	}
 
@@ -1101,7 +1100,7 @@ public:
 	{
         // Range check the count.
 
-		nCount = max(0, min(nCount, static_cast<int>(this->size())));
+		nCount = std::max(0, std::min(nCount, static_cast<int>(this->size())));
 		return this->substr(this->size()-static_cast<MYSIZE>(nCount));
 	}
 
@@ -1307,6 +1306,6 @@ struct StdStringEqualsNoCaseA
 #endif
 
 #define CString CStdString
-#define CStringArray vector<CString>
+#define CStringArray std::vector<CString>
 
 #endif	// #ifndef STDSTRING_H
