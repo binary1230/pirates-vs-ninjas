@@ -10,15 +10,15 @@
 #ifndef ALOGG_H
 #define ALOGG_H
 
-#include "stdafx.h"
-
 #include "aloggdll.h"
 
+#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+struct SAMPLE;
 
 /* common define */
 

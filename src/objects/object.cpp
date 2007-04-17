@@ -94,7 +94,6 @@ void Object::FadeOut(int time) {
 }
 
 bool Object::BaseInit() {
-	LogObjectEvent(OBJECT_INIT);
 	draw_bounding_box = false;
 	tmp_debug_flag = 0;
 	ClearProperties(properties);
@@ -278,8 +277,6 @@ bool Object::CanCollide(Object* obj) {
 }
 
 void Object::BaseShutdown() {
-	LogObjectEvent(OBJECT_SHUTDOWN);
-
 	layer->RemoveObject(this);
 
 	int i, max = animations.size();
@@ -301,7 +298,6 @@ void Object::BaseShutdown() {
 unsigned long Object::debug_object_id = 0;
 
 Object::Object() {
-	LogObjectEvent(OBJECT_NEW);
 	objectDefName = NULL;
 	unique_id = Object::debug_object_id++;
 	layer = NULL;
@@ -415,6 +411,5 @@ void Object::MoveToNewPosition() {
 }
 
 Object::~Object() {
-	LogObjectEvent(OBJECT_DELETE);
 	SAFE_DELETE(objectDefName);
 }

@@ -7,6 +7,10 @@
 #ifndef PRECOMPILED_H
 #define PRECOMPILED_H
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #ifndef WIN32
 #define ENGINE_USES_CEGUI
 #endif
@@ -48,8 +52,8 @@ extern "C" {
 // Our rarely-modified engine stuff
 #include "StdString.h"
 #include "xmlParser.h"
-#include "alogg.h"
 #include "loadpng.h"
+#include "alogg.h"
 
 // Common to everything
 #include <stdarg.h>
@@ -69,16 +73,15 @@ extern "C" {
 #include <fcntl.h>
 
 // STL stuff
-#include <algorithm>
 #include <list>
 #include <map>
 #include <vector>
-
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include <algorithm>
 
 // 3d model support not ready yet.
 // #include "Model_3DS.h"
+
+#include "globals.h"
+#include "singleton.h"
 
 #endif // PRECOMPILED_H

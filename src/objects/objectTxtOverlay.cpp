@@ -107,6 +107,8 @@ void ObjectText::Update() {
 	}
 }
 
+#define OBJECT_TXT_PAGE_DELIM "~"			// Which char goes to the next page
+
 void ObjectText::SetText(CString txt) {
 	page_texts.clear();
 	text_index = 0;

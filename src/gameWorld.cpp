@@ -275,14 +275,13 @@ void GameWorld::Shutdown() {
 //! Draw all objects in this physics simulation
 void GameWorld::Draw() {
 
-	//
-	// Draw the background gradient first
-	// TODO: TURN THIS BACK ON. It works again.
-	// 
-	/*WINDOW->DrawBackgroundGradient(	bg_color, makecol(0,0,0), 
+	// Draw the background gradient first, if we're using it
+	if (bg_color_top != -1) {
+		WINDOW->DrawBackgroundGradient(	bg_color, bg_color_top, 
 																		camera_y, 
 																		camera_y + WINDOW->Height(), 
-																		height);*/
+																		height);
+	}
 
 	int i, max = layers.size();
 
@@ -486,7 +485,7 @@ int GameWorld::Load(XMLNode &xMode) {
 		ObjectListIter iter;
 		Vector2D portal_pos;
 		Object* player;
-		bool found;
+		bool found = false;
 
 		// find the portal with the specified name 
 		for (iter = objects.begin(); iter != objects.end(); iter++) {
@@ -550,7 +549,9 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 
 	bg_color = 0;
 
-	if (xProps.nChildNode("bgcolor") == 1) {
+	if (xProps.nChildNode("bgcolor") != 1) {
+		WINDOW->SetClearColor(0,0,0);
+	} else {
 		xColor = xProps.getChildNode("bgcolor");
 		int r,g,b;
 	
@@ -564,10 +565,23 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 
 		bg_color = makecol(r,g,b);
 		WINDOW->SetClearColor(r,g,b);
-	} else {
-		WINDOW->SetClearColor(0,0,0);
 	}
 
+	bg_color_top = -1;
+
+	if (xProps.nChildNode("bgcolor_top") == 1) {
+		xColor = xProps.getChildNode("bgcolor_top");
+		int r,g,b;
+	
+		if (	!xColor.getChildNode("r").getInt(r) ||
+					!xColor.getChildNode("g").getInt(g) ||
+					!xColor.getChildNode("b").getInt(b) ||
+					r < 0 || g < 0 || b < 0 || r > 255 || b > 255 | g > 255) {
+					fprintf(stderr, "-- Invalid bgcolor_top specified!\n");
+					return -1;
+		}
+		bg_color_top = makecol(r,g,b);
+	}
 
 	return 0;
 }

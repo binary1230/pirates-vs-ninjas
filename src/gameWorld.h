@@ -30,6 +30,7 @@ class GameWorld : public GameMode {
 
 			//! Background color (use makecol())
 			int bg_color;
+			int bg_color_top; // if present, use both for a gradient
 
 			//! ALL objects in the scene
 			ObjectList objects;

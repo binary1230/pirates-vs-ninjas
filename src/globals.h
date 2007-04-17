@@ -3,16 +3,7 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 typedef unsigned int uint;
-
-// OLD UNUSUED [stupid] .dat file functions
-//#define E(x) ((BITMAP*)e[x].dat)
-//#define S(x) ((BITMAP*)s[x].dat)
-//#define SOUNDS(x) ((SAMPLE*)sounds[x].dat)
 
 // Not a great rand... only uses lower bits, not good.
 #define Rand(lower, upper) \
@@ -50,36 +41,14 @@ typedef unsigned int uint;
 // (32768) amount of data to read from disk each time 
 #define DEFAULT_MUSIC_DATA_SIZE  (1<<15) 
 
+#define SAFE_DELETE(x) \
+				if (x) delete x; x = NULL
+
 // Misc: Take a string and split it based on a delimiter, put the
 // resulting strings into a list.
 // 
 // For example: StringSplit("Hey|what's|up","|", out_list) will
 // put 3 things, "Hey", "what's", and "Up", into out_list.
-void StringSplit(CString str, CString delim, vector<CString> &results);
-
-// TxtObject delimiters (see objectTxtOverlay.cpp)
-#define OBJECT_TXT_PAGE_DELIM "~"			// Which char goes to the next page
-#define OBJECT_TXT_LINE_DELIM "|"			// Which char goes to the next line
-
-// DEBUG HACK NASTY STUFF
-class Object;
-#define LogObjectEvent(Event) LogEvent(Event, this)
-enum LOGTYPE {
-	OBJECT_NEW,
-	OBJECT_INIT,
-	OBJECT_SHUTDOWN,
-	OBJECT_DELETE,
-	OBJECT_LAYERADD,
-	OBJECT_LAYERREMOVE
-};
-void LogEvent(LOGTYPE event, Object* obj);
-
-#ifdef DEBUG_HACK_NASTY_STUFF
-void InitDebugHackLog();
-void ShutdownDebugHackLog();
-#endif // DEBUG_HACK_NASTY_STUFF
-
-#define SAFE_DELETE(x) \
-				if (x) delete x; x = NULL
+void StringSplit(CString str, CString delim, std::vector<CString> &results);
 
 #endif // GLOBALS_H

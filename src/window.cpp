@@ -189,6 +189,9 @@ void GameWindow::DrawRect(	int x1, int y1,
 // HACK HACK HACK - get this from somewhere!!
 #define FONT_HEIGHT 10
 
+// TxtObject delimiters (see objectTxtOverlay.cpp)
+#define OBJECT_TXT_LINE_DELIM "|"			// Which char goes to the next line
+
 void GameWindow::DrawText(int x, int y, CString text) {
 	vector<CString> lines;
 	StringSplit(text, OBJECT_TXT_LINE_DELIM, lines);

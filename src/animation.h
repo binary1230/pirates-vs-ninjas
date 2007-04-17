@@ -4,6 +4,7 @@
 #include "stdafx.h"
 
 class Sprite;
+class Object;
 
 #include "globals.h"
 #include "StdString.h"

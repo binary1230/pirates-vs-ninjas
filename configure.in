@@ -17,30 +17,16 @@ PACKAGE_NAME="ninjas-engine"
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_FIX$VERSION_EXTRA"
 
-# Test for GCC and version
-GccVersion=0
-PrecompileEnable="yes"
-
 AC_PROG_AWK
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
 
-dnl ----------------------------------------------------------
-dnl Authoheader multiple #ifdef hackaround
-dnl the stuff here will go at the top of config.h
-dnl ----------------------------------------------------------
-AH_TOP([
-// hack for stdint.h check
-#ifdef HAVE_STDINT_H
-#undef HAVE_STDINT_H
-#endif // HAVE_STDINT_H
-])
-
-
 dnl ------------------------------------
 dnl Precompiled header support
 dnl ------------------------------------
+GccVersion=0
+PrecompileEnable="yes"
 
 AC_MSG_CHECKING([Compiler])
 
