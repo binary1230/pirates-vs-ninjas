@@ -191,11 +191,25 @@ int LUAAPI lua_window_set_faded_in(lua_State* lua) {
 	return 1;
 }
 
+// returns true if, on loading a level, we are jumping back
+// from a door.  Typically can use this to not display first-time
+// level opening stuff (like dialogs) when just jumping back into
+// the level from somewhere.
+int LUAAPI lua_jumped_back_from_a_door(lua_State* lua) {
+	int retval = 0;
+
+	if (WORLD && WORLD->JumpedBackFromADoor()) {
+		retval = 1;
+	}
+
+	lua_pushnumber(lua, retval);
+	return 1;
+}
 
 static struct LuaApiFunction LuaApiFunctionList[] = {
 
 	// first item: function name as it appears from lua
-	// second item: our corresponding C++ function
+	// second item: our corresponding C/C++ function
 	
 	{ "engine_print", lua_engine_print },
 	{ "world_textbox", lua_world_textbox },
@@ -207,7 +221,8 @@ static struct LuaApiFunction LuaApiFunctionList[] = {
 	{ "window_set_faded_out", lua_window_set_faded_out },
 	{ "window_set_faded_in",  lua_window_set_faded_in  },
 	{ "music_play", lua_music_play },
-
+	{ "jumped_back_from_a_door", lua_jumped_back_from_a_door },
+	
 	// XXX TODO: Not implemented yet.
 	{ "music_stop", lua_music_stop },
 

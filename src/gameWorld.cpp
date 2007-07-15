@@ -68,6 +68,7 @@ int GameWorld::Init(XMLNode xMode) {
 	camera_x = camera_y = 0;
 	camera_follow = NULL;
 	camera_scroll_speed = 1.0f;
+	m_bJumpedBackFromADoor = false;
 		
 	OBJECT_FACTORY->CreateInstance();
 	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) {
@@ -447,6 +448,7 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	is_loading = true;
 
+	m_bJumpedBackFromADoor = false;
 	objects.clear();
 	objectAddList.clear();
 	forces.clear();
@@ -497,11 +499,13 @@ int GameWorld::Load(XMLNode &xMode) {
 		}
 
 		if (!found) {
-			fprintf(stderr, "ERROR: Tried to jump back to a portal "
+			fprintf(stderr, "ERROR: Tried to jump to a portal "
 											"that doesn't exist named '%s'!\n", 
 											lastExitInfo.lastPortalName.c_str());
 			return -1;
 		}
+
+		m_bJumpedBackFromADoor = true;
 
 		// find the player obejcts, set their XY to the portal's XY
 		for (iter = objects.begin(); iter != objects.end(); iter++) {
@@ -525,6 +529,8 @@ int GameWorld::Load(XMLNode &xMode) {
 	is_loading = false;
 
 	EVENTS->OnLoad();
+	
+	m_bJumpedBackFromADoor = false;
 	
 	return 0;	
 }

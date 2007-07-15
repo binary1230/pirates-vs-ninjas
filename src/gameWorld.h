@@ -124,6 +124,8 @@ class GameWorld : public GameMode {
 			int camera_shake_fade_time_left;
 				
 			bool allow_player_offscreen;
+	
+			bool m_bJumpedBackFromADoor;
 
 		public:
 			virtual int Init(XMLNode);
@@ -133,6 +135,9 @@ class GameWorld : public GameMode {
 
 			//! True if we are in the middle of the initial load
 			inline bool IsLoading() {return is_loading;}
+
+			//! Returns true during loading if we jumped back from a door
+			bool JumpedBackFromADoor() const {return m_bJumpedBackFromADoor;}
 
 			void SetModalObject(Object* obj) {modal_active = obj;};
 
