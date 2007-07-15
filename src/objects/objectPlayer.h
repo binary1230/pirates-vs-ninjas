@@ -55,6 +55,8 @@ class PlayerObject : public Object {
 		void UpdateRunningAnimationSpeed();
 		void DoCommonGroundStuff();
 		void UpdateSkidding();
+
+		virtual void GetInput(uint key, uint controller_number) = 0;
 		
 		DoorObject* door_in_front_of_us;
 		int ring_count;

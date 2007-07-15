@@ -236,10 +236,10 @@ void PlayerObject::DoCommonStuff() {
 			sign = 1;
 
 
-		if (INPUT->Key(PLAYERKEY_UP, controller_num))
+		if (GetInput(PLAYERKEY_UP, controller_num))
 			objBall->SetVelXY(0.0f, vel.GetY() + strength*1.7);
 
-		else if (INPUT->Key(PLAYERKEY_DOWN, controller_num))
+		else if (GetInput(PLAYERKEY_DOWN, controller_num))
 			objBall->SetVelXY(0.0f, vel.GetY() - strength);
 
 		else
