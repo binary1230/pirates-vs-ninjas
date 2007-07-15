@@ -16,7 +16,7 @@
 #include "sprite.h"
 #include "object.h"
 #include "objectIDs.h"
-#include "objectPlayer.h"
+#include "objectPlayerHuman.h"
 #include "objectBounce.h"
 #include "objectBackground.h"
 #include "objectController.h"
@@ -216,7 +216,7 @@ Object* ObjectFactory::CreateObject(	OBJECTID id,
 			break;
 			
 		case OBJECT_ID_PLAYER:
-			obj = NewPlayerObject(xObjectDef, xObject);
+			obj = NewHumanPlayerObject(xObjectDef, xObject);
 			break;
 			
 		case OBJECT_ID_BOUNCE:
@@ -286,9 +286,9 @@ void ObjectFactory::Shutdown() {
 //
 //! NOTE: this only takes an ObjectDefinition XML fragment,
 // memory leaks on failures here.. CLEAN IT.
-Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
+Object* ObjectFactory::NewHumanPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	
-	PlayerObject* obj = new PlayerObject();
+	HumanPlayerObject* obj = new HumanPlayerObject();
 	
 	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
 		return NULL;

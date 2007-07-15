@@ -34,7 +34,7 @@ window.h assetManager.h gameSound.h mapEditor.h \
 gameMode.h gameModes.h globalDefines.h \
 objectLayer.h objectFactory.h objectIDs.h objects/objectCutBars.h \
 objects/object.h objects/objectEnemy.h \
-objects/objectPlayer.h objects/objectBounce.h \
+objects/objectPlayer.h objects/objectPlayerHuman.h objects/objectBounce.h \
 objects/objectBackground.h objects/objectController.h \
 objects/objectStatic.h objects/objectSpring.h objects/objectTxtOverlay.h \
 objects/objectCollectable.h objects/objectFan.h objects/objectDoor.h \
@@ -53,7 +53,8 @@ window.cpp assetManager.cpp gameSound.cpp mapEditor.cpp \
 gameMode.cpp gameModes.cpp globalDefines.cpp \
 objectLayer.cpp objectFactory.cpp \
 objects/object.cpp objects/objectEnemy.h \
-objects/objectPlayer.cpp objects/objectBounce.cpp objects/objectCutBars.cpp \
+objects/objectPlayer.cpp objects/objectPlayerHuman.cpp \
+objects/objectBounce.cpp objects/objectCutBars.cpp \
 objects/objectBackground.cpp objects/objectController.cpp \
 objects/objectStatic.cpp objects/objectSpring.cpp objects/objectTxtOverlay.cpp \
 objects/objectCollectable.cpp objects/objectFan.cpp objects/objectDoor.cpp \

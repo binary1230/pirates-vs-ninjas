@@ -56,7 +56,7 @@ class PlayerObject : public Object {
 		void DoCommonGroundStuff();
 		void UpdateSkidding();
 
-		virtual void GetInput(uint key, uint controller_number) = 0;
+		virtual bool GetInput(uint key, uint controller_number) const = 0;
 		
 		DoorObject* door_in_front_of_us;
 		int ring_count;
@@ -77,7 +77,7 @@ class PlayerObject : public Object {
 		int GetNumRings() {return ring_count;};
 			
 		PlayerObject();
-		~PlayerObject();
+		virtual ~PlayerObject();
 
 		friend class ObjectFactory;
 };
