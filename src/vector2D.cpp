@@ -1,17 +1,6 @@
 #include "stdafx.h"
 #include "vector2D.h"
 
-void Vector2D::Clear() {
-	x = y = 0.0f;
-}
-
-Vector2D::Vector2D(const float &_x, const float &_y) {
-	x = _x; y = _y;
-}
-
-Vector2D::~Vector2D() {}
-Vector2D::Vector2D() : x(0.0f), y(0.0f) {}
-
 // calculate the sum of the forces
 // acting on this vector at 1/60th 
 // of a second later.  we store things

@@ -72,6 +72,15 @@ void Object::SetupCachedVariables() {
 		width = 0;
 		height = 0;
 	}
+
+	m_bCanCollide =	properties.is_solid ||
+					properties.is_player || 
+					properties.is_spring ||
+					properties.is_collectable || 
+					properties.is_fan ||
+					properties.is_door ||
+					properties.is_ring ||
+					properties.is_ball;
 }
 
 void Object::UpdateFade() {
@@ -131,8 +140,8 @@ void Object::Draw() {
 //! This function populates x,y (reference params) with the 
 //! correctly transformed coordinates.
 void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y) {
-	x = (int)pos.GetX() + offset_x;
-	y = (int)pos.GetY() + offset_y;
+	x = (int)pos.x + offset_x;
+	y = (int)pos.y + offset_y;
 
 	// take into account the camera now.
 	if (!properties.is_overlay)
@@ -176,6 +185,7 @@ void Object::TransformRect(_Rect &r) {
 
 //! This function does the real dirty work of drawing.
 void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {	
+
 	int x, y;
 	Transform(x, y, offset_x, offset_y);
 				
@@ -192,8 +202,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 		_Rect bbox_t;
 
 		// get current bounding box
-		bbox_t.set(	pos.GetX(), pos.GetY(), 
-								pos.GetX() + GetWidth(), pos.GetY() + GetHeight() );
+		bbox_t.set(	pos.x, pos.y, pos.x + width, pos.y + height );
 
 		// draw current bounding rectangle, pink
 		TransformRect(bbox_t);
@@ -209,9 +218,9 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 		TransformRect(bbox_t_old);
 		TransformRect(projRect_t);
 
-		if (	properties.is_player || 
-					properties.is_solid || 
-					properties.is_collectable) {
+		if (properties.is_player || 
+			properties.is_solid || 
+			properties.is_collectable) {
 
 			// draw old bounding rectangle, dark pink
 			WINDOW->DrawRect(bbox_t_old, makecol(127,0,127));
@@ -225,8 +234,8 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 void Object::ApplyForce(Force* force) {
 	// ignore certain types of forces
 	if (	(!properties.feels_gravity && force->GetType() == FORCE_GRAVITY) ||
-				(!properties.feels_user_input && force->GetType() == FORCE_INPUT) ||
-				(!properties.feels_friction && force->GetType() == FORCE_FRICTION) )
+			(!properties.feels_user_input && force->GetType() == FORCE_INPUT) ||
+			(!properties.feels_friction && force->GetType() == FORCE_FRICTION) )
 		return;
 	else
 		accel += force->GetForce(this) / mass;
@@ -237,9 +246,7 @@ void Object::ResetForNextFrame() {
 	accel.Clear();
 	d.up = d.down = d.left = d.right = 0;
 
-	bbox.set(		pos.GetX(), pos.GetY(), 
-							pos.GetX() + GetWidth(), pos.GetY() + GetHeight()
-							);
+	bbox.set( pos.x, pos.y, pos.x + width, pos.y + height);
 
 	// assert(bbox.getx1() <= bbox.getx2()); // DONT USE ASSERTS LIKE THIS.
 	// assert(bbox.gety1() <= bbox.gety2());
@@ -252,29 +259,16 @@ Vector2D Object::Solve() {
 	pos += vel;
 
 	if (debug_flag)
-		TRACE("vel=(%f,%f)\n", vel.GetX(), vel.GetY());
+		TRACE("vel=(%f,%f)\n", vel.x, vel.y);
 	
 	UpdateProjectionRectFromVelocity();
 
 	/*if (debug && properties.is_player) {
-		TRACE("-- YPOS  : %f\n", pos.GetY());
-		TRACE("-- YPOS-H: %f\n", pos.GetY() - GetHeight());
+		TRACE("-- YPOS  : %f\n", pos.y);
+		TRACE("-- YPOS-H: %f\n", pos.y - height);
 	}*/
 
 	return pos;
-}
-
-// static: Returns true if this type of object is able to collide with anything
-bool Object::CanCollide(Object* obj) { 
-	assert(obj != NULL);
-	return 	obj->properties.is_solid ||
-					obj->properties.is_player || 
-					obj->properties.is_spring ||
-					obj->properties.is_collectable || 
-					obj->properties.is_fan ||
-					obj->properties.is_door ||
-					obj->properties.is_ring ||
-					obj->properties.is_ball;
 }
 
 void Object::BaseShutdown() {
@@ -309,14 +303,15 @@ Object::Object() {
 	is_dead = true;
 	mass = 1.0f;
 	debug_flag = false;
-	pos.SetX(0); pos.SetY(0);
-	old_pos.SetX(0); old_pos.SetY(0);
-	accel.SetX(0); accel.SetY(0);
-	vel.SetX(0); vel.SetY(0);
+	pos.x = pos.y = 0.0f;
+	old_pos.x = old_pos.y = 0.0f;
+	accel.x = accel.y = 0.0f;
+	vel.x = vel.y = 0.0f;
 	display_time = -1;
 	rotate_angle = rotate_velocity = 0.0f;
 	use_rotation = false;
 	draw_bounding_box = false;
+	m_bCanCollide = false;
 }
 
 // Return a vector with x,y set to 
@@ -330,14 +325,14 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	bool check_up = false, check_right = false;
 	CollisionDirection d; d.up = d.down = d.left = d.right = 0;
 
-	v.SetX(GetX());
-	v.SetY(GetY()); 
+	v.x = pos.x;
+	v.y = pos.y;
 	
-	if (vel.GetX() > 0) check_right = true;
-	if (vel.GetY() > 0) check_up = true;
+	if (vel.x > 0) check_right = true;
+	if (vel.y > 0) check_up = true;
 	
 	float top = projRect.gety2();
-	float mid = obj->GetY() + obj->GetHeight();
+	float mid = obj->pos.y + obj->height;
 	float bot = projRect.gety1();
 
 	// handle up-down collisions
@@ -356,17 +351,17 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	}*/
 
 	if (d.down) {
-		v.SetY(obj->GetY() + obj->GetHeight() );
+		v.y = obj->pos.y + obj->height;
 		if (debug) TRACE("down!");
 	}
 
 	if (d.left) {
-		v.SetX(obj->GetX() + obj->GetWidth());
+		v.x = obj->pos.x + obj->width;
 		if (debug) TRACE("left!");
 	}
 
 	if (d.right) {
-		v.SetX(obj->GetX() - GetWidth());
+		v.x = obj->pos.x - height;
 		if (debug) TRACE("right!");
 	}
 
@@ -396,10 +391,10 @@ void Object::UpdateProjectionRectFromCollisions(Vector2D &newPos) {
 
 // rough, fast collision detection phase
 bool Object::IsColliding(Object *obj) const {
-	if (obj->properties.is_player) {
-		//projRect.print();
-		//obj->projRect.print();
-	}
+	//if (obj->properties.is_player) {
+	//	projRect.print();
+	//	obj->projRect.print();
+	//}
 	return projRect.Overlaps(obj->GetProjectionRect());
 }
 

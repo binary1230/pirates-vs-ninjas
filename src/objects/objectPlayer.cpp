@@ -35,24 +35,24 @@ void PlayerObject::ScreenBoundsConstraint() {
 	if (WORLD->PlayerAllowedOffscreen())
 		return;
 
-	if (pos.GetX() < 0) {
-		// vel.SetX(-vel.GetX()); // flip velocity
-		vel.SetX(0); 							// stop
-		pos.SetX(0);
-	} else if (pos.GetX() > (WORLD->GetWidth() - GetWidth()) ) {
-		// vel.SetX(-vel.GetX());	// flip velocity
-		vel.SetX(0);							// stop
-		pos.SetX(WORLD->GetWidth() - GetWidth());
+	if (pos.x < 0) {
+		// vel.SetX(-vel.x); // flip velocity
+		vel.x = 0; 							// stop
+		pos.x = 0;
+	} else if (pos.x > (WORLD->GetWidth() - width) ) {
+		// vel.SetX(-vel.x);	// flip velocity
+		vel.x = 0;							// stop
+		pos.x = WORLD->GetWidth() - width;
 	}
 }
 
 void PlayerObject::UpdateSpriteFlip() {
-	if (accel.GetX() == 0.0f) {
-		if (vel.GetX() > 0.0f)
+	if (accel.x == 0.0f) {
+		if (vel.x > 0.0f)
 			flip_x = false;
-		else if (vel.GetX() < 0.0f)
+		else if (vel.x < 0.0f)
 			flip_x = true;
-	} else if (accel.GetX() > 0.0f) {
+	} else if (accel.x > 0.0f) {
 		flip_x = false;
 	} else {
 		flip_x = true;
@@ -61,12 +61,12 @@ void PlayerObject::UpdateSpriteFlip() {
 
 void PlayerObject::UpdateRunningAnimationSpeed() {
 	// alter the speed of the animation based on the velocity
-	// TRACE("vel=%f\n", fabs(vel.GetX()));
-	if (fabs(vel.GetX()) < 3.0f)
+	// TRACE("vel=%f\n", fabs(vel.x));
+	if (fabs(vel.x) < 3.0f)
 		currentAnimation->SetSpeedMultiplier(10);// slow
-	else if (fabs(vel.GetX()) < 7.0f)
+	else if (fabs(vel.x) < 7.0f)
 		currentAnimation->SetSpeedMultiplier(6);// med
-	else if (fabs(vel.GetX()) < 13.0f)
+	else if (fabs(vel.x) < 13.0f)
 		currentAnimation->SetSpeedMultiplier(2);// slight fast
 	else 
 		currentAnimation->SetSpeedMultiplier(1);// max
@@ -97,7 +97,7 @@ void PlayerObject::DoCommonGroundStuff() {
 	}
 
 	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
-		vel.SetY(jump_velocity);
+		vel.y = jump_velocity;
 		SOUND->PlaySound("jump");
 		DoJumping();
 		return;
@@ -114,7 +114,7 @@ void PlayerObject::DoStanding() {
 
 	currentAnimation = animations[PLAYER_STANDING];
 
-	if (fabs(accel.GetX()) > 0.0f || fabs(vel.GetX()) > 0.0f ) {
+	if (fabs(accel.x) > 0.0f || fabs(vel.x) > 0.0f ) {
 		DoWalking();
 		return;
 	}
@@ -128,8 +128,8 @@ void PlayerObject::DoWalking() {
 	currentAnimation = animations[PLAYER_WALKING];
 
 	// if we go too slow, then stop us and make us STANDING
-	if (accel.GetX() == 0.0f && fabs(vel.GetX()) < min_velocity) {
-		vel.SetX(0);
+	if (accel.x == 0.0f && fabs(vel.x) < min_velocity) {
+		vel.x = 0;
 		DoStanding();
 	}
 
@@ -145,8 +145,8 @@ void PlayerObject::UpdateSkidding() {
 	// If acceleration and velocity are in the opposite directions,
 	// then we are skidding and trying to turn around
 	if (	on_skateboard || 
-				(accel.GetX() > 0.0f && vel.GetX() < 0.0f) ||
-				(accel.GetX() < 0.0f && vel.GetX() > 0.0f) ) {
+			(accel.x > 0.0f && vel.x < 0.0f) ||
+			(accel.x < 0.0f && vel.x > 0.0f) ) {
 
 		if (next_skid_time == 0) {
 			next_skid_time = 0;
@@ -157,7 +157,7 @@ void PlayerObject::UpdateSkidding() {
 			if (objSkid) {
 				float skid_vel_x = 6.0f;
 
-				if (vel.GetX() < 0.0f)
+				if (vel.x < 0.0f)
 					skid_vel_x *= -1.0f;
 
 				objSkid->SetDisplayTime(Rand(1,10));
@@ -185,7 +185,7 @@ void PlayerObject::DoJumping() {
 		return;
 	}
 
-	if (vel.GetY() < 0) {
+	if (vel.y < 0) {
 		DoFalling();
 		return;
 	}
@@ -238,16 +238,15 @@ void PlayerObject::DoCommonStuff() {
 
 
 		if (GetInput(PLAYERKEY_UP, controller_num))
-			objBall->SetVelXY(0.0f, vel.GetY() + strength*1.7);
+			objBall->SetVelXY(0.0f, vel.y + strength*1.7);
 
 		else if (GetInput(PLAYERKEY_DOWN, controller_num))
-			objBall->SetVelXY(0.0f, vel.GetY() - strength);
+			objBall->SetVelXY(0.0f, vel.y - strength);
 
 		else
-			objBall->SetVelXY(	sign * strength + vel.GetX(), 
-													vel.GetY() + 6.0f);
+			objBall->SetVelXY(sign * strength + vel.x, vel.y + 6.0f);
 
-		//objBall->SetVelXY(vel.GetX(), 0.0f);
+		//objBall->SetVelXY(vel.x, 0.0f);
 	}
 }
 
@@ -278,20 +277,19 @@ void PlayerObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_fan || obj->GetProperties().is_ball)  
 		return;
 
-  if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
-    
+	if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
 		Vector2D newpos;
-    d = GetBound(obj, newpos);
+		d = GetBound(obj, newpos);
     
 		pos = newpos;
 		UpdateProjectionRectFromCollisions(newpos);
 
-    if (d.left || d.right)
-      vel.SetX(0);
+		if (d.left || d.right)
+			vel.x = 0;
 
-    if (d.down || d.up)
-      vel.SetY(0);
-  }
+		if (d.down || d.up)
+			vel.y = 0;
+	}
 
 	if (obj->GetProperties().is_spring) {
 		SpringObject* sObj = (SpringObject*)obj;

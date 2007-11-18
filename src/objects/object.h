@@ -183,8 +183,11 @@ class Object {
 
 		//! Whether to draw the bounding box or not
 		bool draw_bounding_box;
+
+		//! If this object should report collisions or not
+		bool m_bCanCollide;
 		
-		// Protected constructur, this means we can't directly
+		// Protected constructor, this means we can't directly
 		// instantiate Object's, we need to use a friend or derived class.
 		Object();
 	
@@ -234,15 +237,15 @@ class Object {
 		void DrawAtOffset(int x, int y, Sprite* = NULL);	
 		
 		//! Functions to get/set position
-		inline int GetX() const				{ return (int)pos.GetX(); }
-		inline int GetY() const				{ return (int)pos.GetY(); }
+		inline int GetX() const				{ return (int)pos.x; }
+		inline int GetY() const				{ return (int)pos.y; }
 		inline Vector2D GetXY() const { return pos; }; 
 
-		inline void SetX(const int _x) 		{ pos.SetX((float)_x);  }
-		inline void SetY(const int _y) 		{ pos.SetY((float)_y);	}
+		inline void SetX(const int _x) 		{ pos.x = _x; }
+		inline void SetY(const int _y) 		{ pos.y = _y; }
 		inline void SetXY(const int _x, const int _y) {
-				pos.SetX((float)_x);	
-				pos.SetY((float)_y);
+				pos.x = _x;
+				pos.y = _y;
 		}
 		inline void SetXY(const Vector2D &_pos) {
 			pos = _pos;
@@ -255,13 +258,13 @@ class Object {
 		inline void SetFlipY(const bool val) { flip_y = val; };
 
 		//! Functions to get/set velocity
-		inline float GetVelX() 					{ return vel.GetX(); }
-		inline float GetVelY() 					{ return vel.GetY(); }
-		inline void SetVelX(const float _vx) 		{ vel.SetX(_vx); }
-		inline void SetVelY(const float _vy) 		{ vel.SetY(_vy);	}
+		inline float GetVelX() 					{ return vel.x; }
+		inline float GetVelY() 					{ return vel.y; }
+		inline void SetVelX(const float _vx) 		{ vel.x = _vx; }
+		inline void SetVelY(const float _vy) 		{ vel.y = _vy; }
 		inline void SetVelXY(const float _vx, const float _vy) {
-				vel.SetX(_vx);
-				vel.SetY(_vy);
+				vel.x = _vx;
+				vel.y = _vy;
 		}
 		inline void SetVelXY(const Vector2D &_vel) {
 			vel = _vel;
@@ -318,7 +321,7 @@ class Object {
 		void UpdateProjectionRectFromVelocity();
 		void UpdateProjectionRectFromCollisions(Vector2D &newPos);
 
-		_Rect GetProjectionRect() const {return projRect;}
+		const _Rect& GetProjectionRect() const {return projRect;}
 
 		//! Plays a sound, or does nothing if that sound is not loaded
 		// void PlaySound(CString name);
@@ -327,7 +330,9 @@ class Object {
 		void SetLayer(ObjectLayer* const l) {layer = l;};
 		
 		//! Returns true if this type of object is able to collide with another
-		static bool CanCollide(Object* obj);
+		inline bool CanCollide() const {
+			return m_bCanCollide;
+		}
 
 		void SetObjectDefName(const char*);
 		

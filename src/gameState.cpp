@@ -315,7 +315,7 @@ void GameState::MainLoop() {
 			// failsafe: If there are too many updates left, break out so we can draw.
 			// this will slow the actual gamespeed down, but it will at least draw
 			// You shouldn't see this unless either 1) something's wrong or 2) uber-slow computer
-			if (outstanding_updates > 30) {
+			if (m_iCurrentFps <= 2 || outstanding_updates > 10) {
 				outstanding_updates = 0;
 				break;
 			}

@@ -62,8 +62,8 @@ class _Rect {
 			}
 		};*/
 
-		inline void set(const float &_x1, const float &_y1, 
-										const float &_x2, const float &_y2) {
+		inline void set(const float _x1, const float _y1, 
+						const float _x2, const float _y2) {
 			if (_x1 < _x2) {
 				x1 = _x1; 
 				x2 = _x2; 
@@ -84,14 +84,20 @@ class _Rect {
 		//! Create a rect from 2 vectors
 		// void fromVec(const Vector2D &v1, const Vector2D &v2);
 
-		inline bool Overlaps(const _Rect &rect) const {	
+		inline bool Overlaps(const _Rect rect) const {	
 			return ( y1 <= rect.y2 && y2 >= rect.y1 && x2 >= rect.x1 && x1 <= rect.x2 );
 		}
 		
 		void Print(char* name = "");
 
 		//! Assign a rect's values to this rect
-		_Rect& operator=(const _Rect &r);
+		_Rect& operator=(const _Rect &r) {
+			x1 = r.x1;
+			y1 = r.y1;
+			x2 = r.x2;
+			y2 = r.y2;
+			return *this;
+		}
 		
 		//! Use a vector to expand one of the corners of this
 		//! rectangle.
@@ -105,8 +111,8 @@ class _Rect {
 		bool operator==(const _Rect &v) const;
 		bool operator!=(const _Rect &v) const;
 
-		_Rect(	const float &_x1, const float &_y1, 
-					const float &_x2, const float &_y2	);
+		_Rect(	const float _x1, const float _y1, 
+				const float _x2, const float _y2	);
 
 		_Rect(const Vector2D &v1, const Vector2D &v2);
 		_Rect(const _Rect &r);

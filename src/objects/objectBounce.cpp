@@ -27,9 +27,9 @@ void ObjectBounce::Update() {
 
 	// ghettoooooooo friction.
 	if (d.down) {
-		vel.SetX(vel.GetX() * FRICTION_MULTIPLIER);
-		if (fabs(vel.GetX()) < MIN_VELOCITY) {
-			vel.SetX(0);
+		vel.x *= FRICTION_MULTIPLIER;
+		if (fabs(vel.x) < MIN_VELOCITY) {
+			vel.x = 0;
 		}
 	}
 }
@@ -45,23 +45,24 @@ void ObjectBounce::Collide(Object* obj) {
 		return;
 
 	if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
-    Vector2D newpos;
-    d = GetBound(obj, newpos);
+		Vector2D newpos;
+		d = GetBound(obj, newpos);
 
-    pos = newpos;
-    UpdateProjectionRectFromCollisions(newpos);
+		pos = newpos;
+		UpdateProjectionRectFromCollisions(newpos);
 
-    if (d.left || d.right) {
-      vel.SetX(-vel.GetX());
-		}
+		if (d.left || d.right)
+			vel.x = -vel.x;
+		
+		if (d.down || d.up) {
+			vel.y = -vel.y*0.61f;
 
-    if (d.down || d.up) {
-      vel.SetY( -vel.GetY()*0.61f );
 			if (!collided_last_frame)
 				play_hit_sound = true;
+
 			collided_last_frame = true;
 		}
-  }
+	}
 }
 
 ObjectBounce::ObjectBounce() {}

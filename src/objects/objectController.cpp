@@ -22,8 +22,8 @@ void ObjectController::Draw() {
 		return;
 	}
 				
-	int x = (int)pos.GetX();
-	int y = (int)pos.GetY();
+	int x = (int)pos.x;
+	int y = (int)pos.y;
 
 	int bx, by;
 

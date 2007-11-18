@@ -200,9 +200,9 @@ Object* ObjectFactory::CreateObjectFromXML(
 	return obj;
 }
 
-Object* ObjectFactory::CreateObject(	ENGINE_OBJECTID id, 
-																			XMLNode &xObjectDef,
-																			XMLNode *xObject) {
+Object* ObjectFactory::CreateObject(ENGINE_OBJECTID id, 
+									XMLNode &xObjectDef,
+									XMLNode *xObject) {
 	Object* obj = NULL;
 
 	switch(id) {
@@ -315,12 +315,13 @@ Object* ObjectFactory::NewCutBarObject(XMLNode &xDef, XMLNode *xObj) {
 
 	if (xObj && xObj->nChildNode("text"))
 		obj->SetText(xObj->getChildNode("text").getText());
-
-  obj->properties.is_overlay = true;
+	
+	obj->properties.is_overlay = true;
 	obj->Start();
 
-  return obj;
-
+	obj->SetupCachedVariables();
+	
+	return obj;
 }
 
 Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
@@ -332,7 +333,8 @@ Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_ball = 1;
 	obj->properties.is_solid = 1;
 
-  return obj;
+	obj->SetupCachedVariables();
+	return obj;
 }
 
 Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
@@ -340,11 +342,13 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	CollectableObject* obj = new CollectableObject();
 	if (!LoadCommonObjectStuff(obj, xDef, xObj))
 		return NULL;
+	
+	obj->properties.is_collectable = 1;
+	obj->properties.is_ring = 1;
 
-  obj->properties.is_collectable = 1;
-  obj->properties.is_ring = 1;
-
-  return obj;
+	obj->SetupCachedVariables();
+	
+	return obj;
 }
 
 Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
@@ -366,6 +370,8 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->SetText(txt);
 	obj->SetAvatarFilename(avatar);
 
+	obj->SetupCachedVariables();
+
 	return obj;
 }
 
@@ -377,78 +383,77 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 
 	obj->properties.is_overlay = 1;
 
-  // XXX READ which controller we monitor from XML file
-  // but not in this method
+	// XXX READ which controller we monitor from XML file
+	// but not in this method
 
-  int i, iterator, max;
-  CString filename;
-  XMLNode xImages, xBtn;
+	int i, iterator, max;
+	CString filename;
+	XMLNode xImages, xBtn;
+	  
+	xImages = xDef.getChildNode("images");
+	max = xImages.nChildNode("btn");
+
+	obj->buttons.clear();
+	obj->buttons.resize(max);
+
+	filename = xImages.getChildNode("base").getText();
+	  
+	obj->controller_sprite = ASSETMANAGER->LoadSprite(filename.c_str());
+	    
+	if (!obj->controller_sprite) {
+		TRACE("-- ERROR: Can't load file '%s'\n", filename.c_str() );
+		delete obj;
+		return NULL;
+	}
+	  
+	int x1,y1;
+	if (!xImages.getChildNode("base").getChildNode("x").getInt(x1)) {
+		TRACE("Invalid controller base X!\n");
+		return NULL;
+	}
+	if (!xImages.getChildNode("base").getChildNode("x").getInt(y1)) {
+		TRACE("Invalid controller base Y!\n");
+		return NULL;
+	}
+	obj->pos.x = x1;
+	obj->pos.y = y1;
+
+	Button* b;
   
-  xImages = xDef.getChildNode("images");
-  max = xImages.nChildNode("btn");
+	// load each button
+	max = obj->buttons.size();
+	for (i=iterator=0; i < max; i++) {
+		xBtn = xImages.getChildNode("btn", &iterator);
+		b = &obj->buttons[i];
 
-  obj->buttons.clear();
-  obj->buttons.resize(max);
+		filename = xBtn.getText();
+		b->active = 0;
 
-  filename = xImages.getChildNode("base").getText();
-  
-  obj->controller_sprite = ASSETMANAGER->LoadSprite(filename.c_str());
-    
-  if (!obj->controller_sprite) {
-    TRACE("-- ERROR: Can't load file '%s'\n", filename.c_str() );
-    delete obj;
-    return NULL;
-  }
-  
-  int x1,y1;
-  if (!xImages.getChildNode("base").getChildNode("x").getInt(x1)) {
-    TRACE("Invalid controller base X!\n");
-    return NULL;
-  }
-  if (!xImages.getChildNode("base").getChildNode("x").getInt(y1)) {
-    TRACE("Invalid controller base Y!\n");
-    return NULL;
-  }
-  obj->pos.SetX(x1);
-  obj->pos.SetY(y1);
+		b->sprite = ASSETMANAGER->LoadSprite(filename.c_str());
 
-  Button* b;
-  
-  // load each button
-  max = obj->buttons.size();
-  for (i=iterator=0; i < max; i++) {
-      xBtn = xImages.getChildNode("btn", &iterator);
-      b = &obj->buttons[i];
-      
-      filename = xBtn.getText();
-      b->active = 0;
-    
-      b->sprite = ASSETMANAGER->LoadSprite(filename.c_str());
-      
-      if (!b->sprite) {
-        TRACE("-- ERROR: Can't load file '%s'\n",filename.c_str());
-        return NULL;
-      }
+		if (!b->sprite) {
+			TRACE("-- ERROR: Can't load file '%s'\n",filename.c_str());
+			return NULL;
+		}
 
-      int x2,y2;  
-      if (!xBtn.getChildNode("x").getInt(x2)) {
-        TRACE("Invalid controller button X!\n");
-        return NULL;
-      }
-      if (!xBtn.getChildNode("y").getInt(y2)) {
-        TRACE("Invalid controller button Y!\n");
-        return NULL;
-      }
-      b->sprite->x_offset = x2;
-      b->sprite->y_offset = y2;
-  }
+		int x2,y2;  
+		if (!xBtn.getChildNode("x").getInt(x2)) {
+			TRACE("Invalid controller button X!\n");
+			return NULL;
+		}
+		if (!xBtn.getChildNode("y").getInt(y2)) {
+			TRACE("Invalid controller button Y!\n");
+			return NULL;
+		}
+		b->sprite->x_offset = x2;
+		b->sprite->y_offset = y2;
+	}
 
-  if (xDef.nChildNode("showDuringDemoOnly") > 0)
-    obj->only_show_during_demo = true;
-  
+	if (xDef.nChildNode("showDuringDemoOnly") > 0)
+		obj->only_show_during_demo = true;
+	
 	obj->SetupCachedVariables();
-  
-  return obj;
+	return obj;
 }
 
 Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
@@ -456,10 +461,13 @@ Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
 	BackgroundObject* obj = new BackgroundObject();	
 	if (!LoadCommonObjectStuff(obj, xDef, xObj))
 		return NULL;
+	
+	obj->SetXY(0,0);
+	obj->SetupCachedVariables();
 
-  obj->SetXY(0,0);
+	obj->m_bCanCollide = false;
 
-  return obj;
+	return obj;
 }
 
 Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
@@ -467,7 +475,8 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 	StaticObject* obj = new StaticObject();
 	if (!LoadCommonObjectStuff(obj, xDef, xObj))
 		return NULL;
-	
+
+	obj->SetupCachedVariables();
 	return obj;
 }
 
@@ -478,6 +487,7 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 //	if (!LoadCommonObjectStuff(obj, xDef, xObj))
 //		return NULL;
 //	
+//	obj->SetupCachedVariables();
 //	return obj;
 //}
 
@@ -521,10 +531,12 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) {
 		}
 	}
 
-	obj->spring_vector.SetX(x_strength);
-	obj->spring_vector.SetY(y_strength);
+	obj->spring_vector.x = x_strength;
+	obj->spring_vector.y = y_strength;
 
-  return obj;
+	obj->SetupCachedVariables();
+
+	return obj;
 }
 
 #define DEFAULT_DOOR_TYPE "exit"
@@ -591,6 +603,7 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_fan = 1;
 	obj->properties.is_solid = 1;
 
+	obj->SetupCachedVariables();
 	return obj;
 }
 
@@ -699,23 +712,22 @@ bool ObjectFactory::LoadObjectSounds(Object* obj, XMLNode &xDef) {
 	return true;
 }
 
-bool ObjectFactory::LoadCommonObjectStuff(	Object* obj, 
-																						XMLNode &xDef, 
-																						XMLNode *xObj, 
-																						bool loadAnimations) {
+bool ObjectFactory::LoadCommonObjectStuff(Object* obj,
+										  XMLNode &xDef, 
+										  XMLNode *xObj,
+										  bool loadAnimations) {
 
-  if (!obj || !obj->Init() )
-    return false;
-	
+	if (!obj || !obj->Init() )
+		return false;
+		
 	if (!LoadObjectProperties(obj, xDef))
 		return false;	
 
-  if (!LoadObjectSounds(obj,xDef))
-    return false;
-
-	if (loadAnimations && !LoadObjectAnimations(obj,xDef)) {
+	if (!LoadObjectSounds(obj,xDef))
 		return false;
-	}
+
+	if (loadAnimations && !LoadObjectAnimations(obj,xDef))
+		return false;
 
 	obj->SetupCachedVariables();
 

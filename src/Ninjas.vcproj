@@ -42,7 +42,7 @@
 				Optimization="0"
 				InlineFunctionExpansion="0"
 				AdditionalIncludeDirectories=".;external;objects;..\libs\allegro\include;..\libs\alleggl\include;..\libs\lua\src;..\libs\zlib;..\libs\libpng;..\libs\libogg\include;..\libs\libvorbis\include"
-				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_SCL_SECURE_NO_WARNINGS;_WIN32;_HAS_ITERATOR_DEBUGGING=0"
+				PreprocessorDefinitions="_DEBUG;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;WIN32;_WIN32"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

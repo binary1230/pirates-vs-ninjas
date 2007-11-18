@@ -19,6 +19,9 @@ typedef list<Object*>::const_iterator ObjectConstListIter;
 typedef list<Object*>::reverse_iterator ObjectListReverseIter;
 typedef list<Object*>::const_reverse_iterator ObjectListConstReverseIter;
 
+typedef vector<Object*> ObjectArray;
+typedef vector<Object*>::iterator ObjectArrayIter;
+
 //! Represents a physical simulation (the main game levels)
 class GameWorld : public GameMode {
 
@@ -33,7 +36,7 @@ class GameWorld : public GameMode {
 			int bg_color_top; // if present, use both for a gradient
 
 			//! ALL objects in the scene
-			ObjectList objects;
+			ObjectList m_objects;
 
 			//! Layers, which hold pointers to objects.
 			vector<ObjectLayer*> layers;
@@ -78,9 +81,8 @@ class GameWorld : public GameMode {
 
 			//! Physics functions
 			void Solve(Object* obj);
-			void CheckForCollisions(ObjectList &collideableObjects, 
-															Object* obj);
-			void GetCollideableObjects(ObjectList &objs);
+			void CheckForCollisions(ObjectArray &collideableObjects, Object* obj);
+			void GetCollideableObjects(ObjectArray &objs);
 			bool CleanupObject(ObjectListIter &obj);
 
 			//! Game update functions

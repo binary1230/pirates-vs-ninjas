@@ -69,9 +69,8 @@ void MapSaver::OutputObject(const Object* obj, XMLNode &xObj) {
 
 	xPos.addAttribute("type", "fixed");		// all position types are FIXED
 																				// for XML writes.
-	
-	xPos.addChild("x").addText(obj->pos.GetX());
-	xPos.addChild("y").addText(obj->pos.GetY());
+	xPos.addChild("x").addText(obj->pos.x);
+	xPos.addChild("y").addText(obj->pos.y);
 
 	if (obj->flip_y)
 		xPos.addChild("flipy");
@@ -90,8 +89,8 @@ void MapSaver::OutputObject(const Object* obj, XMLNode &xObj) {
 		SpringObject* objSpring = (SpringObject*)obj;		// pray
 		
 		XMLNode xSpring = xObj.addChild("springDirection");
-		xSpring.addChild("x").addText(objSpring->spring_vector.GetX());
-		xSpring.addChild("y").addText(objSpring->spring_vector.GetY());
+		xSpring.addChild("x").addText(objSpring->spring_vector.x);
+		xSpring.addChild("y").addText(objSpring->spring_vector.y);
 	}
 
 	// handle doors

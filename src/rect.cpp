@@ -5,8 +5,8 @@
 	set(v1.GetX(), v1.GetY(), v2.GetX(), v2.GetY());
 }*/
 
-_Rect::_Rect( const float &_x1, const float &_y1,
-      			const float &_x2, const float &_y2 ) {
+_Rect::_Rect( const float _x1, const float _y1,
+      			const float _x2, const float _y2 ) {
 	set(_x1, _y1, _x2, _y2);
 }
 
@@ -48,42 +48,34 @@ void _Rect::Print(char* name) {
 					name, x1, y1, x2, y2);
 }
 
-_Rect& _Rect::operator=(const _Rect &r) {
-			x1 = r.x1;
-			y1 = r.y1;
-			x2 = r.x2;
-			y2 = r.y2;
-			return *this;
-}
-
 void _Rect::Project(const Vector2D &projection) {
-	if (projection.GetX() >= 0.0f) {
-		x2 += projection.GetX();	// GetX() is positive
+	if (projection.x >= 0.0f) {
+		x2 += projection.x;	// GetX() is positive
 	} else {
-		x1 += projection.GetX();	// GetX() is negative
+		x1 += projection.x;	// GetX() is negative
 	}
 			
-	if (projection.GetY() >= 0.0f) {
-		y2 += projection.GetY();	// GetY() is positive
+	if (projection.y >= 0.0f) {
+		y2 += projection.y;	// GetY() is positive
 	} else {
-		y1 += projection.GetY();	// GetY() is negative
+		y1 += projection.y;	// GetY() is negative
 	}
 }
 
 //! Compare two rectangles
 bool _Rect::operator==(const _Rect &r) const {
-	return (getx1() - r.getx1() < TOLERANCE && getx1() - r.getx1() > -TOLERANCE &&
-					gety1() - r.gety1() < TOLERANCE && gety1() - r.gety1() > -TOLERANCE &&
-					getx2() - r.getx2() < TOLERANCE && getx2() - r.getx2() > -TOLERANCE &&
-					gety2() - r.gety2() < TOLERANCE && gety2() - r.gety2() > -TOLERANCE );
+	return (x1 - r.x1 < TOLERANCE && x1 - r.x1 > -TOLERANCE &&
+			y1 - r.y1 < TOLERANCE && y1 - r.y1 > -TOLERANCE &&
+			x2 - r.x2 < TOLERANCE && x2 - r.x2 > -TOLERANCE &&
+			y2 - r.y2 < TOLERANCE && y2 - r.y2 > -TOLERANCE );
 }
 		
 //! Compare two rectangles
 bool _Rect::operator!=(const _Rect &r) const {
-	return (getx1() - r.getx1() > TOLERANCE && getx1() - r.getx1() < -TOLERANCE &&
-					gety1() - r.gety1() > TOLERANCE && gety1() - r.gety1() < -TOLERANCE &&
-					getx2() - r.getx2() > TOLERANCE && getx2() - r.getx2() < -TOLERANCE &&
-					gety2() - r.gety2() > TOLERANCE && gety2() - r.gety2() < -TOLERANCE );
+	return (x1 - r.x1 > TOLERANCE && x1 - r.x1 < -TOLERANCE &&
+			y1 - r.y1 > TOLERANCE && y1 - r.y1 < -TOLERANCE &&
+			x2 - r.x2 > TOLERANCE && x2 - r.x2 < -TOLERANCE &&
+			y2 - r.y2 > TOLERANCE && y2 - r.y2 < -TOLERANCE );
 }
 
 void _Rect::print(FILE* f) {

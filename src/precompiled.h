@@ -24,10 +24,19 @@
 
 // The order of the allegro stuff is SUPER-IMPORTANT
 #ifdef WIN32
+
 #define  ALLEGRO_STATICLINK
 #pragma warning(disable:4312) // 'type cast' : conversion from 'unsigned int' to 'unsigned char *' of greater size
 #pragma warning(disable:4267)
 #pragma warning(disable:4311) // pointer truncation from 'const void *' to 'unsigned long'
+
+// NOTE: Turning this off won't check for invalid iterators, HOWEVER, it is SLOW as hell.
+
+#ifndef _DEBUG
+#define _SECURE_SCL 0
+#define _HAS_ITERATOR_DEBUGGING 0
+#endif // _DEBUG
+
 #endif // WIN32
 
 #include <allegro.h>

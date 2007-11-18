@@ -90,7 +90,7 @@ int GameWorld::Init(XMLNode xMode) {
 	}
 
 	objectAddList.clear();
-	objects.clear();
+	m_objects.clear();
 	forces.clear();
 	layers.clear();
 
@@ -230,12 +230,12 @@ void GameWorld::Shutdown() {
 	}
 
 	// delete all the objects
-	for (iter = objects.begin(); iter != objects.end(); iter++) {
+	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
 		(*iter)->Shutdown();
 		delete (*iter);
 		(*iter) = NULL;
 	}
-	objects.clear();
+	m_objects.clear();
 	
 	// delete all the objects
 	for (iter = objectAddList.begin(); iter != objectAddList.end(); iter++) {
@@ -306,13 +306,13 @@ void GameWorld::Solve(Object *obj) {
 	}
 }
 
-void GameWorld::GetCollideableObjects(ObjectList &objs) {
-	ObjectListIter iter;
+void GameWorld::GetCollideableObjects(ObjectArray &objs) {
+	static ObjectListIter iter;
 	objs.clear();
 
 	// optimization: only allow collisions on certain layers?
-	for (iter = objects.begin(); iter != objects.end(); iter++) {
-		if (Object::CanCollide(*iter))
+	for (iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
+		if ((*iter)->CanCollide())
 			objs.push_back(*iter);
 	}
 }
@@ -320,22 +320,27 @@ void GameWorld::GetCollideableObjects(ObjectList &objs) {
 
 // TODO: probably a BIG source of CPU here.
 // probably need to optimize, but PROFILE to find out.
-void GameWorld::CheckForCollisions(	ObjectList &collideableObjects, Object* obj) {
-	assert(obj != NULL);
-
-	Object* target;
-	ObjectListIter iter;
+void GameWorld::CheckForCollisions(	ObjectArray &collideableObjects, Object* obj) {
 
 	// Don't bother to check if we can't be collided with.
-	if (!Object::CanCollide(obj))
+	assert(obj != NULL);
+	if (!obj->CanCollide())
 		return;
-	
-	// Loop over all collectable objects, see if we collide with any
-	for (iter = collideableObjects.begin(); 
-		 iter != collideableObjects.end(); 
-		 ++iter) {
 
-		target = *iter;
+	Object* target;
+	static ObjectArrayIter iter;	// static for performance, nothing else.
+	
+	// Loop over all collectible objects, see if we collide with any
+	/*for (iter = collideableObjects.begin(); 
+		 iter != collideableObjects.end(); 
+		 ++iter) {*/
+	uint max = collideableObjects.size();
+
+	for (uint i = 0; i < max; ++i)
+	{
+		// continue; // HACK
+
+		target = collideableObjects[i];
 
 		// Skip ourselves
 		if (target == obj)
@@ -352,9 +357,9 @@ void GameWorld::DoCleaning() {
 	Object* obj;
 	
 	ObjectListIter iter, erased;
-	iter = find_if(objects.begin(), objects.end(), ObjectIsDead);
+	iter = find_if(m_objects.begin(), m_objects.end(), ObjectIsDead);
 	
-	while (iter != objects.end()) {
+	while (iter != m_objects.end()) {
 		obj = *iter;
 		assert(obj != NULL);
 
@@ -372,16 +377,16 @@ void GameWorld::DoCleaning() {
 
 		erased = iter;
 		++iter;
-		objects.erase(erased);
+		m_objects.erase(erased);
 	
-		iter = find_if(iter, objects.end(), ObjectIsDead);
+		iter = find_if(iter, m_objects.end(), ObjectIsDead);
 	}
 }
 
 //! Update all objects
 void GameWorld::UpdateObjects() {
-	ObjectList collideableObjects;
-	ObjectListIter iter;
+	static ObjectArray collideableObjects;
+	static ObjectListIter iter;
 	Object* obj;
 
 	// Add any New Objects
@@ -399,7 +404,8 @@ void GameWorld::UpdateObjects() {
 	GetCollideableObjects(collideableObjects);
 	
 	// Do the physics simulation + update
-	for (iter = objects.begin(); iter != objects.end(); ++iter) {
+	for (iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
+		
 		obj = *iter;
 		assert(obj != NULL);
 
@@ -449,7 +455,7 @@ int GameWorld::Load(XMLNode &xMode) {
 	is_loading = true;
 
 	m_bJumpedBackFromADoor = false;
-	objects.clear();
+	m_objects.clear();
 	objectAddList.clear();
 	forces.clear();
 	if (LoadHeaderFromXML(xMode) == -1 ||
@@ -490,7 +496,7 @@ int GameWorld::Load(XMLNode &xMode) {
 		bool found = false;
 
 		// find the portal with the specified name 
-		for (iter = objects.begin(); iter != objects.end(); iter++) {
+		for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
 			if ((*iter)->GetProperties().is_door && ((DoorObject*)(*iter))->GetName() == lastExitInfo.lastPortalName) {
 				found = true;
 				portal_pos = (*iter)->GetXY();
@@ -508,7 +514,7 @@ int GameWorld::Load(XMLNode &xMode) {
 		m_bJumpedBackFromADoor = true;
 
 		// find the player obejcts, set their XY to the portal's XY
-		for (iter = objects.begin(); iter != objects.end(); iter++) {
+		for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
 			if ((*iter)->GetProperties().is_player) {
 				player = *iter;
 				player->SetXY(portal_pos);
@@ -1008,7 +1014,7 @@ void GameWorld::AddObject(Object* obj, bool addImmediately) {
 }
 
 void GameWorld::DoAddObject(Object* obj) {
-	objects.push_front(obj);
+	m_objects.push_front(obj);
 	obj->GetLayer()->AddObject(obj);
 }
 
@@ -1042,7 +1048,7 @@ int GameWorld::GetAiFitnessScore() {return 0;};
 int GameWorld::GetAiFitnessScore() {
 	ObjectListIter iter;
 	
-	for (iter = objects.begin(); iter != objects.end(); iter++) {
+	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
 		assert(*iter != NULL);
 		if (	(*iter)->GetProperties().is_player ) {
 			PlayerObject* player = (PlayerObject*)(*iter);
