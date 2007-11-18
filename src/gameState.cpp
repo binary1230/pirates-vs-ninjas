@@ -386,7 +386,7 @@ void GameState::Update() {
 }
 
 void GameState::UpdateFPS()
-{
+{ 
 	static int iTicksAtLastFrameDrawn = ticks;
 	static int iAmountOfFramesDrawnSinceLastCheck = 0;
 
