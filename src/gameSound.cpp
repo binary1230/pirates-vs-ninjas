@@ -19,8 +19,6 @@ void GameSound::PlaySound(CString name, unsigned int pan) {
 
 	if (use_variable_pitch)
 		freq += Rand(0, freq_range) - (freq_range / 2);
-
-	TRACE("pitch=%d", freq);
 	
 	s_iter s = sounds.find(name.c_str());
 

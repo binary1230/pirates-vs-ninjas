@@ -350,24 +350,6 @@ void GameState::MainLoop() {
 		}
 
 		if (!exit_game) {
-
-			// Ghetto FPS display
-			// --------------------
-			static DWORD iTicksAtLastFrameDrawn = GetTickCount();
-			static int iAmountOfFramesDrawnSinceLastCheck = 0;
-
-			int iDiff = GetTickCount() - iTicksAtLastFrameDrawn;
-
-			if (iDiff > 1000) {
-				TRACE("FPS: %d\n", iAmountOfFramesDrawnSinceLastCheck);
-				iAmountOfFramesDrawnSinceLastCheck = 0;
-				iTicksAtLastFrameDrawn = GetTickCount();
-			} else {
-				iAmountOfFramesDrawnSinceLastCheck++;
-			}
-
-			// --------------------
-
 			Draw();
 
 			if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
@@ -403,8 +385,45 @@ void GameState::Update() {
 	modes->Update();
 }
 
+void GameState::UpdateFPS()
+{
+	static int iTicksAtLastFrameDrawn = ticks;
+	static int iAmountOfFramesDrawnSinceLastCheck = 0;
+
+	int iDiff = ticks - iTicksAtLastFrameDrawn;
+
+	if (iDiff >= FPS) {
+
+		// The new actual FPS rate for the last second:
+		m_iCurrentFps = iAmountOfFramesDrawnSinceLastCheck;
+
+		TRACE("FPS: %d\n", m_iCurrentFps);
+
+		iAmountOfFramesDrawnSinceLastCheck = 0;
+		iTicksAtLastFrameDrawn = ticks;
+	} else {
+		iAmountOfFramesDrawnSinceLastCheck++;
+	}
+}
+
 //! Draw the current mode
 void GameState::Draw() {
+
+	// Ghetto FPS display
+	// --------------------
+	static DWORD iTicksAtLastFrameDrawn = GetTickCount();
+	static int iAmountOfFramesDrawnSinceLastCheck = 0;
+
+	int iDiff = GetTickCount() - iTicksAtLastFrameDrawn;
+
+	if (iDiff > 1000) {
+		TRACE("FPS: %d\n", iAmountOfFramesDrawnSinceLastCheck);
+		iAmountOfFramesDrawnSinceLastCheck = 0;
+		iTicksAtLastFrameDrawn = GetTickCount();
+	} else {
+		iAmountOfFramesDrawnSinceLastCheck++;
+	}
+
 	if (OPTIONS->DrawGraphics()) {
 		WINDOW->BeginDrawing();
 		WINDOW->Clear();

@@ -74,6 +74,9 @@ class GameState {
 
 		//! Output the total running time
 		void OutputTotalRunningTime();
+
+		//! Update FPS display
+		void UpdateFPS();
 		
 		//! Set to TRUE to immediately shutdown the game 
 		bool exit_game;	
@@ -88,6 +91,9 @@ class GameState {
 	
 		//! Set to true if we are playing back a demo
 		bool is_playing_back_demo;
+
+		//! The current FPS rate
+		int m_iCurrentFps;
 					
 	public:
 		int RunGame();

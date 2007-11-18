@@ -10,7 +10,12 @@ void DebugTrace( char * format, ... )
 
 	va_start( args, format );
 	vsnprintf( buffer, bufsize - 1, format, args );
+
+#ifdef WIN32
 	OutputDebugStr(buffer);
+#else
+	fprintf(stderr, "%s", buffer);
+#endif
 }
 
 void StringSplit(CString str, CString delim, vector<CString> &results) {
