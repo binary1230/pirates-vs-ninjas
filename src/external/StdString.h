@@ -1675,11 +1675,11 @@ inline int ssvsprintf(PWSTR pW, size_t nCount, PCWSTR pFmtW, va_list vl)
 // Microsofties can use
 #elif defined(_MSC_VER) && !defined(SS_ANSI)
 
-inline int	ssnprintf(PSTR pA, size_t nCount, PCSTR pFmtA, va_list vl)
+inline int	ssvsprintf(PSTR pA, size_t nCount, PCSTR pFmtA, va_list vl)
 { 
 	return _vsnprintf(pA, nCount, pFmtA, vl);
 }
-inline int	ssnprintf(PWSTR pW, size_t nCount, PCWSTR pFmtW, va_list vl)
+inline int	ssvsprintf(PWSTR pW, size_t nCount, PCWSTR pFmtW, va_list vl)
 {
 	return _vsnwprintf(pW, nCount, pFmtW, vl);
 }
@@ -1754,7 +1754,7 @@ inline int ssvsprintf(PWSTR pW, size_t nCount, PCWSTR pFmtW, va_list vl)
 // Even THEN you might not be all the way home due to some non-conforming
 // distributions.  More on this in the comments below.
 
-inline int	ssnprintf(PSTR pA, size_t nCount, PCSTR pFmtA, va_list vl)
+inline int	ssvsprintf(PSTR pA, size_t nCount, PCSTR pFmtA, va_list vl)
 {
 #ifdef _MSC_VER
 	return _vsnprintf(pA, nCount, pFmtA, vl);
@@ -1762,7 +1762,7 @@ inline int	ssnprintf(PSTR pA, size_t nCount, PCSTR pFmtA, va_list vl)
 	return vsnprintf(pA, nCount, pFmtA, vl);
 #endif
 }
-inline int	ssnprintf(PWSTR pW, size_t nCount, PCWSTR pFmtW, va_list vl)
+inline int	ssvsprintf(PWSTR pW, size_t nCount, PCWSTR pFmtW, va_list vl)
 {
 #ifdef _MSC_VER
 	return _vsnwprintf(pW, nCount, pFmtW, vl);
@@ -3139,7 +3139,7 @@ public:
 	void AppendFormatV(const CT* szFmt, va_list argList)
 	{
 		CT szBuf[STD_BUF_SIZE];
-		int nLen = ssnprintf(szBuf, STD_BUF_SIZE-1, szFmt, argList);
+		int nLen = ssvsprintf(szBuf, STD_BUF_SIZE-1, szFmt, argList);
 
 		if ( 0 < nLen )
 			this->append(szBuf, nLen);
@@ -3167,7 +3167,7 @@ public:
 #ifdef SS_ANSI
 		MYTYPE str;
 		int nLen	= sslen(szFormat) + STD_BUF_SIZE;
-		ssnprintf(str.GetBuffer(nLen), nLen-1, szFormat, argList);
+		ssvsprintf(str.GetBuffer(nLen), nLen-1, szFormat, argList);
 		str.ReleaseBuffer();
 		*this = str;
 
@@ -3185,7 +3185,7 @@ public:
 
 			nChars			+= ((nTry+1) * FMT_BLOCK_SIZE);
 			pBuf			= reinterpret_cast<CT*>(_alloca(sizeof(CT)*nChars));
-			nUsed			= ssnprintf(pBuf, nChars-1, szFormat, argList);
+			nUsed			= ssvsprintf(pBuf, nChars-1, szFormat, argList);
 
 			// Ensure proper NULL termination.
 
