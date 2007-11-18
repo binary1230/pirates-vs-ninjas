@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "object3d.h"
 
 #include "globals.h"

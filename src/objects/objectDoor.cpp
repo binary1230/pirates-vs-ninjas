@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectDoor.h"
 
 #include "globals.h"

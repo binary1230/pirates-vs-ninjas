@@ -1,3 +1,5 @@
+#include "stdafx.h"
+#include <math.h>
 #include "objectFan.h"
 
 #include "globals.h"
@@ -25,7 +27,7 @@ void FanObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_player) {
 
 		// if the player is going slowly, slow down the new fan speed
-		float player_factor = fmin(	MAX_PLAYER_SPEED, fabs(obj->GetVelX()) ); 
+		float player_factor = std::min(	MAX_PLAYER_SPEED, fabs(obj->GetVelX()) ); 
 		player_factor /= MAX_PLAYER_SPEED;
 
 		// figure out which way to spin the fan (left/right)
@@ -35,7 +37,7 @@ void FanObject::Collide(Object* obj) {
 
 		// calc the new rotational velocity
 		rotate_velocity = direction * 
-						fmax(DEFAULT_FAN_VELOCITY*player_factor, fabs(rotate_velocity));
+						std::max(DEFAULT_FAN_VELOCITY*player_factor, fabs(rotate_velocity));
 	}
 }
 

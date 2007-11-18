@@ -6,10 +6,7 @@
 
 
 #include "stdafx.h"
-
 #include "loadpng.h"
-
-
 
 /* register_png_file_type:
  */

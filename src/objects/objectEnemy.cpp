@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectEnemy.h"
 
 #include "globals.h"

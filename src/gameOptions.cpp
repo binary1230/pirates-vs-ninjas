@@ -12,6 +12,7 @@
  *
  *  This file contains part of the libiberty library. (GPL)*/
 
+#include "stdafx.h"
 #include "gameOptions.h"
 #include "basename.h"
 #include "window.h"
@@ -20,7 +21,7 @@
 DECLARE_SINGLETON(GameOptions)
 
 void GameOptions::PrintBanner() {
-		fprintf(stderr, 
+		TRACE(
 		"Ninja Engine (%s)\n"
 		"binary1230(at)yahoo.com | http://einsteinsbreakfast.com\n"
 		"(c) 2005 Dominic Cerquetti, this program is Free Software\n"
@@ -31,9 +32,9 @@ void GameOptions::PrintBanner() {
 void GameOptions::PrintOptions(const char* arg0) {
 	arg0 = basename(arg0);
 	if (!show_help) {
-		fprintf(stderr, "type '%s -h' for more options..\n\n", arg0);
+		TRACE("type '%s -h' for more options..\n\n", arg0);
 	} else {
-		fprintf(stderr,
+		TRACE(
 		"NOTE: data files MUST be in a dir in THIS folder called 'data'\n\n"
 
 		"Usage: %s [options]\n"
@@ -71,6 +72,7 @@ void GameOptions::PrintOptions(const char* arg0) {
 
 void GameOptions::Clear() {
 	fullscreen = false;
+	//fullscreen = true;
 	show_help = false;
 	
 	first_mode = "";
@@ -80,7 +82,7 @@ void GameOptions::Clear() {
 	
 	demo_filename = "";
 	
-	sound_enabled = 1;
+	sound_enabled = true;
 	
 	debug_start_paused = false;
 	debug_message_level = DEFAULT_DEBUG_MSG_LEVEL;
@@ -157,7 +159,6 @@ char ** dupargv (const char **argv) {
 
 bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 	
-	char c;
 	bool _fullscreen_option_set = false;
 	char** new_argv = dupargv(argv);
 	
@@ -166,6 +167,10 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 	}
 
 	Clear();
+
+#ifndef WIN32		//  TODO: Steal a win32 getopt() implementation
+
+	char c;
 
 	while ( (c = getopt(argc,new_argv,"fzwg:m:r:d:X23vsc:p:h89e")) != -1) {
 		switch (c) {
@@ -181,7 +186,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 			// get demo filename
 			case 'r': case 'd':
 				if (demo_filename.length() > 0) {
-						fprintf(stderr,	"Options ==> ERROR "
+						TRACE(	"Options ==> ERROR "
 														"Don't give more than 1 demo filename (-r, -d)\n");
 						return (is_valid = false);
 				}
@@ -208,23 +213,23 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 			// fullscreen or windowed
 			case 'f': case 'w':
 				if (_fullscreen_option_set) {
-					fprintf(stderr,"Options ==> ERROR, Cannot select both fullscreen (-f) and windowed (-w) mode.\n");
+					TRACE("Options ==> ERROR, Cannot select both fullscreen (-f) and windowed (-w) mode.\n");
 					return (is_valid = false);
 				} else if (c == 'f') {
 					fullscreen = true;
 					_fullscreen_option_set = true;
-					fprintf(stderr, "Options ==> fullscreen mode enabled\n");
+					TRACE("Options ==> fullscreen mode enabled\n");
 				} else if (c == 'w') {
 					fullscreen = false;
 					_fullscreen_option_set = true;
-					fprintf(stderr, "Options ==> windowed mode enabled\n");
+					TRACE("Options ==> windowed mode enabled\n");
 				}
 				break;
 
 			case 'g':
 				graphics_mode = strtoul(optarg, NULL, 10);
 				if (graphics_mode >= 4 || graphics_mode < 0) {
-					fprintf(stderr, "ERROR: Graphics mode is out of range.\n");
+					TRACE("ERROR: Graphics mode is out of range.\n");
 					show_help = true;
 					return (is_valid = false);
 				}
@@ -285,12 +290,14 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 			// ':' and '?' mean unrecognized
 			default:
 			case ':': case '?':
-				fprintf(stderr, "Unrecognized command line option '-%c'\n", c);
+				TRACE("Unrecognized command line option '-%c'\n", c);
 				show_help = true;
 				return (is_valid = false);
 				break;
 		}
 	}
+
+#endif // WIN32	
 
 	if (new_argv) {
 		freeargv(new_argv);
@@ -320,7 +327,7 @@ bool GameOptions::IsValid() {
 
 		// if we aren't to start as a server, but they didn't give us a server name
 		// (btw, ^ is XOR) [YES.]
-		if (!(network_start_as_server ^ network_server_name.GetLength() > 0)) {
+		if (!(network_start_as_server ^ (network_server_name.GetLength() > 0))) {
 			fprintf(	stderr, "Options ==> ERROR\n"
 												"To start with networking, you must specify ONLY ONE\n"
 												"of the following: (-c) or (-s servername)\n\n");

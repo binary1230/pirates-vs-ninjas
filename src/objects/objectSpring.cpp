@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectSpring.h"
 
 #include "globals.h"

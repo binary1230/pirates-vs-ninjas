@@ -4,7 +4,7 @@
 #include "stdafx.h"
 
 class GameMode;
-class GameModeExitInfo;
+struct GameModeExitInfo;
 
 class GameModes {
 	protected:

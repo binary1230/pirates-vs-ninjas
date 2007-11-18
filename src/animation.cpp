@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "animation.h"
 #include "gameState.h"
 #include "sprite.h"
@@ -95,7 +96,7 @@ void Animation::SwitchToNextFrame() {
 			soundName = oldFrame->extraData;
 
 			if (soundName.size() == 0)
-				fprintf(stderr, 	"ERROR: No sound name specified "
+				TRACE(	"ERROR: No sound name specified "
 													"in animation sound frame\n");
 
 			SOUND->PlaySound(soundName);
@@ -106,7 +107,7 @@ void Animation::SwitchToNextFrame() {
 			effectName = oldFrame->extraData;
 
 			if (effectName.size() == 0)
-				fprintf(stderr, 	"ERROR: No sound name specified "
+				TRACE(	"ERROR: No sound name specified "
 													"in animation sound frame\n");
 
 			obj = EFFECTS->TriggerEffect( attachedObject, effectName );
@@ -160,7 +161,7 @@ bool Animation::CreateSpriteFrame(	const char* _file,
 	f->sprite = ASSETMANAGER->LoadSprite(_file, use_alpha);
 
 	if (!f->sprite) {
-		fprintf(stderr, "ERROR: Can't load image file: '%s'\n", _file);
+		TRACE("ERROR: Can't load image file: '%s'\n", _file);
 		return false;
 	}
 
@@ -278,9 +279,9 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
 			}
 	
 			if (!anim->CreateSpriteFrame(	sprite_filename, 
-																		duration, 
-																		(bool)freeze_at_end, 
-																		use_alpha)) {
+											duration, 
+											freeze_at_end != 0, 
+											use_alpha)) {
 				anim->Shutdown();
 				SAFE_DELETE(anim);
 				return NULL;
@@ -298,7 +299,7 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
 			extraData = xFrame.getAttribute("data");
 			assert(extraData.size() != 0);
 
-			if (!anim->CreateEffectFrame(extraData, (bool)freeze_at_end)) {
+			if (!anim->CreateEffectFrame(extraData, freeze_at_end != 0)) {
 				anim->Shutdown();
 				SAFE_DELETE(anim);
 				return NULL;
@@ -310,7 +311,7 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
 			extraData = xFrame.getAttribute("data");
 			assert(extraData.size() != 0);
 
-			if (!anim->CreateSoundFrame(extraData, (bool)freeze_at_end)) {
+			if (!anim->CreateSoundFrame(extraData, freeze_at_end != 0)) {
 				anim->Shutdown();
 				SAFE_DELETE(anim);
 				return NULL;
@@ -318,7 +319,7 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
 
 		} else {
 
-			fprintf(stderr, "ERROR: Invalid frame type specified: '%s'\n", 
+			TRACE("ERROR: Invalid frame type specified: '%s'\n", 
 							frame_type.c_str());
 			anim->Shutdown();
 			SAFE_DELETE(anim);

@@ -37,13 +37,13 @@ int main(const int argc, const char* argv[]) {
 	// InitDebugHackLog();
 
 #	ifdef REDIRECT_STDERR
-	fprintf(stderr, "Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
+	TRACE("Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
 
 	if (!freopen(REDIRECT_STDERR_FILENAME, "wt", stderr)) {
 		printf("Couldn't redirect stderr to "REDIRECT_STDERR_FILENAME "!");
 	}
 	
-	fprintf(stderr, "Main: redirected output.\n");
+	TRACE("Main: redirected output.\n");
 # endif
 
 	return start_game_instance(argc, argv);

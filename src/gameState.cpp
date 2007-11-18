@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "gameState.h"
 
 #include "gui.h"
@@ -29,7 +30,7 @@ int GameState::LoadXMLConfig(CString xml_filename) {
 	
 	XMLNode xInfo = xGame.getChildNode("info");
 
-	fprintf(stderr, 
+	TRACE(
 		" Mod Info: requires engine version '%s'\n"
 		" Mod Info: map version '%s'\n"
 		" Mod Info: map author '%s'\n"
@@ -59,13 +60,13 @@ void GameState::SignalEndCurrentMode() {
 int GameState::InitAllegro() {
 	
 	if (allegro_init() != 0) {
-		fprintf(stderr, "-- FATAL ERROR: Allegro_init() failed.\n");
+		TRACE("-- FATAL ERROR: Allegro_init() failed.\n");
 		return -1;
 	}
 	
 	// must be called SECOND
 	if (InitTimers() < 0) {
-		fprintf(stderr, "-- FATAL ERROR: Can't init timers.\n");
+		TRACE("-- FATAL ERROR: Can't init timers.\n");
 		return -1;
 	}
 
@@ -84,80 +85,80 @@ int GameState::InitAllegro() {
 //! BE CAREFUL, things need to be done IN ORDER here.
 int GameState::InitSystem() {
 		
-		fprintf(stderr, "[Beginning Game Init]\n");
+		TRACE("[Beginning Game Init]\n");
 				
 		exit_game = false;
 		is_playing_back_demo = false;
 		debug_pause_toggle = false;
 
-		fprintf(stderr, "[init: allegro]\n");
+		TRACE("[init: allegro]\n");
 		if (InitAllegro() < 0) {
-			fprintf(stderr, "ERROR: InitSystem: failed to init allegro!\n");
+			TRACE("ERROR: InitSystem: failed to init allegro!\n");
 			return -1;
 		}
 
-		fprintf(stderr, "[init: assetManager]\n");
+		TRACE("[init: assetManager]\n");
 		ASSETMANAGER->CreateInstance();
 		if (!ASSETMANAGER || ASSETMANAGER->Init() < 0) {
-			fprintf(stderr, "ERROR: InitSystem: failed to create assetManager!\n");
+			TRACE("ERROR: InitSystem: failed to create assetManager!\n");
 			return -1;
 		}
 
 		ASSETMANAGER->AppendToSearchPath("data/");
 
-		fprintf(stderr, "[init: xml config]\n");
+		TRACE("[init: xml config]\n");
 
 		// just DIES if it can't load this file (bad)
 		if (LoadXMLConfig("default.xml") < 0) {
-			fprintf(stderr, "ERROR: Failed to parse default.xml");	
+			TRACE("ERROR: Failed to parse default.xml");	
 			return -1;
 		}
 
-		fprintf(stderr, "[init: window]\n");
+		TRACE("[init: window]\n");
 		WINDOW->CreateInstance();
 		if ( !WINDOW ||	WINDOW->Init(screen_size_x, screen_size_y, 
 										OPTIONS->IsFullscreen(), OPTIONS->GraphicsMode()) < 0 ) {
-			fprintf(stderr, "ERROR: InitSystem: failed to init window!\n");
+			TRACE("ERROR: InitSystem: failed to init window!\n");
 			return -1;
 		}
 
 		if (InitNetwork() == -1) {
-			fprintf(stderr, "ERROR: InitSystem: failed to init network!\n");
+			TRACE("ERROR: InitSystem: failed to init network!\n");
 			return -1;
 		}
 	
-		fprintf(stderr, "[init: input subsystem]\n");
+		TRACE("[init: input subsystem]\n");
 		if (InitInput() == -1) {
-			fprintf(stderr, "ERROR: InitSystem: failed to init input subsystem!\n");
+			TRACE("ERROR: InitSystem: failed to init input subsystem!\n");
 			return -1;
 		}
 
-		fprintf(stderr, "[init: sound subsystem]\n");
+		TRACE("[init: sound subsystem]\n");
 		if (InitSound() == -1) {
-			fprintf(stderr, "ERROR: InitSystem: failed to init sound subsystem!\n");
+			TRACE("ERROR: InitSystem: failed to init sound subsystem!\n");
 		}
 
-		fprintf(stderr, "[init: embedded lua scripting]\n");
+		TRACE("[init: embedded lua scripting]\n");
 		LUA->CreateInstance();
 		if ( !LUA || !LUA->Init() ) {
-			fprintf(stderr, "ERROR: InitSystem: failed to init lua scripting!\n");
+			TRACE("ERROR: InitSystem: failed to init lua scripting!\n");
 			return -1;
 		}
 		
-		fprintf(stderr, "[init: gui manager]\n");
+		TRACE("[init: gui manager]\n");
 		GUI->CreateInstance();
 		if ( !GUI || !GUI->Init() ) {
-			fprintf(stderr, "ERROR: InitSystem: failed to init gui!\n");
+			TRACE("ERROR: InitSystem: failed to init gui!\n");
 			return -1;
 		}
 
-		fprintf(stderr, "[init: loading game modes]\n");
+		TRACE("[init: loading game modes]\n");
 		if (LoadGameModes() == -1) {
-			fprintf(stderr, "ERROR: InitSystem: failed to init default game mode!\n");
+			TRACE("ERROR: InitSystem: failed to init default game mode!\n");
 			return -1;
 		}
 		
-		fprintf(stderr, "[init complete]\n");
+		TRACE("[init complete]\n");
 				
 		return 0;
 }
@@ -172,6 +173,9 @@ int GameState::LoadGameModes() {
 }
  
 int GameState::InitNetwork() {	
+
+#ifndef WIN32 // TODO: Networking disabled (e.g. WAY broken, not even close yet)
+
 	int ret;
 	int port = OPTIONS->GetNetworkPortNumber();
 
@@ -182,7 +186,7 @@ int GameState::InitNetwork() {
 	if (!network)
 		return -1;
 
-	fprintf(stderr, "NET: Port %i\n", port);
+	TRACE("NET: Port %i\n", port);
 	
 	if (OPTIONS->IsNetworkServer()) {
 		ret = network->InitServer(port);
@@ -191,6 +195,9 @@ int GameState::InitNetwork() {
 	}
 
 	return ret;
+#endif // WIN32
+
+	return 0;
 }
 
 //! Init sound subsystem
@@ -200,12 +207,12 @@ int GameState::InitSound() {
 	SOUND->CreateInstance();
 
 	if (!SOUND) {
-		fprintf(stderr, " Failed to create sound instance.\n");
+		TRACE(" Failed to create sound instance.\n");
 		return -1;
 	}
 
 	if (!OPTIONS->SoundEnabled())
-		fprintf(stderr, " Sound disabled.\n");
+		TRACE(" Sound disabled.\n");
 
 	if ( !SOUND || (SOUND->Init(OPTIONS->SoundEnabled()) == -1) ) {
 		return -1;
@@ -228,7 +235,7 @@ int GameState::InitInput() {
 //! Init game timers
 //! This MUST be called BEFORE any other allegro initializations.
 int GameState::InitTimers() {
-	fprintf(stderr, "[Init: Timers]\n");
+	TRACE("[Init: Timers]");
 	install_timer();
 	LOCK_VARIABLE(outstanding_updates);
 	LOCK_VARIABLE(ticks);
@@ -260,7 +267,7 @@ void GameState::OutputTotalRunningTime() {
 int GameState::RunGame() {
 	
 		if (InitSystem() == -1) {
-			fprintf(stderr, "ERROR: Failed to init game!\n");
+			TRACE("ERROR: Failed to init game!\n");
 			return -1;	
 		}
 
@@ -269,16 +276,16 @@ int GameState::RunGame() {
 
 		INPUT->Begin();
 			
-		fprintf(stderr, "[running game...]\n");
+		TRACE("[running game...]\n");
 		MainLoop();
-		fprintf(stderr, "[done running game!]\n");
+		TRACE("[done running game!]\n");
 
 		OutputTotalRunningTime();
 
 		INPUT->End();
 	
 		Shutdown();
-		fprintf(stderr, "[Exiting]\n");	
+		TRACE("[Exiting]\n");	
 
 		return 0;
 }
@@ -304,6 +311,15 @@ void GameState::MainLoop() {
 		// before we can draw, in order to keep the game the same speed
 		// no matter the speed of the computer
 		while (outstanding_updates > 0 && !exit_game) {
+
+			// failsafe: If there are too many updates left, break out so we can draw.
+			// this will slow the actual gamespeed down, but it will at least draw
+			// You shouldn't see this unless either 1) something's wrong or 2) uber-slow computer
+			if (outstanding_updates > 30) {
+				outstanding_updates = 0;
+				break;
+			}
+
 			Update();	// mode signals handled here
 	
 			if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
@@ -334,6 +350,24 @@ void GameState::MainLoop() {
 		}
 
 		if (!exit_game) {
+
+			// Ghetto FPS display
+			// --------------------
+			static DWORD iTicksAtLastFrameDrawn = GetTickCount();
+			static int iAmountOfFramesDrawnSinceLastCheck = 0;
+
+			int iDiff = GetTickCount() - iTicksAtLastFrameDrawn;
+
+			if (iDiff > 1000) {
+				TRACE("FPS: %d\n", iAmountOfFramesDrawnSinceLastCheck);
+				iAmountOfFramesDrawnSinceLastCheck = 0;
+				iTicksAtLastFrameDrawn = GetTickCount();
+			} else {
+				iAmountOfFramesDrawnSinceLastCheck++;
+			}
+
+			// --------------------
+
 			Draw();
 
 			if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
@@ -386,7 +420,7 @@ void GameState::Draw() {
 }
 
 void GameState::Shutdown() {
-	fprintf(stderr, "[Shutting Down]\n");	
+	TRACE("[Shutting Down]\n");	
 
 	if (INPUT) {
 		INPUT->Shutdown();
@@ -395,10 +429,12 @@ void GameState::Shutdown() {
 
 	remove_int(Timer);
 
+#ifndef WIN32 // TODO: Networking disabled (e.g. WAY broken, not even close yet)
 	if (network) {
 		network->Shutdown();
 		delete network;
 	}
+#endif // WIN32
 
 	if (modes) {
 		modes->Shutdown();
@@ -467,13 +503,13 @@ int GameState::InitNetworkServer() {
 	int port = OPTIONS->GetNetworkPortNumber();
   ezSocketsPacket packet;
 	
-	fprintf(stderr, "NET: Starting UDP network server on port %i\n", port);
+	TRACE("NET: Starting UDP network server on port %i\n", port);
 	
   socket->mode = ezSockets::skUDP;
   socket->Create(IPPROTO_UDP, SOCK_DGRAM);
   socket->Bind(port);
 	
-	fprintf(stderr, "NET: Waiting for client greeting..\n");
+	TRACE("NET: Waiting for client greeting..\n");
 
 	bool got_greeting = false;
 
@@ -482,11 +518,11 @@ int GameState::InitNetworkServer() {
 		if (socket->ReadPack(packet)) {
 			int size = packet.Read4();
       if (size != packet.Size-4)
-        fprintf(stderr, "NET: WARN: Merged packets!\n");
+        TRACE("NET: WARN: Merged packets!\n");
 
 			// Expect MAGIC greeting from client
 			if (packet.Read4() != PVN_NETWORK_MAGIC_GREETING) {
-				fprintf(stderr, "Incorrect MAGIC recieved from client, aborting!\n");
+				TRACE("Incorrect MAGIC recieved from client, aborting!\n");
 				return -1;	
 			} else {
 				got_greeting = true;
@@ -501,7 +537,7 @@ int GameState::InitNetworkServer() {
   packet.Write4(PVN_NETWORK_MAGIC_GREETING);
 	socket->SendPack(packet);
 
-	fprintf(stderr, "NET: Server: Connected to client OK!\n");
+	TRACE("NET: Server: Connected to client OK!\n");
 
 	return 0;
 }*/

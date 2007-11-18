@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectBounce.h"
 
 #include "globals.h"

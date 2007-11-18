@@ -5,7 +5,7 @@
 //! NOTE: These are just examples for now, we'll replace them with real
 //! objects later on.
 
-enum OBJECTID {
+enum ENGINE_OBJECTID {
  OBJECT_ID_BOUNCE = 1,
  OBJECT_ID_PLAYER,
  OBJECT_ID_BACKGROUND,

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "vector2D.h"
 
 void Vector2D::Clear() {

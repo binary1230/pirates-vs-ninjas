@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "gui.h"
 
 DECLARE_SINGLETON(GuiManager);

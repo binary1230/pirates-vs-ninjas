@@ -54,15 +54,15 @@ class ObjectFactory {
 		ObjectDefMapping objectDefs;
 
 		//! Maps object def types to OBJECTID's
-		map<const CString, OBJECTID> objectDefTypes;
+		map<const CString, ENGINE_OBJECTID> objectDefTypes;
 
-		Object* CreateObject(	OBJECTID id, 
+		Object* CreateObject(	ENGINE_OBJECTID id, 
 													XMLNode &xObjectDef, 
 													XMLNode *xObject=NULL	);
 
 		void SetupTypes();
 
-		OBJECTID GetObjectIDFromXML(XMLNode &xObjectDef);
+		ENGINE_OBJECTID GetObjectIDFromXML(XMLNode &xObjectDef);
 		CString GetObjectTypeFromXML(XMLNode &xObjectDef);
 
 	public:

@@ -1,4 +1,3 @@
-#define STRICT_PARSING 1
 /**
  ****************************************************************************
  * <P> XML.c - implementation file for basic XML parser written in ANSI C++
@@ -65,6 +64,8 @@
  ****************************************************************************
  */
 #include "stdafx.h"
+
+#define STRICT_PARSING 1
 
 #ifdef WIN32
 //#ifdef _DEBUG
@@ -349,7 +350,7 @@ XMLNode XMLNode::openFileHelper(const char *filename, XMLCSTR tag)
 #ifdef WIN32
         MessageBoxA(NULL,message,"XML Parsing error",MB_OK|MB_ICONERROR|MB_TOPMOST);
 #else
-        fprintf(stderr, "%s\n\nERROR: Error parsing xml invloving file '%s'\n",message, filename);
+        TRACE("%s\n\nERROR: Error parsing xml invloving file '%s'\n",message, filename);
 #endif
         exit(255);
     }

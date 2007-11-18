@@ -6,10 +6,9 @@
 
 /* See COPYING.txt for license */
 
+#include "stdafx.h"
 
 #include <string.h>
-#include <allegro.h>
-#include <alogg.h>
 #include <vorbis/vorbisfile.h>
 #include <vorbis/codec.h>
 

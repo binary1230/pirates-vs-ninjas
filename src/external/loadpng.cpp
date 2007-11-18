@@ -4,9 +4,8 @@
  * This file is hereby placed in the public domain.
  */
 
-#include <png.h>
-#include <allegro.h>
-#include <allegro/internal/aintern.h>
+
+#include "stdafx.h"
 #include "loadpng.h"
 
 /* We need internals _color_load_depth and _fixup_loaded_bitmap.  The

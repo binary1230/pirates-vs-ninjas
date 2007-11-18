@@ -84,7 +84,9 @@ class _Rect {
 		//! Create a rect from 2 vectors
 		// void fromVec(const Vector2D &v1, const Vector2D &v2);
 
-		bool Overlaps(const _Rect &rect) const;
+		inline bool _Rect::Overlaps(const _Rect &rect) const {	
+			return ( y1 <= rect.y2 && y2 >= rect.y1 && x2 >= rect.x1 && x1 <= rect.x2 );
+		}
 		
 		void Print(char* name = "");
 

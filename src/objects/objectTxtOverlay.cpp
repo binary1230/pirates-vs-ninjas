@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectTxtOverlay.h"
 
 #include "assetManager.h"

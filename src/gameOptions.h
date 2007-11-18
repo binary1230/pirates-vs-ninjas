@@ -30,7 +30,7 @@ class GameOptions {
 		CString demo_filename;
 
 		//! Whether to enable sound or not
-		int sound_enabled;
+		bool sound_enabled;
 
 		//! Requested graphics mode (double buffering, pageflipping, nothing, etc)
 		int graphics_mode;
@@ -111,7 +111,7 @@ class GameOptions {
 		}
 
 		//! Get whether sound is enabled or not
-		inline int SoundEnabled() {return sound_enabled;}
+		inline bool SoundEnabled() {return sound_enabled;}
 		
 		//! Return whether we are starting the game in 'debug pause mode'
 		inline bool GetDebugStartPaused() {return debug_start_paused;}

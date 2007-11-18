@@ -25,12 +25,19 @@
 // The order of the allegro stuff is SUPER-IMPORTANT
 #ifdef WIN32
 #define  ALLEGRO_STATICLINK
+#pragma warning(disable:4312) // 'type cast' : conversion from 'unsigned int' to 'unsigned char *' of greater size
+#pragma warning(disable:4267)
+#pragma warning(disable:4311) // pointer truncation from 'const void *' to 'unsigned long'
 #endif // WIN32
+
 #include <allegro.h>
+
 #ifdef WIN32
 #include <winalleg.h>
 #endif // WIN32
+
 #include <alleggl.h>
+#include <allegro/internal/aintern.h>
 
 #ifdef PLATFORM_DARWIN
 #include <CoreServices/CoreServices.h>
@@ -49,12 +56,6 @@ extern "C" {
 }
 #endif
 
-// Our rarely-modified engine stuff
-#include "StdString.h"
-#include "xmlParser.h"
-#include "loadpng.h"
-#include "alogg.h"
-
 // Common to everything
 #include <stdarg.h>
 #include <assert.h>
@@ -69,17 +70,37 @@ extern "C" {
 #include <ctype.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#ifndef WIN32
 #include <unistd.h>
+#endif // WIN32
+
 #include <fcntl.h>
+
+// so that std::min and std::max work OK.
+#undef min
+#undef max 
+
+// Our rarely-modified engine stuff
+#include "StdString.h"
+#define CString CStdStringA
+
+#include "xmlParser.h"
+#include "loadpng.h"
+#include "alogg.h"
+// #include "Model_3DS.h" // not ready yet/ever
 
 // STL stuff
 #include <list>
 #include <map>
 #include <vector>
 #include <algorithm>
-
-// 3d model support not ready yet.
-// #include "Model_3DS.h"
+#include <functional>
+#include <cstdarg>
+#include <cstdio>
+#include <cctype>
+#include <cstdlib>
+#include <cstdarg>
 
 #include "globals.h"
 #include "singleton.h"

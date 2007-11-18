@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "oggFile.h"
 
 int OGGFILE::Poll() {
@@ -25,7 +26,7 @@ int OGGFILE::Poll() {
 
 bool OGGFILE::Init(const char* file) {
 	if (initialized) {
-		fprintf(stderr, "WARNING: Ogg File already loaded, "
+		TRACE("WARNING: Ogg File already loaded, "
 										"and we're trying to load another one!\n");
 		return false;
 	}
@@ -106,7 +107,7 @@ void OGGFILE::Update() {
 		return;
 
 	if (Poll() != ALOGG_OK) 
-		fprintf(stderr, " - MUSIC: ERR: Poll failed.\n");
+		TRACE(" - MUSIC: ERR: Poll failed.\n");
 }
 
 OGGFILE::OGGFILE() {

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "network.h"
 #include "ezSockets.h"
 
@@ -7,7 +8,7 @@ int GameNetwork::SendHandShake() {
 	ezSocketsPacket packet;
  	packet.Write4(PVN_NETWORK_MAGIC_GREETING);
 	socket->SendPack(packet);
-	fprintf(stderr, "NET: Sent initial handshake greeting.\n");
+	TRACE("NET: Sent initial handshake greeting.\n");
 	return 0;
 }
 
@@ -15,7 +16,7 @@ int GameNetwork::WaitForHandShake() {
 	ezSocketsPacket packet;
 	bool got_greeting = false;
 
-	fprintf(stderr, "NET: Waiting for handshake response...\n");
+	TRACE("NET: Waiting for handshake response...\n");
 
 	packet.ClearPacket();
 
@@ -23,10 +24,10 @@ int GameNetwork::WaitForHandShake() {
 		if (socket->ReadPack(packet)) {
 			int size = packet.Read4();
       if (size != packet.Size-4)
-        fprintf(stderr, "NET: WARN: Merged packets!\n");
+        TRACE("NET: WARN: Merged packets!\n");
 
 			if (packet.Read4() != PVN_NETWORK_MAGIC_GREETING) {
-				fprintf(stderr, "Incorrect MAGIC recieved, aborting!\n");
+				TRACE("Incorrect MAGIC recieved, aborting!\n");
 				return -1;	
 			} else {
 				got_greeting = true;
@@ -34,7 +35,7 @@ int GameNetwork::WaitForHandShake() {
     } 
 	}
 		
-	fprintf(stderr, "NET: Got response! Handshake Complete!\n");
+	TRACE("NET: Got response! Handshake Complete!\n");
 
 	return 0;
 }
@@ -46,7 +47,7 @@ int GameNetwork::CommonInit(int _port, CString _host) {
 	socket = new ezSockets();
 	if (!socket) {
 		Shutdown();
-		fprintf(stderr, "NET: ERROR: Can't allocate memory for socket!.\n");
+		TRACE("NET: ERROR: Can't allocate memory for socket!.\n");
 		return -1;
 	}
   socket->mode = ezSockets::skUDP;
@@ -57,31 +58,31 @@ int GameNetwork::CommonInit(int _port, CString _host) {
 int GameNetwork::InitClient(int _port, CString _host) {
 	Shutdown();
 
-	fprintf(stderr, "NET: Starting UDP network client:\n");
+	TRACE("NET: Starting UDP network client:\n");
 
 	if (CommonInit(_port, _host) == -1)
 		return -1;
   
-	fprintf(stderr, "NET: Trying to connect to: %s:%i\n", host, port);
+	TRACE("NET: Trying to connect to: %s:%i\n", host, port);
 
 	if (!socket->Create( IPPROTO_UDP, SOCK_DGRAM )) {
-		fprintf(stderr, "NET: ERROR Can't create socket.\n");
+		TRACE("NET: ERROR Can't create socket.\n");
 		Shutdown();
 		return -1;
 	}
   
   if (!socket->Connect(host,port)) {
-		fprintf(stderr, "NET: ERROR Can't connect to server.\n");
+		TRACE("NET: ERROR Can't connect to server.\n");
 		Shutdown();
 		return -1;
 	} else {
-		fprintf(stderr, "NET: Connected to server.\n");
+		TRACE("NET: Connected to server.\n");
 	}
 
 	SendHandShake();
 	WaitForHandShake();
 	
-	fprintf(stderr, "NET: Client: Server connection succeeded!\n");
+	TRACE("NET: Client: Server connection succeeded!\n");
 
 	return 0;
 }
@@ -94,16 +95,16 @@ int GameNetwork::InitServer(int _port) {
 	if (CommonInit(_port, "") == -1)
 		return -1;
 	
-	fprintf(stderr, "NET: Starting UDP network server on port %i\n", port);
+	TRACE("NET: Starting UDP network server on port %i\n", port);
   
 	socket->mode = ezSockets::skUDP;
   if (!socket->Create(IPPROTO_UDP, SOCK_DGRAM)) {
-		fprintf(stderr, "NET: ERROR: Can't create server socket!\n");
+		TRACE("NET: ERROR: Can't create server socket!\n");
 		return -1;
 	}
 
   if (!socket->Bind(port)) {
-		fprintf(stderr, "NET: ERROR: Can't bind() server socket!\n");
+		TRACE("NET: ERROR: Can't bind() server socket!\n");
 		return -1;
 	}
 
@@ -111,7 +112,7 @@ int GameNetwork::InitServer(int _port) {
 	rest(1000);
 	SendHandShake();
 	
-	fprintf(stderr, "NET: Server: Client connection succeeded!\n");
+	TRACE("NET: Server: Client connection succeeded!\n");
 
 	return 0;
 }

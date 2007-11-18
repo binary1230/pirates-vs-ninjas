@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "object.h"
 
 #include "gameState.h"
@@ -116,7 +117,7 @@ void Object::Draw() {
 	assert(WORLD != NULL);
 
 	if (tmp_debug_flag)
-		fprintf(stderr, "DEBUG FLAG!!\n");
+		TRACE("DEBUG FLAG!!\n");
 
 	DrawAtOffset(0,0);
 }
@@ -240,7 +241,7 @@ void Object::ResetForNextFrame() {
 							pos.GetX() + GetWidth(), pos.GetY() + GetHeight()
 							);
 
-	// assert(bbox.getx1() <= bbox.getx2());
+	// assert(bbox.getx1() <= bbox.getx2()); // DONT USE ASSERTS LIKE THIS.
 	// assert(bbox.gety1() <= bbox.gety2());
 }
 
@@ -251,13 +252,13 @@ Vector2D Object::Solve() {
 	pos += vel;
 
 	if (debug_flag)
-		fprintf(stderr, "vel=(%f,%f)\n", vel.GetX(), vel.GetY());
+		TRACE("vel=(%f,%f)\n", vel.GetX(), vel.GetY());
 	
 	UpdateProjectionRectFromVelocity();
 
 	/*if (debug && properties.is_player) {
-		fprintf(stderr, "-- YPOS  : %f\n", pos.GetY());
-		fprintf(stderr, "-- YPOS-H: %f\n", pos.GetY() - GetHeight());
+		TRACE("-- YPOS  : %f\n", pos.GetY());
+		TRACE("-- YPOS-H: %f\n", pos.GetY() - GetHeight());
 	}*/
 
 	return pos;
@@ -351,28 +352,28 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 
 	/*if (d.up) {
 		v.SetY(obj->GetY() - GetHeight());
-		if (debug) fprintf(stderr, "up!");
+		if (debug) TRACE("up!");
 	}*/
 
 	if (d.down) {
 		v.SetY(obj->GetY() + obj->GetHeight() );
-		if (debug) fprintf(stderr, "down!");
+		if (debug) TRACE("down!");
 	}
 
 	if (d.left) {
 		v.SetX(obj->GetX() + obj->GetWidth());
-		if (debug) fprintf(stderr, "left!");
+		if (debug) TRACE("left!");
 	}
 
 	if (d.right) {
 		v.SetX(obj->GetX() - GetWidth());
-		if (debug) fprintf(stderr, "right!");
+		if (debug) TRACE("right!");
 	}
 
 	//if (!(d.right || d.left || d.down || d.up))
-	//	if (debug) fprintf(stderr, "NONE! Not good.");
+	//	if (debug) TRACE("NONE! Not good.");
 
-	// fprintf(stderr, "\n");
+	// TRACE("\n");
 
 	return d;
 }

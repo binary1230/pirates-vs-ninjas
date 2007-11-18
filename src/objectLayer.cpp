@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectLayer.h"
 #include "gameState.h"
 #include "object.h"
@@ -43,7 +44,7 @@ void ObjectLayer::RemoveObject(Object* obj) {
 		*iter = NULL;
 		objects.erase(iter);
 	} else {
-		fprintf(stderr, " WARN: ObjectLayer: asked to remove an"
+		TRACE(" WARN: ObjectLayer: asked to remove an"
 										" object which isn't on this layer.\n");
 	}
 }

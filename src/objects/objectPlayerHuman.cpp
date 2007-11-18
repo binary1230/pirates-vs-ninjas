@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectPlayerHuman.h"
 #include "input.h"
 

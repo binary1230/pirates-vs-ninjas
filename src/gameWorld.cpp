@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "gameWorld.h"
 
 #include "luaManager.h"
@@ -46,7 +47,7 @@ void GameWorld::ShowText(	const char* txt,
 	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT);
 
 	if (!obj) {
-		fprintf(stderr, "ERROR: Failed to create Txt object in ShowText()\n");
+		TRACE("ERROR: Failed to create Txt object in ShowText()\n");
 		return;
 	}
 
@@ -72,19 +73,19 @@ int GameWorld::Init(XMLNode xMode) {
 		
 	OBJECT_FACTORY->CreateInstance();
 	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) {
-		fprintf(stderr, "ERROR: InitSystem: failed to init OBJECT_FACTORY!\n");
+		TRACE("ERROR: InitSystem: failed to init OBJECT_FACTORY!\n");
 		return -1;
 	}
 
 	forceFactory = new ForceFactory();
 	if ( !forceFactory || forceFactory->Init() < 0 ) {
-		fprintf(stderr, "ERROR: InitSystem: failed to init forceFactory!\n");
+		TRACE("ERROR: InitSystem: failed to init forceFactory!\n");
 		return -1;
 	}
 
 	EFFECTS->CreateInstance();
 	if ( !EFFECTS || !EFFECTS->Init() ) {
-		fprintf(stderr, "ERROR: InitSystem: failed to init EffectsManager!\n");
+		TRACE("ERROR: InitSystem: failed to init EffectsManager!\n");
 		return -1;
 	}
 
@@ -95,7 +96,7 @@ int GameWorld::Init(XMLNode xMode) {
 
 	EVENTS->CreateInstance();
 	if (!EVENTS || !EVENTS->Init()) {
-		fprintf(stderr, "ERROR: InitSystem: failed to init EventsManager!\n");
+		TRACE("ERROR: InitSystem: failed to init EventsManager!\n");
 		return -1;
 	}
 
@@ -319,8 +320,7 @@ void GameWorld::GetCollideableObjects(ObjectList &objs) {
 
 // TODO: probably a BIG source of CPU here.
 // probably need to optimize, but PROFILE to find out.
-void GameWorld::CheckForCollisions(	ObjectList &collideableObjects, 
-																					Object* obj) {
+void GameWorld::CheckForCollisions(	ObjectList &collideableObjects, Object* obj) {
 	assert(obj != NULL);
 
 	Object* target;
@@ -331,9 +331,9 @@ void GameWorld::CheckForCollisions(	ObjectList &collideableObjects,
 		return;
 	
 	// Loop over all collectable objects, see if we collide with any
-	for (	iter = collideableObjects.begin(); 
-				iter != collideableObjects.end(); 
-				iter++) {
+	for (iter = collideableObjects.begin(); 
+		 iter != collideableObjects.end(); 
+		 ++iter) {
 
 		target = *iter;
 
@@ -462,7 +462,7 @@ int GameWorld::Load(XMLNode &xMode) {
 	if (xMode.nChildNode("effects") == 1) {
 		XMLNode xEffects = xMode.getChildNode("effects");
 		if (!EFFECTS->LoadEffectsFromXML(xEffects)) {
-			fprintf(stderr, "ERROR: Can't load Effects XML!\n");
+			TRACE("ERROR: Can't load Effects XML!\n");
 			return -1;
 		}
 	}
@@ -471,8 +471,8 @@ int GameWorld::Load(XMLNode &xMode) {
 												Object::debug_draw_bounding_boxes	))
 		Object::debug_draw_bounding_boxes = false;
 
-	assert(GLOBALS->Value("camera_side_margins", camera_side_margins));
-	assert(GLOBALS->Value("camera_snap_rate", camera_snap_rate));
+	GLOBALS->Value("camera_side_margins", camera_side_margins);
+	GLOBALS->Value("camera_snap_rate", camera_snap_rate);
 
 	if (xMode.nChildNode("music") == 1) {
 		music_file = xMode.getChildNode("music").getText();
@@ -499,7 +499,7 @@ int GameWorld::Load(XMLNode &xMode) {
 		}
 
 		if (!found) {
-			fprintf(stderr, "ERROR: Tried to jump to a portal "
+			TRACE("ERROR: Tried to jump to a portal "
 											"that doesn't exist named '%s'!\n", 
 											lastExitInfo.lastPortalName.c_str());
 			return -1;
@@ -539,17 +539,17 @@ int GameWorld::Load(XMLNode &xMode) {
 int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 	XMLNode xInfo = xMode.getChildNode("info");
 
-	fprintf(stderr, " Loading Level: '%s'\n", xInfo.getChildNode("description").getText() );
+	TRACE(" Loading Level: '%s'\n", xInfo.getChildNode("description").getText() );
 
 	XMLNode xProps = xMode.getChildNode("properties");
 	XMLNode xColor;
 	// get width/height/camera xy
 	if (!xProps.getChildNode("width").getInt(width)) {
-		fprintf(stderr, "-- Invalid width!\n");
+		TRACE("-- Invalid width!\n");
 		return -1;
 	}
 	if (!xProps.getChildNode("height").getInt(height)) {
-		fprintf(stderr, "-- Invalid height!\n");
+		TRACE("-- Invalid height!\n");
 		return -1;
 	}
 
@@ -561,12 +561,12 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 		xColor = xProps.getChildNode("bgcolor");
 		int r,g,b;
 	
-		if (	!xColor.getChildNode("r").getInt(r) ||
-					!xColor.getChildNode("g").getInt(g) ||
-					!xColor.getChildNode("b").getInt(b) ||
-					r < 0 || g < 0 || b < 0 || r > 255 || b > 255 | g > 255) {
-					fprintf(stderr, "-- Invalid bgcolor specified!\n");
-					return -1;
+		if (!xColor.getChildNode("r").getInt(r) ||
+			!xColor.getChildNode("g").getInt(g) ||
+			!xColor.getChildNode("b").getInt(b) ||
+			r < 0 || g < 0 || b < 0 || r > 255 || b > 255 || g > 255) {
+			TRACE("-- Invalid bgcolor specified!\n");
+			return -1;
 		}
 
 		bg_color = makecol(r,g,b);
@@ -579,12 +579,12 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 		xColor = xProps.getChildNode("bgcolor_top");
 		int r,g,b;
 	
-		if (	!xColor.getChildNode("r").getInt(r) ||
-					!xColor.getChildNode("g").getInt(g) ||
-					!xColor.getChildNode("b").getInt(b) ||
-					r < 0 || g < 0 || b < 0 || r > 255 || b > 255 | g > 255) {
-					fprintf(stderr, "-- Invalid bgcolor_top specified!\n");
-					return -1;
+		if (!xColor.getChildNode("r").getInt(r) ||
+			!xColor.getChildNode("g").getInt(g) ||
+			!xColor.getChildNode("b").getInt(b) ||
+			r < 0 || g < 0 || b < 0 || r > 255 || b > 255 || g > 255) {
+			TRACE("-- Invalid bgcolor_top specified!\n");
+			return -1;
 		}
 		bg_color_top = makecol(r,g,b);
 	}
@@ -653,7 +653,7 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 
 	// Finished loading objects, do a few sanity checks
 	if (!camera_follow) {
-		fprintf(stderr, "ERROR: No <cameraFollow> found, cannot proceed.\n");
+		TRACE("ERROR: No <cameraFollow> found, cannot proceed.\n");
 		return -1;
 	}
 
@@ -670,14 +670,14 @@ int GameWorld::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
 		XMLNode* xObjectDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
 
 		if (!xObjectDef) {
-			fprintf(stderr, "ERROR: Unable to find object definition of type '%s'\n", 
+			TRACE("ERROR: Unable to find object definition of type '%s'\n", 
 											objDefName.c_str());
 			return -1;
 		}
 
 		// create the object from the objectDefinition
 		if (LoadObjectFromXML(*xObjectDef, xObject, layer) == -1) {
-			fprintf(stderr, "ERROR: Failed trying to load object of type '%s'\n", 
+			TRACE("ERROR: Failed trying to load object of type '%s'\n", 
 											objDefName.c_str());
 			return -1;
 		}
@@ -695,7 +695,7 @@ int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 	// 1) How much do we scroll this layer by?
 	float scroll_speed;
   if ( !xLayer.getAttributeFloat("scroll_speed", scroll_speed) ) {
-		fprintf(stderr, " -- no scroll_speed specified.\n");
+		TRACE(" -- no scroll_speed specified.\n");
 		return -1;
 	}
 
@@ -719,7 +719,7 @@ int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 		xRepeater = xLayer.getChildNode("repeat", &iterator);
 
 		if (!xRepeater.getAttributeInt("times", times_to_repeat)) {
-			fprintf(stderr, "-- Invalid # repeat times!\n");
+			TRACE("-- Invalid # repeat times!\n");
 			return -1;
 		}
 
@@ -728,14 +728,14 @@ int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 
 		if (xRepeater.nChildNode("starting_x") == 1) {
 			if (!xRepeater.getChildNode("starting_x").getInt(repeater_current_x)) {
-				fprintf(stderr, "ERROR: Invalid starting_x specified in <repeat>\n");
+				TRACE("ERROR: Invalid starting_x specified in <repeat>\n");
 				return -1;
 			}
 		} 
 		
 		if (xRepeater.nChildNode("starting_y") == 1) {
 			if (!xRepeater.getChildNode("starting_y").getInt(repeater_current_y)) {
-				fprintf(stderr, "ERROR: Invalid starting_y specified in <repeat>\n");
+				TRACE("ERROR: Invalid starting_y specified in <repeat>\n");
 				return -1;
 			}
 		}
@@ -783,14 +783,14 @@ int GameWorld::LoadObjectFromXML(
 		if (!camera_follow) {
 			camera_follow = obj;
 		} else {
-			fprintf(stderr, "ERROR: multiple camera targets in map\n");
+			TRACE("ERROR: multiple camera targets in map\n");
 			return -1;
 		}
 	}
 
 	// SPECIAL debug flag.  IF it is set, the object MAY print debug message
 	if (xObject.nChildNode("debug") == 1) {
-		fprintf(stderr, "-- Enabling debug mode.\n");
+		TRACE("-- Enabling debug mode.\n");
 		obj->SetDebugFlag(true);
 	}
 
@@ -819,12 +819,12 @@ int GameWorld::LoadObjectFromXML(
 		if (type == CString("fixed")) {
 
 			if (!xPos.getChildNode("x").getInt(x)) {
-				fprintf(stderr, "-- Invalid X coordinate specified (or did you want <x> instead of <x_offset> ?\n");
+				TRACE("-- Invalid X coordinate specified (or did you want <x> instead of <x_offset> ?\n");
 				return -1;	
 			}
 
 			if (!xPos.getChildNode("y").getInt(y)) {
-				fprintf(stderr, "-- Invalid Y coordinate specified (or did you want <y> instead of <y_offset> ?\n");
+				TRACE("-- Invalid Y coordinate specified (or did you want <y> instead of <y_offset> ?\n");
 				return -1;
 			}
 				
@@ -833,22 +833,22 @@ int GameWorld::LoadObjectFromXML(
 			int xmin, ymin, xmax, ymax;
 
 			if (!xPos.getChildNode("xmin").getInt(xmin)) {
-				fprintf(stderr, "-- Invalid xmin!\n");
+				TRACE("-- Invalid xmin!\n");
 				return -1;
 			}
 
 			if (!xPos.getChildNode("ymin").getInt(ymin)) {
-				fprintf(stderr, "-- Invalid ymin!\n");
+				TRACE("-- Invalid ymin!\n");
 				return -1;
 			}
 
 			if (!xPos.getChildNode("xmax").getInt(xmax)) {
-				fprintf(stderr, "-- Invalid xmax!\n");
+				TRACE("-- Invalid xmax!\n");
 				return -1;
 			}
 
 			if (!xPos.getChildNode("ymax").getInt(ymax)) {
-				fprintf(stderr, "-- Invalid ymax!\n");
+				TRACE("-- Invalid ymax!\n");
 				return -1;
 			}
 
@@ -859,11 +859,11 @@ int GameWorld::LoadObjectFromXML(
 
 			int _offset_x, _offset_y;
 			if (!xPos.getChildNode("x_offset").getInt(_offset_x)) {
-				fprintf(stderr, "-- Invalid X!\n");
+				TRACE("-- Invalid X!\n");
 				return -1;	
 			}
 			if (!xPos.getChildNode("y_offset").getInt(_offset_y)) {
-				fprintf(stderr, "-- Invalid Y!\n");
+				TRACE("-- Invalid Y!\n");
 				return -1;
 			}
 
@@ -874,7 +874,7 @@ int GameWorld::LoadObjectFromXML(
 			repeater_current_y += _offset_y;
 				
 		} else {
-			fprintf(stderr, "Unknown object position type: %s\n", type.c_str());
+			TRACE("Unknown object position type: %s\n", type.c_str());
 			return -1;
 		}
 				
@@ -925,7 +925,7 @@ int GameWorld::LoadObjectFromXML(
 		if (xPos.nChildNode("velx")>0) {
 			float velx;
 			if (!xPos.getChildNode("velx").getFloat(velx)) {
-				fprintf(stderr, "-- Invalid velx!\n");
+				TRACE("-- Invalid velx!\n");
 				return -1;
 			}
 			obj->SetVelX(velx);
@@ -934,7 +934,7 @@ int GameWorld::LoadObjectFromXML(
 		if (xPos.nChildNode("vely")>0) {
 			float vely;
 			if (!xPos.getChildNode("vely").getFloat(vely)) {
-				fprintf(stderr, "-- Invalid vely!\n");
+				TRACE("-- Invalid vely!\n");
 				return -1;
 			}
 			obj->SetVelY(vely);
@@ -943,7 +943,7 @@ int GameWorld::LoadObjectFromXML(
 		if (xPos.nChildNode("vel_rotate")>0) {
 			float vel_rotate;
 			if (!xPos.getChildNode("vel_rotate").getFloat(vel_rotate)) {
-				fprintf(stderr, "-- Invalid vel_rotate!\n");
+				TRACE("-- Invalid vel_rotate!\n");
 				return -1;
 			}
 			obj->SetUseRotation(true);
@@ -955,7 +955,7 @@ int GameWorld::LoadObjectFromXML(
 	if (xObject.nChildNode("inputController") == 1) {
 		int controller_num;
 		if (!xObject.getChildNode("inputController").getInt(controller_num)) {
-			fprintf(stderr, "-- Invalid controller number!\n");
+			TRACE("-- Invalid controller number!\n");
 			return -1;
 		}
 		obj->SetControllerNum(controller_num);
@@ -964,7 +964,7 @@ int GameWorld::LoadObjectFromXML(
 	if (xObject.nChildNode("alpha") == 1) {
 		int alpha;
 		if (!xObject.getChildNode("alpha").getInt(alpha) || alpha > 255) {
-			fprintf(stderr, "-- Invalid alpha!\n");
+			TRACE("-- Invalid alpha!\n");
 			return -1;
 		}
 		obj->SetAlpha(alpha);
@@ -973,7 +973,7 @@ int GameWorld::LoadObjectFromXML(
 	if (xObject.nChildNode("fadeout") == 1) {
 		int fadeout_time;
 		if (!xObject.getChildNode("fadeout").getInt(fadeout_time)) {
-			fprintf(stderr, "-- Invalid fadeout time!\n");
+			TRACE("-- Invalid fadeout time!\n");
 			return -1;
 		}
 

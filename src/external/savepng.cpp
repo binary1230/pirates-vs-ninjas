@@ -8,8 +8,6 @@
 #include "stdafx.h"
 #include "loadpng.h"
 
-
-
 /* write_data:
  *  Custom write function to use Allegro packfile routines,
  *  rather than C streams.

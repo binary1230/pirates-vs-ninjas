@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "ai.h"
 #include "gameModes.h"
 #include "xmlParser.h"
@@ -93,10 +94,10 @@ int GameModes::LoadMode(	CString mode_xml_filename,
 	currentMode = NULL;
 
 	#ifdef AI_TRAINING
-	fprintf(stderr, " AI: Enabling AI Training.\n");
+	TRACE(" AI: Enabling AI Training.\n");
 	#endif
 
-	fprintf(stderr, " Mode Info: filename '%s'\n",
+	TRACE(" Mode Info: filename '%s'\n",
 							    mode_xml_filename.c_str() );
 
 	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename);
@@ -104,7 +105,7 @@ int GameModes::LoadMode(	CString mode_xml_filename,
 																						"gameMode"	);
 
 	CString modeType = xMode.getAttribute("type");
-	fprintf(stderr, " Mode Info: type = '%s'\n", modeType.c_str());
+	TRACE(" Mode Info: type = '%s'\n", modeType.c_str());
 
 	// actually create the new mode
 	if (modeType == "simulation") {
@@ -141,7 +142,7 @@ int GameModes::LoadMode(	CString mode_xml_filename,
 	}
 
 	if (error || currentMode->Init(xMode) == -1) {
-			fprintf(stderr, "ERROR: GameModes: failed to init mode type '%s'!\n",
+			TRACE("ERROR: GameModes: failed to init mode type '%s'!\n",
 											modeType.c_str());
 			return -1;
 	}
@@ -167,7 +168,7 @@ void GameModes::SignalGameExit() {
 
 int GameModes::Init(XMLNode _xGame) {
 
-	fprintf(stderr, " Modes: Starting init.\n");
+	TRACE(" Modes: Starting init.\n");
 
 	currentMode = NULL;
 	currentModeIndex = 0;
@@ -179,7 +180,7 @@ int GameModes::Init(XMLNode _xGame) {
 	int max = _xGame.nChildNode("mode_file");
 
 	if (max <= 0) {
-		fprintf(stderr, " -- Error: No modes found.\n");
+		TRACE(" -- Error: No modes found.\n");
 		return -1;
 	}
 
@@ -205,7 +206,7 @@ int GameModes::Init(XMLNode _xGame) {
 
 	assert(currentMode != NULL);
 	
-	fprintf(stderr, " Modes: Init complete.\n");
+	TRACE(" Modes: Init complete.\n");
 
 	return 0;
 }
@@ -241,12 +242,12 @@ void GameModes::DoAIEndStuff() {
 	int score = currentMode->GetAiFitnessScore();
 
 	// print it to a file
-	fprintf(stderr, "AI: Writing end-game fitness score to file '" 
+	TRACE("AI: Writing end-game fitness score to file '" 
 									AI_RESULTS_FILE "'.\n");
 
 	FILE* f = fopen(AI_RESULTS_FILE, "w");
 	if (!f) {
-		fprintf(stderr, "AI: ERROR: Can't open AI results file for writing!\n");
+		TRACE("AI: ERROR: Can't open AI results file for writing!\n");
 		return;
 	}
 

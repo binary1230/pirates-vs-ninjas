@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "effectsManager.h"
 #include "globals.h"
 #include "gameWorld.h"
@@ -35,7 +36,7 @@ bool EffectsManager::AddEffectDefinition(	const CString &effectName,
 
 	effect.spawn_object_name = xEffect.getChildNode("spawn_object").getText();
 	if (effect.spawn_object_name.length() < 1) {
-		fprintf(stderr, "ERROR: Effect object spawn name invalid in effect '%s'\n", 
+		TRACE("ERROR: Effect object spawn name invalid in effect '%s'\n", 
 										effectName.c_str());
 		return false;
 	}
@@ -48,7 +49,7 @@ bool EffectsManager::AddEffectDefinition(	const CString &effectName,
 		if (!	xEffect.getChildNode("camera_shake")
 					.getAttributeInt("duration", effect.camera_shake_duration) || 
 					effect.camera_shake_duration < 0) {
-			fprintf(stderr, 	"ERROR: Effect camera shake duration "
+			TRACE(	"ERROR: Effect camera shake duration "
 												"invalid in effect '%s'\n", 
 												effectName.c_str());
 			return false;
@@ -88,14 +89,14 @@ Object* EffectsManager::TriggerObject(	const Object* triggeringObject,
 																				CString effectName) {
 
 	if (!triggeringObject) {
-		fprintf(stderr, "ERROR: Tried to trigger an effect with a NULL object!\n");
+		TRACE("ERROR: Tried to trigger an effect with a NULL object!\n");
 		return NULL;
 	}
 	
 	Object* newObj = OBJECT_FACTORY->CreateObject(effectName);
 
 	if (!newObj) {
-		fprintf(stderr, "ERROR: Unable to create effect object of type: '%s'\n", 
+		TRACE("ERROR: Unable to create effect object of type: '%s'\n", 
 										effectName.c_str());
 		return NULL;
 	}
@@ -114,7 +115,7 @@ Object* EffectsManager::TriggerEffect(	const Object* triggeringObject,
 	Effect* effect = FindEffectDefinition(effectName);
 
 	if (!effect) {
-		fprintf(stderr, "EFFECTS: Can't find effect named '%s'\n", 
+		TRACE("EFFECTS: Can't find effect named '%s'\n", 
 										effectName.c_str() );
 		return NULL;
 	}
@@ -161,12 +162,12 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
 		
 		if (!FindEffectDefinition(effectName)) {
 			if (!AddEffectDefinition(effectName, xEffect)) {
-				fprintf(stderr, "ERROR: Failed to add effect definition '%s'\n", 
+				TRACE("ERROR: Failed to add effect definition '%s'\n", 
 												effectName.c_str());
 				return false;
 			}
 		} else {
-      fprintf(stderr, "EffectsManager: WARNING: Duplicate effect "
+      TRACE("EffectsManager: WARNING: Duplicate effect "
 	                    "definition found for effect name: '%s', ignoring.\n",
                       effectName.c_str());
 		}
@@ -183,7 +184,7 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
     CString fileNew = ASSETMANAGER->GetPathOf(file);
 
     if (!fileNew.size()) {
-      fprintf(stderr, "EffectsManager: ERROR: Can't open "
+      TRACE("EffectsManager: ERROR: Can't open "
                       "requested XML file for inclusion: '%s'\n",
                       file.c_str() );
       return false;
@@ -192,7 +193,7 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
     // this method is recursive, let's make sure
     // we don't fall into any infinite loops.
     if (++recurse_level > 99) {
-      fprintf(stderr,   "ERROR: Infinite loop while reading effect\n"
+      TRACE(  "ERROR: Infinite loop while reading effect\n"
                         "       definitions!!  Make sure that that\n"
                         "       '%s' does not include itself!\n",
                         parent_include);

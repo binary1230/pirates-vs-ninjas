@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectCutBars.h"
 #include "window.h"
 #include "rect.h"

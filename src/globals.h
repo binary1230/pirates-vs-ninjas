@@ -51,4 +51,17 @@ typedef unsigned int uint;
 // put 3 things, "Hey", "what's", and "Up", into out_list.
 void StringSplit(CString str, CString delim, std::vector<CString> &results);
 
+void DebugTrace( char * format, ... );
+
+#ifdef TRACE
+#undef TRACE
+#endif 
+
+//#ifdef _DEBUG
+#define TRACE DebugTrace
+//#else
+//#define TRACE
+//#endif // _DEBUG
+
+
 #endif // GLOBALS_H

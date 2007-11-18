@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "mapSaver.h"
 #include "gameWorld.h"
 #include "object.h"
@@ -21,7 +22,7 @@ bool MapSaver::SaveEverything(	const GameWorld* p,
 
 	simulation = p;
 
-	fprintf(stderr, "MAPEDITOR: Starting to save to '%s'...\n", file.c_str());
+	TRACE("MAPEDITOR: Starting to save to '%s'...\n", file.c_str());
 
 	XMLNode xMode = XMLNode::createXMLTopNode("gameMode");
 	xMode.addAttribute("type", "simulation");
@@ -51,7 +52,7 @@ bool MapSaver::SaveEverything(	const GameWorld* p,
 
 	xMode.writeToFile(file.c_str());
 	
-	fprintf(stderr, "MAPEDITOR: Finished save!\n");
+	TRACE("MAPEDITOR: Finished save!\n");
 
 	simulation = NULL;
 

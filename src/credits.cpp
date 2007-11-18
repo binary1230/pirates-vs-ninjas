@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "credits.h"
 #include "gameState.h"
 #include "input.h"
@@ -14,7 +15,7 @@ int CreditsMode::Init(XMLNode xMode) {
 		return -1;
 
 	if (!xMode.getChildNode("scrollSpeed").getInt(scroll_speed)) {
-		fprintf(stderr, " -- Invalid scroll speed!\n");
+		TRACE(" -- Invalid scroll speed!\n");
 		return -1;
 	}
 	scroll_offset = WINDOW->Height();

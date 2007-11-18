@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "luaApi.h"
 #include "gameWorld.h"
 #include "objectTxtOverlay.h"
@@ -13,7 +14,7 @@ int LUAAPI lua_engine_print(lua_State* lua) {
 	const char* msg = lua_tostring(lua, -1);
 	int retval = 0;
 
-	fprintf(stderr, "%s", msg);
+	TRACE("%s", msg);
 
   lua_pushnumber( lua, retval );
   return 1;

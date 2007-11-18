@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "force.h"
 
 bool Force::Init() {

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "luaManager.h"
 #include "luaApi.h"
 #include "assetManager.h"
@@ -22,7 +23,7 @@ bool LuaManager::Init() {
 	luaL_openlibs(lua);
 	
 	if (!BindLuaCalls()) {
-		fprintf(stderr, "LUA: Failed to bind C++ calls to Lua!\n");
+		TRACE("LUA: Failed to bind C++ calls to Lua!\n");
 		return false;
 	}
 	
@@ -49,14 +50,14 @@ void LuaManager::Clear() {
 
   if (lua_pcall(lua, numArgs, numResults, 0) != 0) {
 		if (errorMsgOnFunctionNotFound)
-			fprintf(stderr, "LUA: Error running function `%s': %s", 
+			TRACE("LUA: Error running function `%s': %s", 
 							functionName, lua_tostring(lua, -1));
 		return false;
 	}
 
 	// retrieve result 
   // if (!lua_isnumber(lua, -1))
-	//   fprintf(stderr, "function `add_two_things' must return a number");
+	//   TRACE("function `add_two_things' must return a number");
 
 	// get the return value
   // int result = lua_tonumber(lua, -1);
@@ -83,14 +84,14 @@ bool LuaManager::RunVoidFunctionNoArgs(	const char* functionName,
 
   if (lua_pcall(lua, numArgs, numResults, 0) != 0) {
 		if (errorMsgOnFunctionNotFound)
-			fprintf(stderr, "LUA: Error running function `%s': %s", 
+			TRACE("LUA: Error running function `%s': %s", 
 							functionName, lua_tostring(lua, -1));
 		return false;
 	}
 
 	// retrieve result 
   // if (!lua_isnumber(lua, -1))
-	//   fprintf(stderr, "function `add_two_things' must return a number");
+	//   TRACE("function `add_two_things' must return a number");
 
 	// get the return value
   // int result = lua_tonumber(lua, -1);
@@ -104,7 +105,7 @@ bool LuaManager::DoFile(const char* _filename) {
 	CString filename = ASSETMANAGER->GetPathOf(_filename);
 
 	if (!filename.length()) {
-		fprintf(stderr, "ERROR: Can't open LUA file '%s'\n", _filename);
+		TRACE("ERROR: Can't open LUA file '%s'\n", _filename);
 		return false;
 	}
 

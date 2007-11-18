@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "window.h"
 
 #include "gameState.h"
@@ -35,7 +36,7 @@ void GameWindow::Screenshot(char* filename) {
 		file.Format("ninjas-screenshot%i.png", screenshot_num++);
 	}
 
-	fprintf(stderr, " -- saving screenshot '%s'\n", file.c_str());
+	TRACE(" -- saving screenshot '%s'\n", file.c_str());
 
 	save_bitmap(file.c_str(), screen, NULL);
 }
@@ -305,7 +306,7 @@ int GameWindow::Init( uint _width, uint _height,
 
 	// Special case: We won't be drawing _anything_
 	if (!OPTIONS->DrawGraphics() ) {
-		fprintf(stderr, "GameWindow: DISABLING ALL GRAPHICS\n");
+		TRACE("GameWindow: DISABLING ALL GRAPHICS\n");
 		set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
 		initialized = true;
 		return 0;
@@ -318,19 +319,23 @@ int GameWindow::Init( uint _width, uint _height,
 
 	uint gl_flags = AGL_COLOR_DEPTH | AGL_DOUBLEBUFFER | AGL_RENDERMETHOD;
 
-	if (!_fullscreen)
+	if (!_fullscreen) {
 		gl_flags |= AGL_WINDOWED;
+	} else {
+		gl_flags |= AGL_FULLSCREEN;
+	}
 
 	allegro_gl_set(AGL_COLOR_DEPTH, depth);
-  allegro_gl_set(AGL_DOUBLEBUFFER, 1);
-  // allegro_gl_set(AGL_Z_DEPTH, 24);
-  allegro_gl_set(AGL_WINDOWED, !_fullscreen);
-  allegro_gl_set(AGL_RENDERMETHOD, 1);
-  allegro_gl_set(AGL_SUGGEST, gl_flags);
+	allegro_gl_set(AGL_DOUBLEBUFFER, 1);
+	allegro_gl_set(AGL_Z_DEPTH, 24);
+	allegro_gl_set(AGL_WINDOWED, !_fullscreen);
+	allegro_gl_set(AGL_FULLSCREEN, _fullscreen);
+	allegro_gl_set(AGL_RENDERMETHOD, 1);
+	allegro_gl_set(AGL_SUGGEST, gl_flags);
 	
 	if (_fullscreen)
       gfx_mode = GFX_OPENGL_FULLSCREEN;
-  else
+	else
       gfx_mode = GFX_OPENGL;
 
 #	ifdef ALTERNATE_GFX_MODE
@@ -338,11 +343,11 @@ int GameWindow::Init( uint _width, uint _height,
 # endif // ALTERNATE_GFX_MODE
 
 	if (get_color_depth() != depth)
-		fprintf(stderr, "window: Warning: Asked for %i-bit color mode"
+		TRACE("window: Warning: Asked for %i-bit color mode"
 										", got %i-bit instead.\n", depth, get_color_depth());
 									
 	if (set_gfx_mode(gfx_mode, width, height, 0, 0) != 0) {
-		fprintf(stderr, 
+		TRACE(
 						"window: Can't set graphics mode! (%i, %i, fullscreen = %i) \n"
 						"Try setting a different graphics mode or try non-fullscreen\n"
 						"Allegro error says: '%s'\n"
@@ -354,9 +359,7 @@ int GameWindow::Init( uint _width, uint _height,
 	set_window_title(VERSION_STRING);
 
 	// XXX: Font stuff should go in asset manager
-	main_font = allegro_gl_convert_allegro_font(
-								font, AGL_FONT_TYPE_TEXTURED, -1.0
-							);
+	main_font = allegro_gl_convert_allegro_font(font, AGL_FONT_TYPE_TEXTURED, -1.0);
 	assert(main_font != NULL);
 	
 	if (InitGL())
@@ -415,7 +418,8 @@ void GameWindow::Shutdown() {
 	if (!initialized)
 			return;
 
-	allegro_gl_destroy_font(main_font);
+	if (main_font)
+		allegro_gl_destroy_font(main_font);
 
 	initialized = false;
 }

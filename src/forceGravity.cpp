@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "forceGravity.h"
 #include "globals.h"
 #include "object.h"

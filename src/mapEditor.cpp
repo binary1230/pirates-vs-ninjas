@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "mapEditor.h"
 #include "mapSaver.h"
 #include "sprite.h"

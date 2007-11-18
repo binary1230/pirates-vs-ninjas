@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "forceFactory.h"
 #include "globals.h"
 #include "forceInput.h"
@@ -28,7 +29,7 @@ Force* ForceFactory::CreateForce(ForceType type) {
 				inputForce->SetControllerNum(controller_num);
 			
 			} else {
-				fprintf(stderr, "ForceFactory: Failed to create new Input Force\n");
+				TRACE("ForceFactory: Failed to create new Input Force\n");
 				SAFE_DELETE(inputForce);
 			}
 
@@ -43,14 +44,14 @@ Force* ForceFactory::CreateForce(ForceType type) {
 				// gravityForce->SetSomething(...)
 			
 			} else {
-				fprintf(stderr, "ForceFactory: Failed to create new Input Force\n");
+				TRACE("ForceFactory: Failed to create new Input Force\n");
 				SAFE_DELETE(gravityForce);
 			}
 
 			force = gravityForce;
 			break;
 		default:
-			fprintf(stderr, "ForceFactory: Unknown ID passed: %i\n", type);
+			TRACE("ForceFactory: Unknown ID passed: %i\n", type);
 			force = NULL;
 	}
 	

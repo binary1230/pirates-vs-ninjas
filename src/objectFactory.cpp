@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectFactory.h"
 
 // TODO NOTES: ObjectFactory
@@ -39,12 +40,12 @@ Object* ObjectFactory::CreateObject(CString objDefName) {
 	XMLNode* xObjectDef = FindObjectDefinition(objDefName);
 
 	if (!xObjectDef) {
-		fprintf(stderr, "ObjectFactory: Unable to instantiate "
+		TRACE("ObjectFactory: Unable to instantiate "
 										"object definition: '%s'\n", objDefName.c_str());
 		return NULL;
 	}
 	
-	OBJECTID id = GetObjectIDFromXML(*xObjectDef);
+	ENGINE_OBJECTID id = GetObjectIDFromXML(*xObjectDef);
 	
 	return CreateObject(id, *xObjectDef, NULL);
 }
@@ -93,7 +94,7 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		if (!FindObjectDefinition(objName)) {
 			AddObjectDefinition(objName, xObjectDef);
 		} else {
-			fprintf(stderr, "ObjectFactory: WARNING: Duplicate object "
+			TRACE("ObjectFactory: WARNING: Duplicate object "
 											"definitions found for object name: '%s', ignoring.\n",
 											objName.c_str());
 		}
@@ -111,7 +112,7 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		CString fileNew = ASSETMANAGER->GetPathOf(file);
 	
 		if (!fileNew.size()) {
-			fprintf(stderr, "ObjectFactory: ERROR: Can't open "
+			TRACE("ObjectFactory: ERROR: Can't open "
 											"requested XML file for inclusion: '%s'\n", 
 											file.c_str() );
 			return false;
@@ -120,7 +121,7 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		// this method is recursive, let's make sure
 		// we don't fall into any infinite loops.
 		if (++recurse_level > 99) {
-			fprintf(stderr, 	"ERROR: Infinite loop while reading object\n"
+			TRACE(	"ERROR: Infinite loop while reading object\n"
 												"       definitions!!  Make sure that that\n"
 												"       '%s' does not include itself!\n", 
 												parent_include);
@@ -160,7 +161,7 @@ void ObjectFactory::SetupTypes() {
 }
 
 // Get the object ID from an XML object definition
-OBJECTID ObjectFactory::GetObjectIDFromXML(XMLNode &xObjectDef) {
+ENGINE_OBJECTID ObjectFactory::GetObjectIDFromXML(XMLNode &xObjectDef) {
 	return objectDefTypes[GetObjectTypeFromXML(xObjectDef)];
 }
 
@@ -179,10 +180,10 @@ Object* ObjectFactory::CreateObjectFromXML(
 {
 	assert(WORLD != NULL);
 
-	OBJECTID id = GetObjectIDFromXML(xObjectDef);
+	ENGINE_OBJECTID id = GetObjectIDFromXML(xObjectDef);
 
 	if (id < 1) {
-		fprintf(stderr, "ObjectFactory: ERROR: Unable to find specified "
+		TRACE("ObjectFactory: ERROR: Unable to find specified "
 										"object type '%s'\n", 
 										GetObjectTypeFromXML(xObjectDef).c_str() );
 		return NULL;
@@ -191,7 +192,7 @@ Object* ObjectFactory::CreateObjectFromXML(
 	Object* obj = CreateObject(id, xObjectDef, &xObject);
 
 	if (!obj) {
-		fprintf(stderr, "ERROR: Unable to instantiate object of type: '%s'.\n",
+		TRACE("ERROR: Unable to instantiate object of type: '%s'.\n",
 										GetObjectTypeFromXML(xObjectDef).c_str() );
 		return NULL;
 	}
@@ -199,7 +200,7 @@ Object* ObjectFactory::CreateObjectFromXML(
 	return obj;
 }
 
-Object* ObjectFactory::CreateObject(	OBJECTID id, 
+Object* ObjectFactory::CreateObject(	ENGINE_OBJECTID id, 
 																			XMLNode &xObjectDef,
 																			XMLNode *xObject) {
 	Object* obj = NULL;
@@ -260,7 +261,7 @@ Object* ObjectFactory::CreateObject(	OBJECTID id,
 			break;
 			
 		default:
-			fprintf(stderr, "ERROR: Unknown Object ID passed?? [%i]\n", id);
+			TRACE("ERROR: Unknown Object ID passed?? [%i]\n", id);
 			obj = NULL;
 			break;
 	}
@@ -394,18 +395,18 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
   obj->controller_sprite = ASSETMANAGER->LoadSprite(filename.c_str());
     
   if (!obj->controller_sprite) {
-    fprintf(stderr, "-- ERROR: Can't load file '%s'\n", filename.c_str() );
+    TRACE("-- ERROR: Can't load file '%s'\n", filename.c_str() );
     delete obj;
     return NULL;
   }
   
   int x1,y1;
   if (!xImages.getChildNode("base").getChildNode("x").getInt(x1)) {
-    fprintf(stderr, "Invalid controller base X!\n");
+    TRACE("Invalid controller base X!\n");
     return NULL;
   }
   if (!xImages.getChildNode("base").getChildNode("x").getInt(y1)) {
-    fprintf(stderr, "Invalid controller base Y!\n");
+    TRACE("Invalid controller base Y!\n");
     return NULL;
   }
   obj->pos.SetX(x1);
@@ -425,17 +426,17 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
       b->sprite = ASSETMANAGER->LoadSprite(filename.c_str());
       
       if (!b->sprite) {
-        fprintf(stderr,"-- ERROR: Can't load file '%s'\n",filename.c_str());
+        TRACE("-- ERROR: Can't load file '%s'\n",filename.c_str());
         return NULL;
       }
 
       int x2,y2;  
       if (!xBtn.getChildNode("x").getInt(x2)) {
-        fprintf(stderr, "Invalid controller button X!\n");
+        TRACE("Invalid controller button X!\n");
         return NULL;
       }
       if (!xBtn.getChildNode("y").getInt(y2)) {
-        fprintf(stderr, "Invalid controller button Y!\n");
+        TRACE("Invalid controller button Y!\n");
         return NULL;
       }
       b->sprite->x_offset = x2;
@@ -509,13 +510,13 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!using_default) {
 		if ( xSpringDirection.nChildNode("x") != 1 ||  
 				!xSpringDirection.getChildNode("x").getFloat(x_strength)) {
-			fprintf(stderr, " -- invalid spring strength (x)!\n");
+			TRACE(" -- invalid spring strength (x)!\n");
 			return false;
 		}
 	
 		if ( xSpringDirection.nChildNode("y") != 1 ||  
 				!xSpringDirection.getChildNode("y").getFloat(y_strength)) {
-			fprintf(stderr, " -- invalid spring strength (y)!\n");
+			TRACE(" -- invalid spring strength (y)!\n");
 			return NULL;
 		}
 	}
@@ -599,17 +600,17 @@ bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 
 	if (xProps.nChildNode("mass")) {
 		if (!xProps.getChildNode("mass").getFloat(obj->mass)) {
-			fprintf(stderr, "-- Invalid MASS.\n");
+			TRACE("-- Invalid MASS.\n");
 			return false;
 		}
 	}
 	
 	ClearProperties(obj->properties);
-	obj->properties.feels_gravity = xProps.nChildNode("affectedByGravity"); 
-	obj->properties.feels_user_input = xProps.nChildNode("affectedByInput1"); 
-	obj->properties.feels_friction = xProps.nChildNode("affectedByFriction"); 
+	obj->properties.feels_gravity = xProps.nChildNode("affectedByGravity") != 0; 
+	obj->properties.feels_user_input = xProps.nChildNode("affectedByInput1") != 0; 
+	obj->properties.feels_friction = xProps.nChildNode("affectedByFriction") != 0; 
 
-	obj->properties.is_solid = xProps.nChildNode("solidObject");
+	obj->properties.is_solid = xProps.nChildNode("solidObject") != 0;
 	
 	if (xProps.nChildNode("isOverlay")) {
 		obj->properties.is_overlay = 1;
@@ -619,7 +620,7 @@ bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 			!xProps.getChildNode("springStrength").getInt(
 			obj->properties.spring_strength)		) {
 
-		fprintf(stderr, " -- invalid spring strength!\n");
+		TRACE(" -- invalid spring strength!\n");
 		return false;
 	}*/
 

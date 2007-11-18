@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectController.h"
 
 #include "assetManager.h"

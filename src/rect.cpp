@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "rect.h"
 
 /*void _Rect::fromVec(const Vector2D &v1, const Vector2D &v2) {
@@ -43,18 +44,8 @@ void _Rect::FixY() {
 }*/
 
 void _Rect::Print(char* name) {
-	fprintf(stderr, "%s\t x1 = %f, y1 = %f, x2 = %f, y2 = %f\n", 
+	TRACE("%s\t x1 = %f, y1 = %f, x2 = %f, y2 = %f\n", 
 					name, x1, y1, x2, y2);
-}
-
-bool _Rect::Overlaps(const _Rect &rect) const {	
-	if (gety1() > rect.gety2() 	||
-			gety2() < rect.gety1() 	||
-			getx2() < rect.getx1()	||
-			getx1() > rect.getx2()	) 
-		return false;
-
-	return true;
 }
 
 _Rect& _Rect::operator=(const _Rect &r) {

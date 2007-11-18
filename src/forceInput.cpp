@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "forceInput.h"
 #include "globals.h"
 #include "input.h"
@@ -27,7 +28,7 @@ ForceInput::ForceInput() {
 	type = FORCE_INPUT;
 	controller_num = 1;	// default
 
-	assert(GLOBALS->Value("player_acceleration", magnitude));
+	GLOBALS->Value("player_acceleration", magnitude);
 }
 
 ForceInput::~ForceInput() {}

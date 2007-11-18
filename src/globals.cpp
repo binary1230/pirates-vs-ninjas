@@ -1,5 +1,17 @@
 #include "stdafx.h"
+#include "stdafx.h"
 #include "globals.h"
+
+void DebugTrace( char * format, ... )
+{
+	va_list args;
+	const int bufsize = 4000;
+	static char buffer[bufsize];
+
+	va_start( args, format );
+	vsnprintf( buffer, bufsize - 1, format, args );
+	OutputDebugStr(buffer);
+}
 
 void StringSplit(CString str, CString delim, vector<CString> &results) {
 	uint cutAt;
@@ -53,7 +65,7 @@ void LogEvent(LOGTYPE event, Object* obj) {
 			txt = "LAYERREMOVE";
 			break;
 		default:
-			fprintf(stderr, "ERRORLOGHACK: WRONG VALUE??\n");
+			TRACE("ERRORLOGHACK: WRONG VALUE??\n");
 			exit(-1);
 			break;
 	}

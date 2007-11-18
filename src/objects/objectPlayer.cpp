@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectPlayer.h"
 
 #include "gameState.h"
@@ -60,7 +61,7 @@ void PlayerObject::UpdateSpriteFlip() {
 
 void PlayerObject::UpdateRunningAnimationSpeed() {
 	// alter the speed of the animation based on the velocity
-	// fprintf(stderr, "vel=%f\n", fabs(vel.GetX()));
+	// TRACE("vel=%f\n", fabs(vel.GetX()));
 	if (fabs(vel.GetX()) < 3.0f)
 		currentAnimation->SetSpeedMultiplier(10);// slow
 	else if (fabs(vel.GetX()) < 7.0f)
@@ -376,7 +377,7 @@ void PlayerObject::UpdateState() {
 			DoWalkThroughDoor();
 			break;
 		default:
-			fprintf(stderr, " -- PLAYEROBJECT ERROR: Unkown state asked for!\n");
+			TRACE(" -- PLAYEROBJECT ERROR: Unkown state asked for!\n");
 			assert(false);
 			break;
 	}

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "input.h"
 #include "gameState.h"
 #include "gameOptions.h"
@@ -68,7 +69,7 @@ int Input::MouseY() {
 }
 
 bool Input::MouseButton(MouseClickType t) {
-	return mouse_buttons & t;
+	return (mouse_buttons & t) != 0;
 }
 
 int Input::MouseX() {
@@ -81,7 +82,7 @@ int Input::MouseX() {
 // the Nth player.
 bool Input::Key(uint gameKey, uint controller_number) {
 	int i = ResolveControllerKey(gameKey, controller_number);
-	return game_key[i];
+	return game_key[i] != 0;
 }
 
 // Rarely, if ever, called.  Mostly used by joystick stuff
@@ -151,19 +152,19 @@ bool Input::InitPlayback(CString filename, bool seed_engine) {
 	uint seed;
 				
 	if (demofile) {
-		fprintf(stderr, "InputPlayback: ERROR already reading demo file.\n");
+		TRACE("InputPlayback: ERROR already reading demo file.\n");
 		return false;
 	} 
 
 	demofile = fopen(filename.c_str(), "r");
 	
 	if (!demofile) {
-			fprintf(stderr,	"InputPlayback: ERROR can't open demofile '%s'.\n",
+			TRACE(	"InputPlayback: ERROR can't open demofile '%s'.\n",
 							filename.c_str());
 			return false;
 	}
 	
-	//fprintf(stderr, "InputRecord: Playing back demo from file '%s'.\n", 
+	//TRACE("InputRecord: Playing back demo from file '%s'.\n", 
 	//						filename.c_str());
 
 	// 1st line2: 'DEMO' header + version info
@@ -179,7 +180,7 @@ bool Input::InitPlayback(CString filename, bool seed_engine) {
 	} else {
 		if (seed_engine) {
 			GAMESTATE->SetRandomSeed(seed);
-			fprintf(stderr, "InputPlayback: Using random seed %u\n", seed);
+			TRACE("InputPlayback: Using random seed %u\n", seed);
 		}
 	}
 
@@ -261,7 +262,7 @@ void Input::GetNextFrameData() {
 		if (count == 1) {
 			// total badness.. we need to handle this better,
 			// but just DIE right here.
-			fprintf(stderr, "HUGE HUGE INTERNAL ERROR: Could only read one value\n"
+			TRACE("HUGE HUGE INTERNAL ERROR: Could only read one value\n"
 											"from the demo file, it is probably corrupted.\n");
 			error = true;
 			exit(-1);
@@ -275,19 +276,19 @@ bool Input::InitRecorder(CString filename) {
 	old_key.resize(GAMEKEY_COUNT);
 
 	if (demofile) {
-		fprintf(stderr, "InputRecord: ERROR already saving demo file.\n");
+		TRACE("InputRecord: ERROR already saving demo file.\n");
 		return false;
 	} 
 
 	demofile = fopen(filename.c_str(), "w");
 	
 	if (!demofile) {
-			fprintf(stderr,	"InputRecord: ERROR can't write to demofile '%s'.\n",
+			TRACE(	"InputRecord: ERROR can't write to demofile '%s'.\n",
 							filename.c_str());
 			return false;
 	}
 
-	fprintf(stderr, "InputRecord: Recording demo to file '%s'.\n", 
+	TRACE("InputRecord: Recording demo to file '%s'.\n", 
 							filename.c_str());
 
 	// write 'DEMO' header + game version number and some extra info
@@ -333,9 +334,9 @@ bool Input::CommonInit() {
 
 	// num_joysticks is a global allegro variable
 	if (num_joysticks == 0)
-		fprintf(stderr, " Input: No joysticks found\n");
+		TRACE(" Input: No joysticks found\n");
 	else
-		fprintf(stderr, " Input: %i joystick(s) found\n", num_joysticks);
+		TRACE(" Input: %i joystick(s) found\n", num_joysticks);
 
 	gamekey_to_realkey.resize(GAMEKEY_COUNT);
 	game_key.resize(GAMEKEY_COUNT);
@@ -352,7 +353,7 @@ bool Input::CommonInit() {
 }
 
 void Input::LoadDefaultKeyMappings() {
-	fprintf(stderr, " Input: Using default key mappings!\n");
+	TRACE(" Input: Using default key mappings!\n");
 	
 	int player1_offset = PLAYERKEY_COUNT * 0;
 	int player2_offset = PLAYERKEY_COUNT * 1;
@@ -383,13 +384,13 @@ void Input::LoadDefaultKeyMappings() {
 }
 
 bool Input::LoadKeyMappings(char* filename) {
-	fprintf(stderr, "Input: Key map loading not supported yet!\n");
+	TRACE("Input: Key map loading not supported yet!\n");
 	return false;
 }
 
 void Input::Shutdown() {
 	if (demofile) {
-		fprintf(stderr, "WARN: closing demofile, but "
+		TRACE("WARN: closing demofile, but "
 										"record/playback still in progress.");
 		fclose(demofile);
 	}
@@ -496,7 +497,7 @@ void Input::UpdateLive() {
 		game_key[i] = key[gamekey_to_realkey[i]];
 	}
 
-	DoJoystickUpdateHack();
+	// DoJoystickUpdateHack();
 
 	// get the mouse from global allegro variables
 	mouse_x_pos = ::mouse_x;
@@ -596,7 +597,7 @@ void Input::DoJoystickUpdateHack() {
 
 void Input::BeginRecording()	{				
 	if (!demofile) {
-		fprintf(stderr,	"InputRecord: ERROR InitRecorder() not called yet!\n");
+		TRACE(	"InputRecord: ERROR InitRecorder() not called yet!\n");
 		return;
 	}
 	
@@ -629,7 +630,7 @@ void Input::BeginPlayback()	{
 	ClearKeys();
 
 	if (!demofile) {
-		fprintf(stderr,	"InputPlayback: ERROR InitPlayback() not called yet!\n");
+		TRACE(	"InputPlayback: ERROR InitPlayback() not called yet!\n");
 		return;
 	}	
 

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "xmlParser.h"
 #include "StdString.h"
 #include "gameState.h"
@@ -31,7 +32,7 @@ void GameMenu::DoMenuAction(const CString &action) {
 	} else if (action == "Quit") {
 		DoQuit();
 	} else {
-		fprintf(stderr, "-- Invalid menu action: %s\n", action.c_str());
+		TRACE("-- Invalid menu action: %s\n", action.c_str());
 	}			
 }
 
@@ -109,18 +110,18 @@ int GameMenu::Init(XMLNode xMode) {
 
 	back = ASSETMANAGER->LoadSprite(xMode.getChildNode("bgPic").getText());
 	if (!back) {
-		fprintf(stderr, "-- MENU ERROR: Couldn't load bgPic.\n");
+		TRACE("-- MENU ERROR: Couldn't load bgPic.\n");
 		return -1;
 	}
 	
 	selector = ASSETMANAGER->LoadSprite(xMode.getChildNode("selectorPic").getText());
 	if (!selector) {
-		fprintf(stderr, "-- MENU ERROR: Couldn't load selectorPic\n");
+		TRACE("-- MENU ERROR: Couldn't load selectorPic\n");
 		return -1;
 	}
 
 	if (!xMode.getChildNode("xpos").getInt(x_pos)) {
-		fprintf(stderr, "-- MENU ERROR: Invalid xPos\n");
+		TRACE("-- MENU ERROR: Invalid xPos\n");
 		return -1;	
 	}
 
@@ -133,7 +134,7 @@ int GameMenu::Init(XMLNode xMode) {
 		xPos = xPositions.getChildNode("ypos", &iterator);
 		
 		if (!xPos.getInt(ypos)) {
-			fprintf(stderr, "-- MENU ERROR: Invalid yPos\n");
+			TRACE("-- MENU ERROR: Invalid yPos\n");
 			return -1;
 		}
 		y_pos.push_back(ypos);

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "gameSound.h"
 #include "gameState.h"
 #include "assetManager.h"
@@ -18,11 +19,13 @@ void GameSound::PlaySound(CString name, unsigned int pan) {
 
 	if (use_variable_pitch)
 		freq += Rand(0, freq_range) - (freq_range / 2);
+
+	TRACE("pitch=%d", freq);
 	
 	s_iter s = sounds.find(name.c_str());
 
 	if (s == sounds.end()) {
-		fprintf(stderr, "- sound: warning: Sound '%s' was never loaded.\n", 
+		TRACE("- sound: warning: Sound '%s' was never loaded.\n", 
 										name.c_str());
 		return;
 	}
@@ -90,8 +93,8 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 		xSound = xSounds.getChildNode("sound", &iterator);
 		CString name = xSound.getAttribute("name");
 		
-		if (LoadSound(xSound.getText(), name) == -1) {
-			fprintf(stderr, "ERROR: Can't load soundfile: '%s'\n", 
+		if (!LoadSound(xSound.getText(), name)) {
+			TRACE("ERROR: Can't load soundfile: '%s'\n", 
 											xSound.getText());
 			return false;
 		}
@@ -108,7 +111,7 @@ int GameSound::Init(bool _sound_enabled) {
 	
 	//if (install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL) == -1) {
 	if (install_sound(DIGI_AUTODETECT, 0, NULL) == -1) {
-		fprintf(stderr, " WARNING: Sound init failure.  Message from Allegro:\n"
+		TRACE(" WARNING: Sound init failure.  Message from Allegro:\n"
 										"%s\n", allegro_error);
 		sound_enabled = false;
 	}
@@ -117,8 +120,8 @@ int GameSound::Init(bool _sound_enabled) {
 	
 	set_volume_per_voice(0);
 
-	assert(GLOBALS->Value("sound_use_variable_pitch", use_variable_pitch));
-	assert(GLOBALS->Value("sound_freq_range", freq_range));
+	GLOBALS->Value("sound_use_variable_pitch", use_variable_pitch);
+	GLOBALS->Value("sound_freq_range", freq_range);
 
 	return 0;
 }

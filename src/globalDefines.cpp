@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "globalDefines.h"
 
 DECLARE_SINGLETON(GlobalDefines)
@@ -38,12 +39,13 @@ bool GlobalDefines::Value(char* varName, bool &out) {
 	else
 		out = false;
 
+	assert(ret_val);
 	return ret_val;
 }
 
 bool GlobalDefines::Value(char* varName, int &out) {
 	if (!xParams.nChildNode(varName)) {
-		fprintf(stderr, "ERROR: Can't find global XML variable named '%s'\n", 
+		TRACE("ERROR: Can't find global XML variable named '%s'\n", 
 										varName);
 		return false;
 	}
@@ -53,7 +55,7 @@ bool GlobalDefines::Value(char* varName, int &out) {
 
 bool GlobalDefines::Value(char* varName, float &out) {
 	if (!xParams.nChildNode(varName)) {
-		fprintf(stderr, "ERROR: Can't find global XML variable named '%s'\n", 
+		TRACE("ERROR: Can't find global XML variable named '%s'\n", 
 										varName);
 		return false;
 	}
@@ -63,7 +65,7 @@ bool GlobalDefines::Value(char* varName, float &out) {
 
 bool GlobalDefines::Value(char* varName, CString &out) {
 	if (!xParams.nChildNode(varName)) {
-		fprintf(stderr, "ERROR: Can't find global XML variable named '%s'\n", 
+		TRACE("ERROR: Can't find global XML variable named '%s'\n", 
 										varName);
 		return false;
 	}

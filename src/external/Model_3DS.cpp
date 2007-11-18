@@ -774,7 +774,7 @@ void Model_3DS::MapNameChunkProcessor(long length, long findex, int matindex)
 	sprintf(fullname, "%s%s", path, name);
 	Sprite* s = ASSETMANAGER->LoadSprite(fullname);
 
-	fprintf(stderr, "Can't load 3ds tex: %s\n", fullname);
+	TRACE("Can't load 3ds tex: %s\n", fullname);
 	assert(s != NULL && "Can't load 3ds model texture!");
 
 	Materials[matindex].sprite = s;

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "objectIDs.h"
 #include "animations.h"
 

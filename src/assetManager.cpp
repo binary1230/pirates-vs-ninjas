@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "assetManager.h"
 #include "oggFile.h"
 #include "sprite.h"
@@ -141,7 +142,7 @@ Sprite* AssetManager::LoadSprite(	const char* filename,
 		BITMAP* bmp = load_bitmap(file, *pal);
 	
 		if (!bmp) {
-			fprintf(stderr, "ERROR: Can't load bitmap file: '%s'\n", file.c_str());
+			TRACE("ERROR: Can't load bitmap file: '%s'\n", file.c_str());
 			delete sprite;
 			return NULL;
 		}
@@ -168,12 +169,12 @@ Sprite* AssetManager::LoadSprite(	const char* filename,
 		if (sprite->texture != 0) {
 			sprites[filename] = sprite;
 		} else {
-			fprintf(stderr, 	"ERROR: Failed making texture for '%s'\n"
+			TRACE(	"ERROR: Failed making texture for '%s'\n"
 												"-NOTE: Make sure texture size is a multiple of 2!\n",
 												file.c_str());
 
 			if (allegro_gl_error && strlen(allegro_gl_error))
-				fprintf(stderr, "       AllegroGL says: %s\n", allegro_gl_error);
+				TRACE("       AllegroGL says: %s\n", allegro_gl_error);
 
 			delete sprite;
 			return NULL;
@@ -206,10 +207,10 @@ SAMPLE* AssetManager::LoadSound(const char* filename) {
 }
 
 OGGFILE* AssetManager::LoadMusic(const char* filename) {
-	const char* music_file = GetPathOf(filename);
+	CString music_file = GetPathOf(filename);
 
-	if (strlen(music_file) < 0) {
-		fprintf(stderr, " - WARN: Can't find music file: %s\n", filename);
+	if (music_file.GetLength() < 0) {
+		TRACE(" - WARN: Can't find music file: %s\n", filename);
 		return 0;
 	}
 
@@ -221,12 +222,12 @@ OGGFILE* AssetManager::LoadMusic(const char* filename) {
 	music = new OGGFILE();
 
 	if (!music) {
-		fprintf(stderr, " - ERROR: Out of memory while trying to load %s!\n", filename);
+		TRACE(" - ERROR: Out of memory while trying to load %s!\n", filename);
 		return NULL;
 	}
 	
 	if (!music->Init(music_file) ) {
-		fprintf(stderr, " - WARN: Invalid music file: %s\n", filename);
+		TRACE(" - WARN: Invalid music file: %s\n", filename);
 		music->Shutdown();
 		return NULL;
 	}
@@ -263,12 +264,12 @@ AssetManager::~AssetManager() {
 //! if not on Mac, it just returns ""
 CString AssetManager::GetMacOSXCurrentWorkingDir() const {
 #ifdef PLATFORM_DARWIN 
-	fprintf(stderr, "Assetmanager: Using MacOSX Carbon stuff.\n");
+	TRACE("Assetmanager: Using MacOSX Carbon stuff.\n");
 	CFBundleRef mainBundle = CFBundleGetMainBundle();
 	CFURLRef url = CFBundleCopyBundleURL(mainBundle);
 	CFStringRef cfStr = CFURLCopyPath(url);
 	CString path = CFStringGetCStringPtr(cfStr, CFStringGetSystemEncoding());
-	fprintf(stderr, "Assetmanager: Adding path: '%s'\n", path.c_str());
+	TRACE("Assetmanager: Adding path: '%s'\n", path.c_str());
 	return CString(path + "Resources/");
 #else
 	return "";

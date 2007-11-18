@@ -1,6 +1,8 @@
 /* AllegroFont - a wrapper for FreeType 2 */
 /* to render TTF and other font formats with Allegro */
 
+#include "stdafx.h"
+
 // we're not using this file rightnow.
 #ifdef PIRATES_USING_ALFONT
             
