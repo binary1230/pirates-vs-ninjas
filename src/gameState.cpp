@@ -392,7 +392,7 @@ void GameState::UpdateFPS()
 
 	int iDiff = ticks - iTicksAtLastFrameDrawn;
 
-	if (iDiff >= FPS) {
+	if (iDiff > FPS) {
 
 		// The new actual FPS rate for the last second:
 		m_iCurrentFps = iAmountOfFramesDrawnSinceLastCheck;
@@ -409,20 +409,7 @@ void GameState::UpdateFPS()
 //! Draw the current mode
 void GameState::Draw() {
 
-	// Ghetto FPS display
-	// --------------------
-	static DWORD iTicksAtLastFrameDrawn = GetTickCount();
-	static int iAmountOfFramesDrawnSinceLastCheck = 0;
-
-	int iDiff = GetTickCount() - iTicksAtLastFrameDrawn;
-
-	if (iDiff > 1000) {
-		TRACE("FPS: %d\n", iAmountOfFramesDrawnSinceLastCheck);
-		iAmountOfFramesDrawnSinceLastCheck = 0;
-		iTicksAtLastFrameDrawn = GetTickCount();
-	} else {
-		iAmountOfFramesDrawnSinceLastCheck++;
-	}
+	UpdateFPS();
 
 	if (OPTIONS->DrawGraphics()) {
 		WINDOW->BeginDrawing();
