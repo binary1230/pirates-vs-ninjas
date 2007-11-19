@@ -8,6 +8,8 @@
 #include "input.h"
 #include "gameState.h"
 #include "window.h"
+#include "object.h"
+#include "objectFactory.h"
 
 MapEditor::MapEditor() {}
 MapEditor::~MapEditor() {}
@@ -17,9 +19,6 @@ int MapEditor::Init(XMLNode xMode) {
 
 	if (ret_val == -1)
 		return -1;
-		
-	MapSaver mapSaver;
-	mapSaver.SaveEverything(this, "test-map.xml", xObjDefs);
 
 	cursor_sprite = ASSETMANAGER->LoadSprite("cursor.png", true);
 	assert(cursor_sprite && "Unable to load cursor");
@@ -32,6 +31,7 @@ int MapEditor::Init(XMLNode xMode) {
 	m_iCurrentLayer = 0;
 	m_bDisplayOneLayerOnly = 0;
 	m_uiTxtTicksLeft = 0;
+	m_eCurrentMode = MODE_MAIN;
 
 	WINDOW->SetTitle("Pirates VS Ninjas Map Editor");
 	SetFlashText("Pirates VS Ninjas Map Editor, press H for help.");
@@ -44,6 +44,9 @@ void MapEditor::Select(Object* obj) {
 }
 
 void MapEditor::Shutdown() {
+	MapSaver mapSaver;
+	mapSaver.SaveEverything(this, "test-map.xml", xObjDefs);
+
 	GameWorld::Shutdown();
 }
 
@@ -84,14 +87,14 @@ void MapEditor::ComputeNewScrolling() {
 		camera_y -= SCROLL_VALUE;
 
 	 // keep it from getting off screen
-	 if (camera_x < 0) 
-			camera_x = 0;
-	 if (camera_x > width - (int)WINDOW->Width()) 
-			camera_x = width - WINDOW->Width();
-	 if (camera_y < 0) 
-			camera_y = 0;
-	 if (camera_y > height - (int)WINDOW->Height()) 
-			camera_y = height - WINDOW->Height();
+	if (camera_x < 0) 
+		camera_x = 0;
+	if (camera_x > width - (int)WINDOW->Width()) 
+		camera_x = width - WINDOW->Width();
+	if (camera_y < 0) 
+		camera_y = 0;
+	if (camera_y > height - (int)WINDOW->Height()) 
+		camera_y = height - WINDOW->Height();
 }
 
 void MapEditor::ToggleOneLayerDisplay() 
@@ -113,40 +116,134 @@ void MapEditor::ToggleOneLayerDisplay()
 
 void MapEditor::SelectNextLayer()
 {
-	if (!m_bDisplayOneLayerOnly)
-		return;
-
-	layers[m_iCurrentLayer]->SetVisible(false);
+	if (m_bDisplayOneLayerOnly)
+		layers[m_iCurrentLayer]->SetVisible(false);
 
 	m_iCurrentLayer++;
 	if (m_iCurrentLayer == layers.size())
 		m_iCurrentLayer = 0;
 
-	layers[m_iCurrentLayer]->SetVisible(true);
+	if (m_bDisplayOneLayerOnly)
+		layers[m_iCurrentLayer]->SetVisible(true);
 
 	SetFlashText("Selecting layer: %s", layers[m_iCurrentLayer]->GetName());
 }
 
 void MapEditor::SelectPreviousLayer()
 {
-	if (!m_bDisplayOneLayerOnly)
-		return;
-
-	layers[m_iCurrentLayer]->SetVisible(false);
+	if (m_bDisplayOneLayerOnly)
+		layers[m_iCurrentLayer]->SetVisible(false);
 
 	m_iCurrentLayer--;
 	if (m_iCurrentLayer == -1)
 		m_iCurrentLayer = layers.size() - 1;
 
-	layers[m_iCurrentLayer]->SetVisible(true);
+	if (m_bDisplayOneLayerOnly)
+		layers[m_iCurrentLayer]->SetVisible(true);
 
 	SetFlashText("Selecting layer: %s", layers[m_iCurrentLayer]->GetName());
 }
 
-void MapEditor::CheckForInput()
+void MapEditor::ModeUpdate()
 {
-	INPUT->Update();
+	CommonModeUpdateStart();
+	
+	// Figure out if we go to a different mode now
+	if (INPUT->RealKeyOnce(KEY_F1))
+		m_eCurrentMode = MODE_OBJECT_PLACEMENT;
+	
+	switch (m_eCurrentMode) {
+		default:
+			assert(0 && "Invalid mode.");
+			break;
 
+		case MODE_MAIN:
+			break; // DO nothing
+
+		case MODE_OBJECT_PLACEMENT:
+			ModeObjectPlacementUpdate();
+			break;
+	}
+
+	CommonModeUpdateEnd();
+}
+
+void MapEditor::ModeObjectPlacementUpdate()
+{
+	static int iCurrentIndex = 0;
+	static Object* pkObj = NULL;
+
+	if (OBJECT_FACTORY->GetObjectDefinitionCount() == 0) {
+		m_eCurrentMode = MODE_MAIN;
+		iCurrentIndex = -1;
+		return;
+	}
+
+	// -----------------------------------------------------------
+	// move existing object
+	// -----------------------------------------------------------
+
+	if (pkObj) {
+		pkObj->SetXY(INPUT->MouseX() + camera_x, (WINDOW->Height() - INPUT->MouseY()) + camera_y);
+		
+		assert(pkObj->GetLayer());
+
+		// TODO: This should just be one call to SetLayer(), refactor this junk in there.
+		if (pkObj->GetLayer())
+			pkObj->GetLayer()->RemoveObject(pkObj);
+		pkObj->SetLayer(layers[m_iCurrentLayer]);
+		pkObj->GetLayer()->AddObject(pkObj);
+
+		// insert it permanently if they clicked
+		if (INPUT->MouseButtonOnce(MOUSE_LEFT_BTN)) {
+			pkObj = NULL;	// just remove our reference to it, it's already in the world.
+		}
+	}
+
+	// -----------------------------------------------------------
+
+	bool bGetPrevious = INPUT->RealKeyOnce(KEY_INSERT);
+	bool bGetNext = INPUT->RealKeyOnce(KEY_DEL);
+
+	if (pkObj && !bGetNext && !bGetPrevious)
+		return;
+
+	// -----------------------------------------------------------
+	// create a new object/got to previous/next object
+	// -----------------------------------------------------------
+
+	if (bGetNext) {
+		iCurrentIndex++;
+		if (iCurrentIndex >= OBJECT_FACTORY->GetObjectDefinitionCount())
+			iCurrentIndex = 0;
+	}
+
+	if (bGetPrevious) {
+		iCurrentIndex--;
+		if (iCurrentIndex < 0)
+			iCurrentIndex = OBJECT_FACTORY->GetObjectDefinitionCount() - 1;
+	}
+
+	// delete the old object
+	if (pkObj) {
+		pkObj->SetIsDead(true);
+		pkObj = NULL;
+		DoCleaning();
+	}
+
+	// add the new object
+	const CString& sObjectName = OBJECT_FACTORY->GetObjectDefinition(iCurrentIndex);
+	SetFlashText("OBJECTS: Looking at object: '%s'", sObjectName.c_str());
+
+	pkObj = OBJECT_FACTORY->CreateObject(sObjectName);
+	assert(pkObj);
+
+	pkObj->SetLayer(layers[m_iCurrentLayer]);
+	WORLD->AddObject(pkObj, true);
+}
+
+void MapEditor::CommonModeUpdateStart() 
+{
 	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
 		GAMESTATE->SignalGameExit();      // for real
 		return;
@@ -160,9 +257,14 @@ void MapEditor::CheckForInput()
 		SelectPreviousLayer();
 }
 
-void MapEditor::Update() {
-	CheckForInput();
+void MapEditor::CommonModeUpdateEnd() 
+{
 	ComputeNewScrolling();
+}
+
+void MapEditor::Update() {
+	INPUT->Update();
+	ModeUpdate();
 
 	if (m_uiTxtTicksLeft > 0)
 		m_uiTxtTicksLeft--;

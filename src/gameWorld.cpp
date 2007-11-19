@@ -42,8 +42,8 @@ int GameWorld::GetCameraY() {
 }
 
 void GameWorld::ShowText(	const char* txt, 
-																const char* avatar_filename, 
-																bool modal_active) {
+							const char* avatar_filename, 
+							bool modal_active) {
 	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT);
 
 	if (!obj) {
@@ -761,8 +761,7 @@ int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 
 	max = xLayer.nChildNode("object");
 
-  for (i=iterator=0; i < max; i++) {
-
+	for (i=iterator=0; i < max; i++) {
 		xObject = xLayer.getChildNode("object", &iterator);
 
 		if (CreateObjectFromXML(xObject, layer) == -1)
@@ -773,10 +772,9 @@ int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 }
 
 // Do the REAL work of loading an object from XML
-int GameWorld::LoadObjectFromXML(
-								XMLNode &xObjectDef,
-								XMLNode &xObject,
-								ObjectLayer* const layer) {
+int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
+								 XMLNode &xObject,
+								 ObjectLayer* const layer) {
 
 	int x,y;
 
@@ -999,7 +997,7 @@ int GameWorld::LoadObjectFromXML(
 
 ObjectLayer* GameWorld::FindLayer(const char* name) {
 	for (uint i = 0; i < layers.size(); ++i) {
-		if (layers[i]->GetName() == name)
+		if (_stricmp(layers[i]->GetName(),name) == 0)
 			return layers[i];
 	}
 

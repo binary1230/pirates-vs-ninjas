@@ -86,7 +86,7 @@ bool EffectsManager::AddEffectDefinition(	const CString &effectName,
 }
 
 Object* EffectsManager::TriggerObject(	const Object* triggeringObject, 
-																				CString effectName) {
+										CString effectName) {
 
 	if (!triggeringObject) {
 		TRACE("ERROR: Tried to trigger an effect with a NULL object!\n");

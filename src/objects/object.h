@@ -311,6 +311,7 @@ class Object {
 		bool IsColliding(Object *obj) const;
 
 		inline bool IsDead() const {return is_dead;};
+		inline void SetIsDead(bool bVal) {is_dead = bVal;}
 
 		//! Returns a vector used for collision detection
 		//! This vector will be have a position that is guaranteed

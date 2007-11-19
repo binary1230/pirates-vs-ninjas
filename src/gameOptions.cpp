@@ -96,8 +96,8 @@ void GameOptions::Clear() {
 	draw_graphics = true;
 	wait_for_updates = true;
 
-	// map_editor_enabled = false;
-	map_editor_enabled = true;
+	 map_editor_enabled = false;
+	//map_editor_enabled = true;
 
 	is_valid = true;
 }
@@ -168,8 +168,6 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 	}
 
 	Clear();
-
-#ifndef WIN32		//  TODO: Steal a win32 getopt() implementation
 
 	char c;
 
@@ -298,8 +296,6 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 		}
 	}
 
-#endif // WIN32	
-
 	if (new_argv) {
 		freeargv(new_argv);
 		new_argv = NULL;
@@ -316,12 +312,10 @@ bool GameOptions::IsValid() {
 	if (network_enabled) {
 
 		if (network_port_num == -1) {
-			fprintf(	stderr, 
-								"Options ==> ERROR\n You MUST specify a port with (-p).\n\n");
+			TRACE("Options ==> ERROR\n You MUST specify a port with (-p).\n\n");
 			return (is_valid = false);
 		} else if (network_port_num <= 0) {
-			fprintf(	stderr, 
-								"Options ==> ERROR\n (-p) Port # out of range.\n\n");
+			TRACE("Options ==> ERROR\n (-p) Port # out of range.\n\n");
 			return (is_valid = false);
 		}
 
@@ -329,9 +323,9 @@ bool GameOptions::IsValid() {
 		// if we aren't to start as a server, but they didn't give us a server name
 		// (btw, ^ is XOR) [YES.]
 		if (!(network_start_as_server ^ (network_server_name.GetLength() > 0))) {
-			fprintf(	stderr, "Options ==> ERROR\n"
-												"To start with networking, you must specify ONLY ONE\n"
-												"of the following: (-c) or (-s servername)\n\n");
+			TRACE(	"Options ==> ERROR\n"
+					"To start with networking, you must specify ONLY ONE\n"
+					"of the following: (-c) or (-s servername)\n\n");
 			return (is_valid = false);
 		}
 	}

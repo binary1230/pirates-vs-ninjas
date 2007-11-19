@@ -89,8 +89,8 @@ CString GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 //! Use the specified mode exit info from the last mode that exited
 //! If there was no mode exit info, just pass in a blank oldExitInfo and
 //! the new mode will ignore it.
-int GameModes::LoadMode(	CString mode_xml_filename, 
-													const GameModeExitInfo& oldExitInfo ) {
+int GameModes::LoadMode(CString mode_xml_filename, 
+						const GameModeExitInfo& oldExitInfo ) {
 	currentMode = NULL;
 
 	#ifdef AI_TRAINING
@@ -142,9 +142,8 @@ int GameModes::LoadMode(	CString mode_xml_filename,
 	}
 
 	if (error || currentMode->Init(xMode) == -1) {
-			TRACE("ERROR: GameModes: failed to init mode type '%s'!\n",
-											modeType.c_str());
-			return -1;
+		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", 	modeType.c_str());
+		return -1;
 	}
 
 	GAMESTATE->ResetAccumulatedTime();

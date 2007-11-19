@@ -15,8 +15,8 @@ MapSaver::MapSaver() {
 MapSaver::~MapSaver() {}
 
 bool MapSaver::SaveEverything(	const GameWorld* p, 
-																const CString file, 
-																XMLNode &xObjDefs) {
+								const CString file, 
+								XMLNode &xObjDefs) {
 
 	assert(p != NULL && file.size() > 0);
 
@@ -110,7 +110,7 @@ void MapSaver::OutputObject(const Object* obj, XMLNode &xObj) {
 		else if (objDoor->door_type == RETURN_TO_LAST_MODE)
  			door_type = "return";
 
-		assert(door_type && "ERROR: Unkown door type specified.");
+		assert(door_type && "ERROR: Unknown door type specified.");
 
 		xObj.addAttribute("type", door_type);
 		

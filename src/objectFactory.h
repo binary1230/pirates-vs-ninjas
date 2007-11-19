@@ -15,6 +15,7 @@ class AssetManager;
 //! only used for parsing XML
 typedef map<const CString, XMLNode> ObjectDefMapping;
 typedef map<const CString, XMLNode>::iterator ObjectDefMappingIter;
+typedef map<const CString, XMLNode>::const_iterator ObjectDefMappingConstIter;
 
 //! A class which creates Object classes from integer ID's
 class ObjectFactory {
@@ -41,12 +42,12 @@ class ObjectFactory {
 		Object* NewCutBarObject(XMLNode &xDef, XMLNode *xObj=NULL);
 	
 		bool LoadCommonObjectStuff(	Object* obj, XMLNode &xDef, 
-																XMLNode *xObj, bool loadAnimations = true);
+									XMLNode *xObj, bool loadAnimations = true);
 
 		bool LoadObjectSounds(Object* obj, XMLNode &xDef);
 		bool LoadObjectProperties(Object* obj, XMLNode &xDef);
-		bool LoadObjectAnimations(Object* obj, XMLNode &xDef, 
-															AnimationMapping *animation_lookup = NULL);
+		bool LoadObjectAnimations(	Object* obj, XMLNode &xDef, 
+									AnimationMapping *animation_lookup = NULL);
 
 		//! Holds object definitions
 		//! e.g. the definition of e.g. a "player" object 
@@ -57,8 +58,8 @@ class ObjectFactory {
 		map<const CString, ENGINE_OBJECTID> objectDefTypes;
 
 		Object* CreateObject(	ENGINE_OBJECTID id, 
-													XMLNode &xObjectDef, 
-													XMLNode *xObject=NULL	);
+								XMLNode &xObjectDef, 
+								XMLNode *xObject=NULL );
 
 		void SetupTypes();
 
@@ -76,10 +77,14 @@ class ObjectFactory {
 		Object* CreateObject(CString objDefName);
 
 		bool AddObjectDefinition(	const CString &objDefName, 
-															const XMLNode &xObjectDef);
+									const XMLNode &xObjectDef );
 
 		// Return the XML associated with an object definition
 		XMLNode* FindObjectDefinition(const CString &objDefName);
+
+		// Can use this to iterate through the object definitions
+		int GetObjectDefinitionCount() const;
+		const CString& GetObjectDefinition(int iIndex) const;
 
 		//! Load all object definitions from root <objectDefinitions> node
 		bool LoadObjectDefsFromXML(XMLNode &xObjDefs);

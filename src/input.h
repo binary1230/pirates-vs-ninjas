@@ -49,12 +49,15 @@
 #define GAMEKEY_COUNT						18
 
 enum MouseClickType {
-	MOUSE_LEFT_BTN,
-	MOUSE_RIGHT_BTN,
-	MOUSE_MIDDLE_BTN,
-	MOUSE_SCROLL_UP,
-	MOUSE_SCROLL_DOWN
+	MOUSE_LEFT_BTN		= 0x00000001,
+	MOUSE_RIGHT_BTN		= 0x00000002,
+	MOUSE_MIDDLE_BTN	= 0x00000004,
+
+	MOUSE_SCROLL_UP		= 0x00000008,	// these don't really exist in allegro?
+	MOUSE_SCROLL_DOWN	= 0x00000010,
 };
+
+const int g_iMaxMouseButtonCount = 5;
 
 // The input can come from 3 places:
 enum InputType {
@@ -124,7 +127,8 @@ class Input {
 
 		int mouse_x_pos;
 		int mouse_y_pos;
-		int mouse_buttons;
+		uint mouse_buttons;
+		uint released_mouse_buttons;
 		
 		//! Load the default key mappings
 		void LoadDefaultKeyMappings();
@@ -144,6 +148,7 @@ class Input {
 		//! Update key release info
 		void UpdateKeyReleases();
 		void UpdateRealKeyReleases();
+		void UpdateMouseButtonReleases();
 
 		//! Init common stuff for all input types
 		bool CommonInit();
@@ -263,6 +268,10 @@ class Input {
 		bool CheckRealKeyOnce(uint iKeyNum) const;
 		void HandleRealKeyOnce(uint iKeyNum);
 		bool RealKeyOnce(uint iKeyNum);
+		
+		bool MouseButtonOnce(MouseClickType t);
+		void HandleMouseButtonOnce(MouseClickType t);
+		bool CheckMouseButtonOnce(MouseClickType t) const;
 };
 
 #define INPUT Input::GetInstance()

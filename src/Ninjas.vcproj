@@ -534,6 +534,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\external\XGetopt.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\external\xmlParser.cpp"
 					>
 				</File>
@@ -698,6 +702,10 @@
 			</File>
 			<File
 				RelativePath=".\window.h"
+				>
+			</File>
+			<File
+				RelativePath=".\external\XGetopt.h"
 				>
 			</File>
 			<Filter

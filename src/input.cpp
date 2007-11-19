@@ -72,6 +72,43 @@ bool Input::MouseButton(MouseClickType t) {
 	return (mouse_buttons & t) != 0;
 }
 
+// -------------------------------------------------------------
+
+bool Input::CheckMouseButtonOnce(MouseClickType t) const {
+	return (released_mouse_buttons & t) && (mouse_buttons & t);
+}
+
+void Input::HandleMouseButtonOnce(MouseClickType t) {
+	released_mouse_buttons &= ~t;
+}
+
+bool Input::MouseButtonOnce(MouseClickType t) {
+	if (!CheckMouseButtonOnce(t))
+		return false;
+
+	HandleMouseButtonOnce(t);
+	return true;
+}
+
+void Input::UpdateMouseButtonReleases() {
+	if ((mouse_buttons & MOUSE_LEFT_BTN) == 0)
+		released_mouse_buttons |= MOUSE_LEFT_BTN;
+
+	if ((mouse_buttons & MOUSE_RIGHT_BTN) == 0)
+		released_mouse_buttons |= MOUSE_RIGHT_BTN;
+
+	if ((mouse_buttons & MOUSE_MIDDLE_BTN) == 0)
+		released_mouse_buttons |= MOUSE_MIDDLE_BTN;
+
+	if ((mouse_buttons & MOUSE_SCROLL_UP) == 0)
+		released_mouse_buttons |= MOUSE_SCROLL_UP;
+
+	if ((mouse_buttons & MOUSE_SCROLL_DOWN) == 0)
+		released_mouse_buttons |= MOUSE_SCROLL_DOWN;
+}
+
+// -------------------------------------------------------------
+
 int Input::MouseX() {
 	return mouse_x_pos;
 }
@@ -382,6 +419,8 @@ bool Input::CommonInit() {
 		real_released_key[i] = true;
 	}
 
+	released_mouse_buttons = 0xFFFFFFFF;
+
 	demofile = NULL;
 
 	LoadDefaultKeyMappings();
@@ -456,7 +495,9 @@ void Input::Update() {
 			break;
 	}
 
+	UpdateKeyReleases();
 	UpdateRealKeyReleases();
+	UpdateMouseButtonReleases();
 }
 
 //! This is A little complicated..
@@ -519,8 +560,6 @@ void Input::UpdatePlayback() {
 	// so they can exit the demo manually
 	if (key[gamekey_to_realkey[GAMEKEY_EXIT]])
 		game_key[GAMEKEY_EXIT] = 1;	
-	
-	UpdateKeyReleases();
 }
 
 //! Live Input update (freeze state of input)
@@ -541,8 +580,6 @@ void Input::UpdateLive() {
 	mouse_x_pos = ::mouse_x;
 	mouse_y_pos = ::mouse_y;
 	mouse_buttons = ::mouse_b;
-
-	UpdateKeyReleases();
 }
 
 // These are for an XBOX controller

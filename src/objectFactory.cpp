@@ -40,18 +40,23 @@ Object* ObjectFactory::CreateObject(CString objDefName) {
 	XMLNode* xObjectDef = FindObjectDefinition(objDefName);
 
 	if (!xObjectDef) {
-		TRACE("ObjectFactory: Unable to instantiate "
-										"object definition: '%s'\n", objDefName.c_str());
+		TRACE(	"ObjectFactory: Unable to instantiate "
+				"object definition: '%s'\n", objDefName.c_str());
 		return NULL;
 	}
 	
 	ENGINE_OBJECTID id = GetObjectIDFromXML(*xObjectDef);
 	
-	return CreateObject(id, *xObjectDef, NULL);
+	Object* pkObject = CreateObject(id, *xObjectDef, NULL);
+	if (!pkObject)
+		return false;
+
+	pkObject->SetObjectDefName(objDefName);
+	return pkObject;
 }
 
 bool ObjectFactory::AddObjectDefinition(const CString &objDefName, 	
-																				const XMLNode &xObjectDef) {
+										const XMLNode &xObjectDef) {
 	if (objDefName == "" || objDefName.length() < 1)
 		return false;
 
@@ -69,6 +74,22 @@ XMLNode* ObjectFactory::FindObjectDefinition(const CString &objDefName) {
 	return &(iter->second);
 }
 
+int ObjectFactory::GetObjectDefinitionCount() const {
+	return objectDefs.size();
+}
+
+const CString& ObjectFactory::GetObjectDefinition(int iIndex) const {
+	assert(iIndex >= 0 && iIndex < (int)objectDefs.size());
+	ObjectDefMappingConstIter iter = objectDefs.begin();
+	
+	// HACK: why?? this sucks. why does iter+= iIndex not work?
+	for (int i = 0; i != iIndex; ++i)
+		++iter;
+
+	assert(iter != objectDefs.end());
+
+	return iter->first;
+}
 	
 //! Recursively loads Object Definitions from XML, 
 //! puts them into an ObjectMapping

@@ -6,6 +6,13 @@
 
 class Sprite;
 
+enum MapEditMode 
+{
+	MODE_MAIN,
+
+	MODE_OBJECT_PLACEMENT,
+};
+
 class MapEditor : public GameWorld {
 	public:
 		virtual int Init(XMLNode);
@@ -33,13 +40,19 @@ class MapEditor : public GameWorld {
 		CString m_sTxt;
 		uint m_uiTxtTicksLeft;
 
+		MapEditMode m_eCurrentMode;
+
 		XMLNode xObjDefs;
 
 		void Select(Object* obj);
 		void SelectPreviousLayer();
 		void SelectNextLayer();
 		void ToggleOneLayerDisplay();
-		void CheckForInput();
+		void ModeUpdate();
+		void CommonModeUpdateStart();
+		void CommonModeUpdateEnd();
+
+		void ModeObjectPlacementUpdate();
 };
 
 #endif // MAP_EDITOR_H
