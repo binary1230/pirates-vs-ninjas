@@ -997,7 +997,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 
 ObjectLayer* GameWorld::FindLayer(const char* name) {
 	for (uint i = 0; i < layers.size(); ++i) {
-		if (_stricmp(layers[i]->GetName(),name) == 0)
+		if (stricmp(layers[i]->GetName(),name) == 0)
 			return layers[i];
 	}
 
