@@ -27,6 +27,7 @@
 	#pragma warning(disable:4312) // 'type cast' : conversion from 'unsigned int' to 'unsigned char *' of greater size
 	#pragma warning(disable:4267)
 	#pragma warning(disable:4311) // pointer truncation from 'const void *' to 'unsigned long'
+	#pragma warning(disable:4996) // 'stricmp': The POSIX name for this item is deprecated.
 
 	// NOTE: Turning this off won't check for invalid iterators, HOWEVER, it is SLOW as hell.
 	#ifndef _DEBUG

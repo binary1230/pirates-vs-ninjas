@@ -197,6 +197,9 @@ void PlayerObject::DoFalling() {
 	// XXX: should be PLAYER_FALLING when we have one.
 	currentAnimation = animations[PLAYER_JUMPING];
 
+	if (vel.y < -30.0f)
+		vel.y = -30.0f;
+
 	if (d.down) {
 		DoStanding();
 	}
