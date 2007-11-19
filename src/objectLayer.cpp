@@ -4,12 +4,10 @@
 #include "object.h"
 #include "gameWorld.h"
 
-void ObjectLayer::SetName(const char* _name) {
-	SAFE_DELETE(name);
-	name = new CString(_name);
-}
-
 void ObjectLayer::Draw() {
+	if (!IsVisible())
+		return;
+
 	ObjectListReverseIter rev_iter;
 	Object* obj;
 
@@ -64,12 +62,10 @@ void ObjectLayer::Shutdown() {
 ObjectLayer::ObjectLayer() {
 	scroll_speed = 1.0f;
 	visible = true;	
-	name = NULL;
 	objects.clear();
 }
 
 ObjectLayer::~ObjectLayer() {
 	Shutdown();
-	SAFE_DELETE(name);
 }
 

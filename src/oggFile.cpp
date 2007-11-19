@@ -2,26 +2,25 @@
 #include "oggFile.h"
 
 int OGGFILE::Poll() {
-
 	if (!initialized)
 		return -1;
 
 	char *data;
-  long len;
+	long len;
 
 	assert(s!=NULL);
 	assert(f!=NULL);
 
-  data = (char *)alogg_get_oggstream_buffer(s);
-  if (data) { 
-    len = pack_fread(data, DEFAULT_MUSIC_DATA_SIZE, f);
-    if (len < DEFAULT_MUSIC_DATA_SIZE)
-      alogg_free_oggstream_buffer(s, len);
-    else
-      alogg_free_oggstream_buffer(s, -1);
-  }
+	data = (char *)alogg_get_oggstream_buffer(s);
+	if (data) { 
+		len = pack_fread(data, DEFAULT_MUSIC_DATA_SIZE, f);
+		if (len < DEFAULT_MUSIC_DATA_SIZE)
+			alogg_free_oggstream_buffer(s, len);
+		else
+			alogg_free_oggstream_buffer(s, -1);
+	}
     
-  return alogg_poll_oggstream(s);
+	return alogg_poll_oggstream(s);
 }
 
 bool OGGFILE::Init(const char* file) {

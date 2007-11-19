@@ -135,7 +135,7 @@ void MapSaver::OutputLayer(const ObjectLayer* layer, XMLNode &xLayer) {
 
 	xLayer.addAttribute("scroll_speed", layer->scroll_speed);
 	if (layer->name)
-		xLayer.addAttribute("name", layer->name->c_str());
+		xLayer.addAttribute("name", layer->name.c_str());
 
 	ObjectListConstReverseIter iter;
 	XMLNode xObject;

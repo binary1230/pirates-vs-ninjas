@@ -356,7 +356,7 @@ int GameWindow::Init( uint _width, uint _height,
 		return -1;
 	}
 	
-	set_window_title(VERSION_STRING);
+	SetTitle(VERSION_STRING);
 
 	// XXX: Font stuff should go in asset manager
 	main_font = allegro_gl_convert_allegro_font(font, AGL_FONT_TYPE_TEXTURED, -1.0);
@@ -368,6 +368,11 @@ int GameWindow::Init( uint _width, uint _height,
 		initialized = false;
 
 	return 0;
+}
+
+void GameWindow::SetTitle(const char* szTitle)
+{
+	set_window_title(szTitle);
 }
 
 bool GameWindow::InitGL() {

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "mapEditor.h"
+#include "objectLayer.h"
 #include "mapSaver.h"
 #include "sprite.h"
 #include "window.h"
@@ -28,6 +29,13 @@ int MapEditor::Init(XMLNode xMode) {
 
 	selection = NULL;
 
+	m_iCurrentLayer = 0;
+	m_bDisplayOneLayerOnly = 0;
+	m_uiTxtTicksLeft = 0;
+
+	WINDOW->SetTitle("Pirates VS Ninjas Map Editor");
+	SetFlashText("Pirates VS Ninjas Map Editor, press H for help.");
+
 	return ret_val;
 }
 
@@ -42,11 +50,27 @@ void MapEditor::Shutdown() {
 void MapEditor::Draw() {
 	GameWorld::Draw();
 
+	if (m_uiTxtTicksLeft > 0)
+		WINDOW->DrawText(10, 10, m_sTxt);
+
 	// Draw the cursor
 	WINDOW->DrawSprite(cursor_sprite, INPUT->MouseX(), INPUT->MouseY());
 }
 
-#define SCROLL_VALUE 10
+void MapEditor::SetFlashText(char * format, ... )
+{
+	va_list args;
+	const int bufsize = 4000;
+	static char buffer[bufsize];
+
+	va_start( args, format );
+	vsnprintf( buffer, bufsize - 1, format, args );
+
+	m_sTxt = buffer;
+	m_uiTxtTicksLeft = 60;
+}
+
+#define SCROLL_VALUE 30
 
 void MapEditor::ComputeNewScrolling() {	
 	// compute new camera
@@ -70,17 +94,78 @@ void MapEditor::ComputeNewScrolling() {
 			camera_y = height - WINDOW->Height();
 }
 
-void MapEditor::UpdateIdle() {
-	
+void MapEditor::ToggleOneLayerDisplay() 
+{
+	m_bDisplayOneLayerOnly = !m_bDisplayOneLayerOnly;
+
+	if (m_bDisplayOneLayerOnly)
+		SetFlashText("Single layer display ON.");
+	else
+		SetFlashText("Single layer display OFF.");
+
+	for (uint i = 0; i < layers.size(); ++i) {
+		layers[i]->SetVisible(!m_bDisplayOneLayerOnly);
+	}
+
+	if (m_bDisplayOneLayerOnly && m_iCurrentLayer >= 0 && m_iCurrentLayer < (int)layers.size())
+		layers[m_iCurrentLayer]->SetVisible(true);
 }
 
-void MapEditor::Update() {
+void MapEditor::SelectNextLayer()
+{
+	if (!m_bDisplayOneLayerOnly)
+		return;
+
+	layers[m_iCurrentLayer]->SetVisible(false);
+
+	m_iCurrentLayer++;
+	if (m_iCurrentLayer == layers.size())
+		m_iCurrentLayer = 0;
+
+	layers[m_iCurrentLayer]->SetVisible(true);
+
+	SetFlashText("Selecting layer: %s", layers[m_iCurrentLayer]->GetName());
+}
+
+void MapEditor::SelectPreviousLayer()
+{
+	if (!m_bDisplayOneLayerOnly)
+		return;
+
+	layers[m_iCurrentLayer]->SetVisible(false);
+
+	m_iCurrentLayer--;
+	if (m_iCurrentLayer == -1)
+		m_iCurrentLayer = layers.size() - 1;
+
+	layers[m_iCurrentLayer]->SetVisible(true);
+
+	SetFlashText("Selecting layer: %s", layers[m_iCurrentLayer]->GetName());
+}
+
+void MapEditor::CheckForInput()
+{
+	INPUT->Update();
+
 	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
 		GAMESTATE->SignalGameExit();      // for real
 		return;
 	}
 
+	if (INPUT->RealKeyOnce(KEY_1))
+		ToggleOneLayerDisplay();
+	else if (INPUT->RealKeyOnce(KEY_PGUP))
+		SelectNextLayer();
+	else if (INPUT->RealKeyOnce(KEY_PGDN))
+		SelectPreviousLayer();
+}
+
+void MapEditor::Update() {
+	CheckForInput();
 	ComputeNewScrolling();
+
+	if (m_uiTxtTicksLeft > 0)
+		m_uiTxtTicksLeft--;
 }
 
 /*void MapEditor::UpdateSelectMode() {

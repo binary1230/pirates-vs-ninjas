@@ -224,7 +224,9 @@ void GameWorld::Shutdown() {
 	int max, i;
 
 	if (EVENTS) {
-		EVENTS->OnUnLoad();
+		if (!OPTIONS->MapEditorEnabled())
+			EVENTS->OnUnLoad();
+
 		EVENTS->Shutdown();
 		EVENTS->FreeInstance();
 	}
@@ -480,6 +482,7 @@ int GameWorld::Load(XMLNode &xMode) {
 	GLOBALS->Value("camera_side_margins", camera_side_margins);
 	GLOBALS->Value("camera_snap_rate", camera_snap_rate);
 
+	music_file = NULL;
 	if (xMode.nChildNode("music") == 1) {
 		music_file = xMode.getChildNode("music").getText();
 		LoadMusic(music_file);
@@ -534,7 +537,8 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	is_loading = false;
 
-	EVENTS->OnLoad();
+	if (!OPTIONS->MapEditorEnabled())
+		EVENTS->OnLoad();
 	
 	m_bJumpedBackFromADoor = false;
 	

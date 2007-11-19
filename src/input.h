@@ -118,6 +118,10 @@ class Input {
 		//! Whether a key has been released after it was pressed
 		KeyList released_key;
 
+		//! Same thing as above, but for all keys, not just game keys
+		//! DO NOT USE FOR IN-GAME CODE, JUST MAP EDITOR/etc.
+		char real_released_key[KEY_MAX];
+
 		int mouse_x_pos;
 		int mouse_y_pos;
 		int mouse_buttons;
@@ -139,6 +143,7 @@ class Input {
 		
 		//! Update key release info
 		void UpdateKeyReleases();
+		void UpdateRealKeyReleases();
 
 		//! Init common stuff for all input types
 		bool CommonInit();
@@ -253,6 +258,11 @@ class Input {
 		int MouseY();
 			
 		virtual ~Input();
+
+		//! DO NOT USE THESE FOR IN-GAME CODE, JUST MAP EDITOR/etc.
+		bool CheckRealKeyOnce(uint iKeyNum) const;
+		void HandleRealKeyOnce(uint iKeyNum);
+		bool RealKeyOnce(uint iKeyNum);
 };
 
 #define INPUT Input::GetInstance()

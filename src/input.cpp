@@ -14,25 +14,25 @@
 // Player 1 default game keys (total count must = PLAYERKEY_COUNT)
 #define DEFAULT_PLAYERKEY_P1_JUMP			KEY_C
 #define DEFAULT_PLAYERKEY_P1_LEFT			KEY_LEFT
-#define DEFAULT_PLAYERKEY_P1_RIGHT 		KEY_RIGHT
+#define DEFAULT_PLAYERKEY_P1_RIGHT			KEY_RIGHT
 #define DEFAULT_PLAYERKEY_P1_UP 			KEY_UP
 #define DEFAULT_PLAYERKEY_P1_DOWN			KEY_DOWN
-#define DEFAULT_PLAYERKEY_P1_ACTION1 	KEY_D
+#define DEFAULT_PLAYERKEY_P1_ACTION1		KEY_D
 
 // Player 2 default game keys
 #define DEFAULT_PLAYERKEY_P2_JUMP			KEY_E
 #define DEFAULT_PLAYERKEY_P2_LEFT			KEY_DEL
-#define DEFAULT_PLAYERKEY_P2_RIGHT 		KEY_PGDN
+#define DEFAULT_PLAYERKEY_P2_RIGHT			KEY_PGDN
 #define DEFAULT_PLAYERKEY_P2_UP 			KEY_HOME
 #define DEFAULT_PLAYERKEY_P2_DOWN			KEY_END
-#define DEFAULT_PLAYERKEY_P2_ACTION1 	KEY_3
+#define DEFAULT_PLAYERKEY_P2_ACTION1		KEY_3
 
 // Other keys
 #define DEFAULT_GAMEKEY_EXIT				KEY_ESC
 #define DEFAULT_GAMEKEY_START				KEY_ENTER
-#define DEFAULT_GAMEKEY_DEBUGPAUSE	KEY_F1
-#define DEFAULT_GAMEKEY_DEBUGSTEP		KEY_F2
-#define DEFAULT_GAMEKEY_SCREENSHOT	KEY_F5
+#define DEFAULT_GAMEKEY_DEBUGPAUSE			KEY_F1
+#define DEFAULT_GAMEKEY_DEBUGSTEP			KEY_F2
+#define DEFAULT_GAMEKEY_SCREENSHOT			KEY_F5
 
 DECLARE_SINGLETON(Input)
 
@@ -93,6 +93,8 @@ void Input::SetKey(uint gameKey, uint controller_number, bool value) {
 	game_key[i] = value;
 }
 
+// ------------------------------------------------
+
 //! Returns true if a key was first released, then pressed.
 //! Can be used to make sure that a player is pressing and releasing
 //! a key, instead of just holding it down.  Make sure to call HandleKeyOnce()
@@ -138,6 +140,37 @@ void Input::UpdateKeyReleases() {
 			released_key[i] = true;
 	}
 }
+
+// ------------------------------------------------
+// Same as above, but for REAL keys, not GAME keys
+// NO IN GAME CODE SHOULD USE THIS
+// Only use this for map editor/etc.  It WON'T be tracked for demos
+// ------------------------------------------------
+
+bool Input::CheckRealKeyOnce(uint iKeyNum) const {
+	return real_released_key[iKeyNum] && key[iKeyNum];
+}
+
+void Input::HandleRealKeyOnce(uint iKeyNum) {
+	real_released_key[iKeyNum] = false;
+}
+
+bool Input::RealKeyOnce(uint iKeyNum) {
+	if (!CheckRealKeyOnce(iKeyNum))
+		return false;
+
+	HandleRealKeyOnce(iKeyNum);
+	return true;
+}
+
+void Input::UpdateRealKeyReleases() {
+	for (int i = 0; i < KEY_MAX; i++) {
+		if (!key[i]) 
+			real_released_key[i] = true;
+	}
+}
+
+// ------------------------------------------------
 
 bool Input::InitPlayback(CString filename, bool seed_engine) {
 	type = INPUT_PLAYBACK;
@@ -326,7 +359,6 @@ bool Input::InitLive() {
 	return true;
 }
 
-
 bool Input::CommonInit() {
 	install_mouse();
 	install_keyboard();
@@ -342,8 +374,12 @@ bool Input::CommonInit() {
 	game_key.resize(GAMEKEY_COUNT);
 	released_key.resize(GAMEKEY_COUNT);
 	
-	for (int i = 0; i < GAMEKEY_COUNT; i++) {
+	for (int i = 0; i < GAMEKEY_COUNT; ++i) {
 		released_key[i] = true;
+	}
+
+	for (uint i = 0; i < KEY_MAX; ++i) {
+		real_released_key[i] = true;
 	}
 
 	demofile = NULL;
@@ -419,6 +455,8 @@ void Input::Update() {
 			UpdateLive();
 			break;
 	}
+
+	UpdateRealKeyReleases();
 }
 
 //! This is A little complicated..

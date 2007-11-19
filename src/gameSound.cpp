@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "gameOptions.h"
 #include "gameSound.h"
 #include "gameState.h"
 #include "assetManager.h"
@@ -47,8 +48,8 @@ bool GameSound::LoadMusic(const char* filename) {
 }
 
 bool GameSound::PlayMusic(bool loop, int vol, int pan, int buflen) {
-	if (!sound_enabled)
-		return true;		
+	if (!sound_enabled || OPTIONS->MapEditorEnabled())
+		return true;
 
 	OGGFILE* music = ASSETMANAGER->GetMusic();	
 

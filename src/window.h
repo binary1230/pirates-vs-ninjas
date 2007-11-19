@@ -64,6 +64,7 @@ class GameWindow {
 		int Init(	uint _width, uint _height, bool _fullscreen = 0,
 							int _mode = MODE_DOUBLEBUFFERING);
 
+		void SetTitle( const char* szTitle );
 		void Shutdown();
 
 		void Clear();

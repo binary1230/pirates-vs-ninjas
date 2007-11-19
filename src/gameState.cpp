@@ -322,7 +322,7 @@ void GameState::MainLoop() {
 
 			Update();	// mode signals handled here
 	
-			if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
+			if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE) && !OPTIONS->MapEditorEnabled())
 				debug_pause_toggle = !debug_pause_toggle;
 			
 			if (debug_pause_toggle) {
@@ -352,7 +352,7 @@ void GameState::MainLoop() {
 		if (!exit_game) {
 			Draw();
 
-			if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
+			if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT) && !OPTIONS->MapEditorEnabled())
 				WINDOW->Screenshot();
 		}
 
@@ -397,7 +397,7 @@ void GameState::UpdateFPS()
 		// The new actual FPS rate for the last second:
 		m_iCurrentFps = iAmountOfFramesDrawnSinceLastCheck;
 
-		TRACE("FPS: %d\n", m_iCurrentFps);
+		// TRACE("FPS: %d\n", m_iCurrentFps);
 
 		iAmountOfFramesDrawnSinceLastCheck = 0;
 		iTicksAtLastFrameDrawn = ticks;

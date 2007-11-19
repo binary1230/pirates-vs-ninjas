@@ -18,17 +18,14 @@ class ObjectLayer {
 		list<Object*> objects;
 		bool visible;
 		float scroll_speed;
-
-		// the following are rarely used so are stored as pointers
-		// XML props
-		CString* name;
+		CString name;
 	
 	public:
 		bool Init();
 		void Shutdown();
 
-		void SetName(const char*);
-		CString GetName() {return *name;};
+		void SetName(const char* _name) {name = _name;}
+		const char* GetName() {return name.c_str();}
 
 		//! Get/set layer scroll speed
 		void SetScrollSpeed(float _scroll_speed) { scroll_speed = _scroll_speed ;};

@@ -72,7 +72,6 @@ void GameOptions::PrintOptions(const char* arg0) {
 
 void GameOptions::Clear() {
 	fullscreen = false;
-	//fullscreen = true;
 	show_help = false;
 	
 	first_mode = "";
@@ -96,7 +95,9 @@ void GameOptions::Clear() {
 
 	draw_graphics = true;
 	wait_for_updates = true;
-	map_editor_enabled = false;
+
+	// map_editor_enabled = false;
+	map_editor_enabled = true;
 
 	is_valid = true;
 }
