@@ -29,11 +29,11 @@ class GameWorld : public GameMode {
 
 		protected:
 			//! Filename of music, or NULL if none
-			const char* music_file;
+			CString m_szMusicFile;
 
 			//! Background color (use makecol())
 			int bg_color;
-			int bg_color_top; // if present, use both for a gradient
+			int bg_color_top; // if present, use both for a gradient, else -1
 
 			//! ALL objects in the scene
 			ObjectList m_objects;
@@ -78,6 +78,9 @@ class GameWorld : public GameMode {
 			//! MOSTLY used for scrolling backgrounds at different speeds
 			//! on different layers
 			float camera_scroll_speed;
+
+			// Stuff saved for map editor:
+			XMLNode m_xEffects;
 
 			//! Physics functions
 			void Solve(Object* obj);
@@ -128,6 +131,8 @@ class GameWorld : public GameMode {
 			bool allow_player_offscreen;
 	
 			bool m_bJumpedBackFromADoor;
+
+			CString m_szLuaScript;
 
 		public:
 			virtual int Init(XMLNode);

@@ -376,7 +376,7 @@ XMLError XMLNode::writeToFile(const char *filename, const char *encoding, char n
 {
     int i;
     XMLSTR t=createXMLString(nFormat,&i);
-    FILE *f=fopen(filename,"wb");
+    FILE *f=fopen(filename,"w");
     if (!f) return eXMLErrorCannotOpenWriteFile;
 #ifdef _XMLUNICODE
     unsigned char h[2]={ 0xFF, 0xFE };

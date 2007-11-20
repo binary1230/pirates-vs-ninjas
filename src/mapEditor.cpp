@@ -24,7 +24,7 @@ int MapEditor::Init(XMLNode xMode) {
 	assert(cursor_sprite && "Unable to load cursor");
 
 	// Makes all layers scroll at the same rate instead of in parallax
-	use_scroll_speed = false;
+	//use_scroll_speed = false;
 
 	selection = NULL;
 
@@ -184,7 +184,10 @@ void MapEditor::ModeObjectPlacementUpdate()
 	// -----------------------------------------------------------
 
 	if (pkObj) {
-		pkObj->SetXY(INPUT->MouseX() + camera_x, (WINDOW->Height() - INPUT->MouseY()) + camera_y);
+
+		int x = (INPUT->MouseX() / pkObj->GetLayer()->GetScrollSpeed()) + camera_x;
+		int y = ((WINDOW->Height() - INPUT->MouseY()) / pkObj->GetLayer()->GetScrollSpeed()) + camera_y;
+		pkObj->SetXY(x, y);
 		
 		assert(pkObj->GetLayer());
 

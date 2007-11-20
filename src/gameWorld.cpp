@@ -468,24 +468,22 @@ int GameWorld::Load(XMLNode &xMode) {
 	}
 
 	if (xMode.nChildNode("effects") == 1) {
-		XMLNode xEffects = xMode.getChildNode("effects");
-		if (!EFFECTS->LoadEffectsFromXML(xEffects)) {
+		m_xEffects = xMode.getChildNode("effects");
+		if (!EFFECTS->LoadEffectsFromXML(m_xEffects)) {
 			TRACE("ERROR: Can't load Effects XML!\n");
 			return -1;
 		}
 	}
 	
-	if (!GLOBALS->Value(	"debug_draw_bounding_boxes", 
-												Object::debug_draw_bounding_boxes	))
+	if (!GLOBALS->Value("debug_draw_bounding_boxes", Object::debug_draw_bounding_boxes))
 		Object::debug_draw_bounding_boxes = false;
 
 	GLOBALS->Value("camera_side_margins", camera_side_margins);
 	GLOBALS->Value("camera_snap_rate", camera_snap_rate);
 
-	music_file = NULL;
 	if (xMode.nChildNode("music") == 1) {
-		music_file = xMode.getChildNode("music").getText();
-		LoadMusic(music_file);
+		m_szMusicFile = xMode.getChildNode("music").getText();
+		LoadMusic(m_szMusicFile);
 	}
 
 	exitInfo.useExitInfo = true;
@@ -531,8 +529,8 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	// Load the LUA file if there is one
 	if (xMode.nChildNode("luaScript") == 1) {
-		const char* lua_script = xMode.getChildNode("luaScript").getText();
-		LUA->DoFile(lua_script);
+		m_szLuaScript = xMode.getChildNode("luaScript").getText();
+		LUA->DoFile(m_szLuaScript);
 	}
 
 	is_loading = false;
@@ -997,7 +995,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 
 ObjectLayer* GameWorld::FindLayer(const char* name) {
 	for (uint i = 0; i < layers.size(); ++i) {
-		if (stricmp(layers[i]->GetName(),name) == 0)
+		if (_stricmp(layers[i]->GetName(),name) == 0)
 			return layers[i];
 	}
 

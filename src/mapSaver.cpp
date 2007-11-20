@@ -27,11 +27,14 @@ bool MapSaver::SaveEverything(	const GameWorld* p,
 	XMLNode xMode = XMLNode::createXMLTopNode("gameMode");
 	xMode.addAttribute("type", "simulation");
 
-	if (simulation->music_file)
-	xMode.addChild("music").addText(simulation->music_file);
+	if (simulation->m_szMusicFile.GetLength())
+		xMode.addChild("music").addText(simulation->m_szMusicFile);
+
+	if (simulation->m_szLuaScript.GetLength())
+		xMode.addChild("luaScript").addText(simulation->m_szLuaScript);
 
 	XMLNode xInfo = xMode.addChild("info");
-	//xInfo.addChild("map_version").addText(
+	//xInfo.addChild("map_version").addText(simulation->map
 	//xInfo.addChild("author").addText(
 	//xInfo.addChild("description").addText(
 
@@ -44,7 +47,15 @@ bool MapSaver::SaveEverything(	const GameWorld* p,
 	xBgColor.addChild("g").addText(getg(simulation->bg_color));
 	xBgColor.addChild("b").addText(getb(simulation->bg_color));
 
+	if (simulation->bg_color_top != -1) {
+		XMLNode xBgColor2 = xProps.addChild("bgcolor_top");
+		xBgColor2.addChild("r").addText(getr(simulation->bg_color_top));
+		xBgColor2.addChild("g").addText(getg(simulation->bg_color_top));
+		xBgColor2.addChild("b").addText(getb(simulation->bg_color_top));
+	}
+
 	xMode.addChild(xObjDefs);	// "objectDefinitions" node
+	xMode.addChild(simulation->m_xEffects);
 
 	XMLNode xMap = xMode.addChild("map");
 
@@ -66,17 +77,38 @@ void MapSaver::OutputObject(const Object* obj, XMLNode &xObj) {
 		xObj.addAttribute("objectDef", obj->objectDefName->c_str());
 				
 	XMLNode xPos = xObj.addChild("position");
+	xPos.addAttribute("type", "fixed");		// all position types are FIXED for XML writes.
 
-	xPos.addAttribute("type", "fixed");		// all position types are FIXED
-																				// for XML writes.
-	xPos.addChild("x").addText(obj->pos.x);
-	xPos.addChild("y").addText(obj->pos.y);
+	// compensate for scroll speed now.
+	int x = int( float(obj->pos.x) * obj->GetLayer()->GetScrollSpeed() );
+	int y = int( float(obj->pos.y) * obj->GetLayer()->GetScrollSpeed() );
+
+	xPos.addChild("x").addText(x);
+	xPos.addChild("y").addText(y);
 
 	if (obj->flip_y)
 		xPos.addChild("flipy");
 
 	if (obj->flip_x)
 		xPos.addChild("flipx");
+
+	if (obj->GetDebugFlag())
+		xPos.addChild("debug");
+
+	if (obj->vel.x != 0.0f)
+		xPos.addChild("velx").addText(obj->vel.x);
+
+	if (obj->vel.y != 0.0f)
+		xPos.addChild("velx").addText(obj->vel.y);
+
+	if (obj->alpha != 255)
+		xPos.addChild("alpha").addText(obj->alpha);
+
+	if (obj->fade_out_time_total > 0)
+		xPos.addChild("fadeout").addText(obj->fade_out_time_total);
+
+	if (obj->rotate_velocity != 0)
+		xPos.addChild("vel_rotate").addText(obj->rotate_velocity);
 
 	if (obj == simulation->camera_follow)
 		xObj.addChild("cameraFollow");
@@ -122,12 +154,6 @@ void MapSaver::OutputObject(const Object* obj, XMLNode &xObj) {
 			xObj.addAttribute(	"modeToTrigger", 
 													objDoor->mode_to_jump_to_on_activate.c_str() );
 	}
-
-	// TODO: 
-	// velocity 
-	// rotational velocity
-	// inputController
-	// CRAPLOADS OF OTHER STUFF
 }
 
 void MapSaver::OutputLayer(const ObjectLayer* layer, XMLNode &xLayer) {
