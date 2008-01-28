@@ -5,13 +5,14 @@
 #include "animation.h"
 #include "gameState.h"
 #include "gameWorld.h"
+#include "gameSound.h"
 
 void DoorObject::Shutdown() {
 	BaseShutdown();
 }
 
 // in seconds.
-#define TIME_TO_WAIT_BEFORE_DOOR_ACTION 12
+#define TIME_TO_WAIT_BEFORE_DOOR_ACTION 30
 
 // activate the door.
 void DoorObject::Activate() {

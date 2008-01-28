@@ -21,15 +21,27 @@ void GameSound::PlaySound(CString name, unsigned int pan) {
 	if (use_variable_pitch)
 		freq += Rand(0, freq_range) - (freq_range / 2);
 	
-	s_iter s = sounds.find(name.c_str());
+	s_iter s = soundMap.find(name.c_str());
+	SAMPLE* spl = NULL; 
 
-	if (s == sounds.end()) {
-		TRACE("- sound: warning: Sound '%s' was never loaded.\n", 
-										name.c_str());
-		return;
+	if (s != soundMap.end())
+		spl = s->second;
+
+	if (!spl) {
+		// TRACE("- sound: warning: Sound '%s' was never loaded.\n", 
+		// name.c_str());
+		// return;
+
+		// WARNING: Cache miss, load it now
+		if (!LoadSound(name, name)) {
+			TRACE("- SOUND: ERROR: Can't load [non-cached] sound '%s'\n", name.c_str());
+			return;
+		}
+
+		s = soundMap.find(name.c_str());
+		if (s != soundMap.end())
+			spl = s->second;
 	}
-	
-	SAMPLE* spl = s->second;
 
 	if (spl)
 		play_sample(spl, 255, pan, freq, 0);
@@ -79,7 +91,7 @@ bool GameSound::LoadSound(const char* filename, const char* sound_name) {
 	if (!spl)
 		return false;
 	
-	sounds[sound_name] = spl;
+	soundMap[sound_name] = spl;
 	return true;
 }
 	
@@ -115,7 +127,7 @@ int GameSound::Init(bool _sound_enabled) {
 		sound_enabled = false;
 	}
 
-	sounds.clear();
+	soundMap.clear();
 	
 	set_volume_per_voice(0);
 
@@ -129,7 +141,7 @@ void GameSound::Shutdown() {
 	// Do NOT free any pointers in here
 	// The actual memory for sounds and music 
 	// is in the AssetManager
-	sounds.clear();
+	soundMap.clear();
 
 	OGGFILE* music = ASSETMANAGER->GetMusic();
 
@@ -146,3 +158,7 @@ GameSound::GameSound() {
 }
 
 GameSound::~GameSound() {}
+
+void GameSound::ClearSoundMap() {
+	soundMap.clear();
+}

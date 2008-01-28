@@ -2,6 +2,7 @@
 #include "assetManager.h"
 #include "oggFile.h"
 #include "sprite.h"
+#include "gameSound.h"
 
 DECLARE_SINGLETON(AssetManager)
 
@@ -26,6 +27,8 @@ void AssetManager::FreeSamples() {
 			destroy_sample(i->second);
 	}
 	samples.clear();
+	if (SOUND)
+		SOUND->ClearSoundMap();
 }
 
 void AssetManager::FreeSprites() {

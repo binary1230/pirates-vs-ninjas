@@ -19,7 +19,7 @@ class GameSound {
 
 			//! Holds pointers to SAMPLE's.  Do NOT create or free these
 			//! pointers, AssetManager does that.
-			SoundMapping sounds;
+			SoundMapping soundMap;
 
 			//! Pitch altering params
 			bool use_variable_pitch;
@@ -55,6 +55,8 @@ class GameSound {
 
 			//! Shutdown the sound system
 			void Shutdown();
+
+			void ClearSoundMap();
 
 			~GameSound();
 };
