@@ -333,15 +333,10 @@ void GameWorld::CheckForCollisions(	ObjectArray &collideableObjects, Object* obj
 	static ObjectArrayIter iter;	// static for performance, nothing else.
 	
 	// Loop over all collectible objects, see if we collide with any
-	/*for (iter = collideableObjects.begin(); 
-		 iter != collideableObjects.end(); 
-		 ++iter) {*/
 	uint max = collideableObjects.size();
 
 	for (uint i = 0; i < max; ++i)
 	{
-		// continue; // HACK
-
 		target = collideableObjects[i];
 
 		// Skip ourselves

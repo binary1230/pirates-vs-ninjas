@@ -367,6 +367,13 @@ int GameWindow::Init( uint _width, uint _height,
 	else
 		initialized = false;
 
+	// Draw the window once so it's black whilst everything else loads
+	BeginDrawing();
+	Clear();
+	DrawText(10, 10, "Pirates VS Ninjas Loading ...");
+	Flip();
+	EndDrawing();
+
 	return 0;
 }
 
@@ -396,15 +403,14 @@ bool GameWindow::InitGL() {
 
 	// move the origin to bottom left
 	glTranslatef(0, -SCREEN_H, 0);
-
-  glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_MODELVIEW);
 
 	return true;
 }
 
 void GameWindow::Clear() {
 	glClear(GL_COLOR_BUFFER_BIT);
-  glLoadIdentity();
+	glLoadIdentity();
 }
 
 void GameWindow::BeginDrawing() {

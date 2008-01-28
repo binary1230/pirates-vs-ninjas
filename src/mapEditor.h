@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "gameWorld.h"
+#include "mapEditorGui.h"
 
 class Sprite;
 
@@ -44,6 +45,8 @@ class MapEditor : public GameWorld {
 
 		XMLNode xObjDefs;
 
+		MapEditorGui m_kMapEditorGui;
+
 		void Select(Object* obj);
 		void SelectPreviousLayer();
 		void SelectNextLayer();
@@ -53,6 +56,7 @@ class MapEditor : public GameWorld {
 		void CommonModeUpdateEnd();
 
 		void ModeObjectPlacementUpdate();
+		void RePopulateLayerList();
 };
 
 #endif // MAP_EDITOR_H

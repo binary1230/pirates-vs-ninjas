@@ -395,7 +395,7 @@ bool Object::IsColliding(Object *obj) const {
 	//	projRect.print();
 	//	obj->projRect.print();
 	//}
-	return projRect.Overlaps(obj->GetProjectionRect());
+	return projRect.Overlaps(obj->projRect);
 }
 
 void Object::Collide(Object* obj) {

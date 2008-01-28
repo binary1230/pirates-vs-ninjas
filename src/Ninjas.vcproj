@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				InlineFunctionExpansion="0"
-				AdditionalIncludeDirectories=".;external;objects;..\libs\allegro\include;..\libs\alleggl\include;..\libs\lua\src;..\libs\zlib;..\libs\libpng;..\libs\libogg\include;..\libs\libvorbis\include"
+				AdditionalIncludeDirectories=".;gui;external;objects;..\libs\allegro\include;..\libs\alleggl\include;..\libs\lua\src;..\libs\zlib;..\libs\libpng;..\libs\libogg\include;..\libs\libvorbis\include;..\libs\fltk\"
 				PreprocessorDefinitions="_DEBUG;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;WIN32;_WIN32"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="alld_s.lib opengl32.lib glu32.lib user32.lib gdi32.lib oldnames.lib lua51.lib libpngd.lib zlibd.lib libvorbisd.lib libvorbisfiled.lib dinput.lib ddraw.lib dxguid.lib dsound.lib winmm.lib agld_s.lib"
+				AdditionalDependencies="wsock32.lib advapi32.lib alld_s.lib opengl32.lib glu32.lib user32.lib gdi32.lib oldnames.lib lua51.lib fltkd.lib libpngd.lib zlibd.lib libvorbisd.lib libvorbisfiled.lib dinput.lib ddraw.lib dxguid.lib dsound.lib winmm.lib agld_s.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="C:\projects\main\SDKs\DX9C_April2006\Lib\x86;..\libs\allegro\lib\msvc;..\libs\alleggl\lib\msvc;..\libs\lua\src;..\libs\zlib\lib;..\libs\libpng\lib;..\libs\libvorbis\lib"
+				AdditionalLibraryDirectories="C:\projects\main\SDKs\DX9C_April2006\Lib\x86;..\libs\allegro\lib\msvc;..\libs\alleggl\lib\msvc;..\libs\lua\src;..\libs\zlib\lib;..\libs\libpng\lib;..\libs\libvorbis\lib;..\libs\fltk\lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -120,7 +120,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".;external;objects;..\libs\allegro\include;..\libs\alleggl\include;..\libs\lua\src;..\libs\zlib;..\libs\libpng;..\libs\libogg\include;..\libs\libvorbis\include"
+				AdditionalIncludeDirectories=".;gui;external;objects;..\libs\allegro\include;..\libs\alleggl\include;..\libs\lua\src;..\libs\zlib;..\libs\libpng;..\libs\libogg\include;..\libs\libvorbis\include;..\libs\fltk\"
 				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_WIN32"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -139,9 +139,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="alleg_s.lib opengl32.lib glu32.lib user32.lib gdi32.lib oldnames.lib lua51.lib libpng.lib zlib.lib libvorbis.lib libvorbisfile.lib dxguid.lib dinput.lib dsound.lib ddraw.lib winmm.lib agl_s.lib"
+				AdditionalDependencies="wsock32.lib advapi32.lib alleg_s.lib opengl32.lib glu32.lib user32.lib gdi32.lib oldnames.lib lua51.lib fltk.lib libpng.lib zlib.lib libvorbis.lib libvorbisfile.lib dxguid.lib dinput.lib dsound.lib ddraw.lib winmm.lib agl_s.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="C:\projects\main\SDKs\DX9C_April2006\Lib\x86;..\libs\allegro\lib\msvc;..\libs\alleggl\lib\msvc;..\libs\lua\src;..\libs\zlib\lib;..\libs\libpng\lib;..\libs\libvorbis\lib"
+				AdditionalLibraryDirectories="C:\projects\main\SDKs\DX9C_April2006\Lib\x86;..\libs\allegro\lib\msvc;..\libs\alleggl\lib\msvc;..\libs\lua\src;..\libs\zlib\lib;..\libs\libpng\lib;..\libs\libvorbis\lib;..\libs\fltk\lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -284,6 +284,10 @@
 			</File>
 			<File
 				RelativePath=".\mapEditor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\mapEditorGui.cpp"
 				>
 			</File>
 			<File
@@ -542,6 +546,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="MapEditorGui"
+				>
+				<File
+					RelativePath=".\gui\GUI_globals.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\GUI_layeroptions.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -654,6 +670,10 @@
 			</File>
 			<File
 				RelativePath=".\mapEditor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\mapEditorGui.h"
 				>
 			</File>
 			<File
@@ -853,6 +873,18 @@
 				</File>
 				<File
 					RelativePath=".\external\xmlParser.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="MapEditorGui"
+				>
+				<File
+					RelativePath=".\gui\GUI_globals.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\GUI_layeroptions.h"
 					>
 				</File>
 			</Filter>

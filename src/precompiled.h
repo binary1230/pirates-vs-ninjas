@@ -11,16 +11,16 @@
 #include "config.h"
 #endif
 
-#ifndef WIN32
-#define ENGINE_USES_CEGUI
-#endif
+// -----------------------------
+// Config options
+// -----------------------------
 
-#ifdef ENGINE_USES_CEGUI
-#include <CEGUI.h>
-#include <CEGUIWindowManager.h>
-#include <RendererModules/OpenGLGUIRenderer/openglrenderer.h>
-#include <CEGUIDefaultResourceProvider.h>
-#endif // ENGINE_USES_CEGUI
+// #define ENGINE_USES_CEGUI // not going to use anymore
+#define ENGINE_USES_FLTK
+
+#ifndef WIN32
+#undef ENGINE_USES_CEGUI
+#endif
 
 // The order of the allegro stuff is SUPER-IMPORTANT
 #ifdef WIN32
@@ -33,11 +33,30 @@
 	#ifndef _DEBUG
 	#define _SECURE_SCL 0
 	#define _HAS_ITERATOR_DEBUGGING 0
-#endif // _DEBUG
+	#endif // _DEBUG
 
-#define  ALLEGRO_STATICLINK
-
+	#define  ALLEGRO_STATICLINK
 #endif // WIN32
+
+// -----------------------------
+
+#ifdef ENGINE_USES_CEGUI
+#include <CEGUI.h>
+#include <CEGUIWindowManager.h>
+#include <RendererModules/OpenGLGUIRenderer/openglrenderer.h>
+#include <CEGUIDefaultResourceProvider.h>
+#endif // ENGINE_USES_CEGUI
+
+#ifdef ENGINE_USES_FLTK
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Menu_Button.H>
+#include <FL/Fl_Button.H>
+#include <FL/Fl_Check_Button.H>
+#endif // ENGINE_USES_FLTK
+
 
 #include <allegro.h>
 

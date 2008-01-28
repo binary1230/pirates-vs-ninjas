@@ -14,7 +14,17 @@
 MapEditor::MapEditor() {}
 MapEditor::~MapEditor() {}
 
+void MapEditor::RePopulateLayerList() 
+{
+	for (uint i = 0; i < layers.size(); ++i) {
+		
+	}
+}
+
 int MapEditor::Init(XMLNode xMode) {
+	if (!m_kMapEditorGui.Init())
+		return -1;
+
 	int ret_val = GameWorld::Init(xMode);
 
 	if (ret_val == -1)
@@ -258,15 +268,18 @@ void MapEditor::CommonModeUpdateStart()
 		SelectNextLayer();
 	else if (INPUT->RealKeyOnce(KEY_PGDN))
 		SelectPreviousLayer();
+
+	ComputeNewScrolling();
 }
 
 void MapEditor::CommonModeUpdateEnd() 
 {
-	ComputeNewScrolling();
+	
 }
 
 void MapEditor::Update() {
 	INPUT->Update();
+	m_kMapEditorGui.Update();
 	ModeUpdate();
 
 	if (m_uiTxtTicksLeft > 0)
