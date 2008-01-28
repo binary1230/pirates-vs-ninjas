@@ -1,0 +1,36 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0011 
+do_not_include_H_from_C 
+header_name {.h} 
+code_name {.cpp} 
+gridx 5 
+gridy 5 
+snap 3
+decl {\#include "stdafx.h"} {} 
+
+decl {\#include "GUI_layeroptions.h"} {} 
+
+Function {FLTK_DisplayLayerOptions()} {open
+} {
+  Fl_Window {} {open
+    private xywh {485 454 339 299} visible
+  } {
+    Fl_Menu_Button mnuLayers {
+      label Layers
+      callback OnLayerSelectionChanged open selected
+      xywh {10 30 240 20}
+    } {}
+    Fl_Box {} {
+      label {Layer Options}
+      private xywh {0 0 340 20} box THIN_UP_FRAME
+    }
+    Fl_Button {} {
+      label {New layer}
+      private xywh {250 30 80 20}
+    }
+    Fl_Check_Button chkDisplayAllLayers {
+      label {Display All Layers}
+      private xywh {10 55 320 20} down_box EMBOSSED_BOX
+    }
+  }
+} 
