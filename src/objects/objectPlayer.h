@@ -43,11 +43,15 @@ class PlayerObject : public Object {
 		void DoStanding();
 		void DoWalking();
 		void DoRunning();
+		
+		void DoCommonAirStuff();
 		void DoJumping();
 		void DoFalling();
+
 		void DoWhistling();
 		void DoLookingUp();
 		void DoCrouchingDown();
+
 		void DoWalkThroughDoor();
 
 		void ScreenBoundsConstraint();

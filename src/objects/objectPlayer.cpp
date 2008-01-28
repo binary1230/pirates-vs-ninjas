@@ -168,6 +168,12 @@ void PlayerObject::UpdateSkidding() {
 	}
 }
 
+void PlayerObject::DoCommonAirStuff() {
+	// If we're not trying to moving at all, slow us down just a bit so we fall DOWN more, not not forward
+	if (accel.x < 0.001f || accel.x > -0.001f)
+		vel.x *= 0.90f;
+}
+
 // no distinction from walking yet.
 void PlayerObject::DoRunning() {
 	state = RUNNING;
@@ -177,6 +183,8 @@ void PlayerObject::DoJumping() {
 	state = JUMPING;
 
 	currentAnimation = animations[PLAYER_JUMPING];
+
+	DoCommonAirStuff();
 
 	// really shouldn't have a downward 
 	// collision on an upward jump
@@ -197,8 +205,10 @@ void PlayerObject::DoFalling() {
 	// XXX: should be PLAYER_FALLING when we have one.
 	currentAnimation = animations[PLAYER_JUMPING];
 
-	if (vel.y < -30.0f)
-		vel.y = -30.0f;
+	if (vel.y < -25.0f)
+		vel.y = -25.0f;
+
+	DoCommonAirStuff();
 
 	if (d.down) {
 		DoStanding();
@@ -250,6 +260,22 @@ void PlayerObject::DoCommonStuff() {
 			objBall->SetVelXY(sign * strength + vel.x, vel.y + 6.0f);
 
 		//objBall->SetVelXY(vel.x, 0.0f);
+	}
+
+	// Clamp horizontal velocities
+	#define MAX_HORIZ_VELOCITY 27.0f
+
+	if (vel.x > MAX_HORIZ_VELOCITY)
+		vel.x = MAX_HORIZ_VELOCITY;
+
+	if (vel.x < -MAX_HORIZ_VELOCITY)
+		vel.x = -MAX_HORIZ_VELOCITY;
+
+	// If we're moving in a different direction than what we want to do, make us slow down faster.
+	// NOTE: Freaks out horizontal springs currently
+	if ((accel.x > 0.001f && vel.x < 0.001f) ||
+		(accel.x < 0.001f && vel.x > 0.001f) ) {
+			vel.x *= 0.85f;
 	}
 }
 
