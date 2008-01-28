@@ -13,7 +13,7 @@
 #include "objectFactory.h"
 
 // gui stuff
-#include "GUI_layeroptions.h"
+#include "gui/GUI_layeroptions.h"
 
 void MapEditorGui::Shutdown()
 {

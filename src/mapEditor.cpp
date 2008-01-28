@@ -130,7 +130,7 @@ void MapEditor::SelectNextLayer()
 		layers[m_iCurrentLayer]->SetVisible(false);
 
 	m_iCurrentLayer++;
-	if (m_iCurrentLayer == layers.size())
+	if (m_iCurrentLayer == (int)layers.size())
 		m_iCurrentLayer = 0;
 
 	if (m_bDisplayOneLayerOnly)
@@ -195,8 +195,8 @@ void MapEditor::ModeObjectPlacementUpdate()
 
 	if (pkObj) {
 
-		int x = (INPUT->MouseX() / pkObj->GetLayer()->GetScrollSpeed()) + camera_x;
-		int y = ((WINDOW->Height() - INPUT->MouseY()) / pkObj->GetLayer()->GetScrollSpeed()) + camera_y;
+		int x = (int)(INPUT->MouseX() / pkObj->GetLayer()->GetScrollSpeed()) + camera_x;
+		int y = (int)((WINDOW->Height() - INPUT->MouseY()) / pkObj->GetLayer()->GetScrollSpeed()) + camera_y;
 		pkObj->SetXY(x, y);
 		
 		assert(pkObj->GetLayer());

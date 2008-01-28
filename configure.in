@@ -187,6 +187,9 @@ else
 	ALLEGRO_LIBS="`allegro-config --libs`"
 fi
 
+FLTK_LIBS="`fltk-config --ldflags`"
+FLTK_INCLUDES="`fltk-config --cxxflags`"
+
 AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
 
 dnl ------------------------------------------------
@@ -403,18 +406,17 @@ LUA_LDFLAGS="-llua"
 fi
 
 dnl TOTAL HACK! TODO: CHECK THIS THE RIGHT WAY.
-if test "$WIN32" = "no"; then
+dnl if test "$WIN32" = "no"; then
 dnl Ubuntu...
-CEGUI_CXXFLAGS="-I/usr/local/include/CEGUI/"
-CEGUI_LDFLAGS="-L/usr/local/lib -lCEGUIBase -lCEGUIOpenGLRenderer"
-else
+dnl CEGUI_CXXFLAGS="-I/usr/local/include/CEGUI/"
+dnl CEGUI_LDFLAGS="-L/usr/local/lib -lCEGUIBase -lCEGUIOpenGLRenderer"
+dnl else
 dnl TEMP HACK DISABLE THESE
-CEGUI_CXXFLAGS="-I../win32/include/CEGUI/"
+dnl CEGUI_CXXFLAGS="-I../win32/include/CEGUI/"
 dnl CEGUI_LDFLAGS="-lCEGUIBase -lCEGUIOpenGLRenderer"
-fi
+dnl fi
 
-
-ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects $LUA_CXXFLAGS $CEGUI_CXXFLAGS"
+ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects $LUA_CXXFLAGS $CEGUI_CXXFLAGS $FLTK_INCLUDES"
 
 dnl keep this SEPERATE even though here it is identical
 PRECOMPILED_CXXFLAGS="$ninjas_CXXFLAGS"
@@ -424,10 +426,10 @@ ninjas_CXXFLAGS="$ninjas_CXXFLAGS -include precompiled.h"
 aitrainer_CXXFLAGS="$aitrainer_CXXFLAGS -include precompiled.h"
 fi
 
-ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries $LUA_LDFLAGS $CEGUI_LDFLAGS"
+ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries $LUA_LDFLAGS $CEGUI_LDFLAGS $FLTK_LIBS"
 
-LDFLAGS="$extra_libraries $LDFLAGS $LUA_LDFLAGS $CEGUI_LDFLAGS"
-LIBS="$ALLEGRO_LIBS -lm $AGL_LIBS $GL_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB $LUA_LDFLAGS $CEGUI_LDFLAGS"
+LDFLAGS="$extra_libraries $LDFLAGS $LUA_LDFLAGS $CEGUI_LDFLAGS $FLTK_LIBS"
+LIBS="$ALLEGRO_LIBS -lm $AGL_LIBS $GL_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB $LUA_LDFLAGS $CEGUI_LDFLAGS $FLTK_LIBS"
 
 AC_SUBST(PACKAGE_NAME)
 AC_SUBST(ninjas_CXXFLAGS)

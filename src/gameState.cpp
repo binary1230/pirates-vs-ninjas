@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "gameState.h"
 
-#include "gui.h"
+// #include "gui.h"
 #include "gameOptions.h"
 #include "input.h"
 #include "window.h"
@@ -145,12 +145,12 @@ int GameState::InitSystem() {
 			return -1;
 		}
 		
-		TRACE("[init: gui manager]\n");
+		/*TRACE("[init: gui manager]\n");
 		GUI->CreateInstance();
 		if ( !GUI || !GUI->Init() ) {
 			TRACE("ERROR: InitSystem: failed to init gui!\n");
 			return -1;
-		}
+		}*/
 
 		TRACE("[init: loading game modes]\n");
 		if (LoadGameModes() == -1) {
@@ -379,7 +379,7 @@ void GameState::Update() {
 
 	SOUND->Update();
 	INPUT->Update();
-	GUI->Update();
+	// GUI->Update();
 	WINDOW->Update(); // update fades.
 
 	modes->Update();
@@ -418,7 +418,7 @@ void GameState::Draw() {
 		// Tell everything to draw itself
 		modes->Draw();
 		WINDOW->Draw();
-		GUI->Draw();
+		//GUI->Draw();
 
 		WINDOW->Flip();
 		WINDOW->EndDrawing();
@@ -447,10 +447,10 @@ void GameState::Shutdown() {
 		delete modes;
 	}
 
-	if (GUI) {
+	/*if (GUI) {
 		GUI->Shutdown();
 		GUI->FreeInstance();
-	}
+	}*/
 
 	if (LUA) {
 		LUA->Shutdown();
