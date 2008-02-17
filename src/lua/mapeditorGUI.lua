@@ -5,7 +5,7 @@ require("wx")
 
 frame = nil
 
-function init()
+function mapeditorgui_init()
 
     frame = wx.wxFrame( wx.NULL, wx.wxID_ANY, "wxLua Very Minimal Demo",
                         wx.wxDefaultPosition, wx.wxSize(450, 450),
@@ -39,6 +39,24 @@ function init()
       end 
     )
     
+    -- IDLE event calls the game engine Tick(), which is normally
+    -- called by the main loop, but can't be called if our GUI is active
+    frame:Connect(wx.wxEVT_IDLE,
+      function(event)
+      
+        if engine_should_exit_game() == 1 then
+          frame:Close(true)
+          return
+        end
+        
+        engine_tick()   -- C++ Main Engine Update()
+        
+        event:Skip()
+        event:RequestMore() -- make wx keep firing this event
+        
+      end
+    )
+    
     -- connect the selection event of the about menu item
     frame:Connect(wx.wxID_ABOUT, wx.wxEVT_COMMAND_MENU_SELECTED,
        function (event)
@@ -53,23 +71,15 @@ function init()
     frame:Show(true)
 end
 
-function update()
-
-  wx.wxGetApp():MainLoop()
-
-  --engine_print("update().\n")
-  
-  --while wx.wxGetApp():Pending() do
-    --wx.wxGetApp():Dispatch()
-    --engine_print("dispatch().\n")
-  --end
-  
-  -- local idleEvent = wx.wxIdleEvent()
-  -- wx.wxGetApp():SendIdleEvents(frame, idleEvent)
-  --frame:ProcessEvent(idleEvent)
-  -- wx.wxGetApp():ProcessIdle()
+function mapeditorgui_update()
+  -- do update-ish things here
 end
 
-function shutdown()
-  
+function mapeditorgui_run()
+  wx.wxGetApp():MainLoop()
+end
+
+function mapeditorgui_shutdown()
+  frame:Close(true)
+  frame = nil
 end

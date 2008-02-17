@@ -63,14 +63,14 @@ class GameState {
 		//! Shutdown the game
 		void Shutdown();
 
-		//! Main loop to call once everything is initialized
-		void MainLoop();
-
 		//! Update the state of the game
 		void Update();
 
 		//! Draw the current state of the game
 		void Draw();
+
+		//! THE MAIN LOOP
+		void MainLoop();
 
 		//! Output the total running time
 		void OutputTotalRunningTime();
@@ -96,7 +96,14 @@ class GameState {
 		int m_iCurrentFps;
 					
 	public:
+		//! Run the actual game - calls MainLoop()
 		int RunGame();
+
+		//! NOTE: Normally called by MainLoop()
+		//! Sometimes GUI's and things will have to call this directly from ON_IDLE msgs
+		void Tick();
+
+		void UpdateDebugPausing();
 
 		//! Set the random seed value
  		void SetRandomSeed(int);
@@ -117,6 +124,8 @@ class GameState {
 		//! Useful for loading stuff so we don't jump 20-30 frames
 		//! after waiting for a level load
 		void ResetAccumulatedTime();
+
+		bool ShouldExit() { return exit_game; }
 		
 		~GameState();
 };

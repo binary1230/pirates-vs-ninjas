@@ -76,7 +76,7 @@ class Object {
 	protected:
 
 		//! A pointer to the layer this object is on
-		ObjectLayer* layer;
+		ObjectLayer* m_pkLayer;
 
 		//! Which controller (e.g. which joystick) use, if we are getting
 		//! input for this object
@@ -327,8 +327,8 @@ class Object {
 		//! Plays a sound, or does nothing if that sound is not loaded
 		// void PlaySound(CString name);
 
-		ObjectLayer* const GetLayer() const {return layer;};
-		void SetLayer(ObjectLayer* const l) {layer = l;};
+		ObjectLayer* const GetLayer() const {return m_pkLayer;};
+		void SetLayer(ObjectLayer* const l) {m_pkLayer = l;};
 		
 		//! Returns true if this type of object is able to collide with another
 		inline bool CanCollide() const {

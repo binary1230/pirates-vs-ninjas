@@ -55,11 +55,15 @@ void MapEditor::Select(Object* obj) {
 }
 
 void MapEditor::Shutdown() {
+
+	// TODO: Unselect and remove current object FIRST!
+
 	MapSaver mapSaver;
 	mapSaver.SaveEverything(this, "test-map.xml", xObjDefs);
 
 	LUA->RunVoidFunctionNoArgs("shutdown", true);
 
+	GAMESTATE->ResetAccumulatedTime();
 	GameWorld::Shutdown();
 }
 
@@ -184,7 +188,7 @@ void MapEditor::ModeUpdate()
 void MapEditor::ModeObjectPlacementUpdate()
 {
 	static int iCurrentIndex = 0;
-	static Object* pkObj = NULL;
+	static Object* pkObj = NULL; // current object (TODO: Replace with m_pkSelectedObject)
 
 	if (OBJECT_FACTORY->GetObjectDefinitionCount() == 0) {
 		m_eCurrentMode = MODE_MAIN;
@@ -310,4 +314,9 @@ int MapEditor::LoadObjectDefsFromXML(XMLNode& _xObjDefs) {
 
 	// call the original
 	return GameWorld::LoadObjectDefsFromXML(_xObjDefs);
+}
+
+void MapEditor::RunMapEditor()
+{
+	m_kMapEditorGui.Start();
 }

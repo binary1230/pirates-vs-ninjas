@@ -9,6 +9,7 @@ class MapEditorGui {
 		bool Init();
 		void Shutdown();
 
+		void Start();
 		void Update();
 
 		MapEditorGui();

@@ -3,10 +3,10 @@
 #include "globals.h"
 
 // For timing stuff
-volatile int outstanding_updates = 0;
-volatile int ticks = 0;
+volatile int g_iOutstanding_updates = 0;
+volatile int g_iTicks = 0;
 
 void Timer(void) {
-	outstanding_updates++;
-	ticks++;
+	g_iOutstanding_updates++;
+	g_iTicks++;
 } END_OF_FUNCTION(Timer);

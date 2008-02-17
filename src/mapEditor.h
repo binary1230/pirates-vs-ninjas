@@ -22,6 +22,11 @@ class MapEditor : public GameWorld {
 		virtual void Draw();
 		virtual void Update();
 
+		// NOTE: THIS FUNCTION DOES NOT RETURN IMMEDIATELY!
+		// Instead, it lets LUA call GAMESTATE->Tick() until
+		// the GUI has exited.
+		virtual void RunMapEditor();
+
 		virtual void LoadMusic(const char* filename);
 		virtual int LoadObjectDefsFromXML(XMLNode&);
 

@@ -272,7 +272,7 @@ Vector2D Object::Solve() {
 }
 
 void Object::BaseShutdown() {
-	layer->RemoveObject(this);
+	m_pkLayer->RemoveObject(this);
 
 	int i, max = animations.size();
 	for (i = 0; i < max; i++) {
@@ -283,7 +283,7 @@ void Object::BaseShutdown() {
 	
 	currentAnimation = NULL;
 	currentSprite = NULL;
-	layer = NULL;
+	m_pkLayer = NULL;
 	is_dead = true;
 	display_time = -1;
 
@@ -295,7 +295,7 @@ unsigned long Object::debug_object_id = 0;
 Object::Object() {
 	objectDefName = NULL;
 	unique_id = Object::debug_object_id++;
-	layer = NULL;
+	m_pkLayer = NULL;
 	currentSprite = NULL;
 	currentAnimation = NULL;
 	flip_x = false; 

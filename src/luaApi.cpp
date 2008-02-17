@@ -7,6 +7,7 @@
 #include "objectCutBars.h"
 #include "window.h"
 #include "gameSound.h"
+#include "gameState.h"
 
 // LUA: Debug only - print something to stderr from lua
 // through the engine.  Use for testing lua only really.
@@ -93,7 +94,7 @@ int LUAAPI lua_world_textbox(lua_State* lua) {
 	return 1;
 }
 
-int LUAAPI lua_play_input_script(lua_State* lua) {
+int LUAAPI lua_world_play_input_script(lua_State* lua) {
 	const char* input_playback_filename = lua_tostring(lua, -1);
 	int retval = 0;
 
@@ -207,43 +208,66 @@ int LUAAPI lua_jumped_back_from_a_door(lua_State* lua) {
 	return 1;
 }
 
-// returns true if, on loading a level, we are jumping back
-// from a door.  Typically can use this to not display first-time
-// level opening stuff (like dialogs) when just jumping back into
-// the level from somewhere.
-/*int LUAAPI lua_startup_mapeditor_gui(lua_State* lua) {
+// MAP EDITOR ONLY (well, most likely map editor ONLY, at least for now)
+// You better know what you're doing if you're calling this.
+// Dom _will_ kill you.
+int LUAAPI lua_engine_tick(lua_State* lua) 
+{
 	int retval = 0;
 
-	if (!WORLD && MAPEDITOR_GUI)
+	// Normally GameState::MainLoop() will do this as fast as it can.
+	// Sometimes though, we have to call this from OnIdle() msgs in GUIs and such.
+	GAMESTATE->Tick();
 
 	lua_pushnumber(lua, retval);
 	return 1;
-}*/
-
-static struct LuaApiFunction LuaApiFunctionList[] = {
-
-	// first item: function name as it appears from lua
-	// second item: our corresponding C/C++ function
-	
-	{ "engine_print", lua_engine_print },
-	{ "world_textbox", lua_world_textbox },
-	{ "world_play_input_script", lua_play_input_script },
-	{ "world_create_cutbars", lua_world_create_cutbars },
-	{ "world_allow_player_offscreen", lua_world_allow_player_offscreen },
-	{ "window_fadeout", lua_window_fadeout },
-	{ "window_fadein",  lua_window_fadein  },
-	{ "window_set_faded_out", lua_window_set_faded_out },
-	{ "window_set_faded_in",  lua_window_set_faded_in  },
-	{ "music_play", lua_music_play },
-	{ "jumped_back_from_a_door", lua_jumped_back_from_a_door },
-	
-	// XXX TODO: Not implemented yet.
-	{ "music_stop", lua_music_stop },
-
-	// terminating null entry
-	{ 0, 0 } 
-};
-
-struct LuaApiFunction* GetLuaApiFunctionList() {
-	return LuaApiFunctionList;
 }
+
+int LUAAPI lua_engine_should_exit_game(lua_State* lua) 
+{
+	int retval = GAMESTATE->ShouldExit() ? 1 : 0;
+	lua_pushnumber(lua, retval);
+	return 1;
+}
+
+// ----------------------------------------------------------------------
+
+
+#define LUA_FUNCTION_REGISTRATION_LIST_START() \
+struct LuaApiFunction* GetLuaApiFunctionList() { \
+	static struct LuaApiFunction LuaApiFunctionList[] = {
+
+
+#define LUA_FUNCTION_REGISTRATION_LIST_END() \
+		{ 0, 0 } \
+	}; \
+	return LuaApiFunctionList; \
+}
+
+
+#define REGISTER_LUA_FUNCTION(lua_function_name) \
+{ #lua_function_name, lua_##lua_function_name },
+
+
+// ----------------------------------------------------------------------
+
+LUA_FUNCTION_REGISTRATION_LIST_START()
+	REGISTER_LUA_FUNCTION(engine_print)
+	REGISTER_LUA_FUNCTION(engine_tick)
+	REGISTER_LUA_FUNCTION(engine_should_exit_game)
+
+	REGISTER_LUA_FUNCTION(world_textbox)
+	REGISTER_LUA_FUNCTION(world_play_input_script)
+	REGISTER_LUA_FUNCTION(world_create_cutbars)
+	REGISTER_LUA_FUNCTION(world_allow_player_offscreen)
+
+	REGISTER_LUA_FUNCTION(window_fadeout)
+	REGISTER_LUA_FUNCTION(window_fadein)
+	REGISTER_LUA_FUNCTION(window_set_faded_out)
+	REGISTER_LUA_FUNCTION(window_set_faded_in)
+
+	REGISTER_LUA_FUNCTION(music_play)
+
+	REGISTER_LUA_FUNCTION(jumped_back_from_a_door)
+	REGISTER_LUA_FUNCTION(music_stop) // XXX TODO: Not implemented yet.
+LUA_FUNCTION_REGISTRATION_LIST_END()

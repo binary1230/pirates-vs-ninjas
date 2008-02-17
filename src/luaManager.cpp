@@ -3,7 +3,7 @@
 #include "luaApi.h"
 #include "assetManager.h"
 
-// EXPERIMENTAL: I'm using lua version 5.0, should be ok with lua 5.1?
+// For LUA 5.1 and up
 
 DECLARE_SINGLETON(LuaManager);
 

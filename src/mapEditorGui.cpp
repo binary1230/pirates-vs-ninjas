@@ -15,19 +15,24 @@
 
 void MapEditorGui::Shutdown()
 {
-	LUA->RunVoidFunctionNoArgs("shutdown", true);
+	LUA->RunVoidFunctionNoArgs("mapeditorgui_shutdown", true);
 	LUA->ReleaseCurrentLuaScript();
+}
+
+void MapEditorGui::Start()
+{
+	LUA->RunVoidFunctionNoArgs("mapeditorgui_run", true);
 }
 
 void MapEditorGui::Update()
 {
-	LUA->RunVoidFunctionNoArgs("update", true);
+	// No need to update LUA, it'll do it's own Update()
 }
 
 bool MapEditorGui::Init() 
 {
 	LUA->LoadLuaScript("src/lua/mapeditorGUI.lua");
-	LUA->RunVoidFunctionNoArgs("init", true);
+	LUA->RunVoidFunctionNoArgs("mapeditorgui_init", true);
 
 	return true;
 }

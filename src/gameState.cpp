@@ -13,11 +13,12 @@
 #include "network.h"
 #include "globalDefines.h"
 #include "luaManager.h"
+#include "mapEditor.h"
 
 DECLARE_SINGLETON(GameState)
 
 void GameState::ResetAccumulatedTime() {
-	outstanding_updates = 0;
+	g_iOutstanding_updates = 0;
 }
 
 // Parse the master XML file
@@ -237,14 +238,14 @@ int GameState::InitInput() {
 int GameState::InitTimers() {
 	TRACE("[Init: Timers]");
 	install_timer();
-	LOCK_VARIABLE(outstanding_updates);
-	LOCK_VARIABLE(ticks);
+	LOCK_VARIABLE(g_iOutstanding_updates);
+	LOCK_VARIABLE(g_iTicks);
 	LOCK_FUNCTION((void*)Timer);
 	return install_int_ex(Timer, BPS_TO_TIMER(FPS));
 }
 
 void GameState::OutputTotalRunningTime() {
-	int seconds_played = int((float)ticks / (float)FPS);
+	int seconds_played = int((float)g_iTicks / (float)FPS);
 	int seconds = seconds_played % 60;
 	int minutes = seconds_played / 60;
 	char* min_string = "minutes";
@@ -252,9 +253,9 @@ void GameState::OutputTotalRunningTime() {
 	if (minutes == 1) 
 		min_string = "minute";
 
-	fprintf(	stderr, 
-						"[You ninja'd in the night for %i %s and %.2i seconds]\n",
-						minutes, min_string, seconds);
+	fprintf(stderr, 
+			"[You ninja'd in the night for %i %s and %.2i seconds]\n",
+			minutes, min_string, seconds );
 }
 
 
@@ -290,7 +291,23 @@ int GameState::RunGame() {
 		return 0;
 }
 
-//! The Main Loop
+void GameState::MainLoop() 
+{
+	// NOT sure this is the best place for this:
+	if (OPTIONS->MapEditorEnabled()) 
+	{
+		// pray to god.
+		MapEditor* pkMapEditor = dynamic_cast<MapEditor*>(WORLD);
+
+		pkMapEditor->RunMapEditor();
+		return;
+	}
+
+	while (!exit_game) 
+	{
+		Tick();
+	}
+}
 
 //! The most important function.  It will make sure that the game 
 //! is updating at the correct speed, and it will Draw everything
@@ -298,78 +315,51 @@ int GameState::RunGame() {
 
 // XXX NOTE: This is currently a bit more complex than it should be.
 // If you are trying to understand it, ignore all the DEBUG_ and pause junk.
-void GameState::MainLoop() {
-
-	bool wait_for_updates = OPTIONS->WaitForUpdates();
-				
-	int debug_update_count = 0;
-
-	while (!exit_game) {
-
-		// outstanding_updates is incremented once every 1/30th of a sec.
-		// We may need to update more than once on slower computers
-		// before we can draw, in order to keep the game the same speed
-		// no matter the speed of the computer
-		while (outstanding_updates > 0 && !exit_game) {
-
-			// failsafe: If there are too many updates left, break out so we can draw.
-			// this will slow the actual gamespeed down, but it will at least draw
-			// You shouldn't see this unless either 1) something's wrong or 2) uber-slow computer
-			if (m_iCurrentFps <= 2 || outstanding_updates > 10) {
-				outstanding_updates = 0;
-				break;
-			}
-
-			Update();	// mode signals handled here
-	
-			if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE) && !OPTIONS->MapEditorEnabled())
-				debug_pause_toggle = !debug_pause_toggle;
-			
-			if (debug_pause_toggle) {
-			
-				debug_update_count = outstanding_updates;
-
-				while (debug_pause_toggle && !INPUT->KeyOnce(GAMEKEY_DEBUGSTEP)) {
-					
-					INPUT->Update();
-					SOUND->Update();
-					
-					Draw();
-
-					if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
-						WINDOW->Screenshot();
-
-					if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
-						debug_pause_toggle = !debug_pause_toggle;
-				}
-
-				outstanding_updates = debug_update_count;
-			}
-
-			--outstanding_updates;
+void GameState::Tick() 
+{
+	// outstanding_updates is incremented once every 1/30th of a sec.
+	// We may need to update more than once on slower computers
+	// before we can draw, in order to keep the game the same speed
+	// no matter the speed of the computer
+	while (g_iOutstanding_updates > 0 && !exit_game) 
+	{
+		// failsafe: If there are too many updates left, break out so we can draw.
+		// this will slow the actual gamespeed down, but it will at least draw
+		// You shouldn't see this unless either 1) something's wrong or 2) uber-slow computer
+		if (m_iCurrentFps <= 2 || g_iOutstanding_updates > 10) 
+		{
+			g_iOutstanding_updates = 0;
+			break;
 		}
 
-		if (!exit_game) {
-			Draw();
+		Update();	// mode signals handled here
 
-			if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT) && !OPTIONS->MapEditorEnabled())
-				WINDOW->Screenshot();
-		}
+		UpdateDebugPausing();
 
-		// NOT NORMALLY WHAT WE DO - ALSO, A HACK
-		// This is used so we don't wait for timer, but instead do everything
-		// as fast as we possibly can.  Useful for AI training
-		if (!wait_for_updates) {
-			outstanding_updates = 1;
-		}
+		--g_iOutstanding_updates;
+	}
 
-		// wait for 1/60th sec to elapse (if we're on a fast computer)
-		// note: this should really be down() on a lock of some kind rather than
-		// just sleep randomly.
-		while (outstanding_updates <= 0 && !exit_game) {
-			rest(5);	// 1/30 sec is 33 usec, we sleep for 5 to be conservative
-		}
-  }
+	if (!exit_game) {
+		Draw();
+
+		if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT) && !OPTIONS->MapEditorEnabled())
+			WINDOW->Screenshot();
+	}
+
+	// Normally, now that we're done one Tick, we wait around for the next 1/30th of a sec
+	// to pass us by.
+	//
+	// However in some debugging situations, we don't want to wait, we instead just want to bolt through
+	// the game as fast as possible (e.g. AI training, regression testing, fast forwarding, etc)
+	if (!OPTIONS->WaitForUpdates()) 
+		g_iOutstanding_updates = 1;
+
+	// wait for 1/30th sec to elapse (if we're on a fast computer)
+	// note: this should really be down() on a lock of some kind rather than
+	// just sleep randomly.
+	while (g_iOutstanding_updates <= 0 && !exit_game) {
+		rest(5);	// 1/30 sec is 33 usec, we sleep for 5 to be conservative
+	}
 }
 
 //! Update all game status
@@ -387,10 +377,10 @@ void GameState::Update() {
 
 void GameState::UpdateFPS()
 { 
-	static int iTicksAtLastFrameDrawn = ticks;
+	static int iTicksAtLastFrameDrawn = g_iTicks;
 	static int iAmountOfFramesDrawnSinceLastCheck = 0;
 
-	int iDiff = ticks - iTicksAtLastFrameDrawn;
+	int iDiff = g_iTicks - iTicksAtLastFrameDrawn;
 
 	if (iDiff > FPS) {
 
@@ -400,7 +390,7 @@ void GameState::UpdateFPS()
 		// TRACE("FPS: %d\n", m_iCurrentFps);
 
 		iAmountOfFramesDrawnSinceLastCheck = 0;
-		iTicksAtLastFrameDrawn = ticks;
+		iTicksAtLastFrameDrawn = g_iTicks;
 	} else {
 		iAmountOfFramesDrawnSinceLastCheck++;
 	}
@@ -502,6 +492,33 @@ void GameState::SignalGameExit() {
 }
 
 GameState::~GameState() {}
+
+void GameState::UpdateDebugPausing()
+{
+	if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE) && !OPTIONS->MapEditorEnabled())
+		debug_pause_toggle = !debug_pause_toggle;
+
+	if (debug_pause_toggle)
+	{
+		int debug_update_count = g_iOutstanding_updates;
+
+		while (debug_pause_toggle && !INPUT->KeyOnce(GAMEKEY_DEBUGSTEP)) 
+		{
+			INPUT->Update();
+			SOUND->Update();
+
+			Draw();
+
+			if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
+				WINDOW->Screenshot();
+
+			if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
+				debug_pause_toggle = !debug_pause_toggle;
+		}
+
+		g_iOutstanding_updates = debug_update_count;
+	}
+}
 
 /*#define PVN_NETWORK_MAGIC_GREETING 123454321
 
