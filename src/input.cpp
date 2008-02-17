@@ -574,7 +574,7 @@ void Input::UpdateLive() {
 		game_key[i] = key[gamekey_to_realkey[i]];
 	}
 
-	// DoJoystickUpdateHack();
+	DoJoystickUpdateHack();
 
 	// get the mouse from global allegro variables
 	mouse_x_pos = ::mouse_x;
@@ -590,12 +590,12 @@ void Input::UpdateLive() {
 #define XBOX_CONTROLLER_A 					0
 #define XBOX_CONTROLLER_B 					1
 
-#define XBOX_CONTROLLER_LEFT_STICK 	0
+#define XBOX360_CONTROLLER_DPAD 	1
 
 // map joystick buttons to physical joystick
 #define JOY_BTN_JUMP				XBOX_CONTROLLER_A
-#define JOY_BTN_ACTION1			XBOX_CONTROLLER_B
-#define JOY_AXIS_DPAD				XBOX_CONTROLLER_LEFT_STICK
+#define JOY_BTN_ACTION1				XBOX_CONTROLLER_B
+#define JOY_AXIS_DPAD				XBOX360_CONTROLLER_DPAD
 
 //! OK, a quick hack for joysticks
 //! rather than define joystick buttons
@@ -652,8 +652,8 @@ void Input::DoJoystickUpdateHack() {
 		for (j = 0; j < joystick.num_sticks; ++j) {
 			stick = joystick.stick[j];
 
-			if (j != JOY_AXIS_DPAD || stick.num_axis != 2)
-				continue;
+			//if (j != JOY_AXIS_DPAD || stick.num_axis != 2)
+			//	continue;
 
 			if (stick.axis[0].d1) 
 				SetKey(PLAYERKEY_LEFT, player+1);
@@ -662,10 +662,10 @@ void Input::DoJoystickUpdateHack() {
 				SetKey(PLAYERKEY_RIGHT, player+1);
 
 			if (stick.axis[1].d1) 
-				SetKey(PLAYERKEY_DOWN, player+1);
+				SetKey(PLAYERKEY_UP, player+1);
 
 			if (stick.axis[1].d2) 
-				SetKey(PLAYERKEY_UP, player+1);
+				SetKey(PLAYERKEY_DOWN, player+1);
 		}
 	}	
 }

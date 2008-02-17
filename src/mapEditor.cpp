@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "luaManager.h"
 #include "mapEditor.h"
 #include "objectLayer.h"
 #include "mapSaver.h"
@@ -23,7 +24,7 @@ void MapEditor::RePopulateLayerList()
 
 int MapEditor::Init(XMLNode xMode) {
 	if (!m_kMapEditorGui.Init())
-		return -1;
+	 	return -1;
 
 	int ret_val = GameWorld::Init(xMode);
 
@@ -56,6 +57,8 @@ void MapEditor::Select(Object* obj) {
 void MapEditor::Shutdown() {
 	MapSaver mapSaver;
 	mapSaver.SaveEverything(this, "test-map.xml", xObjDefs);
+
+	LUA->RunVoidFunctionNoArgs("shutdown", true);
 
 	GameWorld::Shutdown();
 }

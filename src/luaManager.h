@@ -18,7 +18,8 @@ class LuaManager {
 		void Clear();
 
 		// Run a .lua file with our engine calls exposed
-		bool DoFile(const char* filename);
+		bool LoadLuaScript(const char* filename);
+		void ReleaseCurrentLuaScript();
 
 		bool RunVoidFunctionNoArgs(	const char* functionName, 
 																bool errorMsgOnFunctionNotFound = true);
@@ -28,12 +29,14 @@ class LuaManager {
 																bool errorMsgOnFunctionNotFound = true);
 
 	protected:
-		lua_State* lua; 
+		lua_State* m_pkLuaState; 
 
 		// Bind our C/C++ API to Lua, done on init
 		bool BindLuaCalls();
 
 		virtual ~LuaManager();
+
+		bool InitBlankLuaState();
 };
 
 #define LUA (LuaManager::GetInstance())

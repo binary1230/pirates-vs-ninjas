@@ -207,6 +207,19 @@ int LUAAPI lua_jumped_back_from_a_door(lua_State* lua) {
 	return 1;
 }
 
+// returns true if, on loading a level, we are jumping back
+// from a door.  Typically can use this to not display first-time
+// level opening stuff (like dialogs) when just jumping back into
+// the level from somewhere.
+/*int LUAAPI lua_startup_mapeditor_gui(lua_State* lua) {
+	int retval = 0;
+
+	if (!WORLD && MAPEDITOR_GUI)
+
+	lua_pushnumber(lua, retval);
+	return 1;
+}*/
+
 static struct LuaApiFunction LuaApiFunctionList[] = {
 
 	// first item: function name as it appears from lua

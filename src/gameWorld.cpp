@@ -274,6 +274,8 @@ void GameWorld::Shutdown() {
 		EFFECTS->Shutdown();
 		EFFECTS->FreeInstance();
 	}
+
+	LUA->ReleaseCurrentLuaScript();
 }
 
 //! Draw all objects in this physics simulation
@@ -523,9 +525,10 @@ int GameWorld::Load(XMLNode &xMode) {
 	SnapCamera();
 
 	// Load the LUA file if there is one
-	if (xMode.nChildNode("luaScript") == 1) {
+	// Don't do this for the map editor, since it needs lua stuff too.
+	if (xMode.nChildNode("luaScript") == 1 && !OPTIONS->MapEditorEnabled()) {
 		m_szLuaScript = xMode.getChildNode("luaScript").getText();
-		LUA->DoFile(m_szLuaScript);
+		LUA->LoadLuaScript(m_szLuaScript);
 	}
 
 	is_loading = false;
