@@ -80,6 +80,9 @@ function mapeditorgui_run()
 end
 
 function mapeditorgui_shutdown()
+	if frame == nil then
+		return
+	end
   frame:Close(true)
   frame = nil
 end
