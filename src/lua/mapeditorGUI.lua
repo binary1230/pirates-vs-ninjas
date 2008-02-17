@@ -9,7 +9,7 @@ function mapeditorgui_init()
 
     frame = wx.wxFrame( wx.NULL, wx.wxID_ANY, "PVN Layers",
                         wx.wxDefaultPosition, wx.wxSize(350, 450),
-                        wx.wxMINIMIZE_BOX + wx.wxSYSTEM_MENU + wx.wxCAPTION + wx.wxCLIP_CHILDREN )
+                        wx.wxMINIMIZE_BOX + wx.wxSYSTEM_MENU + wx.wxCAPTION + wx.wxCLIP_CHILDREN + wx.wxFRAME_TOOL_WINDOW )
 
     -- create a simple file menu
     local fileMenu = wx.wxMenu()
@@ -17,7 +17,7 @@ function mapeditorgui_init()
 
     -- create a simple help menu
     local helpMenu = wx.wxMenu()
-    helpMenu:Append(wx.wxID_ABOUT, "&About", "About the wxLua Minimal Application")
+    helpMenu:Append(wx.wxID_ABOUT, "&About", "About Pirates VS Ninjas")
 
     -- create a menu bar and append the file and help menus
     local menuBar = wx.wxMenuBar()
@@ -29,7 +29,7 @@ function mapeditorgui_init()
     
     -- create a simple status bar
     frame:CreateStatusBar(1)
-    frame:SetStatusText("Welcome to wxLua.")
+    frame:SetStatusText("PVN Mapeditor")
     
     -- connect the selection event of the exit menu item to an
     -- event handler that closes the window
@@ -60,9 +60,9 @@ function mapeditorgui_init()
     -- connect the selection event of the about menu item
     frame:Connect(wx.wxID_ABOUT, wx.wxEVT_COMMAND_MENU_SELECTED,
        function (event)
-            wx.wxMessageBox('This is the "About" dialog of the Minimal wxLua sample.\n'..
+            wx.wxMessageBox('Pirates VS Ninjas Level Editor (early version)\n'..
                             wxlua.wxLUA_VERSION_STRING.." built with "..wx.wxVERSION_STRING,
-                            "About wxLua",
+                            "About PVN",
                             wx.wxOK + wx.wxICON_INFORMATION,
                             frame)
        end 
