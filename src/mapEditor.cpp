@@ -94,13 +94,13 @@ void MapEditor::SetFlashText(char * format, ... )
 
 void MapEditor::ComputeNewScrolling() {	
 	// compute new camera
-	if (key[KEY_RIGHT])
+	if (key[KEY_RIGHT] || key[KEY_D])
 		camera_x += SCROLL_VALUE;
-	if (key[KEY_LEFT])
+	if (key[KEY_LEFT]  || key[KEY_A])
 		camera_x -= SCROLL_VALUE;
-	if (key[KEY_UP])
+	if (key[KEY_UP] || key[KEY_W])
 		camera_y += SCROLL_VALUE;
-	if (key[KEY_DOWN])
+	if (key[KEY_DOWN] || key[KEY_S])
 		camera_y -= SCROLL_VALUE;
 
 	 // keep it from getting off screen

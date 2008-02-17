@@ -7,9 +7,9 @@ frame = nil
 
 function mapeditorgui_init()
 
-    frame = wx.wxFrame( wx.NULL, wx.wxID_ANY, "wxLua Very Minimal Demo",
-                        wx.wxDefaultPosition, wx.wxSize(450, 450),
-                        wx.wxDEFAULT_FRAME_STYLE )
+    frame = wx.wxFrame( wx.NULL, wx.wxID_ANY, "PVN Layers",
+                        wx.wxDefaultPosition, wx.wxSize(350, 450),
+                        wx.wxMINIMIZE_BOX + wx.wxSYSTEM_MENU + wx.wxCAPTION + wx.wxCLIP_CHILDREN )
 
     -- create a simple file menu
     local fileMenu = wx.wxMenu()
