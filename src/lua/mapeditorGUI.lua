@@ -7,6 +7,9 @@ frame = nil
 
 function mapeditorgui_init()
 
+		--engine_print("SUP FOOLZ")
+--		return
+
     frame = wx.wxFrame( wx.NULL, wx.wxID_ANY, "PVN Layers",
                         wx.wxDefaultPosition, wx.wxSize(350, 450),
                         wx.wxMINIMIZE_BOX + wx.wxSYSTEM_MENU + wx.wxCAPTION + wx.wxCLIP_CHILDREN + wx.wxFRAME_TOOL_WINDOW )

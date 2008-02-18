@@ -31,7 +31,11 @@ void MapEditorGui::Update()
 
 bool MapEditorGui::Init() 
 {
-	LUA->LoadLuaScript("src/lua/mapeditorGUI.lua");
+	assert(LUA);
+
+	if (!LUA->LoadLuaScript("src/lua/mapeditorGUI.lua"))
+		return false;
+
 	LUA->RunVoidFunctionNoArgs("mapeditorgui_init", true);
 
 	return true;

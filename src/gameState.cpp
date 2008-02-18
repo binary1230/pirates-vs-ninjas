@@ -297,8 +297,10 @@ void GameState::MainLoop()
 	if (OPTIONS->MapEditorEnabled()) 
 	{
 		// pray to god.
-		MapEditor* pkMapEditor = dynamic_cast<MapEditor*>(WORLD);
+		assert(WORLD);
+		MapEditor* pkMapEditor = (MapEditor*)(WORLD);
 
+		assert(pkMapEditor);
 		pkMapEditor->RunMapEditor();
 		return;
 	}

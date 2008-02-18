@@ -20,7 +20,7 @@ bool LuaManager::InitBlankLuaState()
 
 	if (!( m_pkLuaState = lua_open() ))
 	{
-		printf("LUA: Error Initializing lua VM!\n");
+		TRACE("LUA: Error Initializing new blank lua state!\n");
 		return false;
 	}
 
@@ -87,7 +87,7 @@ bool LuaManager::RunVoidFunctionNoArgs(	const char* functionName,
 {
 	if (!m_pkLuaState)
 	{
-		TRACE("ERROR: Can't call lua function: No file is loaded!");
+		TRACE("LUA: Can't call '%s', no lua state!\n", functionName);
 		return false;
 	}
 
@@ -120,7 +120,7 @@ bool LuaManager::RunVoidFunctionNoArgs(	const char* functionName,
 
 // run the specified LUA script file
 bool LuaManager::LoadLuaScript(const char* _filename) 
-{
+{	
 	if (!InitBlankLuaState())
 	{
 		ReleaseCurrentLuaScript();
@@ -138,9 +138,21 @@ bool LuaManager::LoadLuaScript(const char* _filename)
 
 	if (luaL_dofile(m_pkLuaState, filename.c_str()) != 0) 
 	{
+		const char* szError = "(unknown loading error)";
+
+		// first thing on the lua stack is the error msg
+		if (m_pkLuaState)
+			szError = lua_tostring(m_pkLuaState, -1); 
+
+		TRACE("ERROR: Error parsing LUA file '%s':\n", _filename);
+		TRACE("\n%s\n\n", szError);
+
 		ReleaseCurrentLuaScript();
 		return false;
 	}
+
+	assert(m_pkLuaState);
+	TRACE("LUA: Loaded lua script: %s\n", _filename);
 
 	return true;
 }
@@ -164,7 +176,7 @@ bool LuaManager::BindLuaCalls()
 	assert(m_pkLuaState);
 	if (!m_pkLuaState)
 	{
-		TRACE("ERROR: Can't call lua function: No file is loaded!");
+		TRACE("ERROR: Can't bind C++ lua functions, no lua state!\n");
 		return false;
 	}
 
