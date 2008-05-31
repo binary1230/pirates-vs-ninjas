@@ -328,10 +328,7 @@ dnl ------------------------------------------------
 
 OGG=no
 
-XIPH_PATH_OGG(
-				OGG="yes",
-				AC_MSG_RESULT(libogg check Failed: Disabling OggVorbis support)
-)
+XIPH_PATH_OGG( OGG="yes", AC_MSG_RESULT(libogg check Failed: Disabling OggVorbis support) )
 
 dnl ------------------------------------------------
 dnl Check for vorbis
