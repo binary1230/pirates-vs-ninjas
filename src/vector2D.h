@@ -84,6 +84,14 @@ class Vector2D {
 		inline Vector2D Negation() {
 			return Vector2D(-x, -y);
 		}
+
+		inline float LengthSquared() {
+			return (x * x) + (y * y);
+		}
+
+		inline float Length() {
+			return fsqrt((x * x) + (y * y));
+		}
 		
 		Vector2D() : x(0.0f), y(0.0f) {}
 		Vector2D(const float _x, const float _y) : x(_x), y(_y) {}
