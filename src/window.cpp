@@ -154,8 +154,9 @@ void GameWindow::DrawBackgroundGradient(	int bottom_col, int top_col,
 // Colors start at the bottom left and go counter-clockwise
 // Color order: (bottom left, bottom right, top right, top left)
 void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2, 
-														int col1, int col2, int col3, int col4,
-														bool filled, int alpha ) {
+							int col1, int col2, int col3, int col4,
+							bool filled, int alpha ) 
+{
 	glLoadIdentity();
 	glDisable(GL_TEXTURE_2D);
 
@@ -177,7 +178,6 @@ void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2,
 
 	glEnable(GL_TEXTURE_2D);
 	glColor4ub(255, 255, 255, 255);
-
 }
 
 void GameWindow::DrawRect(	int x1, int y1, 
