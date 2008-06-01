@@ -110,8 +110,8 @@ Object* EffectsManager::TriggerObject(	const Object* triggeringObject,
 }
 
 Object* EffectsManager::TriggerEffect(	const Object* triggeringObject, 
-																				CString effectName) {
-
+										CString effectName) 
+{
 	Effect* effect = FindEffectDefinition(effectName);
 
 	if (!effect) {
