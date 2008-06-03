@@ -24,9 +24,15 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Generating Custom Swig C++ to LUA bindings"
+				CommandLine="build-tools\generate-swig-bindings.bat"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				Description=""
+				CommandLine=""
+				AdditionalDependencies=""
+				Outputs=""
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -105,6 +111,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Generating Custom Swig C++ to LUA bindings"
+				CommandLine="build-tools\generate-swig-bindings.bat"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -410,20 +418,6 @@
 				<File
 					RelativePath=".\objects\objectEnemy.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\objectFactory.cpp"
@@ -543,18 +537,6 @@
 				</File>
 				<File
 					RelativePath=".\external\xmlParser.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="MapEditorGui"
-				>
-				<File
-					RelativePath=".\gui\GUI_globals.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\gui\GUI_layeroptions.cpp"
 					>
 				</File>
 			</Filter>
@@ -894,6 +876,30 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\swig\engine.i"
+				>
+			</File>
+			<File
+				RelativePath=".\swig\engine_wrap.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath=".\Ninjas.rc"
 				>
