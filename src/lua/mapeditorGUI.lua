@@ -3,7 +3,9 @@
 
 require("wx")
 
-frame = nil
+-- Global variables
+dialog        = nil -- the wxDialog main toplevel window
+xmlResource   = nil -- the XML resource handle
 
 -- Generate a unique new wxWindowID
 local ID_IDCOUNTER = wx.wxID_HIGHEST + 1
@@ -14,52 +16,44 @@ end
 
 local ID_FILE_SAVE = NewID()
 
+-- ---------------------------------------------------------------------------
+-- Handle the quit button event
+function OnQuit(event)
+    event:Skip()
+    dialog:Show(false)
+    dialog:Destroy()
+end
+
+function dum()
+  wx.wxMessageBox( "DUM", "DUM", wx.wxOK + wx.wxICON_INFORMATION, dialog)
+end
+
+function OnBtn(event)
+  dum()  
+end
+
+function OnLayerUp(event)
+  dum()
+end
+
+function OnLayerDown(event)
+  dum()
+end
+
 function mapeditorgui_init()
 
-    --engine_print("SUP FOOLZ")
-    --return
+    xmlResource = wx.wxXmlResource()
+    xmlResource:InitAllHandlers()
+    local xrcFilename = "C:\\svn\\ninjas\\src\\gui\\mapEditorGui.xrc"
 
-    frame = wx.wxFrame( wx.NULL, wx.wxID_ANY, "PVN Map Editor",
-                        wx.wxDefaultPosition, wx.wxSize(350, 450),
-                        wx.wxMINIMIZE_BOX + wx.wxSYSTEM_MENU + wx.wxCAPTION + wx.wxCLIP_CHILDREN +
-                        wx.wxFRAME_TOOL_WINDOW )
-
-    local fileMenu = wx.wxMenu()
-    fileMenu:Append(wx.wxID_EXIT, "E&xit", "Quit Map Editor")
-    fileMenu:Append(ID_FILE_SAVE, "S&ave", "Save Current Map")
+    xmlResource:Load(xrcFilename)
+    dialog = wx.wxDialog()
+    xmlResource:LoadDialog(dialog, wx.NULL, "dlgLayers")
     
-    local helpMenu = wx.wxMenu()
-    helpMenu:Append(wx.wxID_ABOUT, "&About", "About Pirates VS Ninjas")
-
-    -- create a menu bar and append the file and help menus
-    local menuBar = wx.wxMenuBar()
-    menuBar:Append(fileMenu, "&File")
-    menuBar:Append(helpMenu, "&Help")
-    
-    -- attach the menu bar into the frame
-    frame:SetMenuBar(menuBar)
-    
-    -- create a simple status bar
-    frame:CreateStatusBar(1)
-    frame:SetStatusText("PVN Mapeditor")
-
-
-
-    -- wx.wxMessageBox('DUMSHIT\n', "About PVN", wx.wxOK, frame)
-
-
-    
-    -- connect the selection event of the exit menu item to an
-    -- event handler that closes the window
-    frame:Connect(wx.wxID_EXIT, wx.wxEVT_COMMAND_MENU_SELECTED,
-      function (event) 
-        frame:Close(true) 
-      end 
-    )
     
     -- IDLE event calls the game engine Tick(), which is normally
     -- called by the main loop, but can't be called if our GUI is active
-    frame:Connect(wx.wxEVT_IDLE,
+    dialog:Connect(wx.wxEVT_IDLE,
       function(event)
       
         if engine.GameState_GetInstance():ShouldExit() == true then
@@ -75,29 +69,18 @@ function mapeditorgui_init()
       end
     )
     
-    -- connect the selection event of the about menu item
-    frame:Connect(wx.wxID_ABOUT, wx.wxEVT_COMMAND_MENU_SELECTED,
-       function (event)
-            wx.wxMessageBox('Pirates VS Ninjas Level Editor (early version)\n'..
-                            wxlua.wxLUA_VERSION_STRING.." built with "..wx.wxVERSION_STRING,
-                            "About PVN",
-                            wx.wxOK + wx.wxICON_INFORMATION,
-                            frame)
-       end 
-    )
+    bestSize = dialog:GetBestSize()
     
-        -- connect the selection event of the about menu item
-    frame:Connect(ID_FILE_SAVE, wx.wxEVT_COMMAND_MENU_SELECTED,
-       function (event)
-            wx.wxMessageBox('DUMSHIT\n'..
-                            wxlua.wxLUA_VERSION_STRING.." built with "..wx.wxVERSION_STRING,
-                            "About PVN",
-                            wx.wxOK + wx.wxICON_INFORMATION,
-                            frame)
-       end 
-    )
+    ID_BTN1        = xmlResource.GetXRCID("button_1")
+    ID_LAYERCHANGE = xmlResource.GetXRCID("btnLayerChange")
+    
+    dialog:Connect(ID_BTN1, wx.wxEVT_COMMAND_BUTTON_CLICKED, OnBtn)
+    --dialog:Connect(ID_LAYERCHANGE, wx.wxEVT_SPIN_UP, OnLayerUp)
+    --dialog:Connect(ID_LAYERCHANGE, wx.wxEVT_SPIN_DOWN, OnLayerDown)
+    dialog:Connect(wx.wxEVT_CLOSE_WINDOW, OnQuit)
 
-    frame:Show(true)
+    dialog:Centre()
+    dialog:Show(true)
 end
 
 function mapeditorgui_update()
@@ -109,9 +92,9 @@ function mapeditorgui_run()
 end
 
 function mapeditorgui_shutdown()
-	if frame == nil then
-		return
-	end
-  frame:Close(true)
-  frame = nil
+  if dialog == nil then
+    return
+  end
+  dialog:Close(true)
+  dialog = nil
 end
