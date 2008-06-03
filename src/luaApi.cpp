@@ -210,21 +210,6 @@ int LUAAPI lua_jumped_back_from_a_door(lua_State* lua) {
 	return 1;
 }
 
-// MAP EDITOR ONLY (well, most likely map editor ONLY, at least for now)
-// You better know what you're doing if you're calling this.
-// Dom _will_ kill you.
-int LUAAPI lua_engine_tick(lua_State* lua) 
-{
-	int retval = 0;
-
-	// Normally GameState::MainLoop() will do this as fast as it can.
-	// Sometimes though, we have to call this from OnIdle() msgs in GUIs and such.
-	GAMESTATE->Tick();
-
-	lua_pushnumber(lua, retval);
-	return 1;
-}
-
 // Totally stupid. just implement as a singleton.
 MapEditor* GetMapEditorInstance()
 {
@@ -279,7 +264,6 @@ struct LuaApiFunction* GetLuaApiFunctionList() { \
 
 LUA_FUNCTION_REGISTRATION_LIST_START()
 	REGISTER_LUA_FUNCTION(engine_print)
-	REGISTER_LUA_FUNCTION(engine_tick)
 	REGISTER_LUA_FUNCTION(engine_should_exit_game)
 	REGISTER_LUA_FUNCTION(mapeditor_toggle_grid_resolution)
 

@@ -3,7 +3,7 @@
 #include "luaApi.h"
 #include "assetManager.h"
 
-// For LUA 5.1 and up
+extern "C" { extern int luaopen_engine(lua_State* L); }
 
 DECLARE_SINGLETON(LuaManager);
 
@@ -24,8 +24,11 @@ bool LuaManager::InitBlankLuaState()
 		return false;
 	}
 
-	// init standard lua stuff.
+	// include standard lua stuff in this state
 	luaL_openlibs(m_pkLuaState);
+
+	// init swig-exported stuff from our engine
+	luaopen_engine(m_pkLuaState);
 
 	if (!BindLuaCalls()) 
 	{
