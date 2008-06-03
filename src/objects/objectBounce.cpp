@@ -23,10 +23,10 @@ void ObjectBounce::Update() {
 		play_hit_sound = false;
 	}
 	
-	collided_last_frame = d.down;
+	collided_last_frame = m_kCurrentCollision.down;
 
 	// ghettoooooooo friction.
-	if (d.down) {
+	if (m_kCurrentCollision.down) {
 		vel.x *= FRICTION_MULTIPLIER;
 		if (fabs(vel.x) < MIN_VELOCITY) {
 			vel.x = 0;
@@ -46,15 +46,15 @@ void ObjectBounce::Collide(Object* obj) {
 
 	if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
 		Vector2D newpos;
-		d = GetBound(obj, newpos);
+		m_kCurrentCollision = GetBound(obj, newpos);
 
 		pos = newpos;
 		UpdateProjectionRectFromCollisions(newpos);
 
-		if (d.left || d.right)
+		if (m_kCurrentCollision.left || m_kCurrentCollision.right)
 			vel.x = -vel.x;
 		
-		if (d.down || d.up) {
+		if (m_kCurrentCollision.down || m_kCurrentCollision.up) {
 			vel.y = -vel.y*0.61f;
 
 			if (!collided_last_frame)

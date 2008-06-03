@@ -10,6 +10,7 @@ HumanPlayerObject::~HumanPlayerObject() {
 
 }
 
-bool HumanPlayerObject::GetInput(uint key, uint controller_num) const {
+bool HumanPlayerObject::GetInput(uint key, uint controller_num) const 
+{
 	return INPUT->Key(key, controller_num);
 }

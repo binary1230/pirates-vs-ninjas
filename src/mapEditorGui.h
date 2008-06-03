@@ -12,6 +12,8 @@ class MapEditorGui {
 		void Start();
 		void Update();
 
+		void ReloadLuaScript();
+
 		MapEditorGui();
 		~MapEditorGui();
 };

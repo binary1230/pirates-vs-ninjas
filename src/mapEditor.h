@@ -34,6 +34,9 @@ class MapEditor : public GameWorld {
 
 		void SetFlashText(char * format, ... );
 
+		// A resolution of 1 means disable grid
+		void SetGridResolution(int iResolution) { m_iGridResolution = iResolution; }
+
 		MapEditor();
 		virtual ~MapEditor();
 	protected:
@@ -52,6 +55,11 @@ class MapEditor : public GameWorld {
 
 		MapEditorGui m_kMapEditorGui;
 
+		int m_iCurrentObjectDefinitionIndex;
+		Object* m_pkSelectedObject;
+
+		int m_iGridResolution;
+
 		void Select(Object* obj);
 		void SelectPreviousLayer();
 		void SelectNextLayer();
@@ -61,6 +69,18 @@ class MapEditor : public GameWorld {
 		void CommonModeUpdateEnd();
 
 		void ModeObjectPlacementUpdate();
+
+		void UpdateSelectedObjectLayer();
+
+		void UpdateCurrentObjectDefinitionIfNeeded();
+
+		void AddNewObjectToWorld( int iObjectDefinitionIndexToAdd );
+
+		void UpdateSelectedObjectPosition();
+
+		void UnselectCurrentlySelectedObject();
+
+		void RemoveCurrentlySelectedObject();
 		void RePopulateLayerList();
 };
 

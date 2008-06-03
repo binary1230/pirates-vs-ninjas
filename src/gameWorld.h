@@ -11,6 +11,7 @@ class Object;
 class ObjectFactory;
 class ForceFactory;
 class ObjectLayer;
+class PlayerObject;
 			
 // note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
@@ -108,6 +109,8 @@ class GameWorld : public GameMode {
 			//! Check and see if an object is dead and needs to be cleaned up
 			bool CheckIsDead(Object* obj);
 
+			void CachePlayerObjects();
+
 			//! ONLY used during init, temp variables for "repeat" xml tags
 			int repeater_current_x, repeater_current_y;
 
@@ -159,6 +162,19 @@ class GameWorld : public GameMode {
 
 			//! Find a layer by name
 			ObjectLayer* FindLayer(const char* name);
+
+			PlayerObject* GetPlayer(uint iIndex)
+			{
+				assert(iIndex >= 0 && iIndex < m_kCachedPlayers.size());
+				if (iIndex >= 0 && iIndex < m_kCachedPlayers.size())
+					return m_kCachedPlayers[iIndex];
+				else
+					return NULL;
+			}
+
+			uint GetNumPlayers() { return m_kCachedPlayers.size(); }
+
+			vector<PlayerObject*> m_kCachedPlayers;
 			
 			virtual void Draw();
 			virtual void Update();
@@ -180,8 +196,8 @@ class GameWorld : public GameMode {
 			void TransformViewToScreen(int &x, int &y);
 
 			void ShowText(	const char* txt, 
-											const char* avatar_filename = 0, 
-											bool modal_active = false);
+							const char* avatar_filename = 0, 
+							bool modal_active = false );
 
 			//! Make the camera snap IMMEDIATELY to its
 			//! target's position rather than doing the nice
@@ -200,7 +216,6 @@ class GameWorld : public GameMode {
 			bool PlayerAllowedOffscreen() {
 				return allow_player_offscreen;
 			}
-
 
 			virtual ~GameWorld();
 

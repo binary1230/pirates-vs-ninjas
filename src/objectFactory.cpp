@@ -26,6 +26,7 @@
 #include "objectCollectable.h"
 #include "objectFan.h"
 #include "objectDoor.h"
+#include "objectEnemy.h"
 #include "objectTxtOverlay.h"
 // #include "object3d.h" // not yet.
 #include "objectCutBars.h"
@@ -168,17 +169,18 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 // XXX this shouldn't really be here...
 void ObjectFactory::SetupTypes() {
 	// maps strings of object types to numeric ID's.
-	objectDefTypes["Bounce"] 						= OBJECT_ID_BOUNCE;
-	objectDefTypes["Background"] 				= OBJECT_ID_BACKGROUND;
-	objectDefTypes["Player"] 						= OBJECT_ID_PLAYER;
+	objectDefTypes["Bounce"] 			= OBJECT_ID_BOUNCE;
+	objectDefTypes["Background"] 		= OBJECT_ID_BACKGROUND;
+	objectDefTypes["Player"] 			= OBJECT_ID_PLAYER;
 	objectDefTypes["ControllerDisplay"]	= OBJECT_ID_CONTROLLER;
-	objectDefTypes["Static"] 						= OBJECT_ID_STATIC;
-	objectDefTypes["Fan"]								= OBJECT_ID_FAN;
-	objectDefTypes["Door"]							= OBJECT_ID_DOOR;
-	objectDefTypes["Spring"]						= OBJECT_ID_SPRING;
-	objectDefTypes["Collectable"]				= OBJECT_ID_COLLECTABLE;
-	objectDefTypes["TextOverlay"]				= OBJECT_ID_TXTOVERLAY;
-	objectDefTypes["CutBars"]						= OBJECT_ID_CUTBARS;
+	objectDefTypes["Static"] 			= OBJECT_ID_STATIC;
+	objectDefTypes["Enemy"] 			= OBJECT_ID_ENEMY;
+	objectDefTypes["Fan"]				= OBJECT_ID_FAN;
+	objectDefTypes["Door"]				= OBJECT_ID_DOOR;
+	objectDefTypes["Spring"]			= OBJECT_ID_SPRING;
+	objectDefTypes["Collectable"]		= OBJECT_ID_COLLECTABLE;
+	objectDefTypes["TextOverlay"]		= OBJECT_ID_TXTOVERLAY;
+	objectDefTypes["CutBars"]			= OBJECT_ID_CUTBARS;
 }
 
 // Get the object ID from an XML object definition
@@ -255,6 +257,10 @@ Object* ObjectFactory::CreateObject(ENGINE_OBJECTID id,
 
 		case OBJECT_ID_SPRING:
 			obj = NewSpringObject(xObjectDef, xObject);
+			break;
+
+		case OBJECT_ID_ENEMY:
+			obj = NewEnemyObject(xObjectDef, xObject);
 			break;
 
 		case OBJECT_ID_COLLECTABLE:
@@ -501,6 +507,18 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 	return obj;
 }
 
+Object* ObjectFactory::NewEnemyObject(XMLNode &xDef, XMLNode *xObj) 
+{
+	EnemyObject* obj = new EnemyObject();
+	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+		return NULL;
+
+	obj->properties.is_badguy = true;
+
+	obj->SetupCachedVariables();
+	return obj;
+}
+
 //Object* ObjectFactory::New3dObject(XMLNode &xDef, XMLNode *xObj) {
 //
 //	ModelObject* obj = new ModelObject();
@@ -645,6 +663,7 @@ bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 	obj->properties.feels_friction = xProps.nChildNode("affectedByFriction") != 0; 
 
 	obj->properties.is_solid = xProps.nChildNode("solidObject") != 0;
+	obj->properties.spawns_enemies = xProps.nChildNode("spawnsEnemies") != 0;
 	
 	if (xProps.nChildNode("isOverlay")) {
 		obj->properties.is_overlay = 1;

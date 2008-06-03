@@ -73,7 +73,7 @@ void Object::SetupCachedVariables() {
 		height = 0;
 	}
 
-	m_bCanCollide =	properties.is_solid ||
+	m_bCanCollide |=properties.is_solid ||
 					properties.is_player || 
 					properties.is_spring ||
 					properties.is_collectable || 
@@ -104,7 +104,7 @@ void Object::FadeOut(int time) {
 }
 
 bool Object::BaseInit() {
-	draw_bounding_box = false;
+	m_bDrawBoundingBox = false;
 	tmp_debug_flag = 0;
 	ClearProperties(properties);
 	is_dead = false;
@@ -198,7 +198,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 
 	// bounding box stuff below.
 
-	if (draw_bounding_box) {
+	if (m_bDrawBoundingBox) {
 		_Rect bbox_t;
 
 		// get current bounding box
@@ -244,7 +244,7 @@ void Object::ApplyForce(Force* force) {
 void Object::ResetForNextFrame() {
 	old_pos = pos;
 	accel.Clear();
-	d.up = d.down = d.left = d.right = 0;
+	m_kCurrentCollision.up = m_kCurrentCollision.down = m_kCurrentCollision.left = m_kCurrentCollision.right = 0;
 
 	bbox.set( pos.x, pos.y, pos.x + width, pos.y + height);
 
@@ -310,7 +310,7 @@ Object::Object() {
 	display_time = -1;
 	rotate_angle = rotate_velocity = 0.0f;
 	use_rotation = false;
-	draw_bounding_box = false;
+	m_bDrawBoundingBox = false;
 	m_bCanCollide = false;
 }
 
@@ -408,4 +408,11 @@ void Object::MoveToNewPosition() {
 
 Object::~Object() {
 	SAFE_DELETE(objectDefName);
+}
+
+void Object::PlayAnimation( uint uiIndex )
+{
+	assert(uiIndex >=0 && uiIndex < animations.size() && "Animation index out of range.");
+	if (uiIndex >=0 && uiIndex < animations.size())
+		currentAnimation = animations[uiIndex];
 }

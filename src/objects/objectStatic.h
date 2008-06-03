@@ -18,7 +18,9 @@ class StaticObject : public Object {
 
 		StaticObject();
 		~StaticObject();
-			
+
+		void UpdateSpawns();
+
 		friend class ObjectFactory;
 };
 

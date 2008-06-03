@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "precompiled.h"
 #include "mapEditor.h"
 #include "mapEditorGui.h"
 #include "objectLayer.h"
@@ -12,6 +13,12 @@
 #include "object.h"
 #include "objectFactory.h"
 #include "luaManager.h"
+
+void MapEditorGui::ReloadLuaScript()
+{
+	Shutdown();
+	Start();
+}
 
 void MapEditorGui::Shutdown()
 {

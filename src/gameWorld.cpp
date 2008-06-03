@@ -304,10 +304,14 @@ void GameWorld::Solve(Object *obj) {
 	assert(obj != NULL);
 	int j, max = forces.size();
 
+	// OLD WAY, DEPRECATED, SOON TO BE REPLACED
 	// apply each force to the object
 	for (j = 0; j < max; j++) {
 		obj->ApplyForce(forces[j]);
 	}
+
+	// NEW WAY
+	obj->ApplyForces();
 }
 
 void GameWorld::GetCollideableObjects(ObjectArray &objs) {
@@ -537,8 +541,25 @@ int GameWorld::Load(XMLNode &xMode) {
 		EVENTS->OnLoad();
 	
 	m_bJumpedBackFromADoor = false;
+
+	CachePlayerObjects();
 	
 	return 0;	
+}
+
+void GameWorld::CachePlayerObjects()
+{
+	ObjectListIter iter;
+
+	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) 
+	{
+		assert(*iter != NULL);
+		if ((*iter)->GetProperties().is_player ) 
+		{
+			PlayerObject* player = (PlayerObject*)(*iter);
+			m_kCachedPlayers.push_back(player);
+		}
+	} 
 }
 
 // Loads the header info from the Mode XML file

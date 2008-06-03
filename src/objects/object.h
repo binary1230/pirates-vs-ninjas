@@ -23,12 +23,15 @@ struct CollisionDirection {
 };
 
 //! Various properties of an Object
-struct ObjectProperties {
-	
+struct ObjectProperties 
+{
 	// NOTE: If you add anything here, update ClearProperties()
 	bool feels_gravity;	
 	bool feels_user_input;
 	bool feels_friction;
+
+	// TEMP HACK - this object spawns enemies
+	bool spawns_enemies;
 
 	//! If solid, another solid object cannot move through it
 	bool is_solid;
@@ -47,6 +50,8 @@ struct ObjectProperties {
 	bool is_door;
 	bool is_ring;
 	bool is_ball;
+
+	bool is_badguy;
 };
 
 //! Clears property masks
@@ -63,6 +68,8 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_door = 0;
 	p.is_ring = 0;
 	p.is_ball = 0;
+	p.spawns_enemies = 0;
+	p.is_badguy = 0;
 }
 
 // Used for find()
@@ -104,7 +111,7 @@ class Object {
 		Vector2D accel;
 		
 		//! The directions of current collisions (up,down,right,left)
-		CollisionDirection d;
+		CollisionDirection m_kCurrentCollision;
 		
 		//! Object properties
 		struct ObjectProperties properties;
@@ -182,7 +189,7 @@ class Object {
 		bool use_rotation;
 
 		//! Whether to draw the bounding box or not
-		bool draw_bounding_box;
+		bool m_bDrawBoundingBox;
 
 		//! If this object should report collisions or not
 		bool m_bCanCollide;
@@ -208,7 +215,11 @@ class Object {
 		
 		virtual void Update() = 0;
 
-		void DrawBoundingRect(bool state) {draw_bounding_box = true;}
+		// TODO: Make this take an animation code, for now it just takes the index of the animation 
+		// as defined by the order we found them in the XML file.  Very prone to errors. HACKY
+		void PlayAnimation(uint uiIndex);
+
+		void SetDrawBounds(bool bDrawBounds) {m_bDrawBoundingBox = bDrawBounds;}
 		
 		//! Fade this object out over a given time (in frames)
 		void FadeOut(int time);
@@ -230,6 +241,10 @@ class Object {
 		inline int GetDisplayTime() {
 			return display_time;
 		}
+
+		// NOTE: This will supercede all global force stuff that is happening now.
+		// In a bit, this will replace the force factory junk.
+		virtual void ApplyForces() {};
 	
 		//! Draw this object at its coordinates plus specified offset
 		//! Optionally, you can pass in a specific sprite to draw, otherwise
@@ -260,6 +275,8 @@ class Object {
 		//! Functions to get/set velocity
 		inline float GetVelX() 					{ return vel.x; }
 		inline float GetVelY() 					{ return vel.y; }
+		inline Vector2D GetVelXY() const { return vel; };
+
 		inline void SetVelX(const float _vx) 		{ vel.x = _vx; }
 		inline void SetVelY(const float _vy) 		{ vel.y = _vy; }
 		inline void SetVelXY(const float _vx, const float _vy) {

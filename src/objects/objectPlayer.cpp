@@ -73,7 +73,7 @@ void PlayerObject::UpdateRunningAnimationSpeed() {
 }
 
 void PlayerObject::DoWalkThroughDoor() {
-	state = WALKING_THRU_DOOR;
+	m_kPlayerState = WALKING_THRU_DOOR;
 
 	// XXX don't have an animation for this yet...
 	currentAnimation = animations[PLAYER_WALKING];
@@ -86,29 +86,31 @@ void PlayerObject::DoWalkThroughDoor() {
 
 // Things common to STANDING, WALKING, and RUNNING
 void PlayerObject::DoCommonGroundStuff() {
-	if (!d.down) {
+	if (!m_kCurrentCollision.down) {
 		DoFalling();
 		return;
 	}	
 
-	if (door_in_front_of_us && INPUT->KeyOnce(PLAYERKEY_UP, controller_num)) {
+	if (door_in_front_of_us && INPUT->KeyOnce(PLAYERKEY_UP, controller_num)) 
+	{
 		DoWalkThroughDoor();
 		return;
 	}
 
-	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num)) {
+	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num)) 
+	{
 		vel.y = jump_velocity;
 		SOUND->PlaySound("jump");
 		DoJumping();
 		return;
-  }	
+	}	
 	
 	// Do ghetto friction
 	vel *= drag;
 }
 
 void PlayerObject::DoStanding() {	
-	state = STANDING;
+	m_kPlayerState = STANDING;
 
 	DoCommonGroundStuff();
 
@@ -121,7 +123,7 @@ void PlayerObject::DoStanding() {
 }
 
 void PlayerObject::DoWalking() {
-	state = WALKING;
+	m_kPlayerState = WALKING;
 	
 	DoCommonGroundStuff();
 	
@@ -176,11 +178,11 @@ void PlayerObject::DoCommonAirStuff() {
 
 // no distinction from walking yet.
 void PlayerObject::DoRunning() {
-	state = RUNNING;
+	m_kPlayerState = RUNNING;
 }
 
 void PlayerObject::DoJumping() {
-	state = JUMPING;
+	m_kPlayerState = JUMPING;
 
 	currentAnimation = animations[PLAYER_JUMPING];
 
@@ -188,7 +190,7 @@ void PlayerObject::DoJumping() {
 
 	// really shouldn't have a downward 
 	// collision on an upward jump
-	if (d.down) {
+	if (m_kCurrentCollision.down) {
 		DoStanding();
 		return;
 	}
@@ -200,7 +202,7 @@ void PlayerObject::DoJumping() {
 }
 
 void PlayerObject::DoFalling() {
-	state = FALLING;
+	m_kPlayerState = FALLING;
 
 	// XXX: should be PLAYER_FALLING when we have one.
 	currentAnimation = animations[PLAYER_JUMPING];
@@ -210,19 +212,19 @@ void PlayerObject::DoFalling() {
 
 	DoCommonAirStuff();
 
-	if (d.down) {
+	if (m_kCurrentCollision.down) {
 		DoStanding();
 	}
 }
 
 void PlayerObject::DoWhistling() {
-	state = WHISTLING;
+	m_kPlayerState = WHISTLING;
 }
 void PlayerObject::DoLookingUp() {
-	state = LOOKINGUP;
+	m_kPlayerState = LOOKINGUP;
 }
 void PlayerObject::DoCrouchingDown() {
-	state = CROUCHINGDOWN;
+	m_kPlayerState = CROUCHINGDOWN;
 }
 
 // Do things common to most every state
@@ -231,36 +233,9 @@ void PlayerObject::DoCommonStuff() {
 	// let's do something interesting and random here, why not?
 	// if they press a key here, then drop a bouncy ball.
 
-	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num) && 
-			state != WALKING_THRU_DOOR) {
-		
-		Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
-			
-		if (!objBall)
-			return;
+	DropBombs();
+	return;
 
-		int strength;
-		if (!GLOBALS->Value("bomb_throw_strength", strength))
-			return;
-
-		float sign;
-		if (flip_x)
-			sign = -1;
-		else
-			sign = 1;
-
-
-		if (GetInput(PLAYERKEY_UP, controller_num))
-			objBall->SetVelXY(0.0f, vel.y + strength*1.7);
-
-		else if (GetInput(PLAYERKEY_DOWN, controller_num))
-			objBall->SetVelXY(0.0f, vel.y - strength);
-
-		else
-			objBall->SetVelXY(sign * strength + vel.x, vel.y + 6.0f);
-
-		//objBall->SetVelXY(vel.x, 0.0f);
-	}
 
 	// Clamp horizontal velocities
 	#define MAX_HORIZ_VELOCITY 27.0f
@@ -308,19 +283,20 @@ void PlayerObject::Collide(Object* obj) {
 
 	if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
 		Vector2D newpos;
-		d = GetBound(obj, newpos);
+		m_kCurrentCollision = GetBound(obj, newpos);
     
 		pos = newpos;
 		UpdateProjectionRectFromCollisions(newpos);
 
-		if (d.left || d.right)
+		if (m_kCurrentCollision.left || m_kCurrentCollision.right)
 			vel.x = 0;
 
-		if (d.down || d.up)
+		if (m_kCurrentCollision.down || m_kCurrentCollision.up)
 			vel.y = 0;
 	}
 
-	if (obj->GetProperties().is_spring) {
+	if (obj->GetProperties().is_spring) 
+	{
 		SpringObject* sObj = (SpringObject*)obj;
 		
 		if (sObj->IsSpringActive())
@@ -332,13 +308,15 @@ void PlayerObject::Collide(Object* obj) {
 	}
 }
 
-bool PlayerObject::Init() {
+bool PlayerObject::Init() 
+{
 	next_skid_time = 0;
 	
 	controller_num = 1;
-	state = FALLING; 
+	m_kPlayerState = FALLING; 
 	door_in_front_of_us = NULL;
 	ring_count = 0;
+	m_kInputState = INPUT_NOTHING;
 
 	return BaseInit();
 }
@@ -348,7 +326,7 @@ PlayerObject::PlayerObject() {
 	min_velocity = DEFAULT_MIN_VELOCITY;
 	mass = 1.0f;
 	drag = DEFAULT_DRAG;
-	state = FALLING;
+	m_kPlayerState = FALLING;
 	door_in_front_of_us = NULL;
 	ring_count = 0;
 	next_skid_time = 0;
@@ -375,7 +353,7 @@ void PlayerObject::UpdateState() {
 
 	DoCommonStuff();
 
-	switch (state) {
+	switch (m_kPlayerState) {
 		case STANDING:
 			DoStanding();
 			break;
@@ -407,5 +385,38 @@ void PlayerObject::UpdateState() {
 			TRACE(" -- PLAYEROBJECT ERROR: Unkown state asked for!\n");
 			assert(false);
 			break;
+	}
+}
+
+void PlayerObject::DropBombs()
+{
+	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num) && 
+		m_kPlayerState != WALKING_THRU_DOOR) 
+	{	
+		Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
+
+		if (!objBall)
+			return;
+
+		int strength;
+		if (!GLOBALS->Value("bomb_throw_strength", strength))
+			return;
+
+		float sign;
+		if (flip_x)
+			sign = -1;
+		else
+			sign = 1;
+
+		if (GetInput(PLAYERKEY_UP, controller_num))
+			objBall->SetVelXY(0.0f, vel.y + strength*1.7);
+
+		else if (GetInput(PLAYERKEY_DOWN, controller_num))
+			objBall->SetVelXY(0.0f, vel.y - strength);
+
+		else
+			objBall->SetVelXY(sign * strength + vel.x, vel.y + 6.0f);
+
+		//objBall->SetVelXY(vel.x, 0.0f);
 	}
 }

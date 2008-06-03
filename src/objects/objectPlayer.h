@@ -24,6 +24,17 @@ enum PlayerState {
 	WALKING_THRU_DOOR
 };
 
+// TODO: rename when it becomes more apparent what this is describing
+enum InputStateMask {
+	INPUT_NOTHING	= 0x0,
+	INPUT_JUMP		= 0x1,
+	INPUT_ACTION1	= 0x2,
+	INPUT_LEFT		= 0x4,
+	INPUT_RIGHT		= 0x8,
+	INPUT_UP		= 0x10,
+	INPUT_DOWN		= 0x20,
+};
+
 //! The Player object, represents our HERO on screen
 class PlayerObject : public Object {
 	protected:
@@ -34,11 +45,19 @@ class PlayerObject : public Object {
 		// How long until we are allowed to draw another "skid" object
 		int next_skid_time;
 
-		PlayerState state;
+		// What we're currently doing
+		PlayerState m_kPlayerState;
+
+		// What our input is asking us to do
+		// Corresponds to either current real input (for human controller)
+		// Or what the AI wants to do (for AI controlled players)
+		InputStateMask m_kInputState;
 	
 		void UpdateState();
 
 		void DoCommonStuff();
+
+		void DropBombs();
 
 		void DoStanding();
 		void DoWalking();

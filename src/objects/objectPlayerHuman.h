@@ -7,11 +7,12 @@
 
 class HumanPlayerObject : public PlayerObject {
 	protected:
-		virtual bool GetInput(uint key, uint controller_number) const;
 
 	public:
 		HumanPlayerObject();
 		virtual ~HumanPlayerObject();
+
+		virtual bool GetInput(uint key, uint controller_number) const;
 
 		friend class ObjectFactory;
 };

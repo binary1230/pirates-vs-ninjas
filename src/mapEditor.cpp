@@ -44,6 +44,11 @@ int MapEditor::Init(XMLNode xMode) {
 	m_uiTxtTicksLeft = 0;
 	m_eCurrentMode = MODE_MAIN;
 
+	m_iCurrentObjectDefinitionIndex = 0;
+	m_pkSelectedObject = NULL;
+
+	m_iGridResolution = 1;
+
 	WINDOW->SetTitle("Pirates VS Ninjas Map Editor");
 	SetFlashText("Pirates VS Ninjas Map Editor, press H for help.");
 
@@ -54,9 +59,9 @@ void MapEditor::Select(Object* obj) {
 	selection = obj;
 }
 
-void MapEditor::Shutdown() {
-
-	// TODO: Unselect and remove current object FIRST!
+void MapEditor::Shutdown() 
+{
+	UnselectCurrentlySelectedObject();
 
 	MapSaver mapSaver;
 	mapSaver.SaveEverything(this, "test-map.xml", xObjDefs);
@@ -187,79 +192,22 @@ void MapEditor::ModeUpdate()
 
 void MapEditor::ModeObjectPlacementUpdate()
 {
-	static int iCurrentIndex = 0;
-	static Object* pkObj = NULL; // current object (TODO: Replace with m_pkSelectedObject)
-
-	if (OBJECT_FACTORY->GetObjectDefinitionCount() == 0) {
+	if (OBJECT_FACTORY->GetObjectDefinitionCount() == 0) 
+	{
 		m_eCurrentMode = MODE_MAIN;
-		iCurrentIndex = -1;
+		m_iCurrentObjectDefinitionIndex = -1;
+		assert(!m_pkSelectedObject);
 		return;
 	}
 
-	// -----------------------------------------------------------
-	// move existing object
-	// -----------------------------------------------------------
+	UpdateSelectedObjectPosition();
+	UpdateSelectedObjectLayer();
 
-	if (pkObj) {
+	// insert it permanently into world if they clicked
+	if (INPUT->MouseButtonOnce(MOUSE_LEFT_BTN))
+		UnselectCurrentlySelectedObject();
 
-		int x = (int)(INPUT->MouseX() / pkObj->GetLayer()->GetScrollSpeed()) + camera_x;
-		int y = (int)((WINDOW->Height() - INPUT->MouseY()) / pkObj->GetLayer()->GetScrollSpeed()) + camera_y;
-		pkObj->SetXY(x, y);
-		
-		assert(pkObj->GetLayer());
-
-		// TODO: This should just be one call to SetLayer(), refactor this junk in there.
-		if (pkObj->GetLayer())
-			pkObj->GetLayer()->RemoveObject(pkObj);
-		pkObj->SetLayer(layers[m_iCurrentLayer]);
-		pkObj->GetLayer()->AddObject(pkObj);
-
-		// insert it permanently if they clicked
-		if (INPUT->MouseButtonOnce(MOUSE_LEFT_BTN)) {
-			pkObj = NULL;	// just remove our reference to it, it's already in the world.
-		}
-	}
-
-	// -----------------------------------------------------------
-
-	bool bGetPrevious = INPUT->RealKeyOnce(KEY_INSERT);
-	bool bGetNext = INPUT->RealKeyOnce(KEY_DEL);
-
-	if (pkObj && !bGetNext && !bGetPrevious)
-		return;
-
-	// -----------------------------------------------------------
-	// create a new object/got to previous/next object
-	// -----------------------------------------------------------
-
-	if (bGetNext) {
-		iCurrentIndex++;
-		if (iCurrentIndex >= OBJECT_FACTORY->GetObjectDefinitionCount())
-			iCurrentIndex = 0;
-	}
-
-	if (bGetPrevious) {
-		iCurrentIndex--;
-		if (iCurrentIndex < 0)
-			iCurrentIndex = OBJECT_FACTORY->GetObjectDefinitionCount() - 1;
-	}
-
-	// delete the old object
-	if (pkObj) {
-		pkObj->SetIsDead(true);
-		pkObj = NULL;
-		DoCleaning();
-	}
-
-	// add the new object
-	const CString& sObjectName = OBJECT_FACTORY->GetObjectDefinition(iCurrentIndex);
-	SetFlashText("OBJECTS: Looking at object: '%s'", sObjectName.c_str());
-
-	pkObj = OBJECT_FACTORY->CreateObject(sObjectName);
-	assert(pkObj);
-
-	pkObj->SetLayer(layers[m_iCurrentLayer]);
-	WORLD->AddObject(pkObj, true);
+	UpdateCurrentObjectDefinitionIfNeeded();
 }
 
 void MapEditor::CommonModeUpdateStart() 
@@ -275,6 +223,15 @@ void MapEditor::CommonModeUpdateStart()
 		SelectNextLayer();
 	else if (INPUT->RealKeyOnce(KEY_PGDN))
 		SelectPreviousLayer();
+	else if (INPUT->RealKeyOnce(KEY_PAUSE))
+		m_kMapEditorGui.ReloadLuaScript();
+	else if (INPUT->RealKeyOnce(KEY_G))
+	{
+		if (m_iGridResolution == 1)
+			m_iGridResolution = 16;
+		else
+			m_iGridResolution = 1;
+	}
 
 	ComputeNewScrolling();
 }
@@ -319,4 +276,100 @@ int MapEditor::LoadObjectDefsFromXML(XMLNode& _xObjDefs) {
 void MapEditor::RunMapEditor()
 {
 	m_kMapEditorGui.Start();
+}
+
+void MapEditor::RemoveCurrentlySelectedObject()
+{
+	if (!m_pkSelectedObject)
+		return;
+
+	m_pkSelectedObject->SetIsDead(true);
+	m_pkSelectedObject = NULL;
+	DoCleaning();
+}
+
+void MapEditor::UpdateSelectedObjectPosition()
+{
+	if (!m_pkSelectedObject)
+		return;
+
+	m_pkSelectedObject->SetDrawBounds(true);
+
+	assert(m_pkSelectedObject->GetLayer());
+
+	int x = (int)(INPUT->MouseX() / m_pkSelectedObject->GetLayer()->GetScrollSpeed()) + camera_x;
+	int y = (int)((WINDOW->Height() - INPUT->MouseY()) / m_pkSelectedObject->GetLayer()->GetScrollSpeed()) + camera_y;
+
+	if (m_iGridResolution != 1)
+	{
+		x -= x % m_iGridResolution;
+		y -= y % m_iGridResolution;
+	}
+
+	m_pkSelectedObject->SetXY(x, y);
+}
+
+void MapEditor::UnselectCurrentlySelectedObject()
+{
+	if (!m_pkSelectedObject)
+		return;
+
+	m_pkSelectedObject->SetDrawBounds(false);
+
+	// just remove our reference to it, it's already inserted into the world.
+	m_pkSelectedObject = NULL;
+}
+
+void MapEditor::AddNewObjectToWorld( int iObjectDefinitionIndexToAdd )
+{
+	const CString& sObjectName = OBJECT_FACTORY->GetObjectDefinition(iObjectDefinitionIndexToAdd);
+	SetFlashText("OBJECTS: Looking at object: '%s'", sObjectName.c_str());
+
+	m_pkSelectedObject = OBJECT_FACTORY->CreateObject(sObjectName);
+	assert(m_pkSelectedObject);
+
+	m_pkSelectedObject->SetLayer(layers[m_iCurrentLayer]);
+	WORLD->AddObject(m_pkSelectedObject, true);
+}
+
+void MapEditor::UpdateCurrentObjectDefinitionIfNeeded()
+{
+	bool bGetPrevious = INPUT->RealKeyOnce(KEY_INSERT);
+	bool bGetNext = INPUT->RealKeyOnce(KEY_DEL);
+
+	// Do nothing if there's no input or no selection
+	if (m_pkSelectedObject && !bGetNext && !bGetPrevious)
+		return;
+
+	// To move up and down the object type list, we
+	// delete the object that is selected, and re-add a new object
+	// with the new selected object definition index we compute
+	// based on user input.
+
+	RemoveCurrentlySelectedObject();
+
+	if (bGetNext) {
+		m_iCurrentObjectDefinitionIndex++;
+		if (m_iCurrentObjectDefinitionIndex >= OBJECT_FACTORY->GetObjectDefinitionCount())
+			m_iCurrentObjectDefinitionIndex = 0;
+	}
+
+	if (bGetPrevious) {
+		m_iCurrentObjectDefinitionIndex--;
+		if (m_iCurrentObjectDefinitionIndex < 0)
+			m_iCurrentObjectDefinitionIndex = OBJECT_FACTORY->GetObjectDefinitionCount() - 1;
+	}
+
+	AddNewObjectToWorld(m_iCurrentObjectDefinitionIndex);
+}
+
+void MapEditor::UpdateSelectedObjectLayer()
+{
+	if (!m_pkSelectedObject || m_pkSelectedObject->GetLayer() == layers[m_iCurrentLayer])
+		return;
+	
+	// TODO: This should just be one call to SetLayer(), refactor this junk in there.
+	m_pkSelectedObject->GetLayer()->RemoveObject(m_pkSelectedObject);
+	m_pkSelectedObject->SetLayer(layers[m_iCurrentLayer]);
+	m_pkSelectedObject->GetLayer()->AddObject(m_pkSelectedObject);
 }
