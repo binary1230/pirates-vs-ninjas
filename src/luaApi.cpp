@@ -19,8 +19,8 @@ int LUAAPI lua_engine_print(lua_State* lua) {
 
 	TRACE("%s", msg);
 
-  lua_pushnumber( lua, retval );
-  return 1;
+	lua_pushnumber( lua, retval );
+	return 1;
 }
 
 int LUAAPI lua_world_create_cutbars(lua_State* lua) {

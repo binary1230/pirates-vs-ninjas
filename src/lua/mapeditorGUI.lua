@@ -44,13 +44,23 @@ function mapeditorgui_init()
 
     xmlResource = wx.wxXmlResource()
     xmlResource:InitAllHandlers()
-    local xrcFilename = "C:\\svn\\ninjas\\src\\gui\\mapEditorGui.xrc"
+    local xrcFilename = "data/mapeditor/mapEditorGui.xrc"
+	
+    if (xmlResource:Load(xrcFilename) == false) then
+		engine_print("ERROR: Can't load XRC file: " .. xrcFilename .. "\n")
+		return;
+	end
 
-    xmlResource:Load(xrcFilename)
     dialog = wx.wxDialog()
-    xmlResource:LoadDialog(dialog, wx.NULL, "dlgLayers")
-    
-    
+		
+	local topLevelDlgName = "dlgLayers"
+	if	(xmlResource:LoadDialog(dialog, wx.NULL, topLevelDlgName) == false 
+		or dialog == nil
+		) then
+		engine_print("ERROR: Failed loading dialog from XRC: " .. topLevelDlgName .. "\n")
+		return;
+	end
+	
     -- IDLE event calls the game engine Tick(), which is normally
     -- called by the main loop, but can't be called if our GUI is active
     dialog:Connect(wx.wxEVT_IDLE,
@@ -79,8 +89,8 @@ function mapeditorgui_init()
     --dialog:Connect(ID_LAYERCHANGE, wx.wxEVT_SPIN_DOWN, OnLayerDown)
     dialog:Connect(wx.wxEVT_CLOSE_WINDOW, OnQuit)
 
-    dialog:Centre()
     dialog:Show(true)
+    -- dialog:Centre() -- CRASHES UNDER LINUX???
 end
 
 function mapeditorgui_update()
