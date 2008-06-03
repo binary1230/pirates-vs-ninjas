@@ -1395,17 +1395,21 @@ SWIG_Lua_SetModule(lua_State* L, swig_module_info *module) {
 #define SWIGTYPE_p_MapEditor swig_types[7]
 #define SWIGTYPE_p_Object swig_types[8]
 #define SWIGTYPE_p_ObjectLayer swig_types[9]
-#define SWIGTYPE_p_XMLNode swig_types[10]
-#define SWIGTYPE_p_int swig_types[11]
-#define SWIGTYPE_p_listTObject_p_t swig_types[12]
-#define SWIGTYPE_p_listTObject_p_t__const_iterator swig_types[13]
-#define SWIGTYPE_p_listTObject_p_t__const_reverse_iterator swig_types[14]
-#define SWIGTYPE_p_listTObject_p_t__iterator swig_types[15]
-#define SWIGTYPE_p_listTObject_p_t__reverse_iterator swig_types[16]
-#define SWIGTYPE_p_vectorTObject_p_t swig_types[17]
-#define SWIGTYPE_p_vectorTObject_p_t__iterator swig_types[18]
-static swig_type_info *swig_types[20];
-static swig_module_info swig_module = {swig_types, 19, 0, 0, 0, 0};
+#define SWIGTYPE_p_PlayerObject swig_types[10]
+#define SWIGTYPE_p_XMLNode swig_types[11]
+#define SWIGTYPE_p_int swig_types[12]
+#define SWIGTYPE_p_listTObject_p_t swig_types[13]
+#define SWIGTYPE_p_listTObject_p_t__const_iterator swig_types[14]
+#define SWIGTYPE_p_listTObject_p_t__const_reverse_iterator swig_types[15]
+#define SWIGTYPE_p_listTObject_p_t__iterator swig_types[16]
+#define SWIGTYPE_p_listTObject_p_t__reverse_iterator swig_types[17]
+#define SWIGTYPE_p_uint swig_types[18]
+#define SWIGTYPE_p_vectorTObject_p_t swig_types[19]
+#define SWIGTYPE_p_vectorTObject_p_t__iterator swig_types[20]
+#define SWIGTYPE_p_vectorTPlayerObject_p_t swig_types[21]
+#define SWIGTYPE_uint swig_types[22]
+static swig_type_info *swig_types[24];
+static swig_module_info swig_module = {swig_types, 23, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2463,6 +2467,113 @@ fail:
 }
 
 
+static int _wrap_GameWorld_GetPlayer(lua_State* L) {
+  int SWIG_arg = -1;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  uint arg2 ;
+  PlayerObject *result = 0 ;
+  uint *argp2 ;
+  
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg(1);
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg(2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_GetPlayer",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_uint,0))){
+    SWIG_fail_ptr("GameWorld_GetPlayer",2,SWIGTYPE_uint);
+  }
+  arg2 = *argp2;
+  
+  result = (PlayerObject *)(arg1)->GetPlayer(arg2);
+  SWIG_arg=0;
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_PlayerObject,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_GetNumPlayers(lua_State* L) {
+  int SWIG_arg = -1;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  uint result;
+  
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg(1);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_GetNumPlayers",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  result = (arg1)->GetNumPlayers();
+  SWIG_arg=0;
+  {
+    uint * resultptr = new uint((uint &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_uint,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_m_kCachedPlayers_set(lua_State* L) {
+  int SWIG_arg = -1;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  vector<PlayerObject * > *arg2 = (vector<PlayerObject * > *) 0 ;
+  
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg(1);
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg(2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_m_kCachedPlayers_set",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_vectorTPlayerObject_p_t,0))){
+    SWIG_fail_ptr("GameWorld_m_kCachedPlayers_set",2,SWIGTYPE_p_vectorTPlayerObject_p_t);
+  }
+  
+  if (arg1) (arg1)->m_kCachedPlayers = *arg2;
+  
+  SWIG_arg=0;
+  
+  return SWIG_arg;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_m_kCachedPlayers_get(lua_State* L) {
+  int SWIG_arg = -1;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  vector<PlayerObject * > *result = 0 ;
+  
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg(1);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_m_kCachedPlayers_get",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  result = (vector<PlayerObject * > *)& ((arg1)->m_kCachedPlayers);
+  SWIG_arg=0;
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_vectorTPlayerObject_p_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_GameWorld_Draw(lua_State* L) {
   int SWIG_arg = -1;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -3126,6 +3237,8 @@ static swig_lua_method swig_GameWorld_methods[] = {
     {"SetModalObject", _wrap_GameWorld_SetModalObject}, 
     {"AddObject", _wrap_GameWorld_AddObject}, 
     {"FindLayer", _wrap_GameWorld_FindLayer}, 
+    {"GetPlayer", _wrap_GameWorld_GetPlayer}, 
+    {"GetNumPlayers", _wrap_GameWorld_GetNumPlayers}, 
     {"Draw", _wrap_GameWorld_Draw}, 
     {"Update", _wrap_GameWorld_Update}, 
     {"DoMainGameUpdate", _wrap_GameWorld_DoMainGameUpdate}, 
@@ -3146,6 +3259,7 @@ static swig_lua_method swig_GameWorld_methods[] = {
     {0,0}
 };
 static swig_lua_attribute swig_GameWorld_attributes[] = {
+    { "m_kCachedPlayers",_wrap_GameWorld_m_kCachedPlayers_get, _wrap_GameWorld_m_kCachedPlayers_set},
     {0,0,0}
 };
 static swig_lua_class *swig_GameWorld_bases[] = {&_wrap_class_GameMode,0};
@@ -3365,6 +3479,30 @@ fail:
 }
 
 
+static int _wrap_MapEditor_SetGridResolution(lua_State* L) {
+  int SWIG_arg = -1;
+  MapEditor *arg1 = (MapEditor *) 0 ;
+  int arg2 ;
+  
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg(1);
+  if(!lua_isnumber(L,2)) SWIG_fail_arg(2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MapEditor,0))){
+    SWIG_fail_ptr("MapEditor_SetGridResolution",1,SWIGTYPE_p_MapEditor);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  (arg1)->SetGridResolution(arg2);
+  SWIG_arg=0;
+  
+  return SWIG_arg;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_new_MapEditor(lua_State* L) {
   int SWIG_arg = -1;
   MapEditor *result = 0 ;
@@ -3416,6 +3554,7 @@ static swig_lua_method swig_MapEditor_methods[] = {
     {"LoadObjectDefsFromXML", _wrap_MapEditor_LoadObjectDefsFromXML}, 
     {"ComputeNewScrolling", _wrap_MapEditor_ComputeNewScrolling}, 
     {"SetFlashText", _wrap_MapEditor_SetFlashText}, 
+    {"SetGridResolution", _wrap_MapEditor_SetGridResolution}, 
     {0,0}
 };
 static swig_lua_attribute swig_MapEditor_attributes[] = {
@@ -3793,6 +3932,10 @@ static const struct luaL_reg swig_commands[] = {
     { "GameWorld_SetModalObject", _wrap_GameWorld_SetModalObject},
     { "GameWorld_AddObject",_wrap_GameWorld_AddObject},
     { "GameWorld_FindLayer", _wrap_GameWorld_FindLayer},
+    { "GameWorld_GetPlayer", _wrap_GameWorld_GetPlayer},
+    { "GameWorld_GetNumPlayers", _wrap_GameWorld_GetNumPlayers},
+    { "GameWorld_m_kCachedPlayers_set", _wrap_GameWorld_m_kCachedPlayers_set},
+    { "GameWorld_m_kCachedPlayers_get", _wrap_GameWorld_m_kCachedPlayers_get},
     { "GameWorld_Draw", _wrap_GameWorld_Draw},
     { "GameWorld_Update", _wrap_GameWorld_Update},
     { "GameWorld_DoMainGameUpdate", _wrap_GameWorld_DoMainGameUpdate},
@@ -3820,6 +3963,7 @@ static const struct luaL_reg swig_commands[] = {
     { "MapEditor_LoadObjectDefsFromXML", _wrap_MapEditor_LoadObjectDefsFromXML},
     { "MapEditor_ComputeNewScrolling", _wrap_MapEditor_ComputeNewScrolling},
     { "MapEditor_SetFlashText", _wrap_MapEditor_SetFlashText},
+    { "MapEditor_SetGridResolution", _wrap_MapEditor_SetGridResolution},
     { "new_MapEditor", _wrap_new_MapEditor},
     { "delete_MapEditor", _wrap_delete_MapEditor},
     { "GameState_GetInstance", _wrap_GameState_GetInstance},
@@ -3871,6 +4015,7 @@ static swig_type_info _swigt__p_GameWorld = {"_p_GameWorld", "GameWorld *", 0, 0
 static swig_type_info _swigt__p_MapEditor = {"_p_MapEditor", "MapEditor *", 0, 0, (void*)&_wrap_class_MapEditor, 0};
 static swig_type_info _swigt__p_Object = {"_p_Object", "Object *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ObjectLayer = {"_p_ObjectLayer", "ObjectLayer *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_PlayerObject = {"_p_PlayerObject", "PlayerObject *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_XMLNode = {"_p_XMLNode", "XMLNode *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "int *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_listTObject_p_t = {"_p_listTObject_p_t", "list<Object * > *|ObjectList *", 0, 0, (void*)0, 0};
@@ -3878,8 +4023,11 @@ static swig_type_info _swigt__p_listTObject_p_t__const_iterator = {"_p_listTObje
 static swig_type_info _swigt__p_listTObject_p_t__const_reverse_iterator = {"_p_listTObject_p_t__const_reverse_iterator", "list<Object * >::const_reverse_iterator *|ObjectListConstReverseIter *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_listTObject_p_t__iterator = {"_p_listTObject_p_t__iterator", "list<Object * >::iterator *|ObjectListIter *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_listTObject_p_t__reverse_iterator = {"_p_listTObject_p_t__reverse_iterator", "list<Object * >::reverse_iterator *|ObjectListReverseIter *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_uint = {"_p_uint", "uint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_vectorTObject_p_t = {"_p_vectorTObject_p_t", "vector<Object * > *|ObjectArray *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_vectorTObject_p_t__iterator = {"_p_vectorTObject_p_t__iterator", "vector<Object * >::iterator *|ObjectArrayIter *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_vectorTPlayerObject_p_t = {"_p_vectorTPlayerObject_p_t", "vector<PlayerObject * > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__uint = {"_uint", "uint", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__CString,
@@ -3892,6 +4040,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_MapEditor,
   &_swigt__p_Object,
   &_swigt__p_ObjectLayer,
+  &_swigt__p_PlayerObject,
   &_swigt__p_XMLNode,
   &_swigt__p_int,
   &_swigt__p_listTObject_p_t,
@@ -3899,8 +4048,11 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_listTObject_p_t__const_reverse_iterator,
   &_swigt__p_listTObject_p_t__iterator,
   &_swigt__p_listTObject_p_t__reverse_iterator,
+  &_swigt__p_uint,
   &_swigt__p_vectorTObject_p_t,
   &_swigt__p_vectorTObject_p_t__iterator,
+  &_swigt__p_vectorTPlayerObject_p_t,
+  &_swigt__uint,
 };
 
 static swig_cast_info _swigc__CString[] = {  {&_swigt__CString, 0, 0, 0},{0, 0, 0, 0}};
@@ -3913,6 +4065,7 @@ static swig_cast_info _swigc__p_GameWorld[] = {  {&_swigt__p_MapEditor, _p_MapEd
 static swig_cast_info _swigc__p_MapEditor[] = {  {&_swigt__p_MapEditor, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Object[] = {  {&_swigt__p_Object, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ObjectLayer[] = {  {&_swigt__p_ObjectLayer, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_PlayerObject[] = {  {&_swigt__p_PlayerObject, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_XMLNode[] = {  {&_swigt__p_XMLNode, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_listTObject_p_t[] = {  {&_swigt__p_listTObject_p_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -3920,8 +4073,11 @@ static swig_cast_info _swigc__p_listTObject_p_t__const_iterator[] = {  {&_swigt_
 static swig_cast_info _swigc__p_listTObject_p_t__const_reverse_iterator[] = {  {&_swigt__p_listTObject_p_t__const_reverse_iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_listTObject_p_t__iterator[] = {  {&_swigt__p_listTObject_p_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_listTObject_p_t__reverse_iterator[] = {  {&_swigt__p_listTObject_p_t__reverse_iterator, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uint[] = {  {&_swigt__p_uint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_vectorTObject_p_t[] = {  {&_swigt__p_vectorTObject_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_vectorTObject_p_t__iterator[] = {  {&_swigt__p_vectorTObject_p_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_vectorTPlayerObject_p_t[] = {  {&_swigt__p_vectorTPlayerObject_p_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__uint[] = {  {&_swigt__uint, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__CString,
@@ -3934,6 +4090,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_MapEditor,
   _swigc__p_Object,
   _swigc__p_ObjectLayer,
+  _swigc__p_PlayerObject,
   _swigc__p_XMLNode,
   _swigc__p_int,
   _swigc__p_listTObject_p_t,
@@ -3941,8 +4098,11 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_listTObject_p_t__const_reverse_iterator,
   _swigc__p_listTObject_p_t__iterator,
   _swigc__p_listTObject_p_t__reverse_iterator,
+  _swigc__p_uint,
   _swigc__p_vectorTObject_p_t,
   _swigc__p_vectorTObject_p_t__iterator,
+  _swigc__p_vectorTPlayerObject_p_t,
+  _swigc__uint,
 };
 
 
