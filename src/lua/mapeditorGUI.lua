@@ -62,12 +62,12 @@ function mapeditorgui_init()
     frame:Connect(wx.wxEVT_IDLE,
       function(event)
       
-        if engine_should_exit_game() == 1 then
+        if engine.GameState_GetInstance():ShouldExit() == true then
           frame:Close(true)
           return
         end
         
-        engine_tick()   -- C++ Main Engine Update()
+		engine.GameState_GetInstance():Tick()
         
         event:Skip()
         event:RequestMore() -- make wx keep firing this event
