@@ -16,11 +16,11 @@
 // -----------------------------
 
 // #define ENGINE_USES_CEGUI // not going to use anymore
-#define ENGINE_USES_FLTK
+// #define ENGINE_USES_FLTK // more ideas we're not going to use anymore :)
 
-#ifndef WIN32
-#undef ENGINE_USES_CEGUI
-#endif
+// #ifndef WIN32
+// #undef ENGINE_USES_CEGUI
+// #endif
 
 #define ENGINE_USES_SLOW_CHECKED_STL 0
 
