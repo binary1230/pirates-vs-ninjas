@@ -157,9 +157,6 @@ class GameWorld : public GameMode {
 			// NOTE you CANNOT directly add objects to the world during Update()'s
 			void AddObject(	Object* obj, bool addImmediately = false);
 
-			//! Delete an object from it's layer
-			void DeleteObjectFromLayer(Object* obj);
-
 			//! Find a layer by name
 			ObjectLayer* FindLayer(const char* name);
 
