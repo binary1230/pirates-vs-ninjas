@@ -47,6 +47,7 @@ luaManager.h luaApi.h eventManager.h
 # gui.h
 
 ninjas_SOURCES = \
+swig/engine_wrap.cpp \
 external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
 external/loadpng.cpp external/regpng.cpp external/savepng.cpp \
 main.cpp gameOptions.cpp gameState.cpp globals.cpp \
@@ -55,7 +56,7 @@ window.cpp assetManager.cpp gameSound.cpp mapEditor.cpp mapEditorGui.cpp \
 gui/GUI_globals.cpp gui/GUI_layeroptions.cpp \
 gameMode.cpp gameModes.cpp globalDefines.cpp \
 objectLayer.cpp objectFactory.cpp \
-objects/object.cpp objects/objectEnemy.h \
+objects/object.cpp objects/objectEnemy.cpp \
 objects/objectPlayer.cpp objects/objectPlayerHuman.cpp \
 objects/objectBounce.cpp objects/objectCutBars.cpp \
 objects/objectBackground.cpp objects/objectController.cpp \
@@ -86,5 +87,8 @@ precompiled.h.gch: precompiled.h
 	if $(PRE_CXXCOMPILE) -x c++-header -MT $@ -MD -MP -MF "$(DEPDIR)/precompiled.h.Tpo" \
 	-c -o $@ $<; then mv -f "$(DEPDIR)/precompiled.h.Tpo" "$(DEPDIR)/precompiled.h.Po"; \
 	else rm -f "$(DEPDIR)/precompiled.h.Tpo"; exit 1; fi;
+
+swig/engine_wrap.cpp: swig/engine.i $(headers)
+	 swig -o swig/engine_wrap.cpp -c++ -lua swig/engine.i
 
 endif
