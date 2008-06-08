@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "globals.h"
 
-void DebugTrace( char * format, ... )
+void DebugTrace( const char * format, ... )
 {
 	va_list args;
 	const int bufsize = 4000;
