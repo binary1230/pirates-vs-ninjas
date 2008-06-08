@@ -34,11 +34,11 @@ DECLARE_SINGLETON(GameWorld)
 #define CAMERA_SHAKE_Y_MAGNITUDE 15
 
 int GameWorld::GetCameraX() {
-	return camera_x + camera_shake_x;
+	return m_iCameraX + camera_shake_x;
 }
 
 int GameWorld::GetCameraY() {
-	return camera_y + camera_shake_y;
+	return m_iCameraY + camera_shake_y;
 }
 
 void GameWorld::ShowText(	const char* txt, 
@@ -63,12 +63,12 @@ void GameWorld::ShowText(	const char* txt,
 int GameWorld::Init(XMLNode xMode) {
 	allow_player_offscreen = false;
 	use_scroll_speed = true;
-	camera_shake_time_total = -1;
+	m_iCameraTotalShakeTime = -1;
 	modal_active = NULL;
-	width = height = 0;
-	camera_x = camera_y = 0;
-	camera_follow = NULL;
-	camera_scroll_speed = 1.0f;
+	m_iLevelWidth = m_iLevelHeight = 0;
+	m_iCameraX = m_iCameraY = 0;
+	m_pkCameraLookatTarget = NULL;
+	m_fCameraScrollSpeed = 1.0f;
 	m_bJumpedBackFromADoor = false;
 		
 	OBJECT_FACTORY->CreateInstance();
@@ -77,8 +77,8 @@ int GameWorld::Init(XMLNode xMode) {
 		return -1;
 	}
 
-	forceFactory = new ForceFactory();
-	if ( !forceFactory || forceFactory->Init() < 0 ) {
+	m_pkForceFactory = new ForceFactory();
+	if ( !m_pkForceFactory || m_pkForceFactory->Init() < 0 ) {
 		TRACE("ERROR: InitSystem: failed to init forceFactory!\n");
 		return -1;
 	}
@@ -89,10 +89,10 @@ int GameWorld::Init(XMLNode xMode) {
 		return -1;
 	}
 
-	objectAddList.clear();
+	m_kObjectsToAdd.clear();
 	m_objects.clear();
-	forces.clear();
-	layers.clear();
+	m_kForces.clear();
+	m_kLayers.clear();
 
 	EVENTS->CreateInstance();
 	if (!EVENTS || !EVENTS->Init()) {
@@ -112,8 +112,8 @@ void GameWorld::TransformViewToScreen(	int &x, int &y ) {
 //! Transforms an object's coordinates from its world coordinates
 //! Into "view" coordinates (e.g. x < screen.width, y < screen.height)
 void GameWorld::TransformWorldToView(int &x, int &y) {
-	x = int((x - GetCameraX() ) * camera_scroll_speed);
-	y = int((y - GetCameraY() ) * camera_scroll_speed);
+	x = int((x - GetCameraX() ) * m_fCameraScrollSpeed);
+	y = int((y - GetCameraY() ) * m_fCameraScrollSpeed);
 	// y = y - GetCameraY();
 }
 
@@ -126,26 +126,26 @@ void GameWorld::TransformWorldToView(int &x, int &y) {
 #define CAM_MOVE_TO_CENTER(cam, o, o_size, s_size) 									\
 	int( float( 																											\
 			(((o + o_size / 2.0f) - (s_size / 2.0f)) * CAM_WEIGHT_POS) + 	\
-			((cam) * camera_snap_rate) 																			\
-		) / (camera_snap_rate + CAM_WEIGHT_POS) )
+			((cam) * m_fCameraSnapRate) 																			\
+		) / (m_fCameraSnapRate + CAM_WEIGHT_POS) )
 
 // Snap the camera to its target object
 // Useful when switching targets
 void GameWorld::SnapCamera() {
 
 	// center the camera on this object
-	camera_x = 	int(
+	m_iCameraX = 	int(
 							(
-								 float(camera_follow->GetX()) + 
-								(float(camera_follow->GetWidth()) / 2.0f)
+								 float(m_pkCameraLookatTarget->GetX()) + 
+								(float(m_pkCameraLookatTarget->GetWidth()) / 2.0f)
 							) -	(
 								(float(WINDOW->Height()) / 2.0f)
 							));
 
-	camera_y = 	int(
+	m_iCameraY = 	int(
 							(
-						 		 float(camera_follow->GetY()) + 
-								(float(camera_follow->GetHeight()) / 2.0f)
+						 		 float(m_pkCameraLookatTarget->GetY()) + 
+								(float(m_pkCameraLookatTarget->GetHeight()) / 2.0f)
 							) -	(
 								(float(WINDOW->Width()) / 2.0f)
 							));
@@ -155,62 +155,62 @@ void GameWorld::SnapCamera() {
 }
 
 void GameWorld::SetCameraShake(bool state, int fadeout_time) {
-	camera_shake_time = 0;
-	camera_shake_time_total = fadeout_time;
-	is_camera_shaking = state;
+	m_iCameraShakeTime = 0;
+	m_iCameraTotalShakeTime = fadeout_time;
+	m_bIsCameraShaking = state;
 
-	if (!is_camera_shaking)
-		camera_shake_time_total = -1;
+	if (!m_bIsCameraShaking)
+		m_iCameraTotalShakeTime = -1;
 }
 
 // Oy, vey, this is a bit more complex than it needs to be?
 void GameWorld::ComputeNewCamera() {
 	
-	assert(camera_follow != NULL);
+	assert(m_pkCameraLookatTarget != NULL);
 				
-	int ox = camera_follow->GetX();
-	int ow = camera_follow->GetWidth();
+	int ox = m_pkCameraLookatTarget->GetX();
+	int ow = m_pkCameraLookatTarget->GetWidth();
 	int sw = WINDOW->Width();
 	
-	int oy = camera_follow->GetY();
-	int oh = camera_follow->GetHeight();
+	int oy = m_pkCameraLookatTarget->GetY();
+	int oh = m_pkCameraLookatTarget->GetHeight();
 	int sh = WINDOW->Height();
 	
 	// compute the next interpolated position
-	camera_x = CAM_MOVE_TO_CENTER(camera_x, ox, ow, sw);
-	camera_y = CAM_MOVE_TO_CENTER(camera_y, oy, oh, sh);
+	m_iCameraX = CAM_MOVE_TO_CENTER(m_iCameraX, ox, ow, sw);
+	m_iCameraY = CAM_MOVE_TO_CENTER(m_iCameraY, oy, oh, sh);
 	
 	// keep it within a certain margin of the sides
-	if (ox - camera_x < camera_side_margins)
-		camera_x = ox - camera_side_margins;
-	else if ( (camera_x + sw) - (ox + ow) < camera_side_margins )
-		camera_x = ox + ow + camera_side_margins - sw;
+	if (ox - m_iCameraX < m_iCameraSideMargins)
+		m_iCameraX = ox - m_iCameraSideMargins;
+	else if ( (m_iCameraX + sw) - (ox + ow) < m_iCameraSideMargins )
+		m_iCameraX = ox + ow + m_iCameraSideMargins - sw;
 								
-	if (oy - camera_y < camera_side_margins)
-		camera_y = oy - camera_side_margins;
-	else if ( (camera_y + sh) - (oy + oh) < camera_side_margins )
-		camera_y  = oy + oh + camera_side_margins - sh;
+	if (oy - m_iCameraY < m_iCameraSideMargins)
+		m_iCameraY = oy - m_iCameraSideMargins;
+	else if ( (m_iCameraY + sh) - (oy + oh) < m_iCameraSideMargins )
+		m_iCameraY  = oy + oh + m_iCameraSideMargins - sh;
 	
 	// keep it from getting off screen
-	if (camera_x < 0) camera_x = 0;
-	if (camera_x > width - sw) camera_x = width - sw;
-	if (camera_y < 0) camera_y = 0;
-	if (camera_y > height - sh) camera_y = height - sh;
+	if (m_iCameraX < 0) m_iCameraX = 0;
+	if (m_iCameraX > m_iLevelWidth - sw) m_iCameraX = m_iLevelWidth - sw;
+	if (m_iCameraY < 0) m_iCameraY = 0;
+	if (m_iCameraY > m_iLevelHeight - sh) m_iCameraY = m_iLevelHeight - sh;
 
 	// do the camera shake
-	if (!is_camera_shaking) {
+	if (!m_bIsCameraShaking) {
 		camera_shake_x = 0;
 		camera_shake_y = 0;
 	} else {
 		float multiplier = 1.0f;
 
-		if (camera_shake_time_total != -1) {
-			if (camera_shake_time >= camera_shake_time_total) {
-				is_camera_shaking = false;
+		if (m_iCameraTotalShakeTime != -1) {
+			if (m_iCameraShakeTime >= m_iCameraTotalShakeTime) {
+				m_bIsCameraShaking = false;
 				multiplier = 0.0f;
 			} else {
-				++camera_shake_time;
-				multiplier = 1.0f - float(camera_shake_time) / float(camera_shake_time_total);
+				++m_iCameraShakeTime;
+				multiplier = 1.0f - float(m_iCameraShakeTime) / float(m_iCameraTotalShakeTime);
 			}
 		}
 
@@ -240,21 +240,21 @@ void GameWorld::Shutdown() {
 	m_objects.clear();
 	
 	// delete all the objects
-	for (iter = objectAddList.begin(); iter != objectAddList.end(); iter++) {
+	for (iter = m_kObjectsToAdd.begin(); iter != m_kObjectsToAdd.end(); iter++) {
 		(*iter)->Shutdown();
 		delete (*iter);
 		(*iter) = NULL;
 	}
-	objectAddList.clear();
+	m_kObjectsToAdd.clear();
 
 	// delete all the forces
-	max = forces.size();
+	max = m_kForces.size();
 	for (i = 0; i < max; i++) {
-		forces[i]->Shutdown();
-		delete forces[i];
-		forces[i] = NULL;
+		m_kForces[i]->Shutdown();
+		delete m_kForces[i];
+		m_kForces[i] = NULL;
 	}
-	forces.clear();
+	m_kForces.clear();
 			
 	// delete the object factory
 	if (OBJECT_FACTORY) {
@@ -263,10 +263,10 @@ void GameWorld::Shutdown() {
 	}
 
 	// delete the force factory
-	if (forceFactory) {
-		forceFactory->Shutdown();
-		delete forceFactory;
-		forceFactory = NULL;
+	if (m_pkForceFactory) {
+		m_pkForceFactory->Shutdown();
+		delete m_pkForceFactory;
+		m_pkForceFactory = NULL;
 	}
 
 	// delete the effects manager
@@ -282,17 +282,17 @@ void GameWorld::Shutdown() {
 void GameWorld::Draw() {
 
 	// Draw the background gradient first, if we're using it
-	if (bg_color_top != -1) {
-		WINDOW->DrawBackgroundGradient(	bg_color, bg_color_top, 
-																		camera_y, 
-																		camera_y + WINDOW->Height(), 
-																		height);
+	if (m_bgColorTop != -1) {
+		WINDOW->DrawBackgroundGradient(	m_bgColor, m_bgColorTop, 
+																		m_iCameraY, 
+																		m_iCameraY + WINDOW->Height(), 
+																		m_iLevelHeight);
 	}
 
-	int i, max = layers.size();
+	int i, max = m_kLayers.size();
 
 	for (i = 0; i < max; i++) {
-		layers[i]->Draw();
+		m_kLayers[i]->Draw();
 	}
 }
 
@@ -302,12 +302,12 @@ void GameWorld::Draw() {
 void GameWorld::Solve(Object *obj) {
 	
 	assert(obj != NULL);
-	int j, max = forces.size();
+	int j, max = m_kForces.size();
 
 	// OLD WAY, DEPRECATED, SOON TO BE REPLACED
 	// apply each force to the object
 	for (j = 0; j < max; j++) {
-		obj->ApplyForce(forces[j]);
+		obj->ApplyForce(m_kForces[j]);
 	}
 
 	// NEW WAY
@@ -369,9 +369,9 @@ void GameWorld::DoCleaning() {
 		if (modal_active == obj)
 			modal_active = NULL;
 
-		if (obj == camera_follow) {
+		if (obj == m_pkCameraLookatTarget) {
 			assert(0 && "ERROR: CheckIsDead(): Deleted camera object!!");
-			camera_follow = NULL;
+			m_pkCameraLookatTarget = NULL;
 		}
 
 		obj->Shutdown();
@@ -393,13 +393,13 @@ void GameWorld::UpdateObjects() {
 	Object* obj;
 
 	// Add any New Objects
-	for (iter = objectAddList.begin(); iter != objectAddList.end(); ++iter) {
+	for (iter = m_kObjectsToAdd.begin(); iter != m_kObjectsToAdd.end(); ++iter) {
 		obj = *iter;
 		assert(obj != NULL);
 		AddObject(obj, true);
 	}
 
-	objectAddList.clear();
+	m_kObjectsToAdd.clear();
 
 	DoCleaning();
 
@@ -459,8 +459,8 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	m_bJumpedBackFromADoor = false;
 	m_objects.clear();
-	objectAddList.clear();
-	forces.clear();
+	m_kObjectsToAdd.clear();
+	m_kForces.clear();
 	if (LoadHeaderFromXML(xMode) == -1 ||
 			LoadObjectsFromXML(xMode) == -1 ||
 			LoadForcesFromXML(xMode) == -1 ) {
@@ -479,8 +479,8 @@ int GameWorld::Load(XMLNode &xMode) {
 	if (!GLOBALS->Value("debug_draw_bounding_boxes", Object::debug_draw_bounding_boxes))
 		Object::debug_draw_bounding_boxes = false;
 
-	GLOBALS->Value("camera_side_margins", camera_side_margins);
-	GLOBALS->Value("camera_snap_rate", camera_snap_rate);
+	GLOBALS->Value("camera_side_margins", m_iCameraSideMargins);
+	GLOBALS->Value("camera_snap_rate", m_fCameraSnapRate);
 
 	if (xMode.nChildNode("music") == 1) {
 		m_szMusicFile = xMode.getChildNode("music").getText();
@@ -571,16 +571,16 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 	XMLNode xProps = xMode.getChildNode("properties");
 	XMLNode xColor;
 	// get width/height/camera xy
-	if (!xProps.getChildNode("width").getInt(width)) {
+	if (!xProps.getChildNode("width").getInt(m_iLevelWidth)) {
 		TRACE("-- Invalid width!\n");
 		return -1;
 	}
-	if (!xProps.getChildNode("height").getInt(height)) {
+	if (!xProps.getChildNode("height").getInt(m_iLevelHeight)) {
 		TRACE("-- Invalid height!\n");
 		return -1;
 	}
 
-	bg_color = 0;
+	m_bgColor = 0;
 
 	if (xProps.nChildNode("bgcolor") != 1) {
 		WINDOW->SetClearColor(0,0,0);
@@ -596,11 +596,11 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 			return -1;
 		}
 
-		bg_color = makecol(r,g,b);
+		m_bgColor = makecol(r,g,b);
 		WINDOW->SetClearColor(r,g,b);
 	}
 
-	bg_color_top = -1;
+	m_bgColorTop = -1;
 
 	if (xProps.nChildNode("bgcolor_top") == 1) {
 		xColor = xProps.getChildNode("bgcolor_top");
@@ -613,7 +613,7 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 			TRACE("-- Invalid bgcolor_top specified!\n");
 			return -1;
 		}
-		bg_color_top = makecol(r,g,b);
+		m_bgColorTop = makecol(r,g,b);
 	}
 
 	return 0;
@@ -649,7 +649,7 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
   int i, max, iterator = 0;  
 	XMLNode xMap, xObjDefs, xLayer;
 
-	camera_follow = NULL;
+	m_pkCameraLookatTarget = NULL;
 
 	// 1) load all "object definitions" (e.g. [bad guy 1])
 	xObjDefs = xMode.getChildNode("objectDefinitions");
@@ -671,7 +671,7 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 		assert(layer != NULL);
 
 		layer->Init();
-		layers.push_back(layer);
+		m_kLayers.push_back(layer);
 		
 		if (LoadLayerFromXML(xLayer, layer) == -1) {
 			return -1;
@@ -679,7 +679,7 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 	}
 
 	// Finished loading objects, do a few sanity checks
-	if (!camera_follow) {
+	if (!m_pkCameraLookatTarget) {
 		TRACE("ERROR: No <cameraFollow> found, cannot proceed.\n");
 		return -1;
 	}
@@ -805,8 +805,8 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 
 	// if we have a <cameraFollow>, then we follow this object
 	if (xObject.nChildNode("cameraFollow") == 1) {
-		if (!camera_follow) {
-			camera_follow = obj;
+		if (!m_pkCameraLookatTarget) {
+			m_pkCameraLookatTarget = obj;
 		} else {
 			TRACE("ERROR: multiple camera targets in map\n");
 			return -1;
@@ -1013,9 +1013,9 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 }
 
 ObjectLayer* GameWorld::FindLayer(const char* name) {
-	for (uint i = 0; i < layers.size(); ++i) {
-		if (stricmp(layers[i]->GetName(),name) == 0)
-			return layers[i];
+	for (uint i = 0; i < m_kLayers.size(); ++i) {
+		if (stricmp(m_kLayers[i]->GetName(),name) == 0)
+			return m_kLayers[i];
 	}
 
 	return NULL;
@@ -1028,7 +1028,7 @@ void GameWorld::AddObject(Object* obj, bool addImmediately) {
 	if (addImmediately) {
 		DoAddObject(obj);
 	} else {
-		objectAddList.push_back(obj);
+		m_kObjectsToAdd.push_back(obj);
 	}
 }
 
@@ -1043,18 +1043,18 @@ int GameWorld::LoadForcesFromXML(XMLNode &xMode) {
 	// XXX need to actually load from XML instead of hardcoding...
 	Force* new_force = NULL;
 
-	if ( (new_force = forceFactory->CreateForce(FORCE_GRAVITY)) )
-		forces.push_back(new_force);
+	if ( (new_force = m_pkForceFactory->CreateForce(FORCE_GRAVITY)) )
+		m_kForces.push_back(new_force);
 	else
 		return -1;
 	
-	if ( (new_force = forceFactory->CreateForce(FORCE_INPUT1)) )
-		forces.push_back(new_force);
+	if ( (new_force = m_pkForceFactory->CreateForce(FORCE_INPUT1)) )
+		m_kForces.push_back(new_force);
 	else
 		return -1;
 
-	if ( (new_force = forceFactory->CreateForce(FORCE_INPUT2)) )
-		forces.push_back(new_force);
+	if ( (new_force = m_pkForceFactory->CreateForce(FORCE_INPUT2)) )
+		m_kForces.push_back(new_force);
 	else
 		return -1;
 	
@@ -1081,8 +1081,8 @@ int GameWorld::GetAiFitnessScore() {
 
 GameWorld::GameWorld() {
 	is_loading = false;
-	is_camera_shaking = CAMERA_SHAKE; //temp, usually false
-	camera_shake_time_total = -1;
+	m_bIsCameraShaking = CAMERA_SHAKE; //temp, usually false
+	m_iCameraTotalShakeTime = -1;
 }
 
 GameWorld::~GameWorld() {}
