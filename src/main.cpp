@@ -32,11 +32,9 @@ int start_game_instance(const int argc, const char* argv[]) {
 
 /// The main function
 /// IT ROCKS
-int main(const int argc, const char* argv[]) {
-
-	// InitDebugHackLog();
-
-#	ifdef REDIRECT_STDERR
+int main(const int argc, const char* argv[]) 
+{
+	#ifdef REDIRECT_STDERR
 	TRACE("Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
 
 	if (!freopen(REDIRECT_STDERR_FILENAME, "wt", stderr)) {
@@ -44,10 +42,8 @@ int main(const int argc, const char* argv[]) {
 	}
 	
 	TRACE("Main: redirected output.\n");
-# endif
+	#endif
 
 	return start_game_instance(argc, argv);
-
-	// ShutdownDebugHackLog();
 
 } END_OF_MAIN();
