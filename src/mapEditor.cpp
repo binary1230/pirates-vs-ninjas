@@ -66,8 +66,6 @@ void MapEditor::Shutdown()
 	MapSaver mapSaver;
 	mapSaver.SaveEverything(this, "test-map.xml", xObjDefs);
 
-	LUA->RunVoidFunctionNoArgs("shutdown", true);
-
 	GAMESTATE->ResetAccumulatedTime();
 	GameWorld::Shutdown();
 }
