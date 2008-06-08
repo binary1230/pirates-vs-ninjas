@@ -67,7 +67,7 @@ function mapeditorgui_init()
       function(event)
       
         if engine.GameState_GetInstance():ShouldExit() == true then
-          frame:Close(true)
+          dialog:Close(true)
           return
         end
         
