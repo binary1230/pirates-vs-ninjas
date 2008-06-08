@@ -56,6 +56,22 @@ void GameState::SignalEndCurrentMode() {
 	modes->SignalEndCurrentMode();
 }
 
+int allegro_debug_printer(const char *text)
+{
+	// filter out some spam here.
+	if (strncmp("agl-tex INFO", text, 12) != 0 &&
+		strncmp("agl-font INFO", text, 13) != 0 &&
+		strncmp("agl-win INFO", text, 12) != 0 &&
+		strncmp("agl-scorer INFO", text, 15) != 0 &&
+		strncmp("al-gfx INFO", text, 11) != 0 )
+	{
+		        
+		TRACE("%s", text);
+	}
+
+	return 1; // don't let allegro process this msg further, we handled it.
+}
+
 //! Initialize basic allegro library stuff
 //! This must be called FIRST before ANY allegro stuff
 int GameState::InitAllegro() {
@@ -64,6 +80,8 @@ int GameState::InitAllegro() {
 		TRACE("-- FATAL ERROR: Allegro_init() failed.\n");
 		return -1;
 	}
+	
+	register_trace_handler(allegro_debug_printer);
 	
 	// must be called SECOND
 	if (InitTimers() < 0) {
