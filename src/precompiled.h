@@ -88,6 +88,12 @@ extern "C" {
 }
 #endif
 
+#define ENGINE_USES_BOX2D_PHYSICS
+
+#ifdef ENGINE_USES_BOX2D_PHYSICS
+	#include <Box2D.h>
+#endif 
+
 // Common to everything
 #include <stdarg.h>
 #include <assert.h>

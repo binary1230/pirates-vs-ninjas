@@ -33,52 +33,53 @@ class GameWorld : public GameMode {
 			CString m_szMusicFile;
 
 			//! Background color (use makecol())
-			int bg_color;
-			int bg_color_top; // if present, use both for a gradient, else -1
+			int m_bgColor;
+			int m_bgColorTop; // if present, use both for a gradient, else -1
 
 			//! ALL objects in the scene
 			ObjectList m_objects;
 
 			//! Layers, which hold pointers to objects.
-			vector<ObjectLayer*> layers;
+			vector<ObjectLayer*> m_kLayers;
 
 			//! Collection of forces
-			vector<Force*> forces;
+			// NOTE: Probably should be deprecated.
+			vector<Force*> m_kForces;
 
 			//! Force factory: TODO singleton
-			ForceFactory* forceFactory;
+			ForceFactory* m_pkForceFactory;
 		
 			//! List of objects to add on next Update()
-			ObjectList objectAddList;
+			ObjectList m_kObjectsToAdd;
 
 			//! Width and height of the entire level
 			//! (usually much bigger than screen width/height)
-			int width, height;
+			int m_iLevelWidth, m_iLevelHeight;
 
 			//! Current camera XY position
-			int camera_x, camera_y;
+			int m_iCameraX, m_iCameraY;
 
 			//! Whether the camera is currently shaking or not
-			bool is_camera_shaking;
+			bool m_bIsCameraShaking;
 
-			int camera_shake_time_total;
-			int camera_shake_time;;
+			int m_iCameraTotalShakeTime;
+			int m_iCameraShakeTime;
 
 			//! Which object the camera should follow
-			Object* camera_follow;
+			Object* m_pkCameraLookatTarget;
 
 			//! Camera threshold - how far it should slide before snapping
 			// you can use this to make sure we're, say, 60 units from the sides
 			// at all times.
-			int camera_side_margins;
+			int m_iCameraSideMargins;
 
 			//! Camera snap rate - how fast the camera should "snap" to new targets
-			float camera_snap_rate;
+			float m_fCameraSnapRate;
 
 			//! How much to scale the X coordinate of the camera.
 			//! MOSTLY used for scrolling backgrounds at different speeds
 			//! on different layers
-			float camera_scroll_speed;
+			float m_fCameraScrollSpeed;
 
 			// Stuff saved for map editor:
 			XMLNode m_xEffects;
@@ -178,11 +179,11 @@ class GameWorld : public GameMode {
 
 			void DoMainGameUpdate();
 
-			int GetWidth() {return width;};
-			int GetHeight() {return height;};
+			int GetWidth() {return m_iLevelWidth;};
+			int GetHeight() {return m_iLevelHeight;};
 
 			void ComputeNewCamera();
-			void SetCameraScrollSpeed(float s) {camera_scroll_speed = s;};
+			void SetCameraScrollSpeed(float s) {m_fCameraScrollSpeed = s;};
 
 			int GetCameraX(); 
 			int GetCameraY();

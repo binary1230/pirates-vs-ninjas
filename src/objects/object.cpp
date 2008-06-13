@@ -184,8 +184,8 @@ void Object::TransformRect(_Rect &r) {
 }
 
 //! This function does the real dirty work of drawing.
-void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {	
-
+void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) 
+{	
 	int x, y;
 	Transform(x, y, offset_x, offset_y);
 				
@@ -198,7 +198,9 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) {
 
 	// bounding box stuff below.
 
-	if (m_bDrawBoundingBox) {
+	// if (m_bDrawBoundingBox) {
+	if (1) 
+	{
 		_Rect bbox_t;
 
 		// get current bounding box

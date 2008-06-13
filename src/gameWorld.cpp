@@ -24,6 +24,7 @@
 #include "objectDoor.h"
 #include "globalDefines.h"
 #include "eventManager.h"
+#include "physics.h"
 
 DECLARE_SINGLETON(GameWorld)
 
@@ -72,7 +73,8 @@ int GameWorld::Init(XMLNode xMode) {
 	m_bJumpedBackFromADoor = false;
 		
 	OBJECT_FACTORY->CreateInstance();
-	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) {
+	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) 
+	{
 		TRACE("ERROR: InitSystem: failed to init OBJECT_FACTORY!\n");
 		return -1;
 	}
@@ -84,7 +86,8 @@ int GameWorld::Init(XMLNode xMode) {
 	}
 
 	EFFECTS->CreateInstance();
-	if ( !EFFECTS || !EFFECTS->Init() ) {
+	if ( !EFFECTS || !EFFECTS->Init() ) 
+	{
 		TRACE("ERROR: InitSystem: failed to init EffectsManager!\n");
 		return -1;
 	}
@@ -95,12 +98,25 @@ int GameWorld::Init(XMLNode xMode) {
 	m_kLayers.clear();
 
 	EVENTS->CreateInstance();
-	if (!EVENTS || !EVENTS->Init()) {
+	if (!EVENTS || !EVENTS->Init()) 
+	{
 		TRACE("ERROR: InitSystem: failed to init EventsManager!\n");
 		return -1;
 	}
 
-	return Load(xMode);
+	int iReturn = Load(xMode);
+
+	if (iReturn != 0)
+		return iReturn;
+
+	PHYSICS->CreateInstance();
+	if ( !PHYSICS || !PHYSICS->Init() )
+	{
+		TRACE("ERROR: InitSystem: failed to init PhysicsManager!\n");
+		return -1;
+	}
+
+	return iReturn;
 }
 
 //! Transforms view coordinates into absolute screen coordinates
@@ -219,11 +235,13 @@ void GameWorld::ComputeNewCamera() {
 	}
 }
 
-void GameWorld::Shutdown() {
+void GameWorld::Shutdown() 
+{
 	ObjectListIter iter;
 	int max, i;
 
-	if (EVENTS) {
+	if (EVENTS) 
+	{
 		if (!OPTIONS->MapEditorEnabled())
 			EVENTS->OnUnLoad();
 
@@ -231,8 +249,15 @@ void GameWorld::Shutdown() {
 		EVENTS->FreeInstance();
 	}
 
+	if (PHYSICS)
+	{
+		PHYSICS->Shutdown();
+		PHYSICS->FreeInstance();
+	}
+
 	// delete all the objects
-	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
+	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) 
+	{
 		(*iter)->Shutdown();
 		delete (*iter);
 		(*iter) = NULL;
@@ -240,7 +265,8 @@ void GameWorld::Shutdown() {
 	m_objects.clear();
 	
 	// delete all the objects
-	for (iter = m_kObjectsToAdd.begin(); iter != m_kObjectsToAdd.end(); iter++) {
+	for (iter = m_kObjectsToAdd.begin(); iter != m_kObjectsToAdd.end(); iter++) 
+	{
 		(*iter)->Shutdown();
 		delete (*iter);
 		(*iter) = NULL;
@@ -249,7 +275,8 @@ void GameWorld::Shutdown() {
 
 	// delete all the forces
 	max = m_kForces.size();
-	for (i = 0; i < max; i++) {
+	for (i = 0; i < max; i++) 
+	{
 		m_kForces[i]->Shutdown();
 		delete m_kForces[i];
 		m_kForces[i] = NULL;
@@ -257,20 +284,23 @@ void GameWorld::Shutdown() {
 	m_kForces.clear();
 			
 	// delete the object factory
-	if (OBJECT_FACTORY) {
+	if (OBJECT_FACTORY) 
+	{
 		OBJECT_FACTORY->Shutdown();
 		OBJECT_FACTORY->FreeInstance();
 	}
 
 	// delete the force factory
-	if (m_pkForceFactory) {
+	if (m_pkForceFactory) 
+	{
 		m_pkForceFactory->Shutdown();
 		delete m_pkForceFactory;
 		m_pkForceFactory = NULL;
 	}
 
 	// delete the effects manager
-	if (EFFECTS) {
+	if (EFFECTS) 
+	{
 		EFFECTS->Shutdown();
 		EFFECTS->FreeInstance();
 	}
@@ -279,14 +309,15 @@ void GameWorld::Shutdown() {
 }
 
 //! Draw all objects in this physics simulation
-void GameWorld::Draw() {
-
+void GameWorld::Draw() 
+{
 	// Draw the background gradient first, if we're using it
-	if (m_bgColorTop != -1) {
+	if (m_bgColorTop != -1) 
+	{
 		WINDOW->DrawBackgroundGradient(	m_bgColor, m_bgColorTop, 
-																		m_iCameraY, 
-																		m_iCameraY + WINDOW->Height(), 
-																		m_iLevelHeight);
+										m_iCameraY, 
+										m_iCameraY + WINDOW->Height(), 
+										m_iLevelHeight);
 	}
 
 	int i, max = m_kLayers.size();
@@ -294,6 +325,9 @@ void GameWorld::Draw() {
 	for (i = 0; i < max; i++) {
 		m_kLayers[i]->Draw();
 	}
+
+	// Debug only.
+	PHYSICS->Draw();
 }
 
 #define CLEAR_SCREEN_STRING "\033[H\033[J\r\n"
@@ -439,6 +473,8 @@ void GameWorld::DoMainGameUpdate() {
     GAMESTATE->SignalGameExit();			// for real
 		return;
 	}
+
+	PHYSICS->Update();
 
 	UpdateObjects();
 	ComputeNewCamera();						// Calc where to put the camera now

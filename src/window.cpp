@@ -166,13 +166,13 @@ void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2,
 		glBegin(GL_LINES);
 
 	glColor4ub(getr(col1), getg(col1), getb(col1), alpha);
-	glVertex2f(x1, y1);
-	glColor4ub(getr(col2), getg(col2), getb(col2), alpha);
-	glVertex2f(x2, y1);
-	glColor4ub(getr(col3), getg(col3), getb(col3), alpha);
-	glVertex2f(x2, y2);
-	glColor4ub(getr(col4), getg(col4), getb(col4), alpha);
 	glVertex2f(x1, y2);
+	glColor4ub(getr(col2), getg(col2), getb(col2), alpha);
+	glVertex2f(x2, y2);
+	glColor4ub(getr(col3), getg(col3), getb(col3), alpha);
+	glVertex2f(x2, y1);
+	glColor4ub(getr(col4), getg(col4), getb(col4), alpha);
+	glVertex2f(x1, y1);
 
 	glEnd();
 
@@ -216,10 +216,11 @@ void GameWindow::DrawText(int x, int y, CString text) {
 // NOT flip it at all) 
 //
 // Holy sweetness. Remember that '^' is XOR, and XOR rocks.
-void GameWindow::DrawSprite(	Sprite* sprite, int x, int y, 
-													bool flip_x, bool flip_y, 
-													bool use_rotation, float rotate_angle,
-													GLuint alpha) {
+void GameWindow::DrawSprite(Sprite* sprite, int x, int y, 
+							bool flip_x, bool flip_y, 
+							bool use_rotation, float rotate_angle,
+							GLuint alpha) 
+{
 	// texture coords
 	// we mess with them if flipping
 	float tx1 = 0.0f, ty1 = 0.0f;
@@ -383,14 +384,8 @@ void GameWindow::SetTitle(const char* szTitle)
 }
 
 bool GameWindow::InitGL() {
-	glEnable(GL_TEXTURE_2D);
-	
-	// SET_DEFAULT_GL_ALPHA();
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
 	glShadeModel(GL_FLAT);
-	glPolygonMode(GL_FRONT, GL_FILL);
+	// glPolygonMode(GL_FRONT, GL_FILL); // backface culling
 
 	glViewport(0, 0, SCREEN_W, SCREEN_H);
 	glMatrixMode(GL_PROJECTION); 
@@ -415,6 +410,9 @@ void GameWindow::Clear() {
 
 void GameWindow::BeginDrawing() {
 	glEnable(GL_ALPHA_TEST);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void GameWindow::EndDrawing() {

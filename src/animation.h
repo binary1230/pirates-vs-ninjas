@@ -1,13 +1,10 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
- 
-#include "stdafx.h"
 
 class Sprite;
 class Object;
 
 #include "globals.h"
-#include "StdString.h"
 
 //! Maps an animation name to an integer ID (e.g. "bad_guy_1" to BAD_GUY_1)
 typedef map<const CString, uint> AnimationMapping;

@@ -17,7 +17,7 @@ MapEditor::~MapEditor() {}
 
 void MapEditor::RePopulateLayerList() 
 {
-	for (uint i = 0; i < layers.size(); ++i) {
+	for (uint i = 0; i < m_kLayers.size(); ++i) {
 		
 	}
 }
@@ -98,23 +98,23 @@ void MapEditor::SetFlashText(char * format, ... )
 void MapEditor::ComputeNewScrolling() {	
 	// compute new camera
 	if (key[KEY_RIGHT] || key[KEY_D])
-		camera_x += SCROLL_VALUE;
+		m_iCameraX += SCROLL_VALUE;
 	if (key[KEY_LEFT]  || key[KEY_A])
-		camera_x -= SCROLL_VALUE;
+		m_iCameraX -= SCROLL_VALUE;
 	if (key[KEY_UP] || key[KEY_W])
-		camera_y += SCROLL_VALUE;
+		m_iCameraY += SCROLL_VALUE;
 	if (key[KEY_DOWN] || key[KEY_S])
-		camera_y -= SCROLL_VALUE;
+		m_iCameraY -= SCROLL_VALUE;
 
 	 // keep it from getting off screen
-	if (camera_x < 0) 
-		camera_x = 0;
-	if (camera_x > width - (int)WINDOW->Width()) 
-		camera_x = width - WINDOW->Width();
-	if (camera_y < 0) 
-		camera_y = 0;
-	if (camera_y > height - (int)WINDOW->Height()) 
-		camera_y = height - WINDOW->Height();
+	if (m_iCameraX < 0) 
+		m_iCameraX = 0;
+	if (m_iCameraX > m_iLevelWidth - (int)WINDOW->Width()) 
+		m_iCameraX = m_iLevelWidth - WINDOW->Width();
+	if (m_iCameraY < 0) 
+		m_iCameraY = 0;
+	if (m_iCameraY > m_iLevelHeight - (int)WINDOW->Height()) 
+		m_iCameraY = m_iLevelHeight - WINDOW->Height();
 }
 
 void MapEditor::ToggleOneLayerDisplay() 
@@ -126,42 +126,42 @@ void MapEditor::ToggleOneLayerDisplay()
 	else
 		SetFlashText("Single layer display OFF.");
 
-	for (uint i = 0; i < layers.size(); ++i) {
-		layers[i]->SetVisible(!m_bDisplayOneLayerOnly);
+	for (uint i = 0; i < m_kLayers.size(); ++i) {
+		m_kLayers[i]->SetVisible(!m_bDisplayOneLayerOnly);
 	}
 
-	if (m_bDisplayOneLayerOnly && m_iCurrentLayer >= 0 && m_iCurrentLayer < (int)layers.size())
-		layers[m_iCurrentLayer]->SetVisible(true);
+	if (m_bDisplayOneLayerOnly && m_iCurrentLayer >= 0 && m_iCurrentLayer < (int)m_kLayers.size())
+		m_kLayers[m_iCurrentLayer]->SetVisible(true);
 }
 
 void MapEditor::SelectNextLayer()
 {
 	if (m_bDisplayOneLayerOnly)
-		layers[m_iCurrentLayer]->SetVisible(false);
+		m_kLayers[m_iCurrentLayer]->SetVisible(false);
 
 	m_iCurrentLayer++;
-	if (m_iCurrentLayer == (int)layers.size())
+	if (m_iCurrentLayer == (int)m_kLayers.size())
 		m_iCurrentLayer = 0;
 
 	if (m_bDisplayOneLayerOnly)
-		layers[m_iCurrentLayer]->SetVisible(true);
+		m_kLayers[m_iCurrentLayer]->SetVisible(true);
 
-	SetFlashText("Selecting layer: %s", layers[m_iCurrentLayer]->GetName());
+	SetFlashText("Selecting layer: %s", m_kLayers[m_iCurrentLayer]->GetName());
 }
 
 void MapEditor::SelectPreviousLayer()
 {
 	if (m_bDisplayOneLayerOnly)
-		layers[m_iCurrentLayer]->SetVisible(false);
+		m_kLayers[m_iCurrentLayer]->SetVisible(false);
 
 	m_iCurrentLayer--;
 	if (m_iCurrentLayer == -1)
-		m_iCurrentLayer = layers.size() - 1;
+		m_iCurrentLayer = m_kLayers.size() - 1;
 
 	if (m_bDisplayOneLayerOnly)
-		layers[m_iCurrentLayer]->SetVisible(true);
+		m_kLayers[m_iCurrentLayer]->SetVisible(true);
 
-	SetFlashText("Selecting layer: %s", layers[m_iCurrentLayer]->GetName());
+	SetFlashText("Selecting layer: %s", m_kLayers[m_iCurrentLayer]->GetName());
 }
 
 void MapEditor::ModeUpdate()
@@ -295,8 +295,8 @@ void MapEditor::UpdateSelectedObjectPosition()
 
 	assert(m_pkSelectedObject->GetLayer());
 
-	int x = (int)(INPUT->MouseX() / m_pkSelectedObject->GetLayer()->GetScrollSpeed()) + camera_x;
-	int y = (int)((WINDOW->Height() - INPUT->MouseY()) / m_pkSelectedObject->GetLayer()->GetScrollSpeed()) + camera_y;
+	int x = (int)(INPUT->MouseX() / m_pkSelectedObject->GetLayer()->GetScrollSpeed()) + m_iCameraX;
+	int y = (int)((WINDOW->Height() - INPUT->MouseY()) / m_pkSelectedObject->GetLayer()->GetScrollSpeed()) + m_iCameraY;
 
 	if (m_iGridResolution != 1)
 	{
@@ -326,7 +326,7 @@ void MapEditor::AddNewObjectToWorld( int iObjectDefinitionIndexToAdd )
 	m_pkSelectedObject = OBJECT_FACTORY->CreateObject(sObjectName);
 	assert(m_pkSelectedObject);
 
-	m_pkSelectedObject->SetLayer(layers[m_iCurrentLayer]);
+	m_pkSelectedObject->SetLayer(m_kLayers[m_iCurrentLayer]);
 	WORLD->AddObject(m_pkSelectedObject, true);
 }
 
@@ -363,11 +363,11 @@ void MapEditor::UpdateCurrentObjectDefinitionIfNeeded()
 
 void MapEditor::UpdateSelectedObjectLayer()
 {
-	if (!m_pkSelectedObject || m_pkSelectedObject->GetLayer() == layers[m_iCurrentLayer])
+	if (!m_pkSelectedObject || m_pkSelectedObject->GetLayer() == m_kLayers[m_iCurrentLayer])
 		return;
 	
 	// TODO: This should just be one call to SetLayer(), refactor this junk in there.
 	m_pkSelectedObject->GetLayer()->RemoveObject(m_pkSelectedObject);
-	m_pkSelectedObject->SetLayer(layers[m_iCurrentLayer]);
+	m_pkSelectedObject->SetLayer(m_kLayers[m_iCurrentLayer]);
 	m_pkSelectedObject->GetLayer()->AddObject(m_pkSelectedObject);
 }
