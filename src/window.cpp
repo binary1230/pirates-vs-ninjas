@@ -416,6 +416,7 @@ void GameWindow::BeginDrawing() {
 }
 
 void GameWindow::EndDrawing() {
+	glDisable(GL_BLEND);
 }
 
 // draws the backbuffer to the screen and erases the backbuffer
