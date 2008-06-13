@@ -39,19 +39,19 @@ bool MapSaver::SaveEverything(	const GameWorld* p,
 	//xInfo.addChild("description").addText(
 
 	XMLNode xProps = xMode.addChild("properties");
-	xProps.addChild("width").addText(simulation->width);
-	xProps.addChild("height").addText(simulation->height);
+	xProps.addChild("width").addText(simulation->m_iLevelWidth);
+	xProps.addChild("height").addText(simulation->m_iLevelHeight);
 	
 	XMLNode xBgColor = xProps.addChild("bgcolor");
-	xBgColor.addChild("r").addText(getr(simulation->bg_color));
-	xBgColor.addChild("g").addText(getg(simulation->bg_color));
-	xBgColor.addChild("b").addText(getb(simulation->bg_color));
+	xBgColor.addChild("r").addText(getr(simulation->m_bgColor));
+	xBgColor.addChild("g").addText(getg(simulation->m_bgColor));
+	xBgColor.addChild("b").addText(getb(simulation->m_bgColor));
 
-	if (simulation->bg_color_top != -1) {
+	if (simulation->m_bgColorTop != -1) {
 		XMLNode xBgColor2 = xProps.addChild("bgcolor_top");
-		xBgColor2.addChild("r").addText(getr(simulation->bg_color_top));
-		xBgColor2.addChild("g").addText(getg(simulation->bg_color_top));
-		xBgColor2.addChild("b").addText(getb(simulation->bg_color_top));
+		xBgColor2.addChild("r").addText(getr(simulation->m_bgColorTop));
+		xBgColor2.addChild("g").addText(getg(simulation->m_bgColorTop));
+		xBgColor2.addChild("b").addText(getb(simulation->m_bgColorTop));
 	}
 
 	xMode.addChild(xObjDefs);	// "objectDefinitions" node
@@ -110,7 +110,7 @@ void MapSaver::OutputObject(const Object* obj, XMLNode &xObj) {
 	if (obj->rotate_velocity != 0)
 		xPos.addChild("vel_rotate").addText(obj->rotate_velocity);
 
-	if (obj == simulation->camera_follow)
+	if (obj == simulation->m_pkCameraLookatTarget)
 		xObj.addChild("cameraFollow");
 
 	if (obj->controller_num != 0)
@@ -172,10 +172,10 @@ void MapSaver::OutputLayer(const ObjectLayer* layer, XMLNode &xLayer) {
 }
 
 void MapSaver::OutputLayers(XMLNode &xMap) {
-	uint i, max = simulation->layers.size();
+	uint i, max = simulation->m_kLayers.size();
 	XMLNode xLayer;
 	for (i = 0; i < max; ++i) {
 		xLayer = xMap.addChild("layer");
-		OutputLayer(simulation->layers[i], xLayer);
+		OutputLayer(simulation->m_kLayers[i], xLayer);
 	}
 }
