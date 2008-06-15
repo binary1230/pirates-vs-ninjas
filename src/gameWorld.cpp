@@ -104,17 +104,17 @@ int GameWorld::Init(XMLNode xMode) {
 		return -1;
 	}
 
-	int iReturn = Load(xMode);
-
-	if (iReturn != 0)
-		return iReturn;
-
 	PHYSICS->CreateInstance();
 	if ( !PHYSICS || !PHYSICS->Init() )
 	{
 		TRACE("ERROR: InitSystem: failed to init PhysicsManager!\n");
 		return -1;
 	}
+
+	int iReturn = Load(xMode);
+
+	if (iReturn != 0)
+		return iReturn;
 
 	return iReturn;
 }
@@ -497,10 +497,20 @@ int GameWorld::Load(XMLNode &xMode) {
 	m_objects.clear();
 	m_kObjectsToAdd.clear();
 	m_kForces.clear();
-	if (LoadHeaderFromXML(xMode) == -1 ||
-			LoadObjectsFromXML(xMode) == -1 ||
-			LoadForcesFromXML(xMode) == -1 ) {
-		printf("HARG!\n");
+	
+	if (LoadHeaderFromXML(xMode) == -1)
+		return -1;
+
+	if (!PHYSICS->OnWorldInit())
+	{
+		TRACE("ERROR: InitSystem: failed to init (part 2) PhysicsManager::OnLevelLoaded()!\n");
+		return -1;
+	}
+
+	if (LoadObjectsFromXML(xMode) == -1 ||
+		LoadForcesFromXML(xMode) == -1 ) 
+	{
+		TRACE("Failed loading objects from XML");
 		return -1;
 	}
 
@@ -981,6 +991,8 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 		}
 		
 		obj->SetXY(x,y);
+
+		obj->InitPhysics();
 
 		// check for velocity - <velx>, <vely>, and <vel_rotate>
 		if (xPos.nChildNode("velx")>0) {
