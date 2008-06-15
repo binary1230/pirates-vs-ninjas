@@ -55,6 +55,8 @@ class PhysicsManager
 
 		b2Body* CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction );
 
+		void RemoveFromWorld(b2Body* pkBodyToRemove);
+
 		void Shutdown();
 
 		void Update();

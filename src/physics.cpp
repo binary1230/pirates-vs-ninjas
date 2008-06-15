@@ -25,79 +25,24 @@ bool PhysicsManager::OnWorldInit()
 		return false;
 
 	assert(WORLD->GetWidth() > 0 && WORLD->GetHeight() > 0);
-
 	float fWidthInMeters = PIXELS_TO_METERS(WORLD->GetWidth());
 	float fHeightInMeters = PIXELS_TO_METERS(WORLD->GetHeight());
 
-	// for fake:
 	// Define the size of the world. Simulation will still work
 	// if bodies reach the end of the world, but it will be slower.
 	b2AABB worldAABB;
-	//worldAABB.lowerBound.Set(-100.0f, -100.0f);
-	//worldAABB.upperBound.Set(100.0f, 100.0f);
-	// for real.
 	worldAABB.lowerBound.Set(-50.0f, -50.0f);
 	worldAABB.upperBound.Set(fWidthInMeters + 50.0f, fHeightInMeters + 50.0f);
 
 	b2Vec2 gravity(0.0f, -13.0f);
 	bool doSleep = true;
+
+	assert(m_pkPhysicsWorld == NULL);
 	m_pkPhysicsWorld = new b2World(worldAABB, gravity, doSleep);
 
-	// Define the ground body.
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(PIXELS_TO_METERS(WORLD->GetWidth() / 2.0f), 0);
-
-	// Call the body factory which allocates memory for the ground body
-	// from a pool and creates the ground box shape (also from a pool).
-	// The body is also added to the world.
-	b2Body* pkGroundBody = m_pkPhysicsWorld->CreateBody(&groundBodyDef);
-
-	// Define the ground box shape.
-	b2PolygonDef groundShapeDef;
-
-	// The extents are the half-widths of the box.
-	float fWidth = PIXELS_TO_METERS(WORLD->GetWidth() / 2.0f);
-	float fHeight = PIXELS_TO_METERS(20);
-	groundShapeDef.SetAsBox(fWidth, fHeight);
-
-	// Add the ground shape to the ground body.
-	pkGroundBody->CreateShape(&groundShapeDef);
-
-	// -----------------------------------------------------------------------------
-
-	// DO THE PHYSICS TEST STUFF!
-	// HEllo world in physics means dropping crap EVERYWHERE.
-
-	// x,y  width, height (in WORLD coordinates, not meters)
-	b2Body* pkBody;
-
-	pkBody = CreateDynamicPhysicsBox(2100, 600,    25, 25);
-	pkBody->SetAngularVelocity(-1.0f);
-
-	pkBody = CreateDynamicPhysicsBox(2075, 500,    20, 20);
-	pkBody->SetAngularVelocity(1.0f);
-
-	pkBody = CreateDynamicPhysicsBox(2050, 400,    20, 20);
-	pkBody->SetAngularVelocity(2.0f);
-
-	pkBody = CreateDynamicPhysicsBox(2100, 200,    23, 22);
-	pkBody->SetAngularVelocity(3.0f);
-
-	pkBody = CreateDynamicPhysicsBox(2100, 2000,    30, 22);
-	pkBody->SetAngularVelocity(-1.0f);
-	pkBody = CreateDynamicPhysicsBox(2100, 3000,    23, 50);
-	pkBody->SetAngularVelocity(2.0f);
-	pkBody = CreateDynamicPhysicsBox(2100, 4000,    50, 22);
-	pkBody->SetAngularVelocity(4.0f);
-	pkBody = CreateDynamicPhysicsBox(2100, 5000,    10, 10);
-	pkBody->SetAngularVelocity(-3.0f);
-
-	// -----------------------------------------------------------------------------
-
-	// TEMP ONLY:
 	// NOTE FROM DOM: If you are getting errors here, it's because I hacked the source
 	// of Box2D to 1) make SetDebugDraw() public, and 2) remove the call from b2World::Step()
-	m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
+	// m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
 	m_pkPhysicsWorld->SetDebugDraw(&m_kPhysicsDebugRenderer);
 
 	return true;
@@ -170,6 +115,11 @@ b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, 
 	return pkBody;
 }
 
+void PhysicsManager::RemoveFromWorld( b2Body* pkBodyToRemove )
+{
+	assert(m_pkPhysicsWorld);
+	m_pkPhysicsWorld->DestroyBody(pkBodyToRemove);
+}
 // -------------------------------------------------------------------------
 
 void PhysicsDebugRenderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)

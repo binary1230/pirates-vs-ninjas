@@ -18,6 +18,7 @@
 #include "gameSound.h"
 #include "effectsManager.h"
 #include "globalDefines.h"
+#include "physics.h"
 
 #define DEFAULT_JUMP_VELOCITY 8.0f
 #define DEFAULT_DRAG 0.95f
@@ -281,7 +282,7 @@ void PlayerObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_fan || obj->GetProperties().is_ball)  
 		return;
 
-	if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
+	if (obj->GetProperties().is_physical && !obj->GetProperties().is_player) {
 		Vector2D newpos;
 		m_kCurrentCollision = GetBound(obj, newpos);
     
@@ -338,7 +339,7 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	XMLNode xProps = xDef.getChildNode("properties");
 
 	properties.is_player = 1;
-	properties.is_solid = 1;
+	properties.is_physical = 1;
 	on_skateboard = false;
 
 	if (xProps.nChildNode("onSkateboard"))
@@ -394,12 +395,58 @@ void PlayerObject::DropBombs()
 		m_kPlayerState != WALKING_THRU_DOOR) 
 	{	
 		Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
-
 		if (!objBall)
 			return;
 
+		float sign = flip_x ? -1 : 1;
+		float strength = 0.5;
+
+		if (GetInput(PLAYERKEY_UP, controller_num))
+			objBall->SetImpulse(0.0f, strength);
+
+		else if (GetInput(PLAYERKEY_DOWN, controller_num))
+			objBall->SetImpulse(0.0f, strength*0.1);
+
+		else
+			objBall->SetImpulse(sign * strength, strength / 3.0);
+	}
+
+
+	// ORIG PHYSICS TEST CODE:
+	/*if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num) && 
+		m_kPlayerState != WALKING_THRU_DOOR) 
+	{	
+		b2Body* pkBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, 15, 10);
+
+		float sign = flip_x ? -1 : 1;
+		float strength = 0.1;
+
+		if (GetInput(PLAYERKEY_UP, controller_num))
+			pkBody->ApplyImpulse(b2Vec2(0.0f, strength*1.7), pkBody->GetWorldCenter());
+
+		else if (GetInput(PLAYERKEY_DOWN, controller_num))
+			pkBody->ApplyImpulse(b2Vec2(0.0f, strength*1.7), pkBody->GetWorldCenter());
+
+		else
+			pkBody->ApplyImpulse(b2Vec2(sign * strength, strength / 3.0f), pkBody->GetWorldCenter());
+	}
+
+	return;
+	*/
+
+	// ORIGINAL CODE:
+
+	/*
+	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num) && 
+		m_kPlayerState != WALKING_THRU_DOOR) 
+	{	
 		int strength;
 		if (!GLOBALS->Value("bomb_throw_strength", strength))
+			return;
+
+		Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
+
+		if (!objBall)
 			return;
 
 		float sign;
@@ -419,4 +466,5 @@ void PlayerObject::DropBombs()
 
 		//objBall->SetVelXY(vel.x, 0.0f);
 	}
+	*/
 }

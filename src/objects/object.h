@@ -14,6 +14,7 @@ class Animation;
 class Sprite;
 class ObjectLayer;
 class ObjectFactory;
+class b2Body;
 
 struct CollisionDirection {
 	unsigned up : 1;
@@ -33,8 +34,12 @@ struct ObjectProperties
 	// TEMP HACK - this object spawns enemies
 	bool spawns_enemies;
 
-	//! If solid, another solid object cannot move through it
-	bool is_solid;
+	//! If physical, another physical object cannot move through it
+	bool is_physical;
+
+	//! If static, this object WILL NOT MOVE, ever.
+	//! Only matters if is_physical is on
+	bool is_static; 
 
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -52,6 +57,9 @@ struct ObjectProperties
 	bool is_ball;
 
 	bool is_badguy;
+
+	// TMP: HACK: in a bit, everything will use this.
+	bool uses_new_physics;
 };
 
 //! Clears property masks
@@ -60,7 +68,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.feels_user_input = 0;
 	p.feels_friction = 0;
 	p.is_overlay = 0;
-	p.is_solid = 0;
+	p.is_physical = 0;
 	p.is_player = 0;
 	p.is_spring = 0;
 	p.is_collectable = 0;
@@ -70,6 +78,8 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_ball = 0;
 	p.spawns_enemies = 0;
 	p.is_badguy = 0;
+	p.uses_new_physics = 0;
+	p.is_static = 0;
 }
 
 // Used for find()
@@ -193,6 +203,10 @@ class Object {
 
 		//! If this object should report collisions or not
 		bool m_bCanCollide;
+
+		//! Impulse force to apply on the next frame
+		float m_fImpulseToApplyX;
+		float m_fImpulseToApplyY;
 		
 		// Protected constructor, this means we can't directly
 		// instantiate Object's, we need to use a friend or derived class.
@@ -214,6 +228,8 @@ class Object {
 		virtual void Shutdown() = 0;
 		
 		virtual void Update() = 0;
+
+		void InitPhysics();
 
 		// TODO: Make this take an animation code, for now it just takes the index of the animation 
 		// as defined by the order we found them in the XML file.  Very prone to errors. HACKY
@@ -353,8 +369,12 @@ class Object {
 		}
 
 		void SetObjectDefName(const char*);
+
+		void SetImpulse(float x, float y);
 		
 		virtual ~Object();
+
+		b2Body* m_pkPhysicsBody;
 
 		friend class ObjectFactory;
 		friend class MapSaver;

@@ -144,7 +144,7 @@ bool ObjectText::Init() {
 	time_until_next_blink = BLINK_TIME;
 
 	properties.is_overlay = 1;
-	properties.is_solid = 0;
+	properties.is_physical = 0;
 
 	SetText("");
 	SetAvatarFilename("");

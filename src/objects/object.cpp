@@ -12,6 +12,7 @@
 #include "gameSound.h"
 #include "objectLayer.h"
 #include "sprite.h"
+#include "physics.h"
 
 bool Object::debug_draw_bounding_boxes = 0;
 
@@ -41,8 +42,25 @@ void Object::BaseUpdate() {
 	UpdateDisplayTime();
 	UpdateFade();
 
+	if (properties.uses_new_physics && m_pkPhysicsBody)
+	{
+		m_pkPhysicsBody->ApplyImpulse(b2Vec2(m_fImpulseToApplyX,m_fImpulseToApplyY), m_pkPhysicsBody->GetWorldCenter());
+		m_fImpulseToApplyX = 0.0f;
+		m_fImpulseToApplyY = 0.0f;
+
+		pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - width / 2;
+		pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - height / 2;
+		use_rotation = true;
+		rotate_angle = RAD_TO_DEG(-m_pkPhysicsBody->GetAngle());
+	}
+
 	if (use_rotation)
-		rotate_angle += rotate_velocity;
+	{
+		if (!properties.uses_new_physics)
+			rotate_angle += rotate_velocity;
+		// else
+			//rotate_angle
+	}
 }
 
 // Decrement the display time, when it reaches 0, we 
@@ -73,7 +91,7 @@ void Object::SetupCachedVariables() {
 		height = 0;
 	}
 
-	m_bCanCollide |=properties.is_solid ||
+	m_bCanCollide |=properties.is_physical ||
 					properties.is_player || 
 					properties.is_spring ||
 					properties.is_collectable || 
@@ -81,6 +99,27 @@ void Object::SetupCachedVariables() {
 					properties.is_door ||
 					properties.is_ring ||
 					properties.is_ball;
+}
+
+void Object::InitPhysics()
+{
+	if (!PHYSICS)
+	{
+		TRACE("ERROR: Physics subsystem not yet initialized! Can't init object physics!");
+		assert(PHYSICS);
+		return;
+	}
+
+	if (!properties.is_physical)
+		return;
+
+	if (properties.uses_new_physics)
+	{
+		if (properties.is_static)
+			m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height);
+		else
+			m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height);
+	}
 }
 
 void Object::UpdateFade() {
@@ -119,6 +158,8 @@ bool Object::BaseInit() {
 	level_height = 0;
 	rotate_angle = rotate_velocity = 0.0f;
 	use_rotation = false;
+	m_fImpulseToApplyX = 0.0f;
+	m_fImpulseToApplyY = 0.0f;
 	return true;
 }
 
@@ -198,8 +239,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 
 	// bounding box stuff below.
 
-	// if (m_bDrawBoundingBox) {
-	if (1) 
+	if (m_bDrawBoundingBox) 
 	{
 		_Rect bbox_t;
 
@@ -221,7 +261,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 		TransformRect(projRect_t);
 
 		if (properties.is_player || 
-			properties.is_solid || 
+			properties.is_physical || 
 			properties.is_collectable) {
 
 			// draw old bounding rectangle, dark pink
@@ -289,6 +329,9 @@ void Object::BaseShutdown() {
 	is_dead = true;
 	display_time = -1;
 
+	if (PHYSICS && m_pkPhysicsBody)
+		PHYSICS->RemoveFromWorld(m_pkPhysicsBody);
+
 	SAFE_DELETE(objectDefName);
 }
 
@@ -314,6 +357,7 @@ Object::Object() {
 	use_rotation = false;
 	m_bDrawBoundingBox = false;
 	m_bCanCollide = false;
+	m_pkPhysicsBody = NULL;
 }
 
 // Return a vector with x,y set to 
@@ -404,8 +448,10 @@ void Object::Collide(Object* obj) {
 	// default is no action, this is overriden in higher classes
 }
 
-void Object::MoveToNewPosition() {
-	pos = Solve();
+void Object::MoveToNewPosition() 
+{
+	if (!properties.uses_new_physics)
+		pos = Solve();
 }
 
 Object::~Object() {
@@ -417,4 +463,13 @@ void Object::PlayAnimation( uint uiIndex )
 	assert(uiIndex >=0 && uiIndex < animations.size() && "Animation index out of range.");
 	if (uiIndex >=0 && uiIndex < animations.size())
 		currentAnimation = animations[uiIndex];
+}
+
+void Object::SetImpulse( float x, float y )
+{
+	if (!properties.uses_new_physics)
+		return;
+
+	m_fImpulseToApplyX = x;
+	m_fImpulseToApplyY = y;
 }

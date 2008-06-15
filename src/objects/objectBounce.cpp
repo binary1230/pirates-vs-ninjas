@@ -6,6 +6,7 @@
 #include "gameState.h"
 #include "gameWorld.h"
 #include "gameSound.h"
+#include "physics.h"
 
 #define MIN_VELOCITY 0.34f
 #define FRICTION_MULTIPLIER 0.70f
@@ -35,16 +36,21 @@ void ObjectBounce::Update() {
 }
 
 bool ObjectBounce::Init() {
+	if (!BaseInit())
+		return false;
+
 	play_hit_sound = false;
 	collided_last_frame = false;
-	return BaseInit();
+	properties.uses_new_physics = true;
+
+	return true;
 }
 
 void ObjectBounce::Collide(Object* obj) {
-	if (!properties.is_solid || obj->GetProperties().is_ball || obj->GetProperties().is_fan)
+	if (!properties.is_physical || obj->GetProperties().is_ball || obj->GetProperties().is_fan)
 		return;
 
-	if (obj->GetProperties().is_solid && !obj->GetProperties().is_player) {
+	if (obj->GetProperties().is_physical && !obj->GetProperties().is_player) {
 		Vector2D newpos;
 		m_kCurrentCollision = GetBound(obj, newpos);
 
