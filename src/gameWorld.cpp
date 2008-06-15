@@ -364,6 +364,9 @@ void GameWorld::GetCollideableObjects(ObjectArray &objs) {
 // probably need to optimize, but PROFILE to find out.
 void GameWorld::CheckForCollisions(	ObjectArray &collideableObjects, Object* obj) {
 
+	if (obj->GetProperties().uses_new_physics)
+		return;
+
 	// Don't bother to check if we can't be collided with.
 	assert(obj != NULL);
 	if (!obj->CanCollide())
@@ -990,9 +993,11 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 			obj->SetFlipY(true);
 		}
 		
-		obj->SetXY(x,y);
+		// this can freak out physics
+		assert(obj->GetX() <= WORLD->GetWidth() + 10);
+		assert(obj->GetY() <= WORLD->GetHeight() + 10);
 
-		obj->InitPhysics();
+		obj->SetXY(x,y);
 
 		// check for velocity - <velx>, <vely>, and <vel_rotate>
 		if (xPos.nChildNode("velx")>0) {
@@ -1082,6 +1087,7 @@ void GameWorld::AddObject(Object* obj, bool addImmediately) {
 
 void GameWorld::DoAddObject(Object* obj) {
 	m_objects.push_front(obj);
+	obj->InitPhysics();
 	obj->GetLayer()->AddObject(obj);
 }
 
