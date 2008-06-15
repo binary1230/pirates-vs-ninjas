@@ -17,16 +17,19 @@ PhysicsManager::PhysicsManager()
 
 PhysicsManager::~PhysicsManager() {}
 
-bool PhysicsManager::Init()
+// Happens _after_ level is loaded
+bool PhysicsManager::OnWorldInit()
 {
 	assert(WORLD);
 	if (!WORLD)
 		return false;
 
+	assert(WORLD->GetWidth() > 0 && WORLD->GetHeight() > 0);
+
 	float fWidthInMeters = PIXELS_TO_METERS(WORLD->GetWidth());
 	float fHeightInMeters = PIXELS_TO_METERS(WORLD->GetHeight());
 
-	// for rake:
+	// for fake:
 	// Define the size of the world. Simulation will still work
 	// if bodies reach the end of the world, but it will be slower.
 	b2AABB worldAABB;
@@ -64,29 +67,29 @@ bool PhysicsManager::Init()
 
 	// DO THE PHYSICS TEST STUFF!
 	// HEllo world in physics means dropping crap EVERYWHERE.
-	
+
 	// x,y  width, height (in WORLD coordinates, not meters)
 	b2Body* pkBody;
 
-	pkBody = CreatePhysicsBox(2100, 600,    25, 25);
+	pkBody = CreateDynamicPhysicsBox(2100, 600,    25, 25);
 	pkBody->SetAngularVelocity(-1.0f);
 
-	pkBody = CreatePhysicsBox(2075, 500,    20, 20);
+	pkBody = CreateDynamicPhysicsBox(2075, 500,    20, 20);
 	pkBody->SetAngularVelocity(1.0f);
 
-	pkBody = CreatePhysicsBox(2050, 400,    20, 20);
+	pkBody = CreateDynamicPhysicsBox(2050, 400,    20, 20);
 	pkBody->SetAngularVelocity(2.0f);
 
-	pkBody = CreatePhysicsBox(2100, 200,    23, 22);
+	pkBody = CreateDynamicPhysicsBox(2100, 200,    23, 22);
 	pkBody->SetAngularVelocity(3.0f);
 
-	pkBody = CreatePhysicsBox(2100, 2000,    30, 22);
+	pkBody = CreateDynamicPhysicsBox(2100, 2000,    30, 22);
 	pkBody->SetAngularVelocity(-1.0f);
-	pkBody = CreatePhysicsBox(2100, 3000,    23, 50);
+	pkBody = CreateDynamicPhysicsBox(2100, 3000,    23, 50);
 	pkBody->SetAngularVelocity(2.0f);
-	pkBody = CreatePhysicsBox(2100, 4000,    50, 22);
+	pkBody = CreateDynamicPhysicsBox(2100, 4000,    50, 22);
 	pkBody->SetAngularVelocity(4.0f);
-	pkBody = CreatePhysicsBox(2100, 5000,    10, 10);
+	pkBody = CreateDynamicPhysicsBox(2100, 5000,    10, 10);
 	pkBody->SetAngularVelocity(-3.0f);
 
 	// -----------------------------------------------------------------------------
@@ -97,6 +100,12 @@ bool PhysicsManager::Init()
 	m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
 	m_pkPhysicsWorld->SetDebugDraw(&m_kPhysicsDebugRenderer);
 
+	return true;
+}
+
+// Happens before level load
+bool PhysicsManager::Init()
+{
 	m_fPhysicsSimulatorTimeStep = 1.0f / FPS;
 	m_iPhysicsSimulatorIterations = 10;
 
@@ -120,25 +129,47 @@ void PhysicsManager::Draw()
 	m_pkPhysicsWorld->DrawDebugData();
 }
 
-b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height )
+b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction )
 {
 	b2BodyDef bodyDef;
-	bodyDef.position.Set(PIXELS_TO_METERS(x), PIXELS_TO_METERS(y));
-	
+	b2PolygonDef shapeDef;
+
+	assert(m_pkPhysicsWorld);
+	assert(width > 0.0f);
+	assert(height > 0.0f);
+
+	float halfWidth = PIXELS_TO_METERS(width) / 2;
+	float halfHeight = PIXELS_TO_METERS(height) / 2;
+
+	bodyDef.position.Set(PIXELS_TO_METERS(x) + halfWidth, PIXELS_TO_METERS(y) + halfHeight);
+
 	b2Body* pkBody = m_pkPhysicsWorld->CreateBody(&bodyDef);
 	assert(pkBody);
 
-	b2PolygonDef shapeDef;
-	shapeDef.SetAsBox(PIXELS_TO_METERS(width), PIXELS_TO_METERS(height));
-	shapeDef.density = 2.0f;
-	shapeDef.friction = 0.3f;
-	shapeDef.restitution = 0.3f;
-	pkBody->CreateShape(&shapeDef);
-	pkBody->SetBullet(true);
+	shapeDef.SetAsBox(halfWidth, halfHeight);
+	shapeDef.friction = friction;
+	shapeDef.restitution = restitution;
+	shapeDef.density = density;
 
+	pkBody->CreateShape(&shapeDef);
+
+	return pkBody;
+}
+
+
+b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, float height )
+{
+	return CreatePhysicsBox(x,y,width,height, 0.0f, 0.4f, 0.3f);
+}
+
+b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height )
+{
+	// TODO: Don't hardcode these numbers.
+	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, 0.3f, 0.2f, 0.9f);
 	pkBody->SetMassFromShapes();
 	return pkBody;
 }
+
 // -------------------------------------------------------------------------
 
 void PhysicsDebugRenderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
@@ -170,9 +201,10 @@ void PhysicsDebugRenderer::SubmitVertex( float x, float y )
 	glVertex2f(x,y);
 }
 
-// THIS FUNCTION ONLY FITTED FOR PVN. Nothing else here is :(
 void PhysicsDebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
+	// This is correct for Pirates VS Ninjas engine.
+
 	glLoadIdentity();
 	glDisable(GL_TEXTURE_2D);
 
@@ -200,6 +232,8 @@ void PhysicsDebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertex
 
 void PhysicsDebugRenderer::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 {
+	assert(0 && "TODO: Implement this for pirates vs ninjas engine, it won't work right now.");
+
 	const float32 k_segments = 16.0f;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
@@ -216,6 +250,8 @@ void PhysicsDebugRenderer::DrawCircle(const b2Vec2& center, float32 radius, cons
 
 void PhysicsDebugRenderer::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 {
+	assert(0 && "TODO: Implement this for pirates vs ninjas.");
+
 	const float32 k_segments = 16.0f;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
@@ -252,6 +288,8 @@ void PhysicsDebugRenderer::DrawSolidCircle(const b2Vec2& center, float32 radius,
 
 void PhysicsDebugRenderer::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
+	assert(0 && "TODO: Implement this for pirates vs ninjas.");
+
 	glColor3f(color.r, color.g, color.b);
 	glBegin(GL_LINES);
 	glVertex2f(p1.x, p1.y);
@@ -261,6 +299,8 @@ void PhysicsDebugRenderer::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const
 
 void PhysicsDebugRenderer::DrawXForm(const b2XForm& xf)
 {
+	assert(0 && "TODO: Implement this for pirates vs ninjas.");
+
 	b2Vec2 p1 = xf.position, p2;
 	const float32 k_axisScale = 0.4f;
 	glBegin(GL_LINES);
@@ -280,6 +320,8 @@ void PhysicsDebugRenderer::DrawXForm(const b2XForm& xf)
 
 void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 {
+	assert(0 && "TODO: Implement this for pirates vs ninjas.");
+
 	glPointSize(size);
 	glBegin(GL_POINTS);
 	glColor3f(color.r, color.g, color.b);
@@ -290,6 +332,8 @@ void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 
 void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
+	assert(0 && "TODO: Implement this for pirates vs ninjas.");
+
 	glColor3f(color.r, color.g, color.b);
 	glBegin(GL_LINES);
 	glVertex2f(p1.x, p1.y);
@@ -299,6 +343,8 @@ void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 
 void DrawAABB(b2AABB* aabb, const b2Color& c)
 {
+	assert(0 && "TODO: Implement this for pirates vs ninjas.");
+
 	glColor3f(c.r, c.g, c.b);
 	glBegin(GL_LINE_LOOP);
 	glVertex2f(aabb->lowerBound.x, aabb->lowerBound.y);
