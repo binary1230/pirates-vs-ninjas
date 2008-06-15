@@ -25,6 +25,12 @@ typedef unsigned int uint;
 #define FPS 30
 #define TIMESTEP 1/FPS
 
+#define ONEEIGHTY_OVER_PI 57.2957795
+#define PI_OVER_ONEEIGHTY 0.0174532925
+
+#define DEG_TO_RAD(x) PI_OVER_ONEEIGHTY * x
+#define RAD_TO_DEG(x) ONEEIGHTY_OVER_PI * x
+
 //! A fudge value.  You can't compare two floats
 //! directly, we just want to know if they are close.
 //! This defines how close they must be to be considered
