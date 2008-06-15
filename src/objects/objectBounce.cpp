@@ -28,10 +28,10 @@ void ObjectBounce::Update() {
 
 	// ghettoooooooo friction.
 	if (m_kCurrentCollision.down) {
-		vel.x *= FRICTION_MULTIPLIER;
+/*		vel.x *= FRICTION_MULTIPLIER;
 		if (fabs(vel.x) < MIN_VELOCITY) {
 			vel.x = 0;
-		}
+		}*/
 	}
 }
 
@@ -46,8 +46,8 @@ bool ObjectBounce::Init() {
 	return true;
 }
 
-void ObjectBounce::Collide(Object* obj) {
-	if (!properties.is_physical || obj->GetProperties().is_ball || obj->GetProperties().is_fan)
+void ObjectBounce::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) {
+	/*if (!properties.is_physical || obj->GetProperties().is_ball || obj->GetProperties().is_fan)
 		return;
 
 	if (obj->GetProperties().is_physical && !obj->GetProperties().is_player) {
@@ -68,7 +68,7 @@ void ObjectBounce::Collide(Object* obj) {
 
 			collided_last_frame = true;
 		}
-	}
+	}*/
 }
 
 ObjectBounce::ObjectBounce() {}

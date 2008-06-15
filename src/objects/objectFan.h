@@ -15,7 +15,7 @@ class FanObject : public Object {
 		void Shutdown();
 		
 		void Update();
-		void Collide(Object* obj);
+		void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
 
 		FanObject();
 		~FanObject();

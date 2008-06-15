@@ -2,6 +2,7 @@
 #include "physics.h"
 #include "gameWorld.h"
 #include "window.h"
+#include "object.h"
 
 // NOTE: do NOT new/delete ANY physics objects EXCEPT m_pkWorld
 // 50 pixels == 1 meter in physics here
@@ -44,6 +45,7 @@ bool PhysicsManager::OnWorldInit()
 	// of Box2D to 1) make SetDebugDraw() public, and 2) remove the call from b2World::Step()
 	// m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
 	m_pkPhysicsWorld->SetDebugDraw(&m_kPhysicsDebugRenderer);
+	m_pkPhysicsWorld->SetContactListener(&m_kPhysicsContactListener);
 
 	return true;
 }
@@ -59,9 +61,14 @@ bool PhysicsManager::Init()
 
 void PhysicsManager::Update()
 {
+	m_kContacts.clear();
+
 	// Instruct the world to perform a single step of simulation. It is
 	// generally best to keep the time step and iterations fixed.
 	m_pkPhysicsWorld->Step(m_fPhysicsSimulatorTimeStep, m_iPhysicsSimulatorIterations);
+
+	// dispatch collision events now.
+	HandleCollisions();
 }
 
 void PhysicsManager::Shutdown()
@@ -104,13 +111,13 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 
 b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, float height )
 {
-	return CreatePhysicsBox(x,y,width,height, 0.0f, 0.4f, 0.3f);
+	return CreatePhysicsBox(x,y,width,height, 0.0f, 0.5f, 0.9f);
 }
 
 b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height )
 {
 	// TODO: Don't hardcode these numbers.
-	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, 0.3f, 0.2f, 0.9f);
+	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, 0.3f, 0.0f, 0.9f);
 	pkBody->SetMassFromShapes();
 	return pkBody;
 }
@@ -120,6 +127,33 @@ void PhysicsManager::RemoveFromWorld( b2Body* pkBodyToRemove )
 	assert(m_pkPhysicsWorld);
 	m_pkPhysicsWorld->DestroyBody(pkBodyToRemove);
 }
+
+void PhysicsManager::HandleCollisions()
+{
+	uint iMax = m_kContacts.size();
+
+	for (uint i = 0; i < iMax; ++i)
+	{
+		ProcessCollision(&m_kContacts[i]);
+	}
+}
+
+void PhysicsManager::ProcessCollision(b2ContactPoint* pkContactPoint)
+{
+	Object* obj1 = (Object*)pkContactPoint->shape1->GetBody()->GetUserData();
+	Object* obj2 = (Object*)pkContactPoint->shape2->GetBody()->GetUserData();
+	
+	obj2->OnCollide(obj1, pkContactPoint);
+	pkContactPoint->normal = -pkContactPoint->normal;
+	obj1->OnCollide(obj2, pkContactPoint);
+}
+
+void PhysicsManager::ReportContactPoint( const b2ContactPoint* pkContactPoint )
+{
+	// make a COPY here, don't store the pointer.
+	m_kContacts.push_back(*pkContactPoint);
+}
+
 // -------------------------------------------------------------------------
 
 void PhysicsDebugRenderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
@@ -302,4 +336,32 @@ void DrawAABB(b2AABB* aabb, const b2Color& c)
 	glVertex2f(aabb->upperBound.x, aabb->upperBound.y);
 	glVertex2f(aabb->lowerBound.x, aabb->upperBound.y);
 	glEnd();
+}
+
+void PhysicsContactListener::Add( const b2ContactPoint* point )
+{
+	static int i = 0;
+	i++;
+	i %= 3;
+
+	TRACE("%i: Add\n", i);
+	PHYSICS->ReportContactPoint(point);
+}
+
+void PhysicsContactListener::Persist( const b2ContactPoint* point )
+{
+	static int i = 0;
+	i++;
+	i %= 3;
+
+	TRACE("%i: Persist\n", i);
+	PHYSICS->ReportContactPoint(point);
+}
+
+void PhysicsContactListener::Remove( const b2ContactPoint* point )
+{
+}
+
+void PhysicsContactListener::Result( const b2ContactResult* point )
+{
 }

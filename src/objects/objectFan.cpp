@@ -23,7 +23,7 @@ void FanObject::Update() {
 	UpdateSimpleAnimations();
 }
 
-void FanObject::Collide(Object* obj) {
+void FanObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) {
 	if (obj->GetProperties().is_player) {
 
 		// if the player is going slowly, slow down the new fan speed

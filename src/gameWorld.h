@@ -9,7 +9,6 @@
 class Force;
 class Object;
 class ObjectFactory;
-class ForceFactory;
 class ObjectLayer;
 class PlayerObject;
 			
@@ -41,13 +40,6 @@ class GameWorld : public GameMode {
 
 			//! Layers, which hold pointers to objects.
 			vector<ObjectLayer*> m_kLayers;
-
-			//! Collection of forces
-			// NOTE: Probably should be deprecated.
-			vector<Force*> m_kForces;
-
-			//! Force factory: TODO singleton
-			ForceFactory* m_pkForceFactory;
 		
 			//! List of objects to add on next Update()
 			ObjectList m_kObjectsToAdd;
@@ -85,13 +77,14 @@ class GameWorld : public GameMode {
 			XMLNode m_xEffects;
 
 			//! Physics functions
-			void Solve(Object* obj);
 			void CheckForCollisions(ObjectArray &collideableObjects, Object* obj);
 			void GetCollideableObjects(ObjectArray &objs);
 			bool CleanupObject(ObjectListIter &obj);
 
 			//! Game update functions
 			void UpdateObjects();
+
+			void AddNewObjectsIfNeeded();
 
 			//! Sets up simulation from an XML file
 			//XXX should be moved into a friend factory class, or something.
@@ -123,7 +116,7 @@ class GameWorld : public GameMode {
 			//! Do the real work of adding an object to the global object list
 			void DoAddObject(Object* obj);
 		
-			void DoCleaning();
+			void RemoveDeadObjectsIfNeeded();
 
 			bool is_loading;
 			bool use_scroll_speed;

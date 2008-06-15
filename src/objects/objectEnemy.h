@@ -26,7 +26,7 @@ class EnemyObject : public Object {
 		EnemyObject();
 		virtual ~EnemyObject();
 
-		void Collide(Object* obj);
+		void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
 
 		virtual void ApplyForces();
 

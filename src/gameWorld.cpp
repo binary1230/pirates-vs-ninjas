@@ -9,7 +9,6 @@
 #include "object.h"
 #include "objectIDs.h"
 #include "objectTxtOverlay.h"
-#include "forceFactory.h"
 #include "force.h"
 #include "forceInput.h"
 #include "forceGravity.h"
@@ -79,12 +78,6 @@ int GameWorld::Init(XMLNode xMode) {
 		return -1;
 	}
 
-	m_pkForceFactory = new ForceFactory();
-	if ( !m_pkForceFactory || m_pkForceFactory->Init() < 0 ) {
-		TRACE("ERROR: InitSystem: failed to init forceFactory!\n");
-		return -1;
-	}
-
 	EFFECTS->CreateInstance();
 	if ( !EFFECTS || !EFFECTS->Init() ) 
 	{
@@ -94,7 +87,6 @@ int GameWorld::Init(XMLNode xMode) {
 
 	m_kObjectsToAdd.clear();
 	m_objects.clear();
-	m_kForces.clear();
 	m_kLayers.clear();
 
 	EVENTS->CreateInstance();
@@ -238,7 +230,6 @@ void GameWorld::ComputeNewCamera() {
 void GameWorld::Shutdown() 
 {
 	ObjectListIter iter;
-	int max, i;
 
 	if (EVENTS) 
 	{
@@ -272,30 +263,12 @@ void GameWorld::Shutdown()
 		(*iter) = NULL;
 	}
 	m_kObjectsToAdd.clear();
-
-	// delete all the forces
-	max = m_kForces.size();
-	for (i = 0; i < max; i++) 
-	{
-		m_kForces[i]->Shutdown();
-		delete m_kForces[i];
-		m_kForces[i] = NULL;
-	}
-	m_kForces.clear();
 			
 	// delete the object factory
 	if (OBJECT_FACTORY) 
 	{
 		OBJECT_FACTORY->Shutdown();
 		OBJECT_FACTORY->FreeInstance();
-	}
-
-	// delete the force factory
-	if (m_pkForceFactory) 
-	{
-		m_pkForceFactory->Shutdown();
-		delete m_pkForceFactory;
-		m_pkForceFactory = NULL;
 	}
 
 	// delete the effects manager
@@ -332,22 +305,6 @@ void GameWorld::Draw()
 
 #define CLEAR_SCREEN_STRING "\033[H\033[J\r\n"
 
-//! Solve for next frame
-void GameWorld::Solve(Object *obj) {
-	
-	assert(obj != NULL);
-	int j, max = m_kForces.size();
-
-	// OLD WAY, DEPRECATED, SOON TO BE REPLACED
-	// apply each force to the object
-	for (j = 0; j < max; j++) {
-		obj->ApplyForce(m_kForces[j]);
-	}
-
-	// NEW WAY
-	obj->ApplyForces();
-}
-
 void GameWorld::GetCollideableObjects(ObjectArray &objs) {
 	static ObjectListIter iter;
 	objs.clear();
@@ -368,7 +325,7 @@ void GameWorld::CheckForCollisions(	ObjectArray &collideableObjects, Object* obj
 		return;
 
 	// Don't bother to check if we can't be collided with.
-	assert(obj != NULL);
+	/*assert(obj != NULL);
 	if (!obj->CanCollide())
 		return;
 
@@ -390,10 +347,10 @@ void GameWorld::CheckForCollisions(	ObjectArray &collideableObjects, Object* obj
 			target->Collide(obj);
 			obj->Collide(target);
 		}
-	}
+	}*/
 }
 
-void GameWorld::DoCleaning() {
+void GameWorld::RemoveDeadObjectsIfNeeded() {
 	Object* obj;
 	
 	ObjectListIter iter, erased;
@@ -424,42 +381,23 @@ void GameWorld::DoCleaning() {
 }
 
 //! Update all objects
-void GameWorld::UpdateObjects() {
-	static ObjectArray collideableObjects;
-	static ObjectListIter iter;
-	Object* obj;
-
-	// Add any New Objects
-	for (iter = m_kObjectsToAdd.begin(); iter != m_kObjectsToAdd.end(); ++iter) {
-		obj = *iter;
-		assert(obj != NULL);
-		AddObject(obj, true);
-	}
-
-	m_kObjectsToAdd.clear();
-
-	DoCleaning();
-
-	// Get collideable objects
-	GetCollideableObjects(collideableObjects);
+void GameWorld::UpdateObjects() 
+{
+	AddNewObjectsIfNeeded();
+	RemoveDeadObjectsIfNeeded();
 	
 	// Do the physics simulation + update
-	for (iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
+	for (ObjectListIter iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
 		
-		obj = *iter;
+		Object* obj = *iter;
 		assert(obj != NULL);
 
 		// If there is a 'modal' object, then don't update anything
-		// EXCEPT that. (usually text boxes/etc)
-		if (!modal_active) {
-			obj->ResetForNextFrame();				// oldpos = current_pos
-			Solve(obj);											// Applies forces
-			obj->MoveToNewPosition();
-			CheckForCollisions(collideableObjects, obj);		// newpos = oldpos
-		}
- 
+		// EXCEPT for that object. (usually text boxes/etc) 
 		if (!modal_active || obj == modal_active)
+		{
 			obj->Update();
+		}
 	}
 }
 
@@ -477,7 +415,19 @@ void GameWorld::DoMainGameUpdate() {
 		return;
 	}
 
-	PHYSICS->Update();
+	for (ObjectListIter iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
+
+		Object* obj = *iter;
+		assert(obj != NULL);
+
+		// If there is a 'modal' object, then don't update anything
+		// EXCEPT for that object. (usually text boxes/etc) 
+		if (!modal_active || obj == modal_active)
+			obj->ResetForNextFrame();
+	}
+
+	if (!modal_active)
+		PHYSICS->Update();
 
 	UpdateObjects();
 	ComputeNewCamera();						// Calc where to put the camera now
@@ -499,7 +449,6 @@ int GameWorld::Load(XMLNode &xMode) {
 	m_bJumpedBackFromADoor = false;
 	m_objects.clear();
 	m_kObjectsToAdd.clear();
-	m_kForces.clear();
 	
 	if (LoadHeaderFromXML(xMode) == -1)
 		return -1;
@@ -510,8 +459,7 @@ int GameWorld::Load(XMLNode &xMode) {
 		return -1;
 	}
 
-	if (LoadObjectsFromXML(xMode) == -1 ||
-		LoadForcesFromXML(xMode) == -1 ) 
+	if (LoadObjectsFromXML(xMode) == -1) 
 	{
 		TRACE("Failed loading objects from XML");
 		return -1;
@@ -1000,6 +948,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 		obj->SetXY(x,y);
 
 		// check for velocity - <velx>, <vely>, and <vel_rotate>
+		/*
 		if (xPos.nChildNode("velx")>0) {
 			float velx;
 			if (!xPos.getChildNode("velx").getFloat(velx)) {
@@ -1017,6 +966,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 			}
 			obj->SetVelY(vely);
 		}
+		*/
 
 		if (xPos.nChildNode("vel_rotate")>0) {
 			float vel_rotate;
@@ -1091,30 +1041,6 @@ void GameWorld::DoAddObject(Object* obj) {
 	obj->GetLayer()->AddObject(obj);
 }
 
-// loads the forces from the XML file
-int GameWorld::LoadForcesFromXML(XMLNode &xMode) {
-	
-	// XXX need to actually load from XML instead of hardcoding...
-	Force* new_force = NULL;
-
-	if ( (new_force = m_pkForceFactory->CreateForce(FORCE_GRAVITY)) )
-		m_kForces.push_back(new_force);
-	else
-		return -1;
-	
-	if ( (new_force = m_pkForceFactory->CreateForce(FORCE_INPUT1)) )
-		m_kForces.push_back(new_force);
-	else
-		return -1;
-
-	if ( (new_force = m_pkForceFactory->CreateForce(FORCE_INPUT2)) )
-		m_kForces.push_back(new_force);
-	else
-		return -1;
-	
-	return 0;
-}
-
 #ifndef AI_TRAINING
 int GameWorld::GetAiFitnessScore() {return 0;};
 #else
@@ -1140,3 +1066,15 @@ GameWorld::GameWorld() {
 }
 
 GameWorld::~GameWorld() {}
+
+void GameWorld::AddNewObjectsIfNeeded()
+{
+	// Add any New Objects
+	for (ObjectListIter iter = m_kObjectsToAdd.begin(); iter != m_kObjectsToAdd.end(); ++iter) {
+		Object* obj = *iter;
+		assert(obj != NULL);
+		AddObject(obj, true);
+	}
+
+	m_kObjectsToAdd.clear();
+}

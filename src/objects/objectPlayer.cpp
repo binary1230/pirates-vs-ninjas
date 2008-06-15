@@ -36,38 +36,54 @@ void PlayerObject::ScreenBoundsConstraint() {
 	if (WORLD->PlayerAllowedOffscreen())
 		return;
 
+	// MAN. Abstract away the physics vs our representation here. Think about this more. What a mess.
+
 	if (pos.x < 0) {
-		// vel.SetX(-vel.x); // flip velocity
-		vel.x = 0; 							// stop
-		pos.x = 0;
+		SetVelX(0.0f);
+		int newPosX = 1;
+		pos.x = newPosX;
+		m_pkPhysicsBody->SetXForm(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
 	} else if (pos.x > (WORLD->GetWidth() - width) ) {
-		// vel.SetX(-vel.x);	// flip velocity
-		vel.x = 0;							// stop
-		pos.x = WORLD->GetWidth() - width;
+		SetVelX(0.0f);
+		int newPosX = WORLD->GetWidth() - width - 1;
+		m_pkPhysicsBody->SetXForm(
+			b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle()
+		);
+		pos.x = newPosX;
 	}
 }
 
 void PlayerObject::UpdateSpriteFlip() {
-	if (accel.x == 0.0f) {
+
+	// TODO: PHYSICS: RE-IMPLEMENT
+	// Always face the direction the player's input is pressing,
+	// and if they're not pressing anything, face their velocity.
+
+	/*if (accel.x == 0.0f) 
+	{
 		if (vel.x > 0.0f)
 			flip_x = false;
 		else if (vel.x < 0.0f)
 			flip_x = true;
-	} else if (accel.x > 0.0f) {
+	} 
+	else if (accel.x > 0.0f) 
+	{
 		flip_x = false;
-	} else {
+	} 
+	else 
+	{
 		flip_x = true;
-	}
+	}*/
 }
 
 void PlayerObject::UpdateRunningAnimationSpeed() {
 	// alter the speed of the animation based on the velocity
 	// TRACE("vel=%f\n", fabs(vel.x));
-	if (fabs(vel.x) < 3.0f)
+	if (fabs(GetVelX()) < 3.0f)
 		currentAnimation->SetSpeedMultiplier(10);// slow
-	else if (fabs(vel.x) < 7.0f)
+	else if (fabs(GetVelX()) < 7.0f)
 		currentAnimation->SetSpeedMultiplier(6);// med
-	else if (fabs(vel.x) < 13.0f)
+	else if (fabs(GetVelX()) < 13.0f)
 		currentAnimation->SetSpeedMultiplier(2);// slight fast
 	else 
 		currentAnimation->SetSpeedMultiplier(1);// max
@@ -100,14 +116,11 @@ void PlayerObject::DoCommonGroundStuff() {
 
 	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num)) 
 	{
-		vel.y = jump_velocity;
+		SetVelY(jump_velocity);
 		SOUND->PlaySound("jump");
 		DoJumping();
 		return;
 	}	
-	
-	// Do ghetto friction
-	vel *= drag;
 }
 
 void PlayerObject::DoStanding() {	
@@ -117,7 +130,9 @@ void PlayerObject::DoStanding() {
 
 	currentAnimation = animations[PLAYER_STANDING];
 
-	if (fabs(accel.x) > 0.0f || fabs(vel.x) > 0.0f ) {
+	// TODO: PHYSICS: RE-IMPLEMENT
+
+	if (/*fabs(accel.x) > 0.0f ||*/ fabs(GetVelX()) > 0.0f ) {
 		DoWalking();
 		return;
 	}
@@ -130,9 +145,12 @@ void PlayerObject::DoWalking() {
 	
 	currentAnimation = animations[PLAYER_WALKING];
 
+	// TODO: PHYSICS: RE-IMPLEMENT
+
 	// if we go too slow, then stop us and make us STANDING
-	if (accel.x == 0.0f && fabs(vel.x) < min_velocity) {
-		vel.x = 0;
+	if (/*accel.x == 0.0f &&*/ fabs(GetVelX()) < min_velocity) 
+	{
+		SetVelX(0);
 		DoStanding();
 	}
 
@@ -145,9 +163,11 @@ void PlayerObject::UpdateSkidding() {
 	if (next_skid_time > 0)
 		next_skid_time--;
 
+	// TODO: PHYSICS: RE-IMPLEMENT
+
 	// If acceleration and velocity are in the opposite directions,
 	// then we are skidding and trying to turn around
-	if (	on_skateboard || 
+	/*if (	on_skateboard || 
 			(accel.x > 0.0f && vel.x < 0.0f) ||
 			(accel.x < 0.0f && vel.x > 0.0f) ) {
 
@@ -168,13 +188,17 @@ void PlayerObject::UpdateSkidding() {
 				objSkid->FadeOut(Rand(4,10));
 			}
 		}
-	}
+	}*/
 }
 
-void PlayerObject::DoCommonAirStuff() {
+void PlayerObject::DoCommonAirStuff() 
+{
+	// TODO: PHYSICS: RE-IMPLEMENT
+	return;
+
 	// If we're not trying to moving at all, slow us down just a bit so we fall DOWN more, not not forward
-	if (accel.x < 0.001f || accel.x > -0.001f)
-		vel.x *= 0.90f;
+	/*if (accel.x < 0.001f || accel.x > -0.001f)
+		vel.x *= 0.90f;*/
 }
 
 // no distinction from walking yet.
@@ -196,7 +220,7 @@ void PlayerObject::DoJumping() {
 		return;
 	}
 
-	if (vel.y < 0) {
+	if (GetVelY() < 0) {
 		DoFalling();
 		return;
 	}
@@ -208,8 +232,8 @@ void PlayerObject::DoFalling() {
 	// XXX: should be PLAYER_FALLING when we have one.
 	currentAnimation = animations[PLAYER_JUMPING];
 
-	if (vel.y < -25.0f)
-		vel.y = -25.0f;
+	if (GetVelY() < -25.0f)
+		SetVelY(-25.0f);
 
 	DoCommonAirStuff();
 
@@ -237,6 +261,9 @@ void PlayerObject::DoCommonStuff() {
 	DropBombs();
 	return;
 
+	// TODO: PHYSICS: RE-IMPLEMENT
+
+	/*
 
 	// Clamp horizontal velocities
 	#define MAX_HORIZ_VELOCITY 27.0f
@@ -252,11 +279,38 @@ void PlayerObject::DoCommonStuff() {
 	if ((accel.x > 0.001f && vel.x < 0.001f) ||
 		(accel.x < 0.001f && vel.x > 0.001f) ) {
 			vel.x *= 0.85f;
-	}
+	}*/
 }
 
-void PlayerObject::Update() {
+void PlayerObject::HandleInput() 
+{
+	static float magnitude = GLOBALS->Value("player_acceleration", magnitude);
+
+	Vector2D kMagnitude(0.0f, 0.0f);
+
+	// return a force based on 2 inputs.
+	if (INPUT->Key(PLAYERKEY_LEFT, controller_num) && 
+		!INPUT->Key(PLAYERKEY_RIGHT, controller_num)) 
+	{
+		kMagnitude.x = -magnitude * TIMESTEP;
+	}
+
+	else if (INPUT->Key(PLAYERKEY_RIGHT, controller_num) && 
+		!INPUT->Key(PLAYERKEY_LEFT, controller_num)) 
+	{
+		kMagnitude.x = magnitude * TIMESTEP;
+	}
+
+	kMagnitude *= 200;
+
+	m_pkPhysicsBody->ApplyForce(kMagnitude, m_pkPhysicsBody->GetWorldCenter());
+}
+
+void PlayerObject::Update() 
+{
 	BaseUpdate();
+
+	HandleInput();
 	
 	assert(currentAnimation != NULL);
 	currentAnimation->Update();
@@ -272,8 +326,8 @@ void PlayerObject::Update() {
 	door_in_front_of_us = NULL;
 }
 
-void PlayerObject::Collide(Object* obj) {
-
+void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) 
+{
 	if (obj->GetProperties().is_door) {
 		door_in_front_of_us = (DoorObject*)obj;
 		return;
@@ -282,7 +336,13 @@ void PlayerObject::Collide(Object* obj) {
 	if (obj->GetProperties().is_fan || obj->GetProperties().is_ball)  
 		return;
 
-	if (obj->GetProperties().is_physical && !obj->GetProperties().is_player) {
+	if (obj->GetProperties().is_static && obj->GetProperties().is_physical)
+	{
+		if (pkContactPoint->normal.y > 0)
+			m_kCurrentCollision.down = 1;
+	}
+
+	/*if (obj->GetProperties().is_physical && !obj->GetProperties().is_player) {
 		Vector2D newpos;
 		m_kCurrentCollision = GetBound(obj, newpos);
     
@@ -302,7 +362,7 @@ void PlayerObject::Collide(Object* obj) {
 		
 		if (sObj->IsSpringActive())
 			vel = sObj->GetSpringVector();
-	}
+	}*/
 
 	if (obj->GetProperties().is_ring) {
 		++ring_count;
@@ -317,7 +377,6 @@ bool PlayerObject::Init()
 	m_kPlayerState = FALLING; 
 	door_in_front_of_us = NULL;
 	ring_count = 0;
-	m_kInputState = INPUT_NOTHING;
 
 	return BaseInit();
 }
@@ -340,6 +399,8 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 
 	properties.is_player = 1;
 	properties.is_physical = 1;
+	properties.uses_new_physics = 1;
+
 	on_skateboard = false;
 
 	if (xProps.nChildNode("onSkateboard"))

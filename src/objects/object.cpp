@@ -119,6 +119,8 @@ void Object::InitPhysics()
 			m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height);
 		else
 			m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height);
+
+		m_pkPhysicsBody->SetUserData(this);
 	}
 }
 
@@ -150,7 +152,6 @@ bool Object::BaseInit() {
 	fade_out_time_total = fade_out_time_remaining = 0;
 	is_fading = false;
 	alpha = 255;
-	old_pos = pos;
 	display_time = -1;
 	width = height = 0;
 	controller_num = 0;
@@ -239,7 +240,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 
 	// bounding box stuff below.
 
-	if (m_bDrawBoundingBox) 
+	/*if (m_bDrawBoundingBox) 
 	{
 		_Rect bbox_t;
 
@@ -270,33 +271,36 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 			// draw projection rectangle, blue
 			WINDOW->DrawRect(projRect_t, makecol(0, 0, 255));
 		}
-	}
+	}*/
 }
 
 void Object::ApplyForce(Force* force) {
 	// ignore certain types of forces
-	if (	(!properties.feels_gravity && force->GetType() == FORCE_GRAVITY) ||
+	/*if (	(!properties.feels_gravity && force->GetType() == FORCE_GRAVITY) ||
 			(!properties.feels_user_input && force->GetType() == FORCE_INPUT) ||
 			(!properties.feels_friction && force->GetType() == FORCE_FRICTION) )
 		return;
 	else
-		accel += force->GetForce(this) / mass;
+		accel += force->GetForce(this) / mass;*/
 }
 
-void Object::ResetForNextFrame() {
-	old_pos = pos;
-	accel.Clear();
+void Object::ResetForNextFrame() 
+{
 	m_kCurrentCollision.up = m_kCurrentCollision.down = m_kCurrentCollision.left = m_kCurrentCollision.right = 0;
 
-	bbox.set( pos.x, pos.y, pos.x + width, pos.y + height);
-
-	// assert(bbox.getx1() <= bbox.getx2()); // DONT USE ASSERTS LIKE THIS.
-	// assert(bbox.gety1() <= bbox.gety2());
+	if (m_pkPhysicsBody)
+	{
+		const b2Vec2& kPos = m_pkPhysicsBody->GetPosition();
+		pos.x = kPos.x;
+		pos.y = kPos.y;
+	}
 }
 
 //! Solve for new position based on velocity
-Vector2D Object::Solve() {
+Vector2D Object::Solve() 
+{
 
+	/*
 	vel += accel;
 	pos += vel;
 
@@ -305,10 +309,11 @@ Vector2D Object::Solve() {
 	
 	UpdateProjectionRectFromVelocity();
 
-	/*if (debug && properties.is_player) {
-		TRACE("-- YPOS  : %f\n", pos.y);
-		TRACE("-- YPOS-H: %f\n", pos.y - height);
-	}*/
+	// if (debug && properties.is_player) {
+	//	TRACE("-- YPOS  : %f\n", pos.y);
+	//	TRACE("-- YPOS-H: %f\n", pos.y - height);
+	//}
+	*/
 
 	return pos;
 }
@@ -349,9 +354,6 @@ Object::Object() {
 	mass = 1.0f;
 	debug_flag = false;
 	pos.x = pos.y = 0.0f;
-	old_pos.x = old_pos.y = 0.0f;
-	accel.x = accel.y = 0.0f;
-	vel.x = vel.y = 0.0f;
 	display_time = -1;
 	rotate_angle = rotate_velocity = 0.0f;
 	use_rotation = false;
@@ -364,7 +366,7 @@ Object::Object() {
 // the closest these two objects can get to
 // each other without colliding
 // XXX BIG MESS and NOT FINISHED, not even close.
-CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
+/*CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	
 	int debug = OPTIONS->GetDebugMessageLevel();
 
@@ -391,10 +393,10 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 
 	//debug = true;
 
-	/*if (d.up) {
-		v.SetY(obj->GetY() - GetHeight());
-		if (debug) TRACE("up!");
-	}*/
+	//if (d.up) {
+	//	v.SetY(obj->GetY() - GetHeight());
+	//	if (debug) TRACE("up!");
+	//}
 
 	if (d.down) {
 		v.y = obj->pos.y + obj->height;
@@ -417,14 +419,14 @@ CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
 	// TRACE("\n");
 
 	return d;
-}
+}*/
 	
 // get a rectangle whose area encompasses the total 
 // space we moved from last frame to this frame
 // based solely on velocity (not collisions)
 void Object::UpdateProjectionRectFromVelocity() {
-	projRect = bbox;
-	projRect.Project(vel);
+//	projRect = bbox;
+//	projRect.Project(vel);
 }
 
 void Object::UpdateProjectionRectFromCollisions(Vector2D &newPos) {
@@ -441,17 +443,15 @@ bool Object::IsColliding(Object *obj) const {
 	//	projRect.print();
 	//	obj->projRect.print();
 	//}
-	return projRect.Overlaps(obj->projRect);
+
+	// TODO! Remove this
+	return false;
+	// return projRect.Overlaps(obj->projRect);
 }
 
-void Object::Collide(Object* obj) {
-	// default is no action, this is overriden in higher classes
-}
-
-void Object::MoveToNewPosition() 
+void Object::OnCollide( Object* obj, const b2ContactPoint* pkContactPoint )
 {
-	if (!properties.uses_new_physics)
-		pos = Solve();
+	// default is no action, this is overidden in higher classes
 }
 
 Object::~Object() {

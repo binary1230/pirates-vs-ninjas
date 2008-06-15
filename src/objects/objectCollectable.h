@@ -21,7 +21,7 @@ class CollectableObject : public Object {
 		CollectableObject();
 		~CollectableObject();
 
-		void Collide(Object* obj);
+		void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
 	
 		friend class ObjectFactory;
 };

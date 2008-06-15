@@ -27,7 +27,7 @@ bool EnemyObject::Init()
 	iTimeToWaitBeforeCollisionsAllowedAgain = 0;
 
 	assert(WORLD->GetNumPlayers() > 0);
-	m_pkTargetPlayer = WORLD->GetPlayer(1); 
+	m_pkTargetPlayer = WORLD->GetPlayer(0); 
 	assert(m_pkTargetPlayer);
 
 	properties.is_badguy = true;
@@ -42,7 +42,7 @@ void EnemyObject::Update()
 
 	if (bCollidedLastFrame)
 	{
-		SetVelXY(m_kCollisionDirection);
+		//SetVelXY(m_kCollisionDirection);
 	}
 
 	if (iTimeToWaitBeforeCollisionsAllowedAgain > 0)
@@ -50,10 +50,10 @@ void EnemyObject::Update()
 
 	bCollidedLastFrame = false;
 
-	flip_x = vel.x > 0;
+	flip_x = GetVelX() > 0;
 }
 
-void EnemyObject::Collide(Object* obj) 
+void EnemyObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) 
 {
 	if (obj->GetProperties().is_player) 
 	{
@@ -102,7 +102,7 @@ void EnemyObject::MoveTowardsPlayer()
 		vel *= 0.8f;
 	}*/
 
-	if (kDirection.x > 0)
+/*	if (kDirection.x > 0)
 		accel.x = fSign * fMoveSpeed;
 	else
 		accel.x = -fSign * fMoveSpeed;
@@ -110,5 +110,5 @@ void EnemyObject::MoveTowardsPlayer()
 	if (kDirection.y > 0)
 		accel.y = fSign * fMoveSpeed;
 	else
-		accel.y = -fSign * fMoveSpeed;
+		accel.y = -fSign * fMoveSpeed;*/
 }

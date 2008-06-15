@@ -32,6 +32,15 @@ void DrawAABB(b2AABB* aabb, const b2Color& color);
 
 // -----------------------------------------------------------------------
 
+class PhysicsContactListener : public b2ContactListener
+{
+public:
+	void Add(const b2ContactPoint* point);
+	void Persist(const b2ContactPoint* point);
+	void Remove(const b2ContactPoint* point);
+	void Result(const b2ContactResult* point);
+};
+
 class PhysicsManager
 {
 	DECLARE_SINGLETON_CLASS(PhysicsManager)
@@ -42,6 +51,16 @@ class PhysicsManager
 		b2World* m_pkPhysicsWorld;
 
 		PhysicsDebugRenderer m_kPhysicsDebugRenderer;
+		PhysicsContactListener m_kPhysicsContactListener;
+
+		std::vector<b2ContactPoint> m_kContacts;
+
+		friend PhysicsContactListener;
+
+		void ReportContactPoint(const b2ContactPoint* pkContactPoint);
+		
+		void HandleCollisions();
+		void ProcessCollision(b2ContactPoint* pkContactPoint);
 
 	public:
 		~PhysicsManager();

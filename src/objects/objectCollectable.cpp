@@ -22,7 +22,7 @@ bool CollectableObject::Init() {
 CollectableObject::CollectableObject() {}
 CollectableObject::~CollectableObject() {}
 
-void CollectableObject::Collide(Object* obj) {
+void CollectableObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) {
 	if (obj->GetProperties().is_player) {
 		SOUND->PlaySound("ring");
 		is_dead = true;

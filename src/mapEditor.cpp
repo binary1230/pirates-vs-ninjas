@@ -283,7 +283,7 @@ void MapEditor::RemoveCurrentlySelectedObject()
 
 	m_pkSelectedObject->SetIsDead(true);
 	m_pkSelectedObject = NULL;
-	DoCleaning();
+	RemoveDeadObjectsIfNeeded();
 }
 
 void MapEditor::UpdateSelectedObjectPosition()

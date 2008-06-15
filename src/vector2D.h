@@ -4,10 +4,15 @@
 #include "stdafx.h"
 #include "globals.h"
 
-class Vector2D;
+typedef b2Vec2 Vector2D;
+
+/*class Vector2D : public b2Vec2
+{
+
+};*/
 
 //! A 2 Dimensional Vector
-class Vector2D {		
+/*class Vector2D {		
 	public:		
 		float x, y;
 
@@ -74,11 +79,6 @@ class Vector2D {
 		inline float Dot(const Vector2D &v) const {
 			return (x * v.x) + (y * v.y);
 		}
-		
-		//! Compute the cross product
-		/*inline Vector2D cross(Vector2D v) const {
-
-		}*/
 
 		//! Return a vector which has our components but negated
 		inline Vector2D Negation() {
@@ -101,6 +101,6 @@ class Vector2D {
 		inline void Clear() {
 			x = y = 0.0f;
 		}
-};
+};*/
 
 #endif // VECTOR2D_H

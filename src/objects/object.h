@@ -100,25 +100,16 @@ class Object {
 		int controller_num;
 		
 		//! Bounding box for this object
-		_Rect bbox;
+		// _Rect bbox;
 
-		//! Projection rectange (for collisions)
-		_Rect projRect;
+		//! Projection rectangle (for collisions)
+		// _Rect projRect;
 
 		//! CACHED level width and height
 		int level_width, level_height;
 		
 		//! Current position
 		Vector2D pos;
-
-		//! Old position (last frame)
-		Vector2D old_pos;
-
-		//! Current velocity 
-		Vector2D vel;
-
-		//! Current force
-		Vector2D accel;
 		
 		//! The directions of current collisions (up,down,right,left)
 		CollisionDirection m_kCurrentCollision;
@@ -289,19 +280,32 @@ class Object {
 		inline void SetFlipY(const bool val) { flip_y = val; };
 
 		//! Functions to get/set velocity
-		inline float GetVelX() 					{ return vel.x; }
-		inline float GetVelY() 					{ return vel.y; }
-		inline Vector2D GetVelXY() const { return vel; };
+		inline float GetVelX() 					{ 
+			return m_pkPhysicsBody ? m_pkPhysicsBody->GetLinearVelocity().x : 0.0f; 
+		}
 
-		inline void SetVelX(const float _vx) 		{ vel.x = _vx; }
-		inline void SetVelY(const float _vy) 		{ vel.y = _vy; }
+		inline float GetVelY() 					{ 
+			return m_pkPhysicsBody ? m_pkPhysicsBody->GetLinearVelocity().y : 0.0f; 
+		}
+
+		inline Vector2D GetVelXY() const { 
+			return m_pkPhysicsBody ? m_pkPhysicsBody->GetLinearVelocity() : Vector2D(0.0f, 0.0f); 
+		}
+
+		inline void SetVelX(const float _vx) 		{ 
+			if (m_pkPhysicsBody)
+				m_pkPhysicsBody->SetLinearVelocity(Vector2D(_vx, m_pkPhysicsBody->GetLinearVelocity().y)); 
+		}
+		inline void SetVelY(const float _vy) 		{ 
+			if (m_pkPhysicsBody)
+				m_pkPhysicsBody->SetLinearVelocity(Vector2D(m_pkPhysicsBody->GetLinearVelocity().x, _vy)); 
+		}
+
 		inline void SetVelXY(const float _vx, const float _vy) {
-				vel.x = _vx;
-				vel.y = _vy;
+			if (m_pkPhysicsBody)
+				m_pkPhysicsBody->SetLinearVelocity(Vector2D(_vx, _vy)); 
 		}
-		inline void SetVelXY(const Vector2D &_vel) {
-			vel = _vel;
-		}
+		
 		inline void SetVelRotate(const float vel) {
 			rotate_velocity = vel;
 		}
@@ -320,9 +324,6 @@ class Object {
 		//! Apply a force to this object
 		void ApplyForce(Force* f);
 		
-		inline float GetMass() const		{ return mass; }
-		inline void SetMass(float m) 		{ mass = m; }
-		
 		struct ObjectProperties GetProperties() const { return properties; };
 		inline void SetProperties(struct ObjectProperties p) { properties = p;}
 
@@ -339,7 +340,7 @@ class Object {
 		bool GetDebugFlag() const {return debug_flag;};
 		
 		//! Handle collisions with another object
-		virtual void Collide(Object* obj);
+		virtual void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
 
 		bool IsColliding(Object *obj) const;
 
@@ -350,12 +351,12 @@ class Object {
 		//! This vector will be have a position that is guaranteed
 		//! to make the passed object NOT collide with THIS object.
 		//! (based on velocity)
-		CollisionDirection GetBound(Object* obj, Vector2D &v);
+		// CollisionDirection GetBound(Object* obj, Vector2D &v);
 
 		void UpdateProjectionRectFromVelocity();
 		void UpdateProjectionRectFromCollisions(Vector2D &newPos);
 
-		const _Rect& GetProjectionRect() const {return projRect;}
+		//const _Rect& GetProjectionRect() const {return projRect;}
 
 		//! Plays a sound, or does nothing if that sound is not loaded
 		// void PlaySound(CString name);

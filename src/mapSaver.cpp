@@ -95,11 +95,13 @@ void MapSaver::OutputObject(const Object* obj, XMLNode &xObj) {
 	if (obj->GetDebugFlag())
 		xPos.addChild("debug");
 
+	/*
 	if (obj->vel.x != 0.0f)
 		xPos.addChild("velx").addText(obj->vel.x);
 
 	if (obj->vel.y != 0.0f)
 		xPos.addChild("velx").addText(obj->vel.y);
+	*/
 
 	if (obj->alpha != 255)
 		xPos.addChild("alpha").addText(obj->alpha);

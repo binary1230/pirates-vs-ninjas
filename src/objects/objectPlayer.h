@@ -48,10 +48,7 @@ class PlayerObject : public Object {
 		// What we're currently doing
 		PlayerState m_kPlayerState;
 
-		// What our input is asking us to do
-		// Corresponds to either current real input (for human controller)
-		// Or what the AI wants to do (for AI controlled players)
-		InputStateMask m_kInputState;
+		void HandleInput();
 	
 		void UpdateState();
 
@@ -95,7 +92,7 @@ class PlayerObject : public Object {
 		bool LoadPlayerProperties(XMLNode &xDef);		
 		
 		void Update();
-		void Collide(Object* obj);
+		void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
 		
 		int GetNumRings() {return ring_count;};
 			
