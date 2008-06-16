@@ -250,38 +250,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 		// draw current bounding rectangle, pink
 		TransformRect(bbox_t);
 		WINDOW->DrawRect(bbox_t, makecol(255,0,255));
-	}
-
-	if (debug_draw_bounding_boxes) {
-
-		_Rect projRect_t = projRect;
-		_Rect bbox_t_old = bbox;
-
-		// draw projection rectangle, blue
-		TransformRect(bbox_t_old);
-		TransformRect(projRect_t);
-
-		if (properties.is_player || 
-			properties.is_physical || 
-			properties.is_collectable) {
-
-			// draw old bounding rectangle, dark pink
-			WINDOW->DrawRect(bbox_t_old, makecol(127,0,127));
-	
-			// draw projection rectangle, blue
-			WINDOW->DrawRect(projRect_t, makecol(0, 0, 255));
-		}
 	}*/
-}
-
-void Object::ApplyForce(Force* force) {
-	// ignore certain types of forces
-	/*if (	(!properties.feels_gravity && force->GetType() == FORCE_GRAVITY) ||
-			(!properties.feels_user_input && force->GetType() == FORCE_INPUT) ||
-			(!properties.feels_friction && force->GetType() == FORCE_FRICTION) )
-		return;
-	else
-		accel += force->GetForce(this) / mass;*/
 }
 
 void Object::ResetForNextFrame() 
@@ -294,28 +263,6 @@ void Object::ResetForNextFrame()
 		pos.x = kPos.x;
 		pos.y = kPos.y;
 	}
-}
-
-//! Solve for new position based on velocity
-Vector2D Object::Solve() 
-{
-
-	/*
-	vel += accel;
-	pos += vel;
-
-	if (debug_flag)
-		TRACE("vel=(%f,%f)\n", vel.x, vel.y);
-	
-	UpdateProjectionRectFromVelocity();
-
-	// if (debug && properties.is_player) {
-	//	TRACE("-- YPOS  : %f\n", pos.y);
-	//	TRACE("-- YPOS-H: %f\n", pos.y - height);
-	//}
-	*/
-
-	return pos;
 }
 
 void Object::BaseShutdown() {
@@ -352,7 +299,6 @@ Object::Object() {
 	flip_x = false; 
 	flip_y = false; 
 	is_dead = true;
-	mass = 1.0f;
 	debug_flag = false;
 	pos.x = pos.y = 0.0f;
 	display_time = -1;
@@ -361,93 +307,6 @@ Object::Object() {
 	m_bDrawBoundingBox = false;
 	m_bCanCollide = false;
 	m_pkPhysicsBody = NULL;
-}
-
-// Return a vector with x,y set to 
-// the closest these two objects can get to
-// each other without colliding
-// XXX BIG MESS and NOT FINISHED, not even close.
-/*CollisionDirection Object::GetBound(Object* obj, Vector2D &v) {
-	
-	int debug = OPTIONS->GetDebugMessageLevel();
-
-	bool check_up = false, check_right = false;
-	CollisionDirection d; d.up = d.down = d.left = d.right = 0;
-
-	v.x = pos.x;
-	v.y = pos.y;
-	
-	if (vel.x > 0) check_right = true;
-	if (vel.y > 0) check_up = true;
-	
-	float top = projRect.gety2();
-	float mid = obj->pos.y + obj->height;
-	float bot = projRect.gety1();
-
-	// handle up-down collisions
-	if (!check_up && top >= mid && mid >= bot) {
-		//if (vel.GetY() >= 0)
-		//	d.up = 1;
-		//else 
-			d.down = 1;
-	}
-
-	//debug = true;
-
-	//if (d.up) {
-	//	v.SetY(obj->GetY() - GetHeight());
-	//	if (debug) TRACE("up!");
-	//}
-
-	if (d.down) {
-		v.y = obj->pos.y + obj->height;
-		if (debug) TRACE("down!");
-	}
-
-	if (d.left) {
-		v.x = obj->pos.x + obj->width;
-		if (debug) TRACE("left!");
-	}
-
-	if (d.right) {
-		v.x = obj->pos.x - height;
-		if (debug) TRACE("right!");
-	}
-
-	//if (!(d.right || d.left || d.down || d.up))
-	//	if (debug) TRACE("NONE! Not good.");
-
-	// TRACE("\n");
-
-	return d;
-}*/
-	
-// get a rectangle whose area encompasses the total 
-// space we moved from last frame to this frame
-// based solely on velocity (not collisions)
-void Object::UpdateProjectionRectFromVelocity() {
-//	projRect = bbox;
-//	projRect.Project(vel);
-}
-
-void Object::UpdateProjectionRectFromCollisions(Vector2D &newPos) {
-	/*projRect.setx1(fmin(newPos.GetX(), old_pos.GetX()));
-	projRect.setx2(fmax(newPos.GetX(), old_pos.GetX()));
-	projRect.sety1(fmin(newPos.GetY(), old_pos.GetY()));
-	projRect.sety2(fmax(newPos.GetY(), old_pos.GetY()));
-	projRect.Fix();*/
-}
-
-// rough, fast collision detection phase
-bool Object::IsColliding(Object *obj) const {
-	//if (obj->properties.is_player) {
-	//	projRect.print();
-	//	obj->projRect.print();
-	//}
-
-	// TODO! Remove this
-	return false;
-	// return projRect.Overlaps(obj->projRect);
 }
 
 void Object::OnCollide( Object* obj, const b2ContactPoint* pkContactPoint )

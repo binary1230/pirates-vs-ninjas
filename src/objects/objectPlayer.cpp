@@ -446,7 +446,6 @@ bool PlayerObject::Init()
 PlayerObject::PlayerObject() {
 	jump_velocity = DEFAULT_JUMP_VELOCITY;
 	min_velocity = DEFAULT_MIN_VELOCITY;
-	mass = 1.0f;
 	drag = DEFAULT_DRAG;
 	m_kPlayerState = FALLING;
 	door_in_front_of_us = NULL;

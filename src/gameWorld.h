@@ -76,9 +76,6 @@ class GameWorld : public GameMode {
 			// Stuff saved for map editor:
 			XMLNode m_xEffects;
 
-			//! Physics functions
-			void CheckForCollisions(ObjectArray &collideableObjects, Object* obj);
-			void GetCollideableObjects(ObjectArray &objs);
 			bool CleanupObject(ObjectListIter &obj);
 
 			//! Game update functions

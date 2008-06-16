@@ -7,14 +7,11 @@
 #include "gameSound.h"
 #include "effectsManager.h"
 
-AnimFrame::AnimFrame() { 
-	Clear();
-}
-AnimFrame::~AnimFrame() {	
-	Clear(); 
-}
+AnimFrame::AnimFrame() { Clear(); }
+AnimFrame::~AnimFrame() { Clear(); }
 
-void AnimFrame::Clear() {
+void AnimFrame::Clear() 
+{
 	frame_type = ANIMFRAME_INVALID;
 	sprite = NULL;
 	duration = -1;
@@ -24,7 +21,8 @@ void AnimFrame::Clear() {
 
 // ------------------------------------------- //
 
-bool Animation::Init() {
+bool Animation::Init() 
+{
 	frames.clear();
 	currentFrame = NULL;
 	elapsed_time = 0;
@@ -35,15 +33,16 @@ bool Animation::Init() {
 }
 
 // Draw current frame at specified position, flipping if requested
-void Animation::DrawAt(int x, int y, bool flip_x, bool flip_y) {
+void Animation::DrawAt(int x, int y, bool flip_x, bool flip_y) 
+{
 	assert(currentFrame != NULL);
 	WINDOW->DrawSprite(currentFrame->sprite, x, y);
 }
 
 //! Update the animation, advancing to the next frame
 //! if enough time has passed
-void Animation::Update() {
-
+void Animation::Update() 
+{
 	bool need_to_switch_frames = false;
 
 	// don't need to do anything if we have less than 2 frames or are frozen
@@ -71,9 +70,9 @@ void Animation::Update() {
 
 // Switch this animation to its next frame
 // (maybe this is too complicated.)
-void Animation::SwitchToNextFrame() {
-
-	// special cases:
+void Animation::SwitchToNextFrame() 
+{
+	// special cases
 	// if the frame is an EFFECT frame or a SOUND frame, then
 	// trigger that EFFECT or SOUND, and then immediately advance
 	// to the next frame in the animation
@@ -126,7 +125,8 @@ void Animation::SwitchToNextFrame() {
 }
 
 //! Reset this animation back to the first frame
-void Animation::ResetAnimation() {
+void Animation::ResetAnimation() 
+{
 	freeze_animation = false;
 	if (frames.size())
 		currentFrame = frames[0];
@@ -135,7 +135,8 @@ void Animation::ResetAnimation() {
 }
 
 //! Free memory associated with this animation
-void Animation::Shutdown() {
+void Animation::Shutdown() 
+{
 	int i, max = frames.size();
 
 	// DO NOT FREE SPRITES
@@ -150,10 +151,10 @@ void Animation::Shutdown() {
 
 //! Add a sprite frame to this animation
 bool Animation::CreateSpriteFrame(	const char* _file, 
-																		const int duration, 
-																		bool freeze_at_end, 
-																		bool use_alpha) {
-				
+									const int duration, 
+									bool freeze_at_end, 
+									bool use_alpha) 
+{				
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
 	assert(_file != NULL);
@@ -174,7 +175,8 @@ bool Animation::CreateSpriteFrame(	const char* _file,
 }
 
 bool Animation::CreateEffectFrame(	const CString &effectData, 
-																		const bool freeze_at_end	) {	
+									const bool freeze_at_end ) 
+{	
 
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
@@ -187,8 +189,9 @@ bool Animation::CreateEffectFrame(	const CString &effectData,
 	return PushFrame(f);
 }
 
-bool Animation::CreateSoundFrame(		const CString &soundData, 
-																		const bool freeze_at_end	) {	
+bool Animation::CreateSoundFrame(	const CString &soundData, 
+									const bool freeze_at_end	) 
+{	
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
 	assert(soundData.size() > 0);
@@ -200,7 +203,8 @@ bool Animation::CreateSoundFrame(		const CString &soundData,
 	return PushFrame(f);
 }
 
-bool Animation::PushFrame(AnimFrame* f) {
+bool Animation::PushFrame(AnimFrame* f) 
+{
 	frames.push_back(f);
 
 	f->nextFrame = frames[0];
@@ -222,8 +226,8 @@ bool Animation::PushFrame(AnimFrame* f) {
 //! Does not currently support frames out of order and
 //! other wackiness.  Soon enough, my young apprentice.
 //!
-Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
-
+Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) 
+{
 	int duration;
 	CString sprite_filename, frame_type, extraData;
 	int freeze_at_end;
@@ -329,8 +333,8 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
 
 	// hack.
 	assert(numSpriteFrames >= 1 && 	"ERROR: Animations must have at least 1\n"
-																 	"       sprite frame or else it will hang\n"
-																	"       when played back!" );
+									"       sprite frame or else it will hang\n"
+									"       when played back!" );
 
 	// TODO: Currently this just gets the width and height from the
 	// first frame.  However, we may want to get it from any
@@ -347,7 +351,8 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) {
 	return anim;
 }
 
-Animation::Animation() {
+Animation::Animation()
+{
 	currentFrame = NULL;
 }
 

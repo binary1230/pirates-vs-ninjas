@@ -117,9 +117,9 @@ bool AssetManager::FileExists(const char* file) const {
 //! Opens a bitmap, utilizes the search paths
 // XXX: Need to fix alpha blending
 Sprite* AssetManager::LoadSprite(	const char* filename, 
-																	bool use_alpha, 
-																	PALETTE* pal) {
-	
+									bool use_alpha, 
+									PALETTE* pal) 
+{	
 	Sprite* sprite = NULL;
 	
 	int original_bpp = get_color_depth();

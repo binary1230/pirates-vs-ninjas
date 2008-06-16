@@ -655,12 +655,14 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 	XMLNode xProps = xDef.getChildNode("properties");
 
-	if (xProps.nChildNode("mass")) {
-		if (!xProps.getChildNode("mass").getFloat(obj->mass)) {
+	// TODO: Do stuff with it.
+	/*if (xProps.nChildNode("mass")) {
+		float fMass = 0.0f;
+		if (!xProps.getChildNode("mass").getFloat(fMass)) {
 			TRACE("-- Invalid MASS.\n");
 			return false;
 		}
-	}
+	}*/
 	
 	ClearProperties(obj->properties);
 	obj->properties.feels_gravity = xProps.nChildNode("affectedByGravity") != 0; 

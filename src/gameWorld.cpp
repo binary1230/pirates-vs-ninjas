@@ -305,51 +305,6 @@ void GameWorld::Draw()
 
 #define CLEAR_SCREEN_STRING "\033[H\033[J\r\n"
 
-void GameWorld::GetCollideableObjects(ObjectArray &objs) {
-	static ObjectListIter iter;
-	objs.clear();
-
-	// optimization: only allow collisions on certain layers?
-	for (iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
-		if ((*iter)->CanCollide())
-			objs.push_back(*iter);
-	}
-}
-
-
-// TODO: probably a BIG source of CPU here.
-// probably need to optimize, but PROFILE to find out.
-void GameWorld::CheckForCollisions(	ObjectArray &collideableObjects, Object* obj) {
-
-	if (obj->GetProperties().uses_new_physics)
-		return;
-
-	// Don't bother to check if we can't be collided with.
-	/*assert(obj != NULL);
-	if (!obj->CanCollide())
-		return;
-
-	Object* target;
-	static ObjectArrayIter iter;	// static for performance, nothing else.
-	
-	// Loop over all collectible objects, see if we collide with any
-	uint max = collideableObjects.size();
-
-	for (uint i = 0; i < max; ++i)
-	{
-		target = collideableObjects[i];
-
-		// Skip ourselves
-		if (target == obj)
-			continue;
-
-		if (target->IsColliding(obj)) {
-			target->Collide(obj);
-			obj->Collide(target);
-		}
-	}*/
-}
-
 void GameWorld::RemoveDeadObjectsIfNeeded() {
 	Object* obj;
 	

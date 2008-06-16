@@ -130,12 +130,6 @@ class Object {
 		bool flip_x;
 		bool flip_y;
 
-		//! Object's Physical Mass
-		float mass;
-
-		//! Solve for the new position of this object
-		Vector2D Solve();
-
 		bool BaseInit();	
 		void BaseShutdown();
 
@@ -341,8 +335,6 @@ class Object {
 		
 		//! Handle collisions with another object
 		virtual void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
-
-		bool IsColliding(Object *obj) const;
 
 		inline bool IsDead() const {return is_dead;};
 		inline void SetIsDead(bool bVal) {is_dead = bVal;}

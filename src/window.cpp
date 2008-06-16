@@ -421,6 +421,7 @@ void GameWindow::EndDrawing() {
 
 // draws the backbuffer to the screen and erases the backbuffer
 void GameWindow::Flip() {
+	vsync();
 	allegro_gl_flip();
 }
 
