@@ -62,6 +62,8 @@ class PhysicsManager
 		void HandleCollisions();
 		void ProcessCollision(b2ContactPoint* pkContactPoint);
 
+		bool bDrawDebugBoxes;
+
 	public:
 		~PhysicsManager();
 
@@ -70,11 +72,14 @@ class PhysicsManager
 
 		// helpers
 		b2Body* CreateStaticPhysicsBox( float x, float y, float width, float height );
-		b2Body* CreateDynamicPhysicsBox( float x, float y, float width, float height );
+		b2Body* CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation = false );
 
-		b2Body* CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction );
+		b2Body* CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation = false );
 
 		void RemoveFromWorld(b2Body* pkBodyToRemove);
+	
+		void SetDrawDebug(bool bVal)	{ bDrawDebugBoxes = bVal; }
+		bool GetDrawDebug() const		{ return bDrawDebugBoxes; }
 
 		void Shutdown();
 

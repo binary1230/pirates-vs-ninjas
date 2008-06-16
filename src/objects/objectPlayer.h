@@ -21,7 +21,8 @@ enum PlayerState {
 	WHISTLING,
 	LOOKINGUP,
 	CROUCHINGDOWN,
-	WALKING_THRU_DOOR
+	WALKING_THRU_DOOR,
+	SLIDING_DOWN_WALL,
 };
 
 // TODO: rename when it becomes more apparent what this is describing
@@ -41,6 +42,9 @@ class PlayerObject : public Object {
 		float jump_velocity;
 		float min_velocity;
 		float drag;
+
+		// Amount of acceleration to apply at the end of Update()
+		Vector2D accel;
 	
 		// How long until we are allowed to draw another "skid" object
 		int next_skid_time;
@@ -54,13 +58,18 @@ class PlayerObject : public Object {
 
 		void DoCommonStuff();
 
+		void LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity );
+		void LimitMaxVerticalVelocityTo( float fMaxVerticalVelocity );
+
 		void DropBombs();
 
 		void DoStanding();
 		void DoWalking();
 		void DoRunning();
+		void DoSlidingDownWall();
 		
-		void DoCommonAirStuff();
+		// return true if we're no longer in the air or doing something else
+		bool DoCommonAirStuff();
 		void DoJumping();
 		void DoFalling();
 
@@ -93,11 +102,16 @@ class PlayerObject : public Object {
 		
 		void Update();
 		void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
+
+		virtual void InitPhysics();
 		
 		int GetNumRings() {return ring_count;};
 			
 		PlayerObject();
 		virtual ~PlayerObject();
+
+		bool WantsToSlideOnLeftSide();
+		bool WantsToSlideOnRightSide();
 
 		friend class ObjectFactory;
 };

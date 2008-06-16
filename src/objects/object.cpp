@@ -323,7 +323,8 @@ void Object::BaseShutdown() {
 
 	int i, max = animations.size();
 	for (i = 0; i < max; i++) {
-		animations[i]->Shutdown();
+		if (animations[i])
+			animations[i]->Shutdown();
 		SAFE_DELETE(animations[i]);
 	}
 	animations.clear();
@@ -454,7 +455,8 @@ void Object::OnCollide( Object* obj, const b2ContactPoint* pkContactPoint )
 	// default is no action, this is overidden in higher classes
 }
 
-Object::~Object() {
+Object::~Object() 
+{
 	SAFE_DELETE(objectDefName);
 }
 

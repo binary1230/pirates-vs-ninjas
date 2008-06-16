@@ -14,6 +14,7 @@ AnimationMapping GetPlayerAnimationMappings() {
 	AnimationMapping animation;
 	animation["walking"] = PLAYER_WALKING;
 	animation["standing"] = PLAYER_STANDING;
+	animation["sliding"] = PLAYER_SLIDING_DOWN_WALL;
 	animation["jumping"] = PLAYER_JUMPING;
 	animation["lookup"] = PLAYER_LOOKUP;
 	return animation;

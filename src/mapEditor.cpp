@@ -226,7 +226,7 @@ void MapEditor::CommonModeUpdateStart()
 	else if (INPUT->RealKeyOnce(KEY_G))
 	{
 		if (m_iGridResolution == 1)
-			m_iGridResolution = 16;
+			m_iGridResolution = 30;
 		else
 			m_iGridResolution = 1;
 	}

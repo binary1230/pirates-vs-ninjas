@@ -13,7 +13,7 @@
 #define PLAYERKEY_JUMP 					0
 #define PLAYERKEY_LEFT					1
 #define PLAYERKEY_RIGHT					2
-#define PLAYERKEY_UP						3
+#define PLAYERKEY_UP					3
 #define PLAYERKEY_DOWN					4
 #define PLAYERKEY_ACTION1				5
 
@@ -26,27 +26,28 @@
 #define PLAYERKEY1_JUMP 				0
 #define PLAYERKEY1_LEFT					1
 #define PLAYERKEY1_RIGHT				2
-#define PLAYERKEY1_UP						3
+#define PLAYERKEY1_UP					3
 #define PLAYERKEY1_DOWN					4
-#define PLAYERKEY1_ACTION1			6
+#define PLAYERKEY1_ACTION1				6
 
 #define PLAYERKEY2_JUMP 				7
 #define PLAYERKEY2_LEFT					8
 #define PLAYERKEY2_RIGHT				9
-#define PLAYERKEY2_UP						10
+#define PLAYERKEY2_UP					10
 #define PLAYERKEY2_DOWN					11
-#define PLAYERKEY2_ACTION1			12
+#define PLAYERKEY2_ACTION1				12
 
-#define GAMEKEY_EXIT						13
-#define GAMEKEY_START						14
-#define GAMEKEY_DEBUGPAUSE			15
+#define GAMEKEY_EXIT					13
+#define GAMEKEY_START					14
+#define GAMEKEY_DEBUGPAUSE				15
 #define GAMEKEY_DEBUGSTEP				16
-#define GAMEKEY_SCREENSHOT			17
+#define GAMEKEY_SCREENSHOT				17
+#define GAMEKEY_TOGGLE_PHYSICS_DISPLAY	18
 
 /* End of logical mapping */
 
 //! The max number of defined keys 
-#define GAMEKEY_COUNT						18
+#define GAMEKEY_COUNT						19
 
 enum MouseClickType {
 	MOUSE_LEFT_BTN		= 0x00000001,

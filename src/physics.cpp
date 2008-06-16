@@ -35,7 +35,7 @@ bool PhysicsManager::OnWorldInit()
 	worldAABB.lowerBound.Set(-50.0f, -50.0f);
 	worldAABB.upperBound.Set(fWidthInMeters + 50.0f, fHeightInMeters + 50.0f);
 
-	b2Vec2 gravity(0.0f, -13.0f);
+	b2Vec2 gravity(0.0f, -15.0f);
 	bool doSleep = true;
 
 	assert(m_pkPhysicsWorld == NULL);
@@ -43,8 +43,9 @@ bool PhysicsManager::OnWorldInit()
 
 	// NOTE FROM DOM: If you are getting errors here, it's because I hacked the source
 	// of Box2D to 1) make SetDebugDraw() public, and 2) remove the call from b2World::Step()
-	// m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
+	m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
 	m_pkPhysicsWorld->SetDebugDraw(&m_kPhysicsDebugRenderer);
+
 	m_pkPhysicsWorld->SetContactListener(&m_kPhysicsContactListener);
 
 	return true;
@@ -55,6 +56,7 @@ bool PhysicsManager::Init()
 {
 	m_fPhysicsSimulatorTimeStep = 1.0f / FPS;
 	m_iPhysicsSimulatorIterations = 10;
+	bDrawDebugBoxes = false;
 
 	return true;
 }
@@ -78,10 +80,11 @@ void PhysicsManager::Shutdown()
 
 void PhysicsManager::Draw()
 {
-	m_pkPhysicsWorld->DrawDebugData();
+	if (bDrawDebugBoxes)
+		m_pkPhysicsWorld->DrawDebugData();
 }
 
-b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction )
+b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation /*= false */ )
 {
 	b2BodyDef bodyDef;
 	b2PolygonDef shapeDef;
@@ -94,6 +97,8 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	float halfHeight = PIXELS_TO_METERS(height) / 2;
 
 	bodyDef.position.Set(PIXELS_TO_METERS(x) + halfWidth, PIXELS_TO_METERS(y) + halfHeight);
+	bodyDef.fixedRotation = bDontAllowRotation;
+	//bodyDef.linearDamping = 0.4f;
 
 	b2Body* pkBody = m_pkPhysicsWorld->CreateBody(&bodyDef);
 	assert(pkBody);
@@ -111,13 +116,13 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 
 b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, float height )
 {
-	return CreatePhysicsBox(x,y,width,height, 0.0f, 0.5f, 0.9f);
+	return CreatePhysicsBox(x,y,width,height, 0.0f, 0.0f, 0.2f);
 }
 
-b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height )
+b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation )
 {
 	// TODO: Don't hardcode these numbers.
-	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, 0.3f, 0.0f, 0.9f);
+	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, 0.1f, 0.0f, 0.2f, bDontAllowRotation);
 	pkBody->SetMassFromShapes();
 	return pkBody;
 }
@@ -340,21 +345,13 @@ void DrawAABB(b2AABB* aabb, const b2Color& c)
 
 void PhysicsContactListener::Add( const b2ContactPoint* point )
 {
-	static int i = 0;
-	i++;
-	i %= 3;
-
-	TRACE("%i: Add\n", i);
+	// TRACE("%i: Add\n", i);
 	PHYSICS->ReportContactPoint(point);
 }
 
 void PhysicsContactListener::Persist( const b2ContactPoint* point )
 {
-	static int i = 0;
-	i++;
-	i %= 3;
-
-	TRACE("%i: Persist\n", i);
+	// TRACE("%i: Persist\n", i);
 	PHYSICS->ReportContactPoint(point);
 }
 

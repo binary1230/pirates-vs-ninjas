@@ -220,7 +220,7 @@ class Object {
 		
 		virtual void Update() = 0;
 
-		void InitPhysics();
+		virtual void InitPhysics();
 
 		// TODO: Make this take an animation code, for now it just takes the index of the animation 
 		// as defined by the order we found them in the XML file.  Very prone to errors. HACKY

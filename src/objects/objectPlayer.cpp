@@ -20,7 +20,7 @@
 #include "globalDefines.h"
 #include "physics.h"
 
-#define DEFAULT_JUMP_VELOCITY 8.0f
+#define DEFAULT_JUMP_VELOCITY 10.0f
 #define DEFAULT_DRAG 0.95f
 #define DEFAULT_MIN_VELOCITY 0.3f
 
@@ -40,7 +40,7 @@ void PlayerObject::ScreenBoundsConstraint() {
 
 	if (pos.x < 0) {
 		SetVelX(0.0f);
-		int newPosX = 1;
+		int newPosX = 2;
 		pos.x = newPosX;
 		m_pkPhysicsBody->SetXForm(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
 	} else if (pos.x > (WORLD->GetWidth() - width) ) {
@@ -55,15 +55,11 @@ void PlayerObject::ScreenBoundsConstraint() {
 
 void PlayerObject::UpdateSpriteFlip() {
 
-	// TODO: PHYSICS: RE-IMPLEMENT
-	// Always face the direction the player's input is pressing,
-	// and if they're not pressing anything, face their velocity.
-
-	/*if (accel.x == 0.0f) 
+	if (accel.x == 0.0f) 
 	{
-		if (vel.x > 0.0f)
+		if (GetVelX() > 0.0f)
 			flip_x = false;
-		else if (vel.x < 0.0f)
+		else if (GetVelX() < 0.0f)
 			flip_x = true;
 	} 
 	else if (accel.x > 0.0f) 
@@ -73,7 +69,7 @@ void PlayerObject::UpdateSpriteFlip() {
 	else 
 	{
 		flip_x = true;
-	}*/
+	}
 }
 
 void PlayerObject::UpdateRunningAnimationSpeed() {
@@ -102,7 +98,8 @@ void PlayerObject::DoWalkThroughDoor() {
 }
 
 // Things common to STANDING, WALKING, and RUNNING
-void PlayerObject::DoCommonGroundStuff() {
+void PlayerObject::DoCommonGroundStuff() 
+{
 	if (!m_kCurrentCollision.down) {
 		DoFalling();
 		return;
@@ -116,39 +113,93 @@ void PlayerObject::DoCommonGroundStuff() {
 
 	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num)) 
 	{
-		SetVelY(jump_velocity);
+		SetVelY(DEFAULT_JUMP_VELOCITY);
 		SOUND->PlaySound("jump");
 		DoJumping();
 		return;
 	}	
 }
 
-void PlayerObject::DoStanding() {	
+void PlayerObject::DoSlidingDownWall()
+{
+	m_kPlayerState = SLIDING_DOWN_WALL;
+
+	currentAnimation = animations[PLAYER_SLIDING_DOWN_WALL];
+
+	if (m_kCurrentCollision.down)
+	{
+		DoStanding();
+		return;
+	}
+
+	if (!m_kCurrentCollision.left && !m_kCurrentCollision.right)
+	{
+		DoFalling();
+		return;
+	}
+
+	bool bNoLeft = !m_kCurrentCollision.left || !INPUT->Key(PLAYERKEY_LEFT, controller_num);
+	bool bNoRight = !m_kCurrentCollision.right || !INPUT->Key(PLAYERKEY_RIGHT, controller_num);
+
+	if (bNoLeft && bNoRight)
+	{
+		DoFalling();
+		return;
+	}
+
+	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num)) 
+	{
+		// HACK: offset just the tiniest amount to make us not collide with the wall anymore.
+		const int iOffset = 3;
+		int iHackPixelOffset = m_kCurrentCollision.left ? iOffset : -iOffset;
+		m_pkPhysicsBody->SetXForm(m_pkPhysicsBody->GetWorldCenter() + b2Vec2(PIXELS_TO_METERS(iHackPixelOffset), 0.0f), m_pkPhysicsBody->GetAngle());
+
+		// don't apply any forces
+		accel.x = 0.0f;
+
+		SetVelY(DEFAULT_JUMP_VELOCITY);
+
+		const float fHorizontalJumpVel = DEFAULT_JUMP_VELOCITY * 2.0f;
+		
+		if (m_kCurrentCollision.left)
+			SetVelX(fHorizontalJumpVel);
+		else
+			SetVelX(-fHorizontalJumpVel);
+
+		SOUND->PlaySound("jump");
+
+		m_kPlayerState = JUMPING;
+		return;
+	}
+
+	LimitMaxVerticalVelocityTo(3.0f);
+}
+
+void PlayerObject::DoStanding() 
+{	
 	m_kPlayerState = STANDING;
 
 	DoCommonGroundStuff();
 
 	currentAnimation = animations[PLAYER_STANDING];
 
-	// TODO: PHYSICS: RE-IMPLEMENT
-
-	if (/*fabs(accel.x) > 0.0f ||*/ fabs(GetVelX()) > 0.0f ) {
+	if (fabs(accel.x) > 0.0f || fabs(GetVelX()) > 0.0f ) 
+	{
 		DoWalking();
 		return;
 	}
 }
 
-void PlayerObject::DoWalking() {
+void PlayerObject::DoWalking() 
+{
 	m_kPlayerState = WALKING;
 	
 	DoCommonGroundStuff();
 	
 	currentAnimation = animations[PLAYER_WALKING];
 
-	// TODO: PHYSICS: RE-IMPLEMENT
-
 	// if we go too slow, then stop us and make us STANDING
-	if (/*accel.x == 0.0f &&*/ fabs(GetVelX()) < min_velocity) 
+	if (accel.x == 0.0f && fabs(GetVelX()) < min_velocity) 
 	{
 		SetVelX(0);
 		DoStanding();
@@ -163,13 +214,11 @@ void PlayerObject::UpdateSkidding() {
 	if (next_skid_time > 0)
 		next_skid_time--;
 
-	// TODO: PHYSICS: RE-IMPLEMENT
-
 	// If acceleration and velocity are in the opposite directions,
 	// then we are skidding and trying to turn around
-	/*if (	on_skateboard || 
-			(accel.x > 0.0f && vel.x < 0.0f) ||
-			(accel.x < 0.0f && vel.x > 0.0f) ) {
+	if (	on_skateboard || 
+			(accel.x > 0.0f && GetVelX() < 0.0f) ||
+			(accel.x < 0.0f && GetVelX() > 0.0f) ) {
 
 		if (next_skid_time == 0) {
 			next_skid_time = 0;
@@ -180,7 +229,7 @@ void PlayerObject::UpdateSkidding() {
 			if (objSkid) {
 				float skid_vel_x = 6.0f;
 
-				if (vel.x < 0.0f)
+				if (GetVelX() < 0.0f)
 					skid_vel_x *= -1.0f;
 
 				objSkid->SetDisplayTime(Rand(1,10));
@@ -188,17 +237,32 @@ void PlayerObject::UpdateSkidding() {
 				objSkid->FadeOut(Rand(4,10));
 			}
 		}
-	}*/
+	}
 }
 
-void PlayerObject::DoCommonAirStuff() 
+bool PlayerObject::WantsToSlideOnLeftSide()
 {
-	// TODO: PHYSICS: RE-IMPLEMENT
-	return;
+	return !m_kCurrentCollision.down && m_kCurrentCollision.left && INPUT->Key(PLAYERKEY_LEFT, controller_num);
+}
 
+bool PlayerObject::WantsToSlideOnRightSide()
+{
+	return !m_kCurrentCollision.down && m_kCurrentCollision.right && INPUT->Key(PLAYERKEY_RIGHT, controller_num);
+}
+
+bool PlayerObject::DoCommonAirStuff() 
+{
 	// If we're not trying to moving at all, slow us down just a bit so we fall DOWN more, not not forward
-	/*if (accel.x < 0.001f || accel.x > -0.001f)
-		vel.x *= 0.90f;*/
+	if (accel.x > -0.001f && accel.x < 0.001f)
+		SetVelX(GetVelX() * 0.90f);
+
+	if (WantsToSlideOnLeftSide() || WantsToSlideOnRightSide())
+	{
+		DoSlidingDownWall();
+		return false;
+	}
+
+	return true;
 }
 
 // no distinction from walking yet.
@@ -211,7 +275,8 @@ void PlayerObject::DoJumping() {
 
 	currentAnimation = animations[PLAYER_JUMPING];
 
-	DoCommonAirStuff();
+	if (!DoCommonAirStuff())
+		return;
 
 	// really shouldn't have a downward 
 	// collision on an upward jump
@@ -232,10 +297,13 @@ void PlayerObject::DoFalling() {
 	// XXX: should be PLAYER_FALLING when we have one.
 	currentAnimation = animations[PLAYER_JUMPING];
 
-	if (GetVelY() < -25.0f)
-		SetVelY(-25.0f);
+	const float fMaxFallVelocity = -50.0f;
 
-	DoCommonAirStuff();
+	if (GetVelY() < fMaxFallVelocity)
+		SetVelY(fMaxFallVelocity);
+
+	if (!DoCommonAirStuff())
+		return;
 
 	if (m_kCurrentCollision.down) {
 		DoStanding();
@@ -253,62 +321,47 @@ void PlayerObject::DoCrouchingDown() {
 }
 
 // Do things common to most every state
-void PlayerObject::DoCommonStuff() {
-	
-	// let's do something interesting and random here, why not?
-	// if they press a key here, then drop a bouncy ball.
-
+void PlayerObject::DoCommonStuff() 
+{	
 	DropBombs();
-	return;
-
-	// TODO: PHYSICS: RE-IMPLEMENT
-
-	/*
-
-	// Clamp horizontal velocities
-	#define MAX_HORIZ_VELOCITY 27.0f
-
-	if (vel.x > MAX_HORIZ_VELOCITY)
-		vel.x = MAX_HORIZ_VELOCITY;
-
-	if (vel.x < -MAX_HORIZ_VELOCITY)
-		vel.x = -MAX_HORIZ_VELOCITY;
+	LimitMaxHorizontalVelocityTo(8.0f);
 
 	// If we're moving in a different direction than what we want to do, make us slow down faster.
 	// NOTE: Freaks out horizontal springs currently
-	if ((accel.x > 0.001f && vel.x < 0.001f) ||
-		(accel.x < 0.001f && vel.x > 0.001f) ) {
-			vel.x *= 0.85f;
-	}*/
+	if ((accel.x > 0.001f && GetVelX() < 0.001f) ||
+		(accel.x < 0.001f && GetVelX() > 0.001f) ) 
+	{
+			SetVelX(GetVelX() * 0.85f);
+	}
 }
 
 void PlayerObject::HandleInput() 
 {
-	static float magnitude = GLOBALS->Value("player_acceleration", magnitude);
-
-	Vector2D kMagnitude(0.0f, 0.0f);
+	// static float magnitude = GLOBALS->Value("player_acceleration", magnitude);
+	static float magnitude = 100;
 
 	// return a force based on 2 inputs.
 	if (INPUT->Key(PLAYERKEY_LEFT, controller_num) && 
 		!INPUT->Key(PLAYERKEY_RIGHT, controller_num)) 
 	{
-		kMagnitude.x = -magnitude * TIMESTEP;
+		accel.x = -magnitude * TIMESTEP;
 	}
 
 	else if (INPUT->Key(PLAYERKEY_RIGHT, controller_num) && 
 		!INPUT->Key(PLAYERKEY_LEFT, controller_num)) 
 	{
-		kMagnitude.x = magnitude * TIMESTEP;
+		accel.x = magnitude * TIMESTEP;
 	}
 
-	kMagnitude *= 200;
-
-	m_pkPhysicsBody->ApplyForce(kMagnitude, m_pkPhysicsBody->GetWorldCenter());
+	// accel *= 700;
 }
 
 void PlayerObject::Update() 
 {
 	BaseUpdate();
+
+	accel.x = 0.0f;
+	accel.y = 0.0f;
 
 	HandleInput();
 	
@@ -324,6 +377,9 @@ void PlayerObject::Update()
 	
 	// this will be set true on each collision with a door
 	door_in_front_of_us = NULL;
+
+	// apply the acceleration
+	m_pkPhysicsBody->ApplyForce(accel, m_pkPhysicsBody->GetWorldCenter());
 }
 
 void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) 
@@ -338,8 +394,14 @@ void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint)
 
 	if (obj->GetProperties().is_static && obj->GetProperties().is_physical)
 	{
-		if (pkContactPoint->normal.y > 0)
+		if (pkContactPoint->normal.y > 0 && pkContactPoint->normal.x == 0.0f)
 			m_kCurrentCollision.down = 1;
+
+		if (pkContactPoint->normal.x > 0 && pkContactPoint->normal.y == 0.0f)
+			m_kCurrentCollision.left = 1;
+
+		if (pkContactPoint->normal.x < 0 && pkContactPoint->normal.y == 0.0f)
+			m_kCurrentCollision.right = 1;
 	}
 
 	/*if (obj->GetProperties().is_physical && !obj->GetProperties().is_player) {
@@ -443,6 +505,9 @@ void PlayerObject::UpdateState() {
 		case WALKING_THRU_DOOR:
 			DoWalkThroughDoor();
 			break;
+		case SLIDING_DOWN_WALL:
+			DoSlidingDownWall();
+			break;
 		default:
 			TRACE(" -- PLAYEROBJECT ERROR: Unkown state asked for!\n");
 			assert(false);
@@ -528,4 +593,30 @@ void PlayerObject::DropBombs()
 		//objBall->SetVelXY(vel.x, 0.0f);
 	}
 	*/
+}
+
+void PlayerObject::InitPhysics()
+{
+	const bool bDontAllowRotation = true;
+	m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height, bDontAllowRotation);
+
+	m_pkPhysicsBody->SetUserData(this);
+}
+
+void PlayerObject::LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity )
+{
+	if (GetVelX() > fMaxHorizontalVelocity)
+		SetVelX(fMaxHorizontalVelocity);
+
+	if (GetVelX() < -fMaxHorizontalVelocity)
+		SetVelX(-fMaxHorizontalVelocity);
+}
+
+void PlayerObject::LimitMaxVerticalVelocityTo( float fMaxVerticalVelocity )
+{ 
+	if (GetVelY() > fMaxVerticalVelocity)
+		SetVelY(fMaxVerticalVelocity);
+
+	if (GetVelY() < -fMaxVerticalVelocity)
+		SetVelY(-fMaxVerticalVelocity);
 }
