@@ -29,6 +29,9 @@ void StaticObject::UpdateSpawns()
 	if (!properties.spawns_enemies)
 		return;
 
+	// HACK:
+	return;
+
 	static int iSpawnWaitTime = 0;
 
 	iSpawnWaitTime--;
