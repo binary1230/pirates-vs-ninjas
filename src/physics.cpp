@@ -84,7 +84,7 @@ void PhysicsManager::Draw()
 		m_pkPhysicsWorld->DrawDebugData();
 }
 
-b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation /*= false */ )
+b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation /*= false */, bool bSensorOnly /*= false*/ )
 {
 	b2BodyDef bodyDef;
 	b2PolygonDef shapeDef;
@@ -107,6 +107,7 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	shapeDef.friction = friction;
 	shapeDef.restitution = restitution;
 	shapeDef.density = density;
+	shapeDef.isSensor = bSensorOnly;
 
 	pkBody->CreateShape(&shapeDef);
 
@@ -114,9 +115,9 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 }
 
 
-b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, float height )
+b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, float height, bool bSensorOnly )
 {
-	return CreatePhysicsBox(x,y,width,height, 0.0f, 0.0f, 0.2f);
+	return CreatePhysicsBox(x,y,width,height, 0.0f, 0.0f, 0.2f, false, bSensorOnly );
 }
 
 b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation )

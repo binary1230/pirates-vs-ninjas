@@ -32,7 +32,7 @@ class SpringObject : public Object {
 		bool IsSpringActive() {return spring_is_active;};
 
 		const Vector2D& GetSpringVector() const {return spring_vector;};
-			
+
 		friend class ObjectFactory;
 		friend class MapSaver;
 };

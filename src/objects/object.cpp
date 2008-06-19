@@ -116,9 +116,9 @@ void Object::InitPhysics()
 	if (properties.uses_new_physics)
 	{
 		if (properties.is_static)
-			m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height);
+			m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height, properties.ignores_collisions);
 		else
-			m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height);
+			m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height, properties.ignores_physics_rotation);
 
 		m_pkPhysicsBody->SetUserData(this);
 	}

@@ -397,6 +397,9 @@ void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint)
 		if (pkContactPoint->normal.y > 0 && pkContactPoint->normal.x == 0.0f)
 			m_kCurrentCollision.down = 1;
 
+		if (pkContactPoint->normal.y < 0 && pkContactPoint->normal.x == 0.0f)
+			m_kCurrentCollision.up = 1;
+
 		if (pkContactPoint->normal.x > 0 && pkContactPoint->normal.y == 0.0f)
 			m_kCurrentCollision.left = 1;
 
@@ -404,31 +407,16 @@ void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint)
 			m_kCurrentCollision.right = 1;
 	}
 
-	/*if (obj->GetProperties().is_physical && !obj->GetProperties().is_player) {
-		Vector2D newpos;
-		m_kCurrentCollision = GetBound(obj, newpos);
-    
-		pos = newpos;
-		UpdateProjectionRectFromCollisions(newpos);
-
-		if (m_kCurrentCollision.left || m_kCurrentCollision.right)
-			vel.x = 0;
-
-		if (m_kCurrentCollision.down || m_kCurrentCollision.up)
-			vel.y = 0;
-	}
-
 	if (obj->GetProperties().is_spring) 
 	{
 		SpringObject* sObj = (SpringObject*)obj;
 		
 		if (sObj->IsSpringActive())
-			vel = sObj->GetSpringVector();
-	}*/
-
-	if (obj->GetProperties().is_ring) {
-		++ring_count;
+			SetVelXY(sObj->GetSpringVector());
 	}
+
+	if (obj->GetProperties().is_ring)
+		++ring_count;
 }
 
 bool PlayerObject::Init() 
@@ -461,6 +449,7 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	properties.is_player = 1;
 	properties.is_physical = 1;
 	properties.uses_new_physics = 1;
+	properties.ignores_physics_rotation = 1;
 
 	on_skateboard = false;
 
@@ -592,14 +581,6 @@ void PlayerObject::DropBombs()
 		//objBall->SetVelXY(vel.x, 0.0f);
 	}
 	*/
-}
-
-void PlayerObject::InitPhysics()
-{
-	const bool bDontAllowRotation = true;
-	m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height, bDontAllowRotation);
-
-	m_pkPhysicsBody->SetUserData(this);
 }
 
 void PlayerObject::LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity )

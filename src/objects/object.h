@@ -41,6 +41,13 @@ struct ObjectProperties
 	//! Only matters if is_physical is on
 	bool is_static; 
 
+	//! If set, this object will not get a callback if being collided with
+	//! Note, however, that it will still deal out collision
+	bool ignores_collisions;
+
+	//! Don't rotate if physical
+	bool ignores_physics_rotation;
+
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
 	//! like our status bar or health or something.
@@ -80,6 +87,8 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_badguy = 0;
 	p.uses_new_physics = 0;
 	p.is_static = 0;
+	p.ignores_collisions = 0;
+	p.ignores_physics_rotation = 0;
 }
 
 // Used for find()
@@ -298,6 +307,11 @@ class Object {
 		inline void SetVelXY(const float _vx, const float _vy) {
 			if (m_pkPhysicsBody)
 				m_pkPhysicsBody->SetLinearVelocity(Vector2D(_vx, _vy)); 
+		}
+
+		inline void SetVelXY(const Vector2D& v) {
+			if (m_pkPhysicsBody)
+				m_pkPhysicsBody->SetLinearVelocity(v); 
 		}
 		
 		inline void SetVelRotate(const float vel) {

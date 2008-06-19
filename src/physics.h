@@ -71,10 +71,10 @@ class PhysicsManager
 		bool OnWorldInit();
 
 		// helpers
-		b2Body* CreateStaticPhysicsBox( float x, float y, float width, float height );
+		b2Body* CreateStaticPhysicsBox( float x, float y, float width, float height, bool bSensorOnly = false );
 		b2Body* CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation = false );
 
-		b2Body* CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation = false );
+		b2Body* CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation = false, bool bSensorOnly = false );
 
 		void RemoveFromWorld(b2Body* pkBodyToRemove);
 	

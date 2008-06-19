@@ -102,8 +102,6 @@ class PlayerObject : public Object {
 		
 		void Update();
 		void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
-
-		virtual void InitPhysics();
 		
 		int GetNumRings() {return ring_count;};
 			

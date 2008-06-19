@@ -5,6 +5,7 @@
 #include "animation.h"
 #include "gameState.h"
 #include "gameSound.h"
+#include "physics.h"
 
 #define DEFAULT_SPRING_RESET_TIME 6
 
@@ -55,5 +56,4 @@ void SpringObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) 
 		}
 	}
 }
-
 

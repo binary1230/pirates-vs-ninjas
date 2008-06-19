@@ -373,6 +373,10 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	obj->properties.is_collectable = 1;
 	obj->properties.is_ring = 1;
+	obj->properties.uses_new_physics = 1;
+	obj->properties.is_physical = 1;
+	obj->properties.is_static = 1;
+	obj->properties.ignores_collisions = 1;
 
 	obj->SetupCachedVariables();
 	
@@ -535,8 +539,8 @@ Object* ObjectFactory::NewEnemyObject(XMLNode &xDef, XMLNode *xObj)
 //	return obj;
 //}
 
-Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) { 
-  
+Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) 
+{ 
 	XMLNode xSpringDirection;
 	bool using_default = true;
 
@@ -545,6 +549,10 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) {
 		return NULL;
   
 	obj->properties.is_spring = 1;
+	obj->properties.uses_new_physics = 1;
+	obj->properties.is_physical = 1;
+	obj->properties.is_static = 1;
+	obj->properties.ignores_collisions = 1;
 
 	// order we search for the spring strength:
 	// 1) Object Instance
@@ -575,8 +583,10 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) {
 		}
 	}
 
-	obj->spring_vector.x = x_strength;
-	obj->spring_vector.y = y_strength;
+	const float fGlobalScale = 0.5f;
+
+	obj->spring_vector.x = x_strength * fGlobalScale;
+	obj->spring_vector.y = y_strength * fGlobalScale;
 
 	obj->SetupCachedVariables();
 
