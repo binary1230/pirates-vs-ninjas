@@ -55,7 +55,7 @@ class PhysicsManager
 
 		std::vector<b2ContactPoint> m_kContacts;
 
-		friend PhysicsContactListener;
+		friend class PhysicsContactListener;
 
 		void ReportContactPoint(const b2ContactPoint* pkContactPoint);
 		
@@ -90,3 +90,4 @@ class PhysicsManager
 #define PHYSICS (PhysicsManager::GetInstance())
 
 #endif // PHYSICS_H
+

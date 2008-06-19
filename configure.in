@@ -187,8 +187,9 @@ else
 	ALLEGRO_LIBS="`allegro-config --libs`"
 fi
 
-FLTK_LIBS="`fltk-config --ldflags`"
-FLTK_INCLUDES="`fltk-config --cxxflags`"
+dnl NOT USING THIS ANYMORE
+dnl FLTK_LIBS="`fltk-config --ldflags`"
+dnl FLTK_INCLUDES="`fltk-config --cxxflags`"
 
 AM_CONDITIONAL([WIN32], [test $WIN32 = "yes"])
 
@@ -413,7 +414,10 @@ dnl CEGUI_CXXFLAGS="-I../win32/include/CEGUI/"
 dnl CEGUI_LDFLAGS="-lCEGUIBase -lCEGUIOpenGLRenderer"
 dnl fi
 
-ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects $LUA_CXXFLAGS $CEGUI_CXXFLAGS $FLTK_INCLUDES"
+BOX2D_CXXFLAGS=" -I ../libs/Box2D/Include/ "
+BOX2D_LDFLAGS=" -L ../libs/Box2D/Source/Gen/float -l box2d "
+
+ninjas_CXXFLAGS="-Wall $ninjas_CXXFLAGS $extra_includes $OGGVORBIS_CFLAGS -Iexternal -Iobjects $LUA_CXXFLAGS $CEGUI_CXXFLAGS $BOX2D_CXXFLAGS"
 
 dnl keep this SEPERATE even though here it is identical
 PRECOMPILED_CXXFLAGS="$ninjas_CXXFLAGS"
@@ -423,10 +427,10 @@ ninjas_CXXFLAGS="$ninjas_CXXFLAGS -include precompiled.h"
 aitrainer_CXXFLAGS="$aitrainer_CXXFLAGS -include precompiled.h"
 fi
 
-ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries $LUA_LDFLAGS $CEGUI_LDFLAGS $FLTK_LIBS"
+ninjas_LDFLAGS="$ninjas_LDFLAGS $extra_libraries $LUA_LDFLAGS $CEGUI_LDFLAGS $BOX2D_LDFLAGS"
 
-LDFLAGS="$extra_libraries $LDFLAGS $LUA_LDFLAGS $CEGUI_LDFLAGS $FLTK_LIBS"
-LIBS="$ALLEGRO_LIBS -lm $AGL_LIBS $GL_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB $LUA_LDFLAGS $CEGUI_LDFLAGS $FLTK_LIBS"
+LDFLAGS="$extra_libraries $LDFLAGS $LUA_LDFLAGS $CEGUI_LDFLAGS $BOX2D_LDFLAGS"
+LIBS="$ALLEGRO_LIBS -lm $AGL_LIBS $GL_LIBS $OGGVORBIS_LIBS $LIBPNG $ZLIB $LUA_LDFLAGS $CEGUI_LDFLAGS $BOX2D_LDFLAGS"
 
 AC_SUBST(PACKAGE_NAME)
 AC_SUBST(ninjas_CXXFLAGS)
