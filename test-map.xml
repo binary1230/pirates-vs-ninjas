@@ -1,0 +1,6126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<gameMode type="simulation">
+	<info/>
+	<properties>
+		<width>
+			2560
+		</width>
+		<height>
+			8000
+		</height>
+		<bgcolor>
+			<r>
+				27
+			</r>
+			<g>
+				45
+			</g>
+			<b>
+				135
+			</b>
+		</bgcolor>
+		<bgcolor_top>
+			<r>
+				0
+			</r>
+			<g>
+				0
+			</g>
+			<b>
+				0
+			</b>
+		</bgcolor_top>
+	</properties>
+	<objectDefinitions>
+		<!-- include the standard stuff -->
+		<include_xml_file>
+			common-objects.xml
+		</include_xml_file>
+		<!-- level backgrounds/foregrounds -->
+		<include_xml_file>
+			objects/obj_background_night.xml
+		</include_xml_file>
+		<!-- various scenery -->
+		<include_xml_file>
+			objects/greenblock.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/spawner.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/enemy1.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/smallblock.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/block3.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/obj_s_palm_tall.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/flower1.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/flower2.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/fan.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/cloud.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/cloud2.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/door.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/plane.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-arrow.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-arrow-up.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-haha.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-credits.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-up.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-leftright.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-jump.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/totem1.xml
+		</include_xml_file>
+		<!-- interactive things -->
+		<include_xml_file>
+			objects/spring-up.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/spring-right.xml
+		</include_xml_file>
+	</objectDefinitions>
+	<effects>
+		<include_xml_file>
+			common-effects.xml
+		</include_xml_file>
+	</effects>
+	<map>
+		<layer scroll_speed="0.150000" name="background">
+			<object objectDef="background">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="plane">
+				<position type="fixed">
+					<x>
+						2265
+					</x>
+					<y>
+						1332
+					</y>
+				</position>
+			</object>
+		</layer>
+		<layer scroll_speed="1.000000" name="bg_objects">
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						175
+					</x>
+					<y>
+						-10
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						362
+					</x>
+					<y>
+						-18
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1077
+					</x>
+					<y>
+						13
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						513
+					</x>
+					<y>
+						-38
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						803
+					</x>
+					<y>
+						-9
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2397
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						966
+					</x>
+					<y>
+						-7
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2336
+					</x>
+					<y>
+						-9
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1180
+					</x>
+					<y>
+						-18
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1846
+					</x>
+					<y>
+						-30
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1404
+					</x>
+					<y>
+						-32
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2175
+					</x>
+					<y>
+						-3
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1687
+					</x>
+					<y>
+						6
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1334
+					</x>
+					<y>
+						-7
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						944
+					</x>
+					<y>
+						-7
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						170
+					</x>
+					<y>
+						19
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1377
+					</x>
+					<y>
+						-29
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						403
+					</x>
+					<y>
+						-7
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1645
+					</x>
+					<y>
+						-46
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						664
+					</x>
+					<y>
+						-7
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2459
+					</x>
+					<y>
+						-7
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2333
+					</x>
+					<y>
+						-26
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1359
+					</x>
+					<y>
+						-23
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1680
+					</x>
+					<y>
+						-21
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1426
+					</x>
+					<y>
+						-2
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1530
+					</x>
+					<y>
+						21
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1403
+					</x>
+					<y>
+						12
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						485
+					</x>
+					<y>
+						-12
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2236
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2063
+					</x>
+					<y>
+						-13
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1275
+					</x>
+					<y>
+						-39
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2029
+					</x>
+					<y>
+						9
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1599
+					</x>
+					<y>
+						-40
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1964
+					</x>
+					<y>
+						-17
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						12
+					</x>
+					<y>
+						-33
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						185
+					</x>
+					<y>
+						-14
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1619
+					</x>
+					<y>
+						-43
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2196
+					</x>
+					<y>
+						-37
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1099
+					</x>
+					<y>
+						19
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2141
+					</x>
+					<y>
+						-19
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2251
+					</x>
+					<y>
+						-31
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						162
+					</x>
+					<y>
+						14
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1753
+					</x>
+					<y>
+						-36
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						580
+					</x>
+					<y>
+						-46
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2392
+					</x>
+					<y>
+						7
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						846
+					</x>
+					<y>
+						21
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						2036
+					</x>
+					<y>
+						-41
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1282
+					</x>
+					<y>
+						-28
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1771
+					</x>
+					<y>
+						-26
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1320
+					</x>
+					<y>
+						45
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						226
+					</x>
+					<y>
+						38
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						753
+					</x>
+					<y>
+						24
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						799
+					</x>
+					<y>
+						34
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						327
+					</x>
+					<y>
+						37
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						2426
+					</x>
+					<y>
+						34
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1600
+					</x>
+					<y>
+						47
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1577
+					</x>
+					<y>
+						50
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1292
+					</x>
+					<y>
+						42
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						637
+					</x>
+					<y>
+						21
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1768
+					</x>
+					<y>
+						34
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						2481
+					</x>
+					<y>
+						31
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						947
+					</x>
+					<y>
+						39
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1612
+					</x>
+					<y>
+						44
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						617
+					</x>
+					<y>
+						31
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						2500
+					</x>
+					<y>
+						41
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						352
+					</x>
+					<y>
+						48
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						2269
+					</x>
+					<y>
+						30
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						346
+					</x>
+					<y>
+						30
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						913
+					</x>
+					<y>
+						41
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1840
+					</x>
+					<y>
+						21
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						809
+					</x>
+					<y>
+						45
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						938
+					</x>
+					<y>
+						36
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						554
+					</x>
+					<y>
+						28
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1262
+					</x>
+					<y>
+						27
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						200
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						400
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						600
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						800
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1000
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1200
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1400
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1600
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1800
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						2000
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						2200
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						2400
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						2600
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						1250
+					</x>
+					<y>
+						290
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						20.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						1300
+					</x>
+					<y>
+						290
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						20.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						1350
+					</x>
+					<y>
+						290
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						20.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						1400
+					</x>
+					<y>
+						290
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						20.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						1450
+					</x>
+					<y>
+						290
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						20.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						1500
+					</x>
+					<y>
+						290
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						20.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						1550
+					</x>
+					<y>
+						290
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						20.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1936
+					</x>
+					<y>
+						2020
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1929
+					</x>
+					<y>
+						2020
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1947
+					</x>
+					<y>
+						2020
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						2124
+					</x>
+					<y>
+						2020
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1900
+					</x>
+					<y>
+						2020
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1890
+					</x>
+					<y>
+						2020
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						1898
+					</x>
+					<y>
+						2020
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1735
+					</x>
+					<y>
+						3323
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1756
+					</x>
+					<y>
+						3307
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1679
+					</x>
+					<y>
+						3324
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1609
+					</x>
+					<y>
+						3329
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1771
+					</x>
+					<y>
+						3331
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1606
+					</x>
+					<y>
+						3307
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1734
+					</x>
+					<y>
+						3303
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1703
+					</x>
+					<y>
+						3350
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1639
+					</x>
+					<y>
+						3336
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1608
+					</x>
+					<y>
+						3342
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						30
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow_up">
+				<position type="fixed">
+					<x>
+						600
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						1000
+					</x>
+					<y>
+						20
+					</y>
+					<flipx/>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						1100
+					</x>
+					<y>
+						20
+					</y>
+					<flipx/>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						1200
+					</x>
+					<y>
+						20
+					</y>
+					<flipx/>
+				</position>
+			</object>
+			<object objectDef="s_totem1">
+				<position type="fixed">
+					<x>
+						2544
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_totem1">
+				<position type="fixed">
+					<x>
+						2544
+					</x>
+					<y>
+						83
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						10
+					</x>
+					<y>
+						175
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						40
+					</x>
+					<y>
+						175
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						70
+					</x>
+					<y>
+						175
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						100
+					</x>
+					<y>
+						175
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						130
+					</x>
+					<y>
+						175
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						200
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						300
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="spawner">
+				<position type="fixed">
+					<x>
+						350
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						400
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						325
+					</x>
+					<y>
+						70
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						375
+					</x>
+					<y>
+						70
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						350
+					</x>
+					<y>
+						120
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						580
+					</x>
+					<y>
+						180
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						550
+					</x>
+					<y>
+						150
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						750
+					</x>
+					<y>
+						150
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						800
+					</x>
+					<y>
+						200
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						850
+					</x>
+					<y>
+						250
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						900
+					</x>
+					<y>
+						300
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						1200
+					</x>
+					<y>
+						400
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1150
+					</x>
+					<y>
+						350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1200
+					</x>
+					<y>
+						350
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						1100
+					</x>
+					<y>
+						400
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1100
+					</x>
+					<y>
+						350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1050
+					</x>
+					<y>
+						350
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						1000
+					</x>
+					<y>
+						400
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1000
+					</x>
+					<y>
+						350
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1200
+					</x>
+					<y>
+						450
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1250
+					</x>
+					<y>
+						475
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1300
+					</x>
+					<y>
+						500
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1350
+					</x>
+					<y>
+						475
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1400
+					</x>
+					<y>
+						450
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1750
+					</x>
+					<y>
+						400
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1800
+					</x>
+					<y>
+						400
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1850
+					</x>
+					<y>
+						400
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1690
+					</x>
+					<y>
+						350
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1710
+					</x>
+					<y>
+						340
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1600
+					</x>
+					<y>
+						300
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1650
+					</x>
+					<y>
+						330
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1710
+					</x>
+					<y>
+						350
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1990
+					</x>
+					<y>
+						350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						2190
+					</x>
+					<y>
+						350
+					</y>
+				</position>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						2200
+					</x>
+					<y>
+						400
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						40.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						2500
+					</x>
+					<y>
+						640
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						72.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						2300
+					</x>
+					<y>
+						600
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						2250
+					</x>
+					<y>
+						600
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						2500
+					</x>
+					<y>
+						600
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						2300
+					</x>
+					<y>
+						620
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						2530
+					</x>
+					<y>
+						1000
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						2530
+					</x>
+					<y>
+						1300
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						2530
+					</x>
+					<y>
+						1900
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						2530
+					</x>
+					<y>
+						2200
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						2530
+					</x>
+					<y>
+						2500
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						2530
+					</x>
+					<y>
+						2800
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						1500
+					</x>
+					<y>
+						2000
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1500
+					</x>
+					<y>
+						1980
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1700
+					</x>
+					<y>
+						1980
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						1900
+					</x>
+					<y>
+						1980
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						2100
+					</x>
+					<y>
+						1980
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						2200
+					</x>
+					<y>
+						2000
+					</y>
+					<flipx/>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1800
+					</x>
+					<y>
+						2000
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1750
+					</x>
+					<y>
+						2000
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1700
+					</x>
+					<y>
+						2000
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1650
+					</x>
+					<y>
+						2000
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1600
+					</x>
+					<y>
+						2000
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1700
+					</x>
+					<y>
+						2050
+					</y>
+				</position>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						1700
+					</x>
+					<y>
+						2100
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						90.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2400
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2450
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2500
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2550
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2600
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2650
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2700
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2750
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2800
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2850
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2900
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						2950
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						3000
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						3050
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						3100
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						3150
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1840
+					</x>
+					<y>
+						3000
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1540
+					</x>
+					<y>
+						3000
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1550
+					</x>
+					<y>
+						3000
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1850
+					</x>
+					<y>
+						3000
+					</y>
+				</position>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						1720
+					</x>
+					<y>
+						3800
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						70.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-right">
+				<position type="fixed">
+					<x>
+						1700
+					</x>
+					<y>
+						5000
+					</y>
+				</position>
+				<springDirection>
+					<x>
+						50.000000
+					</x>
+					<y>
+						2.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-up">
+				<position type="fixed">
+					<x>
+						2500
+					</x>
+					<y>
+						4500
+					</y>
+					<flipy/>
+				</position>
+				<springDirection>
+					<x>
+						0.000000
+					</x>
+					<y>
+						-50.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="spring-right">
+				<position type="fixed">
+					<x>
+						2550
+					</x>
+					<y>
+						3600
+					</y>
+					<flipx/>
+				</position>
+				<springDirection>
+					<x>
+						-28.000000
+					</x>
+					<y>
+						9.000000
+					</y>
+				</springDirection>
+			</object>
+			<object objectDef="s_totem1">
+				<position type="fixed">
+					<x>
+						1610
+					</x>
+					<y>
+						3400
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_totem1">
+				<position type="fixed">
+					<x>
+						1800
+					</x>
+					<y>
+						3400
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1550
+					</x>
+					<y>
+						3300
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1600
+					</x>
+					<y>
+						3300
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1650
+					</x>
+					<y>
+						3300
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1700
+					</x>
+					<y>
+						3300
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1750
+					</x>
+					<y>
+						3300
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1800
+					</x>
+					<y>
+						3300
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1850
+					</x>
+					<y>
+						3300
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1900
+					</x>
+					<y>
+						3300
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1575
+					</x>
+					<y>
+						3350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1625
+					</x>
+					<y>
+						3350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1675
+					</x>
+					<y>
+						3350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1725
+					</x>
+					<y>
+						3350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1775
+					</x>
+					<y>
+						3350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1825
+					</x>
+					<y>
+						3350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1875
+					</x>
+					<y>
+						3350
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1650
+					</x>
+					<y>
+						3400
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1700
+					</x>
+					<y>
+						3400
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1750
+					</x>
+					<y>
+						3400
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1675
+					</x>
+					<y>
+						3450
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1725
+					</x>
+					<y>
+						3450
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						1700
+					</x>
+					<y>
+						3500
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_credits">
+				<position type="fixed">
+					<x>
+						1840
+					</x>
+					<y>
+						3400
+					</y>
+				</position>
+			</object>
+			<object objectDef="sign_up">
+				<position type="fixed">
+					<x>
+						1600
+					</x>
+					<y>
+						3400
+					</y>
+				</position>
+			</object>
+			<object objectDef="door" type="exit" name="levelExit">
+				<position type="fixed">
+					<x>
+						1705
+					</x>
+					<y>
+						3400
+					</y>
+				</position>
+			</object>
+			<object objectDef="sign_left_right">
+				<position type="fixed">
+					<x>
+						2400
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="sign_jump">
+				<position type="fixed">
+					<x>
+						500
+					</x>
+					<y>
+						20
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1518
+					</x>
+					<y>
+						3349
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1403
+					</x>
+					<y>
+						3317
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1373
+					</x>
+					<y>
+						3317
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1248
+					</x>
+					<y>
+						3317
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1218
+					</x>
+					<y>
+						3317
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1079
+					</x>
+					<y>
+						3317
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1050
+					</x>
+					<y>
+						3347
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1049
+					</x>
+					<y>
+						3317
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1050
+					</x>
+					<y>
+						3376
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1050
+					</x>
+					<y>
+						3405
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1129
+					</x>
+					<y>
+						3488
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1158
+					</x>
+					<y>
+						3488
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						929
+					</x>
+					<y>
+						3498
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						729
+					</x>
+					<y>
+						3498
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						681
+					</x>
+					<y>
+						3468
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						721
+					</x>
+					<y>
+						3518
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						771
+					</x>
+					<y>
+						3518
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1222
+					</x>
+					<y>
+						3413
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1254
+					</x>
+					<y>
+						3413
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1380
+					</x>
+					<y>
+						3412
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						1409
+					</x>
+					<y>
+						3412
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						2217
+					</x>
+					<y>
+						522
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						2217
+					</x>
+					<y>
+						592
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						2218
+					</x>
+					<y>
+						659
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						770
+					</x>
+					<y>
+						3594
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						717
+					</x>
+					<y>
+						3594
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						665
+					</x>
+					<y>
+						3569
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						613
+					</x>
+					<y>
+						3509
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						566
+					</x>
+					<y>
+						3427
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						542
+					</x>
+					<y>
+						3330
+					</y>
+				</position>
+			</object>
+			<object objectDef="ring">
+				<position type="fixed">
+					<x>
+						528
+					</x>
+					<y>
+						3197
+					</y>
+				</position>
+			</object>
+			<object objectDef="fan">
+				<position type="fixed">
+					<x>
+						767
+					</x>
+					<y>
+						3621
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						490
+					</x>
+					<y>
+						3061
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						520
+					</x>
+					<y>
+						3061
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						549
+					</x>
+					<y>
+						3061
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						344
+					</x>
+					<y>
+						3062
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						344
+					</x>
+					<y>
+						3032
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						374
+					</x>
+					<y>
+						3062
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						314
+					</x>
+					<y>
+						3062
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						284
+					</x>
+					<y>
+						3062
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						254
+					</x>
+					<y>
+						3062
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						314
+					</x>
+					<y>
+						3032
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						344
+					</x>
+					<y>
+						3003
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						345
+					</x>
+					<y>
+						2973
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						345
+					</x>
+					<y>
+						2943
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						344
+					</x>
+					<y>
+						2913
+					</y>
+				</position>
+			</object>
+			<object objectDef="block3">
+				<position type="fixed">
+					<x>
+						174
+					</x>
+					<y>
+						2895
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						296
+					</x>
+					<y>
+						2915
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						296
+					</x>
+					<y>
+						2965
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						246
+					</x>
+					<y>
+						2915
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						246
+					</x>
+					<y>
+						2965
+					</y>
+				</position>
+			</object>
+			<object objectDef="greenblock">
+				<position type="fixed">
+					<x>
+						196
+					</x>
+					<y>
+						2915
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						558
+					</x>
+					<y>
+						3091
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						484
+					</x>
+					<y>
+						3091
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						143
+					</x>
+					<y>
+						2915
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						186
+					</x>
+					<y>
+						2965
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_totem1">
+				<position type="fixed">
+					<x>
+						160
+					</x>
+					<y>
+						2915
+					</y>
+				</position>
+			</object>
+			<object objectDef="door" type="exit" name="levelExit">
+				<position type="fixed">
+					<x>
+						285
+					</x>
+					<y>
+						2915
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						491
+					</x>
+					<y>
+						3091
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						524
+					</x>
+					<y>
+						3092
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						549
+					</x>
+					<y>
+						3091
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						543
+					</x>
+					<y>
+						3109
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						532
+					</x>
+					<y>
+						3092
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						510
+					</x>
+					<y>
+						3091
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						516
+					</x>
+					<y>
+						3120
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						521
+					</x>
+					<y>
+						3097
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						497
+					</x>
+					<y>
+						3104
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						469
+					</x>
+					<y>
+						3092
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_haha">
+				<position type="fixed">
+					<x>
+						320
+					</x>
+					<y>
+						3092
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						546
+					</x>
+					<y>
+						3132
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						556
+					</x>
+					<y>
+						3099
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						371
+					</x>
+					<y>
+						3265
+					</y>
+				</position>
+			</object>
+		</layer>
+		<layer scroll_speed="1.000000" name="foreground">
+			<object objectDef="amaya">
+				<position type="fixed">
+					<x>
+						500
+					</x>
+					<y>
+						60
+					</y>
+				</position>
+				<cameraFollow/>
+				<inputController>
+					1
+				</inputController>
+			</object>
+			<object objectDef="jouten">
+				<position type="fixed">
+					<x>
+						1700
+					</x>
+					<y>
+						50
+					</y>
+				</position>
+				<inputController>
+					2
+				</inputController>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						240
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						270
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						300
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						330
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						360
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						390
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						420
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						450
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						480
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						510
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						330
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						360
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						390
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						420
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						450
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						480
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						510
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						540
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						570
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						600
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						630
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						660
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						690
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						720
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						750
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						540
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						570
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						600
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						630
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						660
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						690
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						720
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						750
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						780
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						810
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						840
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						870
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						900
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						930
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						150
+					</x>
+					<y>
+						780
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						180
+					</x>
+					<y>
+						780
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						780
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						810
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						840
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						870
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						900
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						930
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						960
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						30
+					</x>
+					<y>
+						960
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						30
+					</x>
+					<y>
+						990
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						30
+					</x>
+					<y>
+						1020
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						60
+					</x>
+					<y>
+						1020
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						60
+					</x>
+					<y>
+						1050
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						60
+					</x>
+					<y>
+						1110
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						60
+					</x>
+					<y>
+						1080
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						960
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						990
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						1020
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						1050
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						1080
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						210
+					</x>
+					<y>
+						1110
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						30
+					</x>
+					<y>
+						1110
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						0
+					</x>
+					<y>
+						1110
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						240
+					</x>
+					<y>
+						1110
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						270
+					</x>
+					<y>
+						1110
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						300
+					</x>
+					<y>
+						1110
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						330
+					</x>
+					<y>
+						1110
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						360
+					</x>
+					<y>
+						1230
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1410
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1440
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						360
+					</x>
+					<y>
+						1470
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						330
+					</x>
+					<y>
+						1470
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1470
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1500
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1530
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1560
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1590
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1380
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1350
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						570
+					</x>
+					<y>
+						1320
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						300
+					</x>
+					<y>
+						1470
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						270
+					</x>
+					<y>
+						1470
+					</y>
+				</position>
+			</object>
+			<object objectDef="door" type="exit">
+				<position type="fixed">
+					<x>
+						330
+					</x>
+					<y>
+						1500
+					</y>
+				</position>
+			</object>
+		</layer>
+		<layer scroll_speed="1.500000" name="foreground_fast">
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						1615
+					</x>
+					<y>
+						-24
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						658
+					</x>
+					<y>
+						-19
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						897
+					</x>
+					<y>
+						-24
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						1279
+					</x>
+					<y>
+						-31
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						1623
+					</x>
+					<y>
+						-28
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						858
+					</x>
+					<y>
+						-13
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						1176
+					</x>
+					<y>
+						-18
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						822
+					</x>
+					<y>
+						-30
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						1326
+					</x>
+					<y>
+						-27
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						522
+					</x>
+					<y>
+						-16
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						1602
+					</x>
+					<y>
+						-15
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						823
+					</x>
+					<y>
+						-6
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						853
+					</x>
+					<y>
+						-9
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						786
+					</x>
+					<y>
+						-3
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						627
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						561
+					</x>
+					<y>
+						-18
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						1524
+					</x>
+					<y>
+						-27
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						1665
+					</x>
+					<y>
+						-12
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						186
+					</x>
+					<y>
+						-27
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower1">
+				<position type="fixed">
+					<x>
+						831
+					</x>
+					<y>
+						0
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						955
+					</x>
+					<y>
+						-12
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						1014
+					</x>
+					<y>
+						-12
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						309
+					</x>
+					<y>
+						-18
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						367
+					</x>
+					<y>
+						-4
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						252
+					</x>
+					<y>
+						-15
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						1257
+					</x>
+					<y>
+						-7
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						354
+					</x>
+					<y>
+						-9
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						187
+					</x>
+					<y>
+						-15
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						55
+					</x>
+					<y>
+						-6
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						1141
+					</x>
+					<y>
+						-19
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						1248
+					</x>
+					<y>
+						-3
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						1278
+					</x>
+					<y>
+						-19
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						1164
+					</x>
+					<y>
+						-3
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						243
+					</x>
+					<y>
+						-6
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						984
+					</x>
+					<y>
+						-18
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						1410
+					</x>
+					<y>
+						-10
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						753
+					</x>
+					<y>
+						-9
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						1354
+					</x>
+					<y>
+						-10
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						27
+					</x>
+					<y>
+						-6
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_flower2">
+				<position type="fixed">
+					<x>
+						118
+					</x>
+					<y>
+						-15
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1614
+					</x>
+					<y>
+						2305
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						957
+					</x>
+					<y>
+						3424
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1080
+					</x>
+					<y>
+						3478
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						127
+					</x>
+					<y>
+						2226
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1801
+					</x>
+					<y>
+						3003
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1393
+					</x>
+					<y>
+						1780
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1117
+					</x>
+					<y>
+						2118
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1140
+					</x>
+					<y>
+						3207
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1687
+					</x>
+					<y>
+						2116
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						457
+					</x>
+					<y>
+						1269
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1272
+					</x>
+					<y>
+						2322
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						213
+					</x>
+					<y>
+						1219
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1560
+					</x>
+					<y>
+						1470
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						870
+					</x>
+					<y>
+						1584
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1012
+					</x>
+					<y>
+						1555
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1011
+					</x>
+					<y>
+						1845
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						645
+					</x>
+					<y>
+						2520
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						499
+					</x>
+					<y>
+						1092
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						468
+					</x>
+					<y>
+						1611
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1290
+					</x>
+					<y>
+						2601
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						651
+					</x>
+					<y>
+						2614
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1098
+					</x>
+					<y>
+						1317
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1719
+					</x>
+					<y>
+						1024
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						951
+					</x>
+					<y>
+						2301
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						255
+					</x>
+					<y>
+						1135
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1341
+					</x>
+					<y>
+						2314
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1299
+					</x>
+					<y>
+						2391
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						169
+					</x>
+					<y>
+						1869
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1773
+					</x>
+					<y>
+						3748
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						699
+					</x>
+					<y>
+						1110
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						555
+					</x>
+					<y>
+						3223
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1386
+					</x>
+					<y>
+						1786
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1764
+					</x>
+					<y>
+						1461
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						738
+					</x>
+					<y>
+						2545
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						801
+					</x>
+					<y>
+						903
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1545
+					</x>
+					<y>
+						2754
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						672
+					</x>
+					<y>
+						2532
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						294
+					</x>
+					<y>
+						1335
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1146
+					</x>
+					<y>
+						2800
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						576
+					</x>
+					<y>
+						3423
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1374
+					</x>
+					<y>
+						1464
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1909
+					</x>
+					<y>
+						1350
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						225
+					</x>
+					<y>
+						1749
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1090
+					</x>
+					<y>
+						993
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1962
+					</x>
+					<y>
+						1195
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						949
+					</x>
+					<y>
+						1653
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						43
+					</x>
+					<y>
+						1725
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1458
+					</x>
+					<y>
+						2562
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						66
+					</x>
+					<y>
+						3780
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1345
+					</x>
+					<y>
+						3429
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1651
+					</x>
+					<y>
+						2815
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						145
+					</x>
+					<y>
+						3027
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						939
+					</x>
+					<y>
+						2953
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1836
+					</x>
+					<y>
+						2265
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1407
+					</x>
+					<y>
+						2706
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						261
+					</x>
+					<y>
+						1099
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1240
+					</x>
+					<y>
+						2470
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						303
+					</x>
+					<y>
+						3885
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						831
+					</x>
+					<y>
+						3528
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1843
+					</x>
+					<y>
+						2764
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1062
+					</x>
+					<y>
+						1845
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						30
+					</x>
+					<y>
+						1099
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1291
+					</x>
+					<y>
+						2727
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1683
+					</x>
+					<y>
+						1609
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						850
+					</x>
+					<y>
+						2076
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						453
+					</x>
+					<y>
+						2449
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1159
+					</x>
+					<y>
+						2848
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1086
+					</x>
+					<y>
+						1773
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						733
+					</x>
+					<y>
+						3873
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1527
+					</x>
+					<y>
+						937
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1467
+					</x>
+					<y>
+						3828
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1161
+					</x>
+					<y>
+						858
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						895
+					</x>
+					<y>
+						3669
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						492
+					</x>
+					<y>
+						2173
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1489
+					</x>
+					<y>
+						3409
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						193
+					</x>
+					<y>
+						864
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1336
+					</x>
+					<y>
+						2823
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						174
+					</x>
+					<y>
+						2235
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1224
+					</x>
+					<y>
+						768
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						64
+					</x>
+					<y>
+						1050
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						901
+					</x>
+					<y>
+						2425
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						504
+					</x>
+					<y>
+						1725
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						261
+					</x>
+					<y>
+						3187
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						66
+					</x>
+					<y>
+						2826
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						496
+					</x>
+					<y>
+						1395
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						672
+					</x>
+					<y>
+						930
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						699
+					</x>
+					<y>
+						1809
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1969
+					</x>
+					<y>
+						1062
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						61
+					</x>
+					<y>
+						3670
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						903
+					</x>
+					<y>
+						3375
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						666
+					</x>
+					<y>
+						2271
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1129
+					</x>
+					<y>
+						2959
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1086
+					</x>
+					<y>
+						1054
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						396
+					</x>
+					<y>
+						1266
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						850
+					</x>
+					<y>
+						753
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1831
+					</x>
+					<y>
+						1815
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						879
+					</x>
+					<y>
+						2985
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1755
+					</x>
+					<y>
+						1962
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						462
+					</x>
+					<y>
+						1908
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1849
+					</x>
+					<y>
+						2509
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1195
+					</x>
+					<y>
+						1768
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1195
+					</x>
+					<y>
+						2911
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1593
+					</x>
+					<y>
+						3004
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						441
+					</x>
+					<y>
+						3720
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1146
+					</x>
+					<y>
+						1222
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						108
+					</x>
+					<y>
+						3235
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						100
+					</x>
+					<y>
+						1705
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1026
+					</x>
+					<y>
+						2538
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1617
+					</x>
+					<y>
+						1411
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1212
+					</x>
+					<y>
+						1140
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						951
+					</x>
+					<y>
+						1633
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1269
+					</x>
+					<y>
+						2502
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						937
+					</x>
+					<y>
+						912
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						769
+					</x>
+					<y>
+						3948
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						223
+					</x>
+					<y>
+						1926
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1932
+					</x>
+					<y>
+						3321
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						475
+					</x>
+					<y>
+						1825
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						846
+					</x>
+					<y>
+						2109
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						886
+					</x>
+					<y>
+						3787
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						1236
+					</x>
+					<y>
+						2178
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1074
+					</x>
+					<y>
+						840
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						984
+					</x>
+					<y>
+						1227
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1461
+					</x>
+					<y>
+						1317
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1476
+					</x>
+					<y>
+						744
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1243
+					</x>
+					<y>
+						870
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1761
+					</x>
+					<y>
+						1041
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1579
+					</x>
+					<y>
+						711
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1887
+					</x>
+					<y>
+						694
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1098
+					</x>
+					<y>
+						1267
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						573
+					</x>
+					<y>
+						1020
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						94
+					</x>
+					<y>
+						1047
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1686
+					</x>
+					<y>
+						901
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						667
+					</x>
+					<y>
+						702
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1833
+					</x>
+					<y>
+						1003
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						597
+					</x>
+					<y>
+						733
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						714
+					</x>
+					<y>
+						930
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1942
+					</x>
+					<y>
+						1005
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						223
+					</x>
+					<y>
+						1261
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						16
+					</x>
+					<y>
+						1099
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						814
+					</x>
+					<y>
+						1266
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						471
+					</x>
+					<y>
+						742
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1327
+					</x>
+					<y>
+						1243
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						712
+					</x>
+					<y>
+						1204
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						94
+					</x>
+					<y>
+						837
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						717
+					</x>
+					<y>
+						1122
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						172
+					</x>
+					<y>
+						1302
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						225
+					</x>
+					<y>
+						1305
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						1215
+					</x>
+					<y>
+						928
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						784
+					</x>
+					<y>
+						1165
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						348
+					</x>
+					<y>
+						1155
+					</y>
+				</position>
+			</object>
+		</layer>
+		<layer scroll_speed="1.000000" name="overlays"/>
+	</map>
+</gameMode>
