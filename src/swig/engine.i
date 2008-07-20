@@ -11,6 +11,7 @@
 
 %module engine
 %{
+#include "../stdafx.h"
 #include "../gameMode.h"
 #include "../gameWorld.h"
 #include "../mapEditor.h"
