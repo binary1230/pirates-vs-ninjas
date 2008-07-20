@@ -97,7 +97,7 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	float halfHeight = PIXELS_TO_METERS(height) / 2;
 
 	bodyDef.position.Set(PIXELS_TO_METERS(x) + halfWidth, PIXELS_TO_METERS(y) + halfHeight);
-	bodyDef.fixedRotation = bDontAllowRotation;
+	// bodyDef.fixedRotation = bDontAllowRotation; // HACK DONT CHECK IN
 	//bodyDef.linearDamping = 0.4f;
 
 	b2Body* pkBody = m_pkPhysicsWorld->CreateBody(&bodyDef);

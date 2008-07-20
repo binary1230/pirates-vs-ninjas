@@ -10,7 +10,6 @@
 #include "xmlParser.h"
 #include "gameSound.h"
 #include "gameModes.h"
-#include "network.h"
 #include "globalDefines.h"
 #include "luaManager.h"
 #include "mapEditor.h"
@@ -142,11 +141,6 @@ int GameState::InitSystem() {
 			return -1;
 		}
 
-		if (InitNetwork() == -1) {
-			TRACE("ERROR: InitSystem: failed to init network!\n");
-			return -1;
-		}
-	
 		TRACE("[init: input subsystem]\n");
 		if (InitInput() == -1) {
 			TRACE("ERROR: InitSystem: failed to init input subsystem!\n");
@@ -194,7 +188,7 @@ int GameState::LoadGameModes() {
  
 int GameState::InitNetwork() {	
 
-#ifndef WIN32 // TODO: Networking disabled (e.g. WAY broken, not even close yet)
+#if 0 // TODO: Networking disabled (e.g. WAY broken, not even close yet)
 
 	int ret;
 	int port = OPTIONS->GetNetworkPortNumber();
@@ -215,7 +209,7 @@ int GameState::InitNetwork() {
 	}
 
 	return ret;
-#endif // WIN32
+#endif 
 
 	return 0;
 }
@@ -449,7 +443,7 @@ void GameState::Shutdown() {
 
 	remove_int(Timer);
 
-#ifndef WIN32 // TODO: Networking disabled (e.g. WAY broken, not even close yet)
+#if 0 // TODO: Networking disabled (e.g. WAY broken, not even close yet)
 	if (network) {
 		network->Shutdown();
 		delete network;

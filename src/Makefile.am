@@ -25,11 +25,15 @@ PRE_CXXCOMPILE = 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 # external/Model_3DS.cpp
 # objects/object3d.h objects/object3d.cpp
 
+# ezsockets, not used
+# external/ezSockets.cpp
+# external/ezSockets.h
+
 headers = \
-external/ezSockets.h external/alogg.h external/aloggdll.h \
+external/alogg.h external/aloggdll.h \
 external/xmlParser.h external/StdString.h external/loadpng.h \
 globals.h gameOptions.h gameState.h \
-timer.h rect.h vector2D.h oggFile.h network.h basename.h \
+timer.h rect.h vector2D.h oggFile.h basename.h \
 window.h assetManager.h gameSound.h mapEditor.h mapEditorGui.h \
 gameMode.h gameModes.h globalDefines.h \
 objectLayer.h objectFactory.h objectIDs.h objects/objectCutBars.h \
@@ -47,10 +51,10 @@ luaManager.h luaApi.h eventManager.h physics.h
 
 ninjas_SOURCES = \
 swig/engine_wrap.cpp \
-external/ezSockets.cpp external/alogg.cpp external/xmlParser.cpp \
+external/alogg.cpp external/xmlParser.cpp \
 external/loadpng.cpp external/regpng.cpp external/savepng.cpp \
 main.cpp gameOptions.cpp gameState.cpp globals.cpp \
-timer.cpp rect.cpp vector2D.cpp oggFile.cpp network.cpp basename.cpp \
+timer.cpp rect.cpp vector2D.cpp oggFile.cpp basename.cpp \
 window.cpp assetManager.cpp gameSound.cpp mapEditor.cpp mapEditorGui.cpp \
 gameMode.cpp gameModes.cpp globalDefines.cpp \
 objectLayer.cpp objectFactory.cpp \
