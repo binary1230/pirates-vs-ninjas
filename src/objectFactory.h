@@ -1,8 +1,6 @@
 #ifndef OBJECT_FACTORY_H
 #define OBJECT_FACTORY_H
 
-#include "stdafx.h"
-
 class Object;
 class ObjectFactory;
 class AssetManager;

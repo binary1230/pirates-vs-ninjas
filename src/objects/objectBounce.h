@@ -1,7 +1,6 @@
 #ifndef BOUNCE_OBJECT_H
 #define BOUNCE_OBJECT_H
 
-#include "stdafx.h"
 #include "object.h"
 
 class ObjectFactory;

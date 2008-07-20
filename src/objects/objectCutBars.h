@@ -4,7 +4,6 @@
 // "cut bar" - the bars that make the screen go into 16x9 mode
 // (like how halo does it)
 
-#include "stdafx.h"
 #include "object.h"
 
 enum CutBarState {

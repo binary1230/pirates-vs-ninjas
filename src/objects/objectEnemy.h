@@ -1,7 +1,6 @@
 #ifndef ENEMY_OBJECT_H
 #define ENEMY_OBJECT_H
 
-#include "stdafx.h"
 #include "object.h"
 
 class ObjectFactory;

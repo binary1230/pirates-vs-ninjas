@@ -1,8 +1,6 @@
 #ifndef COLLECTABLE_OBJECT_H
 #define COLLECTABLE_OBJECT_H
 
-#include "stdafx.h"
-
 #include "object.h"
 
 class GameState;

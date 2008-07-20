@@ -1,7 +1,6 @@
 #ifndef CREDITS_H
 #define CREDITS_H
 
-#include "stdafx.h"
 #include "gameMode.h"
 #include "sprite.h"
 

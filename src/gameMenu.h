@@ -3,8 +3,6 @@
 
 // Note: This class is currently PLACEHOLDER for real menu and UI stuff.
 
-#include "stdafx.h"
-
 #include "gameMode.h"
 #include "sprite.h"
 

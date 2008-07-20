@@ -3,7 +3,6 @@
 
 // TODO: Rename this file to gameWorld.h
 
-#include "stdafx.h"
 #include "gameMode.h"
 
 class Force;

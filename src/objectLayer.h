@@ -1,8 +1,6 @@
 #ifndef OBJECTLAYER_H
 #define OBJECTLAYER_H
 
-#include "stdafx.h"
-
 class Object;
 
 //! A container class representing "layers" (e.g. background, foreground, etc)

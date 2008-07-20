@@ -3,8 +3,6 @@
 #ifndef ARGS_H
 #define ARGS_H
 
-#include "stdafx.h"
-
 //! Holds and validates the various command line and game options
 class GameOptions {
 

@@ -1,7 +1,6 @@
 #ifndef VECTOR2D_H
 #define VECTOR2D_H
 
-#include "stdafx.h"
 #include "globals.h"
 
 typedef b2Vec2 Vector2D;

@@ -1,8 +1,6 @@
 #ifndef ANIMATIONS_H
 #define ANIMATIONS_H
 
-#include "stdafx.h"
-
 #include "animation.h"
 #include "objectIDs.h"
 

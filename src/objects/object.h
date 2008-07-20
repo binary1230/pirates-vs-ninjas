@@ -1,7 +1,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "stdafx.h"
 #include "globals.h"
 
 #include "rect.h"

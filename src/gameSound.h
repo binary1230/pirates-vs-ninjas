@@ -1,8 +1,6 @@
 #ifndef GAMESOUND_H
 #define GAMESOUND_H
 
-#include "stdafx.h"
-
 //! Maps a sound name to it's handle (e.g. "jump" to the sample)
 typedef map<CString, SAMPLE*> SoundMapping;
 typedef map<CString, SAMPLE*>::iterator s_iter;

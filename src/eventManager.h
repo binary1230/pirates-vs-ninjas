@@ -1,8 +1,6 @@
 #ifndef EVENTMANAGER_H
 #define EVENTMANAGER_H
 
-#include "stdafx.h"
-
 class EventManager {
 	DECLARE_SINGLETON_CLASS(EventManager)
 

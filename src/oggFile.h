@@ -1,7 +1,6 @@
 #ifndef OGGFILE_H
 #define OGGFILE_H
 
-#include "stdafx.h"
 #include "globals.h"
 
 class OGGFILE {

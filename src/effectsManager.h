@@ -6,7 +6,6 @@
 //
 // Usually, you get here from the animation frame handler code
 
-#include "stdafx.h"
 #include "globals.h"
 
 class Object;

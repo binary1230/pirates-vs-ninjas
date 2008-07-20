@@ -1,7 +1,6 @@
 #ifndef FANOBJECT_H
 #define FANOBJECT_H
 
-#include "stdafx.h"
 #include "object.h"
 
 class ObjectFactory;

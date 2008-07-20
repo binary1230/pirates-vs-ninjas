@@ -1,7 +1,6 @@
 #ifndef MODELOBJECT_H
 #define MODELOBJECT_H
 
-#include "stdafx.h"
 #include "object.h"
 
 class ObjectFactory;

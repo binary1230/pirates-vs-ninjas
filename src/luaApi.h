@@ -1,8 +1,6 @@
 #ifndef LUA_API_H
 #define LUA_API_H
 
-#include "stdafx.h"
-
 #define LUAAPI
 
 struct LuaApiFunction {

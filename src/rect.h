@@ -1,7 +1,6 @@
 #ifndef RECT_H
 #define RECT_H
 
-#include "stdafx.h"
 #include "vector2D.h"
 
 class _Rect;

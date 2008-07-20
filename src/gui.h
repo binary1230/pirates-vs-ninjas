@@ -1,8 +1,6 @@
 #ifndef _GUI_H
 #define _GUI_H
 
-#include "stdafx.h"
-
 #ifndef WIN32
 class CEGUI::OpenGLRenderer;
 #endif // WIN32

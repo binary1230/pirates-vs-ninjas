@@ -1,7 +1,6 @@
 #ifndef OBJ_TXTOVERLAY_H
 #define OBJ_TXTOVERLAY_H
 
-#include "stdafx.h"
 #include "object.h"
 
 class Sprite;

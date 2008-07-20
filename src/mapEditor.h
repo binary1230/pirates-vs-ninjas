@@ -1,7 +1,6 @@
 #ifndef MAP_EDITOR_H
 #define MAP_EDITOR_H
 
-#include "stdafx.h"
 #include "gameWorld.h"
 #include "mapEditorGui.h"
 

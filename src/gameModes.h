@@ -1,8 +1,6 @@
 #ifndef GAMEMODES_H
 #define GAMEMODES_H
 
-#include "stdafx.h"
-
 class GameMode;
 struct GameModeExitInfo;
 

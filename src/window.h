@@ -2,7 +2,6 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "stdafx.h"
 #include "globals.h"
 #include "rect.h"
 

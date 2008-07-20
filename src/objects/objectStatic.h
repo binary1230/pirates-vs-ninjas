@@ -1,7 +1,6 @@
 #ifndef STILLOBJECT_H
 #define STILLOBJECT_H
 
-#include "stdafx.h"
 #include "object.h"
 
 class ObjectFactory;

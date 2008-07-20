@@ -7,8 +7,6 @@
 #ifndef EZSOCKETS_H
 #define EZSOCKETS_H
 
-#include "stdafx.h"
-
 #if defined(_XBOX)
 // Summary : WinsockX is bad, XTL is good.
 // Explained : WinsockX may rely on some declares 

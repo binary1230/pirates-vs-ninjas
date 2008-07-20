@@ -1,8 +1,6 @@
 #ifndef GLOBALDEFINES_H
 #define GLOBALDEFINES_H
 
-#include "stdafx.h"
-
 /* This class is best illustrated by example:
  * Say you do this: 
  *

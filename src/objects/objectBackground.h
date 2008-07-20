@@ -1,7 +1,6 @@
 #ifndef BackgroundObject_H
 #define BackgroundObject_H
 
-#include "stdafx.h"
 #include "object.h"
 
 class BackgroundObject;

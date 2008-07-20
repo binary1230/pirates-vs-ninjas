@@ -1,7 +1,6 @@
 #ifndef ASSET_MANAGER_H
 #define ASSET_MANAGER_H
 
-#include "stdafx.h"
 #include "globals.h"
 
 /* The primary things the Asset manager does are this:

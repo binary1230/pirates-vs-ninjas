@@ -1,7 +1,6 @@
 #ifndef OBJ_CONTROLLER_H
 #define OBJ_CONTROLLER_H
 
-#include "stdafx.h"
 #include "object.h"
 
 class Sprite;

@@ -1,7 +1,6 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include "stdafx.h"
 #include "globals.h"
 
 //! The max number of "player keys" (e.g. JUMP, LEFT, etc)

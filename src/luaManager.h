@@ -3,8 +3,6 @@
 
 /* Deals with all lua-related setup and init */
 
-#include "stdafx.h"
-
 class LuaManager;
 
 class LuaManager {

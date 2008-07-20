@@ -1,8 +1,6 @@
 #ifndef GAMEMODE_H
 #define GAMEMODE_H
 
-#include "stdafx.h"
-
 //! Holds info about the last mode completed (if wanted)
 struct GameModeExitInfo {
 

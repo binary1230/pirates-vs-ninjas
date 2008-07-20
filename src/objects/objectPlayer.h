@@ -1,7 +1,6 @@
 #ifndef PLAYEROBJECT_H
 #define PLAYEROBJECT_H
 
-#include "stdafx.h"
 #include "object.h"
 
 class ObjectPlayer;

@@ -1,8 +1,6 @@
 #ifndef DOOROBJECT_H
 #define DOOROBJECT_H
 
-#include "stdafx.h"
-
 #include "object.h"
 
 class ObjectFactory;

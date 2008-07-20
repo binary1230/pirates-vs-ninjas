@@ -1,8 +1,6 @@
 #ifndef SPRING_OBJECT_H
 #define SPRING_OBJECT_H
 
-#include "stdafx.h"
-
 #include "object.h"
 
 class ObjectFactory;
