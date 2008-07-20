@@ -38,6 +38,7 @@ objects/objectPlayer.h objects/objectPlayerHuman.h objects/objectBounce.h \
 objects/objectBackground.h objects/objectController.h \
 objects/objectStatic.h objects/objectSpring.h objects/objectTxtOverlay.h \
 objects/objectCollectable.h objects/objectFan.h objects/objectDoor.h \
+objects/objectBridge.h \
 input.h effectsManager.h mapSaver.h\
 animation.h animations.h singleton.h \
 credits.h gameMenu.h gameWorld.h sprite.h precompiled.h stdafx.h \
@@ -59,6 +60,7 @@ objects/objectBounce.cpp objects/objectCutBars.cpp \
 objects/objectBackground.cpp objects/objectController.cpp \
 objects/objectStatic.cpp objects/objectSpring.cpp objects/objectTxtOverlay.cpp \
 objects/objectCollectable.cpp objects/objectFan.cpp objects/objectDoor.cpp \
+objects/objectBridge.cpp \
 input.cpp effectsManager.cpp \
 animation.cpp animations.cpp mapSaver.cpp eventManager.cpp \
 physics.cpp \
