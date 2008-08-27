@@ -860,10 +860,6 @@
 				RelativePath=".\Ninjas.rc"
 				>
 			</File>
-			<File
-				RelativePath="..\OneEye.ico"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Swig"

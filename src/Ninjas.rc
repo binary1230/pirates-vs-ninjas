@@ -54,7 +54,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-allegro_icon            ICON                    "C:\\svn\\ninjas\\OneEye.ico"
+allegro_icon            ICON                    "../OneEye.ico"
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 
