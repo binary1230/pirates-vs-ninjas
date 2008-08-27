@@ -376,7 +376,8 @@ void GameState::Tick()
 	// note: this should really be down() on a lock of some kind rather than
 	// just sleep randomly.
 	while (g_iOutstanding_updates <= 0 && !exit_game) {
-		rest(5);	// 1/30 sec is 33 usec, we sleep for 5 to be conservative
+		// rest(5);	// 1/30 sec is 33 usec, we sleep for 5 to be conservative
+		// SPIN!! (not great..)
 	}
 }
 
