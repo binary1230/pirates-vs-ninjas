@@ -705,18 +705,28 @@ bool ObjectFactory::LoadObjectAnimations(
 			Object* obj, XMLNode &xDef, 
 			AnimationMapping *animation_lookup) {
 
-	int i, iterator, max;
+	uint i;
+	int num_xml_animations, num_animation_slots_needed = -1, iterator;
 
 	Animation* anim = NULL;
 	CString anim_name;
 	XMLNode xAnim, xAnims;
 	
 	xAnims = xDef.getChildNode("animations");
-	max = xAnims.nChildNode("animation");
-	
-	obj->animations.resize(max);
+	num_xml_animations = xAnims.nChildNode("animation");
 
-	for (i=iterator=0; i<max; i++) {
+	if (animation_lookup)
+		num_animation_slots_needed = animation_lookup->size();
+
+	obj->animations.resize(max(num_xml_animations, num_animation_slots_needed));
+
+	// zero out all the animations to NULL
+	for (i = 0; i < obj->animations.size(); ++i)
+		obj->animations[i] = NULL;
+
+	// read everything from XML
+	for (i=iterator=0; i<(uint)num_xml_animations; ++i) 
+	{
 		xAnim = xAnims.getChildNode("animation", &iterator);
 		anim_name = xAnim.getAttribute("name");
 	
@@ -729,13 +739,13 @@ bool ObjectFactory::LoadObjectAnimations(
 		// if we have animation names (e.g. "walking") then use them to figure
 		// out which index we store this animation at
 		// if not, just put it in the next available index
-		int index;
-			
+		uint index;
 		if (animation_lookup)
 			index = (*animation_lookup)[anim_name];
 		else 
 			index = i;
 			
+		assert(index >= 0 && index < obj->animations.size());
 		obj->animations[index] = anim;
 	}
 

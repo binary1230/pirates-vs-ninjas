@@ -19,7 +19,7 @@ void DoorObject::Activate() {
 	door_open_time = 0;
 	WORLD->SetModalObject(this);
 
-	currentAnimation = animations[DOOR_OPENING];
+	PlayAnimation(DOOR_OPENING);
 }
 
 void DoorObject::DoDoorAction() {

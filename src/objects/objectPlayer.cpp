@@ -86,7 +86,7 @@ void PlayerObject::DoWalkThroughDoor() {
 	m_kPlayerState = WALKING_THRU_DOOR;
 
 	// XXX don't have an animation for this yet...
-	currentAnimation = animations[PLAYER_WALKING];
+	PlayAnimation(PLAYER_WALKING);
 
 	if (door_in_front_of_us)
 		door_in_front_of_us->Activate();
@@ -121,7 +121,7 @@ void PlayerObject::DoSlidingDownWall()
 {
 	m_kPlayerState = SLIDING_DOWN_WALL;
 
-	currentAnimation = animations[PLAYER_SLIDING_DOWN_WALL];
+	PlayAnimation(PLAYER_SLIDING_DOWN_WALL);
 
 	if (m_kCurrentCollision.down)
 	{
@@ -178,7 +178,7 @@ void PlayerObject::DoStanding()
 
 	DoCommonGroundStuff();
 
-	currentAnimation = animations[PLAYER_STANDING];
+	PlayAnimation(PLAYER_STANDING);
 
 	if (fabs(accel.x) > 0.0f || fabs(GetVelX()) > 0.0f ) 
 	{
@@ -193,7 +193,7 @@ void PlayerObject::DoWalking()
 	
 	DoCommonGroundStuff();
 	
-	currentAnimation = animations[PLAYER_WALKING];
+	PlayAnimation(PLAYER_WALKING);
 
 	// if we go too slow, then stop us and make us STANDING
 	if (accel.x == 0.0f && fabs(GetVelX()) < min_velocity) 
@@ -270,7 +270,7 @@ void PlayerObject::DoRunning() {
 void PlayerObject::DoJumping() {
 	m_kPlayerState = JUMPING;
 
-	currentAnimation = animations[PLAYER_JUMPING];
+	PlayAnimation(PLAYER_JUMPING);
 
 	if (!DoCommonAirStuff())
 		return;
@@ -292,7 +292,7 @@ void PlayerObject::DoFalling() {
 	m_kPlayerState = FALLING;
 
 	// XXX: should be PLAYER_FALLING when we have one.
-	currentAnimation = animations[PLAYER_JUMPING];
+	PlayAnimation(PLAYER_JUMPING);
 
 	const float fMaxFallVelocity = -50.0f;
 
@@ -370,7 +370,8 @@ void PlayerObject::Update()
 	UpdateSpriteFlip();
 
 	// set the current sprite to the current animation
-	currentSprite = currentAnimation->GetCurrentSprite();
+	if (currentAnimation)
+		currentSprite = currentAnimation->GetCurrentSprite();
 	
 	// this will be set true on each collision with a door
 	door_in_front_of_us = NULL;
