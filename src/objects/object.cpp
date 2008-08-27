@@ -320,12 +320,21 @@ Object::~Object()
 
 void Object::PlayAnimation( uint uiIndex )
 {
-	// assert(uiIndex >=0 && uiIndex < animations.size() && "Animation index out of range.");
+	assert(uiIndex >=0 && uiIndex < animations.size() && "Animation index out of range.");
 
-	if (uiIndex >=0 && uiIndex < animations.size())
-		currentAnimation = animations[uiIndex];
-	else
-		TRACE("ERROR: Animation #%i not found! Can't switch to it.\n", uiIndex);
+	if (uiIndex < 0 || uiIndex >= animations.size())
+	{
+		TRACE("ERROR: Animation #%i is out of range! Can't switch to it.\n", uiIndex);
+		return;
+	}
+
+	if (!animations[uiIndex])
+	{
+		TRACE("ERROR: Animation #%i contains nothing! Can't switch to it.\n", uiIndex);
+		return;
+	}
+
+	currentAnimation = animations[uiIndex];
 }
 
 void Object::SetImpulse( float x, float y )

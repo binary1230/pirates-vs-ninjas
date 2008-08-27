@@ -362,8 +362,8 @@ void PlayerObject::Update()
 
 	HandleInput();
 	
-	assert(currentAnimation != NULL);
-	currentAnimation->Update();
+	if (currentAnimation)
+		currentAnimation->Update();
 
 	ScreenBoundsConstraint();
 	UpdateState();
