@@ -17,7 +17,7 @@
 #include "globalDefines.h"
 #include "physics.h"
 
-#define DEFAULT_JUMP_VELOCITY 10.0f
+#define DEFAULT_JUMP_VELOCITY 8.0f
 #define DEFAULT_DRAG 0.95f
 #define DEFAULT_MIN_VELOCITY 0.3f
 
@@ -154,7 +154,7 @@ void PlayerObject::DoSlidingDownWall()
 		// don't apply any forces
 		accel.x = 0.0f;
 
-		SetVelY(DEFAULT_JUMP_VELOCITY);
+		SetVelY(DEFAULT_JUMP_VELOCITY / 1.1f);
 
 		const float fHorizontalJumpVel = DEFAULT_JUMP_VELOCITY * 2.0f;
 		
@@ -335,7 +335,7 @@ void PlayerObject::DoCommonStuff()
 void PlayerObject::HandleInput() 
 {
 	// static float magnitude = GLOBALS->Value("player_acceleration", magnitude);
-	static float magnitude = 100;
+	static float magnitude = 110;
 
 	// return a force based on 2 inputs.
 	if (INPUT->Key(PLAYERKEY_LEFT, controller_num) && 
@@ -390,7 +390,7 @@ void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint)
 	if (obj->GetProperties().is_fan || obj->GetProperties().is_ball)  
 		return;
 
-	if (obj->GetProperties().is_static && obj->GetProperties().is_physical)
+	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().ignores_collisions)
 	{
 		if (pkContactPoint->normal.y > 0 && pkContactPoint->normal.x == 0.0f)
 			m_kCurrentCollision.down = 1;
@@ -410,7 +410,12 @@ void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint)
 		SpringObject* sObj = (SpringObject*)obj;
 		
 		if (sObj->IsSpringActive())
-			SetVelXY(sObj->GetSpringVector());
+		{
+			accel.x = 0.0f;
+			accel.y = 0.0f;
+			SetVelX(sObj->GetSpringVector().x);
+			SetVelY(sObj->GetSpringVector().y);
+		}
 	}
 
 	if (obj->GetProperties().is_ring)

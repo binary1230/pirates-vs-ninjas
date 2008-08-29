@@ -6,6 +6,7 @@
 #include "assetManager.h"
 #include "gameSound.h"
 #include "effectsManager.h"
+#include "object.h"
 
 AnimFrame::AnimFrame() { Clear(); }
 AnimFrame::~AnimFrame() { Clear(); }
@@ -114,6 +115,13 @@ void Animation::SwitchToNextFrame()
 			SwitchToNextFrame();
 			break;
 
+		case ANIMFRAME_DESTROY:
+
+			if (attachedObject)
+				attachedObject->SetIsDead(true);
+
+			break;
+
 		// not nice for now.
 		default: case ANIMFRAME_INVALID:
 			assert(0 && "ERROR: Got an invalid frame type!");
@@ -203,6 +211,18 @@ bool Animation::CreateSoundFrame(	const CString &soundData,
 	return PushFrame(f);
 }
 
+bool Animation::CreateDestroyFrame()
+{
+	AnimFrame* f = new AnimFrame();
+	assert(f != NULL);
+
+	f->frame_type = ANIMFRAME_DESTROY;
+	f->duration = 0;
+	f->extraData = "";
+
+	return PushFrame(f);
+}
+
 bool Animation::PushFrame(AnimFrame* f) 
 {
 	frames.push_back(f);
@@ -226,7 +246,7 @@ bool Animation::PushFrame(AnimFrame* f)
 //! Does not currently support frames out of order and
 //! other wackiness.  Soon enough, my young apprentice.
 //!
-Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject) 
+Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject) 
 {
 	int duration;
 	CString sprite_filename, frame_type, extraData;
@@ -271,8 +291,8 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject)
 			frame_type = "sprite";
 
 		// figure out what type of frame this is and do The Right Thing
-		if (frame_type == "sprite") {
-
+		if (frame_type == "sprite") 
+		{
 			// normally what happens - you get an image filename
 			sprite_filename = xFrame.getAttribute("name");
 
@@ -296,8 +316,9 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject)
 
 			++numSpriteFrames;
 
-		} else if (frame_type == "effect") {
-		
+		} 
+		else if (frame_type == "effect")
+		{
 			// effect frames don't display anything but instead trigger effects 
 			// such as smoke/dust/etc
 			extraData = xFrame.getAttribute("data");
@@ -308,9 +329,9 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject)
 				SAFE_DELETE(anim);
 				return NULL;
 			}
-
-		} else if (frame_type == "sound") {
-
+		} 
+		else if (frame_type == "sound") 
+		{
 			// sound frames don't display anything but instead trigger sounds 
 			extraData = xFrame.getAttribute("data");
 			assert(extraData.size() != 0);
@@ -320,8 +341,17 @@ Animation* Animation::Load(XMLNode &xAnim, const Object* attachedObject)
 				SAFE_DELETE(anim);
 				return NULL;
 			}
-
-		} else {
+		}
+		else if (frame_type == "destroy") 
+		{
+			if (!anim->CreateDestroyFrame()) {
+				anim->Shutdown();
+				SAFE_DELETE(anim);
+				return NULL;
+			}
+		} 
+		else 
+		{
 
 			TRACE("ERROR: Invalid frame type specified: '%s'\n", 
 							frame_type.c_str());

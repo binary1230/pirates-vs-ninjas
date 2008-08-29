@@ -13,9 +13,10 @@ typedef map<const CString, uint> AnimationMapping;
 //! Sprite - this frame is an image we should display (NORMALLY what happens)
 //! 
 enum AnimFrameType {
-	ANIMFRAME_SPRITE, // this frame displays a sprite
+	ANIMFRAME_SPRITE,   // this frame displays a sprite
 	ANIMFRAME_EFFECT,	// this frame triggers an effect (dust, smoke, etc)
 	ANIMFRAME_SOUND,	// this frame triggers a sound
+	ANIMFRAME_DESTROY,  // this frame destroyes the parent object
 
 	ANIMFRAME_INVALID = -1
 };
@@ -57,7 +58,7 @@ class Animation {
 		AnimFrame* currentFrame;	
 
 		//! Points to the object this animation is associated with
-		const Object* attachedObject;
+		Object* attachedObject;
 
 		//! The number of times that our current frame has been 
 		int elapsed_time;
@@ -94,17 +95,21 @@ class Animation {
 		//! Used in constructing a new animation
 		//! Pushes a sprite frame onto it.
 		bool CreateSpriteFrame(	const char* filename, const int duration, 
-														const bool freeze_at_end, const bool use_alpha );
+								const bool freeze_at_end, const bool use_alpha );
 
 		//! Used in constructing a new animation 
 		//! Pushes a sound frame onto it
 		bool CreateEffectFrame(	const CString &effectData, 
-														const bool freeze_at_end	);
+								const bool freeze_at_end	);
 
 		//! Used in constructing a new animation
 		//! Pushes an effect frame onto it
 		bool CreateSoundFrame(	const CString &effectData, 
-														const bool freeze_at_end	);
+								const bool freeze_at_end	);
+
+		//! Used in constructing a new animation
+		//! When this frame is called we will destroy the parent object
+		bool CreateDestroyFrame();
 		
 		inline int GetWidth() {return width;};
 		inline int GetHeight() {return height;};
@@ -115,7 +120,7 @@ class Animation {
 		~Animation();
 
 		//! Static factory method
-		static Animation* Load(XMLNode &xAnim, const Object* attachedObject);
+		static Animation* Load(XMLNode &xAnim, Object* attachedObject);
 };
 
 #endif // ANIMATION_H

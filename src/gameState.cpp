@@ -406,7 +406,7 @@ void GameState::UpdateFPS()
 		// The new actual FPS rate for the last second:
 		m_iCurrentFps = iAmountOfFramesDrawnSinceLastCheck;
 
-		// TRACE("FPS: %d\n", m_iCurrentFps);
+		TRACE("FPS: %d\n", m_iCurrentFps);
 
 		iAmountOfFramesDrawnSinceLastCheck = 0;
 		iTicksAtLastFrameDrawn = g_iTicks;

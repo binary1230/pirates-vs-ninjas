@@ -655,7 +655,11 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!LoadCommonObjectStuff(obj, xDef, xObj))
 		return NULL;
 
+	obj->properties.uses_new_physics = 1;
 	obj->properties.is_fan = 1;
+	obj->properties.is_physical = 1;
+	obj->properties.is_static = 1;
+	obj->properties.ignores_collisions = 1;
 
 	obj->SetupCachedVariables();
 	return obj;

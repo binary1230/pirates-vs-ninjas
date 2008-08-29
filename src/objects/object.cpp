@@ -49,16 +49,25 @@ void Object::BaseUpdate() {
 
 		pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - width / 2;
 		pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - height / 2;
-		use_rotation = true;
-		rotate_angle = RAD_TO_DEG(-m_pkPhysicsBody->GetAngle());
+		if (!properties.is_fan)
+		{
+			use_rotation = true;
+			rotate_angle = RAD_TO_DEG(-m_pkPhysicsBody->GetAngle());
+		}
 	}
 
 	if (use_rotation)
 	{
-		if (!properties.uses_new_physics)
+		/*if (!properties.uses_new_physics)
 			rotate_angle += rotate_velocity;
 		// else
-			//rotate_angle
+			//rotate_angle*/
+
+		if (properties.is_fan)
+		{
+			// ignore physics for rotation, use our own
+			rotate_angle += rotate_velocity;
+		}
 	}
 }
 

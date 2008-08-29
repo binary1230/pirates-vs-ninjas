@@ -108,6 +108,8 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	shapeDef.restitution = restitution;
 	shapeDef.density = density;
 	shapeDef.isSensor = bSensorOnly;
+	if (bSensorOnly)
+		int x  =3;
 
 	pkBody->CreateShape(&shapeDef);
 

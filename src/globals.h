@@ -21,8 +21,8 @@ typedef unsigned int uint;
 
 // the fps (not ever changed)
 // timestep is 1/FPS
-// #define FPS 60
-#define FPS 30
+#define FPS 60
+// #define FPS 30
 #define TIMESTEP 1/FPS
 
 #define ONEEIGHTY_OVER_PI 57.2957795
