@@ -132,10 +132,120 @@
 			<object objectDef="plane">
 				<position type="fixed">
 					<x>
-						2263
+						2262
 					</x>
 					<y>
-						1330
+						1329
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						436
+					</x>
+					<y>
+						778
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						378
+					</x>
+					<y>
+						756
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						391
+					</x>
+					<y>
+						738
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						400
+					</x>
+					<y>
+						715
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						670
+					</x>
+					<y>
+						742
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						535
+					</x>
+					<y>
+						1089
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						139
+					</x>
+					<y>
+						859
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						166
+					</x>
+					<y>
+						535
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						558
+					</x>
+					<y>
+						346
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						810
+					</x>
+					<y>
+						531
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud2">
+				<position type="fixed">
+					<x>
+						441
+					</x>
+					<y>
+						670
 					</y>
 				</position>
 			</object>
@@ -1045,7 +1155,7 @@
 						0.000000
 					</x>
 					<y>
-						2.500000
+						1.250000
 					</y>
 				</springDirection>
 			</object>
@@ -1063,7 +1173,7 @@
 						0.000000
 					</x>
 					<y>
-						2.500000
+						1.250000
 					</y>
 				</springDirection>
 			</object>
@@ -1081,7 +1191,7 @@
 						0.000000
 					</x>
 					<y>
-						2.500000
+						1.250000
 					</y>
 				</springDirection>
 			</object>
@@ -1099,7 +1209,7 @@
 						0.000000
 					</x>
 					<y>
-						2.500000
+						1.250000
 					</y>
 				</springDirection>
 			</object>
@@ -1117,7 +1227,7 @@
 						0.000000
 					</x>
 					<y>
-						2.500000
+						1.250000
 					</y>
 				</springDirection>
 			</object>
@@ -1135,7 +1245,7 @@
 						0.000000
 					</x>
 					<y>
-						2.500000
+						1.250000
 					</y>
 				</springDirection>
 			</object>
@@ -1153,7 +1263,7 @@
 						0.000000
 					</x>
 					<y>
-						2.500000
+						1.250000
 					</y>
 				</springDirection>
 			</object>
@@ -1824,7 +1934,7 @@
 						0.000000
 					</x>
 					<y>
-						5.000000
+						2.500000
 					</y>
 				</springDirection>
 			</object>
@@ -1842,7 +1952,7 @@
 						0.000000
 					</x>
 					<y>
-						9.000000
+						4.500000
 					</y>
 				</springDirection>
 			</object>
@@ -2081,7 +2191,7 @@
 						0.000000
 					</x>
 					<y>
-						11.250000
+						5.625000
 					</y>
 				</springDirection>
 			</object>
@@ -2299,7 +2409,7 @@
 						0.000000
 					</x>
 					<y>
-						8.750000
+						4.375000
 					</y>
 				</springDirection>
 			</object>
@@ -2314,10 +2424,10 @@
 				</position>
 				<springDirection>
 					<x>
-						6.250000
+						3.125000
 					</x>
 					<y>
-						0.250000
+						0.125000
 					</y>
 				</springDirection>
 			</object>
@@ -2336,7 +2446,7 @@
 						0.000000
 					</x>
 					<y>
-						-6.250000
+						-3.125000
 					</y>
 				</springDirection>
 			</object>
@@ -2352,10 +2462,10 @@
 				</position>
 				<springDirection>
 					<x>
-						-3.500000
+						-1.750000
 					</x>
 					<y>
-						1.125000
+						0.562500
 					</y>
 				</springDirection>
 			</object>
@@ -3429,6 +3539,356 @@
 					</y>
 				</position>
 			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1440
+					</x>
+					<y>
+						2880
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1440
+					</x>
+					<y>
+						2910
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1440
+					</x>
+					<y>
+						2940
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1440
+					</x>
+					<y>
+						2970
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1290
+					</x>
+					<y>
+						2970
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1050
+					</x>
+					<y>
+						3030
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1080
+					</x>
+					<y>
+						3030
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1110
+					</x>
+					<y>
+						3030
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						930
+					</x>
+					<y>
+						3630
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						960
+					</x>
+					<y>
+						3630
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1080
+					</x>
+					<y>
+						3750
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1290
+					</x>
+					<y>
+						3840
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1290
+					</x>
+					<y>
+						3870
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1320
+					</x>
+					<y>
+						3900
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1350
+					</x>
+					<y>
+						3930
+					</y>
+				</position>
+			</object>
+			<object objectDef="spawner">
+				<position type="fixed">
+					<x>
+						1380
+					</x>
+					<y>
+						3960
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1140
+					</x>
+					<y>
+						4050
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						840
+					</x>
+					<y>
+						4020
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						480
+					</x>
+					<y>
+						3930
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						450
+					</x>
+					<y>
+						3930
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						420
+					</x>
+					<y>
+						3930
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						360
+					</x>
+					<y>
+						4080
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						360
+					</x>
+					<y>
+						4050
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						390
+					</x>
+					<y>
+						4230
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						450
+					</x>
+					<y>
+						4320
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						390
+					</x>
+					<y>
+						4200
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						450
+					</x>
+					<y>
+						4350
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						630
+					</x>
+					<y>
+						4470
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						870
+					</x>
+					<y>
+						4500
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1110
+					</x>
+					<y>
+						4440
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1140
+					</x>
+					<y>
+						4440
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1170
+					</x>
+					<y>
+						4440
+					</y>
+				</position>
+			</object>
+			<object objectDef="smallblock">
+				<position type="fixed">
+					<x>
+						1200
+					</x>
+					<y>
+						4440
+					</y>
+				</position>
+			</object>
+			<object objectDef="door" type>
+				<position type="fixed">
+					<x>
+						1170
+					</x>
+					<y>
+						4470
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						930
+					</x>
+					<y>
+						3660
+					</y>
+				</position>
+			</object>
 		</layer>
 		<layer scroll_speed="1.000000" name="foreground">
 			<object objectDef="amaya">
@@ -4002,7 +4462,7 @@
 						0.000000
 					</x>
 					<y>
-						8.750000
+						4.375000
 					</y>
 				</springDirection>
 			</object>
