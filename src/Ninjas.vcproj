@@ -197,6 +197,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\animationeditor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\animations.cpp"
 				>
 			</File>
@@ -544,6 +548,10 @@
 			</File>
 			<File
 				RelativePath=".\animation.h"
+				>
+			</File>
+			<File
+				RelativePath=".\animationeditor.h"
 				>
 			</File>
 			<File

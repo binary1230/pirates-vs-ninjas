@@ -50,7 +50,8 @@ void GameOptions::PrintOptions(const char* arg0) {
 
 		"-X            | disable sound\n\n"
 
-		"-e            | (EXPERIMENTAL) start [loser] map editor\n\n"
+		"-e            | (EXPERIMENTAL) start as map editor\n"
+		"-a            | (EXPERIMENTAL) start as animation editor\n\n"
 
 		"-2            | (DEBUG) use 640x480 instead of 320x240\n"
 		"-z            | (DEBUG) use 800x600 (z?? z?? wtf.)\n"
@@ -96,8 +97,8 @@ void GameOptions::Clear() {
 	draw_graphics = true;
 	wait_for_updates = true;
 
-	 map_editor_enabled = false;
-	//map_editor_enabled = true;
+	map_editor_enabled = false;
+	animation_editor_enabled = false;
 
 	is_valid = true;
 }
@@ -171,7 +172,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 
 	char c;
 
-	while ( (c = getopt(argc,new_argv,"fzwg:m:r:d:X23vsc:p:h89e")) != -1) {
+	while ( (c = getopt(argc,new_argv,"fzwg:m:r:d:X23vsc:p:h89ea")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -180,6 +181,10 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 
 			case 'e':
 				map_editor_enabled = true;
+				break;
+
+			case 'a':
+				animation_editor_enabled = true;
 				break;
 
 			// get demo filename
@@ -328,6 +333,12 @@ bool GameOptions::IsValid() {
 					"of the following: (-c) or (-s servername)\n\n");
 			return (is_valid = false);
 		}
+	}
+
+	if (map_editor_enabled && animation_editor_enabled)
+	{
+		is_valid = false;
+		return false;
 	}
 
 	return (is_valid = true);
