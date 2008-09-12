@@ -33,7 +33,7 @@ bool PhysicsManager::OnWorldInit()
 	// if bodies reach the end of the world, but it will be slower.
 	b2AABB worldAABB;
 	worldAABB.lowerBound.Set(-50.0f, -50.0f);
-	worldAABB.upperBound.Set(fWidthInMeters + 50.0f, fHeightInMeters + 50.0f);
+	worldAABB.upperBound.Set(fWidthInMeters + 100.0f, fHeightInMeters + 100.0f);
 
 	b2Vec2 gravity(0.0f, -15.0f);
 	bool doSleep = true;
@@ -108,8 +108,6 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	shapeDef.restitution = restitution;
 	shapeDef.density = density;
 	shapeDef.isSensor = bSensorOnly;
-	if (bSensorOnly)
-		int x  =3;
 
 	pkBody->CreateShape(&shapeDef);
 

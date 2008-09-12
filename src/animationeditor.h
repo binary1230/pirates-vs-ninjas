@@ -14,6 +14,8 @@ class AnimationEditorMode : public GameMode
 
 			void SetFlashText(char * format, ... );
 
+			void LoadSprite(const char* objectXmlFile);
+
 		public:
 			int Init(XMLNode);
 			void Shutdown();

@@ -98,7 +98,6 @@ void GameOptions::Clear() {
 	wait_for_updates = true;
 
 	map_editor_enabled = false;
-	animation_editor_enabled = false;
 
 	is_valid = true;
 }
@@ -184,7 +183,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 				break;
 
 			case 'a':
-				animation_editor_enabled = true;
+				first_mode = "data/animationeditor.xml"; // such a dumb hacky way to start
 				break;
 
 			// get demo filename
@@ -333,12 +332,6 @@ bool GameOptions::IsValid() {
 					"of the following: (-c) or (-s servername)\n\n");
 			return (is_valid = false);
 		}
-	}
-
-	if (map_editor_enabled && animation_editor_enabled)
-	{
-		is_valid = false;
-		return false;
 	}
 
 	return (is_valid = true);

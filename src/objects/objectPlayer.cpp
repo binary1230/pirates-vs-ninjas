@@ -17,7 +17,7 @@
 #include "globalDefines.h"
 #include "physics.h"
 
-#define DEFAULT_JUMP_VELOCITY 8.0f
+#define DEFAULT_JUMP_VELOCITY 9.0f
 #define DEFAULT_DRAG 0.95f
 #define DEFAULT_MIN_VELOCITY 0.3f
 
@@ -37,9 +37,10 @@ void PlayerObject::ScreenBoundsConstraint() {
 
 	if (pos.x < 0) {
 		SetVelX(0.0f);
-		int newPosX = 2;
-		pos.x = newPosX;
+		int newPosX = 20;
 		m_pkPhysicsBody->SetXForm(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
+		pos.x = newPosX;
+		UpdatePositionFromPhysicsLocation();
 	} else if (pos.x > (WORLD->GetWidth() - width) ) {
 		SetVelX(0.0f);
 		int newPosX = WORLD->GetWidth() - width - 1;
@@ -47,6 +48,7 @@ void PlayerObject::ScreenBoundsConstraint() {
 			b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle()
 		);
 		pos.x = newPosX;
+		UpdatePositionFromPhysicsLocation();
 	}
 }
 
@@ -79,7 +81,7 @@ void PlayerObject::UpdateRunningAnimationSpeed() {
 	else if (fabs(GetVelX()) < 13.0f)
 		currentAnimation->SetSpeedMultiplier(2);// slight fast
 	else 
-		currentAnimation->SetSpeedMultiplier(1);// max
+		currentAnimation->SetSpeedMultiplier(2);// max
 }
 
 void PlayerObject::DoWalkThroughDoor() {
@@ -224,7 +226,7 @@ void PlayerObject::UpdateSkidding() {
 			Object* objSkid = EFFECTS->TriggerObject(this, "skid");
 			
 			if (objSkid) {
-				float skid_vel_x = 6.0f;
+				float skid_vel_x = 100.0f;
 
 				if (GetVelX() < 0.0f)
 					skid_vel_x *= -1.0f;
@@ -321,7 +323,7 @@ void PlayerObject::DoCrouchingDown() {
 void PlayerObject::DoCommonStuff() 
 {	
 	DropBombs();
-	LimitMaxHorizontalVelocityTo(8.0f);
+	LimitMaxHorizontalVelocityTo(10.0f);
 
 	// If we're moving in a different direction than what we want to do, make us slow down faster.
 	// NOTE: Freaks out horizontal springs currently
@@ -335,7 +337,7 @@ void PlayerObject::DoCommonStuff()
 void PlayerObject::HandleInput() 
 {
 	// static float magnitude = GLOBALS->Value("player_acceleration", magnitude);
-	static float magnitude = 110;
+	static float magnitude = 130;
 
 	// return a force based on 2 inputs.
 	if (INPUT->Key(PLAYERKEY_LEFT, controller_num) && 

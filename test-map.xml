@@ -3905,6 +3905,7 @@
 					1
 				</inputController>
 			</object>
+<!--
 			<object objectDef="jouten">
 				<position type="fixed">
 					<x>
@@ -3918,6 +3919,7 @@
 					2
 				</inputController>
 			</object>
+-->
 			<object objectDef="greenblock">
 				<position type="fixed">
 					<x>

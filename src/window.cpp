@@ -96,8 +96,8 @@ void GameWindow::FadeIn(int rate /*=1*/) {
 
 void GameWindow::DrawRect(_Rect &r, int col, bool filled, int alpha) {
 	DrawRect(	(int)r.getx1(), (int)r.gety1(), 
-						(int)r.getx2(), (int)r.gety2(), 
-						col, filled, alpha);
+				(int)r.getx2(), (int)r.gety2(), 
+				col, filled, alpha);
 }
 
 // Draws a level-sized gradient
@@ -163,7 +163,7 @@ void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2,
 	if (filled)
 		glBegin(GL_QUADS); 
 	else
-		glBegin(GL_LINES);
+		glBegin(GL_LINE_LOOP);
 
 	glColor4ub(getr(col1), getg(col1), getb(col1), alpha);
 	glVertex2f(x1, y2);
@@ -181,9 +181,9 @@ void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2,
 }
 
 void GameWindow::DrawRect(	int x1, int y1, 
-														int x2, int y2, 
-														int col, bool filled, int alpha) {
-
+							int x2, int y2, 
+							int col, bool filled, int alpha) 
+{
 	DrawQuad(x1, y1, x2, y2, col, col, col, col, filled, alpha);
 }
 
@@ -219,7 +219,7 @@ void GameWindow::DrawText(int x, int y, CString text) {
 void GameWindow::DrawSprite(Sprite* sprite, int x, int y, 
 							bool flip_x, bool flip_y, 
 							bool use_rotation, float rotate_angle,
-							GLuint alpha) 
+							GLuint alpha, bool bDrawBoundingBoxOnly) 
 {
 	// texture coords
 	// we mess with them if flipping
@@ -252,8 +252,18 @@ void GameWindow::DrawSprite(Sprite* sprite, int x, int y,
 		ty2 = ty3 = 0.0f;
 	}
 
-	glBindTexture(GL_TEXTURE_2D, sprite->texture);
-	glColor4ub(255,255,255,alpha);
+	// -----------------------------------------------
+
+	if (!bDrawBoundingBoxOnly)
+	{
+		glBindTexture(GL_TEXTURE_2D, sprite->texture);
+		glColor4ub(255,255,255,alpha);
+	}
+	else
+	{
+		glDisable(GL_TEXTURE_2D);
+		glColor4ub(255,0,255,255);
+	}
 
 	glLoadIdentity();
 
@@ -267,7 +277,11 @@ void GameWindow::DrawSprite(Sprite* sprite, int x, int y,
 
 	glScalef(sprite->width, sprite->height, 1.0f);
 
-	glBegin(GL_QUADS); 
+	if (!bDrawBoundingBoxOnly)
+		glBegin(GL_QUADS); 
+	else
+		glBegin(GL_LINE_LOOP);
+
     glTexCoord2f(tx1, ty1);
 		glVertex2f(0,1);
 
@@ -279,7 +293,11 @@ void GameWindow::DrawSprite(Sprite* sprite, int x, int y,
 
     glTexCoord2f(tx4, ty4);
 		glVertex2f(1,1);
+
 	glEnd();
+
+	if (bDrawBoundingBoxOnly)
+		glEnable(GL_TEXTURE_2D);
 
 	// extra params not used yet:
 	// sprite->use_alpha, alpha 

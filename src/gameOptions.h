@@ -65,7 +65,6 @@ class GameOptions {
 		bool wait_for_updates;
 
 		bool map_editor_enabled;
-		bool animation_editor_enabled;
 		
 	public:
 		//! Print the list of available options to stdout
@@ -130,7 +129,6 @@ class GameOptions {
 		inline bool		WaitForUpdates() {return wait_for_updates;}
 
 		inline bool 	MapEditorEnabled() {return map_editor_enabled;}
-		inline bool		AnimationEditorEnabled() {return animation_editor_enabled;}
 		
 		virtual ~GameOptions();
 };

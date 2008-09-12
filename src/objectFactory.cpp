@@ -153,8 +153,7 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		
 		parent_include = fileNew.c_str();
 
-		xObjectDefFile = XMLNode::openFileHelper(	fileNew.c_str(), 
-																							"objectDefinitions");
+		xObjectDefFile = XMLNode::openFileHelper( fileNew.c_str(), "objectDefinitions");
 
 		// recursively call ourself to handle this
 		if (!LoadObjectDefsFromXML(xObjectDefFile))
@@ -566,27 +565,22 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj)
 		using_default = false;
 	}
 
-	float x_strength = DEFAULT_SPRING_STRENGTH_X;
-	float y_strength = DEFAULT_SPRING_STRENGTH_Y;
+	obj->spring_vector.x = DEFAULT_SPRING_STRENGTH_X;
+	obj->spring_vector.y = DEFAULT_SPRING_STRENGTH_Y;
 
 	if (!using_default) {
 		if ( xSpringDirection.nChildNode("x") != 1 ||  
-				!xSpringDirection.getChildNode("x").getFloat(x_strength)) {
+				!xSpringDirection.getChildNode("x").getFloat(obj->spring_vector.x)) {
 			TRACE(" -- invalid spring strength (x)!\n");
 			return false;
 		}
 	
 		if ( xSpringDirection.nChildNode("y") != 1 ||  
-				!xSpringDirection.getChildNode("y").getFloat(y_strength)) {
+				!xSpringDirection.getChildNode("y").getFloat(obj->spring_vector.y)) {
 			TRACE(" -- invalid spring strength (y)!\n");
 			return NULL;
 		}
 	}
-
-	const float fGlobalScale = 0.5f;
-
-	obj->spring_vector.x = x_strength * fGlobalScale;
-	obj->spring_vector.y = y_strength * fGlobalScale;
 
 	obj->SetupCachedVariables();
 
@@ -609,6 +603,8 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_door = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
+	obj->properties.uses_new_physics = 1;
+	obj->properties.ignores_collisions = 1;
 	
 	obj->SetupCachedVariables();
 
@@ -660,6 +656,7 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
 	obj->properties.ignores_collisions = 1;
+	obj->properties.do_our_own_rotation = 1;
 
 	obj->SetupCachedVariables();
 	return obj;
@@ -687,6 +684,9 @@ bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 	obj->properties.is_physical = xProps.nChildNode("solidObject") != 0;
 	obj->properties.is_static = xProps.nChildNode("solidObject") != 0;
 
+	obj->properties.do_our_own_rotation = xProps.nChildNode("noPhysicsRotate") != 0; 
+	obj->properties.ignores_collisions = xProps.nChildNode("sensorOnly") != 0; 
+
 	obj->properties.spawns_enemies = xProps.nChildNode("spawnsEnemies") != 0;
 	
 	if (xProps.nChildNode("isOverlay")) {
@@ -700,6 +700,25 @@ bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 		TRACE(" -- invalid spring strength!\n");
 		return false;
 	}*/
+
+	if (xProps.nChildNode("boundingBox") != 0)
+	{
+		XMLNode xBoundingBox = xProps.getChildNode("boundingBox");
+
+		if (!xBoundingBox.nChildNode("offset_x"))
+		{
+			return false;
+		}
+
+		if (!xBoundingBox.getChildNode("offset_x").getInt(obj->b_box_offset_x) ||
+			!xBoundingBox.getChildNode("offset_y").getInt(obj->b_box_offset_y) ||
+			!xBoundingBox.getChildNode("width").getInt(obj->width) ||
+			!xBoundingBox.getChildNode("height").getInt(obj->height))
+		{
+			TRACE("Invalid bounding box info.\n");
+			return false;
+		}
+	}
 
 	return true;
 }

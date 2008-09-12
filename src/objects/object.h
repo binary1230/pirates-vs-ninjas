@@ -44,8 +44,11 @@ struct ObjectProperties
 	//! Note, however, that it will still deal out collision
 	bool ignores_collisions;
 
-	//! Don't rotate if physical
+	//! Don't rotate if physical. e.g. if we want to tip over, don't let us
 	bool ignores_physics_rotation;
+
+	//! Don't let physics touch our rotation, we'll do it ourselves
+	bool do_our_own_rotation;
 
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
@@ -88,6 +91,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_static = 0;
 	p.ignores_collisions = 0;
 	p.ignores_physics_rotation = 0;
+	p.do_our_own_rotation = 0;
 }
 
 // Used for find()
@@ -173,6 +177,8 @@ class Object {
 		//! Do common object updates
 		void BaseUpdate();
 
+		void UpdatePositionFromPhysicsLocation();
+
 		//! Update display times
 		void UpdateDisplayTime();
 
@@ -186,6 +192,10 @@ class Object {
 		//! Width and Height of the object
 		// (we may need to rethink where these come from)
 		int width, height;
+
+		//! Bounding box offsets from the bottom left of the first sprite
+		// (maye need to play with these)
+		int b_box_offset_x, b_box_offset_y;
 
 		//! Rotational parameters
 		float rotate_angle, rotate_velocity;

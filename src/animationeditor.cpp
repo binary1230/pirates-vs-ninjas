@@ -10,7 +10,14 @@ int AnimationEditorMode::Init( XMLNode xMode )
 	m_pkCursorSprite = ASSETMANAGER->LoadSprite("cursor.png", true);
 	assert(m_pkCursorSprite && "Unable to load cursor");
 
+	WINDOW->SetClearColor(50,30,30);
+
 	return true;
+}
+
+void AnimationEditorMode::LoadSprite(const char* objectXmlFile)
+{
+	
 }
 
 void AnimationEditorMode::Shutdown()
@@ -28,14 +35,8 @@ void AnimationEditorMode::Update()
 {
 	INPUT->Update();
 
-	char s[][256] = {
-		{ "hey" }, 
-		{ "hi" }, 
-		{ NULL }
-	};
-
 	if (INPUT->KeyOnce(GAMEKEY_EXIT))
-		GAMESTATE->SignalEndCurrentMode();
+		GAMESTATE->SignalGameExit();
 }
 
 AnimationEditorMode::AnimationEditorMode() :

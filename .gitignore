@@ -1,5 +1,4 @@
 /local
-/*.ii
 /CEGUI.log
 /eventlog-hack.txt
 /a.out
@@ -23,3 +22,5 @@
 /gmon.out
 /AI-results.txt
 /*.swp
+/*.dll
+/libs/*

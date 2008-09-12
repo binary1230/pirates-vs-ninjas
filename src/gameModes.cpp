@@ -12,6 +12,7 @@
 #include "gameOptions.h"
 #include "mapEditor.h"
 #include "luaManager.h"
+#include "animationeditor.h"
 
 void GameModes::Update() {
 	if (signal_game_exit)
@@ -97,18 +98,17 @@ int GameModes::LoadMode(CString mode_xml_filename,
 	TRACE(" AI: Enabling AI Training.\n");
 	#endif
 
-	TRACE(" Mode Info: filename '%s'\n",
-							    mode_xml_filename.c_str() );
+	TRACE(" Mode Info: filename '%s'\n", mode_xml_filename.c_str() );
 
 	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename);
-	XMLNode xMode = XMLNode::openFileHelper(	mode_xml_filename.c_str(), 
-																						"gameMode"	);
+	XMLNode xMode = XMLNode::openFileHelper( mode_xml_filename.c_str(), "gameMode" );
 
 	CString modeType = xMode.getAttribute("type");
 	TRACE(" Mode Info: type = '%s'\n", modeType.c_str());
 
 	// actually create the new mode
-	if (modeType == "simulation") {
+	if (modeType == "simulation") 
+	{
 
 		// slight singleton hack.
 		if (!OPTIONS->MapEditorEnabled()) {
@@ -119,11 +119,21 @@ int GameModes::LoadMode(CString mode_xml_filename,
 
 		currentMode = WORLD;
 
-	} else if (modeType == "credits") {
+	} 
+	else if (modeType == "credits") 
+	{
 		currentMode = new CreditsMode();
-	} else if (modeType == "menu") {
+	} 
+	else if (modeType == "menu") 
+	{
 		currentMode = new GameMenu();
-	} else {
+	} 
+	else if (modeType == "animationeditor")
+	{
+		currentMode = new AnimationEditorMode();
+	}
+	else 
+	{
 		currentMode = NULL;
 	}
 

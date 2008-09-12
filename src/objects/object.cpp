@@ -47,9 +47,9 @@ void Object::BaseUpdate() {
 		m_fImpulseToApplyX = 0.0f;
 		m_fImpulseToApplyY = 0.0f;
 
-		pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - width / 2;
-		pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - height / 2;
-		if (!properties.is_fan)
+		UpdatePositionFromPhysicsLocation();
+
+		if (!properties.do_our_own_rotation)
 		{
 			use_rotation = true;
 			rotate_angle = RAD_TO_DEG(-m_pkPhysicsBody->GetAngle());
@@ -63,7 +63,7 @@ void Object::BaseUpdate() {
 		// else
 			//rotate_angle*/
 
-		if (properties.is_fan)
+		if (properties.do_our_own_rotation)
 		{
 			// ignore physics for rotation, use our own
 			rotate_angle += rotate_velocity;
@@ -91,12 +91,18 @@ void Object::SetupCachedVariables() {
 	level_width  = WORLD->GetWidth();
 	level_height = WORLD->GetHeight();
 	
-	if (animations.size() > 0 && animations[0]) {
-		width = animations[0]->GetWidth();
-		height = animations[0]->GetHeight();
-	} else {
-		width = 0;
-		height = 0;
+	if (width == 0 && height == 0)
+	{
+		if (animations.size() > 0 && animations[0]) 
+		{
+			width = animations[0]->GetWidth();
+			height = animations[0]->GetHeight();
+		} 
+		else 
+		{
+			width = 0;
+			height = 0;
+		}
 	}
 
 	m_bCanCollide |=properties.is_physical ||
@@ -125,7 +131,7 @@ void Object::InitPhysics()
 	// TODO: DONT HARDCORE, I WILL KILL YOU
 	float fDensity = 0.1f;
 	if (properties.is_player)
-		fDensity = 0.01f;
+		fDensity = 0.1f;
 
 	if (properties.uses_new_physics)
 	{
@@ -175,6 +181,7 @@ bool Object::BaseInit() {
 	use_rotation = false;
 	m_fImpulseToApplyX = 0.0f;
 	m_fImpulseToApplyY = 0.0f;
+	b_box_offset_x = b_box_offset_y = 0;
 	return true;
 }
 
@@ -184,16 +191,29 @@ void Object::Draw() {
 	if (tmp_debug_flag)
 		TRACE("DEBUG FLAG!!\n");
 
-	DrawAtOffset(0,0);
+	int flip_offset_x = -b_box_offset_x;
+	int flip_offset_y = 0;
+
+	if (b_box_offset_x)
+	{
+		if (flip_x)
+			flip_offset_x = - currentAnimation->GetWidth() + b_box_offset_x + width;
+
+		flip_offset_y = 63; // HACK
+	}
+
+	DrawAtOffset(flip_offset_x, flip_offset_y);
 }
 
 // TEMP CODE FOR SPRITE OFFSETS
 /*
 int flip_offset_x = 0;
 if (flip_x)
-   flip_offset_x = object.width - image.width
+   flip_offset_x = width - currentAnimation->GetWidth();
 
-img.x = obj.x + img.offset_x + flip_offset_x
+// img.x = pos.x + b_box_offset_x + flip_offset_x
+// e.g.
+true_offset = b_box_offset_x + flip_offset_x;
 */
 
 //! Ultimately we need the actual, on-screen coordinates of where
@@ -261,9 +281,16 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 	if (sprite_to_draw)
 		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha);
 
+	// DEBUG ONLY DONT CHECK IN
+	/*if (sprite_to_draw && (b_box_offset_x || b_box_offset_y))
+	{
+		const bool bOnlyDrawBoundingBox = true;
+		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha, bOnlyDrawBoundingBox);
+	}*/
+
 	// bounding box stuff below.
 
-	/*if (m_bDrawBoundingBox) 
+	if (m_bDrawBoundingBox) 
 	{
 		_Rect bbox_t;
 
@@ -273,7 +300,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 		// draw current bounding rectangle, pink
 		TransformRect(bbox_t);
 		WINDOW->DrawRect(bbox_t, makecol(255,0,255));
-	}*/
+	}
 }
 
 void Object::ResetForNextFrame() 
@@ -373,4 +400,10 @@ void Object::SetImpulse( float x, float y )
 
 	m_fImpulseToApplyX = x;
 	m_fImpulseToApplyY = y;
+}
+
+void Object::UpdatePositionFromPhysicsLocation()
+{
+	pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - width / 2;
+	pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - height / 2;
 }
