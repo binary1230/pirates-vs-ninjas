@@ -37,7 +37,7 @@ int MapEditor::Init(XMLNode xMode) {
 	// Makes all layers scroll at the same rate instead of in parallax
 	//use_scroll_speed = false;
 
-	selection = NULL;
+	m_bIsCurrentSelectionNewObject = true;
 
 	m_iCurrentLayer = 0;
 	m_bDisplayOneLayerOnly = 0;
@@ -55,13 +55,10 @@ int MapEditor::Init(XMLNode xMode) {
 	return ret_val;
 }
 
-void MapEditor::Select(Object* obj) {
-	selection = obj;
-}
-
 void MapEditor::Shutdown() 
 {
-	UnselectCurrentlySelectedObject();
+	if (m_pkSelectedObject && m_bIsCurrentSelectionNewObject)
+		RemoveCurrentlySelectedObject();
 
 	MapSaver mapSaver;
 	mapSaver.SaveEverything(this, "test-map.xml", xObjDefs);
@@ -70,7 +67,23 @@ void MapEditor::Shutdown()
 	GameWorld::Shutdown();
 }
 
-void MapEditor::Draw() {
+void MapEditor::Draw() 
+{
+	switch (m_eCurrentMode)
+	{
+		case MODE_MAIN:
+		case MODE_OBJECT_PLACEMENT:
+			DrawCommonModeStuff();
+			break;
+
+		case MODE_HELP:
+			DrawHelpMode();
+			break;
+	}
+}
+
+void MapEditor::DrawCommonModeStuff()
+{
 	GameWorld::Draw();
 
 	if (m_uiTxtTicksLeft > 0)
@@ -78,6 +91,27 @@ void MapEditor::Draw() {
 
 	// Draw the cursor
 	WINDOW->DrawSprite(cursor_sprite, INPUT->MouseX(), INPUT->MouseY());
+}
+
+void MapEditor::DrawHelpMode()
+{
+	// ghetto macro magic - don't do this, ever. I will kill you.
+	int pos = 10;
+	#define NEXTLINE (pos += 10)
+	#define DRAWTEXT(x) WINDOW->DrawText(10, NEXTLINE, x)
+
+	DRAWTEXT("NINJA'S OWN MAP EDITOR");
+	DRAWTEXT("Note: Soon this will be replaced with a GUI so you won't have to remember keys");
+	DRAWTEXT("Press ESC to go back to map editor.  Press \"/\" to get help again.");
+	NEXTLINE;
+	DRAWTEXT("Common controls:");
+	DRAWTEXT("     ARROW KEYS or W/A/S/D - Scroll ");
+	DRAWTEXT("     PGUP/PGDOWN - Scroll through the different layers");
+	DRAWTEXT("     G - Snap to grid");
+	NEXTLINE;
+	DRAWTEXT("F1 - Go into object placement mode:");
+	DRAWTEXT("     INS/DEL - Scroll up/down through the objects");
+	NEXTLINE;
 }
 
 void MapEditor::SetFlashText(char * format, ... )
@@ -166,30 +200,58 @@ void MapEditor::SelectPreviousLayer()
 
 void MapEditor::ModeUpdate()
 {
-	CommonModeUpdateStart();
-	
-	// Figure out if we go to a different mode now
-	if (INPUT->RealKeyOnce(KEY_F1))
-		m_eCurrentMode = MODE_OBJECT_PLACEMENT;
-	
 	switch (m_eCurrentMode) {
 		default:
 			assert(0 && "Invalid mode.");
 			break;
 
 		case MODE_MAIN:
+			ModeMainUpdate();
 			break; // DO nothing
 
 		case MODE_OBJECT_PLACEMENT:
 			ModeObjectPlacementUpdate();
 			break;
+
+		case MODE_HELP:
+			ModeHelpUpdate();
+			break;
 	}
+}
+
+void MapEditor::ModeMainUpdate()
+{
+	CommonModeUpdateStart();
+
+	if (INPUT->RealKeyOnce(KEY_SLASH))
+		m_eCurrentMode = MODE_HELP;
+
+	if (INPUT->RealKeyOnce(KEY_F1))
+		m_eCurrentMode = MODE_OBJECT_PLACEMENT;
 
 	CommonModeUpdateEnd();
 }
 
+void MapEditor::ModeHelpUpdate()
+{
+	if (INPUT->KeyOnce(GAMEKEY_EXIT)) 
+	{
+		m_eCurrentMode = MODE_MAIN;
+		return;
+	}
+}
+
 void MapEditor::ModeObjectPlacementUpdate()
 {
+	if (INPUT->KeyOnce(GAMEKEY_EXIT)) 
+	{
+		RemoveCurrentlySelectedObject();
+		m_eCurrentMode = MODE_MAIN;
+		return;
+	}
+
+	CommonModeUpdateStart();
+
 	if (OBJECT_FACTORY->GetObjectDefinitionCount() == 0) 
 	{
 		m_eCurrentMode = MODE_MAIN;
@@ -206,6 +268,8 @@ void MapEditor::ModeObjectPlacementUpdate()
 		UnselectCurrentlySelectedObject();
 
 	UpdateCurrentObjectDefinitionIfNeeded();
+
+	CommonModeUpdateEnd();
 }
 
 void MapEditor::CommonModeUpdateStart() 
@@ -320,6 +384,8 @@ void MapEditor::UnselectCurrentlySelectedObject()
 
 void MapEditor::AddNewObjectToWorld( int iObjectDefinitionIndexToAdd )
 {
+	m_bIsCurrentSelectionNewObject = true;
+
 	const CString& sObjectName = OBJECT_FACTORY->GetObjectDefinition(iObjectDefinitionIndexToAdd);
 	SetFlashText("OBJECTS: Looking at object: '%s'", sObjectName.c_str());
 
@@ -346,13 +412,15 @@ void MapEditor::UpdateCurrentObjectDefinitionIfNeeded()
 
 	RemoveCurrentlySelectedObject();
 
-	if (bGetNext) {
+	if (bGetNext) 
+	{
 		m_iCurrentObjectDefinitionIndex++;
 		if (m_iCurrentObjectDefinitionIndex >= OBJECT_FACTORY->GetObjectDefinitionCount())
 			m_iCurrentObjectDefinitionIndex = 0;
 	}
 
-	if (bGetPrevious) {
+	if (bGetPrevious) 
+	{
 		m_iCurrentObjectDefinitionIndex--;
 		if (m_iCurrentObjectDefinitionIndex < 0)
 			m_iCurrentObjectDefinitionIndex = OBJECT_FACTORY->GetObjectDefinitionCount() - 1;

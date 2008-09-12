@@ -121,12 +121,18 @@ void Object::InitPhysics()
 	if (!properties.is_physical)
 		return;
 
+	// WHO'S READY FOR THE HACKS?!?!?!?
+	// TODO: DONT HARDCORE, I WILL KILL YOU
+	float fDensity = 0.1f;
+	if (properties.is_player)
+		fDensity = 0.01f;
+
 	if (properties.uses_new_physics)
 	{
 		if (properties.is_static)
 			m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height, properties.ignores_collisions);
 		else
-			m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height, properties.ignores_physics_rotation);
+			m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height, properties.ignores_physics_rotation, fDensity);
 
 		m_pkPhysicsBody->SetUserData(this);
 	}
@@ -180,6 +186,15 @@ void Object::Draw() {
 
 	DrawAtOffset(0,0);
 }
+
+// TEMP CODE FOR SPRITE OFFSETS
+/*
+int flip_offset_x = 0;
+if (flip_x)
+   flip_offset_x = object.width - image.width
+
+img.x = obj.x + img.offset_x + flip_offset_x
+*/
 
 //! Ultimately we need the actual, on-screen coordinates of where
 //! to draw the sprite.  To get to those from the object's "world" coordinates
@@ -343,7 +358,12 @@ void Object::PlayAnimation( uint uiIndex )
 		return;
 	}
 
+	// do nothing if we're already playing this animation
+	if (currentAnimation == animations[uiIndex])
+		return;
+
 	currentAnimation = animations[uiIndex];
+	currentAnimation->ResetAnimation();
 }
 
 void Object::SetImpulse( float x, float y )

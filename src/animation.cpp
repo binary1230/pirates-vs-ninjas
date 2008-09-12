@@ -115,6 +115,12 @@ void Animation::SwitchToNextFrame()
 			SwitchToNextFrame();
 			break;
 
+		case ANIMFRAME_JUMP:
+
+			// do NOTHING!
+			SwitchToNextFrame();
+			break;
+
 		case ANIMFRAME_DESTROY:
 
 			if (attachedObject)
@@ -221,6 +227,45 @@ bool Animation::CreateDestroyFrame()
 	f->extraData = "";
 
 	return PushFrame(f);
+}
+
+//! Add a JUMP frame to this animation
+//! Think of this like a goto statement -> the next frame will loop back on a previous frame
+//! iFrameToJumpTo is an INDEX starting with ZERO.  The XML is a frame NUMBER that starts at ONE
+bool Animation::CreateJumpFrame( int iFrameToJumpTo ) 
+{				
+	AnimFrame *f = new AnimFrame();
+	assert(f != NULL);
+
+	f->sprite = NULL;
+	f->frame_type = ANIMFRAME_JUMP;
+	f->duration = 0;
+
+	if (!PushFrame(f))
+		return false;
+
+	// we are now the last frame of the sequence
+	int me = frames.size() - 1;
+	
+	if (iFrameToJumpTo < 0 || iFrameToJumpTo >= (int)frames.size())
+	{
+		TRACE("ERROR: A jump frame wants to jump to jump to an illegal frame number: %i", iFrameToJumpTo);
+		return false;
+	}
+	else if (iFrameToJumpTo == me || frames[iFrameToJumpTo] == f)
+	{
+		TRACE("ERROR: A jump frame tried to jump back to itself -> infinite loop");
+		return false;
+	}
+	else if (frames[iFrameToJumpTo]->frame_type == ANIMFRAME_JUMP)
+	{
+		TRACE("ERROR: A jump frame wants to jump to ANOTHER jump frame (disallowed for now), frame number: %i", iFrameToJumpTo);
+		return false;
+	}
+
+	// now that we're all set, let's switch the pointers up
+	f->nextFrame = frames[iFrameToJumpTo];
+	return true;
 }
 
 bool Animation::PushFrame(AnimFrame* f) 
@@ -350,6 +395,22 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 				return NULL;
 			}
 		} 
+		else if (frame_type == "jumpToFrame")
+		{
+			bool bFailed = false;
+			int iFrameIndexToJumpTo;
+
+			bFailed = !xFrame.getAttributeInt("num", iFrameIndexToJumpTo);
+			iFrameIndexToJumpTo--; // subtract one since this is an INDEX not a FRAME NUMBER
+			bFailed = bFailed || !anim->CreateJumpFrame(iFrameIndexToJumpTo);
+
+			if (bFailed)
+			{
+				anim->Shutdown();
+				SAFE_DELETE(anim);
+				return NULL;
+			}
+		}
 		else 
 		{
 

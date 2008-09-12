@@ -287,9 +287,9 @@ void GameWindow::DrawSprite(Sprite* sprite, int x, int y,
 
 void GameWindow::SetClearColor(uint r, uint g, uint b) {
 	glClearColor(	float(r)/256.0f, 
-								float(g)/256.0f, 
-								float(b)/256.0f,
-								1.0f );
+					float(g)/256.0f, 
+					float(b)/256.0f,
+					1.0f );
 }
 
 int GameWindow::Init( uint _width, uint _height, 

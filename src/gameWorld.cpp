@@ -413,7 +413,7 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	if (LoadObjectsFromXML(xMode) == -1) 
 	{
-		TRACE("Failed loading objects from XML");
+		TRACE("ERROR: Failed loading objects from XML\n");
 		return -1;
 	}
 

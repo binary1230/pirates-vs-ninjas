@@ -9,8 +9,8 @@ class Sprite;
 enum MapEditMode 
 {
 	MODE_MAIN,
-
 	MODE_OBJECT_PLACEMENT,
+	MODE_HELP,
 };
 
 class MapEditor : public GameWorld {
@@ -40,7 +40,6 @@ class MapEditor : public GameWorld {
 		virtual ~MapEditor();
 	protected:
 		Sprite* cursor_sprite;
-		Object* selection;
 
 		int m_iCurrentLayer;
 		bool m_bDisplayOneLayerOnly;
@@ -56,18 +55,16 @@ class MapEditor : public GameWorld {
 
 		int m_iCurrentObjectDefinitionIndex;
 		Object* m_pkSelectedObject;
+		bool m_bIsCurrentSelectionNewObject;
 
 		int m_iGridResolution;
 
-		void Select(Object* obj);
 		void SelectPreviousLayer();
 		void SelectNextLayer();
 		void ToggleOneLayerDisplay();
 		void ModeUpdate();
 		void CommonModeUpdateStart();
 		void CommonModeUpdateEnd();
-
-		void ModeObjectPlacementUpdate();
 
 		void UpdateSelectedObjectLayer();
 
@@ -81,6 +78,13 @@ class MapEditor : public GameWorld {
 
 		void RemoveCurrentlySelectedObject();
 		void RePopulateLayerList();
+
+		void DrawCommonModeStuff();
+		void DrawHelpMode();
+
+		void ModeObjectPlacementUpdate();
+		void ModeMainUpdate();
+		void ModeHelpUpdate();
 };
 
 #endif // MAP_EDITOR_H

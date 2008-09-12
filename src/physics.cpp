@@ -122,10 +122,10 @@ b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, f
 	return CreatePhysicsBox(x,y,width,height, 0.0f, 0.0f, 0.2f, false, bSensorOnly );
 }
 
-b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation )
+b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation, float fDensity )
 {
 	// TODO: Don't hardcode these numbers.
-	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, 0.1f, 0.0f, 0.2f, bDontAllowRotation);
+	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, fDensity, 0.0f, 0.2f, bDontAllowRotation);
 	pkBody->SetMassFromShapes();
 	return pkBody;
 }

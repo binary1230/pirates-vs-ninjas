@@ -17,6 +17,7 @@ enum AnimFrameType {
 	ANIMFRAME_EFFECT,	// this frame triggers an effect (dust, smoke, etc)
 	ANIMFRAME_SOUND,	// this frame triggers a sound
 	ANIMFRAME_DESTROY,  // this frame destroyes the parent object
+	ANIMFRAME_JUMP,  // this frame destroyes the parent object
 
 	ANIMFRAME_INVALID = -1
 };
@@ -33,9 +34,9 @@ struct AnimFrame {
 	AnimFrameType frame_type;
 
 	// ONLY ONE of the following is used depending on frame_type.
-	Sprite* sprite;				//! Sprite data if ANIMFRAME_SPRITE
+	Sprite* sprite;			//! Sprite data if ANIMFRAME_SPRITE
 	CString extraData;		//! Extra frame data for use with ANIMFRAME_EFFECT
-												//! or ANIMFRAME_SOUND
+							//! or ANIMFRAME_SOUND
 
 	// really just helpers.
 	AnimFrame();
@@ -110,6 +111,10 @@ class Animation {
 		//! Used in constructing a new animation
 		//! When this frame is called we will destroy the parent object
 		bool CreateDestroyFrame();
+
+		//! Used in constructing a new animation
+		//! When this frame is called we will jump to a different frame #
+		bool CreateJumpFrame( int iFrameToJumpTo );
 		
 		inline int GetWidth() {return width;};
 		inline int GetHeight() {return height;};
