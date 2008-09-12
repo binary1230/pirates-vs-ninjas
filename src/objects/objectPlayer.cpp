@@ -71,7 +71,13 @@ void PlayerObject::UpdateSpriteFlip() {
 	}
 }
 
-void PlayerObject::UpdateRunningAnimationSpeed() {
+void PlayerObject::UpdateRunningAnimationSpeed() 
+{
+
+	// HACK?
+	if (m_bShouldNotSwitchAnimationsRightNow)
+		return;
+
 	// alter the speed of the animation based on the velocity
 	// TRACE("vel=%f\n", fabs(vel.x));
 	if (fabs(GetVelX()) < 3.0f)
@@ -322,7 +328,7 @@ void PlayerObject::DoCrouchingDown() {
 // Do things common to most every state
 void PlayerObject::DoCommonStuff() 
 {	
-	DropBombs();
+	DropBombsIfNeeded();
 	LimitMaxHorizontalVelocityTo(10.0f);
 
 	// If we're moving in a different direction than what we want to do, make us slow down faster.
@@ -432,6 +438,7 @@ bool PlayerObject::Init()
 	m_kPlayerState = FALLING; 
 	door_in_front_of_us = NULL;
 	ring_count = 0;
+	m_bShouldNotSwitchAnimationsRightNow = false;
 
 	return BaseInit();
 }
@@ -508,84 +515,45 @@ void PlayerObject::UpdateState() {
 	}
 }
 
-void PlayerObject::DropBombs()
+void PlayerObject::DropBombsIfNeeded()
 {
-	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num) && 
-		m_kPlayerState != WALKING_THRU_DOOR) 
-	{	
-		Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
-		if (!objBall)
-			return;
+	if (m_kPlayerState == WALKING_THRU_DOOR)
+		return;
 
-		float sign = flip_x ? -1 : 1;
-		float strength = 0.5;
+	int iAttackAnimation = -1;
 
-		if (GetInput(PLAYERKEY_UP, controller_num))
-			objBall->SetImpulse(0.0f, strength);
-
-		else if (GetInput(PLAYERKEY_DOWN, controller_num))
-			objBall->SetImpulse(0.0f, strength*0.1);
-
-		else
-			objBall->SetImpulse(sign * strength, strength / 3.0);
+	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num)) 
+	{
+		iAttackAnimation = PLAYER_ATTACK1 + Rand(0,1);
+	} 
+	else if (INPUT->KeyOnce(PLAYERKEY_ACTION2, controller_num))
+	{
+		iAttackAnimation = PLAYER_ATTACK3;
 	}
 
+	if (iAttackAnimation == -1)
+		return;
 
-	// ORIG PHYSICS TEST CODE:
-	/*if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num) && 
-		m_kPlayerState != WALKING_THRU_DOOR) 
-	{	
-		b2Body* pkBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, 15, 10);
+	PlayAnimation(iAttackAnimation);
+	currentAnimation->SetSpeedMultiplier(1);
+	m_bShouldNotSwitchAnimationsRightNow = true;
 
-		float sign = flip_x ? -1 : 1;
-		float strength = 0.1;
+	if (iAttackAnimation != PLAYER_ATTACK3)
+		return;
 
-		if (GetInput(PLAYERKEY_UP, controller_num))
-			pkBody->ApplyImpulse(b2Vec2(0.0f, strength*1.7), pkBody->GetWorldCenter());
+	Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
+	if (!objBall)
+		return;
 
-		else if (GetInput(PLAYERKEY_DOWN, controller_num))
-			pkBody->ApplyImpulse(b2Vec2(0.0f, strength*1.7), pkBody->GetWorldCenter());
+	float sign = flip_x ? -1 : 1;
+	float strength = 0.4;
 
-		else
-			pkBody->ApplyImpulse(b2Vec2(sign * strength, strength / 3.0f), pkBody->GetWorldCenter());
-	}
-
-	return;
-	*/
-
-	// ORIGINAL CODE:
-
-	/*
-	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num) && 
-		m_kPlayerState != WALKING_THRU_DOOR) 
-	{	
-		int strength;
-		if (!GLOBALS->Value("bomb_throw_strength", strength))
-			return;
-
-		Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
-
-		if (!objBall)
-			return;
-
-		float sign;
-		if (flip_x)
-			sign = -1;
-		else
-			sign = 1;
-
-		if (GetInput(PLAYERKEY_UP, controller_num))
-			objBall->SetVelXY(0.0f, vel.y + strength*1.7);
-
-		else if (GetInput(PLAYERKEY_DOWN, controller_num))
-			objBall->SetVelXY(0.0f, vel.y - strength);
-
-		else
-			objBall->SetVelXY(sign * strength + vel.x, vel.y + 6.0f);
-
-		//objBall->SetVelXY(vel.x, 0.0f);
-	}
-	*/
+	if (GetInput(PLAYERKEY_UP, controller_num))
+		objBall->SetImpulse(0.0f, strength);
+	else if (GetInput(PLAYERKEY_DOWN, controller_num))
+		objBall->SetImpulse(0.0f, strength*0.1);
+	else
+		objBall->SetImpulse(sign * strength, strength / 3.0);
 }
 
 void PlayerObject::LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity )
@@ -604,4 +572,17 @@ void PlayerObject::LimitMaxVerticalVelocityTo( float fMaxVerticalVelocity )
 
 	if (GetVelY() < -fMaxVerticalVelocity)
 		SetVelY(-fMaxVerticalVelocity);
+}
+
+void PlayerObject::OnAnimationLooped()
+{
+	m_bShouldNotSwitchAnimationsRightNow = false;
+}
+
+void PlayerObject::PlayAnimation(uint uiIndex)
+{
+	if (m_bShouldNotSwitchAnimationsRightNow)
+		return;
+
+	Object::PlayAnimation(uiIndex);
 }

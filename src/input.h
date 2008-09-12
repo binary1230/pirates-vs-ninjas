@@ -4,7 +4,7 @@
 #include "globals.h"
 
 //! The max number of "player keys" (e.g. JUMP, LEFT, etc)
-#define PLAYERKEY_COUNT					6
+#define PLAYERKEY_COUNT					7
 
 //! The player keys (these are NOT indices into game_key[])
 //! These constants are used with a controller number
@@ -15,6 +15,7 @@
 #define PLAYERKEY_UP					3
 #define PLAYERKEY_DOWN					4
 #define PLAYERKEY_ACTION1				5
+#define PLAYERKEY_ACTION2				6
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 // The logical mapping of the keys
@@ -28,25 +29,27 @@
 #define PLAYERKEY1_UP					3
 #define PLAYERKEY1_DOWN					4
 #define PLAYERKEY1_ACTION1				6
+#define PLAYERKEY1_ACTION2				7
 
-#define PLAYERKEY2_JUMP 				7
-#define PLAYERKEY2_LEFT					8
-#define PLAYERKEY2_RIGHT				9
-#define PLAYERKEY2_UP					10
-#define PLAYERKEY2_DOWN					11
-#define PLAYERKEY2_ACTION1				12
+#define PLAYERKEY2_JUMP 				8
+#define PLAYERKEY2_LEFT					9
+#define PLAYERKEY2_RIGHT				10
+#define PLAYERKEY2_UP					11
+#define PLAYERKEY2_DOWN					12
+#define PLAYERKEY2_ACTION1				13
+#define PLAYERKEY2_ACTION2				14
 
-#define GAMEKEY_EXIT					13
-#define GAMEKEY_START					14
-#define GAMEKEY_DEBUGPAUSE				15
-#define GAMEKEY_DEBUGSTEP				16
-#define GAMEKEY_SCREENSHOT				17
-#define GAMEKEY_TOGGLE_PHYSICS_DISPLAY	18
+#define GAMEKEY_EXIT					15
+#define GAMEKEY_START					16
+#define GAMEKEY_DEBUGPAUSE				17
+#define GAMEKEY_DEBUGSTEP				18
+#define GAMEKEY_SCREENSHOT				19
+#define GAMEKEY_TOGGLE_PHYSICS_DISPLAY	20
 
 /* End of logical mapping */
 
 //! The max number of defined keys 
-#define GAMEKEY_COUNT						19
+#define GAMEKEY_COUNT						21
 
 enum MouseClickType {
 	MOUSE_LEFT_BTN		= 0x00000001,

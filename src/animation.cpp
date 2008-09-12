@@ -136,6 +136,9 @@ void Animation::SwitchToNextFrame()
 
 	// the next frame MUST BE a sprite frame.
 	assert(currentFrame->frame_type == ANIMFRAME_SPRITE);
+
+	if (currentFrame == frames[0] && attachedObject)
+		attachedObject->OnAnimationLooped();
 }
 
 //! Reset this animation back to the first frame

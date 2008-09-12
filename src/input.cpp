@@ -18,6 +18,7 @@
 #define DEFAULT_PLAYERKEY_P1_UP 			KEY_UP
 #define DEFAULT_PLAYERKEY_P1_DOWN			KEY_DOWN
 #define DEFAULT_PLAYERKEY_P1_ACTION1		KEY_D
+#define DEFAULT_PLAYERKEY_P1_ACTION2		KEY_F
 
 // Player 2 default game keys
 #define DEFAULT_PLAYERKEY_P2_JUMP			KEY_E
@@ -26,6 +27,7 @@
 #define DEFAULT_PLAYERKEY_P2_UP 			KEY_HOME
 #define DEFAULT_PLAYERKEY_P2_DOWN			KEY_END
 #define DEFAULT_PLAYERKEY_P2_ACTION1		KEY_3
+#define DEFAULT_PLAYERKEY_P2_ACTION2		KEY_4
 
 // Other keys
 #define DEFAULT_GAMEKEY_EXIT					KEY_ESC
@@ -441,6 +443,7 @@ void Input::LoadDefaultKeyMappings() {
 	gamekey_to_realkey[PLAYERKEY_UP+player1_offset] 	=DEFAULT_PLAYERKEY_P1_UP;
 	gamekey_to_realkey[PLAYERKEY_DOWN+player1_offset] =DEFAULT_PLAYERKEY_P1_DOWN;
 	gamekey_to_realkey[PLAYERKEY_ACTION1+player1_offset] =DEFAULT_PLAYERKEY_P1_ACTION1;
+	gamekey_to_realkey[PLAYERKEY_ACTION2+player1_offset] =DEFAULT_PLAYERKEY_P1_ACTION2;
 
 	gamekey_to_realkey[PLAYERKEY_JUMP+player2_offset] =DEFAULT_PLAYERKEY_P2_JUMP;
 	gamekey_to_realkey[PLAYERKEY_LEFT+player2_offset] =DEFAULT_PLAYERKEY_P2_LEFT;
@@ -448,6 +451,7 @@ void Input::LoadDefaultKeyMappings() {
 	gamekey_to_realkey[PLAYERKEY_UP+player2_offset] 	=DEFAULT_PLAYERKEY_P2_UP;
 	gamekey_to_realkey[PLAYERKEY_DOWN+player2_offset] =DEFAULT_PLAYERKEY_P2_DOWN;
 	gamekey_to_realkey[PLAYERKEY_ACTION1+player2_offset] =DEFAULT_PLAYERKEY_P2_ACTION1;
+	gamekey_to_realkey[PLAYERKEY_ACTION2+player2_offset] =DEFAULT_PLAYERKEY_P2_ACTION2;
 
 	gamekey_to_realkey[GAMEKEY_EXIT] = DEFAULT_GAMEKEY_EXIT;
 	gamekey_to_realkey[GAMEKEY_START] = DEFAULT_GAMEKEY_START;
@@ -592,12 +596,14 @@ void Input::UpdateLive() {
 // TODO: Move this to another file. please.
 #define XBOX_CONTROLLER_A 					0
 #define XBOX_CONTROLLER_B 					1
+#define XBOX_CONTROLLER_X 					2
 
 #define XBOX360_CONTROLLER_DPAD 	1
 
 // map joystick buttons to physical joystick
 #define JOY_BTN_JUMP				XBOX_CONTROLLER_A
 #define JOY_BTN_ACTION1				XBOX_CONTROLLER_B
+#define JOY_BTN_ACTION2				XBOX_CONTROLLER_X
 #define JOY_AXIS_DPAD				XBOX360_CONTROLLER_DPAD
 
 //! OK, a quick hack for joysticks
@@ -639,6 +645,10 @@ void Input::DoJoystickUpdateHack() {
 
 				case JOY_BTN_ACTION1:
 					key = PLAYERKEY_ACTION1;
+					break;
+
+				case JOY_BTN_ACTION2:
+					key = PLAYERKEY_ACTION2;
 					break;
 
 				default:	// then we don't care

@@ -17,6 +17,9 @@ AnimationMapping GetPlayerAnimationMappings() {
 	animation["sliding"] = PLAYER_SLIDING_DOWN_WALL;
 	animation["jumping"] = PLAYER_JUMPING;
 	animation["lookup"] = PLAYER_LOOKUP;
+	animation["attack1"] = PLAYER_ATTACK1;
+	animation["attack2"] = PLAYER_ATTACK2;
+	animation["attack3"] = PLAYER_ATTACK3;
 	return animation;
 }
 

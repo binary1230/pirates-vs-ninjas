@@ -236,7 +236,7 @@ class Object {
 
 		// TODO: Make this take an animation code, for now it just takes the index of the animation 
 		// as defined by the order we found them in the XML file.  Very prone to errors. HACKY
-		void PlayAnimation(uint uiIndex);
+		virtual void PlayAnimation(uint uiIndex);
 
 		void SetDrawBounds(bool bDrawBounds) {m_bDrawBoundingBox = bDrawBounds;}
 		
@@ -358,6 +358,9 @@ class Object {
 		
 		//! Handle collisions with another object
 		virtual void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
+		
+		// When an animation we're playing loops, we get this call
+		virtual void OnAnimationLooped() {};
 
 		inline bool IsDead() const {return is_dead;};
 		inline void SetIsDead(bool bVal) {is_dead = bVal;}

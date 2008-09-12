@@ -60,7 +60,7 @@ class PlayerObject : public Object {
 		void LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity );
 		void LimitMaxVerticalVelocityTo( float fMaxVerticalVelocity );
 
-		void DropBombs();
+		void DropBombsIfNeeded();
 
 		void DoStanding();
 		void DoWalking();
@@ -92,15 +92,20 @@ class PlayerObject : public Object {
 		// If the running animation is a skateboard (only set at init time)
 		bool on_skateboard;
 
+		bool m_bShouldNotSwitchAnimationsRightNow;
+
 	public:
-		bool Init();
-		void Shutdown();
+		virtual bool Init();
+		virtual void Shutdown();
 		
 		//! Load object properties from XML
 		bool LoadPlayerProperties(XMLNode &xDef);		
 		
-		void Update();
-		void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
+		virtual void Update();
+		virtual void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
+
+		virtual void OnAnimationLooped();
+		virtual void PlayAnimation(uint uiIndex);
 		
 		int GetNumRings() {return ring_count;};
 			
