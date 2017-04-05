@@ -38,13 +38,13 @@ void PlayerObject::ScreenBoundsConstraint() {
 	if (pos.x < 0) {
 		SetVelX(0.0f);
 		int newPosX = 20;
-		m_pkPhysicsBody->SetXForm(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
+		m_pkPhysicsBody->SetTransform(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
 		pos.x = newPosX;
 		UpdatePositionFromPhysicsLocation();
 	} else if (pos.x > (WORLD->GetWidth() - width) ) {
 		SetVelX(0.0f);
 		int newPosX = WORLD->GetWidth() - width - 1;
-		m_pkPhysicsBody->SetXForm(
+		m_pkPhysicsBody->SetTransform(
 			b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle()
 		);
 		pos.x = newPosX;
@@ -157,7 +157,7 @@ void PlayerObject::DoSlidingDownWall()
 		// HACK: offset just the tiniest amount to make us not collide with the wall anymore.
 		const int iOffset = 3;
 		int iHackPixelOffset = m_kCurrentCollision.left ? iOffset : -iOffset;
-		m_pkPhysicsBody->SetXForm(m_pkPhysicsBody->GetWorldCenter() + b2Vec2(PIXELS_TO_METERS(iHackPixelOffset), 0.0f), m_pkPhysicsBody->GetAngle());
+		m_pkPhysicsBody->SetTransform(m_pkPhysicsBody->GetWorldCenter() + b2Vec2(PIXELS_TO_METERS(iHackPixelOffset), 0.0f), m_pkPhysicsBody->GetAngle());
 
 		// don't apply any forces
 		accel.x = 0.0f;
@@ -385,10 +385,10 @@ void PlayerObject::Update()
 	door_in_front_of_us = NULL;
 
 	// apply the acceleration
-	m_pkPhysicsBody->ApplyForce(accel, m_pkPhysicsBody->GetWorldCenter());
+	m_pkPhysicsBody->ApplyForce(accel, m_pkPhysicsBody->GetWorldCenter(), true);
 }
 
-void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) 
+void PlayerObject::OnCollide(Object* obj, const b2Contact* pkb2Contact) 
 {
 	if (obj->GetProperties().is_door) {
 		door_in_front_of_us = (DoorObject*)obj;
@@ -400,16 +400,19 @@ void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint)
 
 	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().ignores_collisions)
 	{
-		if (pkContactPoint->normal.y > 0 && pkContactPoint->normal.x == 0.0f)
+		b2WorldManifold worldManifold; 
+		pkb2Contact->GetWorldManifold(&worldManifold);
+
+		if (worldManifold.normal.y > 0 && worldManifold.normal.x == 0.0f)
 			m_kCurrentCollision.down = 1;
 
-		if (pkContactPoint->normal.y < 0 && pkContactPoint->normal.x == 0.0f)
+		if (worldManifold.normal.y < 0 && worldManifold.normal.x == 0.0f)
 			m_kCurrentCollision.up = 1;
 
-		if (pkContactPoint->normal.x > 0 && pkContactPoint->normal.y == 0.0f)
+		if (worldManifold.normal.x > 0 && worldManifold.normal.y == 0.0f)
 			m_kCurrentCollision.left = 1;
 
-		if (pkContactPoint->normal.x < 0 && pkContactPoint->normal.y == 0.0f)
+		if (worldManifold.normal.x < 0 && worldManifold.normal.y == 0.0f)
 			m_kCurrentCollision.right = 1;
 	}
 

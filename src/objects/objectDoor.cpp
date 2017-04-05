@@ -41,12 +41,12 @@ void DoorObject::DoDoorAction() {
 		
 		case SWITCH_TO_ANOTHER_MODE: 
 
-			if (door_name.size() > 0) {
+			if (door_name.GetLength() > 0) {
 				exitInfo.useLastPortalName = true;
 				exitInfo.lastPortalName = door_name;
 			}
 
-			if (mode_to_jump_to_on_activate.size() > 0) {
+			if (mode_to_jump_to_on_activate.GetLength() > 0) {
 				exitInfo.useNextModeToLoad = true;
 				exitInfo.nextModeToLoad = mode_to_jump_to_on_activate;
 			}
@@ -64,7 +64,7 @@ void DoorObject::DoDoorAction() {
 				exitInfo.lastPortalName = oldExitInfo.lastPortalName;
 			}
 
-			if (oldExitInfo.useExitInfo && oldExitInfo.lastModeName.size() > 0) {
+			if (oldExitInfo.useExitInfo && oldExitInfo.lastModeName.GetLength() > 0) {
 				exitInfo.useNextModeToLoad = true;
 				exitInfo.nextModeToLoad = oldExitInfo.lastModeName;
 			}

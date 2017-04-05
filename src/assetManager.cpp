@@ -24,7 +24,7 @@ void AssetManager::FreeSamples() {
 	SampleListIter i;
 	for (i = samples.begin(); i != samples.end(); i++) {
 		if (i->second)
-			destroy_sample(i->second);
+			al_destroy_sample(i->second);
 	}
 	samples.clear();
 	if (SOUND)
@@ -47,21 +47,13 @@ void AssetManager::FreeSprites() {
 	sprites.clear();
 }
 
-/*void AssetManager::FreeSongs() {
-	SongListIter i;
-	for (i = songs.begin(); i != songs.end(); i++) {
-		if (i->second)
-			(i->second);
-	}
-	songs.clear();
-}*/
-
 void AssetManager::FreeMusic() {
+	/* TEMP 
 	if (music) {
 		music->Shutdown();
 		delete music;
 		music = NULL;
-	}
+	}*/
 }
 
 void AssetManager::Shutdown() {	
@@ -116,13 +108,11 @@ bool AssetManager::FileExists(const char* file) const {
 
 //! Opens a bitmap, utilizes the search paths
 // XXX: Need to fix alpha blending
-Sprite* AssetManager::LoadSprite(	const char* filename, 
-									bool use_alpha, 
-									PALETTE* pal) 
+Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha) 
 {	
 	Sprite* sprite = NULL;
 	
-	int original_bpp = get_color_depth();
+	// TEMP //  int original_bpp = get_color_depth();
 	
 	// 1) See if this bitmap is already loaded
 	SpriteListIter i = sprites.find(filename);
@@ -133,40 +123,39 @@ Sprite* AssetManager::LoadSprite(	const char* filename,
 
 	// 2) Try to open the file
 	CString file = GetPathOf(filename);
-	if (file.length() != 0) {
+	if (file.GetLength() != 0) {
 
 		sprite = new Sprite();
 		assert(sprite && "ERROR: Out of memory, can't allocate sprite!\n");
 	
 		if (use_alpha) {
-			set_color_depth(32);
+			// TEMP // set_color_depth(32);
 		}
 			
-		BITMAP* bmp = load_bitmap(file, *pal);
+		ALLEGRO_BITMAP* bmp = al_load_bitmap(file);
 	
 		if (!bmp) {
-			TRACE("ERROR: Can't load bitmap file: '%s'\n", file.c_str());
+			TRACE("ERROR: Can't load bitmap file: '%s'\n", file);
 			delete sprite;
 			return NULL;
 		}
 
-		sprite->width = bmp->w;
-		sprite->height = bmp->h;
+		sprite->width = al_get_bitmap_width(bmp);
+		sprite->height = al_get_bitmap_height(bmp);
 
 		// make the OpenGL texture
 		// this makes a copy of the bitmap
 		if (!use_alpha)
-			sprite->texture = allegro_gl_make_masked_texture(bmp);
+			sprite->texture = al_get_opengl_texture(bmp);
 		else
-			sprite->texture = allegro_gl_make_texture_ex(
-				AGL_TEXTURE_HAS_ALPHA | AGL_TEXTURE_FLIP, bmp, GL_RGBA
-			);
+			sprite->texture = al_get_opengl_texture(bmp); // TEMP
+			// TEMP // sprite->texture = allegro_gl_make_texture_ex(AGL_TEXTURE_HAS_ALPHA | AGL_TEXTURE_FLIP, bmp, GL_RGBA);
 				
 		// don't need the original Allegro bitmap anymore
-		destroy_bitmap(bmp);
+		al_destroy_bitmap(bmp);
 		bmp = NULL;
 		
-		set_color_depth(original_bpp);
+		// TEMP // set_color_depth(original_bpp);
 
 		// add to the loaded sprites list
 		if (sprite->texture != 0) {
@@ -174,10 +163,10 @@ Sprite* AssetManager::LoadSprite(	const char* filename,
 		} else {
 			TRACE(	"ERROR: Failed making texture for '%s'\n"
 												"-NOTE: Make sure texture size is a multiple of 2!\n",
-												file.c_str());
+												file.GetString());
 
-			if (allegro_gl_error && strlen(allegro_gl_error))
-				TRACE("       AllegroGL says: %s\n", allegro_gl_error);
+			// TEMP // if (allegro_gl_error && strlen(allegro_gl_error))
+			// TRACE("       AllegroGL says: %s\n", allegro_gl_error);
 
 			delete sprite;
 			return NULL;
@@ -187,8 +176,8 @@ Sprite* AssetManager::LoadSprite(	const char* filename,
 	return sprite;
 }
 
-SAMPLE* AssetManager::LoadSound(const char* filename) {
-	SAMPLE *spl = NULL;
+ALLEGRO_SAMPLE* AssetManager::LoadSound(const char* filename) {
+	ALLEGRO_SAMPLE *spl = NULL;
 
 	// 1) See if this sample is already loaded
 	SampleListIter i = samples.find(filename);
@@ -199,8 +188,8 @@ SAMPLE* AssetManager::LoadSound(const char* filename) {
 
 	// 2) Try to open the file
 	CString file = GetPathOf(filename);
-	if (file.length() != 0) {
-		spl = load_sample(file);
+	if (file.GetLength() != 0) {
+		spl = al_load_sample(file);
 
 		if (spl)
 			samples[filename] = spl;
@@ -209,7 +198,8 @@ SAMPLE* AssetManager::LoadSound(const char* filename) {
 	return spl;
 }
 
-OGGFILE* AssetManager::LoadMusic(const char* filename) {
+void* AssetManager::LoadMusic(const char* filename) {
+	/* TEMP - disabled for port
 	CString music_file = GetPathOf(filename);
 
 	if (music_file.GetLength() < 0) {
@@ -235,7 +225,8 @@ OGGFILE* AssetManager::LoadMusic(const char* filename) {
 		return NULL;
 	}
 
-	return music;
+	return music;*/
+	return NULL;
 }
 
 AssetManager::AssetManager() {

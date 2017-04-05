@@ -31,6 +31,9 @@ class GameState {
 		//! The game network functionality:
 		GameNetwork *network;
 
+		//! Fires off timer related events
+		ALLEGRO_EVENT_QUEUE *event_queue = NULL;
+
 		//! True if we are using the network
 		bool IsUsingNetwork() {return network != NULL;};
 		

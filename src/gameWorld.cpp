@@ -282,7 +282,7 @@ void GameWorld::Shutdown()
 void GameWorld::Draw() 
 {
 	// Draw the background gradient first, if we're using it
-	if (m_bgColorTop != -1) 
+	if (m_bgColorTop.r != -1.0f) 
 	{
 		WINDOW->DrawBackgroundGradient(	m_bgColor, m_bgColorTop, 
 										m_iCameraY, 
@@ -458,7 +458,7 @@ int GameWorld::Load(XMLNode &xMode) {
 		if (!found) {
 			TRACE("ERROR: Tried to jump to a portal "
 											"that doesn't exist named '%s'!\n", 
-											lastExitInfo.lastPortalName.c_str());
+											lastExitInfo.lastPortalName);
 			return -1;
 		}
 
@@ -529,7 +529,7 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 		return -1;
 	}
 
-	m_bgColor = 0;
+	m_bgColor = al_map_rgb_f(0.0f, 0.0f, 0.0f);
 
 	if (xProps.nChildNode("bgcolor") != 1) {
 		WINDOW->SetClearColor(0,0,0);
@@ -545,11 +545,11 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 			return -1;
 		}
 
-		m_bgColor = makecol(r,g,b);
+		m_bgColor = al_map_rgb(r,g,b);
 		WINDOW->SetClearColor(r,g,b);
 	}
 
-	m_bgColorTop = -1;
+	m_bgColorTop = al_map_rgb_f(-1.0f, -1.0f, -1.0f);
 
 	if (xProps.nChildNode("bgcolor_top") == 1) {
 		xColor = xProps.getChildNode("bgcolor_top");
@@ -562,7 +562,7 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 			TRACE("-- Invalid bgcolor_top specified!\n");
 			return -1;
 		}
-		m_bgColorTop = makecol(r,g,b);
+		m_bgColorTop = al_map_rgb(r, g, b);
 	}
 
 	return 0;
@@ -647,14 +647,14 @@ int GameWorld::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
 
 		if (!xObjectDef) {
 			TRACE("ERROR: Unable to find object definition of type '%s'\n", 
-											objDefName.c_str());
+											objDefName);
 			return -1;
 		}
 
 		// create the object from the objectDefinition
 		if (LoadObjectFromXML(*xObjectDef, xObject, layer) == -1) {
 			TRACE("ERROR: Failed trying to load object of type '%s'\n", 
-											objDefName.c_str());
+											objDefName);
 			return -1;
 		}
 
@@ -848,7 +848,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 			repeater_current_y += _offset_y;
 				
 		} else {
-			TRACE("Unknown object position type: %s\n", type.c_str());
+			TRACE("Unknown object position type: %s\n", type);
 			return -1;
 		}
 				

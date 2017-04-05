@@ -44,7 +44,7 @@ class GameWindow {
 	protected:
 		bool initialized;
 		uint width, height;
-		FONT* main_font;
+		// FONT* main_font;
 		
 		uint fade_rate;
 		int fade_alpha;
@@ -75,30 +75,28 @@ class GameWindow {
 		void DrawSprite(	Sprite* sprite, int x, int y, 
 											bool flip_x=0, bool flip_y=0, 
 											bool use_rotation=false, float rotate_angle=0.0f,
-											GLuint alpha=255, bool bDrawBoundingBoxOnly=false);
+											uint alpha=255, bool bDrawBoundingBoxOnly=false);
 	
 		//! Draw text at specified XY
 		void DrawText(int x, int y, CString text);
 
 		//! Draw a solid rectange
-		//! use makecol(r,g,b) for color
-		void DrawRect(	_Rect &r, int col, 
-										bool filled=false, int alpha=255);
+		//! use al_map_rgb(r,g,b) for color
+		void DrawRect(	_Rect &r, ALLEGRO_COLOR col, bool filled=false, int alpha=255);
 
-		void DrawRect(	int x1, int y1, int x2, int y2, 
-										int color, bool filled=false, int alpha=255);
+		void DrawRect(	int x1, int y1, int x2, int y2, ALLEGRO_COLOR color, bool filled=false, int alpha=255);
 
 
 		//! Draw a quad (includes LOTS of other params)
 		void DrawQuad(	int x1, int y1, int x2, int y2, 
-										int col1, int col2, int col3, int col4,
-										bool filled, int alpha );
+						ALLEGRO_COLOR col1, ALLEGRO_COLOR col2, ALLEGRO_COLOR col3, ALLEGRO_COLOR col4,
+						bool filled, int alpha );
 
 		//! Draw quad with specified vertical gradient, 
 		//! which is interpolated between the two points
-		void DrawBackgroundGradient(	int bottom_col, int top_col, 
-																	int bottom_y, int top_y, 
-																	int level_height );
+		void DrawBackgroundGradient(	ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR top_col,
+										int bottom_y, int top_y, 
+										int level_height );
 
 		void SetClearColor(uint r, uint g, uint b);
 

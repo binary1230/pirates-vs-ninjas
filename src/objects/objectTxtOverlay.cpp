@@ -9,7 +9,7 @@
 #include "gameWorld.h"
 #include "eventManager.h"
 
-#define DEFAULT_BOX_COLOR	 	makecol(172, 20, 31)
+#define DEFAULT_BOX_COLOR	 	al_map_rgb(172, 20, 31)
 #define DEFAULT_BOX_MARGIN	10
 #define DEFAULT_BOX_HEIGHT	110
 
@@ -78,7 +78,7 @@ void ObjectText::Draw() {
 			);
 	}
 
-	if (text.length() > 0)
+	if (text.GetLength() > 0)
 		WINDOW->DrawText(txt_x, txt_y, text);
 }
 
@@ -114,7 +114,7 @@ void ObjectText::SetText(CString txt) {
 	page_texts.clear();
 	text_index = 0;
 	
-	if (txt.length() <= 0) {
+	if (txt.GetLength() <= 0) {
 		txt = "-INVALID TEXT-";
 		page_texts.push_back(txt);
 		return;
@@ -173,10 +173,10 @@ bool ObjectText::Init() {
 }
 
 bool ObjectText::SetAvatarFilename(CString file) {
-	if (file.length() <= 0)
+	if (file.GetLength() <= 0)
 		return false;
 
-	avatar_sprite = ASSETMANAGER->LoadSprite(file.c_str());
+	avatar_sprite = ASSETMANAGER->LoadSprite(file);
 	
 	if (!avatar_sprite)
 		return false;

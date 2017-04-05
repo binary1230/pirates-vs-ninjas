@@ -18,11 +18,11 @@ bool MapSaver::SaveEverything(	const GameWorld* p,
 								const CString file, 
 								XMLNode &xObjDefs) {
 
-	assert(p != NULL && file.size() > 0);
+	assert(p != NULL && file.GetLength() > 0);
 
 	simulation = p;
 
-	TRACE("MAPEDITOR: Starting to save to '%s'...\n", file.c_str());
+	TRACE("MAPEDITOR: Starting to save to '%s'...\n", file);
 
 	XMLNode xMode = XMLNode::createXMLTopNode("gameMode");
 	xMode.addAttribute("type", "simulation");

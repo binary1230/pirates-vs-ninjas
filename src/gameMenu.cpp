@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "xmlParser.h"
-#include "StdString.h"
+// #include "StdString.h"
 #include "gameState.h"
 #include "input.h"
 #include "assetManager.h"
@@ -32,18 +32,21 @@ void GameMenu::DoMenuAction(const CString &action) {
 	} else if (action == "Quit") {
 		DoQuit();
 	} else {
-		TRACE("-- Invalid menu action: %s\n", action.c_str());
+		TRACE("-- Invalid menu action: %s\n", action);
 	}			
 }
 
 // #define DEBUG_VERSION_PRINT 1
 
 void GameMenu::Draw() {
-	int x_offset = SCREEN_W/2 - back->width/2;
-	int y_offset = SCREEN_H/2 - back->height/2;
+	int screen_w = al_get_bitmap_width(al_get_target_bitmap());
+	int screen_h = al_get_bitmap_height(al_get_target_bitmap());
+
+	int x_offset = screen_w/2 - back->width/2;
+	int y_offset = screen_h/2 - back->height/2;
 
 	int x_pos1 = x_offset + x_pos;
-	int x_pos2 = SCREEN_W/2 + back->width/2 - x_pos - selector->width;
+	int x_pos2 = screen_w/2 + back->width/2 - x_pos - selector->width;
 		
 	WINDOW->DrawSprite(back, x_offset, y_offset);
 
@@ -57,7 +60,7 @@ void GameMenu::Draw() {
 	 
 	#ifdef DEBUG_VERSION_PRINT
 	textprintf_right_ex(  WINDOW->GetDrawingSurface(), font, 
-                        SCREEN_W, SCREEN_H - 10, makecol(255, 255, 255), -1, 
+                        SCREEN_W, SCREEN_H - 10, al_map_rgb(255, 255, 255), -1,
                         VERSION_STRING);
 	#endif
 }

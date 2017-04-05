@@ -25,26 +25,15 @@ bool PhysicsManager::OnWorldInit()
 	if (!WORLD)
 		return false;
 
-	assert(WORLD->GetWidth() > 0 && WORLD->GetHeight() > 0);
-	float fWidthInMeters = PIXELS_TO_METERS(WORLD->GetWidth());
-	float fHeightInMeters = PIXELS_TO_METERS(WORLD->GetHeight());
-
-	// Define the size of the world. Simulation will still work
-	// if bodies reach the end of the world, but it will be slower.
-	b2AABB worldAABB;
-	worldAABB.lowerBound.Set(-50.0f, -50.0f);
-	worldAABB.upperBound.Set(fWidthInMeters + 100.0f, fHeightInMeters + 100.0f);
-
 	b2Vec2 gravity(0.0f, -15.0f);
-	bool doSleep = true;
 
 	assert(m_pkPhysicsWorld == NULL);
-	m_pkPhysicsWorld = new b2World(worldAABB, gravity, doSleep);
+	m_pkPhysicsWorld = new b2World(gravity);
 
 	// NOTE FROM DOM: If you are getting errors here, it's because I hacked the source
 	// of Box2D to 1) make SetDebugDraw() public, and 2) remove the call from b2World::Step()
-	m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
-	m_pkPhysicsWorld->SetDebugDraw(&m_kPhysicsDebugRenderer);
+	// TEMPHACK 2017 // m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
+	// TEMPHACK 2017 // m_pkPhysicsWorld->SetDebugDraw(&m_kPhysicsDebugRenderer);
 
 	m_pkPhysicsWorld->SetContactListener(&m_kPhysicsContactListener);
 
@@ -65,9 +54,11 @@ void PhysicsManager::Update()
 {
 	m_kContacts.clear();
 
+	int32 velocityIterations = 6;  // TEMP TODO
+
 	// Instruct the world to perform a single step of simulation. It is
 	// generally best to keep the time step and iterations fixed.
-	m_pkPhysicsWorld->Step(m_fPhysicsSimulatorTimeStep, m_iPhysicsSimulatorIterations);
+	m_pkPhysicsWorld->Step(m_fPhysicsSimulatorTimeStep, velocityIterations, m_iPhysicsSimulatorIterations);
 
 	// dispatch collision events now.
 	HandleCollisions();
@@ -87,7 +78,6 @@ void PhysicsManager::Draw()
 b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation /*= false */, bool bSensorOnly /*= false*/ )
 {
 	b2BodyDef bodyDef;
-	b2PolygonDef shapeDef;
 
 	assert(m_pkPhysicsWorld);
 	assert(width > 0.0f);
@@ -100,16 +90,22 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	bodyDef.fixedRotation = bDontAllowRotation;
 	//bodyDef.linearDamping = 0.4f;
 
+	bodyDef.type = b2_dynamicBody;
+
 	b2Body* pkBody = m_pkPhysicsWorld->CreateBody(&bodyDef);
 	assert(pkBody);
 
+	b2PolygonShape shapeDef;
 	shapeDef.SetAsBox(halfWidth, halfHeight);
-	shapeDef.friction = friction;
-	shapeDef.restitution = restitution;
-	shapeDef.density = density;
-	shapeDef.isSensor = bSensorOnly;
 
-	pkBody->CreateShape(&shapeDef);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shapeDef;
+	fixtureDef.friction = friction;
+	fixtureDef.restitution = restitution;
+	fixtureDef.density = density;
+	fixtureDef.isSensor = bSensorOnly;
+
+	pkBody->CreateFixture(&fixtureDef);
 
 	return pkBody;
 }
@@ -124,7 +120,6 @@ b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, 
 {
 	// TODO: Don't hardcode these numbers.
 	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, fDensity, 0.0f, 0.2f, bDontAllowRotation);
-	pkBody->SetMassFromShapes();
 	return pkBody;
 }
 
@@ -144,25 +139,31 @@ void PhysicsManager::HandleCollisions()
 	}
 }
 
-void PhysicsManager::ProcessCollision(b2ContactPoint* pkContactPoint)
+void PhysicsManager::ProcessCollision(b2Contact* pkb2Contact)
 {
-	Object* obj1 = (Object*)pkContactPoint->shape1->GetBody()->GetUserData();
-	Object* obj2 = (Object*)pkContactPoint->shape2->GetBody()->GetUserData();
+	b2Fixture* fixtureA = pkb2Contact->GetFixtureA();
+	b2Fixture* fixtureB = pkb2Contact->GetFixtureB();
+
+	Object* obj1 = (Object*)fixtureA->GetBody()->GetUserData();
+	Object* obj2 = (Object*)fixtureB->GetBody()->GetUserData();
+
+	b2WorldManifold worldManifold;
+	pkb2Contact->GetWorldManifold(&worldManifold);
 	
-	obj2->OnCollide(obj1, pkContactPoint);
-	pkContactPoint->normal = -pkContactPoint->normal;
-	obj1->OnCollide(obj2, pkContactPoint);
+	obj2->OnCollide(obj1, pkb2Contact);
+	// worldManifold.normal = -worldManifold.normal; // TEMPHACK, DISABLED. (probably need this)
+	obj1->OnCollide(obj2, pkb2Contact);
 }
 
-void PhysicsManager::ReportContactPoint( const b2ContactPoint* pkContactPoint )
+void PhysicsManager::Reportb2Contact( const b2Contact* pkb2Contact )
 {
 	// make a COPY here, don't store the pointer.
-	m_kContacts.push_back(*pkContactPoint);
+	m_kContacts.push_back(*pkb2Contact);
 }
 
 // -------------------------------------------------------------------------
 
-void PhysicsDebugRenderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+/*void PhysicsDebugRenderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 	glColor3f(color.r, color.g, color.b);
 	glBegin(GL_LINE_LOOP);
@@ -342,21 +343,21 @@ void DrawAABB(b2AABB* aabb, const b2Color& c)
 	glVertex2f(aabb->upperBound.x, aabb->upperBound.y);
 	glVertex2f(aabb->lowerBound.x, aabb->upperBound.y);
 	glEnd();
-}
+}*/
 
-void PhysicsContactListener::Add( const b2ContactPoint* point )
+void PhysicsContactListener::Add( const b2Contact* point )
 {
 	// TRACE("%i: Add\n", i);
-	PHYSICS->ReportContactPoint(point);
+	PHYSICS->Reportb2Contact(point);
 }
 
-void PhysicsContactListener::Persist( const b2ContactPoint* point )
+void PhysicsContactListener::Persist( const b2Contact* point )
 {
 	// TRACE("%i: Persist\n", i);
-	PHYSICS->ReportContactPoint(point);
+	PHYSICS->Reportb2Contact(point);
 }
 
-void PhysicsContactListener::Remove( const b2ContactPoint* point )
+void PhysicsContactListener::Remove( const b2Contact* point )
 {
 }
 

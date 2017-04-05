@@ -46,4 +46,4 @@ int main(const int argc, const char* argv[])
 
 	return start_game_instance(argc, argv);
 
-} END_OF_MAIN();
+}

@@ -9,7 +9,7 @@ class Sprite {
 		bool use_alpha;
 		int width, height;
 
-		GLuint texture;	// only used for 3d
+		uint texture;	// only used for 3d
 
 		Sprite() {
 			x_offset = y_offset = 0;

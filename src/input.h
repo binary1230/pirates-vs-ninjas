@@ -126,7 +126,7 @@ class Input {
 
 		//! Same thing as above, but for all keys, not just game keys
 		//! DO NOT USE FOR IN-GAME CODE, JUST MAP EDITOR/etc.
-		char real_released_key[KEY_MAX];
+		char real_released_key[ALLEGRO_KEY_MAX];
 
 		int mouse_x_pos;
 		int mouse_y_pos;

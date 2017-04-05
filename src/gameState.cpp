@@ -26,8 +26,8 @@ void GameState::ResetAccumulatedTime() {
 int GameState::LoadXMLConfig(CString xml_filename) {
 				
 	// XXX xmlParser just DIES on error
-	xml_filename = ASSETMANAGER->GetPathOf(xml_filename.c_str());
-	xGame = XMLNode::openFileHelper(xml_filename.c_str(), "game");
+	xml_filename = ASSETMANAGER->GetPathOf(xml_filename);
+	xGame = XMLNode::openFileHelper(xml_filename, "game");
 	
 	XMLNode xInfo = xGame.getChildNode("info");
 
@@ -56,7 +56,7 @@ void GameState::SignalEndCurrentMode() {
 	modes->SignalEndCurrentMode();
 }
 
-int allegro_debug_printer(const char *text)
+void allegro_debug_printer(const char *text)
 {
 	// filter out some spam here.
 	if (strncmp("agl-tex INFO", text, 12) != 0 &&
@@ -68,29 +68,24 @@ int allegro_debug_printer(const char *text)
 		        
 		TRACE("%s", text);
 	}
-
-	return 1; // don't let allegro process this msg further, we handled it.
 }
 
 //! Initialize basic allegro library stuff
 //! This must be called FIRST before ANY allegro stuff
 int GameState::InitAllegro() {
 	
-	if (allegro_init() != 0) {
+	if (al_init() != 0) {
 		TRACE("-- FATAL ERROR: Allegro_init() failed.\n");
 		return -1;
 	}
 	
-	register_trace_handler(allegro_debug_printer);
+	al_register_trace_handler(allegro_debug_printer);
 	
 	// must be called SECOND
 	if (InitTimers() < 0) {
 		TRACE("-- FATAL ERROR: Can't init timers.\n");
 		return -1;
 	}
-
-	// register PNG as allegro filetype (see loadpng.h)
-	register_png_file_type();
 
 	SetRandomSeed(42);	// for now, makes testing easier
 
@@ -250,11 +245,23 @@ int GameState::InitInput() {
 //! This MUST be called BEFORE any other allegro initializations.
 int GameState::InitTimers() {
 	TRACE("[Init: Timers]");
-	install_timer();
-	LOCK_VARIABLE(g_iOutstanding_updates);
-	LOCK_VARIABLE(g_iTicks);
-	LOCK_FUNCTION((void*)Timer);
-	return install_int_ex(Timer, BPS_TO_TIMER(FPS));
+
+	ALLEGRO_TIMER* g_timer = al_create_timer(ALLEGRO_BPS_TO_SECS(FPS));
+	if (!g_timer) {
+		TRACE("failed to create timer!\n");
+		return -1;
+	}
+	
+	event_queue = al_create_event_queue();
+	if (!event_queue) {
+		TRACE("failed to create event_queue!\n");
+		return -1;
+	}
+
+	al_register_event_source(event_queue, al_get_timer_event_source(g_timer));
+
+	al_start_timer(g_timer);
+	return 0;
 }
 
 void GameState::OutputTotalRunningTime() {
@@ -279,29 +286,28 @@ void GameState::OutputTotalRunningTime() {
 //! It initializes everything, and returns 0 if successful
 //! or 1 on error.
 int GameState::RunGame() {
-	
-		if (InitSystem() == -1) {
-			TRACE("ERROR: Failed to init game!\n");
-			return -1;	
-		}
+	if (InitSystem() == -1) {
+		TRACE("ERROR: Failed to init game!\n");
+		return -1;	
+	}
 
-		if (OPTIONS->GetDebugStartPaused()) 
-		debug_pause_toggle = 1;	
+	if (OPTIONS->GetDebugStartPaused()) 
+	debug_pause_toggle = 1;	
 
-		INPUT->Begin();
+	INPUT->Begin();
 			
-		TRACE("[running game...]\n");
-		MainLoop();
-		TRACE("[done running game!]\n");
+	TRACE("[running game...]\n");
+	MainLoop();
+	TRACE("[done running game!]\n");
 
-		OutputTotalRunningTime();
+	OutputTotalRunningTime();
 
-		INPUT->End();
+	INPUT->End();
 	
-		Shutdown();
-		TRACE("[Exiting]\n");	
+	Shutdown();
+	TRACE("[Exiting]\n");	
 
-		return 0;
+	return 0;
 }
 
 void GameState::MainLoop() 
@@ -320,6 +326,15 @@ void GameState::MainLoop()
 
 	while (!exit_game) 
 	{
+		ALLEGRO_EVENT ev;
+		if (al_get_next_event(event_queue, &ev)) 
+		{
+			if (ev.type == ALLEGRO_EVENT_TIMER) 
+			{
+				OnTimer();
+			}
+		}
+
 		Tick();
 	}
 }
@@ -442,7 +457,8 @@ void GameState::Shutdown() {
 		INPUT->FreeInstance();
 	}
 
-	remove_int(Timer);
+	al_destroy_timer(g_timer);
+	al_destroy_event_queue(event_queue);
 
 #if 0 // TODO: Networking disabled (e.g. WAY broken, not even close yet)
 	if (network) {
@@ -486,8 +502,6 @@ void GameState::Shutdown() {
 	modes = NULL;
 	network = NULL;
 	xGame = XMLNode::emptyXMLNode;
-	
-	allegro_exit();
 }
 
 void GameState::SetRandomSeed(int val) { 

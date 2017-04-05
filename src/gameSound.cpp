@@ -21,8 +21,8 @@ void GameSound::PlaySound(CString name, unsigned int pan) {
 	if (use_variable_pitch)
 		freq += Rand(0, freq_range) - (freq_range / 2);
 	
-	s_iter s = soundMap.find(name.c_str());
-	SAMPLE* spl = NULL; 
+	s_iter s = soundMap.find(name);
+	ALLEGRO_SAMPLE* spl = NULL;
 
 	if (s != soundMap.end())
 		spl = s->second;
@@ -34,24 +34,25 @@ void GameSound::PlaySound(CString name, unsigned int pan) {
 
 		// WARNING: Cache miss, load it now
 		if (!LoadSound(name, name)) {
-			TRACE("- SOUND: ERROR: Can't load [non-cached] sound '%s'\n", name.c_str());
+			TRACE("- SOUND: ERROR: Can't load [non-cached] sound '%s'\n", name);
 			return;
 		}
 
-		s = soundMap.find(name.c_str());
+		s = soundMap.find(name);
 		if (s != soundMap.end())
 			spl = s->second;
 	}
 
-	if (spl)
-		play_sample(spl, 255, pan, freq, 0);
+	/* TEMP if (spl)
+		al_play_sample(spl, 255, pan, freq, 0); */
 }
 
 bool GameSound::LoadMusic(const char* filename) {
 	if (!sound_enabled)
 		return true;		
 
-	OGGFILE* music = ASSETMANAGER->LoadMusic(filename);
+	// TEMP HACK FIX THIS, VOID* IS NOT RIGHT -Domport2017
+	void* music = ASSETMANAGER->LoadMusic(filename);
 
 	if (!music) 
 		return false;
@@ -63,22 +64,25 @@ bool GameSound::PlayMusic(bool loop, int vol, int pan, int buflen) {
 	if (!sound_enabled || OPTIONS->MapEditorEnabled())
 		return true;
 
-	OGGFILE* music = ASSETMANAGER->GetMusic();	
+	// TEMP HACK FIX THIS, VOID* IS NOT RIGHT -Domport2017
+	void* music = ASSETMANAGER->GetMusic();	
 
 	if (!music)
 		return false;
 	else
-		return music->Play(loop, vol, pan, buflen);
+		// return music->Play(loop, vol, pan, buflen); // TEMPHACK
+		return false; // TEMPHACK
 }
 
 void GameSound::Update() {
-	if (!sound_enabled)
+	/*if (!sound_enabled)
 		return;		
 	
 	OGGFILE* music = ASSETMANAGER->GetMusic();	
 
 	if (music)
-		music->Update();
+		music->Update();*/
+	return; // TEMP HACK
 }
 
 //! Loads a sound, you can call it later with PlaySound(sound_name)
@@ -86,7 +90,7 @@ bool GameSound::LoadSound(const char* filename, const char* sound_name) {
 	if (!sound_enabled)
 		return true;
 
-	SAMPLE* spl = ASSETMANAGER->LoadSound(filename);
+	ALLEGRO_SAMPLE* spl = ASSETMANAGER->LoadSound(filename);
 
 	if (!spl)
 		return false;
@@ -120,16 +124,24 @@ int GameSound::Init(bool _sound_enabled) {
 	if (!sound_enabled)
 		return 0;	
 	
-	//if (install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL) == -1) {
-	if (install_sound(DIGI_AUTODETECT, 0, NULL) == -1) {
-		TRACE(" WARNING: Sound init failure.  Message from Allegro:\n"
-										"%s\n", allegro_error);
+	if (!al_install_audio()) {
+		TRACE(" WARNING: Sound init failure.  Message from Allegro:\n%s\n", /*allegro_error*/ "");
 		sound_enabled = false;
+	}
+
+	if (!al_init_acodec_addon()) {
+		TRACE("failed to initialize audio codecs!\n");
+		return -1;
+	}
+
+	if (!al_reserve_samples(10)) {
+		fprintf(stderr, "failed to reserve samples!\n");
+		return -1;
 	}
 
 	soundMap.clear();
 	
-	set_volume_per_voice(0);
+	// TEMP // set_volume_per_voice(0);
 
 	GLOBALS->Value("sound_use_variable_pitch", use_variable_pitch);
 	GLOBALS->Value("sound_freq_range", freq_range);
@@ -143,13 +155,13 @@ void GameSound::Shutdown() {
 	// is in the AssetManager
 	soundMap.clear();
 
-	OGGFILE* music = ASSETMANAGER->GetMusic();
+/* TEMPHACK	OGGFILE* music = ASSETMANAGER->GetMusic();
 
 	if (music) {
 		music->Shutdown();
-	}
+	}*/
 
-	remove_sound();
+	// TEMP // remove_sound();
 	sound_enabled = false;
 }
 

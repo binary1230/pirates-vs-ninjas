@@ -46,7 +46,7 @@ bool ObjectBounce::Init() {
 	return true;
 }
 
-void ObjectBounce::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) {
+void ObjectBounce::OnCollide(Object* obj, const b2Contact* pkb2Contact) {
 	/*if (!properties.is_physical || obj->GetProperties().is_ball || obj->GetProperties().is_fan)
 		return;
 

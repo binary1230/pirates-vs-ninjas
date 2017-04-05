@@ -43,7 +43,7 @@ class ObjectText : public Object {
 		vector<CString> page_texts;		// holds each "page" full of text
 		uint text_index;							// which "page" we're on
 
-		int box_color; 
+		ALLEGRO_COLOR box_color; 
 		int box_margin; 
 		int box_height; 
 

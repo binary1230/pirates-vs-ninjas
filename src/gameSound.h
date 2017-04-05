@@ -2,10 +2,10 @@
 #define GAMESOUND_H
 
 //! Maps a sound name to it's handle (e.g. "jump" to the sample)
-typedef map<CString, SAMPLE*> SoundMapping;
-typedef map<CString, SAMPLE*>::iterator s_iter;
+typedef map<CString, ALLEGRO_SAMPLE*> SoundMapping;
+typedef map<CString, ALLEGRO_SAMPLE*>::iterator s_iter;
 
-class OGGFILE;
+// class OGGFILE;
 
 class GameSound {
 

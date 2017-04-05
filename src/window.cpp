@@ -36,9 +36,9 @@ void GameWindow::Screenshot(char* filename) {
 		file.Format("ninjas-screenshot%i.png", screenshot_num++);
 	}
 
-	TRACE(" -- saving screenshot '%s'\n", file.c_str());
+	TRACE(" -- saving screenshot '%s'\n", file);
 
-	save_bitmap(file.c_str(), screen, NULL);
+	al_save_bitmap(file, al_get_target_bitmap());
 }
 	
 void GameWindow::DrawFade() {
@@ -107,7 +107,7 @@ void GameWindow::DrawRect(_Rect &r, int col, bool filled, int alpha) {
 // to make it look like there is one continuous gradient going up the level
 
 // Usually the screen height is smaller than the level height
-void GameWindow::DrawBackgroundGradient(	int bottom_col, int top_col, 
+void GameWindow::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR top_col,
 																					int bottom_y, int top_y, 
 																					int level_height) {
 	
@@ -132,14 +132,14 @@ void GameWindow::DrawBackgroundGradient(	int bottom_col, int top_col,
 	float bottom_col_percent = float(bottom_y) / float(level_height);
 
 	// compute the final top color
-	int final_top_col = makecol(
+	ALLEGRO_COLOR final_top_col = al_map_rgb(
 									getr(bottom_col) + int(float(col_diff_r) * top_col_percent),
 									getg(bottom_col) + int(float(col_diff_g) * top_col_percent),
 									getb(bottom_col) + int(float(col_diff_b) * top_col_percent)
 								);
 
 	// compute the final bottom color
-	int final_bottom_col = makecol(
+	ALLEGRO_COLOR final_bottom_col = al_map_rgb(
 									getr(bottom_col) +int(float(col_diff_r) * bottom_col_percent),
 									getg(bottom_col) +int(float(col_diff_g) * bottom_col_percent),
 									getb(bottom_col) +int(float(col_diff_b) * bottom_col_percent)
@@ -153,8 +153,9 @@ void GameWindow::DrawBackgroundGradient(	int bottom_col, int top_col,
 
 // Colors start at the bottom left and go counter-clockwise
 // Color order: (bottom left, bottom right, top right, top left)
+// TODO: prob convert alpha param to float
 void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2, 
-							int col1, int col2, int col3, int col4,
+							ALLEGRO_COLOR col1, ALLEGRO_COLOR col2, ALLEGRO_COLOR col3, ALLEGRO_COLOR col4,
 							bool filled, int alpha ) 
 {
 	glLoadIdentity();
@@ -165,24 +166,26 @@ void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2,
 	else
 		glBegin(GL_LINE_LOOP);
 
-	glColor4ub(getr(col1), getg(col1), getb(col1), alpha);
+	float alpha_f = float(alpha * 0xFF);
+
+	glColor4f(col1.r, col1.g, col1.b, alpha_f);
 	glVertex2f(x1, y2);
-	glColor4ub(getr(col2), getg(col2), getb(col2), alpha);
+	glColor4f(col2.r, col2.g, col2.b, alpha);
 	glVertex2f(x2, y2);
-	glColor4ub(getr(col3), getg(col3), getb(col3), alpha);
+	glColor4f(col3.r, col3.g, col3.b, alpha);
 	glVertex2f(x2, y1);
-	glColor4ub(getr(col4), getg(col4), getb(col4), alpha);
+	glColor4f(col4.r, col4.g, col4.b, alpha);
 	glVertex2f(x1, y1);
 
 	glEnd();
 
 	glEnable(GL_TEXTURE_2D);
-	glColor4ub(255, 255, 255, 255);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void GameWindow::DrawRect(	int x1, int y1, 
 							int x2, int y2, 
-							int col, bool filled, int alpha) 
+							ALLEGRO_COLOR col, bool filled, int alpha)
 {
 	DrawQuad(x1, y1, x2, y2, col, col, col, col, filled, alpha);
 }
@@ -200,7 +203,7 @@ void GameWindow::DrawText(int x, int y, CString text) {
 
 	int _x = x;
 	int _y = y;
-	int col = makecol(255,255,255);	// white text color
+	int col = al_map_rgb(255,255,255);	// white text color
 
 	glLoadIdentity();
 	for (i = 0; i < max; i++) {

@@ -18,7 +18,7 @@ bool LuaManager::InitBlankLuaState()
 		return false;
 	}
 
-	if (!( m_pkLuaState = lua_open() ))
+	if (!( m_pkLuaState = luaL_newstate() ))
 	{
 		TRACE("LUA: Error Initializing new blank lua state!\n");
 		return false;
@@ -132,14 +132,14 @@ bool LuaManager::LoadLuaScript(const char* _filename)
 
 	CString filename = ASSETMANAGER->GetPathOf(_filename);
 
-	if (!filename.length()) 
+	if (!filename.GetLength()) 
 	{
 		TRACE("ERROR: Can't open LUA file '%s'\n", _filename);
 		ReleaseCurrentLuaScript();
 		return false;
 	}
 
-	if (luaL_dofile(m_pkLuaState, filename.c_str()) != 0) 
+	if (luaL_dofile(m_pkLuaState, filename) != 0) 
 	{
 		const char* szError = "(unknown loading error)";
 

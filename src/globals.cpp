@@ -11,15 +11,15 @@ void DebugTrace( const char * format, ... )
 	va_start( args, format );
 	vsnprintf( buffer, bufsize - 1, format, args );
 
-#ifdef WIN32
-	OutputDebugStr(buffer);
-#else
+//#ifdef WIN32
+//	OutputDebugStr(buffer);
+//#else
 	fprintf(stderr, "%s", buffer);
-#endif
+//#endif
 }
 
 void StringSplit(CString str, CString delim, vector<CString> &results) {
-	uint cutAt;
+	/*uint cutAt;
 	results.clear();
 	while( (cutAt = str.find_first_of(delim)) != str.npos ) {
 		if(cutAt > 0) {
@@ -31,7 +31,9 @@ void StringSplit(CString str, CString delim, vector<CString> &results) {
 	
 	if(str.length() > 0)	{
 		results.push_back(str);
-	}
+	}*/
+
+	assert(false); // not implemented yet.  above code works fine, just needs to be ported
 }
 
 /*

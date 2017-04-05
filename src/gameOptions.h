@@ -88,7 +88,7 @@ class GameOptions {
 		inline bool IsFullscreen() {return fullscreen;}
 		
 		//! The demo filename if it was set
-		inline const char* GetDemoFilename() {return demo_filename.c_str();}
+		inline const char* GetDemoFilename() {return demo_filename;}
 		
 		//! True if the user wants to reccord a demo
 		inline bool RecordDemo() {return record_demo;}
@@ -102,8 +102,8 @@ class GameOptions {
 
 		//! Get the user-overridden mode XML filename, or "" if none
 		inline const char* GetFirstModeOverride() {
-			if (first_mode.size() > 0)
-				return first_mode.c_str();
+			if (first_mode.GetLength() > 0)
+				return first_mode;
 		 	else 
 				return NULL;
 		}
@@ -122,7 +122,7 @@ class GameOptions {
 		inline bool 	IsNetworkServer() {return network_start_as_server;}
 		inline int 		GetNetworkPortNumber() {return network_port_num;}
 		inline const char* GetNetworkServerName() {
-			return network_server_name.c_str();
+			return network_server_name;
 		}
 
 		inline bool		DrawGraphics() {return draw_graphics;}

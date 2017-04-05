@@ -23,10 +23,10 @@ class Sprite;
 typedef map<CString, Sprite*> SpriteList;
 typedef map<CString, Sprite*>::iterator SpriteListIter;
 
-typedef map<CString, SAMPLE*> SampleList;
-typedef map<CString, SAMPLE*>::iterator SampleListIter;
+typedef map<CString, ALLEGRO_SAMPLE*> SampleList;
+typedef map<CString, ALLEGRO_SAMPLE*>::iterator SampleListIter;
 
-class OGGFILE;
+// class OGGFILE; // TEMPHACK
 
 //! Manages game assets and memory
 class AssetManager {
@@ -37,7 +37,7 @@ class AssetManager {
 		vector<CString> paths;
 		SpriteList sprites;
 		SampleList samples;
-		OGGFILE* music;
+		void* music; // TEMP //
 		
 	public:
 		int Init();
@@ -69,19 +69,17 @@ class AssetManager {
 		//! This function looks in the current search path
 		//! it also outputs the palette in *pal
 		//! if use_alpha is true, this bitmap is loaded as a 32bit RGBA image
-		Sprite* LoadSprite(	const char* filename, 
-												bool use_alpha = false, 
-												PALETTE* pal = NULL	); 
+		Sprite* LoadSprite(const char* filename, bool use_alpha = false); 
 
 		//! Opens a sound file (e.g. WAV), or returns NULL on failure
 		//! This function looks in the current search path
-		SAMPLE* LoadSound(const char* filename);
+		ALLEGRO_SAMPLE* LoadSound(const char* filename);
 
 		//! Opens an ogg file, or returns NULL on failure
 		//! This function looks in the current search path
-		OGGFILE* LoadMusic(const char* filename);
+		void* LoadMusic(const char* filename);  // TEMP //
 
-		inline OGGFILE* GetMusic() { return music; };
+		inline void* GetMusic() { return music; };  // TEMP //
 
 		//! Returns the current working directory
 		CString GetMacOSXCurrentWorkingDir() const;
