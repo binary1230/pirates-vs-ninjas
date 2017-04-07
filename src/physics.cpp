@@ -90,7 +90,8 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	bodyDef.fixedRotation = bDontAllowRotation;
 	//bodyDef.linearDamping = 0.4f;
 
-	bodyDef.type = b2_dynamicBody;
+	if (density > 0.0f)
+		bodyDef.type = b2_dynamicBody;
 
 	b2Body* pkBody = m_pkPhysicsWorld->CreateBody(&bodyDef);
 	assert(pkBody);
