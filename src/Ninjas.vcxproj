@@ -42,6 +42,12 @@
       <AdditionalIncludeDirectories>objects/;external/;.</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>generate swig bindings</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
@@ -51,6 +57,7 @@
     <ClCompile Include="basename.cpp" />
     <ClCompile Include="credits.cpp" />
     <ClCompile Include="effectsManager.cpp" />
+    <ClCompile Include="engine_wrap.cpp" />
     <ClCompile Include="eventManager.cpp" />
     <ClCompile Include="external\XGetopt.cpp" />
     <ClCompile Include="external\xmlParser.cpp" />

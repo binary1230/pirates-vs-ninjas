@@ -183,6 +183,9 @@
     <ClCompile Include="swig\engine_wrap.cpp">
       <Filter>Swig</Filter>
     </ClCompile>
+    <ClCompile Include="engine_wrap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ai.h">
