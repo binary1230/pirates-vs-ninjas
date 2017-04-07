@@ -375,7 +375,7 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.uses_new_physics = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
-	obj->properties.ignores_collisions = 1;
+	obj->properties.is_sensor = 1;
 
 	obj->SetupCachedVariables();
 	
@@ -551,7 +551,7 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj)
 	obj->properties.uses_new_physics = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
-	obj->properties.ignores_collisions = 1;
+	obj->properties.is_sensor = 1;
 
 	// order we search for the spring strength:
 	// 1) Object Instance
@@ -604,7 +604,7 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
 	obj->properties.uses_new_physics = 1;
-	obj->properties.ignores_collisions = 1;
+	obj->properties.is_sensor = 1;
 	
 	obj->SetupCachedVariables();
 
@@ -655,7 +655,7 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_fan = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
-	obj->properties.ignores_collisions = 1;
+	obj->properties.is_sensor = 1;
 	obj->properties.do_our_own_rotation = 1;
 
 	obj->SetupCachedVariables();
@@ -685,7 +685,7 @@ bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 	obj->properties.is_static = xProps.nChildNode("solidObject") != 0;
 
 	obj->properties.do_our_own_rotation = xProps.nChildNode("noPhysicsRotate") != 0; 
-	obj->properties.ignores_collisions = xProps.nChildNode("sensorOnly") != 0; 
+	obj->properties.is_sensor = xProps.nChildNode("sensorOnly") != 0; 
 
 	obj->properties.spawns_enemies = xProps.nChildNode("spawnsEnemies") != 0;
 	

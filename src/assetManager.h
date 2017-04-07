@@ -37,7 +37,6 @@ class AssetManager {
 		vector<CString> paths;
 		SpriteList sprites;
 		SampleList samples;
-		void* music; // TEMP //
 		
 	public:
 		int Init();
@@ -45,7 +44,6 @@ class AssetManager {
 
 		void FreeSprites();
 		void FreeSamples();
-		void FreeMusic();
 		void Free();
 
 		//! Set the search path
@@ -74,12 +72,6 @@ class AssetManager {
 		//! Opens a sound file (e.g. WAV), or returns NULL on failure
 		//! This function looks in the current search path
 		ALLEGRO_SAMPLE* LoadSound(const char* filename);
-
-		//! Opens an ogg file, or returns NULL on failure
-		//! This function looks in the current search path
-		void* LoadMusic(const char* filename);  // TEMP //
-
-		inline void* GetMusic() { return music; };  // TEMP //
 
 		//! Returns the current working directory
 		CString GetMacOSXCurrentWorkingDir() const;

@@ -25,8 +25,7 @@ int CreditsMode::Init(XMLNode xMode) {
 	// Load the music
 	if (xMode.nChildNode("music") == 1) {
 		const char* music_file = xMode.getChildNode("music").getText();
-		SOUND->LoadMusic(music_file);
-		SOUND->PlayMusic();
+		SOUND->PlayMusic(music_file);
 	}
 
 	return 0;

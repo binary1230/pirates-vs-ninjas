@@ -42,7 +42,7 @@ struct ObjectProperties
 
 	//! If set, this object will not get a callback if being collided with
 	//! Note, however, that it will still deal out collision
-	bool ignores_collisions;
+	bool is_sensor;
 
 	//! Don't rotate if physical. e.g. if we want to tip over, don't let us
 	bool ignores_physics_rotation;
@@ -89,7 +89,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_badguy = 0;
 	p.uses_new_physics = 0;
 	p.is_static = 0;
-	p.ignores_collisions = 0;
+	p.is_sensor = 0;
 	p.ignores_physics_rotation = 0;
 	p.do_our_own_rotation = 0;
 }

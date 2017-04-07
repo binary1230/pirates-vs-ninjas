@@ -16,7 +16,6 @@ int AssetManager::Init() {
 void AssetManager::Free() {
 	FreeSprites();
 	FreeSamples();
-	FreeMusic();
 }
 
 // XXX should make these templated...
@@ -45,15 +44,6 @@ void AssetManager::FreeSprites() {
 	}
 	*/
 	sprites.clear();
-}
-
-void AssetManager::FreeMusic() {
-	/* TEMP 
-	if (music) {
-		music->Shutdown();
-		delete music;
-		music = NULL;
-	}*/
 }
 
 void AssetManager::Shutdown() {	
@@ -107,12 +97,9 @@ bool AssetManager::FileExists(const char* file) const {
 }
 
 //! Opens a bitmap, utilizes the search paths
-// XXX: Need to fix alpha blending
 Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha) 
 {	
 	Sprite* sprite = NULL;
-	
-	// TEMP //  int original_bpp = get_color_depth();
 	
 	// 1) See if this bitmap is already loaded
 	SpriteListIter i = sprites.find(filename);
@@ -127,10 +114,6 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 
 		sprite = new Sprite();
 		assert(sprite && "ERROR: Out of memory, can't allocate sprite!\n");
-	
-		if (use_alpha) {
-			// TEMP // set_color_depth(32);
-		}
 			
 		ALLEGRO_BITMAP* bmp = al_load_bitmap(file);
 
@@ -148,27 +131,17 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 
 		sprite->width = al_get_bitmap_width(bmp);
 		sprite->height = al_get_bitmap_height(bmp);
-
-		// make the OpenGL texture
-		// this makes a copy of the bitmap
-		// note - to convert magenta to alpha, use al_convert_mask_to_alpha()
-		// if (!use_alpha)
-			sprite->texture = al_get_opengl_texture(bmp);
+		sprite->texture = al_get_opengl_texture(bmp);
 				
 		bmp = NULL;
-		
-		// TEMP // set_color_depth(original_bpp);
 
 		// add to the loaded sprites list
 		if (sprite->texture != 0) {
 			sprites[filename] = sprite;
 		} else {
 			TRACE(	"ERROR: Failed making texture for '%s'\n"
-												"-NOTE: Make sure texture size is a multiple of 2!\n",
-												file.GetString());
-
-			// TEMP // if (allegro_gl_error && strlen(allegro_gl_error))
-			// TRACE("       AllegroGL says: %s\n", allegro_gl_error);
+					"-NOTE: Make sure texture size is a multiple of 2!\n",
+					file.GetString());
 
 			delete sprite;
 			return NULL;
@@ -200,45 +173,12 @@ ALLEGRO_SAMPLE* AssetManager::LoadSound(const char* filename) {
 	return spl;
 }
 
-void* AssetManager::LoadMusic(const char* filename) {
-	/* TEMP - disabled for port
-	CString music_file = GetPathOf(filename);
-
-	if (music_file.GetLength() < 0) {
-		TRACE(" - WARN: Can't find music file: %s\n", filename);
-		return 0;
-	}
-
-	if (music) {
-		music->Shutdown();
-		music = NULL;
-	}
-
-	music = new OGGFILE();
-
-	if (!music) {
-		TRACE(" - ERROR: Out of memory while trying to load %s!\n", filename);
-		return NULL;
-	}
-	
-	if (!music->Init(music_file) ) {
-		TRACE(" - WARN: Invalid music file: %s\n", filename);
-		music->Shutdown();
-		return NULL;
-	}
-
-	return music;*/
-	return NULL;
-}
-
 AssetManager::AssetManager() {
 	ResetPaths();
-	music = NULL;
 }
 
 AssetManager::~AssetManager() {
 	Shutdown();
-	music = NULL;
 }
 
 //  -------------------------------------------------------------------------

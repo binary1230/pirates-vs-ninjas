@@ -37,6 +37,7 @@ class PhysicsContactListener : public b2ContactListener
 {
 	public:
 		void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
+		void BeginContact(b2Contact* contact);
 };
 
 class PhysicsContact

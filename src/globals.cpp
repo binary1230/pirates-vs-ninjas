@@ -19,21 +19,19 @@ void DebugTrace( const char * format, ... )
 }
 
 void StringSplit(CString str, CString delim, vector<CString> &results) {
-	/*uint cutAt;
+	uint cutAt;
 	results.clear();
-	while( (cutAt = str.find_first_of(delim)) != str.npos ) {
+	while( (cutAt = str.Find(delim)) != -1 ) {
 		if(cutAt > 0) {
-			results.push_back(str.substr(0,cutAt));
+			results.push_back(str.Left(cutAt));
 		}
 
-		str = str.substr(cutAt+1);
+		str = str.Mid(cutAt+1);
 	}
 	
-	if(str.length() > 0)	{
+	if(str.GetLength() > 0)	{
 		results.push_back(str);
-	}*/
-
-	assert(false); // not implemented yet.  above code works fine, just needs to be ported
+	}
 }
 
 /*

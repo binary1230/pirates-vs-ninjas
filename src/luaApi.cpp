@@ -120,8 +120,7 @@ int LUAAPI lua_music_play(lua_State* lua) {
 		retval = -1;
 
 	if (retval != -1 && music_file) {
-		SOUND->LoadMusic(music_file);
-		SOUND->PlayMusic();
+		SOUND->PlayMusic(music_file);
 	}
 
 	lua_pushnumber(lua, retval);

@@ -387,8 +387,7 @@ void GameWorld::DoMainGameUpdate() {
 
 void GameWorld::LoadMusic(const char* music_file) {
 	if (music_file) {
-		SOUND->LoadMusic(music_file);
-		SOUND->PlayMusic();
+		SOUND->PlayMusic(music_file);
 	}
 }
 

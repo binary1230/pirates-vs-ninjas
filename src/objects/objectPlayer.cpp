@@ -398,7 +398,7 @@ void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 	if (obj->GetProperties().is_fan || obj->GetProperties().is_ball)  
 		return;
 
-	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().ignores_collisions)
+	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().is_sensor)
 	{
 		if (pkbWorldManifold->normal.y > 0 && pkbWorldManifold->normal.x == 0.0f)
 			m_kCurrentCollision.down = 1;
@@ -559,9 +559,11 @@ void PlayerObject::DropBombsIfNeeded()
 	float strength = 0.8f;
 
 	if (GetInput(PLAYERKEY_UP, controller_num)) {
-		objBall->SetImpulse(0.0f, strength);
-	} else if (GetInput(PLAYERKEY_DOWN, controller_num)) {
+		objBall->SetY(objBall->GetY() + 40);
 		objBall->SetImpulse(0.0f, strength*0.2f);
+	} else if (GetInput(PLAYERKEY_DOWN, controller_num) && !m_kCurrentCollision.down) {
+		objBall->SetY(objBall->GetY() - 40);
+		objBall->SetImpulse(0.0f, -strength*0.2f);
 	} else {
 		objBall->SetX(objBall->GetX() + (20 * sign));
 		objBall->SetImpulse(GetVelX()*0.01f + sign * strength * 0.3f, 0.0f);

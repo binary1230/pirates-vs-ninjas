@@ -8,95 +8,87 @@
 
 DECLARE_SINGLETON(GameSound)
 
+ALLEGRO_SAMPLE* GameSound::FindCachedSoundByName(const char* name) {
+	s_iter s = soundMap.find(name);
+	if (s == soundMap.end())
+		return NULL;
+
+	return s->second;
+}
+
 //! Plays a sound
-//! Pan goes from 0-255, 128 being the center
-void GameSound::PlaySound(CString name, unsigned int pan) {
+// TODO: Pan is broken, should be a float -2017
+void GameSound::PlaySound(CString name, unsigned int pan, ALLEGRO_PLAYMODE loop, ALLEGRO_SAMPLE_ID* sound_id_out) {
 	if (!sound_enabled)
 		return;
 	
-	// modifying the pitch randomly produces weird variations
-	// for the same sound.  slight pitch changes == good
-	int freq = 1000;  							// pitch to play at (1000=normal)
-
-	if (use_variable_pitch)
-		freq += Rand(0, freq_range) - (freq_range / 2);
-	
-	s_iter s = soundMap.find(name);
 	ALLEGRO_SAMPLE* spl = NULL;
-
-	if (s != soundMap.end())
-		spl = s->second;
+	spl = FindCachedSoundByName(name);
 
 	if (!spl) {
-		// TRACE("- sound: warning: Sound '%s' was never loaded.\n", 
-		// name.c_str());
-		// return;
-
-		// WARNING: Cache miss, load it now
-		if (!LoadSound(name, name)) {
-			TRACE("- SOUND: ERROR: Can't load [non-cached] sound '%s'\n", name);
-			return;
-		}
-
-		s = soundMap.find(name);
-		if (s != soundMap.end())
-			spl = s->second;
+		spl = LoadSound(name, name);
 	}
 
-	/* TEMP if (spl)
-		al_play_sample(spl, 255, pan, freq, 0); */
+	if (!spl) {
+		TRACE("- SOUND: ERROR: Can't load [non-cached] sound '%s'\n", name);
+		return;
+	}
+	
+	al_play_sample(spl, 1.0f, ALLEGRO_AUDIO_PAN_NONE, 1.0f, ALLEGRO_PLAYMODE_ONCE, sound_id_out);
 }
 
-bool GameSound::LoadMusic(const char* filename) {
-	if (!sound_enabled)
-		return true;		
-
-	// TEMP HACK FIX THIS, VOID* IS NOT RIGHT -Domport2017
-	void* music = ASSETMANAGER->LoadMusic(filename);
-
-	if (!music) 
-		return false;
-	else
-		return true;
+bool GameSound::IsThisMusicPlayingAlready(CString name) {
+	return current_music.GetLength() && current_music == name;
 }
 
-bool GameSound::PlayMusic(bool loop, int vol, int pan, int buflen) {
+bool GameSound::PlayMusic(const char* name) {
 	if (!sound_enabled || OPTIONS->MapEditorEnabled())
 		return true;
 
-	// TEMP HACK FIX THIS, VOID* IS NOT RIGHT -Domport2017
-	void* music = ASSETMANAGER->GetMusic();	
+	if (IsThisMusicPlayingAlready(name))
+		return true;
 
-	if (!music)
-		return false;
-	else
-		// return music->Play(loop, vol, pan, buflen); // TEMPHACK
-		return false; // TEMPHACK
+	StopMusic();
+	PlaySound(name, 0, ALLEGRO_PLAYMODE_LOOP, &current_music_id);
+	current_music = name;
+
+	return true;
+}
+
+void GameSound::StopMusic() {
+	if (!current_music.GetLength())
+		return;
+	
+	StopSound(&current_music_id);
+	current_music = "";
+}
+
+void GameSound::StopSound(ALLEGRO_SAMPLE_ID* sample_id) {
+	if (sample_id)
+		al_stop_sample(sample_id);
 }
 
 void GameSound::Update() {
-	/*if (!sound_enabled)
-		return;		
-	
-	OGGFILE* music = ASSETMANAGER->GetMusic();	
 
-	if (music)
-		music->Update();*/
-	return; // TEMP HACK
 }
 
 //! Loads a sound, you can call it later with PlaySound(sound_name)
-bool GameSound::LoadSound(const char* filename, const char* sound_name) {
+ALLEGRO_SAMPLE* GameSound::LoadSound(const char* filename, const char* sound_name) {
 	if (!sound_enabled)
-		return true;
+		return NULL;
+
+	// we need to enable this sometime, we should not be overwriting stuff 
+	// that's already in the map, that should be an error.
+	// right now am too lazy to deal with this properly.
+	// assert(!FindCachedSoundByName(sound_name));
 
 	ALLEGRO_SAMPLE* spl = ASSETMANAGER->LoadSound(filename);
 
 	if (!spl)
-		return false;
+		return NULL;
 	
 	soundMap[sound_name] = spl;
-	return true;
+	return spl;
 }
 	
 bool GameSound::LoadSounds(XMLNode &xSounds) {
@@ -109,8 +101,7 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 		CString name = xSound.getAttribute("name");
 		
 		if (!LoadSound(xSound.getText(), name)) {
-			TRACE("ERROR: Can't load soundfile: '%s'\n", 
-											xSound.getText());
+			TRACE("ERROR: Can't load soundfile: '%s'\n", xSound.getText());
 			return false;
 		}
 	}
@@ -123,6 +114,8 @@ int GameSound::Init(bool _sound_enabled) {
 
 	if (!sound_enabled)
 		return 0;	
+
+	current_music = "";
 	
 	if (!al_install_audio()) {
 		TRACE(" WARNING: Sound init failure.  Message from Allegro:\n%s\n", /*allegro_error*/ "");
@@ -140,8 +133,6 @@ int GameSound::Init(bool _sound_enabled) {
 	}
 
 	soundMap.clear();
-	
-	// TEMP // set_volume_per_voice(0);
 
 	GLOBALS->Value("sound_use_variable_pitch", use_variable_pitch);
 	GLOBALS->Value("sound_freq_range", freq_range);
@@ -150,18 +141,13 @@ int GameSound::Init(bool _sound_enabled) {
 }
 
 void GameSound::Shutdown() {
+	StopMusic();
+
 	// Do NOT free any pointers in here
 	// The actual memory for sounds and music 
 	// is in the AssetManager
 	soundMap.clear();
 
-/* TEMPHACK	OGGFILE* music = ASSETMANAGER->GetMusic();
-
-	if (music) {
-		music->Shutdown();
-	}*/
-
-	// TEMP // remove_sound();
 	sound_enabled = false;
 }
 
