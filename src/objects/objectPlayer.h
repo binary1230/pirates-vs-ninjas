@@ -102,7 +102,7 @@ class PlayerObject : public Object {
 		bool LoadPlayerProperties(XMLNode &xDef);		
 		
 		virtual void Update();
-		virtual void OnCollide(Object* obj, const b2Contact* pkb2Contact);
+		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 
 		virtual void OnAnimationLooped();
 		virtual void PlayAnimation(uint uiIndex);

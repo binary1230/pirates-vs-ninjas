@@ -22,7 +22,7 @@ bool CollectableObject::Init() {
 CollectableObject::CollectableObject() {}
 CollectableObject::~CollectableObject() {}
 
-void CollectableObject::OnCollide(Object* obj, const b2Contact* pkb2Contact) {
+void CollectableObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
 	if (obj->GetProperties().is_player) {
 		SOUND->PlaySound("ring");
 		is_dead = true;

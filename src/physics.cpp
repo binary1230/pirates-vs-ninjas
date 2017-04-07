@@ -139,26 +139,30 @@ void PhysicsManager::HandleCollisions()
 	}
 }
 
-void PhysicsManager::ProcessCollision(b2Contact* pkb2Contact)
+void PhysicsManager::ProcessCollision(PhysicsContact* pkb2Contact)
 {
-	b2Fixture* fixtureA = pkb2Contact->GetFixtureA();
-	b2Fixture* fixtureB = pkb2Contact->GetFixtureB();
+	b2WorldManifold worldManifold = pkb2Contact->worldManifold;
 
-	Object* obj1 = (Object*)fixtureA->GetBody()->GetUserData();
-	Object* obj2 = (Object*)fixtureB->GetBody()->GetUserData();
+	// TODO: should just pass in PhysicsContact to OnCollide().  I'm just being lazy. Why am I even working on this project. Ok bye. -Dom2017
 
-	b2WorldManifold worldManifold;
-	pkb2Contact->GetWorldManifold(&worldManifold);
-	
-	obj2->OnCollide(obj1, pkb2Contact);
-	// worldManifold.normal = -worldManifold.normal; // TEMPHACK, DISABLED. (probably need this)
-	obj1->OnCollide(obj2, pkb2Contact);
+	pkb2Contact->objB->OnCollide(pkb2Contact->objA, &worldManifold);
+	worldManifold.normal = -worldManifold.normal;
+	pkb2Contact->objA->OnCollide(pkb2Contact->objB, &worldManifold);
 }
 
-void PhysicsManager::Reportb2Contact( const b2Contact* pkb2Contact )
+void PhysicsManager::Reportb2Contact(const b2Contact* pkb2Contact)
 {
-	// make a COPY here, don't store the pointer.
-	m_kContacts.push_back(*pkb2Contact);
+	PhysicsContact contact;
+
+	const b2Fixture* fixtureA = pkb2Contact->GetFixtureA();
+	const b2Fixture* fixtureB = pkb2Contact->GetFixtureB();
+
+	contact.objA = (Object*)fixtureA->GetBody()->GetUserData();
+	contact.objB = (Object*)fixtureB->GetBody()->GetUserData();
+
+	pkb2Contact->GetWorldManifold(&contact.worldManifold);
+
+	m_kContacts.push_back(contact);
 }
 
 // -------------------------------------------------------------------------

@@ -8,6 +8,7 @@
 
 class b2World;
 struct b2AABB;
+class Object;
 
 // -----------------------------------------------------------------------
 
@@ -34,11 +35,19 @@ void DrawAABB(b2AABB* aabb, const b2Color& color);
 
 class PhysicsContactListener : public b2ContactListener
 {
-public:
-	void Add(const b2Contact* point);
-	void Persist(const b2Contact* point);
-	void Remove(const b2Contact* point);
-	void Result(const b2ContactResult* point);
+	public:
+		void Add(const b2Contact* point);
+		void Persist(const b2Contact* point);
+		void Remove(const b2Contact* point);
+		void Result(const b2ContactResult* point);
+};
+
+class PhysicsContact
+{
+	public:
+		Object* objA;
+		Object* objB;
+		b2WorldManifold worldManifold;
 };
 
 class PhysicsManager
@@ -53,14 +62,14 @@ class PhysicsManager
 		// PhysicsDebugRenderer m_kPhysicsDebugRenderer;
 		PhysicsContactListener m_kPhysicsContactListener;
 
-		std::vector<b2Contact> m_kContacts;
+		std::vector<PhysicsContact> m_kContacts;
 
 		friend class PhysicsContactListener;
 
 		void Reportb2Contact(const b2Contact* pkb2Contact);
 		
 		void HandleCollisions();
-		void ProcessCollision(b2Contact* pkb2Contact);
+		void ProcessCollision(PhysicsContact* pkb2Contact);
 
 		bool bDrawDebugBoxes;
 

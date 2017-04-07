@@ -46,29 +46,8 @@ bool ObjectBounce::Init() {
 	return true;
 }
 
-void ObjectBounce::OnCollide(Object* obj, const b2Contact* pkb2Contact) {
-	/*if (!properties.is_physical || obj->GetProperties().is_ball || obj->GetProperties().is_fan)
-		return;
+void ObjectBounce::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
 
-	if (obj->GetProperties().is_physical && !obj->GetProperties().is_player) {
-		Vector2D newpos;
-		m_kCurrentCollision = GetBound(obj, newpos);
-
-		pos = newpos;
-		UpdateProjectionRectFromCollisions(newpos);
-
-		if (m_kCurrentCollision.left || m_kCurrentCollision.right)
-			vel.x = -vel.x;
-		
-		if (m_kCurrentCollision.down || m_kCurrentCollision.up) {
-			vel.y = -vel.y*0.61f;
-
-			if (!collided_last_frame)
-				play_hit_sound = true;
-
-			collided_last_frame = true;
-		}
-	}*/
 }
 
 ObjectBounce::ObjectBounce() {}

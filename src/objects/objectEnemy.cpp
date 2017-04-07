@@ -53,7 +53,7 @@ void EnemyObject::Update()
 	flip_x = GetVelX() > 0;
 }
 
-void EnemyObject::OnCollide(Object* obj, const b2Contact* pkb2Contact) 
+void EnemyObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
 	if (obj->GetProperties().is_player) 
 	{

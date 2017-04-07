@@ -359,7 +359,7 @@ Object::Object() {
 	m_pkPhysicsBody = NULL;
 }
 
-void Object::OnCollide( Object* obj, const b2Contact* pkb2Contact )
+void Object::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
 	// default is no action, this is overidden in higher classes
 }

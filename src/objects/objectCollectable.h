@@ -19,7 +19,7 @@ class CollectableObject : public Object {
 		CollectableObject();
 		~CollectableObject();
 
-		void OnCollide(Object* obj, const b2Contact* pkb2Contact);
+		void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 	
 		friend class ObjectFactory;
 };

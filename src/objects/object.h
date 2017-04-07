@@ -357,7 +357,7 @@ class Object {
 		bool GetDebugFlag() const {return debug_flag;};
 		
 		//! Handle collisions with another object
-		virtual void OnCollide(Object* obj, const b2Contact* pkb2Contact);
+		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		
 		// When an animation we're playing loops, we get this call
 		virtual void OnAnimationLooped() {};

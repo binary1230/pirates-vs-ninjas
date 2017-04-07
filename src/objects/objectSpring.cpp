@@ -46,7 +46,7 @@ bool SpringObject::Init() {
 SpringObject::SpringObject() {}
 SpringObject::~SpringObject() {}
 
-void SpringObject::OnCollide(Object* obj, const b2Contact* pkb2Contact) {
+void SpringObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
 	if (obj->GetProperties().is_player) {
 		
 		// Spring it!

@@ -388,7 +388,7 @@ void PlayerObject::Update()
 	m_pkPhysicsBody->ApplyForce(accel, m_pkPhysicsBody->GetWorldCenter(), true);
 }
 
-void PlayerObject::OnCollide(Object* obj, const b2Contact* pkb2Contact) 
+void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
 	if (obj->GetProperties().is_door) {
 		door_in_front_of_us = (DoorObject*)obj;
@@ -400,19 +400,16 @@ void PlayerObject::OnCollide(Object* obj, const b2Contact* pkb2Contact)
 
 	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().ignores_collisions)
 	{
-		b2WorldManifold worldManifold; 
-		pkb2Contact->GetWorldManifold(&worldManifold);
-
-		if (worldManifold.normal.y > 0 && worldManifold.normal.x == 0.0f)
+		if (pkbWorldManifold->normal.y > 0 && pkbWorldManifold->normal.x == 0.0f)
 			m_kCurrentCollision.down = 1;
 
-		if (worldManifold.normal.y < 0 && worldManifold.normal.x == 0.0f)
+		if (pkbWorldManifold->normal.y < 0 && pkbWorldManifold->normal.x == 0.0f)
 			m_kCurrentCollision.up = 1;
 
-		if (worldManifold.normal.x > 0 && worldManifold.normal.y == 0.0f)
+		if (pkbWorldManifold->normal.x > 0 && pkbWorldManifold->normal.y == 0.0f)
 			m_kCurrentCollision.left = 1;
 
-		if (worldManifold.normal.x < 0 && worldManifold.normal.y == 0.0f)
+		if (pkbWorldManifold->normal.x < 0 && pkbWorldManifold->normal.y == 0.0f)
 			m_kCurrentCollision.right = 1;
 	}
 

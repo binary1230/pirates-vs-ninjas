@@ -26,7 +26,7 @@ class SpringObject : public Object {
 		SpringObject();
 		~SpringObject();
 
-		void OnCollide(Object* obj, const b2Contact* pkb2Contact);
+		void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		bool IsSpringActive() {return spring_is_active;};
 
 		const Vector2D& GetSpringVector() const {return spring_vector;};
