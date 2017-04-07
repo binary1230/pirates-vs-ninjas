@@ -350,22 +350,8 @@ void DrawAABB(b2AABB* aabb, const b2Color& c)
 	glEnd();
 }*/
 
-void PhysicsContactListener::Add( const b2Contact* point )
+void PhysicsContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
 {
 	// TRACE("%i: Add\n", i);
-	PHYSICS->Reportb2Contact(point);
-}
-
-void PhysicsContactListener::Persist( const b2Contact* point )
-{
-	// TRACE("%i: Persist\n", i);
-	PHYSICS->Reportb2Contact(point);
-}
-
-void PhysicsContactListener::Remove( const b2Contact* point )
-{
-}
-
-void PhysicsContactListener::Result( const b2ContactResult* point )
-{
+	PHYSICS->Reportb2Contact(contact);
 }

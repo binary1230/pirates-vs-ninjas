@@ -36,10 +36,7 @@ void DrawAABB(b2AABB* aabb, const b2Color& color);
 class PhysicsContactListener : public b2ContactListener
 {
 	public:
-		void Add(const b2Contact* point);
-		void Persist(const b2Contact* point);
-		void Remove(const b2Contact* point);
-		void Result(const b2ContactResult* point);
+		void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
 };
 
 class PhysicsContact
