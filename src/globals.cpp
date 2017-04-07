@@ -11,11 +11,11 @@ void DebugTrace( const char * format, ... )
 	va_start( args, format );
 	vsnprintf( buffer, bufsize - 1, format, args );
 
-//#ifdef WIN32
-//	OutputDebugStr(buffer);
-//#else
+  #ifdef WIN32
+	OutputDebugString(buffer);
+  #else
 	fprintf(stderr, "%s", buffer);
-//#endif
+  #endif
 }
 
 void StringSplit(CString str, CString delim, vector<CString> &results) {
