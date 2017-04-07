@@ -36,6 +36,7 @@
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonAudio>true</Allegro_AddonAudio>
     <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug2|x64'">
     <ClCompile>
@@ -57,7 +58,9 @@
     <ClCompile Include="basename.cpp" />
     <ClCompile Include="credits.cpp" />
     <ClCompile Include="effectsManager.cpp" />
-    <ClCompile Include="engine_wrap.cpp" />
+    <ClCompile Include="engine_wrap.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug2|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="eventManager.cpp" />
     <ClCompile Include="external\XGetopt.cpp" />
     <ClCompile Include="external\xmlParser.cpp" />
@@ -97,7 +100,6 @@
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="rect.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="swig\engine_wrap.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="vector2D.cpp" />
     <ClCompile Include="window.cpp" />

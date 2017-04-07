@@ -180,9 +180,6 @@
     <ClCompile Include="external\xmlParser.cpp">
       <Filter>Source Files\External</Filter>
     </ClCompile>
-    <ClCompile Include="swig\engine_wrap.cpp">
-      <Filter>Swig</Filter>
-    </ClCompile>
     <ClCompile Include="engine_wrap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
