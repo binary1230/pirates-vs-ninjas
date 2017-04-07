@@ -34,7 +34,7 @@ void GameSound::PlaySound(CString name, unsigned int pan, ALLEGRO_PLAYMODE loop,
 		return;
 	}
 	
-	al_play_sample(spl, 1.0f, ALLEGRO_AUDIO_PAN_NONE, 1.0f, ALLEGRO_PLAYMODE_ONCE, sound_id_out);
+	al_play_sample(spl, 1.0f, ALLEGRO_AUDIO_PAN_NONE, 1.0f, loop, sound_id_out);
 }
 
 bool GameSound::IsThisMusicPlayingAlready(CString name) {
