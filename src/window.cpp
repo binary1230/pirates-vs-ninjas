@@ -108,14 +108,13 @@ void GameWindow::DrawRect(_Rect &r, ALLEGRO_COLOR col, bool filled, int alpha) {
 // to make it look like there is one continuous gradient going up the level
 
 // Usually the screen height is smaller than the level height
-void GameWindow::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR top_col,
-																					int bottom_y, int top_y, 
-																					int level_height) {
-	
+void GameWindow::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR top_col, 
+	int bottom_y, int top_y, int level_height) 
+{	
 	// get the color differences for computing the new colors
-	int col_diff_r = top_col.r - bottom_col.r;
-	int col_diff_g = top_col.g - bottom_col.g;
-	int col_diff_b = top_col.b - bottom_col.b;
+	float col_diff_r = top_col.r - bottom_col.r;
+	float col_diff_g = top_col.g - bottom_col.g;
+	float col_diff_b = top_col.b - bottom_col.b;
 
 	// sanity check.
 	if (top_y > level_height)
@@ -133,17 +132,17 @@ void GameWindow::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR 
 	float bottom_col_percent = float(bottom_y) / float(level_height);
 
 	// compute the final top color
-	ALLEGRO_COLOR final_top_col = al_map_rgb(
-									bottom_col.r + int(float(col_diff_r) * top_col_percent),
-									bottom_col.g + int(float(col_diff_g) * top_col_percent),
-									bottom_col.b + int(float(col_diff_b) * top_col_percent)
+	ALLEGRO_COLOR final_top_col = al_map_rgb_f(
+									bottom_col.r + col_diff_r * top_col_percent,
+									bottom_col.g + col_diff_g * top_col_percent,
+									bottom_col.b + col_diff_b * top_col_percent
 								);
 
 	// compute the final bottom color
-	ALLEGRO_COLOR final_bottom_col = al_map_rgb(
-									bottom_col.r +int(float(col_diff_r) * bottom_col_percent),
-									bottom_col.g +int(float(col_diff_g) * bottom_col_percent),
-									bottom_col.b +int(float(col_diff_b) * bottom_col_percent)
+	ALLEGRO_COLOR final_bottom_col = al_map_rgb_f(
+									bottom_col.r + col_diff_r * bottom_col_percent,
+									bottom_col.g + col_diff_g * bottom_col_percent,
+									bottom_col.b + col_diff_b * bottom_col_percent
 								);
 
 	// draw the quad with the two new colors
@@ -167,15 +166,15 @@ void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2,
 	else
 		glBegin(GL_LINE_LOOP);
 
-	float alpha_f = float(alpha * 0xFF);
+	float alpha_f = float(alpha / 255.0f);
 
 	glColor4f(col1.r, col1.g, col1.b, alpha_f);
 	glVertex2f(x1, y2);
-	glColor4f(col2.r, col2.g, col2.b, alpha);
+	glColor4f(col2.r, col2.g, col2.b, alpha_f);
 	glVertex2f(x2, y2);
-	glColor4f(col3.r, col3.g, col3.b, alpha);
+	glColor4f(col3.r, col3.g, col3.b, alpha_f);
 	glVertex2f(x2, y1);
-	glColor4f(col4.r, col4.g, col4.b, alpha);
+	glColor4f(col4.r, col4.g, col4.b, alpha_f);
 	glVertex2f(x1, y1);
 
 	glEnd();

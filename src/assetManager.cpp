@@ -133,6 +133,12 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 		}
 			
 		ALLEGRO_BITMAP* bmp = al_load_bitmap(file);
+
+		// backwards-comaptibility:
+		// old versions of allegro would use magenta as transparent
+		// these days, we can just use real alpha channels becuase it's not a 2006 DOS game.
+		// for now, just go ahead and still convert.
+		al_convert_mask_to_alpha(bmp, al_map_rgb(255, 0, 255));
 	
 		if (!bmp) {
 			TRACE("ERROR: Can't load bitmap file: '%s'\n", file);
@@ -145,14 +151,10 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 
 		// make the OpenGL texture
 		// this makes a copy of the bitmap
-		if (!use_alpha)
+		// note - to convert magenta to alpha, use al_convert_mask_to_alpha()
+		// if (!use_alpha)
 			sprite->texture = al_get_opengl_texture(bmp);
-		else
-			sprite->texture = al_get_opengl_texture(bmp); // TEMP
-			// TEMP // sprite->texture = allegro_gl_make_texture_ex(AGL_TEXTURE_HAS_ALPHA | AGL_TEXTURE_FLIP, bmp, GL_RGBA);
 				
-		// don't need the original Allegro bitmap anymore
-		al_destroy_bitmap(bmp);
 		bmp = NULL;
 		
 		// TEMP // set_color_depth(original_bpp);
