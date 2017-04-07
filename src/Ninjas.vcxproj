@@ -5,68 +5,253 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5BB358AD-A0F0-4F94-B864-919CDF413C5A}</ProjectGuid>
-    <RootNamespace>Ninjas</RootNamespace>
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{4AE14D51-384B-4F94-90A8-B43ABC748709}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Ninjas</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-	<ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v141</PlatformToolset>
-	<UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>
-	</CharacterSet>
+    </CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>
+    </CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>
+    </CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>
+    </CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <_ProjectFileVersion>15.0.26228.10</_ProjectFileVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonAudio>true</Allegro_AddonAudio>
-    <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
-    <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-    <LinkIncremental>true</LinkIncremental>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>objects/;external/;.</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>objects/;external/;.</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
     <PreBuildEvent>
       <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>generate swig bindings</Message>
+      <Message>Build swig wrapper</Message>
     </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>objects/;external/;.</AdditionalIncludeDirectories>
+    </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Build swig wrapper</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>objects/;external/;.</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PreBuildEvent>
+      <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Build swig wrapper</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>objects/;external/;.</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PreBuildEvent>
+      <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Build swig wrapper</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="Doxyfile.in" />
+    <None Include="lua\mapeditorGUI.lua" />
+    <None Include="swig\engine.i" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ai.h" />
+    <ClInclude Include="animation.h" />
+    <ClInclude Include="animationeditor.h" />
+    <ClInclude Include="animations.h" />
+    <ClInclude Include="assetManager.h" />
+    <ClInclude Include="basename.h" />
+    <ClInclude Include="credits.h" />
+    <ClInclude Include="effectsManager.h" />
+    <ClInclude Include="eventManager.h" />
+    <ClInclude Include="external\XGetopt.h" />
+    <ClInclude Include="external\xmlParser.h" />
+    <ClInclude Include="gameLog.h" />
+    <ClInclude Include="gameMenu.h" />
+    <ClInclude Include="gameMode.h" />
+    <ClInclude Include="gameModes.h" />
+    <ClInclude Include="gameOptions.h" />
+    <ClInclude Include="gameSound.h" />
+    <ClInclude Include="gameState.h" />
+    <ClInclude Include="gameWorld.h" />
+    <ClInclude Include="globalDefines.h" />
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="gui.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="luaApi.h" />
+    <ClInclude Include="luaManager.h" />
+    <ClInclude Include="objectFactory.h" />
+    <ClInclude Include="objectIDs.h" />
+    <ClInclude Include="objectLayer.h" />
+    <ClInclude Include="objects\object.h" />
+    <ClInclude Include="objects\object3d.h" />
+    <ClInclude Include="objects\objectBackground.h" />
+    <ClInclude Include="objects\objectBounce.h" />
+    <ClInclude Include="objects\objectBridge.h" />
+    <ClInclude Include="objects\objectCollectable.h" />
+    <ClInclude Include="objects\objectController.h" />
+    <ClInclude Include="objects\objectCutBars.h" />
+    <ClInclude Include="objects\objectDoor.h" />
+    <ClInclude Include="objects\objectEnemy.h" />
+    <ClInclude Include="objects\objectFan.h" />
+    <ClInclude Include="objects\objectPlayer.h" />
+    <ClInclude Include="objects\objectPlayerHuman.h" />
+    <ClInclude Include="objects\objectSpring.h" />
+    <ClInclude Include="objects\objectStatic.h" />
+    <ClInclude Include="objects\objectTxtOverlay.h" />
+    <ClInclude Include="oggFile.h" />
+    <ClInclude Include="physics.h" />
+    <ClInclude Include="precompiled.h" />
+    <ClInclude Include="rect.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="singleton.h" />
+    <ClInclude Include="sprite.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="vector2D.h" />
+    <ClInclude Include="window.h" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationeditor.cpp" />
@@ -76,7 +261,14 @@
     <ClCompile Include="credits.cpp" />
     <ClCompile Include="effectsManager.cpp" />
     <ClCompile Include="engine_wrap.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4244</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4244</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4244</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4244</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="eventManager.cpp" />
     <ClCompile Include="external\XGetopt.cpp" />
@@ -117,77 +309,12 @@
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="rect.cpp" />
     <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="vector2D.cpp" />
     <ClCompile Include="window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ai.h" />
-    <ClInclude Include="animation.h" />
-    <ClInclude Include="animationeditor.h" />
-    <ClInclude Include="animations.h" />
-    <ClInclude Include="assetManager.h" />
-    <ClInclude Include="basename.h" />
-    <ClInclude Include="credits.h" />
-    <ClInclude Include="effectsManager.h" />
-    <ClInclude Include="eventManager.h" />
-    <ClInclude Include="external\XGetopt.h" />
-    <ClInclude Include="external\xmlParser.h" />
-    <ClInclude Include="gameMenu.h" />
-    <ClInclude Include="gameMode.h" />
-    <ClInclude Include="gameModes.h" />
-    <ClInclude Include="gameOptions.h" />
-    <ClInclude Include="gameSound.h" />
-    <ClInclude Include="gameState.h" />
-    <ClInclude Include="gameWorld.h" />
-    <ClInclude Include="globalDefines.h" />
-    <ClInclude Include="globals.h" />
-    <ClInclude Include="gui.h" />
-    <ClInclude Include="gui\GUI_globals.h" />
-    <ClInclude Include="gui\GUI_layeroptions.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="luaApi.h" />
-    <ClInclude Include="luaManager.h" />
-    <ClInclude Include="objectFactory.h" />
-    <ClInclude Include="objectIDs.h" />
-    <ClInclude Include="objectLayer.h" />
-    <ClInclude Include="objects\object.h" />
-    <ClInclude Include="objects\object3d.h" />
-    <ClInclude Include="objects\objectBackground.h" />
-    <ClInclude Include="objects\objectBounce.h" />
-    <ClInclude Include="objects\objectBridge.h" />
-    <ClInclude Include="objects\objectCollectable.h" />
-    <ClInclude Include="objects\objectController.h" />
-    <ClInclude Include="objects\objectCutBars.h" />
-    <ClInclude Include="objects\objectDoor.h" />
-    <ClInclude Include="objects\objectEnemy.h" />
-    <ClInclude Include="objects\objectFan.h" />
-    <ClInclude Include="objects\objectPlayer.h" />
-    <ClInclude Include="objects\objectPlayerHuman.h" />
-    <ClInclude Include="objects\objectSpring.h" />
-    <ClInclude Include="objects\objectStatic.h" />
-    <ClInclude Include="objects\objectTxtOverlay.h" />
-    <ClInclude Include="oggFile.h" />
-    <ClInclude Include="physics.h" />
-    <ClInclude Include="precompiled.h" />
-    <ClInclude Include="rect.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
-    <ClInclude Include="singleton.h" />
-    <ClInclude Include="sprite.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="timer.h" />
-    <ClInclude Include="vector2D.h" />
-    <ClInclude Include="window.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="swig\engine.i" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Ninjas.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

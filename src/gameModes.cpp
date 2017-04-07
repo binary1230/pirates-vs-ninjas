@@ -9,7 +9,7 @@
 #include "gameMenu.h"
 #include "credits.h"
 #include "gameOptions.h"
-#include "mapEditor.h"
+// #include "mapEditor.h"
 #include "luaManager.h"
 #include "animationeditor.h"
 
@@ -110,11 +110,11 @@ int GameModes::LoadMode(CString mode_xml_filename,
 	{
 
 		// slight singleton hack.
-		if (!OPTIONS->MapEditorEnabled()) {
+		//if (!OPTIONS->MapEditorEnabled()) {
 			WORLD->CreateInstance();
-		} else {
-			WORLD->SetInstance(new MapEditor());
-		}
+		//} else {
+		//	WORLD->SetInstance(new MapEditor());
+		//}
 
 		currentMode = WORLD;
 

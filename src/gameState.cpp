@@ -12,7 +12,7 @@
 #include "gameModes.h"
 #include "globalDefines.h"
 #include "luaManager.h"
-#include "mapEditor.h"
+// #include "mapEditor.h"
 #include "physics.h"
 
 DECLARE_SINGLETON(GameState)
@@ -313,7 +313,7 @@ int GameState::RunGame() {
 void GameState::MainLoop() 
 {
 	// NOT sure this is the best place for this:
-	if (OPTIONS->MapEditorEnabled()) 
+	/*if (OPTIONS->MapEditorEnabled()) 
 	{
 		// pray to god.
 		assert(WORLD);
@@ -322,7 +322,7 @@ void GameState::MainLoop()
 		assert(pkMapEditor);
 		pkMapEditor->RunMapEditor();
 		return;
-	}
+	}*/
 
 	while (!exit_game) 
 	{
