@@ -52,7 +52,7 @@ bool PhysicsManager::Init()
 
 void PhysicsManager::Update()
 {
-	m_kContacts.clear();
+	m_kHardCollisions.clear();
 
 	int32 velocityIterations = 6;  // TEMP TODO
 
@@ -132,15 +132,16 @@ void PhysicsManager::RemoveFromWorld( b2Body* pkBodyToRemove )
 
 void PhysicsManager::HandleCollisions()
 {
-	uint iMax = m_kContacts.size();
+	for (uint i = 0; i < m_kHardCollisions.size(); ++i) {
+		ProcessHardCollision(&m_kHardCollisions[i]);
+	}
 
-	for (uint i = 0; i < iMax; ++i)
-	{
-		ProcessCollision(&m_kContacts[i]);
+	for (collision_iter c = sensorMappings.begin(); c != sensorMappings.end(); ++c) {
+		ProcessSensorCollision(&c->second);
 	}
 }
 
-void PhysicsManager::ProcessCollision(PhysicsContact* pkb2Contact)
+void PhysicsManager::ProcessHardCollision(PhysicsContact* pkb2Contact)
 {
 	b2WorldManifold worldManifold = pkb2Contact->worldManifold;
 
@@ -151,19 +152,40 @@ void PhysicsManager::ProcessCollision(PhysicsContact* pkb2Contact)
 	pkb2Contact->objA->OnCollide(pkb2Contact->objB, &worldManifold);
 }
 
-void PhysicsManager::Reportb2Contact(const b2Contact* pkb2Contact)
+void PhysicsManager::ProcessSensorCollision(PhysicsContact* pkb2Contact)
 {
-	PhysicsContact contact;
+	pkb2Contact->objB->OnSensorActivate(pkb2Contact->objA);
+	pkb2Contact->objA->OnSensorActivate(pkb2Contact->objB);
+}
 
+void CreateCollisionInfo(const b2Contact* pkb2Contact, PhysicsContact* contact_out) {
 	const b2Fixture* fixtureA = pkb2Contact->GetFixtureA();
 	const b2Fixture* fixtureB = pkb2Contact->GetFixtureB();
 
-	contact.objA = (Object*)fixtureA->GetBody()->GetUserData();
-	contact.objB = (Object*)fixtureB->GetBody()->GetUserData();
+	contact_out->objA = (Object*)fixtureA->GetBody()->GetUserData();
+	contact_out->objB = (Object*)fixtureB->GetBody()->GetUserData();
 
-	pkb2Contact->GetWorldManifold(&contact.worldManifold);
+	pkb2Contact->GetWorldManifold(&contact_out->worldManifold);
+}
 
-	m_kContacts.push_back(contact);
+void PhysicsManager::ReportRealCollision(const b2Contact* pkb2Contact) {
+	// report a hard collision between two objects
+
+	PhysicsContact contact;
+	CreateCollisionInfo(pkb2Contact, &contact);
+	m_kHardCollisions.push_back(contact);
+}
+
+void PhysicsManager::BeginSensorCollision(const b2Contact* pkb2Contact) {
+	PhysicsContact contact;
+	CreateCollisionInfo(pkb2Contact, &contact);
+
+	sensorMappings[pkb2Contact] = contact;
+}
+
+void PhysicsManager::EndSensorCollision(const b2Contact* pkb2Contact) 
+{
+	sensorMappings.erase(pkb2Contact);
 }
 
 void PhysicsContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
@@ -171,7 +193,7 @@ void PhysicsContactListener::PostSolve(b2Contact* contact, const b2ContactImpuls
 	// this is the one that is triggered each frame if objects are touching
 
 	// TRACE("%i: Add\n", i);
-	PHYSICS->Reportb2Contact(contact);
+	PHYSICS->ReportRealCollision(contact);
 }
 
 void PhysicsContactListener::BeginContact(b2Contact* contact)
@@ -179,18 +201,13 @@ void PhysicsContactListener::BeginContact(b2Contact* contact)
 	// we're only going to use this to report sensors 
 	// (i.e. when there should not be a collision, just a notification)
 
-	const b2Fixture* fixtureA = contact->GetFixtureA();
-	const b2Fixture* fixtureB = contact->GetFixtureB();
+	PHYSICS->BeginSensorCollision(contact);
+}
 
-	Object* objA = (Object*)fixtureA->GetBody()->GetUserData();
-	Object* objB = (Object*)fixtureB->GetBody()->GetUserData();
+void PhysicsContactListener::EndContact(b2Contact* contact)
+{
+	// we're only going to use this to report sensors 
+	// (i.e. when there should not be a collision, just a notification)
 
-	b2WorldManifold manifold;
-	contact->GetWorldManifold(&manifold);
-
-	if (fixtureA->IsSensor() || fixtureB->IsSensor()) {
-		objA->OnCollide(objB, &manifold);
-		manifold.normal = -manifold.normal; // not sure if jank or OK.
-		objB->OnCollide(objA, &manifold);
-	}
+	PHYSICS->EndSensorCollision(contact);
 }

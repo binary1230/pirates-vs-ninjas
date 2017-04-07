@@ -14,7 +14,7 @@ class FanObject : public Object {
 		void Shutdown();
 		
 		void Update();
-		void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
+		void OnSensorActivate(Object* obj);
 
 		FanObject();
 		~FanObject();

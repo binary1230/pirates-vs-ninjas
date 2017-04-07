@@ -358,6 +358,7 @@ class Object {
 		
 		//! Handle collisions with another object
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
+		virtual void OnSensorActivate(Object* obj);
 		
 		// When an animation we're playing loops, we get this call
 		virtual void OnAnimationLooped() {};

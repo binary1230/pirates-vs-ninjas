@@ -364,6 +364,11 @@ void Object::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 	// default is no action, this is overidden in higher classes
 }
 
+void Object::OnSensorActivate(Object* obj) 
+{
+	// default is no action, this is overidden in higher classes
+}
+
 Object::~Object() 
 {
 	SAFE_DELETE(objectDefName);

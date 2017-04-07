@@ -26,7 +26,7 @@ class SpringObject : public Object {
 		SpringObject();
 		~SpringObject();
 
-		void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
+		void OnSensorActivate(Object* obj);
 		bool IsSpringActive() {return spring_is_active;};
 
 		const Vector2D& GetSpringVector() const {return spring_vector;};

@@ -388,16 +388,32 @@ void PlayerObject::Update()
 	m_pkPhysicsBody->ApplyForce(accel, m_pkPhysicsBody->GetWorldCenter(), true);
 }
 
-void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
-{
+void PlayerObject::OnSensorActivate(Object* obj) {
+
 	if (obj->GetProperties().is_door) {
 		door_in_front_of_us = (DoorObject*)obj;
 		return;
 	}
-		
-	if (obj->GetProperties().is_fan || obj->GetProperties().is_ball)  
-		return;
 
+	if (obj->GetProperties().is_spring)
+	{
+		SpringObject* sObj = (SpringObject*)obj;
+
+		if (sObj->IsSpringActive())
+		{
+			accel.x = 0.0f;
+			accel.y = 0.0f;
+			SetVelX(sObj->GetSpringVector().x);
+			SetVelY(sObj->GetSpringVector().y);
+		}
+	}
+
+	if (obj->GetProperties().is_ring)
+		++ring_count;
+}
+
+void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
+{
 	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().is_sensor)
 	{
 		if (pkbWorldManifold->normal.y > 0 && pkbWorldManifold->normal.x == 0.0f)
@@ -412,22 +428,6 @@ void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 		if (pkbWorldManifold->normal.x < 0 && pkbWorldManifold->normal.y == 0.0f)
 			m_kCurrentCollision.right = 1;
 	}
-
-	if (obj->GetProperties().is_spring) 
-	{
-		SpringObject* sObj = (SpringObject*)obj;
-		
-		if (sObj->IsSpringActive())
-		{
-			accel.x = 0.0f;
-			accel.y = 0.0f;
-			SetVelX(sObj->GetSpringVector().x);
-			SetVelY(sObj->GetSpringVector().y);
-		}
-	}
-
-	if (obj->GetProperties().is_ring)
-		++ring_count;
 }
 
 bool PlayerObject::Init() 
