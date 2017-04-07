@@ -19,6 +19,7 @@
     <None Include="Doxyfile.in" />
     <None Include="swig\engine.i" />
     <None Include="lua\mapeditorGUI.lua" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ai.h">

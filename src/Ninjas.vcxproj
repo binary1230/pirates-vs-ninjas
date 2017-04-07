@@ -89,6 +89,8 @@
     <Allegro_AddonAudio>true</Allegro_AddonAudio>
     <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
     <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_LibraryType>DynamicDebug</Allegro_LibraryType>
+    <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -105,6 +107,7 @@
     <Allegro_AddonAudio>true</Allegro_AddonAudio>
     <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
     <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,6 +119,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);OpenGL32.Lib;lua.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
@@ -134,6 +139,9 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);OpenGL32.Lib;lua.lib</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <AdditionalLibraryDirectories>packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
@@ -157,6 +165,8 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);OpenGL32.Lib;lua.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
@@ -180,6 +190,8 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);OpenGL32.Lib;lua.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
@@ -192,6 +204,7 @@
     <None Include=".gitignore" />
     <None Include="Doxyfile.in" />
     <None Include="lua\mapeditorGUI.lua" />
+    <None Include="packages.config" />
     <None Include="swig\engine.i" />
   </ItemGroup>
   <ItemGroup>
