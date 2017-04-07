@@ -88,7 +88,7 @@ class GameOptions {
 		inline bool IsFullscreen() {return fullscreen;}
 		
 		//! The demo filename if it was set
-		inline const char* GetDemoFilename() {return demo_filename;}
+		inline const char* GetDemoFilename() { return demo_filename; }
 		
 		//! True if the user wants to reccord a demo
 		inline bool RecordDemo() {return record_demo;}

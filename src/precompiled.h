@@ -48,12 +48,10 @@
 
 #ifdef _WIN64
 #define _WIN32_WINNT   0x0400
-// #include <winalleg.h>
 #include <objbase.h>
 #endif // WIN32
 
 #include <allegro5/allegro_opengl.h>
-// #include <allegro/internal/aintern.h> ???
 
 #ifdef PLATFORM_DARWIN
 #include <CoreServices/CoreServices.h>
@@ -106,11 +104,8 @@ extern "C" {
 // TODO: OLD, KILL?
 // Our rarely-modified engine stuff
 #include <atlstr.h>
-// #define CString CStdStringA
 
 #include "external/xmlParser.h"
-// #include "external/loadpng.h"
-// #include "external/alogg.h"
 #ifdef _MSC_VER
 #include "external/XGetopt.h"	// include our own getopt() for native windows builds
 #endif

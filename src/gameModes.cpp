@@ -2,7 +2,6 @@
 #include "ai.h"
 #include "gameModes.h"
 #include "xmlParser.h"
-#include "StdString.h"
 #include "assetManager.h"
 #include "gameMode.h"
 #include "gameState.h"

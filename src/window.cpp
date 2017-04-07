@@ -6,6 +6,10 @@
 #include "sprite.h"
 #include "gameOptions.h"
 
+// HAXXXXXXXX.  these are the old names from old allegro.  remove and replace these macros
+#define SCREEN_W al_get_bitmap_width(al_get_target_bitmap())
+#define SCREEN_H al_get_bitmap_height(al_get_target_bitmap())
+
 // DOES NOT USE THE DEPTH BUFFER
 // relies on Drawing order (we are 2d after all.)
 
@@ -16,9 +20,6 @@
 #else
 #	define DEFAULT_COLOR_DEPTH desktop_color_depth()
 #endif
-
-// leave this undefined usually.
-// #define ALTERNATE_GFX_MODE GFX_XDGA2
 
 DECLARE_SINGLETON(GameWindow)
 
@@ -45,7 +46,7 @@ void GameWindow::DrawFade() {
 	if (fading_state == FADED_NONE)
 		return;
 
-	DrawRect(0,0,width,height,0,true,fade_alpha);
+	DrawRect(0,0,width,height, al_map_rgb(0,0,0),true,fade_alpha);
 }
 
 void GameWindow::Draw() {
@@ -94,7 +95,7 @@ void GameWindow::FadeIn(int rate /*=1*/) {
 	fading_state = FADING_IN;
 }
 
-void GameWindow::DrawRect(_Rect &r, int col, bool filled, int alpha) {
+void GameWindow::DrawRect(_Rect &r, ALLEGRO_COLOR col, bool filled, int alpha) {
 	DrawRect(	(int)r.getx1(), (int)r.gety1(), 
 				(int)r.getx2(), (int)r.gety2(), 
 				col, filled, alpha);
@@ -112,9 +113,9 @@ void GameWindow::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR 
 																					int level_height) {
 	
 	// get the color differences for computing the new colors
-	int col_diff_r = getr(top_col) - getr(bottom_col);
-	int col_diff_g = getg(top_col) - getg(bottom_col);
-	int col_diff_b = getb(top_col) - getb(bottom_col);
+	int col_diff_r = top_col.r - bottom_col.r;
+	int col_diff_g = top_col.g - bottom_col.g;
+	int col_diff_b = top_col.b - bottom_col.b;
 
 	// sanity check.
 	if (top_y > level_height)
@@ -133,16 +134,16 @@ void GameWindow::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR 
 
 	// compute the final top color
 	ALLEGRO_COLOR final_top_col = al_map_rgb(
-									getr(bottom_col) + int(float(col_diff_r) * top_col_percent),
-									getg(bottom_col) + int(float(col_diff_g) * top_col_percent),
-									getb(bottom_col) + int(float(col_diff_b) * top_col_percent)
+									bottom_col.r + int(float(col_diff_r) * top_col_percent),
+									bottom_col.g + int(float(col_diff_g) * top_col_percent),
+									bottom_col.b + int(float(col_diff_b) * top_col_percent)
 								);
 
 	// compute the final bottom color
 	ALLEGRO_COLOR final_bottom_col = al_map_rgb(
-									getr(bottom_col) +int(float(col_diff_r) * bottom_col_percent),
-									getg(bottom_col) +int(float(col_diff_g) * bottom_col_percent),
-									getb(bottom_col) +int(float(col_diff_b) * bottom_col_percent)
+									bottom_col.r +int(float(col_diff_r) * bottom_col_percent),
+									bottom_col.g +int(float(col_diff_g) * bottom_col_percent),
+									bottom_col.b +int(float(col_diff_b) * bottom_col_percent)
 								);
 
 	// draw the quad with the two new colors
@@ -203,11 +204,11 @@ void GameWindow::DrawText(int x, int y, CString text) {
 
 	int _x = x;
 	int _y = y;
-	int col = al_map_rgb(255,255,255);	// white text color
+	ALLEGRO_COLOR col = al_map_rgb(255,255,255);	// white text color
 
 	glLoadIdentity();
 	for (i = 0; i < max; i++) {
-		allegro_gl_printf(main_font, _x, _y, 0.0f, col, lines[i].c_str());
+		// allegro_gl_printf(main_font, _x, _y, 0.0f, col, lines[i].c_str()); // TEMP HACK DISABLE -2017
 		_y += FONT_HEIGHT;
 	}
 }
@@ -316,8 +317,8 @@ void GameWindow::SetClearColor(uint r, uint g, uint b) {
 int GameWindow::Init( uint _width, uint _height, 
 									bool _fullscreen, int _mode) {
 	
-	int depth = DEFAULT_COLOR_DEPTH;
-	int gfx_mode;
+	// int depth = DEFAULT_COLOR_DEPTH;
+	// int gfx_mode;
 	
 	fade_rate = 0;
 	fade_alpha = 255;
@@ -327,18 +328,23 @@ int GameWindow::Init( uint _width, uint _height,
 	height = _height;
 
 	// Special case: We won't be drawing _anything_
-	if (!OPTIONS->DrawGraphics() ) {
-		TRACE("GameWindow: DISABLING ALL GRAPHICS\n");
-		set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
-		initialized = true;
-		return 0;
-	}
+	//if (!OPTIONS->DrawGraphics() ) {
+	//	// Disabled in 2017 refactor -dom
+	//	TRACE("GameWindow: DISABLING ALL GRAPHICS\n");
+	//	set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
+	//	initialized = true;
+	//	return 0;
+	//}
+
+	al_set_new_display_flags(ALLEGRO_OPENGL);
+
+	/*
+	// removed in 2017 refactor.  no longer needed? -Dom
 
 	install_allegro_gl();
 	allegro_gl_clear_settings();
-	
-	set_color_depth(depth);
 
+	set_color_depth(depth);
 	uint gl_flags = AGL_COLOR_DEPTH | AGL_DOUBLEBUFFER | AGL_RENDERMETHOD;
 
 	if (!_fullscreen) {
@@ -354,35 +360,21 @@ int GameWindow::Init( uint _width, uint _height,
 	allegro_gl_set(AGL_FULLSCREEN, _fullscreen);
 	allegro_gl_set(AGL_RENDERMETHOD, 1);
 	allegro_gl_set(AGL_SUGGEST, gl_flags);
+	*/
 	
-	if (_fullscreen)
-      gfx_mode = GFX_OPENGL_FULLSCREEN;
-	else
-      gfx_mode = GFX_OPENGL;
-
-#	ifdef ALTERNATE_GFX_MODE
-	gfx_mode = ALTERNATE_GFX_MODE;
-# endif // ALTERNATE_GFX_MODE
-
-	if (get_color_depth() != depth)
-		TRACE("window: Warning: Asked for %i-bit color mode"
-										", got %i-bit instead.\n", depth, get_color_depth());
-									
-	if (set_gfx_mode(gfx_mode, width, height, 0, 0) != 0) {
-		TRACE(
-						"window: Can't set graphics mode! (%i, %i, fullscreen = %i) \n"
-						"Try setting a different graphics mode or try non-fullscreen\n"
-						"Allegro error says: '%s'\n"
-						"AllegoGL error says: '%s'\n",
-						width, height, _fullscreen, allegro_error, allegro_gl_error);
+	al_set_new_display_flags(ALLEGRO_OPENGL);
+	display = al_create_display(width, height);
+	if (!display) {
+		fprintf(stderr, "failed to create display!\n");
 		return -1;
 	}
 	
 	SetTitle(VERSION_STRING);
 
 	// XXX: Font stuff should go in asset manager
-	main_font = allegro_gl_convert_allegro_font(font, AGL_FONT_TYPE_TEXTURED, -1.0);
-	assert(main_font != NULL);
+	// disabled 2017 refactor
+	// main_font = allegro_gl_convert_allegro_font(font, AGL_FONT_TYPE_TEXTURED, -1.0);
+	// assert(main_font != NULL);
 	
 	if (InitGL())
 		initialized = true;
@@ -401,7 +393,8 @@ int GameWindow::Init( uint _width, uint _height,
 
 void GameWindow::SetTitle(const char* szTitle)
 {
-	set_window_title(szTitle);
+	// temp disabled 2017 refactor -Dom
+	// set_window_title(szTitle);
 }
 
 bool GameWindow::InitGL() {
@@ -442,16 +435,18 @@ void GameWindow::EndDrawing() {
 
 // draws the backbuffer to the screen and erases the backbuffer
 void GameWindow::Flip() {
-	vsync();
-	allegro_gl_flip();
+	al_wait_for_vsync(); // i guess right thing to do? 2017
+	al_flip_display();
 }
 
 void GameWindow::Shutdown() {
 	if (!initialized)
-			return;
+		return;
 
-	if (main_font)
-		allegro_gl_destroy_font(main_font);
+	al_destroy_display(display);
+
+	//if (main_font)
+	//   allegro_gl_destroy_font(main_font);
 
 	initialized = false;
 }

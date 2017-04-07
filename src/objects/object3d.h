@@ -4,12 +4,13 @@
 #include "object.h"
 
 class ObjectFactory;
-class Model_3DS;
+// class Model_3DS;
 
 //! A "simple" Object (e.g. scenery) - No collisions
+// NOTE: NONE OF THIS WORKS>
 class ModelObject : public Object {
 	protected:
-		Model_3DS* model;
+		// Model_3DS* model;
 				
 	public:
 		bool Init();

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug2|Win32">
-      <Configuration>Debug2</Configuration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug2|x64">
-      <Configuration>Debug2</Configuration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -17,11 +17,15 @@
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug2|Win32'">
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug2|x64'">
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+	<ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
+	<UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>
+	</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -30,18 +34,27 @@
   <PropertyGroup>
     <_ProjectFileVersion>15.0.26228.10</_ProjectFileVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug2|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonAudio>true</Allegro_AddonAudio>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug2|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>objects/;external/;.</AdditionalIncludeDirectories>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
       <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
@@ -49,6 +62,10 @@
     <PreBuildEvent>
       <Message>generate swig bindings</Message>
     </PreBuildEvent>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
@@ -59,7 +76,7 @@
     <ClCompile Include="credits.cpp" />
     <ClCompile Include="effectsManager.cpp" />
     <ClCompile Include="engine_wrap.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug2|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="eventManager.cpp" />
     <ClCompile Include="external\XGetopt.cpp" />
@@ -99,7 +116,9 @@
     <ClCompile Include="oggFile.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="rect.cpp" />
-    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="vector2D.cpp" />
     <ClCompile Include="window.cpp" />
@@ -155,6 +174,7 @@
     <ClInclude Include="precompiled.h" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="stdafx.h" />
@@ -163,11 +183,11 @@
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Ninjas.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <None Include="swig\engine.i" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Ninjas.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

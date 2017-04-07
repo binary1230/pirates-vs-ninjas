@@ -49,6 +49,7 @@ class GameWindow {
 		uint fade_rate;
 		int fade_alpha;
 		FADE_STATE fading_state;
+		ALLEGRO_DISPLAY *display;
 
 		//! Init openGL stuff
 		bool InitGL();
