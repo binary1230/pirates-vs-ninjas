@@ -199,7 +199,7 @@ void GameWindow::DrawRect(	int x1, int y1,
 
 void GameWindow::DrawText(int x, int y, CString text) {
 	vector<CString> lines;
-	StringSplit(text, OBJECT_TXT_LINE_DELIM, lines);
+	lines.push_back(text); // HACK 2017 FIX THIS, reimpliment StringSplit() // StringSplit(text, OBJECT_TXT_LINE_DELIM, lines);
 	int i, max = lines.size();
 
 	int _x = x;
@@ -208,7 +208,7 @@ void GameWindow::DrawText(int x, int y, CString text) {
 
 	glLoadIdentity();
 	for (i = 0; i < max; i++) {
-		// allegro_gl_printf(main_font, _x, _y, 0.0f, col, lines[i].c_str()); // TEMP HACK DISABLE -2017
+		al_draw_text(main_font, col, _x, _y, ALLEGRO_ALIGN_LEFT, lines[i]);
 		_y += FONT_HEIGHT;
 	}
 }
@@ -361,21 +361,28 @@ int GameWindow::Init( uint _width, uint _height,
 	allegro_gl_set(AGL_RENDERMETHOD, 1);
 	allegro_gl_set(AGL_SUGGEST, gl_flags);
 	*/
+
+	al_init_font_addon();
+	al_init_ttf_addon();
+
+	al_init_image_addon();
 	
-	al_set_new_display_flags(ALLEGRO_OPENGL);
 	display = al_create_display(width, height);
 	if (!display) {
-		fprintf(stderr, "failed to create display!\n");
+		TRACE("failed to create display!");
 		return -1;
 	}
 	
 	SetTitle(VERSION_STRING);
 
-	// XXX: Font stuff should go in asset manager
-	// disabled 2017 refactor
-	// main_font = allegro_gl_convert_allegro_font(font, AGL_FONT_TYPE_TEXTURED, -1.0);
-	// assert(main_font != NULL);
-	
+	// TODO: Font stuff should go in asset manager
+	// TODO: don't hardcore 'data' in here, use asset manager to get path. 2017
+	main_font = al_load_ttf_font("data/Vera.ttf", 12, 0);
+	if (!main_font) {
+		TRACE("failed to create main font (does the file exist?)");
+		return -1;
+	}
+
 	if (InitGL())
 		initialized = true;
 	else
@@ -444,9 +451,6 @@ void GameWindow::Shutdown() {
 		return;
 
 	al_destroy_display(display);
-
-	//if (main_font)
-	//   allegro_gl_destroy_font(main_font);
 
 	initialized = false;
 }

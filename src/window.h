@@ -44,7 +44,7 @@ class GameWindow {
 	protected:
 		bool initialized;
 		uint width, height;
-		// FONT* main_font;
+		ALLEGRO_FONT* main_font;
 		
 		uint fade_rate;
 		int fade_alpha;

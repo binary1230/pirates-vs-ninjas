@@ -74,12 +74,12 @@ void allegro_debug_printer(const char *text)
 //! This must be called FIRST before ANY allegro stuff
 int GameState::InitAllegro() {
 	
-	if (al_init() != 0) {
+	al_register_trace_handler(allegro_debug_printer);
+
+	if (!al_init()) {
 		TRACE("-- FATAL ERROR: Allegro_init() failed.\n");
 		return -1;
 	}
-	
-	al_register_trace_handler(allegro_debug_printer);
 	
 	// must be called SECOND
 	if (InitTimers() < 0) {
@@ -390,10 +390,10 @@ void GameState::Tick()
 	// wait for 1/30th sec to elapse (if we're on a fast computer)
 	// note: this should really be down() on a lock of some kind rather than
 	// just sleep randomly.
-	while (g_iOutstanding_updates <= 0 && !exit_game) {
+	/*while (g_iOutstanding_updates <= 0 && !exit_game) {
 		// rest(5);	// 1/30 sec is 33 usec, we sleep for 5 to be conservative
 		// SPIN!! (not great..)
-	}
+	}*/ // dont need anymore?
 }
 
 //! Update all game status

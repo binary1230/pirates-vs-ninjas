@@ -595,7 +595,7 @@ int GameWorld::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 //! Master XML parsing routine for the physics simulation
 //! Calls other helpers to deal with different parts of the XML.
 int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {	
-  int i, max, iterator = 0;  
+	int i, max, iterator = 0;  
 	XMLNode xMap, xObjDefs, xLayer;
 
 	m_pkCameraLookatTarget = NULL;
@@ -613,7 +613,7 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 
 	// Parse each layer
 	iterator = 0;
-  for (i=0; i < max; i++) {
+	for (i=0; i < max; i++) {
 		xLayer = xMap.getChildNode("layer", &iterator);
 		
 		ObjectLayer* layer = new ObjectLayer();
@@ -670,7 +670,7 @@ int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 
 	// 1) How much do we scroll this layer by?
 	float scroll_speed;
-  if ( !xLayer.getAttributeFloat("scroll_speed", scroll_speed) ) {
+	if ( !xLayer.getAttributeFloat("scroll_speed", scroll_speed) ) {
 		TRACE(" -- no scroll_speed specified.\n");
 		return -1;
 	}
