@@ -520,6 +520,13 @@ void PlayerObject::DropBombsIfNeeded()
 	if (m_kPlayerState == WALKING_THRU_DOOR)
 		return;
 
+	bool attack = false;
+	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num))
+		attack = true;
+
+	/*
+	this attack animation code is horribly broken right now.
+
 	int iAttackAnimation = -1;
 
 	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num)) 
@@ -536,9 +543,12 @@ void PlayerObject::DropBombsIfNeeded()
 
 	PlayAnimation(iAttackAnimation);
 	currentAnimation->SetSpeedMultiplier(1);
-	m_bShouldNotSwitchAnimationsRightNow = true;
+	// m_bShouldNotSwitchAnimationsRightNow = true; // seems to break stuff.
 
 	if (iAttackAnimation != PLAYER_ATTACK3)
+		return;*/
+
+	if (!attack)
 		return;
 
 	Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
@@ -546,14 +556,16 @@ void PlayerObject::DropBombsIfNeeded()
 		return;
 
 	float sign = flip_x ? -1 : 1;
-	float strength = 0.4;
+	float strength = 0.8f;
 
-	if (GetInput(PLAYERKEY_UP, controller_num))
+	if (GetInput(PLAYERKEY_UP, controller_num)) {
 		objBall->SetImpulse(0.0f, strength);
-	else if (GetInput(PLAYERKEY_DOWN, controller_num))
-		objBall->SetImpulse(0.0f, strength*0.1);
-	else
-		objBall->SetImpulse(sign * strength, strength / 3.0);
+	} else if (GetInput(PLAYERKEY_DOWN, controller_num)) {
+		objBall->SetImpulse(0.0f, strength*0.2f);
+	} else {
+		objBall->SetX(objBall->GetX() + (20 * sign));
+		objBall->SetImpulse(GetVelX()*0.01f + sign * strength * 0.3f, 0.0f);
+	}
 }
 
 void PlayerObject::LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity )
