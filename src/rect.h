@@ -1,8 +1,6 @@
 #ifndef RECT_H
 #define RECT_H
 
-#include "vector2D.h"
-
 class _Rect;
 
 // NOTES:
@@ -100,7 +98,7 @@ class _Rect {
 		
 		//! Use a vector to expand one of the corners of this
 		//! rectangle.
-		void Project(const Vector2D &projection);
+		void Project(const b2Vec2 &projection);
 
 		inline void Clear() {
 			x1 = x2 = y1 = y2 = 0.0f;
@@ -113,7 +111,7 @@ class _Rect {
 		_Rect(	const float _x1, const float _y1, 
 				const float _x2, const float _y2	);
 
-		_Rect(const Vector2D &v1, const Vector2D &v2);
+		_Rect(const b2Vec2 &v1, const b2Vec2 &v2);
 		_Rect(const _Rect &r);
 		_Rect() { Clear(); };
 

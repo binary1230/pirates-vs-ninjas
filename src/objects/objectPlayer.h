@@ -15,11 +15,6 @@ enum PlayerState {
 	STANDING,
 	JUMPING,
 	FALLING,
-	WALKING,
-	RUNNING,
-	WHISTLING,
-	LOOKINGUP,
-	CROUCHINGDOWN,
 	WALKING_THRU_DOOR,
 	SLIDING_DOWN_WALL,
 };
@@ -42,10 +37,6 @@ class PlayerObject : public Object {
 		float min_velocity;
 		float drag;
 
-		// Amount of acceleration/impulse to apply at the end of Update()
-		Vector2D accel;
-		Vector2D impulse;
-	
 		// How long until we are allowed to draw another "skid" object
 		int next_skid_time;
 
@@ -82,8 +73,7 @@ class PlayerObject : public Object {
 		void ScreenBoundsConstraint();
 		void UpdateSpriteFlip();
 		void UpdateRunningAnimationSpeed();
-		void DoCommonGroundStuff();
-		void UpdateSkidding();
+		void UpdateLeftRightMotion();
 
 		virtual bool GetInput(uint key, uint controller_number) const = 0;
 		
@@ -104,7 +94,6 @@ class PlayerObject : public Object {
 		
 		virtual void Update();
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
-		virtual void OnSensorActivate(Object* obj);
 
 		virtual void OnAnimationLooped();
 		virtual void PlayAnimation(uint uiIndex);
@@ -116,6 +105,8 @@ class PlayerObject : public Object {
 
 		bool WantsToSlideOnLeftSide();
 		bool WantsToSlideOnRightSide();
+
+		bool WantsToSlideOnAnySide();
 
 		friend class ObjectFactory;
 };

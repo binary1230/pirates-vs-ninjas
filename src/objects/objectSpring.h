@@ -16,7 +16,7 @@ class SpringObject : public Object {
 
 		// When an object hits the spring, it's 
 		// velocity will be set to this value
-		Vector2D spring_vector;
+		b2Vec2 spring_vector;
 				
 	public:
 		bool Init();
@@ -26,10 +26,10 @@ class SpringObject : public Object {
 		SpringObject();
 		~SpringObject();
 
-		void OnSensorActivate(Object* obj);
+		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		bool IsSpringActive() {return spring_is_active;};
 
-		const Vector2D& GetSpringVector() const {return spring_vector;};
+		const b2Vec2& GetSpringVector() const {return spring_vector;};
 
 		friend class ObjectFactory;
 		friend class MapSaver;

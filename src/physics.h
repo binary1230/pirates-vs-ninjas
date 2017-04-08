@@ -13,13 +13,13 @@ class Object;
 class PhysicsContactListener : public b2ContactListener
 {
 	public:
-		void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
+		// void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
 
 		void BeginContact(b2Contact* contact);
 		void EndContact(b2Contact* contact);
 };
 
-class PhysicsContact
+class PhysicsContactInfo
 {
 	public:
 		Object* objA;
@@ -27,8 +27,8 @@ class PhysicsContact
 		b2WorldManifold worldManifold;
 };
 
-typedef map<const b2Contact*, PhysicsContact> CollisionMapping;
-typedef map<const b2Contact*, PhysicsContact>::iterator collision_iter;
+typedef map<const b2Contact*, PhysicsContactInfo> ContactMappings;
+typedef map<const b2Contact*, PhysicsContactInfo>::iterator contact_iter;
 
 class PhysicsManager
 {
@@ -42,22 +42,14 @@ class PhysicsManager
 		// PhysicsDebugRenderer m_kPhysicsDebugRenderer;
 		PhysicsContactListener m_kPhysicsContactListener;
 
-		std::vector<PhysicsContact> m_kHardCollisions;
-
-		CollisionMapping sensorMappings;
-
-		friend class PhysicsContactListener;
-
-		void ReportRealCollision(const b2Contact* pkb2Contact);
-
-		void BeginSensorCollision(const b2Contact* pkb2Contact);
-		void EndSensorCollision(const b2Contact* pkb2Contact);
+		ContactMappings m_currentContacts;
 		
-		void HandleCollisions();
-		void ProcessHardCollision(PhysicsContact* pkb2Contact);
-		void ProcessSensorCollision(PhysicsContact* pkb2Contact);
+		void ProcessCollisions();
+		void ProcessCollision(PhysicsContactInfo* pkb2Contact);
 
 		bool bDrawDebugBoxes;
+
+		friend class PhysicsContactListener;
 
 	public:
 		~PhysicsManager();

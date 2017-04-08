@@ -350,11 +350,6 @@ void Object::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 	// default is no action, this is overidden in higher classes
 }
 
-void Object::OnSensorActivate(Object* obj) 
-{
-	// default is no action, this is overidden in higher classes
-}
-
 Object::~Object() 
 {
 	SAFE_DELETE(objectDefName);
@@ -397,6 +392,6 @@ void Object::ApplyImpulse(const b2Vec2& v)
 
 void Object::UpdatePositionFromPhysicsLocation()
 {
-	pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - width / 2;
-	pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - height / 2;
+	pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - float(width) / 2;
+	pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - float(height) / 2;
 }

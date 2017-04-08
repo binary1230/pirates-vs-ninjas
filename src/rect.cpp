@@ -48,7 +48,7 @@ void _Rect::Print(char* name) {
 					name, x1, y1, x2, y2);
 }
 
-void _Rect::Project(const Vector2D &projection) {
+void _Rect::Project(const b2Vec2 &projection) {
 	if (projection.x >= 0.0f) {
 		x2 += projection.x;	// GetX() is positive
 	} else {

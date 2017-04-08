@@ -52,8 +52,6 @@ bool PhysicsManager::Init()
 
 void PhysicsManager::Update()
 {
-	m_kHardCollisions.clear();
-
 	int32 velocityIterations = 6;  // TEMP TODO
 
 	// Instruct the world to perform a single step of simulation. It is
@@ -61,12 +59,13 @@ void PhysicsManager::Update()
 	m_pkPhysicsWorld->Step(m_fPhysicsSimulatorTimeStep, velocityIterations, m_iPhysicsSimulatorIterations);
 
 	// dispatch collision events now.
-	HandleCollisions();
+	ProcessCollisions();
 }
 
 void PhysicsManager::Shutdown()
 {
 	SAFE_DELETE(m_pkPhysicsWorld);
+	m_currentContacts.clear();
 }
 
 void PhysicsManager::Draw()
@@ -123,11 +122,11 @@ b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, f
 
 b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation, float fDensity )
 {
-	// HAXXXX
-	float density = 1.0f;
+	float density = 1.0f;  // HACK THIS IN HERE. override what's passed in
+	float restitution = 0.0f;
+	float friction = 0.2f;
 
-	// TODO: Don't hardcode these numbers.
-	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, density, 0.0f, 0.2f, bDontAllowRotation);
+	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, density, restitution, friction, bDontAllowRotation);
 	return pkBody;
 }
 
@@ -137,18 +136,14 @@ void PhysicsManager::RemoveFromWorld( b2Body* pkBodyToRemove )
 	m_pkPhysicsWorld->DestroyBody(pkBodyToRemove);
 }
 
-void PhysicsManager::HandleCollisions()
+void PhysicsManager::ProcessCollisions()
 {
-	for (uint i = 0; i < m_kHardCollisions.size(); ++i) {
-		ProcessHardCollision(&m_kHardCollisions[i]);
-	}
-
-	for (collision_iter c = sensorMappings.begin(); c != sensorMappings.end(); ++c) {
-		ProcessSensorCollision(&c->second);
+	for (contact_iter c = m_currentContacts.begin(); c != m_currentContacts.end(); ++c) {
+		ProcessCollision(&c->second);
 	}
 }
 
-void PhysicsManager::ProcessHardCollision(PhysicsContact* pkb2Contact)
+void PhysicsManager::ProcessCollision(PhysicsContactInfo* pkb2Contact)
 {
 	b2WorldManifold worldManifold = pkb2Contact->worldManifold;
 
@@ -159,13 +154,7 @@ void PhysicsManager::ProcessHardCollision(PhysicsContact* pkb2Contact)
 	pkb2Contact->objA->OnCollide(pkb2Contact->objB, &worldManifold);
 }
 
-void PhysicsManager::ProcessSensorCollision(PhysicsContact* pkb2Contact)
-{
-	pkb2Contact->objB->OnSensorActivate(pkb2Contact->objA);
-	pkb2Contact->objA->OnSensorActivate(pkb2Contact->objB);
-}
-
-void CreateCollisionInfo(const b2Contact* pkb2Contact, PhysicsContact* contact_out) {
+void CreateCollisionInfo(const b2Contact* pkb2Contact, PhysicsContactInfo* contact_out) {
 	const b2Fixture* fixtureA = pkb2Contact->GetFixtureA();
 	const b2Fixture* fixtureB = pkb2Contact->GetFixtureB();
 
@@ -175,46 +164,15 @@ void CreateCollisionInfo(const b2Contact* pkb2Contact, PhysicsContact* contact_o
 	pkb2Contact->GetWorldManifold(&contact_out->worldManifold);
 }
 
-void PhysicsManager::ReportRealCollision(const b2Contact* pkb2Contact) {
-	// report a hard collision between two objects
-
-	PhysicsContact contact;
-	CreateCollisionInfo(pkb2Contact, &contact);
-	m_kHardCollisions.push_back(contact);
-}
-
-void PhysicsManager::BeginSensorCollision(const b2Contact* pkb2Contact) {
-	PhysicsContact contact;
-	CreateCollisionInfo(pkb2Contact, &contact);
-
-	sensorMappings[pkb2Contact] = contact;
-}
-
-void PhysicsManager::EndSensorCollision(const b2Contact* pkb2Contact) 
-{
-	sensorMappings.erase(pkb2Contact);
-}
-
-void PhysicsContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
-{
-	// this is the one that is triggered each frame if objects are touching
-
-	// TRACE("%i: Add\n", i);
-	PHYSICS->ReportRealCollision(contact);
-}
-
 void PhysicsContactListener::BeginContact(b2Contact* contact)
 {
-	// we're only going to use this to report sensors 
-	// (i.e. when there should not be a collision, just a notification)
+	PhysicsContactInfo contact_info;
+	CreateCollisionInfo(contact, &contact_info);
 
-	PHYSICS->BeginSensorCollision(contact);
+	PHYSICS->m_currentContacts[contact] = contact_info;
 }
 
 void PhysicsContactListener::EndContact(b2Contact* contact)
 {
-	// we're only going to use this to report sensors 
-	// (i.e. when there should not be a collision, just a notification)
-
-	PHYSICS->EndSensorCollision(contact);
+	PHYSICS->m_currentContacts.erase(contact);
 }

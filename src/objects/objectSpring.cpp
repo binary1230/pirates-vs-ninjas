@@ -46,7 +46,7 @@ bool SpringObject::Init() {
 SpringObject::SpringObject() {}
 SpringObject::~SpringObject() {}
 
-void SpringObject::OnSensorActivate(Object* obj) {
+void SpringObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
 	if (obj->GetProperties().is_player) {
 		
 		// Spring it!

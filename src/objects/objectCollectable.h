@@ -19,7 +19,7 @@ class CollectableObject : public Object {
 		CollectableObject();
 		~CollectableObject();
 
-		void OnSensorActivate(Object* obj);
+		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 	
 		friend class ObjectFactory;
 };
