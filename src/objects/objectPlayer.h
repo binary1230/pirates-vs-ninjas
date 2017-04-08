@@ -42,8 +42,9 @@ class PlayerObject : public Object {
 		float min_velocity;
 		float drag;
 
-		// Amount of acceleration to apply at the end of Update()
+		// Amount of acceleration/impulse to apply at the end of Update()
 		Vector2D accel;
+		Vector2D impulse;
 	
 		// How long until we are allowed to draw another "skid" object
 		int next_skid_time;

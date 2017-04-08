@@ -347,23 +347,34 @@ void PlayerObject::DoCommonStuff()
 
 void PlayerObject::HandleInput() 
 {
-	// static float magnitude = GLOBALS->Value("player_acceleration", magnitude);
-	static float magnitude = 600.0f;
+	float max_desired_speed = 10.0f;
+	float boost = 5.0f;
 
-	// return a force based on 2 inputs.
-	if (INPUT->Key(PLAYERKEY_LEFT, controller_num) && 
-		!INPUT->Key(PLAYERKEY_RIGHT, controller_num)) 
-	{
-		accel.x = -magnitude * TIMESTEP;
+	const bool go_left = INPUT->Key(PLAYERKEY_LEFT, controller_num) && !INPUT->Key(PLAYERKEY_RIGHT, controller_num);
+	const bool go_right = INPUT->Key(PLAYERKEY_RIGHT, controller_num) && !INPUT->Key(PLAYERKEY_LEFT, controller_num);
+
+	if (!(go_left ^ go_right))
+		return;
+
+	float desiredVelocity;
+	if (go_left) {
+		desiredVelocity = std::max(GetVelX() - 0.1f, -max_desired_speed);
+	} else {
+		desiredVelocity = std::min(GetVelX() + 0.1f, max_desired_speed);
 	}
 
-	else if (INPUT->Key(PLAYERKEY_RIGHT, controller_num) && 
-		!INPUT->Key(PLAYERKEY_LEFT, controller_num)) 
-	{
-		accel.x = magnitude * TIMESTEP;
+	float velChange = desiredVelocity - GetVelX();
+
+	// if we're just starting to move and not moving very fast in the direction we want to go, bump up the force
+	float percent_max_speed = 1.0f - (max_desired_speed - fabs(velChange)) / max_desired_speed;
+
+	if (percent_max_speed < 0.5f) {
+		velChange *= boost;
 	}
 
-	// accel *= 700;
+	float impulse = m_pkPhysicsBody->GetMass() * velChange;
+
+	ApplyImpulse(impulse, 0.0f);
 }
 
 void PlayerObject::Update() 
@@ -372,6 +383,8 @@ void PlayerObject::Update()
 
 	accel.x = 0.0f;
 	accel.y = 0.0f;
+	impulse.x = 0.0f;
+	impulse.y = 0.0f;
 
 	HandleInput();
 	
@@ -387,10 +400,7 @@ void PlayerObject::Update()
 		currentSprite = currentAnimation->GetCurrentSprite();
 	
 	// this will be set true on each collision with a door
-	door_in_front_of_us = NULL;
-
-	// apply the acceleration
-	m_pkPhysicsBody->ApplyForce(accel, m_pkPhysicsBody->GetWorldCenter(), true);
+	door_in_front_of_us = NULL;	
 }
 
 void PlayerObject::OnSensorActivate(Object* obj) {
@@ -465,7 +475,6 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 
 	properties.is_player = 1;
 	properties.is_physical = 1;
-	properties.uses_new_physics = 1;
 	properties.ignores_physics_rotation = 1;
 
 	on_skateboard = false;
@@ -565,13 +574,13 @@ void PlayerObject::DropBombsIfNeeded()
 
 	if (GetInput(PLAYERKEY_UP, controller_num)) {
 		objBall->SetY(objBall->GetY() + 40);
-		objBall->SetImpulse(0.0f, strength*0.2f);
+		objBall->ApplyImpulse(0.0f, strength*0.2f);
 	} else if (GetInput(PLAYERKEY_DOWN, controller_num) && !m_kCurrentCollision.down) {
 		objBall->SetY(objBall->GetY() - 40);
-		objBall->SetImpulse(0.0f, -strength*0.2f);
+		objBall->ApplyImpulse(0.0f, -strength*0.2f);
 	} else {
 		objBall->SetX(objBall->GetX() + (20 * sign));
-		objBall->SetImpulse(GetVelX()*0.01f + sign * strength * 0.3f, 0.0f);
+		objBall->ApplyImpulse(GetVelX()*0.01f + sign * strength * 0.3f, 0.0f);
 	}
 }
 

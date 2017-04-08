@@ -27,8 +27,6 @@ class EnemyObject : public Object {
 
 		void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 
-		virtual void ApplyForces();
-
 		static int iSpawnedObjectCount;
 
 		friend class ObjectFactory;

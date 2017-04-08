@@ -41,7 +41,6 @@ bool ObjectBounce::Init() {
 
 	play_hit_sound = false;
 	collided_last_frame = false;
-	properties.uses_new_physics = true;
 
 	return true;
 }
