@@ -13,6 +13,7 @@ void DebugTrace( const char * format, ... )
 
   #ifdef WIN32
 	OutputDebugString(buffer);
+	OutputDebugString("\n");
   #else
 	fprintf(stderr, "%s", buffer);
   #endif
