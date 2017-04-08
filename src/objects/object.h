@@ -4,7 +4,6 @@
 #include "globals.h"
 
 #include "rect.h"
-#include "vector2D.h"
 #include "animations.h"
 
 class Object;
@@ -116,7 +115,7 @@ class Object {
 		int level_width, level_height;
 		
 		//! Current position
-		Vector2D pos;
+		b2Vec2 pos;
 		
 		//! The directions of current collisions (up,down,right,left)
 		CollisionDirection m_kCurrentCollision;
@@ -256,7 +255,7 @@ class Object {
 		//! Functions to get/set position
 		inline int GetX() const				{ return (int)pos.x; }
 		inline int GetY() const				{ return (int)pos.y; }
-		inline Vector2D GetXY() const { return pos; }; 
+		inline b2Vec2 GetXY() const { return pos; }; 
 
 		inline void SetX(const int _x) 		{ pos.x = _x; }
 		inline void SetY(const int _y) 		{ pos.y = _y; }
@@ -264,7 +263,7 @@ class Object {
 				pos.x = _x;
 				pos.y = _y;
 		}
-		inline void SetXY(const Vector2D &_pos) {
+		inline void SetXY(const b2Vec2 &_pos) {
 			pos = _pos;
 		}
 
@@ -283,25 +282,25 @@ class Object {
 			return m_pkPhysicsBody ? m_pkPhysicsBody->GetLinearVelocity().y : 0.0f; 
 		}
 
-		inline Vector2D GetVelXY() const { 
-			return m_pkPhysicsBody ? m_pkPhysicsBody->GetLinearVelocity() : Vector2D(0.0f, 0.0f); 
+		inline b2Vec2 GetVelXY() const { 
+			return m_pkPhysicsBody ? m_pkPhysicsBody->GetLinearVelocity() : b2Vec2(0.0f, 0.0f); 
 		}
 
 		inline void SetVelX(const float _vx) 		{ 
 			if (m_pkPhysicsBody)
-				m_pkPhysicsBody->SetLinearVelocity(Vector2D(_vx, m_pkPhysicsBody->GetLinearVelocity().y)); 
+				m_pkPhysicsBody->SetLinearVelocity(b2Vec2(_vx, m_pkPhysicsBody->GetLinearVelocity().y));
 		}
 		inline void SetVelY(const float _vy) 		{ 
 			if (m_pkPhysicsBody)
-				m_pkPhysicsBody->SetLinearVelocity(Vector2D(m_pkPhysicsBody->GetLinearVelocity().x, _vy)); 
+				m_pkPhysicsBody->SetLinearVelocity(b2Vec2(m_pkPhysicsBody->GetLinearVelocity().x, _vy));
 		}
 
 		inline void SetVelXY(const float _vx, const float _vy) {
 			if (m_pkPhysicsBody)
-				m_pkPhysicsBody->SetLinearVelocity(Vector2D(_vx, _vy)); 
+				m_pkPhysicsBody->SetLinearVelocity(b2Vec2(_vx, _vy));
 		}
 
-		inline void SetVelXY(const Vector2D& v) {
+		inline void SetVelXY(const b2Vec2& v) {
 			if (m_pkPhysicsBody)
 				m_pkPhysicsBody->SetLinearVelocity(v); 
 		}
@@ -352,7 +351,7 @@ class Object {
 		// CollisionDirection GetBound(Object* obj, Vector2D &v);
 
 		void UpdateProjectionRectFromVelocity();
-		void UpdateProjectionRectFromCollisions(Vector2D &newPos);
+		void UpdateProjectionRectFromCollisions(b2Vec2 &newPos);
 
 		//const _Rect& GetProjectionRect() const {return projRect;}
 

@@ -5,7 +5,6 @@
 #include "globals.h"
 #include "input.h"
 #include "gameSound.h"
-#include "vector2D.h"
 #include "animation.h"
 #include "animations.h"
 #include "gameWorld.h"
@@ -41,22 +40,12 @@ bool PlayerObject::WantsToSlideOnAnySide()
 }
 
 void PlayerObject::UpdateSpriteFlip() {
-	// TODO: accel isn't real anymore
-	//if (accel.x == 0.0f) 
-	//{
-		if (GetVelX() > 0.0f)
-			flip_x = false;
-		else if (GetVelX() < 0.0f)
-			flip_x = true;
-	//} 
-	//else if (accel.x > 0.0f) 
-	//{
-	//	flip_x = false;
-	//} 
-	//else 
-	//{
-		//flip_x = true;
-	//}
+	// might need a little updating.  seems to mostly work ok though.
+
+	if (GetVelX() > 0.0f)
+		flip_x = false;
+	else if (GetVelX() < 0.0f)
+		flip_x = true;
 }
 
 void PlayerObject::UpdateRunningAnimationSpeed() 
@@ -65,45 +54,17 @@ void PlayerObject::UpdateRunningAnimationSpeed()
 		return;
 
 	if (fabs(GetVelX()) < 3.0f)
-		currentAnimation->SetSpeedMultiplier(10);// slow
+		currentAnimation->SetSpeedMultiplier(10);	// slow
 	else if (fabs(GetVelX()) < 7.0f)
-		currentAnimation->SetSpeedMultiplier(6);// med
+		currentAnimation->SetSpeedMultiplier(6);	// med
 	else if (fabs(GetVelX()) < 13.0f)
-		currentAnimation->SetSpeedMultiplier(2);// slight fast
+		currentAnimation->SetSpeedMultiplier(2);	// slight fast
 	else 
-		currentAnimation->SetSpeedMultiplier(2);// max
+		currentAnimation->SetSpeedMultiplier(2);	// max
 }
 
-// Things common to STANDING, WALKING, and RUNNING
-void PlayerObject::DoCommonGroundStuff() 
+void PlayerObject::UpdateLeftRightMotion()
 {
-	if (!m_kCurrentCollision.down) {
-		m_kPlayerState = FALLING;
-		return;
-	}	
-
-	if (door_in_front_of_us && INPUT->KeyOnce(PLAYERKEY_UP, controller_num)) 
-	{
-		m_kPlayerState = WALKING_THRU_DOOR;
-		return;
-	}
-
-	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num))
-	{
-		m_pkPhysicsBody->ApplyLinearImpulseToCenter(
-			b2Vec2(0.0f, m_pkPhysicsBody->GetMass() * DEFAULT_JUMP_VELOCITY), true
-		);
-		SOUND->PlaySound("jump");
-		m_kPlayerState = JUMPING;
-		return;
-	}
-}
-
-void PlayerObject::Update() 
-{
-	BaseUpdate();
-
-	// <HandleInput()>
 	float max_desired_speed = 10.0f;
 	float boost = 7.0f;
 
@@ -121,9 +82,9 @@ void PlayerObject::Update()
 
 		float velChange = desiredVelocity - GetVelX();
 
-		// if we're just starting to move and not moving very fast in the direction we want to go, bump up the force
+		// if we're just starting to move and not moving very fast in the direction we want to go, bump up the force.
+		// still seem to be slowing a little on friction when coming down from landing.
 		float percent_max_speed = 1.0f - (max_desired_speed - fabs(velChange)) / max_desired_speed;
-
 		if (percent_max_speed < 0.5f) {
 			velChange *= boost;
 		}
@@ -132,69 +93,52 @@ void PlayerObject::Update()
 
 		ApplyImpulse(impulse, 0.0f);
 	}
-	// </HandleInput()>
+}
+
+void PlayerObject::Update() 
+{
+	BaseUpdate();
+
+	UpdateLeftRightMotion();
 	
 	if (currentAnimation)
 		currentAnimation->Update();
-
-	// <ScreenBoundsConstraint()>
-	if (!WORLD->PlayerAllowedOffscreen()) {
-		// TODO: clean this up some.
-		// BUG: freaks out on right side of screen
-
-		if (pos.x < 0) {
-			SetVelX(0.0f);
-			int newPosX = 20;
-			m_pkPhysicsBody->SetTransform(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
-			pos.x = newPosX;
-			UpdatePositionFromPhysicsLocation();
-		}
-		else if (pos.x > (WORLD->GetWidth() - width)) {
-			SetVelX(0.0f);
-			int newPosX = WORLD->GetWidth() - width - 1;
-			m_pkPhysicsBody->SetTransform(
-				b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle()
-			);
-			pos.x = newPosX;
-			UpdatePositionFromPhysicsLocation();
-		}
-	}
-	// </ScreenBoundsConstraint()>
-
 
 	DropBombsIfNeeded();
 
 	bool bNoLeft;
 	bool bNoRight;
 
-
 	switch (m_kPlayerState) {
-	case STANDING:
-		DoCommonGroundStuff();
-
-		PlayAnimation(PLAYER_STANDING);
-
-		if (fabs(GetVelX()) > 0.0f)
-		{
-			m_kPlayerState = WALKING;
+	case STANDING: // or walking.
+		if (!m_kCurrentCollision.down) {
+			m_kPlayerState = FALLING;
 			break;
 		}
-		break;
-	case WALKING:
-		DoCommonGroundStuff();
 
-		PlayAnimation(PLAYER_WALKING);
-
-		// if we go too slow, then stop us and make us STANDING
-		if (fabs(GetVelX()) < min_velocity)
+		if (door_in_front_of_us && INPUT->KeyOnce(PLAYERKEY_UP, controller_num))
 		{
-			m_kPlayerState = STANDING;
+			m_kPlayerState = WALKING_THRU_DOOR;
+			break;
 		}
 
-		UpdateRunningAnimationSpeed();
-		break;
-	case RUNNING:
-		DoCommonGroundStuff();
+		if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num))
+		{
+			m_pkPhysicsBody->ApplyLinearImpulseToCenter(
+				b2Vec2(0.0f, m_pkPhysicsBody->GetMass() * DEFAULT_JUMP_VELOCITY), true
+			);
+			SOUND->PlaySound("jump");
+			m_kPlayerState = JUMPING;
+			break;
+		}
+
+		if (fabs(GetVelX()) <= 0.0f) {
+			PlayAnimation(PLAYER_STANDING);
+		} else {
+			PlayAnimation(PLAYER_WALKING);
+			UpdateRunningAnimationSpeed();
+		}
+
 		break;
 	case JUMPING:
 		PlayAnimation(PLAYER_JUMPING);
@@ -220,8 +164,10 @@ void PlayerObject::Update()
 	case FALLING:
 		PlayAnimation(PLAYER_JUMPING);
 
-		if (WantsToSlideOnAnySide())
+		if (WantsToSlideOnAnySide()) {
+			m_kPlayerState = SLIDING_DOWN_WALL;
 			break;
+		}
 
 		if (m_kCurrentCollision.down) {
 			m_kPlayerState = STANDING;
@@ -235,7 +181,6 @@ void PlayerObject::Update()
 		if (door_in_front_of_us)
 			door_in_front_of_us->Activate();
 
-		door_in_front_of_us = NULL;
 		break;
 	case SLIDING_DOWN_WALL:
 		PlayAnimation(PLAYER_SLIDING_DOWN_WALL);
@@ -295,8 +240,10 @@ void PlayerObject::Update()
 	if (currentAnimation)
 		currentSprite = currentAnimation->GetCurrentSprite();
 	
-	// this will be set true on each collision with a door
+	// this will be set at the start of each frame if we're colliding.
 	door_in_front_of_us = NULL;	
+
+	ScreenBoundsConstraint();
 }
 
 void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
@@ -325,7 +272,7 @@ void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 	{
 		SpringObject* sObj = (SpringObject*)obj;
 
-		// this should go into the spring
+		// this should go into the spring class, not here
 		if (sObj->IsSpringActive())
 		{
 			SetVelX(sObj->GetSpringVector().x);
@@ -349,8 +296,6 @@ void PlayerObject::DropBombsIfNeeded()
 	if (!attack)
 		return;
 
-	// insert attack animation code here
-
 	Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
 	if (!objBall)
 		return;
@@ -367,6 +312,30 @@ void PlayerObject::DropBombsIfNeeded()
 	} else {
 		objBall->SetX(objBall->GetX() + (20 * sign));
 		objBall->ApplyImpulse(GetVelX()*0.01f + sign * strength * 0.3f, 0.0f);
+	}
+}
+
+void PlayerObject::ScreenBoundsConstraint() {
+	if (!WORLD->PlayerAllowedOffscreen()) {
+		// TODO: clean this up some.
+		// BUG: freaks out on right side of screen
+
+		if (pos.x < 0) {
+			SetVelX(0.0f);
+			int newPosX = 20;
+			m_pkPhysicsBody->SetTransform(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
+			pos.x = newPosX;
+			UpdatePositionFromPhysicsLocation();
+		}
+		else if (pos.x >(WORLD->GetWidth() - width)) {
+			SetVelX(0.0f);
+			float newPosX = WORLD->GetWidth() - width;
+			m_pkPhysicsBody->SetTransform(
+				b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), 
+				m_pkPhysicsBody->GetAngle()
+			);
+			UpdatePositionFromPhysicsLocation();
+		}
 	}
 }
 

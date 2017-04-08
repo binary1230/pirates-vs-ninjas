@@ -13,7 +13,7 @@ class EnemyObject : public Object {
 		PlayerObject* m_pkTargetPlayer;
 
 		bool bCollidedLastFrame;
-		Vector2D m_kCollisionDirection;
+		b2Vec2 m_kCollisionDirection;
 		int iTimeToWaitBeforeCollisionsAllowedAgain;
 				
 	public:

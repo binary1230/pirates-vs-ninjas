@@ -262,7 +262,6 @@
     <ClInclude Include="sprite.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="timer.h" />
-    <ClInclude Include="vector2D.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -326,7 +325,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="timer.cpp" />
-    <ClCompile Include="vector2D.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

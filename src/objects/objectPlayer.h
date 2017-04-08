@@ -15,11 +15,6 @@ enum PlayerState {
 	STANDING,
 	JUMPING,
 	FALLING,
-	WALKING,
-	RUNNING,
-	WHISTLING,
-	LOOKINGUP,
-	CROUCHINGDOWN,
 	WALKING_THRU_DOOR,
 	SLIDING_DOWN_WALL,
 };
@@ -78,8 +73,7 @@ class PlayerObject : public Object {
 		void ScreenBoundsConstraint();
 		void UpdateSpriteFlip();
 		void UpdateRunningAnimationSpeed();
-		void DoCommonGroundStuff();
-		void UpdateSkidding();
+		void UpdateLeftRightMotion();
 
 		virtual bool GetInput(uint key, uint controller_number) const = 0;
 		

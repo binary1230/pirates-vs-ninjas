@@ -441,7 +441,7 @@ int GameWorld::Load(XMLNode &xMode) {
 	// at that portal's position on the map
 	if (lastExitInfo.useExitInfo && lastExitInfo.useLastPortalName) {
 		ObjectListIter iter;
-		Vector2D portal_pos;
+		b2Vec2 portal_pos;
 		Object* player;
 		bool found = false;
 
