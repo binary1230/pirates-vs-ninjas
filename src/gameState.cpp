@@ -74,7 +74,9 @@ void allegro_debug_printer(const char *text)
 //! This must be called FIRST before ANY allegro stuff
 int GameState::InitAllegro() {
 	
+	#if ALLEGRO_VERBOSE_DEBUG_OUTPUT
 	al_register_trace_handler(allegro_debug_printer);
+	#endif
 
 	if (!al_init()) {
 		TRACE("-- FATAL ERROR: Allegro_init() failed.\n");
@@ -421,7 +423,7 @@ void GameState::UpdateFPS()
 		// The new actual FPS rate for the last second:
 		m_iCurrentFps = iAmountOfFramesDrawnSinceLastCheck;
 
-		TRACE("FPS: %d\n", m_iCurrentFps);
+		// TRACE("FPS: %d\n", m_iCurrentFps);
 
 		iAmountOfFramesDrawnSinceLastCheck = 0;
 		iTicksAtLastFrameDrawn = g_iTicks;
