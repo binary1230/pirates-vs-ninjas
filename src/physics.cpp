@@ -116,7 +116,7 @@ b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, f
 {
 	float density = 0.0f;
 	float restitution = 0.0f;
-	float friction = 0.2f;
+	float friction = 2.0f;
 
 	return CreatePhysicsBox(x,y,width,height, density, restitution, friction, false, bSensorOnly );
 }

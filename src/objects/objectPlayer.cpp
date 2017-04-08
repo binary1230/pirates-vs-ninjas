@@ -165,9 +165,9 @@ void PlayerObject::DoSlidingDownWall()
 		// don't apply any forces
 		accel.x = 0.0f;
 
-		SetVelY(DEFAULT_JUMP_VELOCITY / 1.1f);
+		SetVelY(DEFAULT_JUMP_VELOCITY * 0.9f);
 
-		const float fHorizontalJumpVel = DEFAULT_JUMP_VELOCITY * 0.5f;
+		const float fHorizontalJumpVel = DEFAULT_JUMP_VELOCITY * 0.8f;
 		
 		if (m_kCurrentCollision.left)
 			SetVelX(fHorizontalJumpVel);
@@ -348,7 +348,7 @@ void PlayerObject::DoCommonStuff()
 void PlayerObject::HandleInput() 
 {
 	float max_desired_speed = 10.0f;
-	float boost = 5.0f;
+	float boost = 7.0f;
 
 	const bool go_left = INPUT->Key(PLAYERKEY_LEFT, controller_num) && !INPUT->Key(PLAYERKEY_RIGHT, controller_num);
 	const bool go_right = INPUT->Key(PLAYERKEY_RIGHT, controller_num) && !INPUT->Key(PLAYERKEY_LEFT, controller_num);
