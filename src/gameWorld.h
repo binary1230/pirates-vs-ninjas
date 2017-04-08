@@ -5,7 +5,6 @@
 
 #include "gameMode.h"
 
-class Force;
 class Object;
 class ObjectFactory;
 class ObjectLayer;

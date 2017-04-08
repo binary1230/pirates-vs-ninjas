@@ -41,12 +41,8 @@ void Object::BaseUpdate() {
 	UpdateDisplayTime();
 	UpdateFade();
 
-	if (properties.uses_new_physics && m_pkPhysicsBody)
+	if (m_pkPhysicsBody)
 	{
-		m_pkPhysicsBody->ApplyLinearImpulseToCenter(b2Vec2(m_fImpulseToApplyX,m_fImpulseToApplyY), true);
-		m_fImpulseToApplyX = 0.0f;
-		m_fImpulseToApplyY = 0.0f;
-
 		UpdatePositionFromPhysicsLocation();
 
 		if (!properties.do_our_own_rotation)
@@ -58,11 +54,6 @@ void Object::BaseUpdate() {
 
 	if (use_rotation)
 	{
-		/*if (!properties.uses_new_physics)
-			rotate_angle += rotate_velocity;
-		// else
-			//rotate_angle*/
-
 		if (properties.do_our_own_rotation)
 		{
 			// ignore physics for rotation, use our own
@@ -133,15 +124,12 @@ void Object::InitPhysics()
 	if (properties.is_player)
 		fDensity = 0.1f;
 
-	if (properties.uses_new_physics)
-	{
-		if (properties.is_static)
-			m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height, properties.is_sensor);
-		else
-			m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height, properties.ignores_physics_rotation, fDensity);
+	if (properties.is_static)
+		m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height, properties.is_sensor);
+	else
+		m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height, properties.ignores_physics_rotation, fDensity);
 
-		m_pkPhysicsBody->SetUserData(this);
-	}
+	m_pkPhysicsBody->SetUserData(this);
 }
 
 void Object::UpdateFade() {
@@ -179,8 +167,6 @@ bool Object::BaseInit() {
 	level_height = 0;
 	rotate_angle = rotate_velocity = 0.0f;
 	use_rotation = false;
-	m_fImpulseToApplyX = 0.0f;
-	m_fImpulseToApplyY = 0.0f;
 	b_box_offset_x = b_box_offset_y = 0;
 	return true;
 }
@@ -398,13 +384,15 @@ void Object::PlayAnimation( uint uiIndex )
 	currentAnimation->ResetAnimation();
 }
 
-void Object::SetImpulse( float x, float y )
+void Object::ApplyImpulse( float x, float y )
 {
-	if (!properties.uses_new_physics)
-		return;
+	ApplyImpulse(b2Vec2(x, y));
+}
 
-	m_fImpulseToApplyX = x;
-	m_fImpulseToApplyY = y;
+void Object::ApplyImpulse(const b2Vec2& v)
+{
+	if (m_pkPhysicsBody)
+		m_pkPhysicsBody->ApplyLinearImpulseToCenter(v, true);
 }
 
 void Object::UpdatePositionFromPhysicsLocation()

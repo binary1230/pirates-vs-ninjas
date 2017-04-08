@@ -8,7 +8,6 @@
 #include "animations.h"
 
 class Object;
-class Force;
 class Animation;
 class Sprite;
 class ObjectLayer;
@@ -66,9 +65,6 @@ struct ObjectProperties
 	bool is_ball;
 
 	bool is_badguy;
-
-	// TMP: HACK: in a bit, everything will use this.
-	bool uses_new_physics;
 };
 
 //! Clears property masks
@@ -87,7 +83,6 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_ball = 0;
 	p.spawns_enemies = 0;
 	p.is_badguy = 0;
-	p.uses_new_physics = 0;
 	p.is_static = 0;
 	p.is_sensor = 0;
 	p.ignores_physics_rotation = 0;
@@ -206,10 +201,6 @@ class Object {
 
 		//! If this object should report collisions or not
 		bool m_bCanCollide;
-
-		//! Impulse force to apply on the next frame
-		float m_fImpulseToApplyX;
-		float m_fImpulseToApplyY;
 		
 		// Protected constructor, this means we can't directly
 		// instantiate Object's, we need to use a friend or derived class.
@@ -243,10 +234,6 @@ class Object {
 		//! Fade this object out over a given time (in frames)
 		void FadeOut(int time);
 
-		//! Move this object to its new position (done before 
-		//! collision detection)
-		void MoveToNewPosition();
-
 		virtual void Draw();
 
 		void Transform(	int &x, int &y, 
@@ -260,10 +247,6 @@ class Object {
 		inline int GetDisplayTime() {
 			return display_time;
 		}
-
-		// NOTE: This will supercede all global force stuff that is happening now.
-		// In a bit, this will replace the force factory junk.
-		virtual void ApplyForces() {};
 	
 		//! Draw this object at its coordinates plus specified offset
 		//! Optionally, you can pass in a specific sprite to draw, otherwise
@@ -337,9 +320,6 @@ class Object {
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();
-
-		//! Apply a force to this object
-		void ApplyForce(Force* f);
 		
 		struct ObjectProperties GetProperties() const { return properties; };
 		inline void SetProperties(struct ObjectProperties p) { properties = p;}
@@ -390,7 +370,8 @@ class Object {
 
 		void SetObjectDefName(const char*);
 
-		void SetImpulse(float x, float y);
+		void ApplyImpulse(float x, float y);
+		void ApplyImpulse(const b2Vec2& v);
 		
 		virtual ~Object();
 

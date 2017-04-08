@@ -104,7 +104,9 @@ Object* EffectsManager::TriggerObject(	const Object* triggeringObject,
 	newObj->SetXY( triggeringObject->GetXY() );
 	newObj->SetLayer( triggeringObject->GetLayer() );
 		
-	WORLD->AddObject( newObj );
+	const bool addImmediately = true;	// might be slightly risk to do this, 
+										// but needed for some physics stuff to work right away
+	WORLD->AddObject( newObj, addImmediately );
 
 	return newObj;
 }

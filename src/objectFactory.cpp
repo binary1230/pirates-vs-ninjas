@@ -358,7 +358,6 @@ Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
 
 	obj->properties.is_ball = 1;
 	obj->properties.is_physical = 1;
-	obj->properties.uses_new_physics = 1;
 
 	obj->SetupCachedVariables();
 	return obj;
@@ -372,7 +371,6 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	obj->properties.is_collectable = 1;
 	obj->properties.is_ring = 1;
-	obj->properties.uses_new_physics = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
 	obj->properties.is_sensor = 1;
@@ -509,7 +507,6 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 
 	obj->SetupCachedVariables();
 
-	obj->properties.uses_new_physics = 1;
 	obj->properties.is_static = 1;
 
 	return obj;
@@ -548,7 +545,6 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj)
 		return NULL;
   
 	obj->properties.is_spring = 1;
-	obj->properties.uses_new_physics = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
 	obj->properties.is_sensor = 1;
@@ -603,7 +599,6 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_door = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
-	obj->properties.uses_new_physics = 1;
 	obj->properties.is_sensor = 1;
 	
 	obj->SetupCachedVariables();
@@ -651,7 +646,6 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!LoadCommonObjectStuff(obj, xDef, xObj))
 		return NULL;
 
-	obj->properties.uses_new_physics = 1;
 	obj->properties.is_fan = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;

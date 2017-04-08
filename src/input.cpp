@@ -406,9 +406,9 @@ bool Input::InitLive() {
 }
 
 bool Input::CommonInit() {
-	al_install_mouse();
+	// al_install_mouse();
 	al_install_keyboard();
-	al_install_joystick();
+	// al_install_joystick();
 
 	// num_joysticks is a global allegro variable
 	/*if (num_joysticks == 0)
@@ -477,8 +477,7 @@ bool Input::LoadKeyMappings(char* filename) {
 
 void Input::Shutdown() {
 	if (demofile) {
-		TRACE("WARN: closing demofile, but "
-										"record/playback still in progress.");
+		TRACE("WARN: closing demofile, but record/playback still in progress.");
 		fclose(demofile);
 	}
 		
@@ -490,12 +489,6 @@ void Input::Shutdown() {
 }
 
 void Input::Update() {
-
-	// don't think we need these anymore -2017
-	//al_poll_mouse();
-	//al_poll_keyboard();
-	//al_poll_joystick();
-
 	switch (type) {
 		case INPUT_RECORDED:
 			UpdateRecord();
