@@ -116,13 +116,16 @@ void PlayerObject::DoCommonGroundStuff()
 		return;
 	}
 
-	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num)) 
+	if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num))
 	{
-		SetVelY(DEFAULT_JUMP_VELOCITY);
+		// SetVelY(DEFAULT_JUMP_VELOCITY);
+		m_pkPhysicsBody->ApplyLinearImpulseToCenter(
+			b2Vec2(0.0f, m_pkPhysicsBody->GetMass() * DEFAULT_JUMP_VELOCITY), true
+		);
 		SOUND->PlaySound("jump");
 		DoJumping();
 		return;
-	}	
+	}
 }
 
 void PlayerObject::DoSlidingDownWall()
@@ -133,13 +136,13 @@ void PlayerObject::DoSlidingDownWall()
 
 	if (m_kCurrentCollision.down)
 	{
-		DoStanding();
+		m_kPlayerState = STANDING;
 		return;
 	}
 
 	if (!m_kCurrentCollision.left && !m_kCurrentCollision.right)
 	{
-		DoFalling();
+		m_kPlayerState = FALLING;
 		return;
 	}
 
@@ -148,7 +151,7 @@ void PlayerObject::DoSlidingDownWall()
 
 	if (bNoLeft && bNoRight)
 	{
-		DoFalling();
+		m_kPlayerState = FALLING;
 		return;
 	}
 
@@ -164,7 +167,7 @@ void PlayerObject::DoSlidingDownWall()
 
 		SetVelY(DEFAULT_JUMP_VELOCITY / 1.1f);
 
-		const float fHorizontalJumpVel = DEFAULT_JUMP_VELOCITY * 2.0f;
+		const float fHorizontalJumpVel = DEFAULT_JUMP_VELOCITY * 0.5f;
 		
 		if (m_kCurrentCollision.left)
 			SetVelX(fHorizontalJumpVel);
@@ -190,7 +193,7 @@ void PlayerObject::DoStanding()
 
 	if (fabs(accel.x) > 0.0f || fabs(GetVelX()) > 0.0f ) 
 	{
-		DoWalking();
+		m_kPlayerState = WALKING;
 		return;
 	}
 }
@@ -206,8 +209,10 @@ void PlayerObject::DoWalking()
 	// if we go too slow, then stop us and make us STANDING
 	if (accel.x == 0.0f && fabs(GetVelX()) < min_velocity) 
 	{
-		SetVelX(0);
-		DoStanding();
+		TRACE("walking: STOPPED");
+		// SetVelX(0);
+		// DoStanding(); // can cause recursion badness, kill this.
+		m_kPlayerState = STANDING;
 	}
 
 	UpdateSkidding();
@@ -216,7 +221,7 @@ void PlayerObject::DoWalking()
 }
 
 void PlayerObject::UpdateSkidding() {
-	if (next_skid_time > 0)
+	/*if (next_skid_time > 0)
 		next_skid_time--;
 
 	// If acceleration and velocity are in the opposite directions,
@@ -242,7 +247,7 @@ void PlayerObject::UpdateSkidding() {
 				objSkid->FadeOut(Rand(4,10));
 			}
 		}
-	}
+	}*/
 }
 
 bool PlayerObject::WantsToSlideOnLeftSide()
@@ -258,8 +263,8 @@ bool PlayerObject::WantsToSlideOnRightSide()
 bool PlayerObject::DoCommonAirStuff() 
 {
 	// If we're not trying to moving at all, slow us down just a bit so we fall DOWN more, not not forward
-	if (accel.x > -0.001f && accel.x < 0.001f)
-		SetVelX(GetVelX() * 0.90f);
+	/*if (accel.x > -0.001f && accel.x < 0.001f)
+		SetVelX(GetVelX() * 0.90f);*/
 
 	if (WantsToSlideOnLeftSide() || WantsToSlideOnRightSide())
 	{
@@ -302,10 +307,10 @@ void PlayerObject::DoFalling() {
 	// XXX: should be PLAYER_FALLING when we have one.
 	PlayAnimation(PLAYER_JUMPING);
 
-	const float fMaxFallVelocity = -50.0f;
+	/*const float fMaxFallVelocity = -50.0f;
 
 	if (GetVelY() < fMaxFallVelocity)
-		SetVelY(fMaxFallVelocity);
+		SetVelY(fMaxFallVelocity);*/
 
 	if (!DoCommonAirStuff())
 		return;
@@ -329,7 +334,7 @@ void PlayerObject::DoCrouchingDown() {
 void PlayerObject::DoCommonStuff() 
 {	
 	DropBombsIfNeeded();
-	LimitMaxHorizontalVelocityTo(10.0f);
+	/*LimitMaxHorizontalVelocityTo(10.0f);
 
 	// If we're moving in a different direction than what we want to do, make us slow down faster.
 	// NOTE: Freaks out horizontal springs currently
@@ -337,13 +342,13 @@ void PlayerObject::DoCommonStuff()
 		(accel.x < 0.001f && GetVelX() > 0.001f) ) 
 	{
 			SetVelX(GetVelX() * 0.85f);
-	}
+	}*/
 }
 
 void PlayerObject::HandleInput() 
 {
 	// static float magnitude = GLOBALS->Value("player_acceleration", magnitude);
-	static float magnitude = 130;
+	static float magnitude = 600.0f;
 
 	// return a force based on 2 inputs.
 	if (INPUT->Key(PLAYERKEY_LEFT, controller_num) && 
@@ -572,20 +577,20 @@ void PlayerObject::DropBombsIfNeeded()
 
 void PlayerObject::LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity )
 {
-	if (GetVelX() > fMaxHorizontalVelocity)
+	/*if (GetVelX() > fMaxHorizontalVelocity)
 		SetVelX(fMaxHorizontalVelocity);
 
 	if (GetVelX() < -fMaxHorizontalVelocity)
-		SetVelX(-fMaxHorizontalVelocity);
+		SetVelX(-fMaxHorizontalVelocity);*/
 }
 
 void PlayerObject::LimitMaxVerticalVelocityTo( float fMaxVerticalVelocity )
 { 
-	if (GetVelY() > fMaxVerticalVelocity)
+	/*if (GetVelY() > fMaxVerticalVelocity)
 		SetVelY(fMaxVerticalVelocity);
 
 	if (GetVelY() < -fMaxVerticalVelocity)
-		SetVelY(-fMaxVerticalVelocity);
+		SetVelY(-fMaxVerticalVelocity);*/
 }
 
 void PlayerObject::OnAnimationLooped()

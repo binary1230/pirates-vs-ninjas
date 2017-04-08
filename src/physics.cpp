@@ -25,7 +25,7 @@ bool PhysicsManager::OnWorldInit()
 	if (!WORLD)
 		return false;
 
-	b2Vec2 gravity(0.0f, -15.0f);
+	b2Vec2 gravity(0.0f, -20.0f);
 
 	assert(m_pkPhysicsWorld == NULL);
 	m_pkPhysicsWorld = new b2World(gravity);
@@ -88,7 +88,7 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 
 	bodyDef.position.Set(PIXELS_TO_METERS(x) + halfWidth, PIXELS_TO_METERS(y) + halfHeight);
 	bodyDef.fixedRotation = bDontAllowRotation;
-	//bodyDef.linearDamping = 0.4f;
+	// bodyDef.linearDamping = 2.0f;
 
 	if (density > 0.0f)
 		bodyDef.type = b2_dynamicBody;
@@ -114,13 +114,20 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 
 b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, float height, bool bSensorOnly )
 {
-	return CreatePhysicsBox(x,y,width,height, 0.0f, 0.0f, 0.2f, false, bSensorOnly );
+	float density = 0.0f;
+	float restitution = 0.0f;
+	float friction = 0.2f;
+
+	return CreatePhysicsBox(x,y,width,height, density, restitution, friction, false, bSensorOnly );
 }
 
 b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation, float fDensity )
 {
+	// HAXXXX
+	float density = 1.0f;
+
 	// TODO: Don't hardcode these numbers.
-	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, fDensity, 0.0f, 0.2f, bDontAllowRotation);
+	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, density, 0.0f, 0.2f, bDontAllowRotation);
 	return pkBody;
 }
 
