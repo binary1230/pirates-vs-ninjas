@@ -46,7 +46,7 @@ bool SpringObject::Init() {
 SpringObject::SpringObject() {}
 SpringObject::~SpringObject() {}
 
-void SpringObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) {
+void SpringObject::OnSensorActivate(Object* obj) {
 	if (obj->GetProperties().is_player) {
 		
 		// Spring it!

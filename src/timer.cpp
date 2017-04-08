@@ -2,11 +2,15 @@
 #include "timer.h"
 #include "globals.h"
 
-// For timing stuff
-volatile int g_iOutstanding_updates = 0;
-volatile int g_iTicks = 0;
+// TODO: move this stuff to gameState.h/.cpp, doesn't need to be separate anymore.
 
-void Timer(void) {
+// For timing stuff
+int g_iOutstanding_updates = 0;
+int g_iTicks = 0;
+
+ALLEGRO_TIMER* g_timer;
+
+void OnTimer(void) {
 	g_iOutstanding_updates++;
 	g_iTicks++;
-} END_OF_FUNCTION(Timer);
+}

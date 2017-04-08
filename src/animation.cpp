@@ -6,7 +6,7 @@
 #include "assetManager.h"
 #include "gameSound.h"
 #include "effectsManager.h"
-#include "object.h"
+#include "objects/object.h"
 
 AnimFrame::AnimFrame() { Clear(); }
 AnimFrame::~AnimFrame() { Clear(); }
@@ -95,7 +95,7 @@ void Animation::SwitchToNextFrame()
 		case ANIMFRAME_SOUND:
 			soundName = oldFrame->extraData;
 
-			if (soundName.size() == 0)
+			if (soundName.GetLength() == 0)
 				TRACE(	"ERROR: No sound name specified "
 													"in animation sound frame\n");
 
@@ -106,7 +106,7 @@ void Animation::SwitchToNextFrame()
 		case ANIMFRAME_EFFECT:
 			effectName = oldFrame->extraData;
 
-			if (effectName.size() == 0)
+			if (effectName.GetLength() == 0)
 				TRACE(	"ERROR: No sound name specified "
 													"in animation sound frame\n");
 
@@ -197,7 +197,7 @@ bool Animation::CreateEffectFrame(	const CString &effectData,
 
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
-	assert(effectData.size() > 0);
+	assert(effectData.GetLength() > 0);
 
 	f->frame_type = ANIMFRAME_EFFECT;
 	f->duration = 0;
@@ -211,7 +211,7 @@ bool Animation::CreateSoundFrame(	const CString &soundData,
 {	
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
-	assert(soundData.size() > 0);
+	assert(soundData.GetLength() > 0);
 
 	f->frame_type = ANIMFRAME_SOUND;
 	f->duration = 0;
@@ -335,7 +335,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 		// of type "sprite" (as opossed to "sound" and "effect" types)
 		frame_type = xFrame.getAttribute("type");
 		
-		if (frame_type.size() == 0)
+		if (frame_type.GetLength() == 0)
 			frame_type = "sprite";
 
 		// figure out what type of frame this is and do The Right Thing
@@ -370,7 +370,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 			// effect frames don't display anything but instead trigger effects 
 			// such as smoke/dust/etc
 			extraData = xFrame.getAttribute("data");
-			assert(extraData.size() != 0);
+			assert(extraData.GetLength() != 0);
 
 			if (!anim->CreateEffectFrame(extraData, freeze_at_end != 0)) {
 				anim->Shutdown();
@@ -382,7 +382,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 		{
 			// sound frames don't display anything but instead trigger sounds 
 			extraData = xFrame.getAttribute("data");
-			assert(extraData.size() != 0);
+			assert(extraData.GetLength() != 0);
 
 			if (!anim->CreateSoundFrame(extraData, freeze_at_end != 0)) {
 				anim->Shutdown();
@@ -418,7 +418,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 		{
 
 			TRACE("ERROR: Invalid frame type specified: '%s'\n", 
-							frame_type.c_str());
+							frame_type);
 			anim->Shutdown();
 			SAFE_DELETE(anim);
 			return NULL;

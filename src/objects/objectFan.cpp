@@ -23,7 +23,7 @@ void FanObject::Update() {
 	UpdateSimpleAnimations();
 }
 
-void FanObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) {
+void FanObject::OnSensorActivate(Object* obj) {
 	if (obj->GetProperties().is_player) {
 
 		// if the player is going slowly, slow down the new fan speed
@@ -36,8 +36,7 @@ void FanObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) {
 			direction = 1.0f;
 
 		// calc the new rotational velocity
-		rotate_velocity = direction * 
-						std::max(DEFAULT_FAN_VELOCITY*player_factor, (float)fabs(rotate_velocity));
+		rotate_velocity = direction * std::max(DEFAULT_FAN_VELOCITY*player_factor, (float)fabs(rotate_velocity));
 	}
 }
 

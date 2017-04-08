@@ -2,10 +2,10 @@
 #define GAMESOUND_H
 
 //! Maps a sound name to it's handle (e.g. "jump" to the sample)
-typedef map<CString, SAMPLE*> SoundMapping;
-typedef map<CString, SAMPLE*>::iterator s_iter;
+typedef map<CString, ALLEGRO_SAMPLE*> SoundMapping;
+typedef map<CString, ALLEGRO_SAMPLE*>::iterator s_iter;
 
-class OGGFILE;
+// class OGGFILE;
 
 class GameSound {
 
@@ -23,28 +23,30 @@ class GameSound {
 			bool use_variable_pitch;
 			int freq_range;
 
+			CString current_music;
+			ALLEGRO_SAMPLE_ID current_music_id;
+
+			ALLEGRO_SAMPLE* FindCachedSoundByName(const char* name);
+
+			bool IsThisMusicPlayingAlready(CString name);
+
 		public:
-			//! Load a sound
+			//! Load and cache a sound
 			//! example: LoadSound("sounds/jump.wav", "jump")
 			//! Then you can PlaySound("jump") to hear it.  Neat eh?
-			bool LoadSound(const char* filename, const char* sound_name);
+			ALLEGRO_SAMPLE* LoadSound(const char* filename, const char* sound_name);
 	
 			//! Load all sounds from a <sounds> block in XML
 			bool LoadSounds(XMLNode &xSounds);
 			
 			//! Load a piece of music
-			bool LoadMusic(const char* filename);
-
-			//! Plays the currently loaded song
-			bool PlayMusic( bool loop=false, int vol=255, int pan=128, 
-											int buflen=DEFAULT_MUSIC_BUFFER_SIZE);
-
-			void PauseMusic();					// If playing, pause the song
-			void PauseToggleMusic();		// If playing pause the song, resume if not playing
-			void ResumeMusic();					// If not playing, resume the song
-			void StopMusic();						// Stop the music
+			bool PlayMusic(const char* filename);
+			void StopMusic();			
 			
-			void PlaySound(CString name, unsigned int pan = 128);
+			void PlaySound(	CString name, unsigned int pan = 128, 
+							ALLEGRO_PLAYMODE loop = ALLEGRO_PLAYMODE_ONCE, ALLEGRO_SAMPLE_ID* sound_id_out = NULL);
+
+			void StopSound(ALLEGRO_SAMPLE_ID* sample_id);
 
 			//! Init the sound system
 			int Init(bool _sound_enabled);

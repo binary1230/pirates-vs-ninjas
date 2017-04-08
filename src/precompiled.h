@@ -22,54 +22,41 @@
 // #undef ENGINE_USES_CEGUI
 // #endif
 
-#define ENGINE_USES_SLOW_CHECKED_STL 0
+#define ENGINE_USES_SLOW_CHECKED_STL 0	// 2017, enabling this breaks, like, everything.
 
-// The order of the allegro stuff is SUPER-IMPORTANT
-#ifdef WIN32
+
+#ifdef _WIN64
+
+	// yiiiiiiiiikes. should probbly fix everything here. 2017
 	#pragma warning(disable:4312) // 'type cast' : conversion from 'unsigned int' to 'unsigned char *' of greater size
 	#pragma warning(disable:4267)
 	#pragma warning(disable:4311) // pointer truncation from 'const void *' to 'unsigned long'
 	#pragma warning(disable:4996) // 'stricmp': The POSIX name for this item is deprecated.
 
 	// NOTE: Turning this off won't check for invalid iterators, HOWEVER, it is SLOW as hell.
-	#ifdef ENGINE_USES_SLOW_CHECKED_STL
+	#if ENGINE_USES_SLOW_CHECKED_STL
 	#define _SECURE_SCL 0
-	#define _HAS_ITERATOR_DEBUGGING 0
+	#define _HAS_ITERATOR_DEBUGGING 0    // 2017, enabling this breaks, like, everything.
 	#endif // _DEBUG
 
-	#define  ALLEGRO_STATICLINK
+	// #define  ALLEGRO_STATICLINK   // old? 2017
 #endif // WIN32
 
 // -----------------------------
 
-#ifdef ENGINE_USES_CEGUI
-#include <CEGUI.h>
-#include <CEGUIWindowManager.h>
-#include <RendererModules/OpenGLGUIRenderer/openglrenderer.h>
-#include <CEGUIDefaultResourceProvider.h>
-#endif // ENGINE_USES_CEGUI
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_image.h>
 
-#ifdef ENGINE_USES_FLTK
-#include <FL/Fl.H>
-#include <FL/Fl_Window.H>
-#include <FL/Fl_Box.H>
-#include <FL/Fl_Window.H>
-#include <FL/Fl_Menu_Button.H>
-#include <FL/Fl_Button.H>
-#include <FL/Fl_Check_Button.H>
-#endif // ENGINE_USES_FLTK
-
-
-#include <allegro.h>
-
-#ifdef WIN32
+#ifdef _WIN64
 #define _WIN32_WINNT   0x0400
-#include <winalleg.h>
 #include <objbase.h>
 #endif // WIN32
 
-#include <alleggl.h>
-#include <allegro/internal/aintern.h>
+#include <allegro5/allegro_opengl.h>
 
 #ifdef PLATFORM_DARWIN
 #include <CoreServices/CoreServices.h>
@@ -81,11 +68,7 @@
 #define ENGINE_EMBEDDED_LUA
 
 #ifdef ENGINE_EMBEDDED_LUA
-extern "C" {
-	#include <lua.h>
-	#include <lualib.h>
-	#include <lauxlib.h>
-}
+	#include <lua.hpp>
 #endif
 
 #define ENGINE_USES_BOX2D_PHYSICS
@@ -102,16 +85,16 @@ extern "C" {
 #include <string.h>
 #include <math.h>
 #include <png.h>
-#include <GL/gl.h>
+// #include <GL/gl.h>
 
 // Unix-y?
 #include <ctype.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#ifndef WIN32
+#ifndef _WIN64
 #include <unistd.h>
-#endif // WIN32
+#endif // _WIN64
 
 #include <fcntl.h>
 
@@ -119,16 +102,11 @@ extern "C" {
 #undef min
 #undef max 
 
-// Our rarely-modified engine stuff
-#include "StdString.h"
-#define CString CStdStringA
+#include <atlstr.h>
 
-// #include "Model_3DS.h" // not ready yet/ever
-#include "xmlParser.h"
-#include "loadpng.h"
-#include "alogg.h"
+#include "external/xmlParser.h"
 #ifdef _MSC_VER
-#include "XGetopt.h"	// include our own getopt() for native windows builds
+#include "external/XGetopt.h"	// include our own getopt() for native windows builds
 #endif
 
 // STL stuff

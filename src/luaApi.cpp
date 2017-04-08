@@ -8,7 +8,7 @@
 #include "window.h"
 #include "gameSound.h"
 #include "gameState.h"
-#include "mapEditor.h"
+// #include "mapEditor.h"
 #include "gameOptions.h"
 
 // LUA: Debug only - print something to stderr from lua
@@ -120,8 +120,7 @@ int LUAAPI lua_music_play(lua_State* lua) {
 		retval = -1;
 
 	if (retval != -1 && music_file) {
-		SOUND->LoadMusic(music_file);
-		SOUND->PlayMusic();
+		SOUND->PlayMusic(music_file);
 	}
 
 	lua_pushnumber(lua, retval);
@@ -211,7 +210,7 @@ int LUAAPI lua_jumped_back_from_a_door(lua_State* lua) {
 }
 
 // Totally stupid. just implement as a singleton.
-MapEditor* GetMapEditorInstance()
+/*MapEditor* GetMapEditorInstance()
 {
 	if (!OPTIONS || !WORLD || !OPTIONS->MapEditorEnabled())
 		return NULL;
@@ -219,7 +218,7 @@ MapEditor* GetMapEditorInstance()
 	// pray to god. cast from nowhere.
 	assert(WORLD);
 	return (MapEditor*)(WORLD); // BAD IDEA. DANGEROUS CAST.
-}
+}*/
 
 int LUAAPI lua_engine_should_exit_game(lua_State* lua) 
 {
@@ -228,7 +227,7 @@ int LUAAPI lua_engine_should_exit_game(lua_State* lua)
 	return 1;
 }
 
-int LUAAPI lua_mapeditor_toggle_grid_resolution(lua_State* lua) 
+/*int LUAAPI lua_mapeditor_toggle_grid_resolution(lua_State* lua) 
 {
 	if (!GetMapEditorInstance())
 		return 1;
@@ -239,7 +238,7 @@ int LUAAPI lua_mapeditor_toggle_grid_resolution(lua_State* lua)
 
 	lua_pushnumber(lua, retval);
 	return 1;
-}
+}*/
 
 // ----------------------------------------------------------------------
 
@@ -265,7 +264,7 @@ struct LuaApiFunction* GetLuaApiFunctionList() { \
 LUA_FUNCTION_REGISTRATION_LIST_START()
 	REGISTER_LUA_FUNCTION(engine_print)
 	REGISTER_LUA_FUNCTION(engine_should_exit_game)
-	REGISTER_LUA_FUNCTION(mapeditor_toggle_grid_resolution)
+	//REGISTER_LUA_FUNCTION(mapeditor_toggle_grid_resolution)
 
 	REGISTER_LUA_FUNCTION(world_textbox)
 	REGISTER_LUA_FUNCTION(world_play_input_script)

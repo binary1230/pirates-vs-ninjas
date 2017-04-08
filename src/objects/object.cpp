@@ -43,7 +43,7 @@ void Object::BaseUpdate() {
 
 	if (properties.uses_new_physics && m_pkPhysicsBody)
 	{
-		m_pkPhysicsBody->ApplyImpulse(b2Vec2(m_fImpulseToApplyX,m_fImpulseToApplyY), m_pkPhysicsBody->GetWorldCenter());
+		m_pkPhysicsBody->ApplyLinearImpulseToCenter(b2Vec2(m_fImpulseToApplyX,m_fImpulseToApplyY), true);
 		m_fImpulseToApplyX = 0.0f;
 		m_fImpulseToApplyY = 0.0f;
 
@@ -136,7 +136,7 @@ void Object::InitPhysics()
 	if (properties.uses_new_physics)
 	{
 		if (properties.is_static)
-			m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height, properties.ignores_collisions);
+			m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height, properties.is_sensor);
 		else
 			m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height, properties.ignores_physics_rotation, fDensity);
 
@@ -299,7 +299,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 
 		// draw current bounding rectangle, pink
 		TransformRect(bbox_t);
-		WINDOW->DrawRect(bbox_t, makecol(255,0,255));
+		WINDOW->DrawRect(bbox_t, al_map_rgb(255,0,255));
 	}
 }
 
@@ -359,7 +359,12 @@ Object::Object() {
 	m_pkPhysicsBody = NULL;
 }
 
-void Object::OnCollide( Object* obj, const b2ContactPoint* pkContactPoint )
+void Object::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
+{
+	// default is no action, this is overidden in higher classes
+}
+
+void Object::OnSensorActivate(Object* obj) 
 {
 	// default is no action, this is overidden in higher classes
 }

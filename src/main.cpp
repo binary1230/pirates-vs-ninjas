@@ -30,9 +30,7 @@ int start_game_instance(const int argc, const char* argv[]) {
 	return ret_val;
 }
 
-/// The main function
-/// IT ROCKS
-int main(const int argc, const char* argv[]) 
+int main(int argc, const char** argv) 
 {
 	#ifdef REDIRECT_STDERR
 	TRACE("Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
@@ -46,4 +44,4 @@ int main(const int argc, const char* argv[])
 
 	return start_game_instance(argc, argv);
 
-} END_OF_MAIN();
+}

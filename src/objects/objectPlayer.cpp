@@ -38,13 +38,13 @@ void PlayerObject::ScreenBoundsConstraint() {
 	if (pos.x < 0) {
 		SetVelX(0.0f);
 		int newPosX = 20;
-		m_pkPhysicsBody->SetXForm(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
+		m_pkPhysicsBody->SetTransform(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
 		pos.x = newPosX;
 		UpdatePositionFromPhysicsLocation();
 	} else if (pos.x > (WORLD->GetWidth() - width) ) {
 		SetVelX(0.0f);
 		int newPosX = WORLD->GetWidth() - width - 1;
-		m_pkPhysicsBody->SetXForm(
+		m_pkPhysicsBody->SetTransform(
 			b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle()
 		);
 		pos.x = newPosX;
@@ -157,7 +157,7 @@ void PlayerObject::DoSlidingDownWall()
 		// HACK: offset just the tiniest amount to make us not collide with the wall anymore.
 		const int iOffset = 3;
 		int iHackPixelOffset = m_kCurrentCollision.left ? iOffset : -iOffset;
-		m_pkPhysicsBody->SetXForm(m_pkPhysicsBody->GetWorldCenter() + b2Vec2(PIXELS_TO_METERS(iHackPixelOffset), 0.0f), m_pkPhysicsBody->GetAngle());
+		m_pkPhysicsBody->SetTransform(m_pkPhysicsBody->GetWorldCenter() + b2Vec2(PIXELS_TO_METERS(iHackPixelOffset), 0.0f), m_pkPhysicsBody->GetAngle());
 
 		// don't apply any forces
 		accel.x = 0.0f;
@@ -385,38 +385,20 @@ void PlayerObject::Update()
 	door_in_front_of_us = NULL;
 
 	// apply the acceleration
-	m_pkPhysicsBody->ApplyForce(accel, m_pkPhysicsBody->GetWorldCenter());
+	m_pkPhysicsBody->ApplyForce(accel, m_pkPhysicsBody->GetWorldCenter(), true);
 }
 
-void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint) 
-{
+void PlayerObject::OnSensorActivate(Object* obj) {
+
 	if (obj->GetProperties().is_door) {
 		door_in_front_of_us = (DoorObject*)obj;
 		return;
 	}
-		
-	if (obj->GetProperties().is_fan || obj->GetProperties().is_ball)  
-		return;
 
-	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().ignores_collisions)
-	{
-		if (pkContactPoint->normal.y > 0 && pkContactPoint->normal.x == 0.0f)
-			m_kCurrentCollision.down = 1;
-
-		if (pkContactPoint->normal.y < 0 && pkContactPoint->normal.x == 0.0f)
-			m_kCurrentCollision.up = 1;
-
-		if (pkContactPoint->normal.x > 0 && pkContactPoint->normal.y == 0.0f)
-			m_kCurrentCollision.left = 1;
-
-		if (pkContactPoint->normal.x < 0 && pkContactPoint->normal.y == 0.0f)
-			m_kCurrentCollision.right = 1;
-	}
-
-	if (obj->GetProperties().is_spring) 
+	if (obj->GetProperties().is_spring)
 	{
 		SpringObject* sObj = (SpringObject*)obj;
-		
+
 		if (sObj->IsSpringActive())
 		{
 			accel.x = 0.0f;
@@ -428,6 +410,24 @@ void PlayerObject::OnCollide(Object* obj, const b2ContactPoint* pkContactPoint)
 
 	if (obj->GetProperties().is_ring)
 		++ring_count;
+}
+
+void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
+{
+	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().is_sensor)
+	{
+		if (pkbWorldManifold->normal.y > 0 && pkbWorldManifold->normal.x == 0.0f)
+			m_kCurrentCollision.down = 1;
+
+		if (pkbWorldManifold->normal.y < 0 && pkbWorldManifold->normal.x == 0.0f)
+			m_kCurrentCollision.up = 1;
+
+		if (pkbWorldManifold->normal.x > 0 && pkbWorldManifold->normal.y == 0.0f)
+			m_kCurrentCollision.left = 1;
+
+		if (pkbWorldManifold->normal.x < 0 && pkbWorldManifold->normal.y == 0.0f)
+			m_kCurrentCollision.right = 1;
+	}
 }
 
 bool PlayerObject::Init() 
@@ -520,6 +520,13 @@ void PlayerObject::DropBombsIfNeeded()
 	if (m_kPlayerState == WALKING_THRU_DOOR)
 		return;
 
+	bool attack = false;
+	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num))
+		attack = true;
+
+	/*
+	this attack animation code is horribly broken right now.
+
 	int iAttackAnimation = -1;
 
 	if (INPUT->KeyOnce(PLAYERKEY_ACTION1, controller_num)) 
@@ -536,9 +543,12 @@ void PlayerObject::DropBombsIfNeeded()
 
 	PlayAnimation(iAttackAnimation);
 	currentAnimation->SetSpeedMultiplier(1);
-	m_bShouldNotSwitchAnimationsRightNow = true;
+	// m_bShouldNotSwitchAnimationsRightNow = true; // seems to break stuff.
 
 	if (iAttackAnimation != PLAYER_ATTACK3)
+		return;*/
+
+	if (!attack)
 		return;
 
 	Object* objBall = EFFECTS->TriggerEffect(this, "bomb");
@@ -546,14 +556,18 @@ void PlayerObject::DropBombsIfNeeded()
 		return;
 
 	float sign = flip_x ? -1 : 1;
-	float strength = 0.4;
+	float strength = 0.8f;
 
-	if (GetInput(PLAYERKEY_UP, controller_num))
-		objBall->SetImpulse(0.0f, strength);
-	else if (GetInput(PLAYERKEY_DOWN, controller_num))
-		objBall->SetImpulse(0.0f, strength*0.1);
-	else
-		objBall->SetImpulse(sign * strength, strength / 3.0);
+	if (GetInput(PLAYERKEY_UP, controller_num)) {
+		objBall->SetY(objBall->GetY() + 40);
+		objBall->SetImpulse(0.0f, strength*0.2f);
+	} else if (GetInput(PLAYERKEY_DOWN, controller_num) && !m_kCurrentCollision.down) {
+		objBall->SetY(objBall->GetY() - 40);
+		objBall->SetImpulse(0.0f, -strength*0.2f);
+	} else {
+		objBall->SetX(objBall->GetX() + (20 * sign));
+		objBall->SetImpulse(GetVelX()*0.01f + sign * strength * 0.3f, 0.0f);
+	}
 }
 
 void PlayerObject::LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity )

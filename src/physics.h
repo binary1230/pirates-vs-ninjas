@@ -8,38 +8,27 @@
 
 class b2World;
 struct b2AABB;
-
-// -----------------------------------------------------------------------
-
-class PhysicsDebugRenderer : public b2DebugDraw
-{
-public:
-	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
-	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
-
-	void SubmitVertex( float x, float y );
-	void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color);
-	void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color);
-	void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color);
-	void DrawXForm(const b2XForm& xf);
-
-	void Transform(float &x, float &y);
-};
-
-void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color);
-void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color);
-void DrawAABB(b2AABB* aabb, const b2Color& color);
-
-// -----------------------------------------------------------------------
+class Object;
 
 class PhysicsContactListener : public b2ContactListener
 {
-public:
-	void Add(const b2ContactPoint* point);
-	void Persist(const b2ContactPoint* point);
-	void Remove(const b2ContactPoint* point);
-	void Result(const b2ContactResult* point);
+	public:
+		void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
+
+		void BeginContact(b2Contact* contact);
+		void EndContact(b2Contact* contact);
 };
+
+class PhysicsContact
+{
+	public:
+		Object* objA;
+		Object* objB;
+		b2WorldManifold worldManifold;
+};
+
+typedef map<const b2Contact*, PhysicsContact> CollisionMapping;
+typedef map<const b2Contact*, PhysicsContact>::iterator collision_iter;
 
 class PhysicsManager
 {
@@ -50,17 +39,23 @@ class PhysicsManager
 		int m_iPhysicsSimulatorIterations;
 		b2World* m_pkPhysicsWorld;
 
-		PhysicsDebugRenderer m_kPhysicsDebugRenderer;
+		// PhysicsDebugRenderer m_kPhysicsDebugRenderer;
 		PhysicsContactListener m_kPhysicsContactListener;
 
-		std::vector<b2ContactPoint> m_kContacts;
+		std::vector<PhysicsContact> m_kHardCollisions;
+
+		CollisionMapping sensorMappings;
 
 		friend class PhysicsContactListener;
 
-		void ReportContactPoint(const b2ContactPoint* pkContactPoint);
+		void ReportRealCollision(const b2Contact* pkb2Contact);
+
+		void BeginSensorCollision(const b2Contact* pkb2Contact);
+		void EndSensorCollision(const b2Contact* pkb2Contact);
 		
 		void HandleCollisions();
-		void ProcessCollision(b2ContactPoint* pkContactPoint);
+		void ProcessHardCollision(PhysicsContact* pkb2Contact);
+		void ProcessSensorCollision(PhysicsContact* pkb2Contact);
 
 		bool bDrawDebugBoxes;
 

@@ -2,7 +2,6 @@
 #include "ai.h"
 #include "gameModes.h"
 #include "xmlParser.h"
-#include "StdString.h"
 #include "assetManager.h"
 #include "gameMode.h"
 #include "gameState.h"
@@ -10,7 +9,7 @@
 #include "gameMenu.h"
 #include "credits.h"
 #include "gameOptions.h"
-#include "mapEditor.h"
+// #include "mapEditor.h"
 #include "luaManager.h"
 #include "animationeditor.h"
 
@@ -61,7 +60,7 @@ void GameModes::DoEndCurrentMode() {
 
 	CString mode_to_load = PickNextMode(exitInfo);
 
-	if (mode_to_load.size() == 0 || LoadMode(mode_to_load, exitInfo) == -1)
+	if (mode_to_load.GetLength() == 0 || LoadMode(mode_to_load, exitInfo) == -1)
 		signal_game_exit = true;
 }
 
@@ -70,7 +69,7 @@ void GameModes::DoEndCurrentMode() {
 CString GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 
 	// if the exit info tells us explicitly to use a mode, then do it.
-	if (exitInfo.useExitInfo && exitInfo.nextModeToLoad.size() > 0)
+	if (exitInfo.useExitInfo && exitInfo.nextModeToLoad.GetLength() > 0)
 		return exitInfo.nextModeToLoad;
 
 	// if exitInfo doesn't specify which mode to use, 
@@ -98,24 +97,24 @@ int GameModes::LoadMode(CString mode_xml_filename,
 	TRACE(" AI: Enabling AI Training.\n");
 	#endif
 
-	TRACE(" Mode Info: filename '%s'\n", mode_xml_filename.c_str() );
+	TRACE(" Mode Info: filename '%s'\n", mode_xml_filename );
 
 	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename);
-	XMLNode xMode = XMLNode::openFileHelper( mode_xml_filename.c_str(), "gameMode" );
+	XMLNode xMode = XMLNode::openFileHelper( mode_xml_filename, "gameMode" );
 
 	CString modeType = xMode.getAttribute("type");
-	TRACE(" Mode Info: type = '%s'\n", modeType.c_str());
+	TRACE(" Mode Info: type = '%s'\n", modeType);
 
 	// actually create the new mode
 	if (modeType == "simulation") 
 	{
 
 		// slight singleton hack.
-		if (!OPTIONS->MapEditorEnabled()) {
+		//if (!OPTIONS->MapEditorEnabled()) {
 			WORLD->CreateInstance();
-		} else {
-			WORLD->SetInstance(new MapEditor());
-		}
+		//} else {
+		//	WORLD->SetInstance(new MapEditor());
+		//}
 
 		currentMode = WORLD;
 
@@ -152,7 +151,7 @@ int GameModes::LoadMode(CString mode_xml_filename,
 	}
 
 	if (error || currentMode->Init(xMode) == -1) {
-		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", 	modeType.c_str());
+		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", 	modeType);
 		return -1;
 	}
 

@@ -4,10 +4,12 @@
 #define TIMER_H
 
 //! Incremented by Timer()
-extern volatile int g_iOutstanding_updates;
-extern volatile int g_iTicks;
+extern int g_iOutstanding_updates;
+extern int g_iTicks;
+
+extern ALLEGRO_TIMER* g_timer;
 
 //! A function which gets called once every 1/30th of a second
-void Timer();
+void OnTimer();
 
 #endif // TIMER_H

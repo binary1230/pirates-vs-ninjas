@@ -12,30 +12,30 @@
 // - - - - - - - - - - - - - - - - - - 
 
 // Player 1 default game keys (total count must = PLAYERKEY_COUNT)
-#define DEFAULT_PLAYERKEY_P1_JUMP			KEY_C
-#define DEFAULT_PLAYERKEY_P1_LEFT			KEY_LEFT
-#define DEFAULT_PLAYERKEY_P1_RIGHT			KEY_RIGHT
-#define DEFAULT_PLAYERKEY_P1_UP 			KEY_UP
-#define DEFAULT_PLAYERKEY_P1_DOWN			KEY_DOWN
-#define DEFAULT_PLAYERKEY_P1_ACTION1		KEY_D
-#define DEFAULT_PLAYERKEY_P1_ACTION2		KEY_F
+#define DEFAULT_PLAYERKEY_P1_JUMP			ALLEGRO_KEY_C
+#define DEFAULT_PLAYERKEY_P1_LEFT			ALLEGRO_KEY_LEFT
+#define DEFAULT_PLAYERKEY_P1_RIGHT			ALLEGRO_KEY_RIGHT
+#define DEFAULT_PLAYERKEY_P1_UP 			ALLEGRO_KEY_UP
+#define DEFAULT_PLAYERKEY_P1_DOWN			ALLEGRO_KEY_DOWN
+#define DEFAULT_PLAYERKEY_P1_ACTION1		ALLEGRO_KEY_D
+#define DEFAULT_PLAYERKEY_P1_ACTION2		ALLEGRO_KEY_F
 
 // Player 2 default game keys
-#define DEFAULT_PLAYERKEY_P2_JUMP			KEY_E
-#define DEFAULT_PLAYERKEY_P2_LEFT			KEY_DEL
-#define DEFAULT_PLAYERKEY_P2_RIGHT			KEY_PGDN
-#define DEFAULT_PLAYERKEY_P2_UP 			KEY_HOME
-#define DEFAULT_PLAYERKEY_P2_DOWN			KEY_END
-#define DEFAULT_PLAYERKEY_P2_ACTION1		KEY_3
-#define DEFAULT_PLAYERKEY_P2_ACTION2		KEY_4
+#define DEFAULT_PLAYERKEY_P2_JUMP			ALLEGRO_KEY_E
+#define DEFAULT_PLAYERKEY_P2_LEFT			ALLEGRO_KEY_DELETE
+#define DEFAULT_PLAYERKEY_P2_RIGHT			ALLEGRO_KEY_PGDN
+#define DEFAULT_PLAYERKEY_P2_UP 			ALLEGRO_KEY_HOME
+#define DEFAULT_PLAYERKEY_P2_DOWN			ALLEGRO_KEY_END
+#define DEFAULT_PLAYERKEY_P2_ACTION1		ALLEGRO_KEY_3
+#define DEFAULT_PLAYERKEY_P2_ACTION2		ALLEGRO_KEY_4
 
 // Other keys
-#define DEFAULT_GAMEKEY_EXIT					KEY_ESC
-#define DEFAULT_GAMEKEY_START					KEY_ENTER
-#define DEFAULT_GAMEKEY_DEBUGPAUSE				KEY_F1
-#define DEFAULT_GAMEKEY_DEBUGSTEP				KEY_F2
-#define DEFAULT_GAMEKEY_TOGGLE_PHYSICS_DISPLAY	KEY_F3
-#define DEFAULT_GAMEKEY_SCREENSHOT				KEY_F8
+#define DEFAULT_GAMEKEY_EXIT					ALLEGRO_KEY_ESCAPE
+#define DEFAULT_GAMEKEY_START					ALLEGRO_KEY_ENTER
+#define DEFAULT_GAMEKEY_DEBUGPAUSE				ALLEGRO_KEY_F1
+#define DEFAULT_GAMEKEY_DEBUGSTEP				ALLEGRO_KEY_F2
+#define DEFAULT_GAMEKEY_TOGGLE_PHYSICS_DISPLAY	ALLEGRO_KEY_F3
+#define DEFAULT_GAMEKEY_SCREENSHOT				ALLEGRO_KEY_F8
 
 
 DECLARE_SINGLETON(Input)
@@ -189,7 +189,9 @@ void Input::UpdateKeyReleases() {
 // ------------------------------------------------
 
 bool Input::CheckRealKeyOnce(uint iKeyNum) const {
-	return real_released_key[iKeyNum] && key[iKeyNum];
+	ALLEGRO_KEYBOARD_STATE key_state;
+	al_get_keyboard_state(&key_state);
+	return real_released_key[iKeyNum] && al_key_down(&key_state, iKeyNum);
 }
 
 void Input::HandleRealKeyOnce(uint iKeyNum) {
@@ -205,8 +207,11 @@ bool Input::RealKeyOnce(uint iKeyNum) {
 }
 
 void Input::UpdateRealKeyReleases() {
-	for (int i = 0; i < KEY_MAX; i++) {
-		if (!key[i]) 
+	ALLEGRO_KEYBOARD_STATE key_state;
+	al_get_keyboard_state(&key_state);
+
+	for (int i = 0; i < ALLEGRO_KEY_MAX; i++) {
+		if (!al_key_down(&key_state, i))
 			real_released_key[i] = true;
 	}
 }
@@ -230,16 +235,16 @@ bool Input::InitPlayback(CString filename, bool seed_engine) {
 		return false;
 	} 
 
-	demofile = fopen(filename.c_str(), "r");
+	demofile = fopen(filename, "r");
 	
 	if (!demofile) {
 			TRACE(	"InputPlayback: ERROR can't open demofile '%s'.\n",
-							filename.c_str());
+							filename);
 			return false;
 	}
 	
 	//TRACE("InputRecord: Playing back demo from file '%s'.\n", 
-	//						filename.c_str());
+	//						filename);
 
 	// 1st line2: 'DEMO' header + version info
 	// (todo.. we could check for engine version numbers in this line2)
@@ -354,16 +359,16 @@ bool Input::InitRecorder(CString filename) {
 		return false;
 	} 
 
-	demofile = fopen(filename.c_str(), "w");
+	demofile = fopen(filename, "w");
 	
 	if (!demofile) {
 			TRACE(	"InputRecord: ERROR can't write to demofile '%s'.\n",
-							filename.c_str());
+							filename);
 			return false;
 	}
 
 	TRACE("InputRecord: Recording demo to file '%s'.\n", 
-							filename.c_str());
+							filename);
 
 	// write 'DEMO' header + game version number and some extra info
 	fprintf(demofile, "DEMO:ninja-engine saved demo file:%s:%s\n",
@@ -401,15 +406,15 @@ bool Input::InitLive() {
 }
 
 bool Input::CommonInit() {
-	install_mouse();
-	install_keyboard();
-	install_joystick(JOY_TYPE_AUTODETECT);
+	al_install_mouse();
+	al_install_keyboard();
+	al_install_joystick();
 
 	// num_joysticks is a global allegro variable
-	if (num_joysticks == 0)
+	/*if (num_joysticks == 0)
 		TRACE(" Input: No joysticks found\n");
 	else
-		TRACE(" Input: %i joystick(s) found\n", num_joysticks);
+		TRACE(" Input: %i joystick(s) found\n", num_joysticks);*/
 
 	gamekey_to_realkey.resize(GAMEKEY_COUNT);
 	game_key.resize(GAMEKEY_COUNT);
@@ -419,7 +424,7 @@ bool Input::CommonInit() {
 		released_key[i] = true;
 	}
 
-	for (uint i = 0; i < KEY_MAX; ++i) {
+	for (uint i = 0; i < ALLEGRO_KEY_MAX; ++i) {
 		real_released_key[i] = true;
 	}
 
@@ -479,16 +484,17 @@ void Input::Shutdown() {
 		
 	demofile = NULL;
 
-	remove_mouse();
-	remove_keyboard();
-	remove_joystick();
+	al_uninstall_mouse();
+	al_uninstall_keyboard();
+	al_uninstall_joystick();
 }
 
 void Input::Update() {
 
-	poll_mouse();
-	poll_keyboard();
-	poll_joystick();
+	// don't think we need these anymore -2017
+	//al_poll_mouse();
+	//al_poll_keyboard();
+	//al_poll_joystick();
 
 	switch (type) {
 		case INPUT_RECORDED:
@@ -565,7 +571,9 @@ void Input::UpdatePlayback() {
 	// everything comes back from the demo file,
 	// but we still allow the user to press GAMEKEY_EXIT key LIVE
 	// so they can exit the demo manually
-	if (key[gamekey_to_realkey[GAMEKEY_EXIT]])
+	ALLEGRO_KEYBOARD_STATE key_state;
+	al_get_keyboard_state(&key_state);
+	if (al_key_down(&key_state, gamekey_to_realkey[GAMEKEY_EXIT]))
 		game_key[GAMEKEY_EXIT] = 1;	
 }
 
@@ -577,16 +585,18 @@ void Input::UpdatePlayback() {
 // NOTE: UpdateRecord() also calls this method for recording demos
 // 
 void Input::UpdateLive() {
+	ALLEGRO_KEYBOARD_STATE key_state;
+	al_get_keyboard_state(&key_state);
 	for (uint i = 0; i < GAMEKEY_COUNT; i++) {
-		game_key[i] = key[gamekey_to_realkey[i]];
+		game_key[i] = al_key_down(&key_state, gamekey_to_realkey[i]);
 	}
 
 	DoJoystickUpdateHack();
 
 	// get the mouse from global allegro variables
-	mouse_x_pos = ::mouse_x;
-	mouse_y_pos = ::mouse_y;
-	mouse_buttons = ::mouse_b;
+	//mouse_x_pos = ::mouse_x;
+	//mouse_y_pos = ::mouse_y;
+	//mouse_buttons = ::mouse_b; // need to port, 2017
 }
 
 // These are for an XBOX controller
@@ -612,9 +622,12 @@ void Input::UpdateLive() {
 //! game_key[].  E.g. 'A' button on the joystick
 //! just maps to PLAYERKEY_JUMP
 void Input::DoJoystickUpdateHack() {
+/*
+ *
+ *  Need to port this over - 2017.
 
 	int player, j, key, max_joysticks;
-	JOYSTICK_INFO joystick;
+	ALLEGRO_JOYSTICK_INFO joystick;
 	JOYSTICK_STICK_INFO stick;
 
 	// num_joysticks is a GLOBAL read-only variable from allegro
@@ -681,6 +694,7 @@ void Input::DoJoystickUpdateHack() {
 				SetKey(PLAYERKEY_DOWN, player+1);
 		}
 	}	
+	*/
 }
 
 void Input::BeginRecording()	{				

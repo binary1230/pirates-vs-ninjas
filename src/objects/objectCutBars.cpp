@@ -66,13 +66,13 @@ void CutBarObject::Draw() {
 
 	// bottom bar
 	WINDOW->DrawRect(	0, 0,
-										screen_width, (int)real_pos,
-										makecol(0,0,0), true, alpha );
+						screen_width, (int)real_pos,
+						al_map_rgb(0,0,0), true, alpha );
 
 	// top bar
 	WINDOW->DrawRect(	0, screen_height,
-										screen_width, screen_height - (int)real_pos,
-									  makecol(0,0,0), true, alpha );
+						screen_width, screen_height - (int)real_pos,
+						al_map_rgb(0,0,0), true, alpha );
 
 	// text
 	if (state == STATE_ACTIVE)

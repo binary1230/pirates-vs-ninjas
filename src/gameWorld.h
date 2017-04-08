@@ -30,9 +30,9 @@ class GameWorld : public GameMode {
 			//! Filename of music, or NULL if none
 			CString m_szMusicFile;
 
-			//! Background color (use makecol())
-			int m_bgColor;
-			int m_bgColorTop; // if present, use both for a gradient, else -1
+			//! Background color (use al_map_rgb())
+			ALLEGRO_COLOR m_bgColor;
+			ALLEGRO_COLOR m_bgColorTop; // if present, use both for a gradient, else -1
 
 			//! ALL objects in the scene
 			ObjectList m_objects;

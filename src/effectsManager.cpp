@@ -29,15 +29,15 @@ Effect* EffectsManager::FindEffectDefinition(const CString &effectName) {
 
 bool EffectsManager::AddEffectDefinition(	const CString &effectName,
                                         	XMLNode &xEffect) {
-  if (effectName == "" || effectName.length() < 1)
+  if (effectName == "" || effectName.GetLength() < 1)
     return false;
 
 	Effect effect;
 
 	effect.spawn_object_name = xEffect.getChildNode("spawn_object").getText();
-	if (effect.spawn_object_name.length() < 1) {
+	if (effect.spawn_object_name.GetLength() < 1) {
 		TRACE("ERROR: Effect object spawn name invalid in effect '%s'\n", 
-										effectName.c_str());
+										effectName);
 		return false;
 	}
 
@@ -51,7 +51,7 @@ bool EffectsManager::AddEffectDefinition(	const CString &effectName,
 					effect.camera_shake_duration < 0) {
 			TRACE(	"ERROR: Effect camera shake duration "
 												"invalid in effect '%s'\n", 
-												effectName.c_str());
+												effectName);
 			return false;
 		}
 	}
@@ -97,7 +97,7 @@ Object* EffectsManager::TriggerObject(	const Object* triggeringObject,
 
 	if (!newObj) {
 		TRACE("ERROR: Unable to create effect object of type: '%s'\n", 
-										effectName.c_str());
+										effectName);
 		return NULL;
 	}
 
@@ -116,7 +116,7 @@ Object* EffectsManager::TriggerEffect(	const Object* triggeringObject,
 
 	if (!effect) {
 		TRACE("EFFECTS: Can't find effect named '%s'\n", 
-										effectName.c_str() );
+										effectName );
 		return NULL;
 	}
 
@@ -163,13 +163,13 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
 		if (!FindEffectDefinition(effectName)) {
 			if (!AddEffectDefinition(effectName, xEffect)) {
 				TRACE("ERROR: Failed to add effect definition '%s'\n", 
-												effectName.c_str());
+												effectName);
 				return false;
 			}
 		} else {
       TRACE("EffectsManager: WARNING: Duplicate effect "
 	                    "definition found for effect name: '%s', ignoring.\n",
-                      effectName.c_str());
+                      effectName);
 		}
 	}
 
@@ -183,10 +183,10 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
 
     CString fileNew = ASSETMANAGER->GetPathOf(file);
 
-    if (!fileNew.size()) {
+    if (!fileNew.GetLength()) {
       TRACE("EffectsManager: ERROR: Can't open "
                       "requested XML file for inclusion: '%s'\n",
-                      file.c_str() );
+                      file );
       return false;
     }
 
@@ -201,10 +201,9 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
       return false;
     }
 
-    parent_include = fileNew.c_str();
+    parent_include = fileNew;
 
-    xEffectDefFile = XMLNode::openFileHelper( fileNew.c_str(),
-                                              "effects");
+    xEffectDefFile = XMLNode::openFileHelper(fileNew, "effects");
 
     // recursively call ourself to handle this
     if (!LoadEffectsFromXML(xEffectDefFile))

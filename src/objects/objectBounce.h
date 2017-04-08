@@ -15,7 +15,7 @@ class ObjectBounce : public Object {
 		void Shutdown();
 		void Update();
 
-		void OnCollide(Object* obj, const b2ContactPoint* pkContactPoint);
+		void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		
 		ObjectBounce();
 		~ObjectBounce();

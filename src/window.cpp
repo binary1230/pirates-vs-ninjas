@@ -6,6 +6,10 @@
 #include "sprite.h"
 #include "gameOptions.h"
 
+// HAXXXXXXXX.  these are the old names from old allegro.  remove and replace these macros
+#define SCREEN_W al_get_bitmap_width(al_get_target_bitmap())
+#define SCREEN_H al_get_bitmap_height(al_get_target_bitmap())
+
 // DOES NOT USE THE DEPTH BUFFER
 // relies on Drawing order (we are 2d after all.)
 
@@ -16,9 +20,6 @@
 #else
 #	define DEFAULT_COLOR_DEPTH desktop_color_depth()
 #endif
-
-// leave this undefined usually.
-// #define ALTERNATE_GFX_MODE GFX_XDGA2
 
 DECLARE_SINGLETON(GameWindow)
 
@@ -36,16 +37,16 @@ void GameWindow::Screenshot(char* filename) {
 		file.Format("ninjas-screenshot%i.png", screenshot_num++);
 	}
 
-	TRACE(" -- saving screenshot '%s'\n", file.c_str());
+	TRACE(" -- saving screenshot '%s'\n", file);
 
-	save_bitmap(file.c_str(), screen, NULL);
+	al_save_bitmap(file, al_get_target_bitmap());
 }
 	
 void GameWindow::DrawFade() {
 	if (fading_state == FADED_NONE)
 		return;
 
-	DrawRect(0,0,width,height,0,true,fade_alpha);
+	DrawRect(0,0,width,height, al_map_rgb(0,0,0),true,fade_alpha);
 }
 
 void GameWindow::Draw() {
@@ -94,7 +95,7 @@ void GameWindow::FadeIn(int rate /*=1*/) {
 	fading_state = FADING_IN;
 }
 
-void GameWindow::DrawRect(_Rect &r, int col, bool filled, int alpha) {
+void GameWindow::DrawRect(_Rect &r, ALLEGRO_COLOR col, bool filled, int alpha) {
 	DrawRect(	(int)r.getx1(), (int)r.gety1(), 
 				(int)r.getx2(), (int)r.gety2(), 
 				col, filled, alpha);
@@ -107,14 +108,13 @@ void GameWindow::DrawRect(_Rect &r, int col, bool filled, int alpha) {
 // to make it look like there is one continuous gradient going up the level
 
 // Usually the screen height is smaller than the level height
-void GameWindow::DrawBackgroundGradient(	int bottom_col, int top_col, 
-																					int bottom_y, int top_y, 
-																					int level_height) {
-	
+void GameWindow::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR top_col, 
+	int bottom_y, int top_y, int level_height) 
+{	
 	// get the color differences for computing the new colors
-	int col_diff_r = getr(top_col) - getr(bottom_col);
-	int col_diff_g = getg(top_col) - getg(bottom_col);
-	int col_diff_b = getb(top_col) - getb(bottom_col);
+	float col_diff_r = top_col.r - bottom_col.r;
+	float col_diff_g = top_col.g - bottom_col.g;
+	float col_diff_b = top_col.b - bottom_col.b;
 
 	// sanity check.
 	if (top_y > level_height)
@@ -132,17 +132,17 @@ void GameWindow::DrawBackgroundGradient(	int bottom_col, int top_col,
 	float bottom_col_percent = float(bottom_y) / float(level_height);
 
 	// compute the final top color
-	int final_top_col = makecol(
-									getr(bottom_col) + int(float(col_diff_r) * top_col_percent),
-									getg(bottom_col) + int(float(col_diff_g) * top_col_percent),
-									getb(bottom_col) + int(float(col_diff_b) * top_col_percent)
+	ALLEGRO_COLOR final_top_col = al_map_rgb_f(
+									bottom_col.r + col_diff_r * top_col_percent,
+									bottom_col.g + col_diff_g * top_col_percent,
+									bottom_col.b + col_diff_b * top_col_percent
 								);
 
 	// compute the final bottom color
-	int final_bottom_col = makecol(
-									getr(bottom_col) +int(float(col_diff_r) * bottom_col_percent),
-									getg(bottom_col) +int(float(col_diff_g) * bottom_col_percent),
-									getb(bottom_col) +int(float(col_diff_b) * bottom_col_percent)
+	ALLEGRO_COLOR final_bottom_col = al_map_rgb_f(
+									bottom_col.r + col_diff_r * bottom_col_percent,
+									bottom_col.g + col_diff_g * bottom_col_percent,
+									bottom_col.b + col_diff_b * bottom_col_percent
 								);
 
 	// draw the quad with the two new colors
@@ -153,8 +153,9 @@ void GameWindow::DrawBackgroundGradient(	int bottom_col, int top_col,
 
 // Colors start at the bottom left and go counter-clockwise
 // Color order: (bottom left, bottom right, top right, top left)
+// TODO: prob convert alpha param to float
 void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2, 
-							int col1, int col2, int col3, int col4,
+							ALLEGRO_COLOR col1, ALLEGRO_COLOR col2, ALLEGRO_COLOR col3, ALLEGRO_COLOR col4,
 							bool filled, int alpha ) 
 {
 	glLoadIdentity();
@@ -165,30 +166,32 @@ void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2,
 	else
 		glBegin(GL_LINE_LOOP);
 
-	glColor4ub(getr(col1), getg(col1), getb(col1), alpha);
+	float alpha_f = float(alpha / 255.0f);
+
+	glColor4f(col1.r, col1.g, col1.b, alpha_f);
 	glVertex2f(x1, y2);
-	glColor4ub(getr(col2), getg(col2), getb(col2), alpha);
+	glColor4f(col2.r, col2.g, col2.b, alpha_f);
 	glVertex2f(x2, y2);
-	glColor4ub(getr(col3), getg(col3), getb(col3), alpha);
+	glColor4f(col3.r, col3.g, col3.b, alpha_f);
 	glVertex2f(x2, y1);
-	glColor4ub(getr(col4), getg(col4), getb(col4), alpha);
+	glColor4f(col4.r, col4.g, col4.b, alpha_f);
 	glVertex2f(x1, y1);
 
 	glEnd();
 
 	glEnable(GL_TEXTURE_2D);
-	glColor4ub(255, 255, 255, 255);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void GameWindow::DrawRect(	int x1, int y1, 
 							int x2, int y2, 
-							int col, bool filled, int alpha) 
+							ALLEGRO_COLOR col, bool filled, int alpha)
 {
 	DrawQuad(x1, y1, x2, y2, col, col, col, col, filled, alpha);
 }
 
 // HACK HACK HACK - get this from somewhere!!
-#define FONT_HEIGHT 10
+#define FONT_HEIGHT 14
 
 // TxtObject delimiters (see objectTxtOverlay.cpp)
 #define OBJECT_TXT_LINE_DELIM "|"			// Which char goes to the next line
@@ -200,11 +203,11 @@ void GameWindow::DrawText(int x, int y, CString text) {
 
 	int _x = x;
 	int _y = y;
-	int col = makecol(255,255,255);	// white text color
+	ALLEGRO_COLOR col = al_map_rgb(255,255,255);	// white text color
 
 	glLoadIdentity();
 	for (i = 0; i < max; i++) {
-		allegro_gl_printf(main_font, _x, _y, 0.0f, col, lines[i].c_str());
+		al_draw_text(main_font, col, _x, _y, ALLEGRO_ALIGN_LEFT, lines[i]);
 		_y += FONT_HEIGHT;
 	}
 }
@@ -313,8 +316,8 @@ void GameWindow::SetClearColor(uint r, uint g, uint b) {
 int GameWindow::Init( uint _width, uint _height, 
 									bool _fullscreen, int _mode) {
 	
-	int depth = DEFAULT_COLOR_DEPTH;
-	int gfx_mode;
+	// int depth = DEFAULT_COLOR_DEPTH;
+	// int gfx_mode;
 	
 	fade_rate = 0;
 	fade_alpha = 255;
@@ -324,18 +327,23 @@ int GameWindow::Init( uint _width, uint _height,
 	height = _height;
 
 	// Special case: We won't be drawing _anything_
-	if (!OPTIONS->DrawGraphics() ) {
-		TRACE("GameWindow: DISABLING ALL GRAPHICS\n");
-		set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
-		initialized = true;
-		return 0;
-	}
+	//if (!OPTIONS->DrawGraphics() ) {
+	//	// Disabled in 2017 refactor -dom
+	//	TRACE("GameWindow: DISABLING ALL GRAPHICS\n");
+	//	set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
+	//	initialized = true;
+	//	return 0;
+	//}
+
+	al_set_new_display_flags(ALLEGRO_OPENGL);
+
+	/*
+	// removed in 2017 refactor.  no longer needed? -Dom
 
 	install_allegro_gl();
 	allegro_gl_clear_settings();
-	
-	set_color_depth(depth);
 
+	set_color_depth(depth);
 	uint gl_flags = AGL_COLOR_DEPTH | AGL_DOUBLEBUFFER | AGL_RENDERMETHOD;
 
 	if (!_fullscreen) {
@@ -351,36 +359,29 @@ int GameWindow::Init( uint _width, uint _height,
 	allegro_gl_set(AGL_FULLSCREEN, _fullscreen);
 	allegro_gl_set(AGL_RENDERMETHOD, 1);
 	allegro_gl_set(AGL_SUGGEST, gl_flags);
+	*/
+
+	al_init_font_addon();
+	al_init_ttf_addon();
+
+	al_init_image_addon();
 	
-	if (_fullscreen)
-      gfx_mode = GFX_OPENGL_FULLSCREEN;
-	else
-      gfx_mode = GFX_OPENGL;
-
-#	ifdef ALTERNATE_GFX_MODE
-	gfx_mode = ALTERNATE_GFX_MODE;
-# endif // ALTERNATE_GFX_MODE
-
-	if (get_color_depth() != depth)
-		TRACE("window: Warning: Asked for %i-bit color mode"
-										", got %i-bit instead.\n", depth, get_color_depth());
-									
-	if (set_gfx_mode(gfx_mode, width, height, 0, 0) != 0) {
-		TRACE(
-						"window: Can't set graphics mode! (%i, %i, fullscreen = %i) \n"
-						"Try setting a different graphics mode or try non-fullscreen\n"
-						"Allegro error says: '%s'\n"
-						"AllegoGL error says: '%s'\n",
-						width, height, _fullscreen, allegro_error, allegro_gl_error);
+	display = al_create_display(width, height);
+	if (!display) {
+		TRACE("failed to create display!");
 		return -1;
 	}
 	
 	SetTitle(VERSION_STRING);
 
-	// XXX: Font stuff should go in asset manager
-	main_font = allegro_gl_convert_allegro_font(font, AGL_FONT_TYPE_TEXTURED, -1.0);
-	assert(main_font != NULL);
-	
+	// TODO: Font stuff should go in asset manager
+	// TODO: don't hardcore 'data' in here, use asset manager to get path. 2017
+	main_font = al_load_ttf_font("data/Vera.ttf", 12, 0);
+	if (!main_font) {
+		TRACE("failed to create main font (does the file exist?)");
+		return -1;
+	}
+
 	if (InitGL())
 		initialized = true;
 	else
@@ -398,7 +399,8 @@ int GameWindow::Init( uint _width, uint _height,
 
 void GameWindow::SetTitle(const char* szTitle)
 {
-	set_window_title(szTitle);
+	// temp disabled 2017 refactor -Dom
+	// set_window_title(szTitle);
 }
 
 bool GameWindow::InitGL() {
@@ -439,16 +441,15 @@ void GameWindow::EndDrawing() {
 
 // draws the backbuffer to the screen and erases the backbuffer
 void GameWindow::Flip() {
-	vsync();
-	allegro_gl_flip();
+	al_wait_for_vsync(); // i guess right thing to do? 2017
+	al_flip_display();
 }
 
 void GameWindow::Shutdown() {
 	if (!initialized)
-			return;
+		return;
 
-	if (main_font)
-		allegro_gl_destroy_font(main_font);
+	al_destroy_display(display);
 
 	initialized = false;
 }

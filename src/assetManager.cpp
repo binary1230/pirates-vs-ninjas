@@ -16,7 +16,6 @@ int AssetManager::Init() {
 void AssetManager::Free() {
 	FreeSprites();
 	FreeSamples();
-	FreeMusic();
 }
 
 // XXX should make these templated...
@@ -24,7 +23,7 @@ void AssetManager::FreeSamples() {
 	SampleListIter i;
 	for (i = samples.begin(); i != samples.end(); i++) {
 		if (i->second)
-			destroy_sample(i->second);
+			al_destroy_sample(i->second);
 	}
 	samples.clear();
 	if (SOUND)
@@ -45,23 +44,6 @@ void AssetManager::FreeSprites() {
 	}
 	*/
 	sprites.clear();
-}
-
-/*void AssetManager::FreeSongs() {
-	SongListIter i;
-	for (i = songs.begin(); i != songs.end(); i++) {
-		if (i->second)
-			(i->second);
-	}
-	songs.clear();
-}*/
-
-void AssetManager::FreeMusic() {
-	if (music) {
-		music->Shutdown();
-		delete music;
-		music = NULL;
-	}
 }
 
 void AssetManager::Shutdown() {	
@@ -115,14 +97,9 @@ bool AssetManager::FileExists(const char* file) const {
 }
 
 //! Opens a bitmap, utilizes the search paths
-// XXX: Need to fix alpha blending
-Sprite* AssetManager::LoadSprite(	const char* filename, 
-									bool use_alpha, 
-									PALETTE* pal) 
+Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha) 
 {	
 	Sprite* sprite = NULL;
-	
-	int original_bpp = get_color_depth();
 	
 	// 1) See if this bitmap is already loaded
 	SpriteListIter i = sprites.find(filename);
@@ -133,51 +110,38 @@ Sprite* AssetManager::LoadSprite(	const char* filename,
 
 	// 2) Try to open the file
 	CString file = GetPathOf(filename);
-	if (file.length() != 0) {
+	if (file.GetLength() != 0) {
 
 		sprite = new Sprite();
 		assert(sprite && "ERROR: Out of memory, can't allocate sprite!\n");
-	
-		if (use_alpha) {
-			set_color_depth(32);
-		}
 			
-		BITMAP* bmp = load_bitmap(file, *pal);
+		ALLEGRO_BITMAP* bmp = al_load_bitmap(file);
+
+		// backwards-comaptibility:
+		// old versions of allegro would use magenta as transparent
+		// these days, we can just use real alpha channels becuase it's not a 2006 DOS game.
+		// for now, just go ahead and still convert.
+		al_convert_mask_to_alpha(bmp, al_map_rgb(255, 0, 255));
 	
 		if (!bmp) {
-			TRACE("ERROR: Can't load bitmap file: '%s'\n", file.c_str());
+			TRACE("ERROR: Can't load bitmap file: '%s'\n", file);
 			delete sprite;
 			return NULL;
 		}
 
-		sprite->width = bmp->w;
-		sprite->height = bmp->h;
-
-		// make the OpenGL texture
-		// this makes a copy of the bitmap
-		if (!use_alpha)
-			sprite->texture = allegro_gl_make_masked_texture(bmp);
-		else
-			sprite->texture = allegro_gl_make_texture_ex(
-				AGL_TEXTURE_HAS_ALPHA | AGL_TEXTURE_FLIP, bmp, GL_RGBA
-			);
+		sprite->width = al_get_bitmap_width(bmp);
+		sprite->height = al_get_bitmap_height(bmp);
+		sprite->texture = al_get_opengl_texture(bmp);
 				
-		// don't need the original Allegro bitmap anymore
-		destroy_bitmap(bmp);
 		bmp = NULL;
-		
-		set_color_depth(original_bpp);
 
 		// add to the loaded sprites list
 		if (sprite->texture != 0) {
 			sprites[filename] = sprite;
 		} else {
 			TRACE(	"ERROR: Failed making texture for '%s'\n"
-												"-NOTE: Make sure texture size is a multiple of 2!\n",
-												file.c_str());
-
-			if (allegro_gl_error && strlen(allegro_gl_error))
-				TRACE("       AllegroGL says: %s\n", allegro_gl_error);
+					"-NOTE: Make sure texture size is a multiple of 2!\n",
+					file.GetString());
 
 			delete sprite;
 			return NULL;
@@ -187,8 +151,8 @@ Sprite* AssetManager::LoadSprite(	const char* filename,
 	return sprite;
 }
 
-SAMPLE* AssetManager::LoadSound(const char* filename) {
-	SAMPLE *spl = NULL;
+ALLEGRO_SAMPLE* AssetManager::LoadSound(const char* filename) {
+	ALLEGRO_SAMPLE *spl = NULL;
 
 	// 1) See if this sample is already loaded
 	SampleListIter i = samples.find(filename);
@@ -199,8 +163,8 @@ SAMPLE* AssetManager::LoadSound(const char* filename) {
 
 	// 2) Try to open the file
 	CString file = GetPathOf(filename);
-	if (file.length() != 0) {
-		spl = load_sample(file);
+	if (file.GetLength() != 0) {
+		spl = al_load_sample(file);
 
 		if (spl)
 			samples[filename] = spl;
@@ -209,43 +173,12 @@ SAMPLE* AssetManager::LoadSound(const char* filename) {
 	return spl;
 }
 
-OGGFILE* AssetManager::LoadMusic(const char* filename) {
-	CString music_file = GetPathOf(filename);
-
-	if (music_file.GetLength() < 0) {
-		TRACE(" - WARN: Can't find music file: %s\n", filename);
-		return 0;
-	}
-
-	if (music) {
-		music->Shutdown();
-		music = NULL;
-	}
-
-	music = new OGGFILE();
-
-	if (!music) {
-		TRACE(" - ERROR: Out of memory while trying to load %s!\n", filename);
-		return NULL;
-	}
-	
-	if (!music->Init(music_file) ) {
-		TRACE(" - WARN: Invalid music file: %s\n", filename);
-		music->Shutdown();
-		return NULL;
-	}
-
-	return music;
-}
-
 AssetManager::AssetManager() {
 	ResetPaths();
-	music = NULL;
 }
 
 AssetManager::~AssetManager() {
 	Shutdown();
-	music = NULL;
 }
 
 //  -------------------------------------------------------------------------

@@ -188,7 +188,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 
 			// get demo filename
 			case 'r': case 'd':
-				if (demo_filename.length() > 0) {
+				if (demo_filename.GetLength() > 0) {
 						TRACE(	"Options ==> ERROR "
 														"Don't give more than 1 demo filename (-r, -d)\n");
 						return (is_valid = false);

@@ -42,7 +42,7 @@ Object* ObjectFactory::CreateObject(CString objDefName) {
 
 	if (!xObjectDef) {
 		TRACE(	"ObjectFactory: Unable to instantiate "
-				"object definition: '%s'\n", objDefName.c_str());
+				"object definition: '%s'\n", objDefName);
 		return NULL;
 	}
 	
@@ -58,7 +58,7 @@ Object* ObjectFactory::CreateObject(CString objDefName) {
 
 bool ObjectFactory::AddObjectDefinition(const CString &objDefName, 	
 										const XMLNode &xObjectDef) {
-	if (objDefName == "" || objDefName.length() < 1)
+	if (objDefName == "" || objDefName.GetLength() < 1)
 		return false;
 
 	objectDefs[objDefName] = xObjectDef;
@@ -118,7 +118,7 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		} else {
 			TRACE("ObjectFactory: WARNING: Duplicate object "
 											"definitions found for object name: '%s', ignoring.\n",
-											objName.c_str());
+											objName);
 		}
 	}
 
@@ -133,10 +133,10 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		// open that file, get the objectDef
 		CString fileNew = ASSETMANAGER->GetPathOf(file);
 	
-		if (!fileNew.size()) {
+		if (!fileNew.GetLength()) {
 			TRACE("ObjectFactory: ERROR: Can't open "
 											"requested XML file for inclusion: '%s'\n", 
-											file.c_str() );
+											file);
 			return false;
 		}	
 
@@ -151,9 +151,9 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 			return false;
 		}
 		
-		parent_include = fileNew.c_str();
+		parent_include = fileNew;
 
-		xObjectDefFile = XMLNode::openFileHelper( fileNew.c_str(), "objectDefinitions");
+		xObjectDefFile = XMLNode::openFileHelper( fileNew, "objectDefinitions");
 
 		// recursively call ourself to handle this
 		if (!LoadObjectDefsFromXML(xObjectDefFile))
@@ -207,7 +207,7 @@ Object* ObjectFactory::CreateObjectFromXML(
 	if (id < 1) {
 		TRACE("ObjectFactory: ERROR: Unable to find specified "
 										"object type '%s'\n", 
-										GetObjectTypeFromXML(xObjectDef).c_str() );
+										GetObjectTypeFromXML(xObjectDef) );
 		return NULL;
 	}
 	
@@ -215,7 +215,7 @@ Object* ObjectFactory::CreateObjectFromXML(
 
 	if (!obj) {
 		TRACE("ERROR: Unable to instantiate object of type: '%s'.\n",
-										GetObjectTypeFromXML(xObjectDef).c_str() );
+										GetObjectTypeFromXML(xObjectDef) );
 		return NULL;
 	}
 	
@@ -375,7 +375,7 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.uses_new_physics = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
-	obj->properties.ignores_collisions = 1;
+	obj->properties.is_sensor = 1;
 
 	obj->SetupCachedVariables();
 	
@@ -429,10 +429,10 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 
 	filename = xImages.getChildNode("base").getText();
 	  
-	obj->controller_sprite = ASSETMANAGER->LoadSprite(filename.c_str());
+	obj->controller_sprite = ASSETMANAGER->LoadSprite(filename);
 	    
 	if (!obj->controller_sprite) {
-		TRACE("-- ERROR: Can't load file '%s'\n", filename.c_str() );
+		TRACE("-- ERROR: Can't load file '%s'\n", filename );
 		delete obj;
 		return NULL;
 	}
@@ -460,10 +460,10 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 		filename = xBtn.getText();
 		b->active = 0;
 
-		b->sprite = ASSETMANAGER->LoadSprite(filename.c_str());
+		b->sprite = ASSETMANAGER->LoadSprite(filename);
 
 		if (!b->sprite) {
-			TRACE("-- ERROR: Can't load file '%s'\n",filename.c_str());
+			TRACE("-- ERROR: Can't load file '%s'\n",filename);
 			return NULL;
 		}
 
@@ -551,7 +551,7 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj)
 	obj->properties.uses_new_physics = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
-	obj->properties.ignores_collisions = 1;
+	obj->properties.is_sensor = 1;
 
 	// order we search for the spring strength:
 	// 1) Object Instance
@@ -604,7 +604,7 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
 	obj->properties.uses_new_physics = 1;
-	obj->properties.ignores_collisions = 1;
+	obj->properties.is_sensor = 1;
 	
 	obj->SetupCachedVariables();
 
@@ -624,7 +624,7 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 
 	CString door_type = xObj->getAttribute("type");
 
-	if (door_type.size() == 0)
+	if (door_type.GetLength() == 0)
 		door_type = DEFAULT_DOOR_TYPE;
 
 	if (door_type == "exit")
@@ -655,7 +655,7 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_fan = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
-	obj->properties.ignores_collisions = 1;
+	obj->properties.is_sensor = 1;
 	obj->properties.do_our_own_rotation = 1;
 
 	obj->SetupCachedVariables();
@@ -685,7 +685,7 @@ bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 	obj->properties.is_static = xProps.nChildNode("solidObject") != 0;
 
 	obj->properties.do_our_own_rotation = xProps.nChildNode("noPhysicsRotate") != 0; 
-	obj->properties.ignores_collisions = xProps.nChildNode("sensorOnly") != 0; 
+	obj->properties.is_sensor = xProps.nChildNode("sensorOnly") != 0; 
 
 	obj->properties.spawns_enemies = xProps.nChildNode("spawnsEnemies") != 0;
 	

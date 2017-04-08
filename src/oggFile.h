@@ -1,6 +1,6 @@
 #ifndef OGGFILE_H
 #define OGGFILE_H
-
+/*
 #include "globals.h"
 
 class OGGFILE {
@@ -22,5 +22,6 @@ class OGGFILE {
 		OGGFILE();
 		~OGGFILE();
 };
+*/
 
 #endif // OGGFILE_H
