@@ -1,16 +1,8 @@
 PIRATES VERSUS NINJAS 
-An open source 2-d sidesrolling adventure for Linux, Windows, and MacOSx
+An open source 2-d sidesrolling adventure 
 
-(c) 2006 Dominic Cerquetti (binary1230-at-yahoo-dot-com)
+(c) 2006-2017 Dominic Cerquetti
 Licensed under the GNU GPL, see the file LICENSE for more information
-
-Full documenation available at the WIKI:
-http://marcie.cs.loyola.edu:4400/
-
-Also, the natural tendencies of pirates and ninjas were originally
-discovered by http://realultimatepower.com/
-
-This game is open source (e.g. YOU can help create it!)
 
 ---------
 GAMEPLAY:
@@ -20,9 +12,9 @@ Use your right hand to move and your left to do stuff.
 
 Player 1:
 LEFT, RIGHT, UP, DOWN with the ARROW keys
-JUMP with the C key, Weird stuff with the E key
+JUMP with the C key, Weird stuff with the D key
 
-Player 2:
+Player 2: (where available)
 LEFT, RIGHT, UP, DOWN with the DELETE, PAGEDOWN, HOME, END keys
 JUMP with the E key, Weird stuff with the 3 key
 
@@ -30,11 +22,11 @@ JUMP with the E key, Weird stuff with the 3 key
 DEBUG/CHEAT CONTROLS
 --------------------
 
-Try recording a demo with these :)
-
 Press F1 to pause the game
+
 While the game is paused, press F2 to advance one frame at a time
-F3 - screenshot
+
+F3 - toggle debug physics display
 
 --------------------
 COMMAND LINE OPTIONS
@@ -44,12 +36,8 @@ COMMAND LINE OPTIONS
 
 -w            try to force windowed mode
 
--g mode       Set Graphics Mode
-							0 = no buffering, 1 = double buffer [default]
-              2 = page flipping, 3 = triple buffering
-
 -m id         Set Default Mode (Level)
-							specify a different mode ID to use from default.xml
+              specify a different mode ID to use from default.xml
 
 -r file       record a demo to 'file'
 -d file       playback a demo from 'file'
@@ -89,18 +77,14 @@ The game initial reads data/default.xml and includes the other XML files.
 You can customize pretty much everything by modifying things in those XML
 files.
 
-There's not really an documentation yet for modders because at this point
-things are changing quite rapidly in the engine.  However, if you'd
-like some, feel free to send an angry email to binary1230 at yahoo d0t com,
-saying something like "MORON! Write some docs! Clean your code up!"
-
 NOTE: You MUST have the following at the top of EVERY XML FILE:
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 Happy hacking! Have fun!
 
--------
-BUGS
--------
-Found a bug? Report it to binary1230/at/yahoo/dot/com
+-----------------------
+THIS CODE IS REALLY OLD
+-----------------------
 
+I made this back in college in 2006 and resurrected it from the dead 10 years later.  
+I don't recommend anyone write their own game engine in C++ these days, use something like Unity or at least program in Python or C#
