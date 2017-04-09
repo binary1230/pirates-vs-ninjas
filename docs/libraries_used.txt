@@ -1,9 +1,0 @@
-Ninjas-engine contains source code from the following external libraries:
-
-xmlParser
- license:	LGPL
- site:		http://iridia.ulb.ac.be/~fvandenb/tools/xmlParser.html
-
-CStdString
- license:	freely redistributable
- site:		http://home.earthlink.net/~jmoleary/stdstring.htm
