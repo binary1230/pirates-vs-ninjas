@@ -1,9 +1,5 @@
-data/
 /local
-/CEGUI.log
-/eventlog-hack.txt
 /a.out
-/gene*.demo
 /install-sh
 /Makefile
 /aclocal.m4
@@ -11,21 +7,14 @@ data/
 /autom4te.cache
 /stamp-h1
 /config.status
-/tags
 /config.h
 /depcomp
-/config.log
 /Makefile.in
 /configure
-/t
 /*.exe
 /report
-/gmon.out
-/AI-results.txt
 /*.swp
 /*.dll
-/libs/*
-allegro.log
 
 ## ------------------------------------------------------
 ## ------------------------------------------------------
