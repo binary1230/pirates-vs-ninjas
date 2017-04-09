@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="explosion" type="Static">
+	<animations default="default">
+		<animation name="default">
+			<frames>
+				<frame type="sound" data="explosion"/>
+				<frame name="explosion1.png" duration="1" alpha_enabled="true" />
+				<frame name="explosion2.png" duration="1" alpha_enabled="true" />
+				<frame name="explosion3.png" duration="3" alpha_enabled="true" />
+				<frame name="explosion4.png" duration="1" alpha_enabled="true" />
+				<frame name="explosion5.png" duration="1" alpha_enabled="true" />
+				<frame name="explosion6.png" duration="1" alpha_enabled="true" />
+				<frame name="explosion7.png" duration="1" alpha_enabled="true" />
+				<frame name="explosion8.png" duration="1" alpha_enabled="true" />
+				<frame name="explosion9.png" duration="3" alpha_enabled="true" />
+				<frame name="explosion10.png" duration="3" alpha_enabled="true" />
+				<frame name="explosion11.png" duration="3" alpha_enabled="true" />
+				<frame name="explosion12.png" duration="3" alpha_enabled="true" />
+				<frame name="empty.png" duration="1" pause="1" />
+			</frames>
+		<show_in_order />
+		</animation>
+	</animations>
+	<properties>
+	</properties>
+	<sounds>
+		<sound name="explosion">sounds/explosion.wav</sound>
+	</sounds>
+</objectDef>
+
+</objectDefinitions>

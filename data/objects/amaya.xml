@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="amaya" type="Player">
+	<animations default="standing">
+	
+		<animation name="standing">
+			<frames>
+				<frame name="amaya2/idle/njgs0001.png" duration="20" alpha_enabled="true" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	
+		<animation name="walking">
+			<frames>
+				<frame name="amaya2/run/njgs0053.png" duration="1" alpha_enabled="true" />
+				<frame name="amaya2/run/njgs0054.png" duration="1" alpha_enabled="true" />
+				<frame name="amaya2/run/njgs0055.png" duration="1" alpha_enabled="true" />
+				<frame name="amaya2/run/njgs0056.png" duration="1" alpha_enabled="true" />
+				<frame name="amaya2/run/njgs0057.png" duration="1" alpha_enabled="true" />
+				<frame name="amaya2/run/njgs0058.png" duration="1" alpha_enabled="true" />
+				<frame name="amaya2/run/njgs0059.png" duration="1" alpha_enabled="true" />
+				<frame name="amaya2/run/njgs0060.png" duration="1" alpha_enabled="true" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+
+		<animation name="sliding">
+			<frames>
+				<frame name="amaya2/slide/njgs0046.png" duration="15" alpha_enabled="true" />
+				<frame name="amaya2/slide/njgs0047.png" duration="10" alpha_enabled="true" pause=1 />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+
+		<animation name="jumping">
+			<frames>
+				<frame name="amaya2/jump/njgs0021.png" duration="13" alpha_enabled="true" />
+				<frame name="amaya2/jump/njgs0022.png" duration="10" alpha_enabled="true" />
+				<frame name="amaya2/jump/njgs0023.png" duration="4" alpha_enabled="true" />
+				<frame name="amaya2/jump/njgs0024.png" duration="4" alpha_enabled="true" />
+				<frame name="amaya2/jump/njgs0025.png" duration="4" alpha_enabled="true" />
+				<frame name="amaya2/jump/njgs0026.png" duration="4" alpha_enabled="true" />
+				<frame name="amaya2/jump/njgs0027.png" duration="4" alpha_enabled="true" />
+				<frame type="jumpToFrame" num="2" /> <!-- first frame is ONE -->
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+
+	<sounds>
+		<sound name="jump">sounds/jump.wav</sound>
+	</sounds>
+	
+	<properties>
+		<boundingBox>
+			<offset_x>22</offset_x>
+			<offset_y>17</offset_y>
+			<width>29</width>
+			<height>63</height>
+		</boundingBox>
+
+		<affectedByGravity />
+		<affectedByInput1 />
+		<affectedByFriction />
+ 		<jumpVelocity>30.0f</jumpVelocity>
+		<drag>0.92f</drag>
+		<minVelocity>4.0f</minVelocity>
+		<mass>1.0f</mass>
+	</properties>
+</objectDef>
+
+
+</objectDefinitions>

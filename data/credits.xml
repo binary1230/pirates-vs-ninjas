@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<!-- best viewed with tabs set to 2 spaces -->
+
+<gameMode type="credits" name="Game Credits">
+	<scrollSpeed>1</scrollSpeed>
+	<scrollPic>credits.png</scrollPic>
+	<music>credits.ogg</music>
+</gameMode>

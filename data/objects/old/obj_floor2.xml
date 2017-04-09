@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDef name="floor2" type="Background">
+	<animations default="default">
+		<animation name="default">
+			<frames>
+				<img name="floor3.png" duration="1" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+	<properties>
+		<!-- <scroll /> -->
+	</properties>
+</objectDef>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<!-- best viewed with tabs set to 2 spaces -->
+
+<!-- someday this file will get used. -->
+
+<gameMode type="menu" name="Main Menu">
+
+	<bgPic>menu/bg.png</bgPic>
+	<selectorPic>menu/selector.png</selectorPic>
+
+	<xpos>25</xpos>
+
+	<ypositions>
+		<ypos>142<action>NewGame</action></ypos>
+		<ypos>167<disabled /></ypos>
+		<ypos>193<action>Quit</action></ypos>
+	</ypositions>
+
+	<moveSound>menu/move.wav</moveSound>
+	<selectSound>menu/select.wav</selectSound>
+
+</gameMode>

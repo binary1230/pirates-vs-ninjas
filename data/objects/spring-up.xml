@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="spring-up" type="Spring">
+	<animations default="default">
+		<animation name="default">
+			<frames>
+				<frame type="sprite" name="spring1-up.png" duration="1" pause="1" />
+				<frame type="sound" data="spring" /> 
+				<frame type="sprite" name="spring2-up.png" duration="6" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+	<sounds>
+		<sound name="spring">sounds/spring.wav</sound>
+	</sounds>
+	<springDirection>
+		<x>0</x> <y>70</y>
+	</springDirection>
+</objectDef>
+
+</objectDefinitions>

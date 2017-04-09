@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="door-bright" type="Door">
+	<animations default="closed">
+		<animation name="closed">
+			<frames>
+				<frame name="door2.png" duration=1 />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+		<animation name="opening">
+			<frames>
+				<frame name="door2.png" duration=4 />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+	<properties>
+	</properties>
+</objectDef>
+
+</objectDefinitions>

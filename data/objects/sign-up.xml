@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="sign_up" type="Static">
+	<animations default="default">
+		<animation name="default">
+			<frames>
+				<frame name="sign-UPkey.png" duration="50" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+	<properties>
+	</properties>
+</objectDef>
+
+</objectDefinitions>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<effects>
+	<effect name="bomb">
+		<spawn_object>bomb</spawn_object>
+		<center_x_on_target />
+		<center_y_on_target />
+	</effect>
+	<effect name="explosion1">
+		<spawn_object>explosion</spawn_object>
+		<camera_shake duration="30" />
+		<center_x_on_target />
+		<display_time>25</display_time>
+	</effect>
+	<effect name="skid">
+		<spawn_object>skid</spawn_object>
+		<display_time>42</display_time>
+	</effect>
+</effects>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="s_palm_tall" type="Static">
+	<animations default="default">
+		<animation name="default">
+			<frames>
+				<frame name="palm3.png" duration="1" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+	<properties>
+	</properties>
+</objectDef>
+
+</objectDefinitions>

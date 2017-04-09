@@ -1,0 +1,446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<gameMode type="simulation">
+	<music>PVN-I_lost_my_glasses.ogg</music>
+	<info/>
+	<properties>
+		<width>1200</width>
+		<height>6500</height>
+		<bgcolor>
+			<r>00</r>
+			<g>00</g>
+			<b>00</b>
+		</bgcolor>
+		<bgcolor_top>
+			<r>0</r>
+			<g>0</g>
+			<b>30</b>
+		</bgcolor_top>
+	</properties>
+	<objectDefinitions>
+		<include_xml_file>
+			common-objects.xml
+		</include_xml_file>
+		<!-- level backgrounds/foregrounds -->
+		<include_xml_file>
+			objects/obj_bg_lava.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/obj_bg_lava2.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/obj_floor2.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/floor3_a.xml
+		</include_xml_file>
+		<!-- various scenery -->
+		<include_xml_file>
+			objects/jouten-sign-rocket.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/jouten-house.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/door.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/door3.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/obj_s_palm_tall.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-arrow.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-haha.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/sign-credits.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/totem1.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/cloud.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/gear1.xml
+		</include_xml_file>
+		<include_xml_file>
+			objects/siren.xml
+		</include_xml_file>
+	</objectDefinitions>
+	<effects>
+		<include_xml_file>common-effects.xml</include_xml_file>
+	</effects>
+	<map>
+		<layer scroll_speed="0.750000" name="background-slow">
+		</layer>
+		<layer scroll_speed="1.000000" name="bg_objects">
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						0.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						129.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						257.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						386.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						516.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						514.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						645.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						774.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						903.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						1030.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor2">
+				<position type="fixed">
+					<x>
+						1093.000000
+					</x>
+					<y>
+						1.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor3_a">
+				<position type="fixed">
+					<x>
+						1036.000000
+					</x>
+					<y>
+						65.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor3_a">
+				<position type="fixed">
+					<x>
+						1074.000000
+					</x>
+					<y>
+						366.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor3_a">
+				<position type="fixed">
+					<x>
+						945.000000
+					</x>
+					<y>
+						366.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor3_a">
+				<position type="fixed">
+					<x>
+						816.000000
+					</x>
+					<y>
+						366.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor3_a">
+				<position type="fixed">
+					<x>
+						688.000000
+					</x>
+					<y>
+						366.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor3_a">
+				<position type="fixed">
+					<x>
+						909.000000
+					</x>
+					<y>
+						65.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="floor3_a">
+				<position type="fixed">
+					<x>
+						1028.000000
+					</x>
+					<y>
+						85.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_palm_tall">
+				<position type="fixed">
+					<x>
+						1112.000000
+					</x>
+					<y>
+						105.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_sign_arrow">
+				<position type="fixed">
+					<x>
+						43.000000
+					</x>
+					<y>
+						66.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_siren">
+				<position type="fixed">
+					<x>
+						909.000000
+					</x>
+					<y>
+						86.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="s_totem1">
+				<position type="fixed">
+					<x>
+						683.000000
+					</x>
+					<y>
+						386.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="door-slide" type>
+				<position type="fixed">
+					<x>
+						1088.000000
+					</x>
+					<y>
+						105.000000
+					</y>
+				</position>
+			</object>
+		</layer>
+		<layer scroll_speed="1.000000" name="foreground">
+			<object objectDef="amaya">
+				<position type="fixed">
+					<x>
+						300.000000
+					</x>
+					<y>
+						6500.000000
+					</y>
+				</position>
+				<cameraFollow/>
+				<inputController>
+					1
+				</inputController>
+			</object>
+		</layer>
+		<layer scroll_speed="1.000000" name="foreground-fast">
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						991.000000
+					</x>
+					<y>
+						4033.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						498.000000
+					</x>
+					<y>
+						3962.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						244.000000
+					</x>
+					<y>
+						3427.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						521.000000
+					</x>
+					<y>
+						3011.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						977.000000
+					</x>
+					<y>
+						2618.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						597.000000
+					</x>
+					<y>
+						1971.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						69.000000
+					</x>
+					<y>
+						1322.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						27.000000
+					</x>
+					<y>
+						705.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						697.000000
+					</x>
+					<y>
+						61.000000
+					</y>
+				</position>
+			</object>
+			<object objectDef="cloud">
+				<position type="fixed">
+					<x>
+						983.000000
+					</x>
+					<y>
+						182.000000
+					</y>
+				</position>
+			</object>
+		</layer>
+		<layer scroll_speed="1.000000" name="overlays">
+			<object objectDef="controller">
+				<position type="fixed">
+					<x>
+						5.000000
+					</x>
+					<y>
+						5.000000
+					</y>
+				</position>
+				<inputController>
+					1
+				</inputController>
+			</object>
+		</layer>
+	</map>
+</gameMode>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="controller" type="ControllerDisplay">
+	<images>
+		<base>controller.png <x>0</x> <y>0</y> </base>
+		
+		<btn>c_left.png	<x>13</x>	<y>37</y>	</btn>
+		<btn>c_right.png	<x>50</x>	<y>37</y> </btn>
+		<btn>c_top.png		<x>34</x>	<y>18</y> </btn>
+		<btn>c_bot.png		<x>34</x>	<y>54</y> </btn>
+		
+		<btn>c_btn.png		<x>130</x>	<y>60</y>	</btn>
+		<btn>c_btn.png		<x>153</x>	<y>36</y>	</btn>
+		<btn>c_btn.png		<x>130</x>	<y>13</y>	</btn>
+		<btn>c_btn.png		<x>106</x>	<y>36</y>	</btn>
+	</images>
+	<showDuringDemoOnly/>
+</objectDef>
+
+</objectDefinitions>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="door-slide" type="Door">
+	<animations default="closed">
+		<animation name="closed">
+			<frames>
+				<frame name="door3-open1.png" duration=1 />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+		<animation name="opening">
+			<frames>
+				<frame type="sound" data="door3"/>
+				<frame name="door3-open2.png" duration=3 />
+				<frame name="door3-open3.png" duration=3 />
+				<frame name="door3-open4.png" duration=3 />
+				<frame name="door3-open5.png" duration=50 />
+				<frame name="door3-open5.png" duration=3 />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+	<properties>
+	</properties>
+	<sounds>
+		<sound name="door3">sounds/door.wav</sound>
+	</sounds>
+</objectDef>
+
+</objectDefinitions>

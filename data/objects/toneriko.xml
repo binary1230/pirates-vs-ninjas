@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="toneriko" type="Player">
+	<animations default="standing">
+	
+		<animation name="walking">
+			<frames>
+				<frame name="toneriko/run1.png" duration="1" />
+				<frame name="toneriko/run2.png" duration="1" />
+				<frame name="toneriko/run3.png" duration="1" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+				
+		<animation name="standing">
+			<frames>
+			<frame name="toneriko/stand.png" duration="64" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+
+		<animation name="jumping">
+			<frames>
+				<frame name="toneriko/jump.png" duration="3" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+	
+	<sounds>
+		<sound name="jump">sounds/jump.wav</sound>
+	</sounds>
+	
+	<properties>
+		<onSkateboard />
+		<affectedByGravity />
+		<affectedByInput1 />
+		<affectedByFriction />
+ 		<jumpVelocity>	18.0f	</jumpVelocity>
+		<drag>					0.92f	</drag>
+		<minVelocity>		4.0f	</minVelocity>
+		<mass>					1.0f	</mass>
+	</properties>
+</objectDef>
+
+
+</objectDefinitions>

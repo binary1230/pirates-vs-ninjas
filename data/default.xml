@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- best viewed with tabs set to 2 spaces -->
+
+<game>
+	<info>
+		Pirates Versus Ninjas
+		<requires_engine_version>0.2-beta</requires_engine_version>
+		<game_version>0.8</game_version>
+		<author>Dominic Cerquetti</author>
+	</info>
+
+	<!-- the default mode is the first one, unless overriden on the command
+	     line (e.g. ninjas.exe -m 1) -->
+	<!-- ID's must be > 0 -->
+
+	<!--
+	
+	-->
+
+	<mode_file>menu.xml</mode_file>
+    <mode_file>level1.xml</mode_file>
+	<mode_file>level2.xml</mode_file>
+	<mode_file>level2-fall.xml</mode_file>
+	<mode_file>credits.xml</mode_file>
+	
+	<!--
+	<mode_file>jouten-shop.xml</mode_file>
+	-->
+
+	<!-- game global variables -->
+	<global_vars>
+					<screen_x>640</screen_x>
+					<screen_y>480</screen_y>
+
+					<!-- "cut" bars (widescreen bars on level openings) -->
+					<cutbar_rate>2.5</cutbar_rate>
+					<cutbar_maxsize>30</cutbar_maxsize>
+					<cutbar_alpha>180</cutbar_alpha>
+					<cutbar_time_to_show>80</cutbar_time_to_show>
+
+					<!-- player variables -->
+					<player_acceleration>50.0</player_acceleration>
+					<player_jump_velocity>8.0</player_jump_velocity>
+					<player_drag_multiplier>0.95</player_drag_multiplier>
+					<player_min_moving_velocity>0.3</player_min_moving_velocity>
+					<bomb_throw_strength>10</bomb_throw_strength>
+					
+					<!-- the name of the object to spawn while skidding -->
+					<skid_object_type>skid</skid_object_type>
+
+					<!-- spring default x/y velocity setting and reset time -->
+					<default_spring_x_vel>0</default_spring_x_vel>
+					<default_spring_y_vel>20</default_spring_y_vel>
+					<default_spring_reset_time>6</default_spring_reset_time>
+
+					<sound_use_variable_pitch>0</sound_use_variable_pitch>
+					<sound_freq_range>200</sound_freq_range>
+
+					<camera_side_margins>40</camera_side_margins>
+					<camera_snap_rate>3.0</camera_snap_rate>
+
+					<debug_draw_bounding_boxes>0</debug_draw_bounding_boxes>
+	</global_vars>
+
+	<!-- more to come:
+src/objects/objectDoor.cpp:#define TIME_TO_WAIT_BEFORE_DOOR_ACTION 12
+src/objects/objectFan.cpp:#define FAN_DECAY_RATE 0.96f
+src/objects/objectFan.cpp:#define DEFAULT_FAN_VELOCITY 30.0f
+src/objects/objectPlayer.cpp:#define DEFAULT_JUMP_VELOCITY 8.0f
+src/objects/objectPlayer.cpp:#define DEFAULT_DRAG 0.95f
+src/objects/objectPlayer.cpp:#define DEFAULT_MIN_VELOCITY 0.3f
+src/objects/objectPlayer.cpp:#define SKID_OBJECT_TYPE "skid"
+src/objects/objectSpring.cpp:#define DEFAULT_SPRING_RESET_TIME 6
+src/objects/objectTxtOverlay.cpp:#define DEFAULT_BOX_COLOR	 	makecol(172, 20, 31)
+src/objects/objectTxtOverlay.cpp:#define DEFAULT_BOX_MARGIN	10
+src/ai.h:// #define AI_TRAINING 1
+src/globals.h:#define DEFAULT_SCREEN_SIZE_X	640
+src/globals.h:#define DEFAULT_SCREEN_SIZE_Y 480
+src/globals.h:#define FPS 30
+	-->
+</game>

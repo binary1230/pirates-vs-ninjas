@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="jouten-sign-rocket" type="Static">
+	<animations default="default">
+		<animation name="default">
+			<frames>
+				<frame name="jouten-sign-rocket.png" duration="10" alpha_enabled=true />
+				<frame name="jouten-sign-rocket2.png" duration="3" alpha_enabled=true />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+	<properties>
+	</properties>
+</objectDef>
+
+</objectDefinitions>

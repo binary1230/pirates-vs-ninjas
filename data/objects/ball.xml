@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<objectDefinitions>
+
+<objectDef name="bomb" type="Bounce">
+	<animations default="default">
+		<animation name="default">
+			<frames>
+				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb4.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb4.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
+				<frame type="effect" data="explosion1" />
+				<frame type="destroy" />
+			</frames>
+			<show_in_order />
+			<repeat />
+		</animation>
+	</animations>
+	<properties>
+		<affectedByGravity />
+	</properties>
+	<sounds>
+	</sounds>
+</objectDef>
+
+</objectDefinitions>
