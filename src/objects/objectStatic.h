@@ -30,8 +30,6 @@ class StaticObject : public Object {
 		void UpdateSpawns();
 
 		friend class ObjectFactory;
-
-		int junk_test;
 };
 
 #endif // StaticObject_H   
