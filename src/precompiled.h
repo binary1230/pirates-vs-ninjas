@@ -123,10 +123,7 @@
 
 // so that std::min and std::max work OK.
 #undef min
-#undef max 
-
-// #include <atlstr.h>
-typedef std::string CString;
+#undef max
 
 #include "external/xmlParser.h"
 #ifdef _MSC_VER

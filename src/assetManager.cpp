@@ -61,7 +61,7 @@ void AssetManager::ResetPaths() {
 	paths.clear();
 	
 	// Only for MacOSX paths
-	CString MacOSXWorkingDir = GetMacOSXCurrentWorkingDir();
+	std::string MacOSXWorkingDir = GetMacOSXCurrentWorkingDir();
 	if (MacOSXWorkingDir != "") {
 		paths.push_back(MacOSXWorkingDir);
 	}
@@ -71,11 +71,11 @@ void AssetManager::ResetPaths() {
 }
 
 //! Returns either the full path to a real file,
-//! or an empty CString
-CString AssetManager::GetPathOf(const char* filename) const {
+//! or an empty std::string
+std::string AssetManager::GetPathOf(const char* filename) const {
 	
-	const CString seperator = "/";
-	CString fullpath;
+	const std::string seperator = "/";
+	std::string fullpath;
 				
 	for (uint i = 0; i < paths.size(); i++) {
 		fullpath = paths[i] + seperator + filename;
@@ -109,7 +109,7 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 	}
 
 	// 2) Try to open the file
-	CString file = GetPathOf(filename);
+	std::string file = GetPathOf(filename);
 	if (file.length() != 0) {
 
 		sprite = new Sprite();
@@ -162,7 +162,7 @@ ALLEGRO_SAMPLE* AssetManager::LoadSound(const char* filename) {
 	}
 
 	// 2) Try to open the file
-	CString file = GetPathOf(filename);
+	std::string file = GetPathOf(filename);
 	if (file.length() != 0) {
 		spl = al_load_sample(file.c_str());
 
@@ -198,15 +198,15 @@ AssetManager::~AssetManager() {
 
 //! Returns something like "/Applications/Ninjas.app/Resources" on Mac, 
 //! if not on Mac, it just returns ""
-CString AssetManager::GetMacOSXCurrentWorkingDir() const {
+std::string AssetManager::GetMacOSXCurrentWorkingDir() const {
 #ifdef PLATFORM_DARWIN 
 	TRACE("Assetmanager: Using MacOSX Carbon stuff.\n");
 	CFBundleRef mainBundle = CFBundleGetMainBundle();
 	CFURLRef url = CFBundleCopyBundleURL(mainBundle);
 	CFStringRef cfStr = CFURLCopyPath(url);
-	CString path = CFStringGetCStringPtr(cfStr, CFStringGetSystemEncoding());
+	std::string path = CFStringGetstd::stringPtr(cfStr, CFStringGetSystemEncoding());
 	TRACE("Assetmanager: Adding path: '%s'\n", path.c_str());
-	return CString(path + "Resources/");
+	return std::string(path + "Resources/");
 #else
 	return "";
 #endif // PLATFORM_DARWIN

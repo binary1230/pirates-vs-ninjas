@@ -2,8 +2,8 @@
 #define GAMESOUND_H
 
 //! Maps a sound name to it's handle (e.g. "jump" to the sample)
-typedef map<CString, ALLEGRO_SAMPLE*> SoundMapping;
-typedef map<CString, ALLEGRO_SAMPLE*>::iterator s_iter;
+typedef map<std::string, ALLEGRO_SAMPLE*> SoundMapping;
+typedef map<std::string, ALLEGRO_SAMPLE*>::iterator s_iter;
 
 // class OGGFILE;
 
@@ -23,12 +23,12 @@ class GameSound {
 			bool use_variable_pitch;
 			int freq_range;
 
-			CString current_music;
+			std::string current_music;
 			ALLEGRO_SAMPLE_ID current_music_id;
 
 			ALLEGRO_SAMPLE* FindCachedSoundByName(const char* name);
 
-			bool IsThisMusicPlayingAlready(CString name);
+			bool IsThisMusicPlayingAlready(std::string name);
 
 		public:
 			//! Load and cache a sound
@@ -43,7 +43,7 @@ class GameSound {
 			bool PlayMusic(const char* filename);
 			void StopMusic();			
 			
-			void PlaySound(	CString name, unsigned int pan = 128, 
+			void PlaySound(	std::string name, unsigned int pan = 128, 
 							ALLEGRO_PLAYMODE loop = ALLEGRO_PLAYMODE_ONCE, ALLEGRO_SAMPLE_ID* sound_id_out = NULL);
 
 			void StopSound(ALLEGRO_SAMPLE_ID* sample_id);

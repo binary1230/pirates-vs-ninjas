@@ -24,7 +24,7 @@ void GameState::ResetAccumulatedTime() {
 
 // Parse the master XML file
 // returns: XMLNode of first GameMode to load
-int GameState::LoadXMLConfig(CString xml_filename) {
+int GameState::LoadXMLConfig(std::string xml_filename) {
 				
 	// XXX xmlParser just DIES on error
 	xml_filename = ASSETMANAGER->GetPathOf(xml_filename.c_str());

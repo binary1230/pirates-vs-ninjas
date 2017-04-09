@@ -29,12 +29,19 @@ class GameWorld : public GameMode {
 		void serialize(Archive &ar, const unsigned int version)
 		{
 			ar  & BOOST_SERIALIZATION_BASE_OBJECT_NVP(GameMode)
-				& BOOST_SERIALIZATION_NVP(m_kLayers);
+				& boost::serialization::make_nvp("layers", m_kLayers)
+				& boost::serialization::make_nvp("bgcolor", m_bgColor)
+				& boost::serialization::make_nvp("bgcolor_top", m_bgColor)
+				& boost::serialization::make_nvp("music", m_szMusicFile)
+				& boost::serialization::make_nvp("width", m_iLevelWidth)
+				& boost::serialization::make_nvp("height", m_iLevelHeight)
+				& boost::serialization::make_nvp("lua_script", m_szLuaScript)
+				;
 		}
 
 		protected:
 			//! Filename of music, or NULL if none
-			CString m_szMusicFile;
+			std::string m_szMusicFile;
 
 			//! Background color (use al_map_rgb())
 			ALLEGRO_COLOR m_bgColor;
@@ -125,7 +132,7 @@ class GameWorld : public GameMode {
 	
 			bool m_bJumpedBackFromADoor;
 
-			CString m_szLuaScript;
+			std::string m_szLuaScript;
 
 		public:
 			virtual int Init(XMLNode);

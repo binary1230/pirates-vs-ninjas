@@ -14,11 +14,11 @@ class GameMenu : public GameMode {
 
 		uint current_pos;
 
-		vector<CString> actions;
+		vector<std::string> actions;
 
 		void DoNewGame();
 		void DoQuit();
-		void DoMenuAction(const CString &action);
+		void DoMenuAction(const std::string &action);
 
 		void MenuPress();
 		void CheckKeys();

@@ -159,7 +159,7 @@ class Object {
 		int display_time;
 
 		// XML Props, rarely ever used.
-		CString* objectDefName;
+		std::string* objectDefName;
 
 		// -- UNUSUED BELOW --
 

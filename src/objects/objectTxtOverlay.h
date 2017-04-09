@@ -48,7 +48,7 @@ class ObjectText : public Object {
 		int time_until_next_blink;
 		bool blink;
 		
-		vector<CString> page_texts;		// holds each "page" full of text
+		vector<std::string> page_texts;		// holds each "page" full of text
 		uint text_index;							// which "page" we're on
 
 		ALLEGRO_COLOR box_color; 
@@ -64,10 +64,10 @@ class ObjectText : public Object {
 		void Update();
 		void Draw();
 
-		bool SetAvatarFilename(CString file);
+		bool SetAvatarFilename(std::string file);
 		void SetModalActive(bool state);
 
-		void SetText(CString txt);
+		void SetText(std::string txt);
 
 		int GetWidth();		// need to override, default ones grab the animation
 		int GetHeight();

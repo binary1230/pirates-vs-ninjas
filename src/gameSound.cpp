@@ -17,7 +17,7 @@ ALLEGRO_SAMPLE* GameSound::FindCachedSoundByName(const char* name) {
 
 //! Plays a sound
 // TODO: Pan is broken, should be a float -2017
-void GameSound::PlaySound(CString name, unsigned int pan, ALLEGRO_PLAYMODE loop, ALLEGRO_SAMPLE_ID* sound_id_out) {
+void GameSound::PlaySound(std::string name, unsigned int pan, ALLEGRO_PLAYMODE loop, ALLEGRO_SAMPLE_ID* sound_id_out) {
 	if (!sound_enabled)
 		return;
 	
@@ -36,7 +36,7 @@ void GameSound::PlaySound(CString name, unsigned int pan, ALLEGRO_PLAYMODE loop,
 	al_play_sample(spl, 1.0f, ALLEGRO_AUDIO_PAN_NONE, 1.0f, loop, sound_id_out);
 }
 
-bool GameSound::IsThisMusicPlayingAlready(CString name) {
+bool GameSound::IsThisMusicPlayingAlready(std::string name) {
 	return current_music.length() && current_music == name;
 }
 
@@ -97,7 +97,7 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 	max = xSounds.nChildNode("sound");
 	for (i = iterator = 0; i<max; i++) {
 		xSound = xSounds.getChildNode("sound", &iterator);
-		CString name = xSound.getAttribute("name");
+		std::string name = xSound.getAttribute("name");
 		
 		if (!LoadSound(xSound.getText(), name.c_str())) {
 			TRACE("ERROR: Can't load soundfile: '%s'\n", xSound.getText());

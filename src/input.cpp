@@ -221,7 +221,7 @@ void Input::UpdateRealKeyReleases() {
 
 // ------------------------------------------------
 
-bool Input::InitPlayback(CString filename, bool seed_engine) {
+bool Input::InitPlayback(std::string filename, bool seed_engine) {
 	type = INPUT_PLAYBACK;
 
 	const uint BUF_SIZE = 256; 
@@ -353,7 +353,7 @@ void Input::GetNextFrameData() {
 	}	
 }
 
-bool Input::InitRecorder(CString filename) {
+bool Input::InitRecorder(std::string filename) {
 	type = INPUT_RECORDED;
 	old_key.resize(GAMEKEY_COUNT);
 

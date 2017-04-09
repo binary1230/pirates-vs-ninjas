@@ -7,7 +7,7 @@ class Object;
 #include "globals.h"
 
 //! Maps an animation name to an integer ID (e.g. "bad_guy_1" to BAD_GUY_1)
-typedef map<const CString, uint> AnimationMapping;
+typedef map<const std::string, uint> AnimationMapping;
 
 //! What kind of frame this is
 //! Sprite - this frame is an image we should display (NORMALLY what happens)
@@ -35,7 +35,7 @@ struct AnimFrame {
 
 	// ONLY ONE of the following is used depending on frame_type.
 	Sprite* sprite;			//! Sprite data if ANIMFRAME_SPRITE
-	CString extraData;		//! Extra frame data for use with ANIMFRAME_EFFECT
+	std::string extraData;		//! Extra frame data for use with ANIMFRAME_EFFECT
 							//! or ANIMFRAME_SOUND
 
 	// really just helpers.
@@ -100,12 +100,12 @@ class Animation {
 
 		//! Used in constructing a new animation 
 		//! Pushes a sound frame onto it
-		bool CreateEffectFrame(	const CString &effectData, 
+		bool CreateEffectFrame(	const std::string &effectData, 
 								const bool freeze_at_end	);
 
 		//! Used in constructing a new animation
 		//! Pushes an effect frame onto it
-		bool CreateSoundFrame(	const CString &effectData, 
+		bool CreateSoundFrame(	const std::string &effectData, 
 								const bool freeze_at_end	);
 
 		//! Used in constructing a new animation

@@ -199,7 +199,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 				else 
 						playback_demo = true;
 								
-				demo_filename = CString(optarg);
+				demo_filename = std::string(optarg);
 				break;
 			
 			// display help
@@ -269,7 +269,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 	
 			// Network server name
 			case 'c':
-				network_server_name = CString(optarg);
+				network_server_name = std::string(optarg);
 				network_enabled = true;
 				break;
 	

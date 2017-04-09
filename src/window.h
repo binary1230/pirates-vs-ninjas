@@ -79,7 +79,7 @@ class GameWindow {
 											uint alpha=255, bool bDrawBoundingBoxOnly=false);
 	
 		//! Draw text at specified XY
-		void DrawText(int x, int y, CString text);
+		void DrawText(int x, int y, std::string text);
 
 		//! Draw a solid rectange
 		//! use al_map_rgb(r,g,b) for color

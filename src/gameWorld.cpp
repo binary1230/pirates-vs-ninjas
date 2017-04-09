@@ -639,7 +639,7 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 int GameWorld::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
 
 		// get the object definition name
-		CString objDefName = xObject.getAttribute("objectDef");
+		std::string objDefName = xObject.getAttribute("objectDef");
 
 		// try to find that object definition
 		XMLNode* xObjectDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
@@ -665,7 +665,7 @@ int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 
 	int i, iterator, max;
 	XMLNode xObject;
-	CString objDefName;
+	std::string objDefName;
 
 	// 1) How much do we scroll this layer by?
 	float scroll_speed;
@@ -769,7 +769,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 
 	if (xObject.nChildNode("position") == 1) {
 		XMLNode xPos = xObject.getChildNode("position");
-		CString type = xPos.getAttribute("type");
+		std::string type = xPos.getAttribute("type");
 		// Figure out the position type.
 		// Currently 3 types exist:
 		// 1) "fixed" - regular XY position, nothing fancy
@@ -789,7 +789,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 		// hand-coding the XML.  Once the map editor is done, only 1) will
 		// be useful.
 
-		if (type == CString("fixed")) {
+		if (type == std::string("fixed")) {
 
 			if (!xPos.getChildNode("x").getInt(x)) {
 				TRACE("-- Invalid X coordinate specified (or did you want <x> instead of <x_offset> ?\n");
@@ -801,7 +801,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 				return -1;
 			}
 				
-		} else if (type == CString("random")) {
+		} else if (type == std::string("random")) {
 
 			int xmin, ymin, xmax, ymax;
 
@@ -828,7 +828,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 			x = Rand(xmin, xmax);
 			y = Rand(ymin, ymax);	
 
-		} else if (type == CString("offset")) {
+		} else if (type == std::string("offset")) {
 
 			int _offset_x, _offset_y;
 			if (!xPos.getChildNode("x_offset").getInt(_offset_x)) {

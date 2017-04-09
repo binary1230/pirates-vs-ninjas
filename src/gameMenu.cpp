@@ -24,7 +24,7 @@ void GameMenu::DoQuit() {
 }
 
 // Hardcoded for now...
-void GameMenu::DoMenuAction(const CString &action) {
+void GameMenu::DoMenuAction(const std::string &action) {
 	if (action == "") {
 		// do nothing.
 	} else if (action == "NewGame") {

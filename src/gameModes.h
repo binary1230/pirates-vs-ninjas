@@ -11,15 +11,15 @@ class GameModes {
 		bool signal_end_current_mode;
 		bool signal_game_exit;
 
-		vector<CString> mode_files;
+		vector<std::string> mode_files;
 
 		GameMode* currentMode;
 
 		void DoEndCurrentMode();
 		void DoGameExit();
 
-		int LoadMode(CString, const GameModeExitInfo& exitInfo);
-		CString PickNextMode(const GameModeExitInfo& exitInfo);
+		int LoadMode(std::string, const GameModeExitInfo& exitInfo);
+		std::string PickNextMode(const GameModeExitInfo& exitInfo);
 
 	public:
 		void Update();

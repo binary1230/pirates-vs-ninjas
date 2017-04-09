@@ -56,7 +56,7 @@ void ObjectText::Draw() {
 	if (avatar_sprite)
 		txt_x += avatar_sprite->width;
 
-	CString text = page_texts[text_index];
+	std::string text = page_texts[text_index];
 
 
 	time_until_next_blink--;
@@ -110,7 +110,7 @@ void ObjectText::Update() {
 
 #define OBJECT_TXT_PAGE_DELIM "~"			// Which char goes to the next page
 
-void ObjectText::SetText(CString txt) {
+void ObjectText::SetText(std::string txt) {
 	page_texts.clear();
 	text_index = 0;
 	
@@ -172,7 +172,7 @@ bool ObjectText::Init() {
 	return noError;
 }
 
-bool ObjectText::SetAvatarFilename(CString file) {
+bool ObjectText::SetAvatarFilename(std::string file) {
 	if (file.length() <= 0)
 		return false;
 

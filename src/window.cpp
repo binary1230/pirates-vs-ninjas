@@ -27,7 +27,7 @@ int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
 
 void GameWindow::Screenshot(char* filename) {
-	/*CString file;
+	/*std::string file;
 	static int screenshot_num = 0;
 
 	if (filename) {
@@ -196,8 +196,8 @@ void GameWindow::DrawRect(	int x1, int y1,
 // TxtObject delimiters (see objectTxtOverlay.cpp)
 #define OBJECT_TXT_LINE_DELIM "|"			// Which char goes to the next line
 
-void GameWindow::DrawText(int x, int y, CString text) {
-	vector<CString> lines;
+void GameWindow::DrawText(int x, int y, std::string text) {
+	vector<std::string> lines;
 	StringSplit(text, OBJECT_TXT_LINE_DELIM, lines);
 	int i, max = lines.size();
 

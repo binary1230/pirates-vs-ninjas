@@ -11,9 +11,9 @@ class AssetManager;
 //! Maps an object definition name to an XMLNode 
 //! (e.g. maps "bad_guy_1" to its corresponding XML data)
 //! only used for parsing XML
-typedef map<const CString, XMLNode> ObjectDefMapping;
-typedef map<const CString, XMLNode>::iterator ObjectDefMappingIter;
-typedef map<const CString, XMLNode>::const_iterator ObjectDefMappingConstIter;
+typedef map<const std::string, XMLNode> ObjectDefMapping;
+typedef map<const std::string, XMLNode>::iterator ObjectDefMappingIter;
+typedef map<const std::string, XMLNode>::const_iterator ObjectDefMappingConstIter;
 
 //! A class which creates Object classes from integer ID's
 class ObjectFactory {
@@ -54,7 +54,7 @@ class ObjectFactory {
 		ObjectDefMapping objectDefs;
 
 		//! Maps object def types to OBJECTID's
-		map<const CString, ENGINE_OBJECTID> objectDefTypes;
+		map<const std::string, ENGINE_OBJECTID> objectDefTypes;
 
 		Object* CreateObject(	ENGINE_OBJECTID id, 
 								XMLNode &xObjectDef, 
@@ -63,7 +63,7 @@ class ObjectFactory {
 		void SetupTypes();
 
 		ENGINE_OBJECTID GetObjectIDFromXML(XMLNode &xObjectDef);
-		CString GetObjectTypeFromXML(XMLNode &xObjectDef);
+		std::string GetObjectTypeFromXML(XMLNode &xObjectDef);
 
 	public:
 		int Init();
@@ -73,17 +73,17 @@ class ObjectFactory {
 		Object* CreateObjectFromXML(XMLNode &xObjectDef, XMLNode &xObject);
 
 		// Create an object from a string
-		Object* CreateObject(CString objDefName);
+		Object* CreateObject(std::string objDefName);
 
-		bool AddObjectDefinition(	const CString &objDefName, 
+		bool AddObjectDefinition(	const std::string &objDefName, 
 									const XMLNode &xObjectDef );
 
 		// Return the XML associated with an object definition
-		XMLNode* FindObjectDefinition(const CString &objDefName);
+		XMLNode* FindObjectDefinition(const std::string &objDefName);
 
 		// Can use this to iterate through the object definitions
 		int GetObjectDefinitionCount() const;
-		const CString& GetObjectDefinition(int iIndex) const;
+		const std::string& GetObjectDefinition(int iIndex) const;
 
 		//! Load all object definitions from root <objectDefinitions> node
 		bool LoadObjectDefsFromXML(XMLNode &xObjDefs);

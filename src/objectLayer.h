@@ -14,15 +14,16 @@ class ObjectLayer {
 	void serialize(Archive & ar, const unsigned int /* file_version */)
 	{
 		ar	& BOOST_SERIALIZATION_NVP(objects)
-			& BOOST_SERIALIZATION_NVP(scroll_speed);
-			// & BOOST_SERIALIZATION_NVP(name);
+			& BOOST_SERIALIZATION_NVP(scroll_speed)
+			& BOOST_SERIALIZATION_NVP(name)
+			& BOOST_SERIALIZATION_NVP(visible);
 	}
 
 	protected:
 		list<Object*> objects;
 		bool visible;
 		float scroll_speed;
-		CString name;
+		std::string name;
 	
 	public:
 		bool Init();

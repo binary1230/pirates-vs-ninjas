@@ -26,10 +26,10 @@ class DoorObject : public Object {
 	protected:
 		int door_open_time;
 		
-		CString door_name;		// the door name, used for when we switch levels 
+		std::string door_name;		// the door name, used for when we switch levels 
 													// around so we can jump back to it if needed
 
-		CString mode_to_jump_to_on_activate;		// which mode we should use when this door
+		std::string mode_to_jump_to_on_activate;		// which mode we should use when this door
 																						// is activated (e.g. "level2")
 	
 		enum DoorType door_type; 
@@ -49,7 +49,7 @@ class DoorObject : public Object {
 		DoorObject();
 		~DoorObject();
 
-		inline const CString& GetName() {return door_name;}
+		inline const std::string& GetName() {return door_name;}
 			
 		friend class ObjectFactory;
 		friend class MapSaver;

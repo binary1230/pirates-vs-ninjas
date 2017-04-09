@@ -22,7 +22,7 @@ class CutBarObject : public Object {
 		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
 	}
 		protected:
-			CString txt;				// the text to show
+			std::string txt;				// the text to show
 			CutBarState state;
 			float real_pos;			// the real position of the object
 
@@ -41,7 +41,7 @@ class CutBarObject : public Object {
 			void Start();
 			void Stop();
 
-			inline void SetText(const CString &text) {txt = text;}
+			inline void SetText(const std::string &text) {txt = text;}
 
 			void Update();
 			void Draw();

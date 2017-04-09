@@ -58,7 +58,7 @@ void GameModes::DoEndCurrentMode() {
 	if (signal_game_exit)
 		return;
 
-	CString mode_to_load = PickNextMode(exitInfo);
+	std::string mode_to_load = PickNextMode(exitInfo);
 
 	if (mode_to_load.length() == 0 || LoadMode(mode_to_load, exitInfo) == -1)
 		signal_game_exit = true;
@@ -66,7 +66,7 @@ void GameModes::DoEndCurrentMode() {
 
 // Pick the next mode we should load.
 // Returns an empty string if we should exit
-CString GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
+std::string GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 
 	// if the exit info tells us explicitly to use a mode, then do it.
 	if (exitInfo.useExitInfo && exitInfo.nextModeToLoad.length() > 0)
@@ -89,7 +89,7 @@ CString GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 //! Use the specified mode exit info from the last mode that exited
 //! If there was no mode exit info, just pass in a blank oldExitInfo and
 //! the new mode will ignore it.
-int GameModes::LoadMode(CString mode_xml_filename, 
+int GameModes::LoadMode(std::string mode_xml_filename, 
 						const GameModeExitInfo& oldExitInfo ) {
 	currentMode = NULL;
 
@@ -102,7 +102,7 @@ int GameModes::LoadMode(CString mode_xml_filename,
 	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename.c_str());
 	XMLNode xMode = XMLNode::openFileHelper( mode_xml_filename.c_str(), "gameMode" );
 
-	CString modeType = xMode.getAttribute("type");
+	std::string modeType = xMode.getAttribute("type");
 	TRACE(" Mode Info: type = '%s'\n", modeType);
 
 	// actually create the new mode
@@ -193,7 +193,7 @@ int GameModes::Init(XMLNode _xGame) {
 	}
 
 	mode_files.resize(max); 
-	CString tmp;
+	std::string tmp;
 
 	// iterate backwards for push_back(), lame I know.
 	for (i=iterator=0; i < max; i++) {

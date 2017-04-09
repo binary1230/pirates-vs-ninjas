@@ -17,7 +17,7 @@ bool Object::debug_draw_bounding_boxes = 0;
 
 void Object::SetObjectDefName(const char* _name) {
 	SAFE_DELETE(objectDefName);
-	objectDefName = new CString(_name);
+	objectDefName = new std::string(_name);
 }
 
 // Used as criteria for STL find()

@@ -25,7 +25,7 @@ class GameOptions {
 		bool playback_demo;
 
 		//! The demo filename if it was set
-		CString demo_filename;
+		std::string demo_filename;
 
 		//! Whether to enable sound or not
 		bool sound_enabled;
@@ -34,7 +34,7 @@ class GameOptions {
 		int graphics_mode;
 
 		//! The first mode we should use (leave "" to select the default mode)
-		CString first_mode;
+		std::string first_mode;
 
 		//! If true, start the game in debug pause mode
 		bool debug_start_paused;
@@ -43,7 +43,7 @@ class GameOptions {
 		int debug_message_level;
 
 		//! Network server to connect to
-		CString network_server_name;
+		std::string network_server_name;
 
 		//! Network port to use
 		int network_port_num;

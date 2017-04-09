@@ -55,7 +55,7 @@ typedef unsigned int uint;
 // 
 // For example: StringSplit("Hey|what's|up","|", out_list) will
 // put 3 things, "Hey", "what's", and "Up", into out_list.
-void StringSplit(CString str, CString delim, std::vector<CString> &results);
+void StringSplit(std::string str, std::string delim, std::vector<std::string> &results);
 
 void DebugTrace( const char * format, ... );
 
@@ -68,6 +68,32 @@ void DebugTrace( const char * format, ... );
 //#else
 //#define TRACE
 //#endif // _DEBUG
+
+
+namespace boost {
+	namespace serialization {
+
+		// custom serializable types for Boost
+
+		template<class Archive>
+		void serialize(Archive & ar, ALLEGRO_COLOR& c, const unsigned int version)
+		{
+			ar & boost::serialization::make_nvp("r", c.r);
+			ar & boost::serialization::make_nvp("g", c.g);
+			ar & boost::serialization::make_nvp("b", c.b);
+			ar & boost::serialization::make_nvp("a", c.a);
+		}
+
+		template<class Archive>
+		void serialize(Archive & ar, b2Vec2& v, const unsigned int version)
+		{
+			ar & boost::serialization::make_nvp("x", v.x);
+			ar & boost::serialization::make_nvp("y", v.y);
+		}
+
+
+	} // namespace serialization
+} // namespace boost
 
 
 #endif // GLOBALS_H

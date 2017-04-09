@@ -130,7 +130,7 @@ bool LuaManager::LoadLuaScript(const char* _filename)
 		return false;
 	}
 
-	CString filename = ASSETMANAGER->GetPathOf(_filename);
+	std::string filename = ASSETMANAGER->GetPathOf(_filename);
 
 	if (!filename.length()) 
 	{

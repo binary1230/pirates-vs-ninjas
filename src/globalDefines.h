@@ -29,7 +29,7 @@ class GlobalDefines {
 		bool Value(char* varName, int &out);
 		bool Value(char* varName, float &out);
 		bool Value(char* varName, bool &out);
-		bool Value(char* varName, CString &out);
+		bool Value(char* varName, std::string &out);
 
 		bool Init(XMLNode &_xParams);
 		void Shutdown();

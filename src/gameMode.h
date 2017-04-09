@@ -6,13 +6,13 @@ struct GameModeExitInfo {
 
 	bool useExitInfo;					//! Whether to use any of this info at all.
 
-	CString lastModeName;			//! The name of the mode that is exiting 
+	std::string lastModeName;			//! The name of the mode that is exiting 
 														//! (e.g. "level1.xml") 
 
-	CString nextModeToLoad;		//! If not empty, holds the name of the
+	std::string nextModeToLoad;		//! If not empty, holds the name of the
 														//! next mode to run. (e.g. "level2.xml")
 
-	CString lastPortalName;		//! The last portal we went through
+	std::string lastPortalName;		//! The last portal we went through
 														//! (allows player to spawn at a specific door)
 	
 	bool useNextModeToLoad;

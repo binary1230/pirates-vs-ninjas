@@ -63,7 +63,7 @@ bool GlobalDefines::Value(char* varName, float &out) {
 	return xParams.getChildNode(varName).getFloat(out);
 }
 
-bool GlobalDefines::Value(char* varName, CString &out) {
+bool GlobalDefines::Value(char* varName, std::string &out) {
 	if (!xParams.nChildNode(varName)) {
 		TRACE("ERROR: Can't find global XML variable named '%s'\n", 
 										varName);

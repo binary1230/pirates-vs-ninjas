@@ -37,7 +37,7 @@
 
 DECLARE_SINGLETON(ObjectFactory)
 		
-Object* ObjectFactory::CreateObject(CString objDefName) {
+Object* ObjectFactory::CreateObject(std::string objDefName) {
 	XMLNode* xObjectDef = FindObjectDefinition(objDefName);
 
 	if (!xObjectDef) {
@@ -56,7 +56,7 @@ Object* ObjectFactory::CreateObject(CString objDefName) {
 	return pkObject;
 }
 
-bool ObjectFactory::AddObjectDefinition(const CString &objDefName, 	
+bool ObjectFactory::AddObjectDefinition(const std::string &objDefName, 	
 										const XMLNode &xObjectDef) {
 	if (objDefName == "" || objDefName.length() < 1)
 		return false;
@@ -66,7 +66,7 @@ bool ObjectFactory::AddObjectDefinition(const CString &objDefName,
 	return true;
 }
 
-XMLNode* ObjectFactory::FindObjectDefinition(const CString &objDefName) {
+XMLNode* ObjectFactory::FindObjectDefinition(const std::string &objDefName) {
 	ObjectDefMappingIter iter = objectDefs.find(objDefName);
 
 	if (iter == objectDefs.end())
@@ -79,7 +79,7 @@ int ObjectFactory::GetObjectDefinitionCount() const {
 	return objectDefs.size();
 }
 
-const CString& ObjectFactory::GetObjectDefinition(int iIndex) const {
+const std::string& ObjectFactory::GetObjectDefinition(int iIndex) const {
 	assert(iIndex >= 0 && iIndex < (int)objectDefs.size());
 	ObjectDefMappingConstIter iter = objectDefs.begin();
 	
@@ -105,7 +105,7 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 	static int recurse_level = 0;
 
 	XMLNode xObjectDef, xObjectDefFile;
-	CString objName, file;
+	std::string objName, file;
 	
 	// 1) handle <objectDef> tags
 	max = xObjDefs.nChildNode("objectDef");
@@ -131,7 +131,7 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		file = xObjDefs.getChildNode("include_xml_file", &iterator).getText();
 		
 		// open that file, get the objectDef
-		CString fileNew = ASSETMANAGER->GetPathOf(file.c_str());
+		std::string fileNew = ASSETMANAGER->GetPathOf(file.c_str());
 	
 		if (!fileNew.length()) {
 			TRACE("ObjectFactory: ERROR: Can't open "
@@ -188,7 +188,7 @@ ENGINE_OBJECTID ObjectFactory::GetObjectIDFromXML(XMLNode &xObjectDef) {
 }
 
 // Get the object ID from an XML object definition
-CString ObjectFactory::GetObjectTypeFromXML(XMLNode &xObjectDef) {
+std::string ObjectFactory::GetObjectTypeFromXML(XMLNode &xObjectDef) {
 	return xObjectDef.getAttribute("type");
 }
 
@@ -382,7 +382,7 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 
 Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 
-	CString txt, avatar;
+	std::string txt, avatar;
 	ObjectText* obj = new ObjectText();	
 	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
 		return NULL;
@@ -416,7 +416,7 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 	// but not in this method
 
 	int i, iterator, max;
-	CString filename;
+	std::string filename;
 	XMLNode xImages, xBtn;
 	  
 	xImages = xDef.getChildNode("images");
@@ -617,7 +617,7 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!xObj)
 		return obj;
 
-	CString door_type = "";
+	std::string door_type = "";
 	if (xObj->getAttribute("type"))
 		door_type = xObj->getAttribute("type");
 
@@ -731,7 +731,7 @@ bool ObjectFactory::LoadObjectAnimations(
 	int num_xml_animations, num_animation_slots_needed = -1, iterator;
 
 	Animation* anim = NULL;
-	CString anim_name;
+	std::string anim_name;
 	XMLNode xAnim, xAnims;
 	
 	xAnims = xDef.getChildNode("animations");
@@ -774,7 +774,7 @@ bool ObjectFactory::LoadObjectAnimations(
 	// set the default animation 
 	// XXX error check this!
 	
-	CString default_name;
+	std::string default_name;
 	int default_index; 
 
 	if (!animation_lookup) {

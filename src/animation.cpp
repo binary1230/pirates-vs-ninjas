@@ -78,7 +78,7 @@ void Animation::SwitchToNextFrame()
 	// trigger that EFFECT or SOUND, and then immediately advance
 	// to the next frame in the animation
 
-	CString soundName, effectName;
+	std::string soundName, effectName;
 	Object* obj;
 	AnimFrame* oldFrame = currentFrame;
 
@@ -191,7 +191,7 @@ bool Animation::CreateSpriteFrame(	const char* _file,
 	return PushFrame(f);
 }
 
-bool Animation::CreateEffectFrame(	const CString &effectData, 
+bool Animation::CreateEffectFrame(	const std::string &effectData, 
 									const bool freeze_at_end ) 
 {	
 
@@ -206,7 +206,7 @@ bool Animation::CreateEffectFrame(	const CString &effectData,
 	return PushFrame(f);
 }
 
-bool Animation::CreateSoundFrame(	const CString &soundData, 
+bool Animation::CreateSoundFrame(	const std::string &soundData, 
 									const bool freeze_at_end	) 
 {	
 	AnimFrame *f = new AnimFrame();
@@ -297,7 +297,7 @@ bool Animation::PushFrame(AnimFrame* f)
 Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject) 
 {
 	int duration;
-	CString sprite_filename, frame_type, extraData;
+	std::string sprite_filename, frame_type, extraData;
 	int freeze_at_end;
 	XMLNode xFrames, xFrame;
 	int i, iterator, numFrames, numSpriteFrames = 0;
@@ -323,7 +323,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 
 		const char* alpha_enabled = xFrame.getAttribute("alpha_enabled");
 			
-		if (alpha_enabled != NULL && CString(alpha_enabled) == "true") {
+		if (alpha_enabled != NULL && std::string(alpha_enabled) == "true") {
 			use_alpha = true;
 		}
 	

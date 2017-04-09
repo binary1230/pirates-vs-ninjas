@@ -11,7 +11,7 @@
 class Object;
 
 struct Effect {
-	CString spawn_object_name;
+	std::string spawn_object_name;
 
 	bool camera_shake;
 	int  camera_shake_duration;
@@ -22,8 +22,8 @@ struct Effect {
 	int fadeout_time;
 };
 
-typedef map<const CString, Effect> EffectDefMapping;
-typedef map<const CString, Effect>::iterator EffectDefMappingIter;
+typedef map<const std::string, Effect> EffectDefMapping;
+typedef map<const std::string, Effect>::iterator EffectDefMappingIter;
 
 class EffectsManager {
 		DECLARE_SINGLETON_CLASS(EffectsManager)
@@ -35,21 +35,21 @@ class EffectsManager {
 			bool Init();
 			void Shutdown();
 
-			bool AddEffectDefinition(	const CString &effectName, 
+			bool AddEffectDefinition(	const std::string &effectName, 
 																XMLNode &xEffect);
 
-			Effect* FindEffectDefinition(const CString &effectName);
+			Effect* FindEffectDefinition(const std::string &effectName);
 
 			bool LoadEffectsFromXML(XMLNode &xEffects);
 
 			// Trigger an object at a given object, insert it into the simulation,
 			// and return a pointer to the newly inserted object
-			Object* TriggerObject(const Object* triggeringObject, CString objectName);
+			Object* TriggerObject(const Object* triggeringObject, std::string objectName);
 
 			// The usual case.
 			// Trigger an effect (as specified in an effect XML file)
 			// at the current object
-			Object* TriggerEffect(const Object* triggeringObject, CString effectName);
+			Object* TriggerEffect(const Object* triggeringObject, std::string effectName);
 
 			virtual ~EffectsManager();
 };

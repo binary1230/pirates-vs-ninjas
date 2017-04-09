@@ -20,11 +20,11 @@
 
 class Sprite;
 
-typedef map<CString, Sprite*> SpriteList;
-typedef map<CString, Sprite*>::iterator SpriteListIter;
+typedef map<std::string, Sprite*> SpriteList;
+typedef map<std::string, Sprite*>::iterator SpriteListIter;
 
-typedef map<CString, ALLEGRO_SAMPLE*> SampleList;
-typedef map<CString, ALLEGRO_SAMPLE*>::iterator SampleListIter;
+typedef map<std::string, ALLEGRO_SAMPLE*> SampleList;
+typedef map<std::string, ALLEGRO_SAMPLE*>::iterator SampleListIter;
 
 // class OGGFILE; // TEMPHACK
 
@@ -34,7 +34,7 @@ class AssetManager {
 	DECLARE_SINGLETON_CLASS(AssetManager)
 
 	protected:
-		vector<CString> paths;
+		vector<std::string> paths;
 		SpriteList sprites;
 		SampleList samples;
 		
@@ -58,7 +58,7 @@ class AssetManager {
 		//! This function either returns a full to a file path which 
 		//! is guaranteed to exist, or returns "" if one can't be found
 		//! in the current search path
-		CString GetPathOf(const char* filename) const;
+		std::string GetPathOf(const char* filename) const;
 
 		//! Returns true if the file exists.
 		bool FileExists(const char* file) const;
@@ -74,7 +74,7 @@ class AssetManager {
 		ALLEGRO_SAMPLE* LoadSound(const char* filename);
 
 		//! Returns the current working directory
-		CString GetMacOSXCurrentWorkingDir() const;
+		std::string GetMacOSXCurrentWorkingDir() const;
 
 		virtual ~AssetManager();
 };

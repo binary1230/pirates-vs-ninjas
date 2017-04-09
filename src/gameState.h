@@ -57,7 +57,7 @@ class GameState {
 		
 		//! Load master game config from an XML file, return an XMLNode which is
 		//! the first game Mode's config we should now load.
-		int LoadXMLConfig(CString xml_filename);
+		int LoadXMLConfig(std::string xml_filename);
 		
 		//! Load a game mode from an XML config file
 		int LoadGameModes();

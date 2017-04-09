@@ -197,7 +197,7 @@ class Input {
 		KeyList old_key;
 		
 		//! Initialize demo recording stuff
-		bool InitRecorder(CString filename);
+		bool InitRecorder(std::string filename);
 		
 		//! Update demofile recorder
 		void UpdateRecord();
@@ -214,7 +214,7 @@ class Input {
 		int Init();
 
 		//! Init demo playback stuff
-		bool InitPlayback(CString filename, bool seed_engine = true);
+		bool InitPlayback(std::string filename, bool seed_engine = true);
 
 		//! Start using this input
 		void Begin();

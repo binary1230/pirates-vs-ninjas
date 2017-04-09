@@ -18,7 +18,7 @@ bool EffectsManager::Init() {
 	return true;	
 }
 
-Effect* EffectsManager::FindEffectDefinition(const CString &effectName) {
+Effect* EffectsManager::FindEffectDefinition(const std::string &effectName) {
   EffectDefMappingIter iter = effects.find(effectName);
 
   if (iter == effects.end())
@@ -27,7 +27,7 @@ Effect* EffectsManager::FindEffectDefinition(const CString &effectName) {
   return &(iter->second);
 }
 
-bool EffectsManager::AddEffectDefinition(	const CString &effectName,
+bool EffectsManager::AddEffectDefinition(	const std::string &effectName,
                                         	XMLNode &xEffect) {
   if (effectName == "" || effectName.length() < 1)
     return false;
@@ -86,7 +86,7 @@ bool EffectsManager::AddEffectDefinition(	const CString &effectName,
 }
 
 Object* EffectsManager::TriggerObject(	const Object* triggeringObject, 
-										CString effectName) {
+										std::string effectName) {
 
 	if (!triggeringObject) {
 		TRACE("ERROR: Tried to trigger an effect with a NULL object!\n");
@@ -112,7 +112,7 @@ Object* EffectsManager::TriggerObject(	const Object* triggeringObject,
 }
 
 Object* EffectsManager::TriggerEffect(	const Object* triggeringObject, 
-										CString effectName) 
+										std::string effectName) 
 {
 	Effect* effect = FindEffectDefinition(effectName);
 
@@ -155,7 +155,7 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
   static int recurse_level = 0;
 
 	XMLNode xEffect, xEffectDefFile;
-	CString effectName, file;
+	std::string effectName, file;
 
 	max = xEffects.nChildNode("effect");
 	for (i = iterator = 0; i < max; ++i) {
@@ -183,7 +183,7 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
     // get the filename
     file = xEffects.getChildNode("include_xml_file", &iterator).getText();
 
-    CString fileNew = ASSETMANAGER->GetPathOf(file.c_str());
+    std::string fileNew = ASSETMANAGER->GetPathOf(file.c_str());
 
     if (!fileNew.length()) {
       TRACE("EffectsManager: ERROR: Can't open "

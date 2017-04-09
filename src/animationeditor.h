@@ -9,7 +9,7 @@ class GameState;
 class AnimationEditorMode : public GameMode
 {
 		protected:		
-			CString m_sFlashText;
+			std::string m_sFlashText;
 			Sprite* m_pkCursorSprite;
 
 			void SetFlashText(char * format, ... );

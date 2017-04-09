@@ -19,7 +19,7 @@ void DebugTrace( const char * format, ... )
   #endif
 }
 
-void StringSplit(CString str, CString delim, vector<CString> &results) {
+void StringSplit(std::string str, std::string delim, vector<std::string> &results) {
 	uint cutAt;
 	results.clear();
 	while( (cutAt = str.find_first_of(delim)) != -1 ) {
@@ -49,7 +49,7 @@ void LogEvent(LOGTYPE event, Object* obj) {
 	if (!fObjectEventLog)
 		return;
 
-	CString txt;
+	std::string txt;
 
 	switch (event) {
 		case OBJECT_NEW:
