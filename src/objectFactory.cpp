@@ -52,13 +52,13 @@ Object* ObjectFactory::CreateObject(CString objDefName) {
 	if (!pkObject)
 		return false;
 
-	pkObject->SetObjectDefName(objDefName);
+	pkObject->SetObjectDefName(objDefName.c_str());
 	return pkObject;
 }
 
 bool ObjectFactory::AddObjectDefinition(const CString &objDefName, 	
 										const XMLNode &xObjectDef) {
-	if (objDefName == "" || objDefName.GetLength() < 1)
+	if (objDefName == "" || objDefName.length() < 1)
 		return false;
 
 	objectDefs[objDefName] = xObjectDef;
@@ -131,9 +131,9 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 		file = xObjDefs.getChildNode("include_xml_file", &iterator).getText();
 		
 		// open that file, get the objectDef
-		CString fileNew = ASSETMANAGER->GetPathOf(file);
+		CString fileNew = ASSETMANAGER->GetPathOf(file.c_str());
 	
-		if (!fileNew.GetLength()) {
+		if (!fileNew.length()) {
 			TRACE("ObjectFactory: ERROR: Can't open "
 											"requested XML file for inclusion: '%s'\n", 
 											file);
@@ -151,9 +151,9 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 			return false;
 		}
 		
-		parent_include = fileNew;
+		parent_include = fileNew.c_str();
 
-		xObjectDefFile = XMLNode::openFileHelper( fileNew, "objectDefinitions");
+		xObjectDefFile = XMLNode::openFileHelper( fileNew.c_str(), "objectDefinitions");
 
 		// recursively call ourself to handle this
 		if (!LoadObjectDefsFromXML(xObjectDefFile))
@@ -427,7 +427,7 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 
 	filename = xImages.getChildNode("base").getText();
 	  
-	obj->controller_sprite = ASSETMANAGER->LoadSprite(filename);
+	obj->controller_sprite = ASSETMANAGER->LoadSprite(filename.c_str());
 	    
 	if (!obj->controller_sprite) {
 		TRACE("-- ERROR: Can't load file '%s'\n", filename );
@@ -458,7 +458,7 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 		filename = xBtn.getText();
 		b->active = 0;
 
-		b->sprite = ASSETMANAGER->LoadSprite(filename);
+		b->sprite = ASSETMANAGER->LoadSprite(filename.c_str());
 
 		if (!b->sprite) {
 			TRACE("-- ERROR: Can't load file '%s'\n",filename);
@@ -617,9 +617,11 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!xObj)
 		return obj;
 
-	CString door_type = xObj->getAttribute("type");
+	CString door_type = "";
+	if (xObj->getAttribute("type"))
+		door_type = xObj->getAttribute("type");
 
-	if (door_type.GetLength() == 0)
+	if (door_type.length() == 0)
 		door_type = DEFAULT_DOOR_TYPE;
 
 	if (door_type == "exit")
@@ -633,8 +635,11 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	else
 		obj->door_type = INVALID_TYPE;
 
-	obj->door_name = xObj->getAttribute("name");
-	obj->mode_to_jump_to_on_activate = xObj->getAttribute("modeToTrigger");
+	if (xObj->getAttribute("name"))
+		obj->door_name = xObj->getAttribute("name");
+
+	if (xObj->getAttribute("modeToTrigger"))
+		obj->mode_to_jump_to_on_activate = xObj->getAttribute("modeToTrigger");
 	
 	return obj;
 }

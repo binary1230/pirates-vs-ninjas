@@ -22,10 +22,10 @@ void GameSound::PlaySound(CString name, unsigned int pan, ALLEGRO_PLAYMODE loop,
 		return;
 	
 	ALLEGRO_SAMPLE* spl = NULL;
-	spl = FindCachedSoundByName(name);
+	spl = FindCachedSoundByName(name.c_str());
 
 	if (!spl) {
-		spl = LoadSound(name, name);
+		spl = LoadSound(name.c_str(), name.c_str());
 	}
 
 	if (!spl) {
@@ -37,7 +37,7 @@ void GameSound::PlaySound(CString name, unsigned int pan, ALLEGRO_PLAYMODE loop,
 }
 
 bool GameSound::IsThisMusicPlayingAlready(CString name) {
-	return current_music.GetLength() && current_music == name;
+	return current_music.length() && current_music == name;
 }
 
 bool GameSound::PlayMusic(const char* name) {
@@ -55,7 +55,7 @@ bool GameSound::PlayMusic(const char* name) {
 }
 
 void GameSound::StopMusic() {
-	if (!current_music.GetLength())
+	if (!current_music.length())
 		return;
 	
 	StopSound(&current_music_id);
@@ -99,7 +99,7 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 		xSound = xSounds.getChildNode("sound", &iterator);
 		CString name = xSound.getAttribute("name");
 		
-		if (!LoadSound(xSound.getText(), name)) {
+		if (!LoadSound(xSound.getText(), name.c_str())) {
 			TRACE("ERROR: Can't load soundfile: '%s'\n", xSound.getText());
 			return false;
 		}

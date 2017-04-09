@@ -27,7 +27,7 @@ int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
 
 void GameWindow::Screenshot(char* filename) {
-	CString file;
+	/*CString file;
 	static int screenshot_num = 0;
 
 	if (filename) {
@@ -39,7 +39,7 @@ void GameWindow::Screenshot(char* filename) {
 
 	TRACE(" -- saving screenshot '%s'\n", file);
 
-	al_save_bitmap(file, al_get_target_bitmap());
+	al_save_bitmap(file, al_get_target_bitmap());*/
 }
 	
 void GameWindow::DrawFade() {
@@ -207,7 +207,7 @@ void GameWindow::DrawText(int x, int y, CString text) {
 
 	glLoadIdentity();
 	for (i = 0; i < max; i++) {
-		al_draw_text(main_font, col, _x, _y, ALLEGRO_ALIGN_LEFT, lines[i]);
+		al_draw_text(main_font, col, _x, _y, ALLEGRO_ALIGN_LEFT, lines[i].c_str());
 		_y += FONT_HEIGHT;
 	}
 }

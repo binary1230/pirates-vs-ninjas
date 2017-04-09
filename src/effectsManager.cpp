@@ -29,13 +29,13 @@ Effect* EffectsManager::FindEffectDefinition(const CString &effectName) {
 
 bool EffectsManager::AddEffectDefinition(	const CString &effectName,
                                         	XMLNode &xEffect) {
-  if (effectName == "" || effectName.GetLength() < 1)
+  if (effectName == "" || effectName.length() < 1)
     return false;
 
 	Effect effect;
 
 	effect.spawn_object_name = xEffect.getChildNode("spawn_object").getText();
-	if (effect.spawn_object_name.GetLength() < 1) {
+	if (effect.spawn_object_name.length() < 1) {
 		TRACE("ERROR: Effect object spawn name invalid in effect '%s'\n", 
 										effectName);
 		return false;
@@ -183,9 +183,9 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
     // get the filename
     file = xEffects.getChildNode("include_xml_file", &iterator).getText();
 
-    CString fileNew = ASSETMANAGER->GetPathOf(file);
+    CString fileNew = ASSETMANAGER->GetPathOf(file.c_str());
 
-    if (!fileNew.GetLength()) {
+    if (!fileNew.length()) {
       TRACE("EffectsManager: ERROR: Can't open "
                       "requested XML file for inclusion: '%s'\n",
                       file );
@@ -203,9 +203,9 @@ bool EffectsManager::LoadEffectsFromXML(XMLNode &xEffects) {
       return false;
     }
 
-    parent_include = fileNew;
+    parent_include = fileNew.c_str();
 
-    xEffectDefFile = XMLNode::openFileHelper(fileNew, "effects");
+    xEffectDefFile = XMLNode::openFileHelper(fileNew.c_str(), "effects");
 
     // recursively call ourself to handle this
     if (!LoadEffectsFromXML(xEffectDefFile))

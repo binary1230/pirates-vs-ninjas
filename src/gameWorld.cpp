@@ -432,7 +432,7 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	if (xMode.nChildNode("music") == 1) {
 		m_szMusicFile = xMode.getChildNode("music").getText();
-		LoadMusic(m_szMusicFile);
+		LoadMusic(m_szMusicFile.c_str());
 	}
 
 	exitInfo.useExitInfo = true;
@@ -480,7 +480,7 @@ int GameWorld::Load(XMLNode &xMode) {
 	// Don't do this for the map editor, since it needs lua stuff too.
 	if (xMode.nChildNode("luaScript") == 1 && !OPTIONS->MapEditorEnabled()) {
 		m_szLuaScript = xMode.getChildNode("luaScript").getText();
-		LUA->LoadLuaScript(m_szLuaScript);
+		LUA->LoadLuaScript(m_szLuaScript.c_str());
 	}
 
 	is_loading = false;

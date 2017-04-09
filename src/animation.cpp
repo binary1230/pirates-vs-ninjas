@@ -95,7 +95,7 @@ void Animation::SwitchToNextFrame()
 		case ANIMFRAME_SOUND:
 			soundName = oldFrame->extraData;
 
-			if (soundName.GetLength() == 0)
+			if (soundName.length() == 0)
 				TRACE(	"ERROR: No sound name specified "
 													"in animation sound frame\n");
 
@@ -106,7 +106,7 @@ void Animation::SwitchToNextFrame()
 		case ANIMFRAME_EFFECT:
 			effectName = oldFrame->extraData;
 
-			if (effectName.GetLength() == 0)
+			if (effectName.length() == 0)
 				TRACE(	"ERROR: No sound name specified "
 													"in animation sound frame\n");
 
@@ -197,7 +197,7 @@ bool Animation::CreateEffectFrame(	const CString &effectData,
 
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
-	assert(effectData.GetLength() > 0);
+	assert(effectData.length() > 0);
 
 	f->frame_type = ANIMFRAME_EFFECT;
 	f->duration = 0;
@@ -211,7 +211,7 @@ bool Animation::CreateSoundFrame(	const CString &soundData,
 {	
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
-	assert(soundData.GetLength() > 0);
+	assert(soundData.length() > 0);
 
 	f->frame_type = ANIMFRAME_SOUND;
 	f->duration = 0;
@@ -320,8 +320,10 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 	for (i=iterator=0; i<numFrames; i++) {
 
 		xFrame = xFrames.getChildNode("frame", &iterator);
+
+		const char* alpha_enabled = xFrame.getAttribute("alpha_enabled");
 			
-		if (CString("true") == CString(xFrame.getAttribute("alpha_enabled"))) {
+		if (alpha_enabled != NULL && CString(alpha_enabled) == "true") {
 			use_alpha = true;
 		}
 	
@@ -333,10 +335,10 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 
 		// if this frame has a "type" attribute, use it, if not assume it's a
 		// of type "sprite" (as opossed to "sound" and "effect" types)
-		frame_type = xFrame.getAttribute("type");
-		
-		if (frame_type.GetLength() == 0)
+		if (xFrame.getAttribute("type") == NULL)
 			frame_type = "sprite";
+		else
+			frame_type = xFrame.getAttribute("type");;
 
 		// figure out what type of frame this is and do The Right Thing
 		if (frame_type == "sprite") 
@@ -350,7 +352,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 				return NULL;
 			}
 	
-			if (!anim->CreateSpriteFrame(	sprite_filename, 
+			if (!anim->CreateSpriteFrame(	sprite_filename.c_str(),
 											duration, 
 											freeze_at_end != 0, 
 											use_alpha)) {
@@ -370,7 +372,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 			// effect frames don't display anything but instead trigger effects 
 			// such as smoke/dust/etc
 			extraData = xFrame.getAttribute("data");
-			assert(extraData.GetLength() != 0);
+			assert(extraData.length() != 0);
 
 			if (!anim->CreateEffectFrame(extraData, freeze_at_end != 0)) {
 				anim->Shutdown();
@@ -382,7 +384,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 		{
 			// sound frames don't display anything but instead trigger sounds 
 			extraData = xFrame.getAttribute("data");
-			assert(extraData.GetLength() != 0);
+			assert(extraData.length() != 0);
 
 			if (!anim->CreateSoundFrame(extraData, freeze_at_end != 0)) {
 				anim->Shutdown();

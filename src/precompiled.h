@@ -125,7 +125,8 @@
 #undef min
 #undef max 
 
-#include <atlstr.h>
+// #include <atlstr.h>
+typedef std::string CString;
 
 #include "external/xmlParser.h"
 #ifdef _MSC_VER

@@ -22,15 +22,15 @@ void DebugTrace( const char * format, ... )
 void StringSplit(CString str, CString delim, vector<CString> &results) {
 	uint cutAt;
 	results.clear();
-	while( (cutAt = str.Find(delim)) != -1 ) {
+	while( (cutAt = str.find_first_of(delim)) != -1 ) {
 		if(cutAt > 0) {
-			results.push_back(str.Left(cutAt));
+			results.push_back(str.substr(cutAt));
 		}
 
-		str = str.Mid(cutAt+1);
+		str = str.substr(str.length() - cutAt);
 	}
 	
-	if(str.GetLength() > 0)	{
+	if(str.length() > 0)	{
 		results.push_back(str);
 	}
 }

@@ -79,7 +79,7 @@ CString AssetManager::GetPathOf(const char* filename) const {
 				
 	for (uint i = 0; i < paths.size(); i++) {
 		fullpath = paths[i] + seperator + filename;
-		if (FileExists(fullpath))
+		if (FileExists(fullpath.c_str()))
 			return fullpath;
 	}
 		
@@ -110,12 +110,12 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 
 	// 2) Try to open the file
 	CString file = GetPathOf(filename);
-	if (file.GetLength() != 0) {
+	if (file.length() != 0) {
 
 		sprite = new Sprite();
 		assert(sprite && "ERROR: Out of memory, can't allocate sprite!\n");
 			
-		ALLEGRO_BITMAP* bmp = al_load_bitmap(file);
+		ALLEGRO_BITMAP* bmp = al_load_bitmap(file.c_str());
 
 		// backwards-comaptibility:
 		// old versions of allegro would use magenta as transparent
@@ -141,7 +141,7 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 		} else {
 			TRACE(	"ERROR: Failed making texture for '%s'\n"
 					"-NOTE: Make sure texture size is a multiple of 2!\n",
-					file.GetString());
+					file.c_str());
 
 			delete sprite;
 			return NULL;
@@ -163,8 +163,8 @@ ALLEGRO_SAMPLE* AssetManager::LoadSound(const char* filename) {
 
 	// 2) Try to open the file
 	CString file = GetPathOf(filename);
-	if (file.GetLength() != 0) {
-		spl = al_load_sample(file);
+	if (file.length() != 0) {
+		spl = al_load_sample(file.c_str());
 
 		if (spl)
 			samples[filename] = spl;

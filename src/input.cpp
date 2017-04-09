@@ -238,7 +238,7 @@ bool Input::InitPlayback(CString filename, bool seed_engine) {
 		return false;
 	} 
 
-	demofile = fopen(filename, "r");
+	demofile = fopen(filename.c_str(), "r");
 	
 	if (!demofile) {
 			TRACE(	"InputPlayback: ERROR can't open demofile '%s'.\n",
@@ -362,7 +362,7 @@ bool Input::InitRecorder(CString filename) {
 		return false;
 	} 
 
-	demofile = fopen(filename, "w");
+	demofile = fopen(filename.c_str(), "w");
 	
 	if (!demofile) {
 			TRACE(	"InputRecord: ERROR can't write to demofile '%s'.\n",

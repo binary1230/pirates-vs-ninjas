@@ -9,7 +9,7 @@
 int CreditsMode::Init(XMLNode xMode) {
 	CString file = xMode.getChildNode("scrollPic").getText();
 	
-	credits_sprite = ASSETMANAGER->LoadSprite(file);
+	credits_sprite = ASSETMANAGER->LoadSprite(file.c_str());
 
 	if (!credits_sprite)
 		return -1;

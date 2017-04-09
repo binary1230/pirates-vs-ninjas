@@ -27,8 +27,8 @@ void GameState::ResetAccumulatedTime() {
 int GameState::LoadXMLConfig(CString xml_filename) {
 				
 	// XXX xmlParser just DIES on error
-	xml_filename = ASSETMANAGER->GetPathOf(xml_filename);
-	xGame = XMLNode::openFileHelper(xml_filename, "game");
+	xml_filename = ASSETMANAGER->GetPathOf(xml_filename.c_str());
+	xGame = XMLNode::openFileHelper(xml_filename.c_str(), "game");
 	
 	XMLNode xInfo = xGame.getChildNode("info");
 

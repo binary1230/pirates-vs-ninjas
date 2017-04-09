@@ -188,7 +188,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
 
 			// get demo filename
 			case 'r': case 'd':
-				if (demo_filename.GetLength() > 0) {
+				if (demo_filename.length() > 0) {
 						TRACE(	"Options ==> ERROR "
 														"Don't give more than 1 demo filename (-r, -d)\n");
 						return (is_valid = false);
@@ -326,7 +326,7 @@ bool GameOptions::IsValid() {
 
 		// if we aren't to start as a server, but they didn't give us a server name
 		// (btw, ^ is XOR) [YES.]
-		if (!(network_start_as_server ^ (network_server_name.GetLength() > 0))) {
+		if (!(network_start_as_server ^ (network_server_name.length() > 0))) {
 			TRACE(	"Options ==> ERROR\n"
 					"To start with networking, you must specify ONLY ONE\n"
 					"of the following: (-c) or (-s servername)\n\n");

@@ -60,7 +60,7 @@ void GameModes::DoEndCurrentMode() {
 
 	CString mode_to_load = PickNextMode(exitInfo);
 
-	if (mode_to_load.GetLength() == 0 || LoadMode(mode_to_load, exitInfo) == -1)
+	if (mode_to_load.length() == 0 || LoadMode(mode_to_load, exitInfo) == -1)
 		signal_game_exit = true;
 }
 
@@ -69,7 +69,7 @@ void GameModes::DoEndCurrentMode() {
 CString GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 
 	// if the exit info tells us explicitly to use a mode, then do it.
-	if (exitInfo.useExitInfo && exitInfo.nextModeToLoad.GetLength() > 0)
+	if (exitInfo.useExitInfo && exitInfo.nextModeToLoad.length() > 0)
 		return exitInfo.nextModeToLoad;
 
 	// if exitInfo doesn't specify which mode to use, 
@@ -99,8 +99,8 @@ int GameModes::LoadMode(CString mode_xml_filename,
 
 	TRACE(" Mode Info: filename '%s'\n", mode_xml_filename );
 
-	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename);
-	XMLNode xMode = XMLNode::openFileHelper( mode_xml_filename, "gameMode" );
+	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename.c_str());
+	XMLNode xMode = XMLNode::openFileHelper( mode_xml_filename.c_str(), "gameMode" );
 
 	CString modeType = xMode.getAttribute("type");
 	TRACE(" Mode Info: type = '%s'\n", modeType);
@@ -200,7 +200,7 @@ int GameModes::Init(XMLNode _xGame) {
 		mode_files[i] = _xGame.getChildNode("mode_file", &iterator).getText();
 	}
 
-	const char* firstModeToLoad = mode_files[currentModeIndex];
+	const char* firstModeToLoad = mode_files[currentModeIndex].c_str();
 
 	// user can override the first mode's filename on the command line
 	if (OPTIONS->GetFirstModeOverride()) {

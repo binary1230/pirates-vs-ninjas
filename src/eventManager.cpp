@@ -34,5 +34,5 @@ void EventManager::OnEvent(const char* eventName) {
 	CString sEventCall = "Event_";
 	sEventCall += eventName;
 
-	LUA->RunVoidFunctionNoArgs(sEventCall, false);
+	LUA->RunVoidFunctionNoArgs(sEventCall.c_str(), false);
 }

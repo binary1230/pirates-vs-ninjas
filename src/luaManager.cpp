@@ -132,14 +132,14 @@ bool LuaManager::LoadLuaScript(const char* _filename)
 
 	CString filename = ASSETMANAGER->GetPathOf(_filename);
 
-	if (!filename.GetLength()) 
+	if (!filename.length()) 
 	{
 		TRACE("ERROR: Can't open LUA file '%s'\n", _filename);
 		ReleaseCurrentLuaScript();
 		return false;
 	}
 
-	if (luaL_dofile(m_pkLuaState, filename) != 0) 
+	if (luaL_dofile(m_pkLuaState, filename.c_str()) != 0) 
 	{
 		const char* szError = "(unknown loading error)";
 

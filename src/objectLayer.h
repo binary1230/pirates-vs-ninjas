@@ -29,7 +29,7 @@ class ObjectLayer {
 		void Shutdown();
 
 		void SetName(const char* _name) {name = _name;}
-		const char* GetName() {return name;}
+		const char* GetName() {return name.c_str();}
 
 		//! Get/set layer scroll speed
 		void SetScrollSpeed(float _scroll_speed) { scroll_speed = _scroll_speed ;};
