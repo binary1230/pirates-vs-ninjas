@@ -254,6 +254,7 @@
     <ClInclude Include="objects\objectTxtOverlay.h" />
     <ClInclude Include="oggFile.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="physicsDebugRenderer.h" />
     <ClInclude Include="precompiled.h" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="resource.h" />
@@ -319,6 +320,7 @@
     <ClCompile Include="objects\objectTxtOverlay.cpp" />
     <ClCompile Include="oggFile.cpp" />
     <ClCompile Include="physics.cpp" />
+    <ClCompile Include="physicsDebugRenderer.cpp" />
     <ClCompile Include="rect.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

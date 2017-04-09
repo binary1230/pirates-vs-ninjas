@@ -3,6 +3,7 @@
 #include "gameWorld.h"
 #include "window.h"
 #include "object.h"
+#include "physicsDebugRenderer.h"
 
 // NOTE: do NOT new/delete ANY physics objects EXCEPT m_pkWorld
 // 50 pixels == 1 meter in physics here
@@ -30,10 +31,8 @@ bool PhysicsManager::OnWorldInit()
 	assert(m_pkPhysicsWorld == NULL);
 	m_pkPhysicsWorld = new b2World(gravity);
 
-	// NOTE FROM DOM: If you are getting errors here, it's because I hacked the source
-	// of Box2D to 1) make SetDebugDraw() public, and 2) remove the call from b2World::Step()
-	// TEMPHACK 2017 // m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
-	// TEMPHACK 2017 // m_pkPhysicsWorld->SetDebugDraw(&m_kPhysicsDebugRenderer);
+	m_kPhysicsDebugRenderer.SetFlags(PhysicsDebugRenderer::e_shapeBit);
+	m_pkPhysicsWorld->SetDebugDraw(&m_kPhysicsDebugRenderer);
 
 	m_pkPhysicsWorld->SetContactListener(&m_kPhysicsContactListener);
 
@@ -74,7 +73,47 @@ void PhysicsManager::Draw()
 		m_pkPhysicsWorld->DrawDebugData();
 }
 
-b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation /*= false */, bool bSensorOnly /*= false*/ )
+void PhysicsManager::CreatePolygonWithRoundedEdges(float hx, float hy, b2PolygonShape& shapeOut) {
+	/*
+	
+	create a polygon with angled corners.
+	this is useful for preventing erroneous collisions for player characters
+	shape will look like this, with angled bottom corners:
+
+    F              E
+	----------------
+	|              |
+	|A      X      |D
+	 \            /
+	  B--------- C
+
+	hx = half of the width of the box,  from the center point X
+	hy = half of the height of the box, from the center point X
+
+	*/
+
+	float percent_x_inwards = 0.8f;
+	float percent_y_upwards = 0.95f;
+
+	const int32 count = 6;
+	b2Vec2 vertices[count];
+
+	// original corner of -hx, -hy, now made into an angle
+	vertices[0].Set(-hx, -hy * percent_y_upwards);	// A
+	vertices[1].Set(-hx * percent_x_inwards, -hy);	// B
+
+	// original corner of hx, -hy, now made into an angle
+	vertices[2].Set(hx * percent_x_inwards, -hy);	// C
+	vertices[3].Set(hx, -hy * percent_y_upwards);	// D
+
+	// top corners, unmodified from box
+	vertices[4].Set(hx, hy);	// E
+	vertices[5].Set(-hx, hy);	// F
+
+	shapeOut.Set(vertices, count);
+}
+
+b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation /*= false */, bool bSensorOnly /*= false*/, bool useRoundedBottom )
 {
 	b2BodyDef bodyDef;
 
@@ -96,8 +135,11 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	assert(pkBody);
 
 	b2PolygonShape shapeDef;
-	shapeDef.SetAsBox(halfWidth, halfHeight);
-
+	if (!useRoundedBottom)
+		shapeDef.SetAsBox(halfWidth, halfHeight);
+	else
+		CreatePolygonWithRoundedEdges(halfWidth, halfHeight, shapeDef);
+		
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shapeDef;
 	fixtureDef.friction = friction;
@@ -120,13 +162,13 @@ b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, f
 	return CreatePhysicsBox(x,y,width,height, density, restitution, friction, false, bSensorOnly );
 }
 
-b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation, float fDensity )
+b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation, float fDensity, bool useRoundedBottom)
 {
 	float density = 1.0f;  // HACK THIS IN HERE. override what's passed in
 	float restitution = 0.0f;
 	float friction = 0.2f;
 
-	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, density, restitution, friction, bDontAllowRotation);
+	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, density, restitution, friction, bDontAllowRotation, false, useRoundedBottom);
 	return pkBody;
 }
 

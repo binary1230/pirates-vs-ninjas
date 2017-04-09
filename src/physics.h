@@ -1,6 +1,8 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
+#include "physicsDebugRenderer.h"
+
 #define PIXELS_PER_METER 45
 
 #define PIXELS_TO_METERS(pixels_to_convert) (float(pixels_to_convert) / PIXELS_PER_METER)
@@ -39,7 +41,7 @@ class PhysicsManager
 		int m_iPhysicsSimulatorIterations;
 		b2World* m_pkPhysicsWorld;
 
-		// PhysicsDebugRenderer m_kPhysicsDebugRenderer;
+		PhysicsDebugRenderer m_kPhysicsDebugRenderer;
 		PhysicsContactListener m_kPhysicsContactListener;
 
 		ContactMappings m_currentContacts;
@@ -59,9 +61,16 @@ class PhysicsManager
 
 		// helpers
 		b2Body* CreateStaticPhysicsBox( float x, float y, float width, float height, bool bSensorOnly = false );
-		b2Body* CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation = false, float fDensity = 0.1f );
+		
+		b2Body* CreateDynamicPhysicsBox(	float x, float y, float width, float height, 
+											bool bDontAllowRotation = false, float fDensity = 0.1f, bool useRoundedBottom = false);
 
-		b2Body* CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation = false, bool bSensorOnly = false );
+		b2Body* CreatePhysicsBox(	float x, float y, float width, float height, 
+									float density, float restitution, float friction, 
+									bool bDontAllowRotation = false, bool bSensorOnly = false, 
+									bool useRoundedBottom = false );
+
+		void CreatePolygonWithRoundedEdges(float hx, float hy, b2PolygonShape & shapeOut);
 
 		void RemoveFromWorld(b2Body* pkBodyToRemove);
 	

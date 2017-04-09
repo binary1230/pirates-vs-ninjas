@@ -48,6 +48,10 @@ struct ObjectProperties
 	//! Don't let physics touch our rotation, we'll do it ourselves
 	bool do_our_own_rotation;
 
+	//! Tell the physics engine to create angled corners for our bounding box 
+	//! (useful to keep some objects from sticking on seams, like the player)
+	bool use_angled_corners_collision_box;
+
 	//! true if this object is an overlay
 	//! e.g. not IN the world, but on top it,
 	//! like our status bar or health or something.
@@ -73,6 +77,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.feels_friction = 0;
 	p.is_overlay = 0;
 	p.is_physical = 0;
+	p.use_angled_corners_collision_box = 0;
 	p.is_player = 0;
 	p.is_spring = 0;
 	p.is_collectable = 0;

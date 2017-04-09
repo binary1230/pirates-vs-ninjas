@@ -379,6 +379,7 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	properties.is_player = 1;
 	properties.is_physical = 1;
 	properties.ignores_physics_rotation = 1;
+	properties.use_angled_corners_collision_box = 1;
 
 	on_skateboard = false;
 
