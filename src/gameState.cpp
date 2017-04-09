@@ -14,6 +14,7 @@
 #include "luaManager.h"
 // #include "mapEditor.h"
 #include "physics.h"
+#include "gameWorld.h"
 
 DECLARE_SINGLETON(GameState)
 
@@ -379,6 +380,9 @@ void GameState::Tick()
 
 		if (INPUT->KeyOnce(GAMEKEY_TOGGLE_PHYSICS_DISPLAY) && !OPTIONS->MapEditorEnabled() && PHYSICS)
 			PHYSICS->SetDrawDebug(!PHYSICS->GetDrawDebug());
+
+		if (INPUT->KeyOnce(GAMEKEY_SAVE_MAP))
+			WORLD->SaveMap();
 	}
 
 	// Normally, now that we're done one Tick, we wait around for the next 1/30th of a sec

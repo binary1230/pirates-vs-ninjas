@@ -203,6 +203,8 @@ class GameWorld : public GameMode {
 				return allow_player_offscreen;
 			}
 
+			void SaveMap();
+
 			virtual ~GameWorld();
 
 			friend class MapSaver;

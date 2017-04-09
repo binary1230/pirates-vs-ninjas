@@ -45,11 +45,12 @@
 #define GAMEKEY_DEBUGSTEP				18
 #define GAMEKEY_SCREENSHOT				19
 #define GAMEKEY_TOGGLE_PHYSICS_DISPLAY	20
+#define GAMEKEY_SAVE_MAP				21
 
 /* End of logical mapping */
 
 //! The max number of defined keys 
-#define GAMEKEY_COUNT						21
+#define GAMEKEY_COUNT						22
 
 enum MouseClickType {
 	MOUSE_LEFT_BTN		= 0x00000001,

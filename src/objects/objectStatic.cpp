@@ -57,5 +57,7 @@ void StaticObject::UpdateSpawns()
 	WORLD->AddObject(badyguy);
 }
 
-StaticObject::StaticObject() {}
+StaticObject::StaticObject() {
+	junk_test = 42;
+}
 StaticObject::~StaticObject() {}

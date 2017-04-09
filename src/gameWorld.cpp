@@ -1016,6 +1016,16 @@ GameWorld::GameWorld() {
 	m_iCameraTotalShakeTime = -1;
 }
 
+void GameWorld::SaveMap()
+{
+	// make an archive
+	std::ofstream ofs("map-saved.xml");
+	assert(ofs.good());
+	boost::archive::xml_oarchive oa(ofs);
+
+	oa << BOOST_SERIALIZATION_NVP(this->m_objects);
+}
+
 GameWorld::~GameWorld() {}
 
 void GameWorld::AddNewObjectsIfNeeded()
