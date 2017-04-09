@@ -1,9 +1,8 @@
-#ifndef PHYS_SYSTEM_H
-#define PHYS_SYSTEM_H
-
-// TODO: Rename this file to gameWorld.h
+#ifndef GAMEWORLD_H
+#define GAMEWORLD_H
 
 #include "gameMode.h"
+#include "object.h"
 
 class Object;
 class ObjectFactory;
@@ -24,6 +23,14 @@ typedef vector<Object*>::iterator ObjectArrayIter;
 class GameWorld : public GameMode {
 
 		DECLARE_SINGLETON_CLASS(GameWorld)
+		
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive &ar, const unsigned int version)
+		{
+			ar  & BOOST_SERIALIZATION_BASE_OBJECT_NVP(GameMode)
+				& BOOST_SERIALIZATION_NVP(m_objects);
+		}
 
 		protected:
 			//! Filename of music, or NULL if none
@@ -74,8 +81,6 @@ class GameWorld : public GameMode {
 			// Stuff saved for map editor:
 			XMLNode m_xEffects;
 
-			bool CleanupObject(ObjectListIter &obj);
-
 			//! Game update functions
 			void UpdateObjects();
 
@@ -87,16 +92,12 @@ class GameWorld : public GameMode {
 			int LoadHeaderFromXML(XMLNode&);
 			int LoadObjectsFromXML(XMLNode&);
 			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer* const);
-			int LoadForcesFromXML(XMLNode&);
 			int LoadLayerFromXML(XMLNode&, ObjectLayer* const);
 			// these virtuals might be overridden by the map editor
 			virtual int LoadObjectDefsFromXML(XMLNode&);
 			virtual void LoadMusic(const char* filename);
 
 			int CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const);
-
-			//! Check and see if an object is dead and needs to be cleaned up
-			bool CheckIsDead(Object* obj);
 
 			void CachePlayerObjects();
 
@@ -203,11 +204,11 @@ class GameWorld : public GameMode {
 				return allow_player_offscreen;
 			}
 
-			virtual ~GameWorld();
+			void SaveMap();
 
-			friend class MapSaver;
+			virtual ~GameWorld();
 };
 
 #define WORLD (GameWorld::GetInstance())
 
-#endif
+#endif // GAMEWORLD_H

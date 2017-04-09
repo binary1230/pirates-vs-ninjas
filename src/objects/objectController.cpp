@@ -88,3 +88,5 @@ ObjectController::ObjectController() {
 }
 
 ObjectController::~ObjectController() {}
+
+BOOST_CLASS_EXPORT_GUID(ObjectController, "ObjectController")

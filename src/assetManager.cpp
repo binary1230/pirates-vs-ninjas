@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "assetManager.h"
-#include "oggFile.h"
 #include "sprite.h"
 #include "gameSound.h"
 
@@ -41,6 +40,7 @@ void AssetManager::FreeSprites() {
 			continue;
 
 		// TODO: probably something in here about freeing GL textures
+		// 2017 update: not sure any of this is needed anymore.
 	}
 	*/
 	sprites.clear();

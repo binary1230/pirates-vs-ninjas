@@ -46,3 +46,5 @@ bool FanObject::Init() {
 
 FanObject::FanObject() {}
 FanObject::~FanObject() {}
+
+BOOST_CLASS_EXPORT_GUID(FanObject, "FanObject")

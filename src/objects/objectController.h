@@ -14,6 +14,14 @@ struct Button {
 
 //! A drawable on-screen joystick Object that is shown during demo playback
 class ObjectController : public Object {
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive &ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
+		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
+	}
+
 	protected:
 		Sprite* controller_sprite;
 		vector<struct Button> buttons;

@@ -74,3 +74,5 @@ void EnemyObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold
 		bCollidedLastFrame = true;
 	}*/
 }
+
+BOOST_CLASS_EXPORT_GUID(EnemyObject, "EnemyObject")

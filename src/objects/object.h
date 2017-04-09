@@ -101,6 +101,8 @@ bool ObjectIsDead(Object* obj);
 //! Objects have physical properties associated with them, but do
 //! not always have to take part in the world
 class Object {
+	friend class boost::serialization::access;
+
 	protected:
 
 		//! A pointer to the layer this object is on
@@ -205,12 +207,19 @@ class Object {
 
 		//! If this object should report collisions or not
 		bool m_bCanCollide;
-		
-		// Protected constructor, this means we can't directly
-		// instantiate Object's, we need to use a friend or derived class.
-		Object();
+
+		template<class Archive>
+		void serialize(Archive & ar, const unsigned int /* file_version */)
+		{
+			ar  & BOOST_SERIALIZATION_NVP(pos.x)
+				& BOOST_SERIALIZATION_NVP(pos.y);
+		}
 	
 	public:
+		// WRONG Protected constructor, this means we can't directly
+		// instantiate Object's, we need to use a friend or derived class.
+		Object();
+
 		int tmp_debug_flag;
 
 		// Whether to draw ALL the different rectangles or not (DEBUG)
@@ -349,20 +358,6 @@ class Object {
 		inline bool IsDead() const {return is_dead;};
 		inline void SetIsDead(bool bVal) {is_dead = bVal;}
 
-		//! Returns a vector used for collision detection
-		//! This vector will be have a position that is guaranteed
-		//! to make the passed object NOT collide with THIS object.
-		//! (based on velocity)
-		// CollisionDirection GetBound(Object* obj, Vector2D &v);
-
-		void UpdateProjectionRectFromVelocity();
-		void UpdateProjectionRectFromCollisions(b2Vec2 &newPos);
-
-		//const _Rect& GetProjectionRect() const {return projRect;}
-
-		//! Plays a sound, or does nothing if that sound is not loaded
-		// void PlaySound(CString name);
-
 		ObjectLayer* const GetLayer() const {return m_pkLayer;};
 		void SetLayer(ObjectLayer* const l) {m_pkLayer = l;};
 		
@@ -381,7 +376,8 @@ class Object {
 		b2Body* m_pkPhysicsBody;
 
 		friend class ObjectFactory;
-		friend class MapSaver;
 };
+
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
 
 #endif // OBJECT_H

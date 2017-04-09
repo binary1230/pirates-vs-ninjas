@@ -28,3 +28,5 @@ void CollectableObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldMa
 		is_dead = true;
 	}
 }
+
+BOOST_CLASS_EXPORT_GUID(CollectableObject, "CollectableObject")

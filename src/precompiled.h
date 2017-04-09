@@ -65,17 +65,39 @@
 #include <malloc.h>
 #endif // PLATFORM_DARWIN
 
-#define ENGINE_EMBEDDED_LUA
+#define ENGINE_EMBEDDED_LUA			1
+#define ENGINE_USES_BOX2D_PHYSICS	1
+#define ENGINE_USES_BOOST			1
 
-#ifdef ENGINE_EMBEDDED_LUA
+#if ENGINE_EMBEDDED_LUA
 	#include <lua.hpp>
 #endif
 
-#define ENGINE_USES_BOX2D_PHYSICS
-
-#ifdef ENGINE_USES_BOX2D_PHYSICS
+#if ENGINE_USES_BOX2D_PHYSICS
 	#include <Box2D.h>
 #endif 
+
+#include <cstdio> // remove
+
+#if ENGINE_USES_BOOST
+	#include <boost/archive/tmpdir.hpp>
+	#include <boost/archive/xml_iarchive.hpp>
+	#include <boost/archive/xml_oarchive.hpp>
+	#include <boost/archive/text_oarchive.hpp>
+	#include <boost/archive/text_iarchive.hpp>
+
+	#include <boost/serialization/export.hpp>
+
+	#include <boost/serialization/vector.hpp>
+	#include <boost/serialization/list.hpp>
+
+	#include <boost/config.hpp>
+	#if defined(BOOST_NO_STDC_NAMESPACE)
+	namespace std {
+		using ::remove;
+	}
+	#endif
+#endif
 
 // Common to everything
 #include <stdarg.h>
@@ -116,10 +138,12 @@
 #include <algorithm>
 #include <functional>
 #include <cstdarg>
-#include <cstdio>
 #include <cctype>
 #include <cstdlib>
 #include <cstdarg>
+#include <iomanip>
+#include <iostream>
+#include <fstream>
 
 #include "globals.h"
 #include "singleton.h"

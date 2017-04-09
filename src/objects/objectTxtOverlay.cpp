@@ -202,3 +202,5 @@ ObjectText::ObjectText() {
 
 ObjectText::~ObjectText() {
 }
+
+BOOST_CLASS_EXPORT_GUID(ObjectText, "ObjectText")

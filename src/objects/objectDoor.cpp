@@ -107,3 +107,5 @@ bool DoorObject::Init() {
 
 DoorObject::DoorObject() {}
 DoorObject::~DoorObject() {}
+
+BOOST_CLASS_EXPORT_GUID(DoorObject, "DoorObject")

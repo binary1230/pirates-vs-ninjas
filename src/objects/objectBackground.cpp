@@ -81,3 +81,5 @@ void BackgroundObject::Shutdown() {
 
 BackgroundObject::BackgroundObject() {}
 BackgroundObject::~BackgroundObject() {}
+
+BOOST_CLASS_EXPORT_GUID(BackgroundObject, "BackgroundObject")

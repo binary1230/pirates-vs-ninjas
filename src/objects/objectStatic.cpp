@@ -59,3 +59,5 @@ void StaticObject::UpdateSpawns()
 
 StaticObject::StaticObject() {}
 StaticObject::~StaticObject() {}
+
+BOOST_CLASS_EXPORT_GUID(StaticObject, "StaticObject")

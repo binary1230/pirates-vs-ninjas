@@ -38,6 +38,15 @@ struct GameModeExitInfo {
 //! other things.  It also acts as a node in a linked list in order to hold
 //! all the game modes.
 class GameMode {
+
+	friend class boost::serialization::access;
+
+	template<class Archive>
+	void serialize(Archive &ar, const unsigned int version)
+	{
+		// implement if needed
+	}
+
 		protected:
 
 			// our exit info that we will return 

@@ -237,10 +237,8 @@
     <ClInclude Include="objectIDs.h" />
     <ClInclude Include="objectLayer.h" />
     <ClInclude Include="objects\object.h" />
-    <ClInclude Include="objects\object3d.h" />
     <ClInclude Include="objects\objectBackground.h" />
     <ClInclude Include="objects\objectBounce.h" />
-    <ClInclude Include="objects\objectBridge.h" />
     <ClInclude Include="objects\objectCollectable.h" />
     <ClInclude Include="objects\objectController.h" />
     <ClInclude Include="objects\objectCutBars.h" />
@@ -252,7 +250,6 @@
     <ClInclude Include="objects\objectSpring.h" />
     <ClInclude Include="objects\objectStatic.h" />
     <ClInclude Include="objects\objectTxtOverlay.h" />
-    <ClInclude Include="oggFile.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="physicsDebugRenderer.h" />
     <ClInclude Include="precompiled.h" />
@@ -303,10 +300,8 @@
     <ClCompile Include="objectFactory.cpp" />
     <ClCompile Include="objectLayer.cpp" />
     <ClCompile Include="objects\object.cpp" />
-    <ClCompile Include="objects\object3d.cpp" />
     <ClCompile Include="objects\objectBackground.cpp" />
     <ClCompile Include="objects\objectBounce.cpp" />
-    <ClCompile Include="objects\objectBridge.cpp" />
     <ClCompile Include="objects\objectCollectable.cpp" />
     <ClCompile Include="objects\objectController.cpp" />
     <ClCompile Include="objects\objectCutBars.cpp" />
@@ -318,7 +313,6 @@
     <ClCompile Include="objects\objectSpring.cpp" />
     <ClCompile Include="objects\objectStatic.cpp" />
     <ClCompile Include="objects\objectTxtOverlay.cpp" />
-    <ClCompile Include="oggFile.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="physicsDebugRenderer.cpp" />
     <ClCompile Include="rect.cpp" />
@@ -336,6 +330,8 @@
     <Import Project="packages\lua.redist.5.3.3\build\native\lua.redist.targets" Condition="Exists('packages\lua.redist.5.3.3\build\native\lua.redist.targets')" />
     <Import Project="packages\lua.5.3.3\build\native\lua.targets" Condition="Exists('packages\lua.5.3.3\build\native\lua.targets')" />
     <Import Project="packages\Box2D.2.3.0\build\native\Box2D.targets" Condition="Exists('packages\Box2D.2.3.0\build\native\Box2D.targets')" />
+    <Import Project="packages\boost.1.63.0.0\build\native\boost.targets" Condition="Exists('packages\boost.1.63.0.0\build\native\boost.targets')" />
+    <Import Project="packages\boost_serialization-vc140.1.63.0.0\build\native\boost_serialization-vc140.targets" Condition="Exists('packages\boost_serialization-vc140.1.63.0.0\build\native\boost_serialization-vc140.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -346,5 +342,7 @@
     <Error Condition="!Exists('packages\lua.redist.5.3.3\build\native\lua.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\lua.redist.5.3.3\build\native\lua.redist.targets'))" />
     <Error Condition="!Exists('packages\lua.5.3.3\build\native\lua.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\lua.5.3.3\build\native\lua.targets'))" />
     <Error Condition="!Exists('packages\Box2D.2.3.0\build\native\Box2D.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Box2D.2.3.0\build\native\Box2D.targets'))" />
+    <Error Condition="!Exists('packages\boost.1.63.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost.1.63.0.0\build\native\boost.targets'))" />
+    <Error Condition="!Exists('packages\boost_serialization-vc140.1.63.0.0\build\native\boost_serialization-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_serialization-vc140.1.63.0.0\build\native\boost_serialization-vc140.targets'))" />
   </Target>
 </Project>

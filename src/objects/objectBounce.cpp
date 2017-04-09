@@ -51,3 +51,5 @@ void ObjectBounce::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 
 ObjectBounce::ObjectBounce() {}
 ObjectBounce::~ObjectBounce() {}
+
+BOOST_CLASS_EXPORT_GUID(ObjectBounce, "ObjectBounce")
