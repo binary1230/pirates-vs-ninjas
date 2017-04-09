@@ -15,33 +15,9 @@ function UpdateIntroState()
 
 	elseif introState == 2 then
 
-		world_textbox("Amaya: Jouten!| |(Press C to continue)~Amaya: ...~Amaya: Jouten!!!!~Amaya: Hm....|Where could he be?", "amaya-icon.png");
+		world_textbox("Sup. It's a good day to be a sweet, sweet ninja.| |(Press C to continue)~I should meet up with my friend~I'll just head up from here.", "amaya-icon.png");
 		
 	elseif introState == 3 then
-
-		world_textbox("Jouten:| |TAAAAALLLY|HOOOOOO!~", "jouten-icon.png");
-
-	elseif introState == 4 then
-
-		world_play_input_script("data/input/level1.2.input");
-	
-	elseif introState == 5 then
-
-		world_textbox("Jouten: Hey Amaya!||What's new?", "jouten-icon.png");
-	
-	elseif introState == 6 then
-
-		world_textbox("Amaya: You know, you really scare me sometimes.~Amaya: But, I need your help, which is weird.|Let's get to your|workshop, FAST.", "amaya-icon.png");
-	
-	elseif introState == 7 then
-		
-		world_textbox("Jouten: No prob. It should|be a quick climb|from here.~Just head straight up.", "jouten-icon.png");
-	
-	elseif introState == 8 then
-		
-		world_textbox("Amaya: Let's hurry up and get there!", "amaya-icon.png");
-	
-	elseif introState == 9 then
 
 		world_create_cutbars("Pirates VS Ninjas|Level 1 - Treasure Island");
 
