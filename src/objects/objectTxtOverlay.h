@@ -34,6 +34,14 @@ class ObjectFactory;
 //
 // When the user presses a key again, it will close the textbox
 class ObjectText : public Object {
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive &ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
+		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
+	}
+
 	protected:
 		Sprite *avatar_sprite, *wait_sprite;
 

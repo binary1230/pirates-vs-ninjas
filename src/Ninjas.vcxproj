@@ -237,10 +237,8 @@
     <ClInclude Include="objectIDs.h" />
     <ClInclude Include="objectLayer.h" />
     <ClInclude Include="objects\object.h" />
-    <ClInclude Include="objects\object3d.h" />
     <ClInclude Include="objects\objectBackground.h" />
     <ClInclude Include="objects\objectBounce.h" />
-    <ClInclude Include="objects\objectBridge.h" />
     <ClInclude Include="objects\objectCollectable.h" />
     <ClInclude Include="objects\objectController.h" />
     <ClInclude Include="objects\objectCutBars.h" />
@@ -252,7 +250,6 @@
     <ClInclude Include="objects\objectSpring.h" />
     <ClInclude Include="objects\objectStatic.h" />
     <ClInclude Include="objects\objectTxtOverlay.h" />
-    <ClInclude Include="oggFile.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="physicsDebugRenderer.h" />
     <ClInclude Include="precompiled.h" />
@@ -303,10 +300,8 @@
     <ClCompile Include="objectFactory.cpp" />
     <ClCompile Include="objectLayer.cpp" />
     <ClCompile Include="objects\object.cpp" />
-    <ClCompile Include="objects\object3d.cpp" />
     <ClCompile Include="objects\objectBackground.cpp" />
     <ClCompile Include="objects\objectBounce.cpp" />
-    <ClCompile Include="objects\objectBridge.cpp" />
     <ClCompile Include="objects\objectCollectable.cpp" />
     <ClCompile Include="objects\objectController.cpp" />
     <ClCompile Include="objects\objectCutBars.cpp" />
@@ -318,7 +313,6 @@
     <ClCompile Include="objects\objectSpring.cpp" />
     <ClCompile Include="objects\objectStatic.cpp" />
     <ClCompile Include="objects\objectTxtOverlay.cpp" />
-    <ClCompile Include="oggFile.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="physicsDebugRenderer.cpp" />
     <ClCompile Include="rect.cpp" />

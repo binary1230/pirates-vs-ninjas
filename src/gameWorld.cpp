@@ -1018,12 +1018,13 @@ GameWorld::GameWorld() {
 
 void GameWorld::SaveMap()
 {
-	// make an archive
-	std::ofstream ofs("map-saved.xml");
+	const char* filename = "test-save.xml";
+
+	GameMode* w = WORLD;
+	std::ofstream ofs(filename);
 	assert(ofs.good());
 	boost::archive::xml_oarchive oa(ofs);
-
-	oa << BOOST_SERIALIZATION_NVP(this->m_objects);
+	oa << BOOST_SERIALIZATION_NVP(w);
 }
 
 GameWorld::~GameWorld() {}
@@ -1039,3 +1040,6 @@ void GameWorld::AddNewObjectsIfNeeded()
 
 	m_kObjectsToAdd.clear();
 }
+
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(GameWorld)
+BOOST_CLASS_EXPORT_GUID(GameWorld, "GameWorld")

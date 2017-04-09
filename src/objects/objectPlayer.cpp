@@ -394,3 +394,5 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 
 PlayerObject::PlayerObject() {}
 PlayerObject::~PlayerObject() {}
+
+BOOST_CLASS_EXPORT_GUID(PlayerObject, "PlayerObject")

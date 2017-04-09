@@ -57,3 +57,4 @@ void SpringObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 	}
 }
 
+BOOST_CLASS_EXPORT_GUID(SpringObject, "SpringObject")

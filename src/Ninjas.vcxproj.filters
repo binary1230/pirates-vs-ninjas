@@ -100,9 +100,6 @@
     <ClInclude Include="objectLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="oggFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -136,16 +133,10 @@
     <ClInclude Include="objects\object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="objects\object3d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="objects\objectBackground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="objects\objectBounce.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="objects\objectBridge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="objects\objectCollectable.h">
@@ -267,9 +258,6 @@
     <ClCompile Include="objectLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="oggFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -288,16 +276,10 @@
     <ClCompile Include="objects\object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="objects\object3d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="objects\objectBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="objects\objectBounce.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="objects\objectBridge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="objects\objectCollectable.cpp">

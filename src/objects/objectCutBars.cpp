@@ -95,3 +95,5 @@ CutBarObject::CutBarObject() {
 }
 
 CutBarObject::~CutBarObject() {}
+
+BOOST_CLASS_EXPORT_GUID(CutBarObject, "CutBarObject")

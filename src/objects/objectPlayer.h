@@ -32,6 +32,14 @@ enum InputStateMask {
 
 //! The Player object, represents our HERO on screen
 class PlayerObject : public Object {
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive &ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
+		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
+	}
+
 	protected:
 		float jump_velocity;
 		float min_velocity;
