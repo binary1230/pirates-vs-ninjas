@@ -1020,11 +1020,10 @@ void GameWorld::SaveMap()
 {
 	const char* filename = "test-save.xml";
 
-	GameMode* w = WORLD;
 	std::ofstream ofs(filename);
 	assert(ofs.good());
 	boost::archive::xml_oarchive oa(ofs);
-	oa << BOOST_SERIALIZATION_NVP(w);
+	oa << BOOST_SERIALIZATION_NVP(this);
 }
 
 GameWorld::~GameWorld() {}

@@ -90,6 +90,7 @@
 
 	#include <boost/serialization/vector.hpp>
 	#include <boost/serialization/list.hpp>
+	#include <boost/serialization/string.hpp>
 
 	#include <boost/config.hpp>
 	#if defined(BOOST_NO_STDC_NAMESPACE)

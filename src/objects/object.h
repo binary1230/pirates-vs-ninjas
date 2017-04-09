@@ -102,6 +102,12 @@ bool ObjectIsDead(Object* obj);
 //! not always have to take part in the world
 class Object {
 	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int /* file_version */)
+	{
+		ar  & BOOST_SERIALIZATION_NVP(pos.x)
+			& BOOST_SERIALIZATION_NVP(pos.y);
+	}
 
 	protected:
 
@@ -111,12 +117,6 @@ class Object {
 		//! Which controller (e.g. which joystick) use, if we are getting
 		//! input for this object
 		int controller_num;
-		
-		//! Bounding box for this object
-		// _Rect bbox;
-
-		//! Projection rectangle (for collisions)
-		// _Rect projRect;
 
 		//! CACHED level width and height
 		int level_width, level_height;
@@ -207,13 +207,6 @@ class Object {
 
 		//! If this object should report collisions or not
 		bool m_bCanCollide;
-
-		template<class Archive>
-		void serialize(Archive & ar, const unsigned int /* file_version */)
-		{
-			ar  & BOOST_SERIALIZATION_NVP(pos.x)
-				& BOOST_SERIALIZATION_NVP(pos.y);
-		}
 	
 	public:
 		// WRONG Protected constructor, this means we can't directly

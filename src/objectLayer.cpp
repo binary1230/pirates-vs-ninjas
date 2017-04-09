@@ -69,3 +69,4 @@ ObjectLayer::~ObjectLayer() {
 	Shutdown();
 }
 
+BOOST_CLASS_EXPORT_GUID(ObjectLayer, "ObjectLayer")

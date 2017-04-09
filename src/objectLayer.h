@@ -8,10 +8,16 @@ class Object;
 //! A layer holds pointers to the objects on it. Its main purpose is to 
 //! allow Object's to be drawn in the correct order on-screen and allow
 //! multiple scrolling speeds
-//
-// TODO The layers holding pointers to objects is a bit complex and probably
-//      needs rethinking
 class ObjectLayer {
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int /* file_version */)
+	{
+		ar	& BOOST_SERIALIZATION_NVP(objects)
+			& BOOST_SERIALIZATION_NVP(scroll_speed);
+			// & BOOST_SERIALIZATION_NVP(name);
+	}
+
 	protected:
 		list<Object*> objects;
 		bool visible;

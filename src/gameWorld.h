@@ -29,7 +29,7 @@ class GameWorld : public GameMode {
 		void serialize(Archive &ar, const unsigned int version)
 		{
 			ar  & BOOST_SERIALIZATION_BASE_OBJECT_NVP(GameMode)
-				& BOOST_SERIALIZATION_NVP(m_objects);
+				& BOOST_SERIALIZATION_NVP(m_kLayers);
 		}
 
 		protected:
