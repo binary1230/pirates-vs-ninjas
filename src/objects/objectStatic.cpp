@@ -61,3 +61,5 @@ StaticObject::StaticObject() {
 	junk_test = 42;
 }
 StaticObject::~StaticObject() {}
+
+BOOST_CLASS_EXPORT_GUID(StaticObject, "StaticObject")

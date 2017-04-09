@@ -395,3 +395,5 @@ void Object::UpdatePositionFromPhysicsLocation()
 	pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - float(width) / 2;
 	pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - float(height) / 2;
 }
+
+BOOST_CLASS_EXPORT_GUID(Object, "Object")

@@ -13,6 +13,8 @@ class ObjectLayer;
 class ObjectFactory;
 class b2Body;
 
+class ObjectStatic;
+
 struct CollisionDirection {
 	unsigned up : 1;
 	unsigned down : 1;
@@ -212,6 +214,9 @@ class Object {
 		template<class Archive>
 		void serialize(Archive & ar, const unsigned int /* file_version */)
 		{
+			// TODO: figure out if we don't have to hardcode this
+			// ar.register_type(static_cast<StaticObject *>(NULL)); // dont think needed anymore
+
 			ar  & BOOST_SERIALIZATION_NVP(pos.x)
 				& BOOST_SERIALIZATION_NVP(pos.y);
 		}

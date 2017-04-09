@@ -57,8 +57,6 @@ public:
 #include "objectStatic.h"
 
 void junk() {
-	// create and open a character archive for output
-
 	// create class instance
 	StaticObject g;
 	g.junk_test = 88888;
@@ -68,14 +66,15 @@ void junk() {
 
 	// save data to archive
 	{
+		Object* x = &g;
 		std::ofstream ofs(filename);
 		assert(ofs.good());
 		boost::archive::xml_oarchive oa(ofs);
-		oa << BOOST_SERIALIZATION_NVP(g);
+		oa << BOOST_SERIALIZATION_NVP(x);
 	}
 
 	// ... some time later restore the class instance to its orginal state
-	StaticObject newg;
+	Object* newg;
 	{
 		// create and open an archive for input
 		std::ifstream ifs(filename);
