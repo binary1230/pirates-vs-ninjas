@@ -70,6 +70,39 @@ struct ObjectProperties
 	bool is_badguy;
 };
 
+namespace boost {
+	namespace serialization {
+
+		// custom serializable types for Boost
+
+		template<class Archive>
+		void serialize(Archive & ar, ObjectProperties& p, const unsigned int version)
+		{
+			ar & BOOST_SERIALIZATION_NVP(p.feels_gravity);
+			ar & BOOST_SERIALIZATION_NVP(p.feels_user_input);
+			ar & BOOST_SERIALIZATION_NVP(p.feels_friction);
+			ar & BOOST_SERIALIZATION_NVP(p.spawns_enemies);
+			ar & BOOST_SERIALIZATION_NVP(p.is_physical);
+			ar & BOOST_SERIALIZATION_NVP(p.is_static);
+			ar & BOOST_SERIALIZATION_NVP(p.is_sensor);
+			ar & BOOST_SERIALIZATION_NVP(p.ignores_physics_rotation);
+			ar & BOOST_SERIALIZATION_NVP(p.do_our_own_rotation);
+			ar & BOOST_SERIALIZATION_NVP(p.use_angled_corners_collision_box);
+			ar & BOOST_SERIALIZATION_NVP(p.is_overlay);
+
+			ar & BOOST_SERIALIZATION_NVP(p.is_player);
+			ar & BOOST_SERIALIZATION_NVP(p.is_spring);
+			ar & BOOST_SERIALIZATION_NVP(p.is_collectable);
+			ar & BOOST_SERIALIZATION_NVP(p.is_fan);
+			ar & BOOST_SERIALIZATION_NVP(p.is_door);
+			ar & BOOST_SERIALIZATION_NVP(p.is_ring);
+			ar & BOOST_SERIALIZATION_NVP(p.is_ball);
+
+			ar & BOOST_SERIALIZATION_NVP(p.is_badguy);
+		}
+	}
+}
+
 //! Clears property masks
 inline void ClearProperties(struct ObjectProperties& p) {
 	p.feels_gravity = 0;
@@ -105,8 +138,10 @@ class Object {
 	template<class Archive>
 	void serialize(Archive & ar, const unsigned int /* file_version */)
 	{
-		ar  & BOOST_SERIALIZATION_NVP(pos.x)
-			& BOOST_SERIALIZATION_NVP(pos.y);
+		ar & BOOST_SERIALIZATION_NVP(pos);
+		ar & BOOST_SERIALIZATION_NVP(objectDefName);
+		ar & BOOST_SERIALIZATION_NVP(controller_num);
+		ar & BOOST_SERIALIZATION_NVP(properties);
 	}
 
 	protected:
@@ -159,7 +194,7 @@ class Object {
 		int display_time;
 
 		// XML Props, rarely ever used.
-		std::string* objectDefName;
+		std::string objectDefName;
 
 		// -- UNUSUED BELOW --
 

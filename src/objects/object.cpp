@@ -16,8 +16,7 @@
 bool Object::debug_draw_bounding_boxes = 0;
 
 void Object::SetObjectDefName(const char* _name) {
-	SAFE_DELETE(objectDefName);
-	objectDefName = new std::string(_name);
+	objectDefName = _name;
 }
 
 // Used as criteria for STL find()
@@ -320,14 +319,11 @@ void Object::BaseShutdown() {
 
 	if (PHYSICS && m_pkPhysicsBody)
 		PHYSICS->RemoveFromWorld(m_pkPhysicsBody);
-
-	SAFE_DELETE(objectDefName);
 }
 
 unsigned long Object::debug_object_id = 0;
 
 Object::Object() {
-	objectDefName = NULL;
 	unique_id = Object::debug_object_id++;
 	m_pkLayer = NULL;
 	currentSprite = NULL;
@@ -350,10 +346,7 @@ void Object::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 	// default is no action, this is overidden in higher classes
 }
 
-Object::~Object() 
-{
-	SAFE_DELETE(objectDefName);
-}
+Object::~Object() {}
 
 void Object::PlayAnimation( uint uiIndex )
 {
