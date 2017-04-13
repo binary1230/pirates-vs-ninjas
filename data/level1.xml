@@ -2,7 +2,7 @@
 <gameMode type="simulation">
 	<info/>
 	
-	<luaScript>scripts/level1.lua</luaScript>
+	<!--<luaScript>scripts/level1.lua</luaScript>TEMP-->
 	
 	<properties>
 		<width>

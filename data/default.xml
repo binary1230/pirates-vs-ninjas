@@ -17,8 +17,9 @@
 	
 	-->
 
-	<mode_file>menu.xml</mode_file>
     <mode_file>level1.xml</mode_file>
+	
+	<mode_file>menu.xml</mode_file>
 	<mode_file>level2.xml</mode_file>
 	<mode_file>level2-fall.xml</mode_file>
 	<mode_file>credits.xml</mode_file>

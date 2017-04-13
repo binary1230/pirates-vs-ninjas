@@ -87,13 +87,15 @@ bool EffectsManager::AddEffectDefinition(	const std::string &effectName,
 
 Object* EffectsManager::TriggerObject(	const Object* triggeringObject, 
 										std::string effectName) {
-
 	if (!triggeringObject) {
 		TRACE("ERROR: Tried to trigger an effect with a NULL object!\n");
 		return NULL;
 	}
 	
-	Object* newObj = OBJECT_FACTORY->CreateObject(effectName);
+	Object* newObj = NULL;
+
+	#ifdef USE_OLD_LOADING_SYSTEM
+	newObj = OBJECT_FACTORY->CreateObject(effectName);
 
 	if (!newObj) {
 		TRACE("ERROR: Unable to create effect object of type: '%s'\n", 
@@ -107,6 +109,7 @@ Object* EffectsManager::TriggerObject(	const Object* triggeringObject,
 	const bool addImmediately = true;	// might be slightly risk to do this, 
 										// but needed for some physics stuff to work right away
 	WORLD->AddObject( newObj, addImmediately );
+	#endif USE_OLD_LOADING_SYSTEM
 
 	return newObj;
 }

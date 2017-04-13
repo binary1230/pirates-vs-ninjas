@@ -41,6 +41,7 @@ int GameWorld::GetCameraY() {
 void GameWorld::ShowText(	const char* txt, 
 							const char* avatar_filename, 
 							bool modal_active) {
+	#ifdef USE_OLD_LOADING_SYSTEM
 	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT);
 
 	if (!obj) {
@@ -55,9 +56,13 @@ void GameWorld::ShowText(	const char* txt,
 		obj->SetAvatarFilename(avatar_filename);
 
 	AddObject(obj);
+	#endif // USE_OLD_LOADING_SYSTEM
 }
 
 int GameWorld::Init(XMLNode xMode) {
+	m_objects.clear();
+	m_kLayers.clear();
+
 	allow_player_offscreen = false;
 	use_scroll_speed = true;
 	m_iCameraTotalShakeTime = -1;
@@ -67,6 +72,7 @@ int GameWorld::Init(XMLNode xMode) {
 	m_pkCameraLookatTarget = NULL;
 	m_fCameraScrollSpeed = 1.0f;
 	m_bJumpedBackFromADoor = false;
+	m_kObjectsToAdd.clear();
 		
 	OBJECT_FACTORY->CreateInstance();
 	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) 
@@ -81,10 +87,6 @@ int GameWorld::Init(XMLNode xMode) {
 		TRACE("ERROR: InitSystem: failed to init EffectsManager!\n");
 		return -1;
 	}
-
-	m_kObjectsToAdd.clear();
-	m_objects.clear();
-	m_kLayers.clear();
 
 	EVENTS->CreateInstance();
 	if (!EVENTS || !EVENTS->Init()) 
@@ -741,6 +743,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 								 XMLNode &xObject,
 								 ObjectLayer* const layer) {
 
+	#ifdef USE_OLD_LOADING_SYSTEM
 	int x,y;
 
 	// Really create the instance of this object, it is BORN here:
@@ -898,27 +901,6 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 
 		obj->SetXY(x,y);
 
-		// check for velocity - <velx>, <vely>, and <vel_rotate>
-		/*
-		if (xPos.nChildNode("velx")>0) {
-			float velx;
-			if (!xPos.getChildNode("velx").getFloat(velx)) {
-				TRACE("-- Invalid velx!\n");
-				return -1;
-			}
-			obj->SetVelX(velx);
-		}
-
-		if (xPos.nChildNode("vely")>0) {
-			float vely;
-			if (!xPos.getChildNode("vely").getFloat(vely)) {
-				TRACE("-- Invalid vely!\n");
-				return -1;
-			}
-			obj->SetVelY(vely);
-		}
-		*/
-
 		if (xPos.nChildNode("vel_rotate")>0) {
 			float vel_rotate;
 			if (!xPos.getChildNode("vel_rotate").getFloat(vel_rotate)) {
@@ -962,6 +944,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 
 	// Everything loaded OK, now we add it to the simulation
 	AddObject(obj, true);
+	#endif // USE_OLD_LOADING_SYSTEM
 
 	return 0;
 }

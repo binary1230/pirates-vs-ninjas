@@ -85,6 +85,29 @@ std::string GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 	}
 }
 
+void GameModes::LoadSimulationMode() {
+	#ifdef USE_OLD_LOADING_SYSTEM
+		// slight singleton hack.
+		//if (!OPTIONS->MapEditorEnabled()) {
+		WORLD->CreateInstance();
+		//} else {
+		//	WORLD->SetInstance(new MapEditor());
+		//}
+
+		currentMode = WORLD;
+	#else
+		// create and open an archive for input
+		GameWorld* unserialized_world;
+		std::ifstream ifs("test-save.xml");
+		boost::archive::xml_iarchive ia(ifs);
+		ia >> BOOST_SERIALIZATION_NVP(unserialized_world);
+		
+		WORLD->SetInstance(unserialized_world);
+		currentMode = WORLD;
+
+	#endif // USE_OLD_LOADING_SYSTEM
+}
+
 //! Load a new mode up from the specified XML file
 //! Use the specified mode exit info from the last mode that exited
 //! If there was no mode exit info, just pass in a blank oldExitInfo and
@@ -108,16 +131,7 @@ int GameModes::LoadMode(std::string mode_xml_filename,
 	// actually create the new mode
 	if (modeType == "simulation") 
 	{
-
-		// slight singleton hack.
-		//if (!OPTIONS->MapEditorEnabled()) {
-			WORLD->CreateInstance();
-		//} else {
-		//	WORLD->SetInstance(new MapEditor());
-		//}
-
-		currentMode = WORLD;
-
+		LoadSimulationMode();
 	} 
 	else if (modeType == "credits") 
 	{

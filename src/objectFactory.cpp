@@ -17,44 +17,29 @@
 #include "sprite.h"
 #include "object.h"
 #include "objectIDs.h"
-#include "objectPlayerHuman.h"
-#include "objectBounce.h"
-#include "objectBackground.h"
-#include "objectController.h"
-#include "objectStatic.h"
-#include "objectSpring.h"
-#include "objectCollectable.h"
-#include "objectFan.h"
-#include "objectDoor.h"
-#include "objectEnemy.h"
-#include "objectTxtOverlay.h"
-// #include "object3d.h" // not yet.
-#include "objectCutBars.h"
+
+#ifdef USE_OLD_LOADING_SYSTEM
+	#include "objectPlayerHuman.h"
+	#include "objectBounce.h"
+	#include "objectBackground.h"
+	#include "objectController.h"
+	#include "objectStatic.h"
+	#include "objectSpring.h"
+	#include "objectCollectable.h"
+	#include "objectFan.h"
+	#include "objectDoor.h"
+	#include "objectEnemy.h"
+	#include "objectTxtOverlay.h"
+	// #include "object3d.h" // not yet.
+	#include "objectCutBars.h"
+#endif // USE_OLD_LOADING_SYSTEM
+
 #include "assetManager.h"
 #include "animations.h"
 #include "gameSound.h"
 #include "gameWorld.h"
 
 DECLARE_SINGLETON(ObjectFactory)
-		
-Object* ObjectFactory::CreateObject(std::string objDefName) {
-	XMLNode* xObjectDef = FindObjectDefinition(objDefName);
-
-	if (!xObjectDef) {
-		TRACE(	"ObjectFactory: Unable to instantiate "
-				"object definition: '%s'\n", objDefName);
-		return NULL;
-	}
-	
-	ENGINE_OBJECTID id = GetObjectIDFromXML(*xObjectDef);
-	
-	Object* pkObject = CreateObject(id, *xObjectDef, NULL);
-	if (!pkObject)
-		return false;
-
-	pkObject->SetObjectDefName(objDefName.c_str());
-	return pkObject;
-}
 
 bool ObjectFactory::AddObjectDefinition(const std::string &objDefName, 	
 										const XMLNode &xObjectDef) {
@@ -192,6 +177,126 @@ std::string ObjectFactory::GetObjectTypeFromXML(XMLNode &xObjectDef) {
 	return xObjectDef.getAttribute("type");
 }
 
+int ObjectFactory::Init() {
+	objectDefs.clear();
+	SetupTypes();
+	return 0;
+}
+
+void ObjectFactory::Shutdown() {
+	objectDefs.clear();
+	objectDefTypes.clear();
+}
+
+
+// A helper function to load animations
+bool ObjectFactory::LoadObjectAnimations(
+	Object* obj, XMLNode &xDef,
+	AnimationMapping *animation_lookup) {
+
+	uint i;
+	int num_xml_animations, num_animation_slots_needed = -1, iterator;
+
+	Animation* anim = NULL;
+	std::string anim_name;
+	XMLNode xAnim, xAnims;
+
+	xAnims = xDef.getChildNode("animations");
+	num_xml_animations = xAnims.nChildNode("animation");
+
+	if (animation_lookup)
+		num_animation_slots_needed = animation_lookup->size();
+
+	obj->animations.resize(max(num_xml_animations, num_animation_slots_needed));
+
+	// zero out all the animations to NULL
+	for (i = 0; i < obj->animations.size(); ++i)
+		obj->animations[i] = NULL;
+
+	// read everything from XML
+	for (i = iterator = 0; i<(uint)num_xml_animations; ++i)
+	{
+		xAnim = xAnims.getChildNode("animation", &iterator);
+		anim_name = xAnim.getAttribute("name");
+
+		// Load the animation	
+		anim = Animation::Load(xAnim, obj);
+
+		if (!anim)
+			return false;
+
+		// if we have animation names (e.g. "walking") then use them to figure
+		// out which index we store this animation at
+		// if not, just put it in the next available index
+		uint index;
+		if (animation_lookup)
+			index = (*animation_lookup)[anim_name];
+		else
+			index = i;
+
+		assert(index >= 0 && index < obj->animations.size());
+		obj->animations[index] = anim;
+	}
+
+	// set the default animation 
+	// XXX error check this!
+
+	std::string default_name;
+	int default_index;
+
+	if (!animation_lookup) {
+		obj->currentAnimation = obj->animations[0];
+	}
+	else {
+		default_name = xAnims.getAttribute("default");
+		default_index = (*animation_lookup)[default_name];
+		obj->currentAnimation = obj->animations[default_index];
+	}
+
+	// set the current sprite to the first frame of the animation
+	obj->currentSprite = obj->currentAnimation->GetCurrentSprite();
+
+	return true;
+}
+
+//! Load any sounds specified in the XML
+// (obj not used)
+bool ObjectFactory::LoadObjectSounds(Object* obj, XMLNode &xDef) {
+
+	if (xDef.nChildNode("sounds")) {
+		XMLNode xSounds = xDef.getChildNode("sounds");
+		if (!SOUND->LoadSounds(xSounds))
+			return false;
+	}
+
+	return true;
+}
+
+ObjectFactory::ObjectFactory() {}
+ObjectFactory::~ObjectFactory() {}
+
+// everything below here is unused
+
+#ifdef USE_OLD_LOADING_SYSTEM
+Object* ObjectFactory::CreateObject(std::string objDefName) {
+	XMLNode* xObjectDef = FindObjectDefinition(objDefName);
+
+	if (!xObjectDef) {
+		TRACE("ObjectFactory: Unable to instantiate "
+			"object definition: '%s'\n", objDefName);
+		return NULL;
+	}
+
+	ENGINE_OBJECTID id = GetObjectIDFromXML(*xObjectDef);
+
+	Object* pkObject = CreateObject(id, *xObjectDef, NULL);
+	if (!pkObject)
+		return false;
+
+	pkObject->SetObjectDefName(objDefName.c_str());
+	return pkObject;
+}
+
 // Creates an object from an XML definition
 // in: xObjectDef - XML representation of an object's definition
 // in: xObject - XML representation of additional object paramaters
@@ -298,15 +403,26 @@ Object* ObjectFactory::CreateObject(ENGINE_OBJECTID id,
 	return obj;
 }
 
-int ObjectFactory::Init() {
-	objectDefs.clear();
-	SetupTypes();
-	return 0;
-}
+bool ObjectFactory::LoadCommonObjectStuff(Object* obj,
+	XMLNode &xDef,
+	XMLNode *xObj,
+	bool loadAnimations) {
 
-void ObjectFactory::Shutdown() {
-	objectDefs.clear();
-	objectDefTypes.clear();
+	if (!obj || !obj->Init())
+		return false;
+
+	if (!LoadObjectProperties(obj, xDef))
+		return false;
+
+	if (!LoadObjectSounds(obj, xDef))
+		return false;
+
+	if (loadAnimations && !LoadObjectAnimations(obj, xDef))
+		return false;
+
+	obj->SetupCachedVariables();
+
+	return true;
 }
 
 //! Factory method, creates new PlayerObjects from XML files
@@ -721,110 +837,4 @@ bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
 
 	return true;
 }
-
-// A helper function to load animations
-bool ObjectFactory::LoadObjectAnimations(
-			Object* obj, XMLNode &xDef, 
-			AnimationMapping *animation_lookup) {
-
-	uint i;
-	int num_xml_animations, num_animation_slots_needed = -1, iterator;
-
-	Animation* anim = NULL;
-	std::string anim_name;
-	XMLNode xAnim, xAnims;
-	
-	xAnims = xDef.getChildNode("animations");
-	num_xml_animations = xAnims.nChildNode("animation");
-
-	if (animation_lookup)
-		num_animation_slots_needed = animation_lookup->size();
-
-	obj->animations.resize(max(num_xml_animations, num_animation_slots_needed));
-
-	// zero out all the animations to NULL
-	for (i = 0; i < obj->animations.size(); ++i)
-		obj->animations[i] = NULL;
-
-	// read everything from XML
-	for (i=iterator=0; i<(uint)num_xml_animations; ++i) 
-	{
-		xAnim = xAnims.getChildNode("animation", &iterator);
-		anim_name = xAnim.getAttribute("name");
-	
-		// Load the animation	
-		anim = Animation::Load(xAnim, obj);
-
-		if (!anim)
-			return false;
-
-		// if we have animation names (e.g. "walking") then use them to figure
-		// out which index we store this animation at
-		// if not, just put it in the next available index
-		uint index;
-		if (animation_lookup)
-			index = (*animation_lookup)[anim_name];
-		else 
-			index = i;
-			
-		assert(index >= 0 && index < obj->animations.size());
-		obj->animations[index] = anim;
-	}
-
-	// set the default animation 
-	// XXX error check this!
-	
-	std::string default_name;
-	int default_index; 
-
-	if (!animation_lookup) {
-		obj->currentAnimation = obj->animations[0];
-	} else { 
-		default_name = xAnims.getAttribute("default");
-		default_index = (*animation_lookup)[default_name];
-		obj->currentAnimation = obj->animations[default_index];
-	}
-
-	// set the current sprite to the first frame of the animation
-	obj->currentSprite = obj->currentAnimation->GetCurrentSprite();
-
-	return true;
-}
-
-//! Load any sounds specified in the XML
-// (obj not used)
-bool ObjectFactory::LoadObjectSounds(Object* obj, XMLNode &xDef) {
-				
-	if (xDef.nChildNode("sounds")) {
-		XMLNode xSounds = xDef.getChildNode("sounds");
-		if (!SOUND->LoadSounds(xSounds))
-			return false;
-	}
-
-	return true;
-}
-
-bool ObjectFactory::LoadCommonObjectStuff(Object* obj,
-										  XMLNode &xDef, 
-										  XMLNode *xObj,
-										  bool loadAnimations) {
-
-	if (!obj || !obj->Init() )
-		return false;
-		
-	if (!LoadObjectProperties(obj, xDef))
-		return false;	
-
-	if (!LoadObjectSounds(obj,xDef))
-		return false;
-
-	if (loadAnimations && !LoadObjectAnimations(obj,xDef))
-		return false;
-
-	obj->SetupCachedVariables();
-
-	return true;
-}	
-
-ObjectFactory::ObjectFactory() {}
-ObjectFactory::~ObjectFactory() {} 
+#endif // USE_OLD_LOADING_SYSTEM

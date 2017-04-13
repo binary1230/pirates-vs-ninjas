@@ -1,6 +1,7 @@
 #ifndef GAMEWORLD_H
 #define GAMEWORLD_H
 
+#include "objectLayer.h"
 #include "gameMode.h"
 #include "object.h"
 
@@ -28,15 +29,14 @@ class GameWorld : public GameMode {
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-			ar  & BOOST_SERIALIZATION_BASE_OBJECT_NVP(GameMode)
-				& boost::serialization::make_nvp("layers", m_kLayers)
-				& boost::serialization::make_nvp("bgcolor", m_bgColor)
-				& boost::serialization::make_nvp("bgcolor_top", m_bgColor)
-				& boost::serialization::make_nvp("music", m_szMusicFile)
-				& boost::serialization::make_nvp("width", m_iLevelWidth)
-				& boost::serialization::make_nvp("height", m_iLevelHeight)
-				& boost::serialization::make_nvp("lua_script", m_szLuaScript)
-				;
+			ar  & BOOST_SERIALIZATION_BASE_OBJECT_NVP(GameMode);
+			ar  & boost::serialization::make_nvp("layers", m_kLayers);
+			ar  & boost::serialization::make_nvp("bgcolor", m_bgColor);
+			ar  & boost::serialization::make_nvp("bgcolor_top", m_bgColor);
+			ar  & boost::serialization::make_nvp("music", m_szMusicFile);
+			ar  & boost::serialization::make_nvp("width", m_iLevelWidth);
+			ar  & boost::serialization::make_nvp("height", m_iLevelHeight);
+			ar  & boost::serialization::make_nvp("lua_script", m_szLuaScript);
 		}
 
 		protected:

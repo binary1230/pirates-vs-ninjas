@@ -29,9 +29,7 @@ void StaticObject::UpdateSpawns()
 	if (!properties.spawns_enemies)
 		return;
 
-	// HACK:
-	return;
-
+#if BLOCKS_SPAWN_ENEMIES
 	static int iSpawnWaitTime = 0;
 
 	iSpawnWaitTime--;
@@ -55,6 +53,7 @@ void StaticObject::UpdateSpawns()
 	badyguy->PlayAnimation(1);
 
 	WORLD->AddObject(badyguy);
+#endif BLOCKS_SPAWN_ENEMIES
 }
 
 StaticObject::StaticObject() {}
