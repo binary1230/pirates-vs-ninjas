@@ -40,8 +40,7 @@ class ObjectFactory {
 		Object* NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewCutBarObject(XMLNode &xDef, XMLNode *xObj=NULL);
 	
-		bool LoadCommonObjectStuff(	Object* obj, XMLNode &xDef, 
-									XMLNode *xObj, bool loadAnimations = true);
+		bool LoadCommonObjectStuff(	Object* obj, XMLNode &xDef, bool loadAnimations = true);
 
 		bool LoadObjectSounds(Object* obj, XMLNode &xDef);
 		bool LoadObjectProperties(Object* obj, XMLNode &xDef);
@@ -87,6 +86,8 @@ class ObjectFactory {
 
 		//! Load all object definitions from root <objectDefinitions> node
 		bool LoadObjectDefsFromXML(XMLNode &xObjDefs);
+
+		bool LoadObjectDefsFromIncludeXML(std::string file);
 
 		~ObjectFactory();
 };

@@ -35,12 +35,13 @@ class EffectsManager {
 			bool Init();
 			void Shutdown();
 
-			bool AddEffectDefinition(	const std::string &effectName, 
-																XMLNode &xEffect);
+			bool AddEffectDefinition(const std::string &effectName, XMLNode &xEffect);
 
 			Effect* FindEffectDefinition(const std::string &effectName);
 
 			bool LoadEffectsFromXML(XMLNode &xEffects);
+
+			bool LoadEffectsFromIncludedXml(const std::string filename);
 
 			// Trigger an object at a given object, insert it into the simulation,
 			// and return a pointer to the newly inserted object

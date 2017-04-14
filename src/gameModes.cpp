@@ -112,8 +112,7 @@ void GameModes::LoadSimulationMode() {
 //! Use the specified mode exit info from the last mode that exited
 //! If there was no mode exit info, just pass in a blank oldExitInfo and
 //! the new mode will ignore it.
-int GameModes::LoadMode(std::string mode_xml_filename, 
-						const GameModeExitInfo& oldExitInfo ) {
+int GameModes::LoadMode(std::string mode_xml_filename, const GameModeExitInfo& oldExitInfo ) {
 	currentMode = NULL;
 
 	#ifdef AI_TRAINING

@@ -11,6 +11,8 @@
 //
 // OBJECTID's should not be types like "player" or "spring" or "static"
 // but more like "sonic", "mario", "crazyspring43", "flower2"
+//
+// 2017 update: this class is about to get ripped to shreds.
 
 #include "globals.h"
 #include "gameState.h"
@@ -110,43 +112,27 @@ bool ObjectFactory::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
 	max = xObjDefs.nChildNode("include_xml_file");
 	
 	for (i = iterator = 0; i < max; i++) {
-					
-		// get the filename
 		file = xObjDefs.getChildNode("include_xml_file", &iterator).getText();
-		
-		// open that file, get the objectDef
-		std::string fileNew = ASSETMANAGER->GetPathOf(file.c_str());
-	
-		if (!fileNew.length()) {
-			TRACE("ObjectFactory: ERROR: Can't open "
-											"requested XML file for inclusion: '%s'\n", 
-											file);
-			return false;
-		}	
-
-		// this method is recursive, let's make sure
-		// we don't fall into any infinite loops.
-		if (++recurse_level > 99) {
-			TRACE(	"ERROR: Infinite loop while reading object\n"
-												"       definitions!!  Make sure that that\n"
-												"       '%s' does not include itself!\n", 
-												parent_include);
-
+		if (!LoadObjectDefsFromIncludeXML(file)) {
 			return false;
 		}
-		
-		parent_include = fileNew.c_str();
-
-		xObjectDefFile = XMLNode::openFileHelper( fileNew.c_str(), "objectDefinitions");
-
-		// recursively call ourself to handle this
-		if (!LoadObjectDefsFromXML(xObjectDefFile))
-			return false;
-
-		--recurse_level;
 	}
 
 	return true;
+}
+
+bool ObjectFactory::LoadObjectDefsFromIncludeXML(std::string file) {
+	std::string full_path = ASSETMANAGER->GetPathOf(file.c_str());
+
+	if (!full_path.length()) {
+		TRACE("ObjectFactory: ERROR: Can't open requested XML file for inclusion: '%s'\n", file);
+		return false;
+	}
+
+	XMLNode xObjectDefFile = XMLNode::openFileHelper(full_path.c_str(), "objectDefinitions");
+
+	// recursively call ourself to handle this
+	return LoadObjectDefsFromXML(xObjectDefFile);
 }
 
 // XXX this shouldn't really be here...
@@ -402,10 +388,7 @@ Object* ObjectFactory::CreateObject(ENGINE_OBJECTID id,
 	return obj;
 }
 
-bool ObjectFactory::LoadCommonObjectStuff(Object* obj,
-	XMLNode &xDef,
-	XMLNode *xObj,
-	bool loadAnimations) {
+bool ObjectFactory::LoadCommonObjectStuff(Object* obj, XMLNode &xDef, bool loadAnimations) {
 
 	if (!obj || !obj->Init())
 		return false;
@@ -432,7 +415,7 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	PlayerObject* obj = new PlayerObject();
 	
-	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+	if (!LoadCommonObjectStuff(obj, xDef, false))
 		return NULL;
 	
 	AnimationMapping animation_map = GetPlayerAnimationMappings();
@@ -451,7 +434,7 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewCutBarObject(XMLNode &xDef, XMLNode *xObj) {
 	CutBarObject* obj = new CutBarObject();
 
-	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+	if (!LoadCommonObjectStuff(obj, xDef, false))
 		return NULL;
 
 	if (xObj && xObj->nChildNode("text"))
@@ -468,7 +451,7 @@ Object* ObjectFactory::NewCutBarObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	ObjectBounce* obj = new ObjectBounce();
-	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+	if (!LoadCommonObjectStuff(obj, xDef))
 		return NULL;
 
 	obj->properties.is_ball = 1;
@@ -481,7 +464,7 @@ Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	CollectableObject* obj = new CollectableObject();
-	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+	if (!LoadCommonObjectStuff(obj, xDef))
 		return NULL;
 	
 	obj->properties.is_collectable = 1;
@@ -499,7 +482,7 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 
 	std::string txt, avatar;
 	ObjectText* obj = new ObjectText();	
-	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+	if (!LoadCommonObjectStuff(obj, xDef, false))
 		return NULL;
 
 	if (!xObj) 
@@ -522,7 +505,7 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
  
  	ObjectController* obj = new ObjectController();
-	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+	if (!LoadCommonObjectStuff(obj, xDef, false))
 		return NULL;
 
 	obj->properties.is_overlay = 1;
@@ -603,7 +586,7 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
  
 	BackgroundObject* obj = new BackgroundObject();	
-	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+	if (!LoadCommonObjectStuff(obj, xDef))
 		return NULL;
 	
 	obj->SetXY(0,0);
@@ -617,7 +600,7 @@ Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	StaticObject* obj = new StaticObject();
-	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+	if (!LoadCommonObjectStuff(obj, xDef))
 		return NULL;
 
 	obj->SetupCachedVariables();
@@ -630,7 +613,7 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewEnemyObject(XMLNode &xDef, XMLNode *xObj) 
 {
 	EnemyObject* obj = new EnemyObject();
-	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+	if (!LoadCommonObjectStuff(obj, xDef))
 		return NULL;
 
 	obj->properties.is_badguy = true;
@@ -639,24 +622,13 @@ Object* ObjectFactory::NewEnemyObject(XMLNode &xDef, XMLNode *xObj)
 	return obj;
 }
 
-//Object* ObjectFactory::New3dObject(XMLNode &xDef, XMLNode *xObj) {
-//
-//	ModelObject* obj = new ModelObject();
-//
-//	if (!LoadCommonObjectStuff(obj, xDef, xObj))
-//		return NULL;
-//	
-//	obj->SetupCachedVariables();
-//	return obj;
-//}
-
 Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) 
 { 
 	XMLNode xSpringDirection;
 	bool using_default = true;
 
 	SpringObject* obj = new SpringObject();
-	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+	if (!LoadCommonObjectStuff(obj, xDef))
 		return NULL;
   
 	obj->properties.is_spring = 1;
@@ -704,7 +676,7 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	DoorObject* obj = new DoorObject();
 	
-	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
+	if (!LoadCommonObjectStuff(obj, xDef, false))
 		return NULL;	
 	
 	AnimationMapping animation_map = GetDoorAnimationMappings();
@@ -763,7 +735,7 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	FanObject* obj = new FanObject();
 	
-	if (!LoadCommonObjectStuff(obj, xDef, xObj))
+	if (!LoadCommonObjectStuff(obj, xDef))
 		return NULL;
 
 	obj->properties.is_fan = 1;

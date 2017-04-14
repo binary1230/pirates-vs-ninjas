@@ -37,7 +37,6 @@ class PlayerObject : public Object {
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
-		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
 	}
 
 	protected:
@@ -51,6 +50,11 @@ class PlayerObject : public Object {
 		// What we're currently doing
 		PlayerState m_kPlayerState;
 
+		DoorObject* door_in_front_of_us;
+		int ring_count;
+
+		bool m_bShouldNotSwitchAnimationsRightNow;
+
 		void Clear();
 
 		void DropBombsIfNeeded();
@@ -61,11 +65,6 @@ class PlayerObject : public Object {
 		void UpdateLeftRightMotion();
 
 		bool GetInput(uint key, uint controller_number) const;
-		
-		DoorObject* door_in_front_of_us;
-		int ring_count;
-
-		bool m_bShouldNotSwitchAnimationsRightNow;
 
 	public:
 		virtual bool Init();
