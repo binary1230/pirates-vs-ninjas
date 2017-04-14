@@ -51,45 +51,19 @@ class PlayerObject : public Object {
 		// What we're currently doing
 		PlayerState m_kPlayerState;
 
-		void HandleInput();
-	
-		void UpdateState();
-
-		void DoCommonStuff();
-
-		void LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity );
-		void LimitMaxVerticalVelocityTo( float fMaxVerticalVelocity );
+		void Clear();
 
 		void DropBombsIfNeeded();
-
-		void DoStanding();
-		void DoWalking();
-		void DoRunning();
-		void DoSlidingDownWall();
-		
-		// return true if we're no longer in the air or doing something else
-		bool DoCommonAirStuff();
-		void DoJumping();
-		void DoFalling();
-
-		void DoWhistling();
-		void DoLookingUp();
-		void DoCrouchingDown();
-
-		void DoWalkThroughDoor();
 
 		void ScreenBoundsConstraint();
 		void UpdateSpriteFlip();
 		void UpdateRunningAnimationSpeed();
 		void UpdateLeftRightMotion();
 
-		virtual bool GetInput(uint key, uint controller_number) const = 0;
+		bool GetInput(uint key, uint controller_number) const;
 		
 		DoorObject* door_in_front_of_us;
 		int ring_count;
-
-		// If the running animation is a skateboard (only set at init time)
-		bool on_skateboard;
 
 		bool m_bShouldNotSwitchAnimationsRightNow;
 

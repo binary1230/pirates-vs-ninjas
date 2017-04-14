@@ -19,7 +19,7 @@
 #include "objectIDs.h"
 
 #ifdef USE_OLD_LOADING_SYSTEM
-	#include "objectPlayerHuman.h"
+	#include "objectPlayer.h"
 	#include "objectBounce.h"
 	#include "objectBackground.h"
 	#include "objectController.h"
@@ -30,7 +30,6 @@
 	#include "objectDoor.h"
 	#include "objectEnemy.h"
 	#include "objectTxtOverlay.h"
-	// #include "object3d.h" // not yet.
 	#include "objectCutBars.h"
 #endif // USE_OLD_LOADING_SYSTEM
 
@@ -344,7 +343,7 @@ Object* ObjectFactory::CreateObject(ENGINE_OBJECTID id,
 			break;
 			
 		case OBJECT_ID_PLAYER:
-			obj = NewHumanPlayerObject(xObjectDef, xObject);
+			obj = NewPlayerObject(xObjectDef, xObject);
 			break;
 			
 		case OBJECT_ID_BOUNCE:
@@ -429,9 +428,9 @@ bool ObjectFactory::LoadCommonObjectStuff(Object* obj,
 //
 //! NOTE: this only takes an ObjectDefinition XML fragment,
 // memory leaks on failures here.. CLEAN IT.
-Object* ObjectFactory::NewHumanPlayerObject(XMLNode &xDef, XMLNode *xObj) {
+Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	
-	HumanPlayerObject* obj = new HumanPlayerObject();
+	PlayerObject* obj = new PlayerObject();
 	
 	if (!LoadCommonObjectStuff(obj, xDef, xObj, false))
 		return NULL;

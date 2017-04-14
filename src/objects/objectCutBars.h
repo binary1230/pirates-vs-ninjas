@@ -32,9 +32,11 @@ class CutBarObject : public Object {
 			int time_to_show;		// amount of time to show this before fading
 			int time_active;		// amount of time this has been active
 
-			int alpha;					// alpha for boxes
+			int box_alpha;					// alpha for boxes
 			
 		public:
+			void Clear();
+
 			bool Init();
 			void Shutdown();
 

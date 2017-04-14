@@ -20,16 +20,16 @@ void StaticObject::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
 
-	UpdateSpawns(); // HACK, stupid.
+	UpdateSpawns();
 }
 
-// TOTAL HACK DONT CHECK IN ENEMY TESTING ONLY
 void StaticObject::UpdateSpawns() 
 {
 	if (!properties.spawns_enemies)
 		return;
 
 #if BLOCKS_SPAWN_ENEMIES
+	// experimental
 	static int iSpawnWaitTime = 0;
 
 	iSpawnWaitTime--;

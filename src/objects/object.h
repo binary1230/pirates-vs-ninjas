@@ -178,6 +178,7 @@ class Object {
 		bool flip_x;
 		bool flip_y;
 
+		void Clear();
 		bool BaseInit();	
 		void BaseShutdown();
 
@@ -242,6 +243,8 @@ class Object {
 
 		//! If this object should report collisions or not
 		bool m_bCanCollide;
+
+		b2Body* m_pkPhysicsBody;
 	
 	public:
 		// WRONG Protected constructor, this means we can't directly
@@ -400,8 +403,6 @@ class Object {
 		void ApplyImpulse(const b2Vec2& v);
 		
 		virtual ~Object();
-
-		b2Body* m_pkPhysicsBody;
 
 		friend class ObjectFactory;
 };

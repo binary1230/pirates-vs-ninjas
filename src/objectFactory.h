@@ -26,7 +26,7 @@ class ObjectFactory {
 		// xDef is the Object Definition XML (frames, colors, speeds, etc)
 		// xObj is a pointer to the XML of the Object Instance (x,y,layer,etc)
 		// xObj may be null, and should be ignored if so.
-		Object* NewHumanPlayerObject(XMLNode &xDef, XMLNode *xObj=NULL);
+		Object* NewPlayerObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewBounceObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewCollectableObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewControllerObject(XMLNode &xDef, XMLNode *xObj=NULL);

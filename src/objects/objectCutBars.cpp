@@ -5,14 +5,11 @@
 #include "globalDefines.h"
 
 bool CutBarObject::Init() {
-	real_pos = 0.0f;
-	time_active = 0;
-
 	// Load default values from global XML
-	if (	!GLOBALS->Value("cutbar_rate", rate) ||
-				!GLOBALS->Value("cutbar_maxsize", max_size) ||
-				!GLOBALS->Value("cutbar_alpha", alpha) ||
-				!GLOBALS->Value("cutbar_time_to_show", time_to_show)) {
+	if (!GLOBALS->Value("cutbar_rate", rate) ||
+		!GLOBALS->Value("cutbar_maxsize", max_size) ||
+		!GLOBALS->Value("cutbar_alpha", box_alpha) ||
+		!GLOBALS->Value("cutbar_time_to_show", time_to_show)) {
 		return false;
 	}
 
@@ -67,12 +64,12 @@ void CutBarObject::Draw() {
 	// bottom bar
 	WINDOW->DrawRect(	0, 0,
 						screen_width, (int)real_pos,
-						al_map_rgb(0,0,0), true, alpha );
+						al_map_rgb(0,0,0), true, box_alpha );
 
 	// top bar
 	WINDOW->DrawRect(	0, screen_height,
 						screen_width, screen_height - (int)real_pos,
-						al_map_rgb(0,0,0), true, alpha );
+						al_map_rgb(0,0,0), true, box_alpha );
 
 	// text
 	if (state == STATE_ACTIVE)
@@ -89,9 +86,25 @@ void CutBarObject::Start() {
 	real_pos = 0;
 }
 
-CutBarObject::CutBarObject() {
+void CutBarObject::Clear() {
+	Object::Clear();
+
 	txt = "PLACEHOLDER";
-	state = STATE_INACTIVE;
+	real_pos = 0.0f;
+	time_active = 0;
+
+	CutBarState state = STATE_INACTIVE;
+
+	rate = 1.0f;
+	max_size = 0;
+	time_to_show = 0;
+	time_active = 0;
+
+	box_alpha = 255;
+}
+
+CutBarObject::CutBarObject() {
+	Clear();
 }
 
 CutBarObject::~CutBarObject() {}

@@ -306,7 +306,8 @@ void PlayerObject::DropBombsIfNeeded()
 	if (GetInput(PLAYERKEY_UP, controller_num)) {
 		objBall->SetY(objBall->GetY() + 40);
 		objBall->ApplyImpulse(0.0f, strength*0.2f);
-	} else if (GetInput(PLAYERKEY_DOWN, controller_num) && !m_kCurrentCollision.down) {
+	}
+	else if (GetInput(PLAYERKEY_DOWN, controller_num) && !m_kCurrentCollision.down) {
 		objBall->SetY(objBall->GetY() - 40);
 		objBall->ApplyImpulse(0.0f, -strength*0.2f);
 	} else {
@@ -356,8 +357,10 @@ void PlayerObject::Shutdown() {
 	BaseShutdown();
 }
 
-bool PlayerObject::Init()
+void PlayerObject::Clear()
 {
+	Object::Clear();
+
 	jump_velocity = DEFAULT_JUMP_VELOCITY;
 	min_velocity = DEFAULT_MIN_VELOCITY;
 	drag = DEFAULT_DRAG;
@@ -369,7 +372,10 @@ bool PlayerObject::Init()
 	door_in_front_of_us = NULL;
 	ring_count = 0;
 	m_bShouldNotSwitchAnimationsRightNow = false;
+}
 
+bool PlayerObject::Init()
+{
 	return BaseInit();
 }
 
@@ -381,18 +387,19 @@ bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
 	properties.ignores_physics_rotation = 1;
 	properties.use_angled_corners_collision_box = 1;
 
-	on_skateboard = false;
-
-	if (xProps.nChildNode("onSkateboard"))
-		on_skateboard = true;
-
 	return (xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
 		xProps.getChildNode("minVelocity").getFloat(min_velocity) &&
 		xProps.getChildNode("drag").getFloat(drag));
 }
 
+bool PlayerObject::GetInput(uint key, uint controller_num) const
+{
+	return INPUT->Key(key, controller_num);
+}
 
-PlayerObject::PlayerObject() {}
+PlayerObject::PlayerObject() { 
+	Clear();
+}
 PlayerObject::~PlayerObject() {}
 
 BOOST_CLASS_EXPORT_GUID(PlayerObject, "PlayerObject")

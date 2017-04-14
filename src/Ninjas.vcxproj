@@ -335,7 +335,6 @@
     <ClInclude Include="objects\objectEnemy.h" />
     <ClInclude Include="objects\objectFan.h" />
     <ClInclude Include="objects\objectPlayer.h" />
-    <ClInclude Include="objects\objectPlayerHuman.h" />
     <ClInclude Include="objects\objectSpring.h" />
     <ClInclude Include="objects\objectStatic.h" />
     <ClInclude Include="objects\objectTxtOverlay.h" />
@@ -402,7 +401,6 @@
     <ClCompile Include="objects\objectEnemy.cpp" />
     <ClCompile Include="objects\objectFan.cpp" />
     <ClCompile Include="objects\objectPlayer.cpp" />
-    <ClCompile Include="objects\objectPlayerHuman.cpp" />
     <ClCompile Include="objects\objectSpring.cpp" />
     <ClCompile Include="objects\objectStatic.cpp" />
     <ClCompile Include="objects\objectTxtOverlay.cpp" />

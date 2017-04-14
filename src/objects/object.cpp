@@ -151,7 +151,7 @@ void Object::FadeOut(int time) {
 	is_fading = true;
 }
 
-bool Object::BaseInit() {
+void Object::Clear() {
 	m_bDrawBoundingBox = false;
 	tmp_debug_flag = 0;
 	ClearProperties(properties);
@@ -167,6 +167,28 @@ bool Object::BaseInit() {
 	rotate_angle = rotate_velocity = 0.0f;
 	use_rotation = false;
 	b_box_offset_x = b_box_offset_y = 0;
+	m_pkLayer = NULL;
+	pos.x = pos.y = 0.0f;
+	m_kCurrentCollision.down = 0;
+	m_kCurrentCollision.up = 0;
+	m_kCurrentCollision.left = 0;
+	m_kCurrentCollision.right = 0;
+	currentAnimation = NULL;
+	animations.clear();
+	currentSprite = NULL;	
+	flip_x = flip_y = false;
+	objectDefName = "";
+	alpha = 255;
+	b_box_offset_x = b_box_offset_y = 0;
+	m_bDrawBoundingBox = false;
+	m_bCanCollide = false;
+	m_pkPhysicsBody = NULL;
+	debug_flag = false;
+
+	unique_id = Object::debug_object_id++;
+}
+
+bool Object::BaseInit() {
 	return true;
 }
 
@@ -323,30 +345,10 @@ void Object::BaseShutdown() {
 
 unsigned long Object::debug_object_id = 0;
 
-Object::Object() {
-	unique_id = Object::debug_object_id++;
-	m_pkLayer = NULL;
-	currentSprite = NULL;
-	currentAnimation = NULL;
-	flip_x = false; 
-	flip_y = false; 
-	is_dead = true;
-	debug_flag = false;
-	pos.x = pos.y = 0.0f;
-	display_time = -1;
-	rotate_angle = rotate_velocity = 0.0f;
-	use_rotation = false;
-	m_bDrawBoundingBox = false;
-	m_bCanCollide = false;
-	m_pkPhysicsBody = NULL;
-}
-
 void Object::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
 	// default is no action, this is overidden in higher classes
 }
-
-Object::~Object() {}
 
 void Object::PlayAnimation( uint uiIndex )
 {
@@ -388,5 +390,10 @@ void Object::UpdatePositionFromPhysicsLocation()
 	pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - float(width) / 2;
 	pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - float(height) / 2;
 }
+
+Object::Object() {
+	Clear();
+}
+Object::~Object() {}
 
 BOOST_CLASS_EXPORT_GUID(Object, "Object")
