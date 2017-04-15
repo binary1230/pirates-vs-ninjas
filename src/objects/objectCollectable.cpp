@@ -6,16 +6,16 @@
 #include "gameState.h"
 #include "gameSound.h"
 
-void CollectableObject::Shutdown() {
+void ObjectCollectable::Shutdown() {
 	BaseShutdown();
 }
 
-void CollectableObject::Update() {
+void ObjectCollectable::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
 }
 
-bool CollectableObject::LoadObjectProperties(XMLNode &xDef) {
+bool ObjectCollectable::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
@@ -28,18 +28,18 @@ bool CollectableObject::LoadObjectProperties(XMLNode &xDef) {
 	return true;
 }
 
-bool CollectableObject::Init() {
+bool ObjectCollectable::Init() {
 	return BaseInit();
 }
 
-CollectableObject::CollectableObject() {}
-CollectableObject::~CollectableObject() {}
+ObjectCollectable::ObjectCollectable() {}
+ObjectCollectable::~ObjectCollectable() {}
 
-void CollectableObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
+void ObjectCollectable::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
 	if (obj->GetProperties().is_player) {
 		SOUND->PlaySound("ring");
 		is_dead = true;
 	}
 }
 
-BOOST_CLASS_EXPORT_GUID(CollectableObject, "CollectableObject")
+BOOST_CLASS_EXPORT_GUID(ObjectCollectable, "ObjectCollectable")

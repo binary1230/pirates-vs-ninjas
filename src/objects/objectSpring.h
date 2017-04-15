@@ -9,7 +9,7 @@ class ObjectFactory;
 #define DEFAULT_SPRING_STRENGTH_Y 20.0f
 
 //! A "simple" Object (e.g. scenery) - No collisions
-class SpringObject : public Object {
+class ObjectSpring : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
@@ -27,14 +27,21 @@ class SpringObject : public Object {
 		b2Vec2 spring_vector;
 				
 	public:
+		IMPLEMENT_CLONE(ObjectSpring)
+
 		bool Init();
+		virtual void Clear();
 		void Shutdown();
 		void Update();
 
+		bool LoadSpringVectorFromXML(XMLNode & xSpringDirection);
+
+		virtual bool LoadXMLInstanceProperties(XMLNode & xObj);
+
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 
-		SpringObject();
-		~SpringObject();
+		ObjectSpring();
+		~ObjectSpring();
 
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		bool IsSpringActive() {return spring_is_active;};

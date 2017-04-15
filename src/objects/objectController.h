@@ -31,6 +31,8 @@ class ObjectController : public Object {
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 		
 	public:
+		IMPLEMENT_CLONE(ObjectController)
+
 		bool Init();
 		void Shutdown();
 

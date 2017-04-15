@@ -15,6 +15,7 @@
 #include "..\objectFactory.h"
 
 bool Object::debug_draw_bounding_boxes = 0;
+map<std::string, Object*> Object::objectProtoTable;
 
 void Object::SetObjectDefName(const char* _name) {
 	objectDefName = _name;
@@ -305,6 +306,7 @@ void Object::ResetForNextFrame()
 }
 
 void Object::BaseShutdown() {
+	assert(m_pkLayer);
 	m_pkLayer->RemoveObject(this);
 
 	int i, max = animations.size();
@@ -373,6 +375,8 @@ void Object::UpdatePositionFromPhysicsLocation()
 }
 
 bool Object::LoadFromObjectDef(XMLNode& xDef) {
+	SetObjectDefName(xDef.getAttribute("name"));
+
 	if (!Init())
 		return false;
 
@@ -438,6 +442,11 @@ bool Object::LoadObjectProperties(XMLNode &xDef) {
 		}
 	}
 
+	return true;
+}
+
+bool Object::LoadXMLInstanceProperties(XMLNode & xObj)
+{
 	return true;
 }
 
@@ -511,5 +520,26 @@ Object::Object() {
 	Clear();
 }
 Object::~Object() {}
+
+Object* Object::AddPrototype(string type, Object * obj)
+{
+	TRACE("adding object prototype for '%s' ", type.c_str());
+	objectProtoTable[type] = obj;
+	return obj; // handy
+}
+
+Object* Object::CreateObject(std::string type)
+{
+	std::map<string, Object*>::iterator it;
+	it = objectProtoTable.find(type);
+	if (it == objectProtoTable.end()) {
+		TRACE("CreateObject(): Object type named '%s' not found", type.c_str());
+		return NULL;
+	}
+
+	Object* obj = it->second;
+		
+	return obj->Clone();
+}
 
 BOOST_CLASS_EXPORT_GUID(Object, "Object")

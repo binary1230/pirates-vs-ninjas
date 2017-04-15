@@ -8,7 +8,7 @@
 #include "object.h"
 #include "window.h"
 
-void BackgroundObject::Update() {
+void ObjectBackground::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
 }
@@ -16,7 +16,7 @@ void BackgroundObject::Update() {
 // We want to wrap the background around the level.  Compute the offset
 // NOTE: Maybe we should really just move this code into the code
 // common for any object.
-void BackgroundObject::Draw() {
+void ObjectBackground::Draw() {
 
 	int x, y, w, h, current_x, current_y, screen_w, screen_h;
 	
@@ -71,15 +71,15 @@ void BackgroundObject::Draw() {
 	}
 }
 
-bool BackgroundObject::Init() {
+bool ObjectBackground::Init() {
 	return BaseInit();
 }
 
-void BackgroundObject::Shutdown() {
+void ObjectBackground::Shutdown() {
 	BaseShutdown();
 }
 
-BackgroundObject::BackgroundObject() {}
-BackgroundObject::~BackgroundObject() {}
+ObjectBackground::ObjectBackground() {}
+ObjectBackground::~ObjectBackground() {}
 
-BOOST_CLASS_EXPORT_GUID(BackgroundObject, "BackgroundObject")
+BOOST_CLASS_EXPORT_GUID(ObjectBackground, "ObjectBackground")

@@ -4,10 +4,10 @@
 #include "object.h"
 
 class ObjectFactory;
-class PlayerObject;
+class ObjectPlayer;
 
 //! An enemy object that interacts with the player
-class EnemyObject : public Object {
+class ObjectEnemy : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
@@ -18,20 +18,22 @@ class EnemyObject : public Object {
 
 	protected:
 		void MoveTowardsPlayer();
-		PlayerObject* m_pkTargetPlayer;
+		ObjectPlayer* m_pkTargetPlayer;
 
 		bool bCollidedLastFrame;
 		b2Vec2 m_kCollisionDirection;
 		int iTimeToWaitBeforeCollisionsAllowedAgain;
 				
 	public:
+		IMPLEMENT_CLONE(ObjectEnemy)
+
 		bool Init();
 		void Shutdown();
 		
 		void Update();
 
-		EnemyObject();
-		virtual ~EnemyObject();
+		ObjectEnemy();
+		virtual ~ObjectEnemy();
 
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 

@@ -6,7 +6,7 @@
 class ObjectFactory;
 
 //! A "simple" Object (e.g. scenery) - No collisions
-class StaticObject : public Object {
+class ObjectStatic : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
@@ -18,14 +18,16 @@ class StaticObject : public Object {
 		
 				
 	public:
+		IMPLEMENT_CLONE(ObjectStatic)
+
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 		bool Init();
 		void Shutdown();
 		
 		void Update();
 
-		StaticObject();
-		~StaticObject();
+		ObjectStatic();
+		~ObjectStatic();
 
 		void UpdateSpawns();
 

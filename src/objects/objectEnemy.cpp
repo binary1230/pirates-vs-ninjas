@@ -8,17 +8,17 @@
 #include "gameWorld.h"
 #include "objectPlayer.h"
 
-int EnemyObject::iSpawnedObjectCount = 0;
+int ObjectEnemy::iSpawnedObjectCount = 0;
 
-void EnemyObject::Shutdown() 
+void ObjectEnemy::Shutdown() 
 {
 	BaseShutdown();
 }
 
-EnemyObject::EnemyObject() {}
-EnemyObject::~EnemyObject() {}
+ObjectEnemy::ObjectEnemy() {}
+ObjectEnemy::~ObjectEnemy() {}
 
-bool EnemyObject::Init() 
+bool ObjectEnemy::Init() 
 {
 	if (!BaseInit())
 		return false;
@@ -34,7 +34,7 @@ bool EnemyObject::Init()
 	return true;
 }
 
-void EnemyObject::Update() 
+void ObjectEnemy::Update() 
 {
 	BaseUpdate();
 	UpdateSimpleAnimations();
@@ -52,7 +52,7 @@ void EnemyObject::Update()
 	flip_x = GetVelX() > 0;
 }
 
-void EnemyObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
+void ObjectEnemy::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
 	if (obj->GetProperties().is_player) 
 	{
@@ -74,4 +74,4 @@ void EnemyObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold
 	}*/
 }
 
-BOOST_CLASS_EXPORT_GUID(EnemyObject, "EnemyObject")
+BOOST_CLASS_EXPORT_GUID(ObjectEnemy, "ObjectEnemy")

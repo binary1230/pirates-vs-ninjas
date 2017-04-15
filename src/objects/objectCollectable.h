@@ -6,7 +6,7 @@
 class GameState;
 class ObjectFactory;
 
-class CollectableObject : public Object {
+class ObjectCollectable : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
@@ -17,6 +17,8 @@ class CollectableObject : public Object {
 	protected:
 				
 	public:
+		IMPLEMENT_CLONE(ObjectCollectable)
+
 		bool Init();
 		void Shutdown();
 		
@@ -24,8 +26,8 @@ class CollectableObject : public Object {
 
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 
-		CollectableObject();
-		~CollectableObject();
+		ObjectCollectable();
+		~ObjectCollectable();
 
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 	

@@ -19,6 +19,8 @@ class ObjectBounce : public Object {
 		bool collided_last_frame;
 
 	public:
+		IMPLEMENT_CLONE(ObjectBounce)
+
 		bool Init();
 		void Shutdown();
 		void Update();

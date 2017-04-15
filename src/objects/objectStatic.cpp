@@ -9,7 +9,7 @@
 #include "objectEnemy.h"
 
 
-bool StaticObject::LoadObjectProperties(XMLNode &xDef) {
+bool ObjectStatic::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
@@ -18,22 +18,22 @@ bool StaticObject::LoadObjectProperties(XMLNode &xDef) {
 	return true;
 }
 
-bool StaticObject::Init() {
+bool ObjectStatic::Init() {
 	return BaseInit();
 }
 
-void StaticObject::Shutdown() {
+void ObjectStatic::Shutdown() {
 	BaseShutdown();
 }
 
-void StaticObject::Update() {
+void ObjectStatic::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
 
 	UpdateSpawns();
 }
 
-void StaticObject::UpdateSpawns() 
+void ObjectStatic::UpdateSpawns() 
 {
 	if (!properties.spawns_enemies)
 		return;
@@ -48,10 +48,10 @@ void StaticObject::UpdateSpawns()
 
 	iSpawnWaitTime = 60;
 
-	if (EnemyObject::iSpawnedObjectCount > 100)
+	if (ObjectEnemy::iSpawnedObjectCount > 100)
 		return;
 
-	EnemyObject::iSpawnedObjectCount++;
+	ObjectEnemy::iSpawnedObjectCount++;
 
 	Object* badyguy = OBJECT_FACTORY->CreateObject("enemy1");
 	assert(badyguy);
@@ -66,7 +66,7 @@ void StaticObject::UpdateSpawns()
 #endif BLOCKS_SPAWN_ENEMIES
 }
 
-StaticObject::StaticObject() {}
-StaticObject::~StaticObject() {}
+ObjectStatic::ObjectStatic() {}
+ObjectStatic::~ObjectStatic() {}
 
-BOOST_CLASS_EXPORT_GUID(StaticObject, "StaticObject")
+BOOST_CLASS_EXPORT_GUID(ObjectStatic, "ObjectStatic")

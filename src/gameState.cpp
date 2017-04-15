@@ -15,6 +15,7 @@
 // #include "mapEditor.h"
 #include "physics.h"
 #include "gameWorld.h"
+#include "objectFactory.h"
 
 DECLARE_SINGLETON(GameState)
 
@@ -102,77 +103,79 @@ int GameState::InitAllegro() {
 //! BE CAREFUL, things need to be done IN ORDER here.
 int GameState::InitSystem() {
 		
-		TRACE("[Beginning Game Init]\n");
+	TRACE("[Beginning Game Init]\n");
 				
-		exit_game = false;
-		is_playing_back_demo = false;
-		debug_pause_toggle = false;
+	exit_game = false;
+	is_playing_back_demo = false;
+	debug_pause_toggle = false;
 
-		TRACE("[init: allegro]\n");
-		if (InitAllegro() < 0) {
-			TRACE("ERROR: InitSystem: failed to init allegro!\n");
-			return -1;
-		}
+	RegisterObjectPrototypes();
 
-		TRACE("[init: assetManager]\n");
-		ASSETMANAGER->CreateInstance();
-		if (!ASSETMANAGER || ASSETMANAGER->Init() < 0) {
-			TRACE("ERROR: InitSystem: failed to create assetManager!\n");
-			return -1;
-		}
+	TRACE("[init: allegro]\n");
+	if (InitAllegro() < 0) {
+		TRACE("ERROR: InitSystem: failed to init allegro!\n");
+		return -1;
+	}
 
-		ASSETMANAGER->AppendToSearchPath("data/");
+	TRACE("[init: assetManager]\n");
+	ASSETMANAGER->CreateInstance();
+	if (!ASSETMANAGER || ASSETMANAGER->Init() < 0) {
+		TRACE("ERROR: InitSystem: failed to create assetManager!\n");
+		return -1;
+	}
 
-		TRACE("[init: xml config]\n");
+	ASSETMANAGER->AppendToSearchPath("data/");
 
-		// just DIES if it can't load this file (bad)
-		if (LoadXMLConfig("default.xml") < 0) {
-			TRACE("ERROR: Failed to parse default.xml");	
-			return -1;
-		}
+	TRACE("[init: xml config]\n");
 
-		TRACE("[init: window]\n");
-		WINDOW->CreateInstance();
-		if ( !WINDOW ||	WINDOW->Init(screen_size_x, screen_size_y, 
-										OPTIONS->IsFullscreen(), OPTIONS->GraphicsMode()) < 0 ) {
-			TRACE("ERROR: InitSystem: failed to init window!\n");
-			return -1;
-		}
+	// just DIES if it can't load this file (bad)
+	if (LoadXMLConfig("default.xml") < 0) {
+		TRACE("ERROR: Failed to parse default.xml");	
+		return -1;
+	}
 
-		TRACE("[init: input subsystem]\n");
-		if (InitInput() == -1) {
-			TRACE("ERROR: InitSystem: failed to init input subsystem!\n");
-			return -1;
-		}
+	TRACE("[init: window]\n");
+	WINDOW->CreateInstance();
+	if ( !WINDOW ||	WINDOW->Init(screen_size_x, screen_size_y, 
+									OPTIONS->IsFullscreen(), OPTIONS->GraphicsMode()) < 0 ) {
+		TRACE("ERROR: InitSystem: failed to init window!\n");
+		return -1;
+	}
 
-		TRACE("[init: sound subsystem]\n");
-		if (InitSound() == -1) {
-			TRACE("ERROR: InitSystem: failed to init sound subsystem!\n");
-		}
+	TRACE("[init: input subsystem]\n");
+	if (InitInput() == -1) {
+		TRACE("ERROR: InitSystem: failed to init input subsystem!\n");
+		return -1;
+	}
 
-		TRACE("[init: embedded lua scripting]\n");
-		LUA->CreateInstance();
-		if ( !LUA || !LUA->Init() ) {
-			TRACE("ERROR: InitSystem: failed to init lua scripting!\n");
-			return -1;
-		}
+	TRACE("[init: sound subsystem]\n");
+	if (InitSound() == -1) {
+		TRACE("ERROR: InitSystem: failed to init sound subsystem!\n");
+	}
+
+	TRACE("[init: embedded lua scripting]\n");
+	LUA->CreateInstance();
+	if ( !LUA || !LUA->Init() ) {
+		TRACE("ERROR: InitSystem: failed to init lua scripting!\n");
+		return -1;
+	}
 		
-		/*TRACE("[init: gui manager]\n");
-		GUI->CreateInstance();
-		if ( !GUI || !GUI->Init() ) {
-			TRACE("ERROR: InitSystem: failed to init gui!\n");
-			return -1;
-		}*/
+	/*TRACE("[init: gui manager]\n");
+	GUI->CreateInstance();
+	if ( !GUI || !GUI->Init() ) {
+		TRACE("ERROR: InitSystem: failed to init gui!\n");
+		return -1;
+	}*/
 
-		TRACE("[init: loading game modes]\n");
-		if (LoadGameModes() == -1) {
-			TRACE("ERROR: InitSystem: failed to init default game mode!\n");
-			return -1;
-		}
+	TRACE("[init: loading game modes]\n");
+	if (LoadGameModes() == -1) {
+		TRACE("ERROR: InitSystem: failed to init default game mode!\n");
+		return -1;
+	}
 		
-		TRACE("[init complete]\n");
+	TRACE("[init complete]\n");
 				
-		return 0;
+	return 0;
 }
 
 int GameState::LoadGameModes() {

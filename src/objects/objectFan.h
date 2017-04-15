@@ -18,6 +18,8 @@ class ObjectFan : public Object {
 		float current_fan_speed;
 	
 	public:
+		IMPLEMENT_CLONE(ObjectFan)
+
 		bool Init();
 		void Clear();
 		void Shutdown();

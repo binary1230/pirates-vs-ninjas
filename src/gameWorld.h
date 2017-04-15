@@ -8,7 +8,7 @@
 class Object;
 class ObjectFactory;
 class ObjectLayer;
-class PlayerObject;
+class ObjectPlayer;
 			
 // note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
@@ -136,7 +136,7 @@ class GameWorld : public GameMode {
 			//! then the rest of the game pauses until it responds
 			Object* modal_active;
 
-			vector<PlayerObject*> m_kCachedPlayers;
+			vector<ObjectPlayer*> m_kCachedPlayers;
 			
 			//! Do the real work of adding an object to the global object list
 			void DoAddObject(Object* obj);
@@ -168,7 +168,7 @@ class GameWorld : public GameMode {
 			//! Find a layer by name
 			ObjectLayer* FindLayer(const char* name);
 
-			PlayerObject* GetPlayer(uint iIndex)
+			ObjectPlayer* GetPlayer(uint iIndex)
 			{
 				assert(iIndex >= 0 && iIndex < m_kCachedPlayers.size());
 				if (iIndex >= 0 && iIndex < m_kCachedPlayers.size())

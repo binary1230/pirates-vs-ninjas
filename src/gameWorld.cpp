@@ -42,7 +42,7 @@ void GameWorld::ShowText(	const char* txt,
 							const char* avatar_filename, 
 							bool modal_active) {
 	#ifdef USE_OLD_LOADING_SYSTEM
-	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT);
+	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT); // broken?
 
 	if (!obj) {
 		TRACE("ERROR: Failed to create Txt object in ShowText()\n");
@@ -512,6 +512,8 @@ int GameWorld::Load(XMLNode &xMode) {
 
 bool GameWorld::LoadObjects()
 {
+	#ifndef USE_OLD_LOADING_SYSTEM
+	
 	ObjectListIter iter;
 	for (iter = m_objects.begin(); iter != m_objects.end(); iter++)
 	{
@@ -525,6 +527,8 @@ bool GameWorld::LoadObjects()
 
 		obj->InitPhysics();
 	}
+
+	#endif // USE_NEW
 
 	return true;
 }
@@ -577,7 +581,7 @@ void GameWorld::CachePlayerObjects()
 		assert(*iter != NULL);
 		if ((*iter)->GetProperties().is_player ) 
 		{
-			PlayerObject* player = (PlayerObject*)(*iter);
+			ObjectPlayer* player = (ObjectPlayer*)(*iter);
 			m_kCachedPlayers.push_back(player);
 		}
 	} 
@@ -725,26 +729,20 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 // Creates an instance of an object on the specified layer 
 int GameWorld::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
 
-		// get the object definition name
-		std::string objDefName = xObject.getAttribute("objectDef");
+	std::string objDefName = xObject.getAttribute("objectDef");
+	XMLNode* xObjectDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
 
-		// try to find that object definition
-		XMLNode* xObjectDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
+	if (!xObjectDef) {
+		TRACE("ERROR: Unable to find object definition of type '%s'\n", objDefName);
+		return -1;
+	}
 
-		if (!xObjectDef) {
-			TRACE("ERROR: Unable to find object definition of type '%s'\n", 
-											objDefName);
-			return -1;
-		}
+	if (LoadObjectFromXML(*xObjectDef, xObject, layer) == -1) {
+		TRACE("ERROR: Failed trying to load object of type '%s'\n", objDefName);
+		return -1;
+	}
 
-		// create the object from the objectDefinition
-		if (LoadObjectFromXML(*xObjectDef, xObject, layer) == -1) {
-			TRACE("ERROR: Failed trying to load object of type '%s'\n", 
-											objDefName);
-			return -1;
-		}
-
-		return 0;
+	return 0;
 }
 
 //! Parse XML info from a <layer> block
@@ -833,7 +831,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 	int x,y;
 
 	// Really create the instance of this object, it is BORN here:
-	Object* obj = OBJECT_FACTORY->CreateObjectFromXML(xObjectDef, xObject);
+	Object* obj = OBJECT_FACTORY->CreateObjectFromXML(xObjectDef, &xObject);
 
 	if (!obj)
 		return -1;
@@ -1070,7 +1068,7 @@ int GameWorld::GetAiFitnessScore() {
 	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
 		assert(*iter != NULL);
 		if (	(*iter)->GetProperties().is_player ) {
-			PlayerObject* player = (PlayerObject*)(*iter);
+			ObjectPlayer* player = (ObjectPlayer*)(*iter);
 			return player->GetNumRings();
 		}
 	} 

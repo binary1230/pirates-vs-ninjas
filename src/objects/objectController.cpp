@@ -65,12 +65,79 @@ void ObjectController::Update() {
 	}
 }
 
-
 bool ObjectController::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
 	properties.is_overlay = 1;
+
+	// XXX READ which controller we monitor from XML file
+	// but not in this method
+
+	int i, iterator, max;
+	std::string filename;
+	XMLNode xImages, xBtn;
+
+	xImages = xDef.getChildNode("images");
+	max = xImages.nChildNode("btn");
+
+	buttons.clear();
+	buttons.resize(max);
+
+	filename = xImages.getChildNode("base").getText();
+
+	controller_sprite = ASSETMANAGER->LoadSprite(filename.c_str());
+
+	if (!controller_sprite) {
+		TRACE("-- ERROR: Can't load file '%s'\n", filename);
+		return NULL;
+	}
+
+	int x1, y1;
+	if (!xImages.getChildNode("base").getChildNode("x").getInt(x1)) {
+		TRACE("Invalid controller base X!\n");
+		return NULL;
+	}
+	if (!xImages.getChildNode("base").getChildNode("x").getInt(y1)) {
+		TRACE("Invalid controller base Y!\n");
+		return NULL;
+	}
+	pos.x = x1;
+	pos.y = y1;
+
+	Button* b;
+
+	// load each button
+	max = buttons.size();
+	for (i = iterator = 0; i < max; i++) {
+		xBtn = xImages.getChildNode("btn", &iterator);
+		b = &buttons[i];
+
+		filename = xBtn.getText();
+		b->active = 0;
+
+		b->sprite = ASSETMANAGER->LoadSprite(filename.c_str());
+
+		if (!b->sprite) {
+			TRACE("-- ERROR: Can't load file '%s'\n", filename);
+			return NULL;
+		}
+
+		int x2, y2;
+		if (!xBtn.getChildNode("x").getInt(x2)) {
+			TRACE("Invalid controller button X!\n");
+			return NULL;
+		}
+		if (!xBtn.getChildNode("y").getInt(y2)) {
+			TRACE("Invalid controller button Y!\n");
+			return NULL;
+		}
+		b->sprite->x_offset = x2;
+		b->sprite->y_offset = y2;
+	}
+
+	if (xDef.nChildNode("showDuringDemoOnly") > 0)
+		only_show_during_demo = true;
 
 	return true;
 }

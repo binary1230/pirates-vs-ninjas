@@ -5,7 +5,17 @@
 #include "globalDefines.h"
 
 
-bool CutBarObject::LoadObjectProperties(XMLNode &xDef) {
+bool ObjectCutBars::LoadXMLInstanceProperties(XMLNode & xObj)
+{
+	if (xObj.nChildNode("text"))
+		SetText(xObj.getChildNode("text").getText());
+
+	Start();
+
+	return true;
+}
+
+bool ObjectCutBars::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
@@ -14,7 +24,7 @@ bool CutBarObject::LoadObjectProperties(XMLNode &xDef) {
 	return true;
 }
 
-bool CutBarObject::Init() {
+bool ObjectCutBars::Init() {
 	// Load default values from global XML
 	if (!GLOBALS->Value("cutbar_rate", rate) ||
 		!GLOBALS->Value("cutbar_maxsize", max_size) ||
@@ -26,11 +36,11 @@ bool CutBarObject::Init() {
 	return BaseInit();
 }
 
-void CutBarObject::Shutdown() {
+void ObjectCutBars::Shutdown() {
 	BaseShutdown();
 }
 
-void CutBarObject::Update() {
+void ObjectCutBars::Update() {
 
 	switch (state) {
 
@@ -64,7 +74,7 @@ void CutBarObject::Update() {
 	}
 }
 
-void CutBarObject::Draw() {
+void ObjectCutBars::Draw() {
 	if (state == STATE_INACTIVE)
 		return;
 
@@ -86,17 +96,17 @@ void CutBarObject::Draw() {
 		WINDOW->DrawText(30, screen_height - max_size + 2, txt);
 }
 
-void CutBarObject::Stop() {
+void ObjectCutBars::Stop() {
 	state = STATE_INACTIVE;
 	is_dead = true;
 }
 
-void CutBarObject::Start() {
+void ObjectCutBars::Start() {
 	state = STATE_ROLL_IN;
 	real_pos = 0;
 }
 
-void CutBarObject::Clear() {
+void ObjectCutBars::Clear() {
 	Object::Clear();
 
 	txt = "PLACEHOLDER";
@@ -113,10 +123,10 @@ void CutBarObject::Clear() {
 	box_alpha = 255;
 }
 
-CutBarObject::CutBarObject() {
+ObjectCutBars::ObjectCutBars() {
 	Clear();
 }
 
-CutBarObject::~CutBarObject() {}
+ObjectCutBars::~ObjectCutBars() {}
 
-BOOST_CLASS_EXPORT_GUID(CutBarObject, "CutBarObject")
+BOOST_CLASS_EXPORT_GUID(ObjectCutBars, "ObjectCutBars")

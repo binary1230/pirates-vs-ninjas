@@ -119,13 +119,13 @@ int GameModes::LoadMode(std::string mode_xml_filename, const GameModeExitInfo& o
 	TRACE(" AI: Enabling AI Training.\n");
 	#endif
 
-	TRACE(" Mode Info: filename '%s'\n", mode_xml_filename );
+	TRACE(" Mode Info: filename '%s'\n", mode_xml_filename.c_str() );
 
 	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename.c_str());
 	XMLNode xMode = XMLNode::openFileHelper( mode_xml_filename.c_str(), "gameMode" );
 
 	std::string modeType = xMode.getAttribute("type");
-	TRACE(" Mode Info: type = '%s'\n", modeType);
+	TRACE(" Mode Info: type = '%s'\n", modeType.c_str());
 
 	// actually create the new mode
 	if (modeType == "simulation") 
@@ -164,7 +164,7 @@ int GameModes::LoadMode(std::string mode_xml_filename, const GameModeExitInfo& o
 	}
 
 	if (error || currentMode->Init(xMode) == -1) {
-		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", 	modeType);
+		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", modeType.c_str());
 		return -1;
 	}
 

@@ -5,11 +5,11 @@
 
 #include "rect.h"
 #include "animations.h"
+#include "objectLayer.h"
 
 class Object;
 class Animation;
 class Sprite;
-class ObjectLayer;
 class ObjectFactory;
 class b2Body;
 
@@ -129,6 +129,15 @@ inline void ClearProperties(struct ObjectProperties& p) {
 // Used for find()
 bool ObjectIsDead(Object* obj);
 
+#define IMPLEMENT_CLONE(TYPE) \
+   Object* Clone() const { return new TYPE(*this); }
+
+#define MAKE_PROTOTYPE(TYPE) \
+   Object* TYPE ## _myProtoype1 = Object::AddPrototype(#TYPE, new TYPE());
+
+#define MAKE_PROTOTYPE_ALIAS(TYPE, NAME) \
+   Object* TYPE ## _myProtoype2 = Object::AddPrototype(NAME, new TYPE());
+
 //! A drawable entity in the world
 
 //! Objects have physical properties associated with them, but do
@@ -142,7 +151,12 @@ class Object {
 		ar & BOOST_SERIALIZATION_NVP(objectDefName);
 		ar & BOOST_SERIALIZATION_NVP(controller_num);
 		ar & BOOST_SERIALIZATION_NVP(properties);
+		ar & BOOST_SERIALIZATION_NVP(m_pkLayer);
 	}
+
+	// implement "prototype pattern" for object creation
+	static map<std::string, Object*> objectProtoTable;
+	virtual Object* Clone() const = 0;
 
 	protected:
 
@@ -213,9 +227,10 @@ class Object {
 
 		void UpdatePositionFromPhysicsLocation();
 
-		bool LoadObjectSounds(XMLNode & xDef);
-		virtual bool LoadObjectProperties(XMLNode & xDef);
-		bool LoadObjectAnimations(XMLNode & xDef);
+		bool LoadObjectSounds(XMLNode& xDef);
+		virtual bool LoadObjectProperties(XMLNode& xDef);
+		virtual bool LoadXMLInstanceProperties(XMLNode& xObj);
+		bool LoadObjectAnimations(XMLNode& xDef);
 
 		//! Update display times
 		void UpdateDisplayTime();
@@ -244,7 +259,6 @@ class Object {
 		bool m_bDrawBoundingBox;
 
 		b2Body* m_pkPhysicsBody;
-
 
 		// loading-only paramaters
 		AnimationMapping m_animationMapping;
@@ -402,6 +416,9 @@ class Object {
 		virtual bool LoadFromObjectDef(XMLNode & xDef);
 		
 		virtual ~Object();
+
+		static Object* AddPrototype(std::string type, Object* obj);
+		static Object* CreateObject(std::string type);
 
 		friend class ObjectFactory;
 };

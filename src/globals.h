@@ -95,7 +95,6 @@ namespace boost {
 	} // namespace serialization
 } // namespace boost
 
-
 // #define USE_OLD_LOADING_SYSTEM 0
 
 #endif // GLOBALS_H

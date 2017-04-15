@@ -24,24 +24,22 @@ void ObjectDoor::Activate() {
 }
 
 void ObjectDoor::DoDoorAction() {
-	
+
 	// this door now no longer grabs exlusive control of the level.	
 	WORLD->SetModalObject(NULL);
-			
+
 	GameModeExitInfo exitInfo, oldExitInfo;
 	exitInfo = WORLD->GetExitInfo();
 	oldExitInfo = WORLD->GetOldExitInfo();
-	
+
 	// figure out what to do based on the door type
 	switch (door_type) {
-
 		case LEVEL_EXIT:
 			exitInfo.showInitialText = true;
 			GAMESTATE->SignalEndCurrentMode();
 			break;
-		
-		case SWITCH_TO_ANOTHER_MODE: 
 
+		case SWITCH_TO_ANOTHER_MODE:
 			if (door_name.length() > 0) {
 				exitInfo.useLastPortalName = true;
 				exitInfo.lastPortalName = door_name;
@@ -59,7 +57,6 @@ void ObjectDoor::DoDoorAction() {
 			break;
 
 		case RETURN_TO_LAST_MODE:
-
 			if (oldExitInfo.useExitInfo && oldExitInfo.useLastPortalName) {
 				exitInfo.useLastPortalName = true;
 				exitInfo.lastPortalName = oldExitInfo.lastPortalName;
@@ -69,9 +66,9 @@ void ObjectDoor::DoDoorAction() {
 				exitInfo.useNextModeToLoad = true;
 				exitInfo.nextModeToLoad = oldExitInfo.lastModeName;
 			}
-			
+
 			exitInfo.showInitialText = false;
-	
+
 			WORLD->SetExitInfo(exitInfo);
 			GAMESTATE->SignalEndCurrentMode();
 			break;
@@ -89,7 +86,7 @@ void ObjectDoor::DoDoorAction() {
 void ObjectDoor::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
-	
+
 	if (door_open_time == -1)
 		return;
 
@@ -101,6 +98,47 @@ void ObjectDoor::Update() {
 		DoDoorAction();
 }
 
+#define DEFAULT_DOOR_TYPE "exit"
+
+bool ObjectDoor::LoadXMLInstanceProperties(XMLNode & xObj)
+{
+	// doors have 3 attributes they can use:
+	//
+	// type - the type of this door (level exit, warp, return to last mode, etc)
+	// 
+	// the following are used for the appropriate types:
+	//
+	// name - name of this door, used when jumping back to it from another mode 
+	//        (like jumping back to a door outside after exiting a house)
+	//
+	// modeToTrigger - the name of the mode to trigger when this door activates
+
+	std::string door_description = "";
+	if (xObj.getAttribute("type"))
+		door_description = xObj.getAttribute("type");
+
+	if (door_description.length() == 0)
+		door_description = DEFAULT_DOOR_TYPE;
+
+	if (door_description == "exit")
+		door_type = LEVEL_EXIT;
+	else if (door_description == "warp")
+		door_type = WARP_TO_ANOTHER_PORTAL;
+	else if (door_description == "switchToNewMode")
+		door_type = SWITCH_TO_ANOTHER_MODE;
+	else if (door_description == "return")
+		door_type = RETURN_TO_LAST_MODE;
+	else
+		door_type = INVALID_TYPE;
+
+	if (xObj.getAttribute("name"))
+		door_name = xObj.getAttribute("name");
+
+	if (xObj.getAttribute("modeToTrigger"))
+		mode_to_jump_to_on_activate = xObj.getAttribute("modeToTrigger");
+
+	return true;
+}
 
 bool ObjectDoor::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))

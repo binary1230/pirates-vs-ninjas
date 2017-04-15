@@ -3,12 +3,12 @@
 
 #include "object.h"
 
-class BackgroundObject;
+class ObjectBackground;
 class GameState;
 class ObjectFactory;
 
 //! An Object which repeats itself, usually used for backgrounds
-class BackgroundObject : public Object {
+class ObjectBackground : public Object {
 	protected:
 		friend class boost::serialization::access;
 		template<class Archive>
@@ -18,14 +18,16 @@ class BackgroundObject : public Object {
 		}
 				
 	public:
+		IMPLEMENT_CLONE(ObjectBackground)
+
 		bool Init();
 		void Shutdown();
 
 		void Update();
 		void Draw();
 
-		BackgroundObject();
-		~BackgroundObject();
+		ObjectBackground();
+		~ObjectBackground();
 
 		friend class ObjectFactory;
 };

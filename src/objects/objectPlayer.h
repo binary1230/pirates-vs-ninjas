@@ -31,7 +31,7 @@ enum InputStateMask {
 };
 
 //! The Player object, represents our HERO on screen
-class PlayerObject : public Object {
+class ObjectPlayer : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
@@ -69,6 +69,8 @@ class PlayerObject : public Object {
 		bool GetInput(uint key, uint controller_number) const;
 
 	public:
+		IMPLEMENT_CLONE(ObjectPlayer)
+
 		virtual bool Init();
 		virtual void Shutdown();
 
@@ -80,8 +82,8 @@ class PlayerObject : public Object {
 		
 		int GetNumRings() {return ring_count;};
 			
-		PlayerObject();
-		virtual ~PlayerObject();
+		ObjectPlayer();
+		virtual ~ObjectPlayer();
 
 		bool WantsToSlideOnLeftSide();
 		bool WantsToSlideOnRightSide();

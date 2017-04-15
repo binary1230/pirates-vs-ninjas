@@ -20,7 +20,9 @@ class ObjectDoor : public Object {
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
-		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
+		ar & BOOST_SERIALIZATION_NVP(door_type);
+		ar & BOOST_SERIALIZATION_NVP(mode_to_jump_to_on_activate);
+		ar & BOOST_SERIALIZATION_NVP(door_name);
 	}
 
 	protected:
@@ -37,11 +39,15 @@ class ObjectDoor : public Object {
 		void DoDoorAction();
 	
 	public:
+		IMPLEMENT_CLONE(ObjectDoor)
+
 		bool Init();
 		void Clear();
 		void Shutdown();
 		
 		void Update();
+
+		virtual bool LoadXMLInstanceProperties(XMLNode & xObj);
 
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 

@@ -13,7 +13,7 @@ enum CutBarState {
 	STATE_ROLL_OUT
 };
 
-class CutBarObject : public Object {
+class ObjectCutBars : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
@@ -35,8 +35,11 @@ class CutBarObject : public Object {
 			int box_alpha;					// alpha for boxes
 			
 		public:
+			IMPLEMENT_CLONE(ObjectCutBars)
+
 			void Clear();
 
+			virtual bool LoadXMLInstanceProperties(XMLNode & xObj);
 			virtual bool LoadObjectProperties(XMLNode & xDef);
 
 			virtual bool Init();
@@ -50,8 +53,8 @@ class CutBarObject : public Object {
 			void Update();
 			void Draw();
 
-			CutBarObject();
-			virtual ~CutBarObject();
+			ObjectCutBars();
+			virtual ~ObjectCutBars();
 };
 
 #endif // OBJECT_CUTBARS

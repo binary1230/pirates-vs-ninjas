@@ -24,22 +24,22 @@
 // like the white puffs when you skid
 #define SKID_OBJECT_TYPE "skid"
 
-bool PlayerObject::WantsToSlideOnLeftSide()
+bool ObjectPlayer::WantsToSlideOnLeftSide()
 {
 	return !m_kCurrentCollision.down && m_kCurrentCollision.left && INPUT->Key(PLAYERKEY_LEFT, controller_num);
 }
 
-bool PlayerObject::WantsToSlideOnRightSide()
+bool ObjectPlayer::WantsToSlideOnRightSide()
 {
 	return !m_kCurrentCollision.down && m_kCurrentCollision.right && INPUT->Key(PLAYERKEY_RIGHT, controller_num);
 }
 
-bool PlayerObject::WantsToSlideOnAnySide()
+bool ObjectPlayer::WantsToSlideOnAnySide()
 {
 	return (WantsToSlideOnLeftSide() || WantsToSlideOnRightSide());
 }
 
-void PlayerObject::UpdateSpriteFlip() {
+void ObjectPlayer::UpdateSpriteFlip() {
 	// might need a little updating.  seems to mostly work ok though.
 
 	if (GetVelX() > 0.0f)
@@ -48,7 +48,7 @@ void PlayerObject::UpdateSpriteFlip() {
 		flip_x = true;
 }
 
-void PlayerObject::UpdateRunningAnimationSpeed() 
+void ObjectPlayer::UpdateRunningAnimationSpeed() 
 {
 	if (m_bShouldNotSwitchAnimationsRightNow)
 		return;
@@ -63,7 +63,7 @@ void PlayerObject::UpdateRunningAnimationSpeed()
 		currentAnimation->SetSpeedMultiplier(2);	// max
 }
 
-void PlayerObject::UpdateLeftRightMotion()
+void ObjectPlayer::UpdateLeftRightMotion()
 {
 	float max_desired_speed = 10.0f;
 	float boost = 7.0f;
@@ -96,7 +96,7 @@ void PlayerObject::UpdateLeftRightMotion()
 	}
 }
 
-void PlayerObject::Update() 
+void ObjectPlayer::Update() 
 {
 	BaseUpdate();
 
@@ -247,7 +247,7 @@ void PlayerObject::Update()
 	ScreenBoundsConstraint();
 }
 
-void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
+void ObjectPlayer::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
 	if (obj->GetProperties().is_static && obj->GetProperties().uses_physics_engine && !obj->GetProperties().is_sensor)
 	{
@@ -271,7 +271,7 @@ void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 
 	if (obj->GetProperties().is_spring)
 	{
-		SpringObject* sObj = (SpringObject*)obj;
+		ObjectSpring* sObj = (ObjectSpring*)obj;
 
 		// this should go into the spring class, not here
 		if (sObj->IsSpringActive())
@@ -285,7 +285,7 @@ void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 		++ring_count;
 }
 
-void PlayerObject::DropBombsIfNeeded()
+void ObjectPlayer::DropBombsIfNeeded()
 {
 	if (m_kPlayerState == WALKING_THRU_DOOR)
 		return;
@@ -317,7 +317,7 @@ void PlayerObject::DropBombsIfNeeded()
 	}
 }
 
-void PlayerObject::ScreenBoundsConstraint() {
+void ObjectPlayer::ScreenBoundsConstraint() {
 	if (!WORLD->PlayerAllowedOffscreen()) {
 		// TODO: clean this up some.
 		// BUG: freaks out on right side of screen
@@ -341,12 +341,12 @@ void PlayerObject::ScreenBoundsConstraint() {
 	}
 }
 
-void PlayerObject::OnAnimationLooped()
+void ObjectPlayer::OnAnimationLooped()
 {
 	m_bShouldNotSwitchAnimationsRightNow = false;
 }
 
-void PlayerObject::PlayAnimation(uint uiIndex)
+void ObjectPlayer::PlayAnimation(uint uiIndex)
 {
 	if (m_bShouldNotSwitchAnimationsRightNow)
 		return;
@@ -354,11 +354,11 @@ void PlayerObject::PlayAnimation(uint uiIndex)
 	Object::PlayAnimation(uiIndex);
 }
 
-void PlayerObject::Shutdown() {
+void ObjectPlayer::Shutdown() {
 	BaseShutdown();
 }
 
-void PlayerObject::Clear()
+void ObjectPlayer::Clear()
 {
 	Object::Clear();
 
@@ -377,7 +377,7 @@ void PlayerObject::Clear()
 	m_bShouldNotSwitchAnimationsRightNow = false;
 }
 
-bool PlayerObject::LoadObjectProperties(XMLNode &xDef) {
+bool ObjectPlayer::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
@@ -393,19 +393,19 @@ bool PlayerObject::LoadObjectProperties(XMLNode &xDef) {
 			xProps.getChildNode("drag").getFloat(drag);
 }
 
-bool PlayerObject::Init()
+bool ObjectPlayer::Init()
 {
 	return BaseInit();
 }
 
-bool PlayerObject::GetInput(uint key, uint controller_num) const
+bool ObjectPlayer::GetInput(uint key, uint controller_num) const
 {
 	return INPUT->Key(key, controller_num);
 }
 
-PlayerObject::PlayerObject() { 
+ObjectPlayer::ObjectPlayer() { 
 	Clear();
 }
-PlayerObject::~PlayerObject() {}
+ObjectPlayer::~ObjectPlayer() {}
 
-BOOST_CLASS_EXPORT_GUID(PlayerObject, "PlayerObject")
+BOOST_CLASS_EXPORT_GUID(ObjectPlayer, "ObjectPlayer")

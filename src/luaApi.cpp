@@ -32,7 +32,7 @@ int LUAAPI lua_world_create_cutbars(lua_State* lua) {
 	if (!WORLD) {
 		retval = -1;
 	} else {
-		CutBarObject* obj = (CutBarObject*)OBJECT_FACTORY->CreateObject("CutBars");
+		ObjectCutBars* obj = (ObjectCutBars*)OBJECT_FACTORY->CreateObject("CutBars");
 		if (!obj) {
 			retval = -1;
 		} else {
