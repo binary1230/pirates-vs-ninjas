@@ -61,6 +61,8 @@ class ObjectText : public Object {
 		bool Init();
 		void Shutdown();
 
+		void Clear();
+
 		void Update();
 		void Draw();
 

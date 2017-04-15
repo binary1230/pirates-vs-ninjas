@@ -39,13 +39,6 @@ class ObjectFactory {
 		Object* NewDoorObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj=NULL);
 		Object* NewCutBarObject(XMLNode &xDef, XMLNode *xObj=NULL);
-	
-		bool LoadCommonObjectStuff(	Object* obj, XMLNode &xDef, bool loadAnimations = true);
-
-		bool LoadObjectSounds(Object* obj, XMLNode &xDef);
-		bool LoadObjectProperties(Object* obj, XMLNode &xDef);
-		bool LoadObjectAnimations(	Object* obj, XMLNode &xDef, 
-									AnimationMapping *animation_lookup = NULL);
 
 		//! Holds object definitions
 		//! e.g. the definition of e.g. a "player" object 

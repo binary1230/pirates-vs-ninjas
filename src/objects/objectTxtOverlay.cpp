@@ -195,9 +195,13 @@ void ObjectText::Shutdown() {
 	BaseShutdown();
 }
 
-ObjectText::ObjectText() {
+void ObjectText::Clear() {
 	is_modal = false;
 	avatar_sprite = NULL;
+}
+
+ObjectText::ObjectText() {
+	Clear();
 }
 
 ObjectText::~ObjectText() {

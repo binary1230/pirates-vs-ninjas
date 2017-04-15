@@ -6,8 +6,9 @@
 #include "gameState.h"
 #include "gameWorld.h"
 #include "gameSound.h"
+#include "animations.h"
 
-void DoorObject::Shutdown() {
+void ObjectDoor::Shutdown() {
 	BaseShutdown();
 }
 
@@ -15,14 +16,14 @@ void DoorObject::Shutdown() {
 #define TIME_TO_WAIT_BEFORE_DOOR_ACTION 30
 
 // activate the door.
-void DoorObject::Activate() {
+void ObjectDoor::Activate() {
 	door_open_time = 0;
 	WORLD->SetModalObject(this);
 
 	PlayAnimation(DOOR_OPENING);
 }
 
-void DoorObject::DoDoorAction() {
+void ObjectDoor::DoDoorAction() {
 	
 	// this door now no longer grabs exlusive control of the level.	
 	WORLD->SetModalObject(NULL);
@@ -85,7 +86,7 @@ void DoorObject::DoDoorAction() {
 	}
 }
 
-void DoorObject::Update() {
+void ObjectDoor::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
 	
@@ -100,12 +101,18 @@ void DoorObject::Update() {
 		DoDoorAction();
 }
 
-bool DoorObject::Init() {
+bool ObjectDoor::Init() {
 	door_open_time = -1;
 	return BaseInit();
 }
 
-DoorObject::DoorObject() {}
-DoorObject::~DoorObject() {}
+void ObjectDoor::Clear() {
+	m_animationMapping = GetDoorAnimationMappings();
+}
 
-BOOST_CLASS_EXPORT_GUID(DoorObject, "DoorObject")
+ObjectDoor::ObjectDoor() {
+	Clear();
+}
+ObjectDoor::~ObjectDoor() {}
+
+BOOST_CLASS_EXPORT_GUID(ObjectDoor, "ObjectDoor")

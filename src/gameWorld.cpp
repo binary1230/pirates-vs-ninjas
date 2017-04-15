@@ -436,7 +436,6 @@ int GameWorld::Load(XMLNode &xMode) {
 	if (!LoadObjectDefsFromXML(p_xObjDefs))
 		return -1;
 
-
 	#if USE_OLD_LOADING_SYSTEM
 	if (LoadObjectsFromXML(xMode) == -1) 
 	{
@@ -461,12 +460,19 @@ int GameWorld::Load(XMLNode &xMode) {
 	if (xMode.nChildNode("luaScript") == 1) {
 		m_szLuaScript = xMode.getChildNode("luaScript").getText();
 	}
+	#else 
+	if (!LoadObjects())
+		return -1;
 	#endif // OLD_LOAD
+
+
 
 	for (int i = 0; i < m_included_effect_xml_files.size(); ++i)
 	{
 		EFFECTS->LoadEffectsFromIncludedXml(m_included_effect_xml_files[i]);
 	}
+
+
 	
 	if (!GLOBALS->Value("debug_draw_bounding_boxes", Object::debug_draw_bounding_boxes))
 		Object::debug_draw_bounding_boxes = false;
@@ -504,6 +510,25 @@ int GameWorld::Load(XMLNode &xMode) {
 	return 0;	
 }
 
+bool GameWorld::LoadObjects()
+{
+	ObjectListIter iter;
+	for (iter = m_objects.begin(); iter != m_objects.end(); iter++)
+	{
+		Object* obj = (*iter);
+		XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(obj->GetObjectDefName());
+
+		assert(xDef);
+		
+		if (!obj->LoadFromObjectDef(*xDef))
+			return false;
+
+		obj->InitPhysics();
+	}
+
+	return true;
+}
+
 bool GameWorld::InitJumpBackFromDoor()
 {
 	exitInfo.useExitInfo = true;
@@ -518,7 +543,7 @@ bool GameWorld::InitJumpBackFromDoor()
 
 		// find the portal with the specified name 
 		for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
-			if ((*iter)->GetProperties().is_door && ((DoorObject*)(*iter))->GetName() == lastExitInfo.lastPortalName) {
+			if ((*iter)->GetProperties().is_door && ((ObjectDoor*)(*iter))->GetName() == lastExitInfo.lastPortalName) {
 				found = true;
 				portal_pos = (*iter)->GetXY();
 				break;

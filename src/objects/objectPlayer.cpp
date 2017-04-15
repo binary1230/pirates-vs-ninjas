@@ -89,6 +89,7 @@ void PlayerObject::UpdateLeftRightMotion()
 			velChange *= boost;
 		}
 
+		assert(m_pkPhysicsBody);
 		float impulse = m_pkPhysicsBody->GetMass() * velChange;
 
 		ApplyImpulse(impulse, 0.0f);
@@ -265,7 +266,7 @@ void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 
 
 	if (obj->GetProperties().is_door) {
-		door_in_front_of_us = (DoorObject*)obj;
+		door_in_front_of_us = (ObjectDoor*)obj;
 	}
 
 	if (obj->GetProperties().is_spring)
@@ -328,9 +329,9 @@ void PlayerObject::ScreenBoundsConstraint() {
 			pos.x = newPosX;
 			UpdatePositionFromPhysicsLocation();
 		}
-		else if (pos.x >(WORLD->GetWidth() - width)) {
+		else if (pos.x >(WORLD->GetWidth() - GetWidth())) {
 			SetVelX(0.0f);
-			float newPosX = WORLD->GetWidth() - width;
+			float newPosX = WORLD->GetWidth() - GetWidth();
 			m_pkPhysicsBody->SetTransform(
 				b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), 
 				m_pkPhysicsBody->GetAngle()
@@ -357,9 +358,16 @@ void PlayerObject::Shutdown() {
 	BaseShutdown();
 }
 
+bool PlayerObject::LoadFromObjectDef(XMLNode & xDef)
+{
+	return Object::LoadFromObjectDef(xDef) && LoadPlayerProperties(xDef);
+}
+
 void PlayerObject::Clear()
 {
 	Object::Clear();
+
+	m_animationMapping = GetPlayerAnimationMappings();
 
 	jump_velocity = DEFAULT_JUMP_VELOCITY;
 	min_velocity = DEFAULT_MIN_VELOCITY;

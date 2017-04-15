@@ -23,7 +23,6 @@ bool EnemyObject::Init()
 	if (!BaseInit())
 		return false;
 
-	m_bCanCollide = true;
 	iTimeToWaitBeforeCollisionsAllowedAgain = 0;
 
 	assert(WORLD->GetNumPlayers() > 0);

@@ -83,8 +83,12 @@ void ObjectController::Shutdown() {
 	BaseShutdown();
 }
 
-ObjectController::ObjectController() {
+void ObjectController::Clear() {
 	controller_sprite = NULL;
+}
+
+ObjectController::ObjectController() {
+	Clear();
 }
 
 ObjectController::~ObjectController() {}

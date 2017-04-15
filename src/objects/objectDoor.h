@@ -14,7 +14,7 @@ enum DoorType {
 	RETURN_TO_LAST_MODE
 };
 
-class DoorObject : public Object {
+class ObjectDoor : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
@@ -38,6 +38,7 @@ class DoorObject : public Object {
 	
 	public:
 		bool Init();
+		void Clear();
 		void Shutdown();
 		
 		void Update();
@@ -46,8 +47,8 @@ class DoorObject : public Object {
 		// the door's action will happen (e.g. warp to next level)
 		void Activate();
 
-		DoorObject();
-		~DoorObject();
+		ObjectDoor();
+		~ObjectDoor();
 
 		inline const std::string& GetName() {return door_name;}
 			

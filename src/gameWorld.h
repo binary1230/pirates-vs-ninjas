@@ -112,6 +112,7 @@ class GameWorld : public GameMode {
 			//! Sets up simulation from an XML file
 			//XXX should be moved into a friend factory class, or something.
 			int Load(XMLNode&);
+			bool LoadObjects();
 			int LoadHeaderFromXML(XMLNode&);
 			int LoadObjectsFromXML(XMLNode&);
 			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer* const);

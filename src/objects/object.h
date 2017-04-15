@@ -153,8 +153,8 @@ class Object {
 		//! input for this object
 		int controller_num;
 
-		//! CACHED level width and height
-		int level_width, level_height;
+		//! optimization: CACHED level width and height
+		// int level_width, level_height;
 		
 		//! Current position
 		b2Vec2 pos;
@@ -216,6 +216,10 @@ class Object {
 
 		void UpdatePositionFromPhysicsLocation();
 
+		bool LoadObjectSounds(XMLNode & xDef);
+		bool LoadObjectProperties(XMLNode & xDef);
+		bool LoadObjectAnimations(XMLNode & xDef);
+
 		//! Update display times
 		void UpdateDisplayTime();
 
@@ -226,13 +230,14 @@ class Object {
 		//! Update the fading stuff
 		void UpdateFade();
 
-		//! Width and Height of the object
+		//! optimization: cache Width and Height of the object
 		// (we may need to rethink where these come from)
-		int width, height;
+		// int width, height;
 
 		//! Bounding box offsets from the bottom left of the first sprite
 		// (maye need to play with these)
 		int b_box_offset_x, b_box_offset_y;
+		int b_box_width, b_box_height;
 
 		//! Rotational parameters
 		float rotate_angle, rotate_velocity;
@@ -241,10 +246,11 @@ class Object {
 		//! Whether to draw the bounding box or not
 		bool m_bDrawBoundingBox;
 
-		//! If this object should report collisions or not
-		bool m_bCanCollide;
-
 		b2Body* m_pkPhysicsBody;
+
+
+		// loading-only paramaters
+		AnimationMapping m_animationMapping;
 	
 	public:
 		// WRONG Protected constructor, this means we can't directly
@@ -359,8 +365,8 @@ class Object {
 		}
 
 		//! Get width/height of this object
-		inline int GetWidth() const {return width;};
-		inline int GetHeight() const {return height;};
+		int GetWidth() const;
+		int GetHeight() const;
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();
@@ -391,16 +397,15 @@ class Object {
 
 		ObjectLayer* const GetLayer() const {return m_pkLayer;};
 		void SetLayer(ObjectLayer* const l) {m_pkLayer = l;};
-		
-		//! Returns true if this type of object is able to collide with another
-		inline bool CanCollide() const {
-			return m_bCanCollide;
-		}
 
 		void SetObjectDefName(const char*);
 
+		std::string GetObjectDefName();
+
 		void ApplyImpulse(float x, float y);
 		void ApplyImpulse(const b2Vec2& v);
+
+		virtual bool LoadFromObjectDef(XMLNode & xDef);
 		
 		virtual ~Object();
 

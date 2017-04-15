@@ -131,7 +131,6 @@ bool ObjectFactory::LoadObjectDefsFromIncludeXML(std::string file) {
 
 	XMLNode xObjectDefFile = XMLNode::openFileHelper(full_path.c_str(), "objectDefinitions");
 
-	// recursively call ourself to handle this
 	return LoadObjectDefsFromXML(xObjectDefFile);
 }
 
@@ -171,90 +170,6 @@ int ObjectFactory::Init() {
 void ObjectFactory::Shutdown() {
 	objectDefs.clear();
 	objectDefTypes.clear();
-}
-
-
-// A helper function to load animations
-bool ObjectFactory::LoadObjectAnimations(
-	Object* obj, XMLNode &xDef,
-	AnimationMapping *animation_lookup) {
-
-	uint i;
-	int num_xml_animations, num_animation_slots_needed = -1, iterator;
-
-	Animation* anim = NULL;
-	std::string anim_name;
-	XMLNode xAnim, xAnims;
-
-	xAnims = xDef.getChildNode("animations");
-	num_xml_animations = xAnims.nChildNode("animation");
-
-	if (animation_lookup)
-		num_animation_slots_needed = animation_lookup->size();
-
-	obj->animations.resize(max(num_xml_animations, num_animation_slots_needed));
-
-	// zero out all the animations to NULL
-	for (i = 0; i < obj->animations.size(); ++i)
-		obj->animations[i] = NULL;
-
-	// read everything from XML
-	for (i = iterator = 0; i<(uint)num_xml_animations; ++i)
-	{
-		xAnim = xAnims.getChildNode("animation", &iterator);
-		anim_name = xAnim.getAttribute("name");
-
-		// Load the animation	
-		anim = Animation::Load(xAnim, obj);
-
-		if (!anim)
-			return false;
-
-		// if we have animation names (e.g. "walking") then use them to figure
-		// out which index we store this animation at
-		// if not, just put it in the next available index
-		uint index;
-		if (animation_lookup)
-			index = (*animation_lookup)[anim_name];
-		else
-			index = i;
-
-		assert(index >= 0 && index < obj->animations.size());
-		obj->animations[index] = anim;
-	}
-
-	// set the default animation 
-	// XXX error check this!
-
-	std::string default_name;
-	int default_index;
-
-	if (!animation_lookup) {
-		obj->currentAnimation = obj->animations[0];
-	}
-	else {
-		default_name = xAnims.getAttribute("default");
-		default_index = (*animation_lookup)[default_name];
-		obj->currentAnimation = obj->animations[default_index];
-	}
-
-	// set the current sprite to the first frame of the animation
-	obj->currentSprite = obj->currentAnimation->GetCurrentSprite();
-
-	return true;
-}
-
-//! Load any sounds specified in the XML
-// (obj not used)
-bool ObjectFactory::LoadObjectSounds(Object* obj, XMLNode &xDef) {
-
-	if (xDef.nChildNode("sounds")) {
-		XMLNode xSounds = xDef.getChildNode("sounds");
-		if (!SOUND->LoadSounds(xSounds))
-			return false;
-	}
-
-	return true;
 }
 
 ObjectFactory::ObjectFactory() {}
@@ -388,24 +303,6 @@ Object* ObjectFactory::CreateObject(ENGINE_OBJECTID id,
 	return obj;
 }
 
-bool ObjectFactory::LoadCommonObjectStuff(Object* obj, XMLNode &xDef, bool loadAnimations) {
-
-	if (!obj || !obj->Init())
-		return false;
-
-	if (!LoadObjectProperties(obj, xDef))
-		return false;
-
-	if (!LoadObjectSounds(obj, xDef))
-		return false;
-
-	if (loadAnimations && !LoadObjectAnimations(obj, xDef))
-		return false;
-
-	obj->SetupCachedVariables();
-
-	return true;
-}
 
 //! Factory method, creates new PlayerObjects from XML files
 //
@@ -415,26 +312,16 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	PlayerObject* obj = new PlayerObject();
 	
-	if (!LoadCommonObjectStuff(obj, xDef, false))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 	
-	AnimationMapping animation_map = GetPlayerAnimationMappings();
-	if (!LoadObjectAnimations(obj, xDef, &animation_map))
-		return NULL;
-
-	if (!obj->LoadPlayerProperties(xDef))
-		return NULL;
-
-	// need to do it again to catch the new animations
-	obj->SetupCachedVariables();
-
 	return obj;
 }
 
 Object* ObjectFactory::NewCutBarObject(XMLNode &xDef, XMLNode *xObj) {
 	CutBarObject* obj = new CutBarObject();
 
-	if (!LoadCommonObjectStuff(obj, xDef, false))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
 	if (xObj && xObj->nChildNode("text"))
@@ -443,7 +330,7 @@ Object* ObjectFactory::NewCutBarObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_overlay = true;
 	obj->Start();
 
-	obj->SetupCachedVariables();
+	// obj->SetupCachedVariables();
 	
 	return obj;
 }
@@ -451,20 +338,20 @@ Object* ObjectFactory::NewCutBarObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	ObjectBounce* obj = new ObjectBounce();
-	if (!LoadCommonObjectStuff(obj, xDef))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
 	obj->properties.is_ball = 1;
 	obj->properties.is_physical = 1;
 
-	obj->SetupCachedVariables();
+	// obj->SetupCachedVariables();
 	return obj;
 }
 
 Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	CollectableObject* obj = new CollectableObject();
-	if (!LoadCommonObjectStuff(obj, xDef))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 	
 	obj->properties.is_collectable = 1;
@@ -473,7 +360,7 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_static = 1;
 	obj->properties.is_sensor = 1;
 
-	obj->SetupCachedVariables();
+	// obj->SetupCachedVariables();
 	
 	return obj;
 }
@@ -482,7 +369,7 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 
 	std::string txt, avatar;
 	ObjectText* obj = new ObjectText();	
-	if (!LoadCommonObjectStuff(obj, xDef, false))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
 	if (!xObj) 
@@ -497,7 +384,7 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->SetText(txt);
 	obj->SetAvatarFilename(avatar);
 
-	obj->SetupCachedVariables();
+	// obj->SetupCachedVariables();
 
 	return obj;
 }
@@ -505,7 +392,7 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
  
  	ObjectController* obj = new ObjectController();
-	if (!LoadCommonObjectStuff(obj, xDef, false))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
 	obj->properties.is_overlay = 1;
@@ -579,20 +466,15 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 	if (xDef.nChildNode("showDuringDemoOnly") > 0)
 		obj->only_show_during_demo = true;
 	
-	obj->SetupCachedVariables();
+	// obj->SetupCachedVariables();
 	return obj;
 }
 
 Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
  
 	BackgroundObject* obj = new BackgroundObject();	
-	if (!LoadCommonObjectStuff(obj, xDef))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
-	
-	obj->SetXY(0,0);
-	obj->SetupCachedVariables();
-
-	obj->m_bCanCollide = false;
 
 	return obj;
 }
@@ -600,10 +482,8 @@ Object* ObjectFactory::NewBackgroundObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	StaticObject* obj = new StaticObject();
-	if (!LoadCommonObjectStuff(obj, xDef))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
-
-	obj->SetupCachedVariables();
 
 	obj->properties.is_static = 1;
 
@@ -613,12 +493,12 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 Object* ObjectFactory::NewEnemyObject(XMLNode &xDef, XMLNode *xObj) 
 {
 	EnemyObject* obj = new EnemyObject();
-	if (!LoadCommonObjectStuff(obj, xDef))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
 	obj->properties.is_badguy = true;
 
-	obj->SetupCachedVariables();
+	// obj->SetupCachedVariables();
 	return obj;
 }
 
@@ -628,7 +508,7 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj)
 	bool using_default = true;
 
 	SpringObject* obj = new SpringObject();
-	if (!LoadCommonObjectStuff(obj, xDef))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
   
 	obj->properties.is_spring = 1;
@@ -665,7 +545,7 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj)
 		}
 	}
 
-	obj->SetupCachedVariables();
+	// obj->SetupCachedVariables();
 
 	return obj;
 }
@@ -674,21 +554,17 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj)
 
 Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	
-	DoorObject* obj = new DoorObject();
+	ObjectDoor* obj = new ObjectDoor();
 	
-	if (!LoadCommonObjectStuff(obj, xDef, false))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;	
 	
-	AnimationMapping animation_map = GetDoorAnimationMappings();
-	if (!LoadObjectAnimations(obj, xDef, &animation_map))
-		return NULL;
-
 	obj->properties.is_door = 1;
 	obj->properties.is_physical = 1;
 	obj->properties.is_static = 1;
 	obj->properties.is_sensor = 1;
 	
-	obj->SetupCachedVariables();
+	// obj->SetupCachedVariables();
 
 	// doors have 3 attributes they can use:
 	//
@@ -735,7 +611,7 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	FanObject* obj = new FanObject();
 	
-	if (!LoadCommonObjectStuff(obj, xDef))
+	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
 	obj->properties.is_fan = 1;
@@ -744,68 +620,7 @@ Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->properties.is_sensor = 1;
 	obj->properties.do_our_own_rotation = 1;
 
-	obj->SetupCachedVariables();
+	// obj->SetupCachedVariables();
 	return obj;
-}
-
-//! Load some common object properties from XML
-bool ObjectFactory::LoadObjectProperties(Object* obj, XMLNode &xDef) {
-	XMLNode xProps = xDef.getChildNode("properties");
-
-	// TODO: Do stuff with it.
-	/*if (xProps.nChildNode("mass")) {
-		float fMass = 0.0f;
-		if (!xProps.getChildNode("mass").getFloat(fMass)) {
-			TRACE("-- Invalid MASS.\n");
-			return false;
-		}
-	}*/
-	
-	ClearProperties(obj->properties);
-	obj->properties.feels_gravity = xProps.nChildNode("affectedByGravity") != 0; 
-	obj->properties.feels_user_input = xProps.nChildNode("affectedByInput1") != 0; 
-	obj->properties.feels_friction = xProps.nChildNode("affectedByFriction") != 0; 
-
-	// TODO: 2 seperate things?
-	obj->properties.is_physical = xProps.nChildNode("solidObject") != 0;
-	obj->properties.is_static = xProps.nChildNode("solidObject") != 0;
-
-	obj->properties.do_our_own_rotation = xProps.nChildNode("noPhysicsRotate") != 0; 
-	obj->properties.is_sensor = xProps.nChildNode("sensorOnly") != 0; 
-
-	obj->properties.spawns_enemies = xProps.nChildNode("spawnsEnemies") != 0;
-	
-	if (xProps.nChildNode("isOverlay")) {
-		obj->properties.is_overlay = 1;
-	}
-
-	/*if ( xProps.nChildNode("springStrength") && 
-			!xProps.getChildNode("springStrength").getInt(
-			obj->properties.spring_strength)		) {
-
-		TRACE(" -- invalid spring strength!\n");
-		return false;
-	}*/
-
-	if (xProps.nChildNode("boundingBox") != 0)
-	{
-		XMLNode xBoundingBox = xProps.getChildNode("boundingBox");
-
-		if (!xBoundingBox.nChildNode("offset_x"))
-		{
-			return false;
-		}
-
-		if (!xBoundingBox.getChildNode("offset_x").getInt(obj->b_box_offset_x) ||
-			!xBoundingBox.getChildNode("offset_y").getInt(obj->b_box_offset_y) ||
-			!xBoundingBox.getChildNode("width").getInt(obj->width) ||
-			!xBoundingBox.getChildNode("height").getInt(obj->height))
-		{
-			TRACE("Invalid bounding box info.\n");
-			return false;
-		}
-	}
-
-	return true;
 }
 #endif // USE_OLD_LOADING_SYSTEM

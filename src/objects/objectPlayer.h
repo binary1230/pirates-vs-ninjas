@@ -9,7 +9,7 @@ class BaseInput;
 class Animation;
 class BaseInput;
 class ObjectFactory;
-class DoorObject;
+class ObjectDoor;
 
 enum PlayerState {
 	STANDING,
@@ -50,7 +50,7 @@ class PlayerObject : public Object {
 		// What we're currently doing
 		PlayerState m_kPlayerState;
 
-		DoorObject* door_in_front_of_us;
+		ObjectDoor* door_in_front_of_us;
 		int ring_count;
 
 		bool m_bShouldNotSwitchAnimationsRightNow;
@@ -70,8 +70,10 @@ class PlayerObject : public Object {
 		virtual bool Init();
 		virtual void Shutdown();
 		
+		virtual bool LoadFromObjectDef(XMLNode & xDef);
+
 		//! Load object properties from XML
-		bool LoadPlayerProperties(XMLNode &xDef);		
+		bool LoadPlayerProperties(XMLNode &xDef);
 		
 		virtual void Update();
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
