@@ -65,6 +65,16 @@ void ObjectController::Update() {
 	}
 }
 
+
+bool ObjectController::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_overlay = 1;
+
+	return true;
+}
+
 bool ObjectController::Init() {
 	buttons.clear();
 	controller_sprite = NULL;

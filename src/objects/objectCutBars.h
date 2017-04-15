@@ -37,7 +37,9 @@ class CutBarObject : public Object {
 		public:
 			void Clear();
 
-			bool Init();
+			virtual bool LoadObjectProperties(XMLNode & xDef);
+
+			virtual bool Init();
 			void Shutdown();
 
 			void Start();

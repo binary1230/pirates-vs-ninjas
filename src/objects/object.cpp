@@ -79,30 +79,6 @@ void Object::UpdateDisplayTime() {
 		is_dead = true;
 }
 
-//! Cache some commonly used stuff
-// ('cause the profiler says so!)
-// DOM2017 (Going to disable this optimization for now, compiler might be way better than 2007)
-// if no negative perf effects, remove this function.
-void Object::SetupCachedVariables() {
-	/*assert(WORLD != NULL);
-	level_width  = WORLD->GetWidth();
-	level_height = WORLD->GetHeight();
-	
-	if (width == 0 && height == 0)
-	{
-		if (animations.size() > 0 && animations[0]) 
-		{
-			width = animations[0]->GetWidth();
-			height = animations[0]->GetHeight();
-		} 
-		else 
-		{
-			width = 0;
-			height = 0;
-		}
-	}*/
-}
-
 void Object::InitPhysics()
 {
 	if (!PHYSICS)
@@ -112,7 +88,7 @@ void Object::InitPhysics()
 		return;
 	}
 
-	if (!properties.is_physical)
+	if (!properties.uses_physics_engine)
 		return;
 
 	// WHO'S READY FOR THE HACKS?!?!?!?
@@ -159,10 +135,7 @@ void Object::Clear() {
 	is_fading = false;
 	alpha = 255;
 	display_time = -1;
-	// width = height = 0;
 	controller_num = 0;
-	// level_width = 0;
-	// level_height = 0;
 	rotate_angle = rotate_velocity = 0.0f;
 	use_rotation = false;
 	b_box_offset_x = b_box_offset_y = 0;
@@ -211,16 +184,6 @@ void Object::Draw() {
 	DrawAtOffset(flip_offset_x, flip_offset_y);
 }
 
-// TEMP CODE FOR SPRITE OFFSETS
-/*
-int flip_offset_x = 0;
-if (flip_x)
-   flip_offset_x = width - currentAnimation->GetWidth();
-
-// img.x = pos.x + b_box_offset_x + flip_offset_x
-// e.g.
-true_offset = b_box_offset_x + flip_offset_x;
-*/
 
 //! Ultimately we need the actual, on-screen coordinates of where
 //! to draw the sprite.  To get to those from the object's "world" coordinates
@@ -268,10 +231,6 @@ void Object::TransformRect(_Rect &r) {
 	WORLD->TransformViewToScreen(x2, y2);
 
 	r.set(x1,y1,x2,y2);
-	/*r.setx1(x1); 	r.sety1(y1);
-	r.setx2(x2); 	r.sety2(y2);*/
-	
-	// r.setx2(x1 + w); 	r.sety2(y1 + h);
 }
 
 //! This function does the real dirty work of drawing.
@@ -287,14 +246,13 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 	if (sprite_to_draw)
 		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha);
 
-	// DEBUG ONLY DONT CHECK IN
-	/*if (sprite_to_draw && (b_box_offset_x || b_box_offset_y))
+	#if DEBUG_DRAW_SPRITE
+	if (sprite_to_draw && (b_box_offset_x || b_box_offset_y))
 	{
 		const bool bOnlyDrawBoundingBox = true;
 		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha, bOnlyDrawBoundingBox);
-	}*/
-
-	// bounding box stuff below.
+	}
+	#endif
 
 	if (m_bDrawBoundingBox) 
 	{
@@ -390,7 +348,6 @@ void Object::PlayAnimation( uint uiIndex )
 		return;
 	}
 
-	// do nothing if we're already playing this animation
 	if (currentAnimation == animations[uiIndex])
 		return;
 
@@ -444,13 +401,13 @@ bool Object::LoadObjectSounds(XMLNode &xDef) {
 bool Object::LoadObjectProperties(XMLNode &xDef) {
 	XMLNode xProps = xDef.getChildNode("properties");
 
-	ClearProperties(properties);
+	// TODO: these are overriding things set in Init()
+
 	properties.feels_gravity = xProps.nChildNode("affectedByGravity") != 0;
 	properties.feels_user_input = xProps.nChildNode("affectedByInput1") != 0;
 	properties.feels_friction = xProps.nChildNode("affectedByFriction") != 0;
 
-	// TODO: 2 seperate things?
-	properties.is_physical = xProps.nChildNode("solidObject") != 0;
+	properties.uses_physics_engine = xProps.nChildNode("solidObject") != 0;
 	properties.is_static = xProps.nChildNode("solidObject") != 0;
 
 	properties.do_our_own_rotation = xProps.nChildNode("noPhysicsRotate") != 0;

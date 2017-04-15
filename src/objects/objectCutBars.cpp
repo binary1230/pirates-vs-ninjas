@@ -4,6 +4,16 @@
 #include "rect.h"
 #include "globalDefines.h"
 
+
+bool CutBarObject::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_overlay = true;
+
+	return true;
+}
+
 bool CutBarObject::Init() {
 	// Load default values from global XML
 	if (!GLOBALS->Value("cutbar_rate", rate) ||

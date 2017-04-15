@@ -31,11 +31,11 @@ struct ObjectProperties
 	// TEMP HACK - this object spawns enemies
 	bool spawns_enemies;
 
-	//! If physical, another physical object cannot move through it
-	bool is_physical;
+	//! Whether we should register with the physics engine or not
+	bool uses_physics_engine;
 
 	//! If static, this object WILL NOT MOVE, ever.
-	//! Only matters if is_physical is on
+	//! Only matters if uses_physics_engine is on
 	bool is_static; 
 
 	//! If set, this object will not get a callback if being collided with
@@ -82,7 +82,7 @@ namespace boost {
 			ar & BOOST_SERIALIZATION_NVP(p.feels_user_input);
 			ar & BOOST_SERIALIZATION_NVP(p.feels_friction);
 			ar & BOOST_SERIALIZATION_NVP(p.spawns_enemies);
-			ar & BOOST_SERIALIZATION_NVP(p.is_physical);
+			ar & BOOST_SERIALIZATION_NVP(p.uses_physics_engine);
 			ar & BOOST_SERIALIZATION_NVP(p.is_static);
 			ar & BOOST_SERIALIZATION_NVP(p.is_sensor);
 			ar & BOOST_SERIALIZATION_NVP(p.ignores_physics_rotation);
@@ -109,7 +109,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.feels_user_input = 0;
 	p.feels_friction = 0;
 	p.is_overlay = 0;
-	p.is_physical = 0;
+	p.uses_physics_engine = 0;
 	p.use_angled_corners_collision_box = 0;
 	p.is_player = 0;
 	p.is_spring = 0;
@@ -152,9 +152,6 @@ class Object {
 		//! Which controller (e.g. which joystick) use, if we are getting
 		//! input for this object
 		int controller_num;
-
-		//! optimization: CACHED level width and height
-		// int level_width, level_height;
 		
 		//! Current position
 		b2Vec2 pos;
@@ -217,7 +214,7 @@ class Object {
 		void UpdatePositionFromPhysicsLocation();
 
 		bool LoadObjectSounds(XMLNode & xDef);
-		bool LoadObjectProperties(XMLNode & xDef);
+		virtual bool LoadObjectProperties(XMLNode & xDef);
 		bool LoadObjectAnimations(XMLNode & xDef);
 
 		//! Update display times
@@ -373,9 +370,6 @@ class Object {
 		
 		struct ObjectProperties GetProperties() const { return properties; };
 		inline void SetProperties(struct ObjectProperties p) { properties = p;}
-
-		//! Setup some commonly used variables
-		void SetupCachedVariables();
 
 		//! Set which controller we monitor
 		void SetControllerNum(uint _c) {controller_num = _c;};

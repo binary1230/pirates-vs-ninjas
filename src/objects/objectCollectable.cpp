@@ -15,6 +15,19 @@ void CollectableObject::Update() {
 	UpdateSimpleAnimations();
 }
 
+bool CollectableObject::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_collectable = 1;
+	properties.is_ring = 1;
+	properties.uses_physics_engine = 1;
+	properties.is_static = 1;
+	properties.is_sensor = 1;
+
+	return true;
+}
+
 bool CollectableObject::Init() {
 	return BaseInit();
 }

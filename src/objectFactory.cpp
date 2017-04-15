@@ -311,7 +311,6 @@ Object* ObjectFactory::CreateObject(ENGINE_OBJECTID id,
 Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 	
 	PlayerObject* obj = new PlayerObject();
-	
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 	
@@ -319,18 +318,15 @@ Object* ObjectFactory::NewPlayerObject(XMLNode &xDef, XMLNode *xObj) {
 }
 
 Object* ObjectFactory::NewCutBarObject(XMLNode &xDef, XMLNode *xObj) {
+	
 	CutBarObject* obj = new CutBarObject();
-
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
 	if (xObj && xObj->nChildNode("text"))
 		obj->SetText(xObj->getChildNode("text").getText());
 	
-	obj->properties.is_overlay = true;
 	obj->Start();
-
-	// obj->SetupCachedVariables();
 	
 	return obj;
 }
@@ -341,10 +337,6 @@ Object* ObjectFactory::NewBounceObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
-	obj->properties.is_ball = 1;
-	obj->properties.is_physical = 1;
-
-	// obj->SetupCachedVariables();
 	return obj;
 }
 
@@ -354,26 +346,19 @@ Object* ObjectFactory::NewCollectableObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 	
-	obj->properties.is_collectable = 1;
-	obj->properties.is_ring = 1;
-	obj->properties.is_physical = 1;
-	obj->properties.is_static = 1;
-	obj->properties.is_sensor = 1;
-
-	// obj->SetupCachedVariables();
-	
 	return obj;
 }
 
 Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 
-	std::string txt, avatar;
 	ObjectText* obj = new ObjectText();	
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
 	if (!xObj) 
 		return obj;
+
+	std::string txt, avatar;
 
 	if (xObj->nChildNode("text"))
 		txt = xObj->getChildNode("text").getText();
@@ -384,8 +369,6 @@ Object* ObjectFactory::NewTxtOverlayObject(XMLNode &xDef, XMLNode *xObj) {
 	obj->SetText(txt);
 	obj->SetAvatarFilename(avatar);
 
-	// obj->SetupCachedVariables();
-
 	return obj;
 }
 
@@ -394,8 +377,6 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
  	ObjectController* obj = new ObjectController();
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
-
-	obj->properties.is_overlay = 1;
 
 	// XXX READ which controller we monitor from XML file
 	// but not in this method
@@ -466,7 +447,6 @@ Object* ObjectFactory::NewControllerObject(XMLNode &xDef, XMLNode *xObj) {
 	if (xDef.nChildNode("showDuringDemoOnly") > 0)
 		obj->only_show_during_demo = true;
 	
-	// obj->SetupCachedVariables();
 	return obj;
 }
 
@@ -485,8 +465,6 @@ Object* ObjectFactory::NewStaticObject(XMLNode &xDef, XMLNode *xObj) {
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
-	obj->properties.is_static = 1;
-
 	return obj;
 }
 
@@ -496,25 +474,17 @@ Object* ObjectFactory::NewEnemyObject(XMLNode &xDef, XMLNode *xObj)
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
-	obj->properties.is_badguy = true;
-
-	// obj->SetupCachedVariables();
 	return obj;
 }
 
 Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj) 
 { 
-	XMLNode xSpringDirection;
-	bool using_default = true;
-
 	SpringObject* obj = new SpringObject();
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
-  
-	obj->properties.is_spring = 1;
-	obj->properties.is_physical = 1;
-	obj->properties.is_static = 1;
-	obj->properties.is_sensor = 1;
+
+	XMLNode xSpringDirection;
+	bool using_default = true;
 
 	// order we search for the spring strength:
 	// 1) Object Instance
@@ -545,26 +515,16 @@ Object* ObjectFactory::NewSpringObject(XMLNode &xDef, XMLNode *xObj)
 		}
 	}
 
-	// obj->SetupCachedVariables();
-
 	return obj;
 }
 
 #define DEFAULT_DOOR_TYPE "exit"
 
-Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
-	
+Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) 
+{	
 	ObjectDoor* obj = new ObjectDoor();
-	
 	if (!obj->LoadFromObjectDef(xDef))
-		return NULL;	
-	
-	obj->properties.is_door = 1;
-	obj->properties.is_physical = 1;
-	obj->properties.is_static = 1;
-	obj->properties.is_sensor = 1;
-	
-	// obj->SetupCachedVariables();
+		return NULL;
 
 	// doors have 3 attributes they can use:
 	//
@@ -607,20 +567,12 @@ Object* ObjectFactory::NewDoorObject(XMLNode &xDef, XMLNode *xObj) {
 	return obj;
 }
 
-Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) {
-	
-	FanObject* obj = new FanObject();
-	
+Object* ObjectFactory::NewFanObject(XMLNode &xDef, XMLNode *xObj) 
+{	
+	ObjectFan* obj = new ObjectFan();
 	if (!obj->LoadFromObjectDef(xDef))
 		return NULL;
 
-	obj->properties.is_fan = 1;
-	obj->properties.is_physical = 1;
-	obj->properties.is_static = 1;
-	obj->properties.is_sensor = 1;
-	obj->properties.do_our_own_rotation = 1;
-
-	// obj->SetupCachedVariables();
 	return obj;
 }
 #endif // USE_OLD_LOADING_SYSTEM

@@ -249,7 +249,7 @@ void PlayerObject::Update()
 
 void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
-	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().is_sensor)
+	if (obj->GetProperties().is_static && obj->GetProperties().uses_physics_engine && !obj->GetProperties().is_sensor)
 	{
 		if (pkbWorldManifold->normal.y > 0 && pkbWorldManifold->normal.x == 0.0f)
 			m_kCurrentCollision.down = 1;
@@ -358,11 +358,6 @@ void PlayerObject::Shutdown() {
 	BaseShutdown();
 }
 
-bool PlayerObject::LoadFromObjectDef(XMLNode & xDef)
-{
-	return Object::LoadFromObjectDef(xDef) && LoadPlayerProperties(xDef);
-}
-
 void PlayerObject::Clear()
 {
 	Object::Clear();
@@ -382,22 +377,25 @@ void PlayerObject::Clear()
 	m_bShouldNotSwitchAnimationsRightNow = false;
 }
 
-bool PlayerObject::Init()
-{
-	return BaseInit();
-}
-
-bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
-	XMLNode xProps = xDef.getChildNode("properties");
+bool PlayerObject::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
 
 	properties.is_player = 1;
-	properties.is_physical = 1;
+	properties.uses_physics_engine = 1;
 	properties.ignores_physics_rotation = 1;
 	properties.use_angled_corners_collision_box = 1;
 
-	return (xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
-		xProps.getChildNode("minVelocity").getFloat(min_velocity) &&
-		xProps.getChildNode("drag").getFloat(drag));
+	XMLNode xProps = xDef.getChildNode("properties");
+
+	return	xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
+			xProps.getChildNode("minVelocity").getFloat(min_velocity) &&
+			xProps.getChildNode("drag").getFloat(drag);
+}
+
+bool PlayerObject::Init()
+{
+	return BaseInit();
 }
 
 bool PlayerObject::GetInput(uint key, uint controller_num) const

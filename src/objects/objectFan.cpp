@@ -11,11 +11,11 @@
 #define MAX_PLAYER_SPEED 10.0f
 #define DEFAULT_FAN_VELOCITY 30.0f
 
-void FanObject::Shutdown() {
+void ObjectFan::Shutdown() {
 	BaseShutdown();
 }
 
-void FanObject::Update() {
+void ObjectFan::Update() {
 	use_rotation = true;
 	rotate_velocity *= FAN_DECAY_RATE;
 	
@@ -23,7 +23,7 @@ void FanObject::Update() {
 	UpdateSimpleAnimations();
 }
 
-void FanObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
+void ObjectFan::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
 	if (obj->GetProperties().is_player) {
 
 		// if the player is going slowly, slow down the new fan speed
@@ -40,11 +40,28 @@ void FanObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) 
 	}
 }
 
-bool FanObject::Init() {
+bool ObjectFan::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_fan = 1;
+	properties.uses_physics_engine = 1;
+	properties.is_static = 1;
+	properties.is_sensor = 1;
+	properties.do_our_own_rotation = 1;
+
+	return true;
+}
+
+bool ObjectFan::Init() {
 	return BaseInit();
 }
 
-FanObject::FanObject() {}
-FanObject::~FanObject() {}
+void ObjectFan::Clear() {
 
-BOOST_CLASS_EXPORT_GUID(FanObject, "FanObject")
+}
+
+ObjectFan::ObjectFan() { Clear(); }
+ObjectFan::~ObjectFan() {}
+
+BOOST_CLASS_EXPORT_GUID(ObjectFan, "ObjectFan")

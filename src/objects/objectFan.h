@@ -5,7 +5,7 @@
 
 class ObjectFactory;
 
-class FanObject : public Object {
+class ObjectFan : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
@@ -19,13 +19,16 @@ class FanObject : public Object {
 	
 	public:
 		bool Init();
+		void Clear();
 		void Shutdown();
 		
 		void Update();
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 
-		FanObject();
-		~FanObject();
+		virtual bool LoadObjectProperties(XMLNode & xDef);
+
+		ObjectFan();
+		~ObjectFan();
 			
 		friend class ObjectFactory;
 };

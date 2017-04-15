@@ -42,8 +42,7 @@ void ObjectLayer::RemoveObject(Object* obj) {
 		*iter = NULL;
 		objects.erase(iter);
 	} else {
-		TRACE(" WARN: ObjectLayer: asked to remove an"
-										" object which isn't on this layer.\n");
+		TRACE(" WARN: ObjectLayer: asked to remove an object which isn't on this layer.\n");
 	}
 }
 

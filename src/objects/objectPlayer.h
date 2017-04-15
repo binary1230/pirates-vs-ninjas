@@ -57,6 +57,8 @@ class PlayerObject : public Object {
 
 		void Clear();
 
+		virtual bool LoadObjectProperties(XMLNode & xDef);
+
 		void DropBombsIfNeeded();
 
 		void ScreenBoundsConstraint();
@@ -69,12 +71,7 @@ class PlayerObject : public Object {
 	public:
 		virtual bool Init();
 		virtual void Shutdown();
-		
-		virtual bool LoadFromObjectDef(XMLNode & xDef);
 
-		//! Load object properties from XML
-		bool LoadPlayerProperties(XMLNode &xDef);
-		
 		virtual void Update();
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 

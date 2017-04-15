@@ -22,6 +22,8 @@ class CollectableObject : public Object {
 		
 		void Update();
 
+		virtual bool LoadObjectProperties(XMLNode & xDef);
+
 		CollectableObject();
 		~CollectableObject();
 

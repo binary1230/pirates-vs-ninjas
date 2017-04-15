@@ -18,6 +18,7 @@ class StaticObject : public Object {
 		
 				
 	public:
+		virtual bool LoadObjectProperties(XMLNode & xDef);
 		bool Init();
 		void Shutdown();
 		

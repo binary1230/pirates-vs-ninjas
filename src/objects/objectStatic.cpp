@@ -8,6 +8,16 @@
 #include "objectFactory.h"
 #include "objectEnemy.h"
 
+
+bool StaticObject::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_static = 1;
+
+	return true;
+}
+
 bool StaticObject::Init() {
 	return BaseInit();
 }

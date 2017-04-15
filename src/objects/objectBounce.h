@@ -23,6 +23,8 @@ class ObjectBounce : public Object {
 		void Shutdown();
 		void Update();
 
+		virtual bool LoadObjectProperties(XMLNode & xDef);
+
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		
 		ObjectBounce();

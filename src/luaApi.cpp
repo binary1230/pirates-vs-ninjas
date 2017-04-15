@@ -79,7 +79,6 @@ int LUAAPI lua_world_textbox(lua_State* lua) {
 			retval = -1;
 		} else {
 			obj->Init();
-			obj->SetupCachedVariables();
 
 			if (txt)
 				obj->SetText(txt);

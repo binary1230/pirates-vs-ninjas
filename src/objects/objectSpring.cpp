@@ -37,9 +37,22 @@ void SpringObject::Update() {
 		spring_reset_time = DEFAULT_SPRING_RESET_TIME;*/
 }
 
+bool SpringObject::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_spring = 1;
+	properties.uses_physics_engine = 1;
+	properties.is_static = 1;
+	properties.is_sensor = 1;
+
+	return true;
+}
+
 bool SpringObject::Init() {
 	spring_reset_time = 0;
 	spring_is_active = true;
+
 	return BaseInit();
 }
 

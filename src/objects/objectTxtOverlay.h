@@ -69,6 +69,8 @@ class ObjectText : public Object {
 		bool SetAvatarFilename(std::string file);
 		void SetModalActive(bool state);
 
+		virtual bool LoadObjectProperties(XMLNode & xDef);
+
 		void SetText(std::string txt);
 
 		int GetWidth();		// need to override, default ones grab the animation

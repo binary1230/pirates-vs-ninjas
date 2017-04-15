@@ -31,6 +31,8 @@ class SpringObject : public Object {
 		void Shutdown();
 		void Update();
 
+		virtual bool LoadObjectProperties(XMLNode & xDef);
+
 		SpringObject();
 		~SpringObject();
 
