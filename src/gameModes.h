@@ -21,8 +21,6 @@ class GameModes {
 		int LoadMode(std::string, const GameModeExitInfo& exitInfo);
 		std::string PickNextMode(const GameModeExitInfo& exitInfo);
 
-		void LoadSimulationMode();
-
 	public:
 		void Update();
 		void Draw();

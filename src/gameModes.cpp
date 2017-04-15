@@ -85,52 +85,39 @@ std::string GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 	}
 }
 
-void GameModes::LoadSimulationMode() {
-	#ifdef USE_OLD_LOADING_SYSTEM
-		// slight singleton hack.
-		//if (!OPTIONS->MapEditorEnabled()) {
-		WORLD->CreateInstance();
-		//} else {
-		//	WORLD->SetInstance(new MapEditor());
-		//}
-
-		currentMode = WORLD;
-	#else
-		// create and open an archive for input
-		GameWorld* unserialized_world;
-		std::ifstream ifs("test-save.xml");
-		boost::archive::xml_iarchive ia(ifs);
-		ia >> BOOST_SERIALIZATION_NVP(unserialized_world);
-		
-		WORLD->SetInstance(unserialized_world);
-		currentMode = WORLD;
-
-	#endif // USE_OLD_LOADING_SYSTEM
-}
-
 //! Load a new mode up from the specified XML file
 //! Use the specified mode exit info from the last mode that exited
 //! If there was no mode exit info, just pass in a blank oldExitInfo and
 //! the new mode will ignore it.
-int GameModes::LoadMode(std::string mode_xml_filename, const GameModeExitInfo& oldExitInfo ) {
+int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldExitInfo) {
 	currentMode = NULL;
 
 	#ifdef AI_TRAINING
 	TRACE(" AI: Enabling AI Training.\n");
 	#endif
 
-	TRACE(" Mode Info: filename '%s'\n", mode_xml_filename.c_str() );
+	TRACE(" Mode Info: filename '%s'\n", mode_filename.c_str() );
+	mode_filename = ASSETMANAGER->GetPathOf(mode_filename.c_str());
 
-	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename.c_str());
-	XMLNode xMode = XMLNode::openFileHelper( mode_xml_filename.c_str(), "gameMode" );
+	string modeType;
+	XMLNode xMode;
 
-	std::string modeType = xMode.getAttribute("type");
+	bool forceSimulation = mode_filename.find("simulation") != mode_filename.npos;
+
+	if (forceSimulation) {
+		modeType = "simulation";
+	} else {
+		xMode = XMLNode::openFileHelper(mode_filename.c_str(), "gameMode");
+		modeType = xMode.getAttribute("type");
+	}
+
 	TRACE(" Mode Info: type = '%s'\n", modeType.c_str());
 
 	// actually create the new mode
 	if (modeType == "simulation") 
 	{
-		LoadSimulationMode();
+		GameWorld::CreateWorld(mode_filename);
+		currentMode = WORLD;
 	} 
 	else if (modeType == "credits") 
 	{
@@ -159,7 +146,7 @@ int GameModes::LoadMode(std::string mode_xml_filename, const GameModeExitInfo& o
 
 		// setup the new exit info
 		GameModeExitInfo exitInfo = currentMode->GetExitInfo();
-		exitInfo.lastModeName = mode_xml_filename;
+		exitInfo.lastModeName = mode_filename;
 		currentMode->SetExitInfo(exitInfo);
 	}
 

@@ -400,6 +400,28 @@ void GameWorld::DoMainGameUpdate() {
 	ComputeNewCamera();						// Calc where to put the camera now
 }
 
+void GameWorld::SaveWorld(string filename)
+{
+	std::ofstream ofs(filename);
+	assert(ofs.good());
+	boost::archive::xml_oarchive oa(ofs);
+	oa << BOOST_SERIALIZATION_NVP(this);
+}
+
+void GameWorld::CreateWorld(string mode_filename = "") {
+	#ifdef USE_OLD_LOADING_SYSTEM
+		WORLD->CreateInstance();
+	#else
+		// create and open an archive for input
+		GameWorld* unserialized_world = NULL;
+		std::ifstream ifs(mode_filename);
+		boost::archive::xml_iarchive ia(ifs);
+		ia >> BOOST_SERIALIZATION_NVP(unserialized_world);
+
+		WORLD->SetInstance(unserialized_world);
+	#endif // USE_OLD_LOADING_SYSTEM
+}
+
 void GameWorld::LoadMusic(const char* music_file) {
 	if (music_file) {
 		SOUND->PlayMusic(music_file);
@@ -1079,16 +1101,6 @@ int GameWorld::GetAiFitnessScore() {
 
 GameWorld::GameWorld() {
 	Clear();
-}
-
-void GameWorld::SaveMap()
-{
-	const char* filename = "test-save.xml";
-
-	std::ofstream ofs(filename);
-	assert(ofs.good());
-	boost::archive::xml_oarchive oa(ofs);
-	oa << BOOST_SERIALIZATION_NVP(this);
 }
 
 GameWorld::~GameWorld() {}

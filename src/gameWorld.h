@@ -184,6 +184,8 @@ class GameWorld : public GameMode {
 
 			void DoMainGameUpdate();
 
+			static void CreateWorld(string mode_filename);
+
 			int GetWidth() {return m_iLevelWidth;};
 			int GetHeight() {return m_iLevelHeight;};
 
@@ -220,7 +222,7 @@ class GameWorld : public GameMode {
 				return allow_player_offscreen;
 			}
 
-			void SaveMap();
+			void SaveWorld(string filename = "test-save.xml");
 
 			virtual ~GameWorld();
 };

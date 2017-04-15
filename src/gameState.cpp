@@ -385,7 +385,7 @@ void GameState::Tick()
 			PHYSICS->SetDrawDebug(!PHYSICS->GetDrawDebug());
 
 		if (INPUT->KeyOnce(GAMEKEY_SAVE_MAP))
-			WORLD->SaveMap();
+			WORLD->SaveWorld();
 	}
 
 	// Normally, now that we're done one Tick, we wait around for the next 1/30th of a sec
