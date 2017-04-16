@@ -89,35 +89,35 @@ std::string GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 //! Use the specified mode exit info from the last mode that exited
 //! If there was no mode exit info, just pass in a blank oldExitInfo and
 //! the new mode will ignore it.
-int GameModes::LoadMode(std::string mode_xml_filename, 
-						const GameModeExitInfo& oldExitInfo ) {
+int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldExitInfo) {
 	currentMode = NULL;
 
 	#ifdef AI_TRAINING
 	TRACE(" AI: Enabling AI Training.\n");
 	#endif
 
-	TRACE(" Mode Info: filename '%s'\n", mode_xml_filename );
+	TRACE(" Mode Info: filename '%s'\n", mode_filename.c_str() );
+	mode_filename = ASSETMANAGER->GetPathOf(mode_filename.c_str());
 
-	mode_xml_filename = ASSETMANAGER->GetPathOf(mode_xml_filename.c_str());
-	XMLNode xMode = XMLNode::openFileHelper( mode_xml_filename.c_str(), "gameMode" );
+	string modeType;
+	XMLNode xMode;
 
-	std::string modeType = xMode.getAttribute("type");
-	TRACE(" Mode Info: type = '%s'\n", modeType);
+	bool forceSimulation = mode_filename.find("simulation") != mode_filename.npos;
+
+	if (forceSimulation) {
+		modeType = "simulation";
+	} else {
+		xMode = XMLNode::openFileHelper(mode_filename.c_str(), "gameMode");
+		modeType = xMode.getAttribute("type");
+	}
+
+	TRACE(" Mode Info: type = '%s'\n", modeType.c_str());
 
 	// actually create the new mode
 	if (modeType == "simulation") 
 	{
-
-		// slight singleton hack.
-		//if (!OPTIONS->MapEditorEnabled()) {
-			WORLD->CreateInstance();
-		//} else {
-		//	WORLD->SetInstance(new MapEditor());
-		//}
-
+		GameWorld::CreateWorld(mode_filename);
 		currentMode = WORLD;
-
 	} 
 	else if (modeType == "credits") 
 	{
@@ -146,12 +146,12 @@ int GameModes::LoadMode(std::string mode_xml_filename,
 
 		// setup the new exit info
 		GameModeExitInfo exitInfo = currentMode->GetExitInfo();
-		exitInfo.lastModeName = mode_xml_filename;
+		exitInfo.lastModeName = mode_filename;
 		currentMode->SetExitInfo(exitInfo);
 	}
 
 	if (error || currentMode->Init(xMode) == -1) {
-		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", 	modeType);
+		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", modeType.c_str());
 		return -1;
 	}
 

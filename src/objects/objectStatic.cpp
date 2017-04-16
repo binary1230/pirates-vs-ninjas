@@ -8,30 +8,38 @@
 #include "objectFactory.h"
 #include "objectEnemy.h"
 
-bool StaticObject::Init() {
+
+bool ObjectStatic::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_static = 1;
+
+	return true;
+}
+
+bool ObjectStatic::Init() {
 	return BaseInit();
 }
 
-void StaticObject::Shutdown() {
+void ObjectStatic::Shutdown() {
 	BaseShutdown();
 }
 
-void StaticObject::Update() {
+void ObjectStatic::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
 
-	UpdateSpawns(); // HACK, stupid.
+	UpdateSpawns();
 }
 
-// TOTAL HACK DONT CHECK IN ENEMY TESTING ONLY
-void StaticObject::UpdateSpawns() 
+void ObjectStatic::UpdateSpawns() 
 {
 	if (!properties.spawns_enemies)
 		return;
 
-	// HACK:
-	return;
-
+#if BLOCKS_SPAWN_ENEMIES
+	// experimental
 	static int iSpawnWaitTime = 0;
 
 	iSpawnWaitTime--;
@@ -40,10 +48,10 @@ void StaticObject::UpdateSpawns()
 
 	iSpawnWaitTime = 60;
 
-	if (EnemyObject::iSpawnedObjectCount > 100)
+	if (ObjectEnemy::iSpawnedObjectCount > 100)
 		return;
 
-	EnemyObject::iSpawnedObjectCount++;
+	ObjectEnemy::iSpawnedObjectCount++;
 
 	Object* badyguy = OBJECT_FACTORY->CreateObject("enemy1");
 	assert(badyguy);
@@ -55,9 +63,10 @@ void StaticObject::UpdateSpawns()
 	badyguy->PlayAnimation(1);
 
 	WORLD->AddObject(badyguy);
+#endif BLOCKS_SPAWN_ENEMIES
 }
 
-StaticObject::StaticObject() {}
-StaticObject::~StaticObject() {}
+ObjectStatic::ObjectStatic() {}
+ObjectStatic::~ObjectStatic() {}
 
-BOOST_CLASS_EXPORT_GUID(StaticObject, "StaticObject")
+BOOST_CLASS_EXPORT_GUID(ObjectStatic, "ObjectStatic")

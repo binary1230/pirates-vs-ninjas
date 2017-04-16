@@ -10,7 +10,7 @@ typedef unsigned int uint;
 ((rand() % (int(upper) - int(lower) + 1)) + int(lower))
 
 #define DEFAULT_SCREEN_SIZE_X	1024
-#define DEFAULT_SCREEN_SIZE_Y	768
+#define DEFAULT_SCREEN_SIZE_Y	650
 
 // PACKAGE and VERSION come from autotools (config.h)
 #ifdef HAVE_CONFIG_H
@@ -95,5 +95,6 @@ namespace boost {
 	} // namespace serialization
 } // namespace boost
 
+// #define USE_OLD_LOADING_SYSTEM 0
 
 #endif // GLOBALS_H

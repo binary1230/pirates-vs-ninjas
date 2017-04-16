@@ -27,10 +27,16 @@ class ObjectController : public Object {
 		vector<struct Button> buttons;
 
 		bool only_show_during_demo;
+
+		virtual bool LoadObjectProperties(XMLNode & xDef);
 		
 	public:
-		bool Init();	
+		IMPLEMENT_CLONE(ObjectController)
+
+		bool Init();
 		void Shutdown();
+
+		void Clear();
 
 		void Update();
 		void Draw();

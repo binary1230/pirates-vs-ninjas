@@ -1,13 +1,14 @@
 #ifndef GAMEWORLD_H
 #define GAMEWORLD_H
 
+#include "objectLayer.h"
 #include "gameMode.h"
 #include "object.h"
 
 class Object;
 class ObjectFactory;
 class ObjectLayer;
-class PlayerObject;
+class ObjectPlayer;
 			
 // note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
@@ -28,15 +29,18 @@ class GameWorld : public GameMode {
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-			ar  & BOOST_SERIALIZATION_BASE_OBJECT_NVP(GameMode)
-				& boost::serialization::make_nvp("layers", m_kLayers)
-				& boost::serialization::make_nvp("bgcolor", m_bgColor)
-				& boost::serialization::make_nvp("bgcolor_top", m_bgColor)
-				& boost::serialization::make_nvp("music", m_szMusicFile)
-				& boost::serialization::make_nvp("width", m_iLevelWidth)
-				& boost::serialization::make_nvp("height", m_iLevelHeight)
-				& boost::serialization::make_nvp("lua_script", m_szLuaScript)
-				;
+			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(GameMode);
+			ar & boost::serialization::make_nvp("objects", m_objects);
+			ar & boost::serialization::make_nvp("layers", m_kLayers);
+			ar & boost::serialization::make_nvp("bgcolor", m_bgColor);
+			ar & boost::serialization::make_nvp("bgcolor_top", m_bgColorTop);
+			ar & boost::serialization::make_nvp("music", m_szMusicFile);
+			ar & boost::serialization::make_nvp("width", m_iLevelWidth);
+			ar & boost::serialization::make_nvp("height", m_iLevelHeight);
+			ar & boost::serialization::make_nvp("lua_script", m_szLuaScript);
+			ar & BOOST_SERIALIZATION_NVP(m_pkCameraLookatTarget);
+			ar & BOOST_SERIALIZATION_NVP(m_included_effect_xml_files);
+			ar & BOOST_SERIALIZATION_NVP(m_included_objectdef_xml_files);
 		}
 
 		protected:
@@ -52,6 +56,9 @@ class GameWorld : public GameMode {
 
 			//! Layers, which hold pointers to objects.
 			vector<ObjectLayer*> m_kLayers;
+
+			vector<std::string> m_included_effect_xml_files;
+			vector<std::string> m_included_objectdef_xml_files;
 		
 			//! List of objects to add on next Update()
 			ObjectList m_kObjectsToAdd;
@@ -85,8 +92,17 @@ class GameWorld : public GameMode {
 			//! on different layers
 			float m_fCameraScrollSpeed;
 
-			// Stuff saved for map editor:
-			XMLNode m_xEffects;
+			bool is_loading;
+			bool use_scroll_speed;
+
+			int camera_shake_x;
+			int camera_shake_y;
+
+			bool allow_player_offscreen;
+
+			bool m_bJumpedBackFromADoor;
+
+			std::string m_szLuaScript;
 
 			//! Game update functions
 			void UpdateObjects();
@@ -96,13 +112,17 @@ class GameWorld : public GameMode {
 			//! Sets up simulation from an XML file
 			//XXX should be moved into a friend factory class, or something.
 			int Load(XMLNode&);
+			bool LoadObjects();
 			int LoadHeaderFromXML(XMLNode&);
 			int LoadObjectsFromXML(XMLNode&);
 			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer* const);
 			int LoadLayerFromXML(XMLNode&, ObjectLayer* const);
+			
 			// these virtuals might be overridden by the map editor
-			virtual int LoadObjectDefsFromXML(XMLNode&);
 			virtual void LoadMusic(const char* filename);
+			virtual bool LoadObjectDefsFromXML(XMLNode * xObjDefs);
+
+			bool InitJumpBackFromDoor();
 
 			int CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const);
 
@@ -115,24 +135,15 @@ class GameWorld : public GameMode {
 			//! If a modal object (e.g. on-screen text) is active
 			//! then the rest of the game pauses until it responds
 			Object* modal_active;
+
+			vector<ObjectPlayer*> m_kCachedPlayers;
 			
 			//! Do the real work of adding an object to the global object list
 			void DoAddObject(Object* obj);
 		
 			void RemoveDeadObjectsIfNeeded();
 
-			bool is_loading;
-			bool use_scroll_speed;
-
-			int camera_shake_x;
-			int camera_shake_y;
-			int camera_shake_fade_time_left;
-				
-			bool allow_player_offscreen;
-	
-			bool m_bJumpedBackFromADoor;
-
-			std::string m_szLuaScript;
+			void Clear();
 
 		public:
 			virtual int Init(XMLNode);
@@ -157,7 +168,7 @@ class GameWorld : public GameMode {
 			//! Find a layer by name
 			ObjectLayer* FindLayer(const char* name);
 
-			PlayerObject* GetPlayer(uint iIndex)
+			ObjectPlayer* GetPlayer(uint iIndex)
 			{
 				assert(iIndex >= 0 && iIndex < m_kCachedPlayers.size());
 				if (iIndex >= 0 && iIndex < m_kCachedPlayers.size())
@@ -167,13 +178,13 @@ class GameWorld : public GameMode {
 			}
 
 			uint GetNumPlayers() { return m_kCachedPlayers.size(); }
-
-			vector<PlayerObject*> m_kCachedPlayers;
 			
 			virtual void Draw();
 			virtual void Update();
 
 			void DoMainGameUpdate();
+
+			static void CreateWorld(string mode_filename);
 
 			int GetWidth() {return m_iLevelWidth;};
 			int GetHeight() {return m_iLevelHeight;};
@@ -211,7 +222,7 @@ class GameWorld : public GameMode {
 				return allow_player_offscreen;
 			}
 
-			void SaveMap();
+			void SaveWorld(string filename = "test-save.xml");
 
 			virtual ~GameWorld();
 };

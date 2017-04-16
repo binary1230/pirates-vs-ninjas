@@ -58,14 +58,21 @@ class ObjectText : public Object {
 		bool is_modal;
 
 	public:
+		IMPLEMENT_CLONE(ObjectText)
+
 		bool Init();
 		void Shutdown();
+
+		void Clear();
 
 		void Update();
 		void Draw();
 
 		bool SetAvatarFilename(std::string file);
 		void SetModalActive(bool state);
+
+		virtual bool LoadXMLInstanceProperties(XMLNode & xObj);
+		virtual bool LoadObjectProperties(XMLNode & xDef);
 
 		void SetText(std::string txt);
 

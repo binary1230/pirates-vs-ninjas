@@ -24,22 +24,22 @@
 // like the white puffs when you skid
 #define SKID_OBJECT_TYPE "skid"
 
-bool PlayerObject::WantsToSlideOnLeftSide()
+bool ObjectPlayer::WantsToSlideOnLeftSide()
 {
 	return !m_kCurrentCollision.down && m_kCurrentCollision.left && INPUT->Key(PLAYERKEY_LEFT, controller_num);
 }
 
-bool PlayerObject::WantsToSlideOnRightSide()
+bool ObjectPlayer::WantsToSlideOnRightSide()
 {
 	return !m_kCurrentCollision.down && m_kCurrentCollision.right && INPUT->Key(PLAYERKEY_RIGHT, controller_num);
 }
 
-bool PlayerObject::WantsToSlideOnAnySide()
+bool ObjectPlayer::WantsToSlideOnAnySide()
 {
 	return (WantsToSlideOnLeftSide() || WantsToSlideOnRightSide());
 }
 
-void PlayerObject::UpdateSpriteFlip() {
+void ObjectPlayer::UpdateSpriteFlip() {
 	// might need a little updating.  seems to mostly work ok though.
 
 	if (GetVelX() > 0.0f)
@@ -48,7 +48,7 @@ void PlayerObject::UpdateSpriteFlip() {
 		flip_x = true;
 }
 
-void PlayerObject::UpdateRunningAnimationSpeed() 
+void ObjectPlayer::UpdateRunningAnimationSpeed() 
 {
 	if (m_bShouldNotSwitchAnimationsRightNow)
 		return;
@@ -63,7 +63,7 @@ void PlayerObject::UpdateRunningAnimationSpeed()
 		currentAnimation->SetSpeedMultiplier(2);	// max
 }
 
-void PlayerObject::UpdateLeftRightMotion()
+void ObjectPlayer::UpdateLeftRightMotion()
 {
 	float max_desired_speed = 10.0f;
 	float boost = 7.0f;
@@ -89,13 +89,14 @@ void PlayerObject::UpdateLeftRightMotion()
 			velChange *= boost;
 		}
 
+		assert(m_pkPhysicsBody);
 		float impulse = m_pkPhysicsBody->GetMass() * velChange;
 
 		ApplyImpulse(impulse, 0.0f);
 	}
 }
 
-void PlayerObject::Update() 
+void ObjectPlayer::Update() 
 {
 	BaseUpdate();
 
@@ -246,9 +247,9 @@ void PlayerObject::Update()
 	ScreenBoundsConstraint();
 }
 
-void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
+void ObjectPlayer::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
-	if (obj->GetProperties().is_static && obj->GetProperties().is_physical && !obj->GetProperties().is_sensor)
+	if (obj->GetProperties().is_static && obj->GetProperties().uses_physics_engine && !obj->GetProperties().is_sensor)
 	{
 		if (pkbWorldManifold->normal.y > 0 && pkbWorldManifold->normal.x == 0.0f)
 			m_kCurrentCollision.down = 1;
@@ -265,12 +266,12 @@ void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 
 
 	if (obj->GetProperties().is_door) {
-		door_in_front_of_us = (DoorObject*)obj;
+		door_in_front_of_us = (ObjectDoor*)obj;
 	}
 
 	if (obj->GetProperties().is_spring)
 	{
-		SpringObject* sObj = (SpringObject*)obj;
+		ObjectSpring* sObj = (ObjectSpring*)obj;
 
 		// this should go into the spring class, not here
 		if (sObj->IsSpringActive())
@@ -284,7 +285,7 @@ void PlayerObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 		++ring_count;
 }
 
-void PlayerObject::DropBombsIfNeeded()
+void ObjectPlayer::DropBombsIfNeeded()
 {
 	if (m_kPlayerState == WALKING_THRU_DOOR)
 		return;
@@ -306,7 +307,8 @@ void PlayerObject::DropBombsIfNeeded()
 	if (GetInput(PLAYERKEY_UP, controller_num)) {
 		objBall->SetY(objBall->GetY() + 40);
 		objBall->ApplyImpulse(0.0f, strength*0.2f);
-	} else if (GetInput(PLAYERKEY_DOWN, controller_num) && !m_kCurrentCollision.down) {
+	}
+	else if (GetInput(PLAYERKEY_DOWN, controller_num) && !m_kCurrentCollision.down) {
 		objBall->SetY(objBall->GetY() - 40);
 		objBall->ApplyImpulse(0.0f, -strength*0.2f);
 	} else {
@@ -315,7 +317,7 @@ void PlayerObject::DropBombsIfNeeded()
 	}
 }
 
-void PlayerObject::ScreenBoundsConstraint() {
+void ObjectPlayer::ScreenBoundsConstraint() {
 	if (!WORLD->PlayerAllowedOffscreen()) {
 		// TODO: clean this up some.
 		// BUG: freaks out on right side of screen
@@ -327,9 +329,9 @@ void PlayerObject::ScreenBoundsConstraint() {
 			pos.x = newPosX;
 			UpdatePositionFromPhysicsLocation();
 		}
-		else if (pos.x >(WORLD->GetWidth() - width)) {
+		else if (pos.x >(WORLD->GetWidth() - GetWidth())) {
 			SetVelX(0.0f);
-			float newPosX = WORLD->GetWidth() - width;
+			float newPosX = WORLD->GetWidth() - GetWidth();
 			m_pkPhysicsBody->SetTransform(
 				b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), 
 				m_pkPhysicsBody->GetAngle()
@@ -339,12 +341,12 @@ void PlayerObject::ScreenBoundsConstraint() {
 	}
 }
 
-void PlayerObject::OnAnimationLooped()
+void ObjectPlayer::OnAnimationLooped()
 {
 	m_bShouldNotSwitchAnimationsRightNow = false;
 }
 
-void PlayerObject::PlayAnimation(uint uiIndex)
+void ObjectPlayer::PlayAnimation(uint uiIndex)
 {
 	if (m_bShouldNotSwitchAnimationsRightNow)
 		return;
@@ -352,12 +354,16 @@ void PlayerObject::PlayAnimation(uint uiIndex)
 	Object::PlayAnimation(uiIndex);
 }
 
-void PlayerObject::Shutdown() {
+void ObjectPlayer::Shutdown() {
 	BaseShutdown();
 }
 
-bool PlayerObject::Init()
+void ObjectPlayer::Clear()
 {
+	Object::Clear();
+
+	m_animationMapping = GetPlayerAnimationMappings();
+
 	jump_velocity = DEFAULT_JUMP_VELOCITY;
 	min_velocity = DEFAULT_MIN_VELOCITY;
 	drag = DEFAULT_DRAG;
@@ -369,30 +375,37 @@ bool PlayerObject::Init()
 	door_in_front_of_us = NULL;
 	ring_count = 0;
 	m_bShouldNotSwitchAnimationsRightNow = false;
-
-	return BaseInit();
 }
 
-bool PlayerObject::LoadPlayerProperties(XMLNode &xDef) {
-	XMLNode xProps = xDef.getChildNode("properties");
+bool ObjectPlayer::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
 
 	properties.is_player = 1;
-	properties.is_physical = 1;
+	properties.uses_physics_engine = 1;
 	properties.ignores_physics_rotation = 1;
 	properties.use_angled_corners_collision_box = 1;
 
-	on_skateboard = false;
+	XMLNode xProps = xDef.getChildNode("properties");
 
-	if (xProps.nChildNode("onSkateboard"))
-		on_skateboard = true;
-
-	return (xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
-		xProps.getChildNode("minVelocity").getFloat(min_velocity) &&
-		xProps.getChildNode("drag").getFloat(drag));
+	return	xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
+			xProps.getChildNode("minVelocity").getFloat(min_velocity) &&
+			xProps.getChildNode("drag").getFloat(drag);
 }
 
+bool ObjectPlayer::Init()
+{
+	return BaseInit();
+}
 
-PlayerObject::PlayerObject() {}
-PlayerObject::~PlayerObject() {}
+bool ObjectPlayer::GetInput(uint key, uint controller_num) const
+{
+	return INPUT->Key(key, controller_num);
+}
 
-BOOST_CLASS_EXPORT_GUID(PlayerObject, "PlayerObject")
+ObjectPlayer::ObjectPlayer() { 
+	Clear();
+}
+ObjectPlayer::~ObjectPlayer() {}
+
+BOOST_CLASS_EXPORT_GUID(ObjectPlayer, "ObjectPlayer")

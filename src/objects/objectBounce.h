@@ -19,9 +19,13 @@ class ObjectBounce : public Object {
 		bool collided_last_frame;
 
 	public:
+		IMPLEMENT_CLONE(ObjectBounce)
+
 		bool Init();
 		void Shutdown();
 		void Update();
+
+		virtual bool LoadObjectProperties(XMLNode & xDef);
 
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		

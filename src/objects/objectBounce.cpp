@@ -25,24 +25,23 @@ void ObjectBounce::Update() {
 	}
 	
 	collided_last_frame = m_kCurrentCollision.down;
+}
 
-	// ghettoooooooo friction.
-	if (m_kCurrentCollision.down) {
-/*		vel.x *= FRICTION_MULTIPLIER;
-		if (fabs(vel.x) < MIN_VELOCITY) {
-			vel.x = 0;
-		}*/
-	}
+bool ObjectBounce::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_ball = 1;
+	properties.uses_physics_engine = 1;
+	
+	return true;
 }
 
 bool ObjectBounce::Init() {
-	if (!BaseInit())
-		return false;
-
 	play_hit_sound = false;
 	collided_last_frame = false;
 
-	return true;
+	return BaseInit();
 }
 
 void ObjectBounce::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {

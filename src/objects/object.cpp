@@ -12,11 +12,17 @@
 #include "objectLayer.h"
 #include "sprite.h"
 #include "physics.h"
+#include "..\objectFactory.h"
 
 bool Object::debug_draw_bounding_boxes = 0;
+map<std::string, Object*> Object::objectProtoTable;
 
 void Object::SetObjectDefName(const char* _name) {
 	objectDefName = _name;
+}
+
+std::string Object::GetObjectDefName() {
+	return objectDefName;
 }
 
 // Used as criteria for STL find()
@@ -74,37 +80,6 @@ void Object::UpdateDisplayTime() {
 		is_dead = true;
 }
 
-//! Cache some commonly used stuff
-// ('cause the profiler says so!)
-void Object::SetupCachedVariables() {
-	assert(WORLD != NULL);
-	level_width  = WORLD->GetWidth();
-	level_height = WORLD->GetHeight();
-	
-	if (width == 0 && height == 0)
-	{
-		if (animations.size() > 0 && animations[0]) 
-		{
-			width = animations[0]->GetWidth();
-			height = animations[0]->GetHeight();
-		} 
-		else 
-		{
-			width = 0;
-			height = 0;
-		}
-	}
-
-	m_bCanCollide |=properties.is_physical ||
-					properties.is_player || 
-					properties.is_spring ||
-					properties.is_collectable || 
-					properties.is_fan ||
-					properties.is_door ||
-					properties.is_ring ||
-					properties.is_ball;
-}
-
 void Object::InitPhysics()
 {
 	if (!PHYSICS)
@@ -114,7 +89,7 @@ void Object::InitPhysics()
 		return;
 	}
 
-	if (!properties.is_physical)
+	if (!properties.uses_physics_engine)
 		return;
 
 	// WHO'S READY FOR THE HACKS?!?!?!?
@@ -124,9 +99,9 @@ void Object::InitPhysics()
 		fDensity = 0.1f;
 
 	if (properties.is_static)
-		m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, width, height, properties.is_sensor);
+		m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, GetWidth(), GetHeight(), properties.is_sensor);
 	else
-		m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, width, height, properties.ignores_physics_rotation, fDensity, properties.use_angled_corners_collision_box);
+		m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, GetWidth(), GetHeight(), properties.ignores_physics_rotation, fDensity, properties.use_angled_corners_collision_box);
 
 	m_pkPhysicsBody->SetUserData(this);
 }
@@ -151,7 +126,8 @@ void Object::FadeOut(int time) {
 	is_fading = true;
 }
 
-bool Object::BaseInit() {
+void Object::Clear() {
+	m_animationMapping.clear();
 	m_bDrawBoundingBox = false;
 	tmp_debug_flag = 0;
 	ClearProperties(properties);
@@ -160,13 +136,32 @@ bool Object::BaseInit() {
 	is_fading = false;
 	alpha = 255;
 	display_time = -1;
-	width = height = 0;
 	controller_num = 0;
-	level_width = 0;
-	level_height = 0;
 	rotate_angle = rotate_velocity = 0.0f;
 	use_rotation = false;
 	b_box_offset_x = b_box_offset_y = 0;
+	b_box_width = b_box_height = 0;
+	m_pkLayer = NULL;
+	pos.x = pos.y = 0.0f;
+	m_kCurrentCollision.down = 0;
+	m_kCurrentCollision.up = 0;
+	m_kCurrentCollision.left = 0;
+	m_kCurrentCollision.right = 0;
+	currentAnimation = NULL;
+	animations.clear();
+	currentSprite = NULL;	
+	flip_x = flip_y = false;
+	objectDefName = "";
+	alpha = 255;
+	b_box_offset_x = b_box_offset_y = 0;
+	m_bDrawBoundingBox = false;
+	m_pkPhysicsBody = NULL;
+	debug_flag = false;
+
+	unique_id = Object::debug_object_id++;
+}
+
+bool Object::BaseInit() {
 	return true;
 }
 
@@ -182,24 +177,14 @@ void Object::Draw() {
 	if (b_box_offset_x)
 	{
 		if (flip_x)
-			flip_offset_x = - currentAnimation->GetWidth() + b_box_offset_x + width;
+			flip_offset_x = - currentAnimation->GetWidth() + b_box_offset_x + GetWidth();
 
-		flip_offset_y = 63; // HACK
+		flip_offset_y = b_box_height; // not sure if this is right
 	}
 
 	DrawAtOffset(flip_offset_x, flip_offset_y);
 }
 
-// TEMP CODE FOR SPRITE OFFSETS
-/*
-int flip_offset_x = 0;
-if (flip_x)
-   flip_offset_x = width - currentAnimation->GetWidth();
-
-// img.x = pos.x + b_box_offset_x + flip_offset_x
-// e.g.
-true_offset = b_box_offset_x + flip_offset_x;
-*/
 
 //! Ultimately we need the actual, on-screen coordinates of where
 //! to draw the sprite.  To get to those from the object's "world" coordinates
@@ -247,10 +232,6 @@ void Object::TransformRect(_Rect &r) {
 	WORLD->TransformViewToScreen(x2, y2);
 
 	r.set(x1,y1,x2,y2);
-	/*r.setx1(x1); 	r.sety1(y1);
-	r.setx2(x2); 	r.sety2(y2);*/
-	
-	// r.setx2(x1 + w); 	r.sety2(y1 + h);
 }
 
 //! This function does the real dirty work of drawing.
@@ -266,21 +247,20 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 	if (sprite_to_draw)
 		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha);
 
-	// DEBUG ONLY DONT CHECK IN
-	/*if (sprite_to_draw && (b_box_offset_x || b_box_offset_y))
+	#if DEBUG_DRAW_SPRITE
+	if (sprite_to_draw && (b_box_offset_x || b_box_offset_y))
 	{
 		const bool bOnlyDrawBoundingBox = true;
 		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha, bOnlyDrawBoundingBox);
-	}*/
-
-	// bounding box stuff below.
+	}
+	#endif
 
 	if (m_bDrawBoundingBox) 
 	{
 		_Rect bbox_t;
 
 		// get current bounding box
-		bbox_t.set(	pos.x, pos.y, pos.x + width, pos.y + height );
+		bbox_t.set(	pos.x, pos.y, pos.x + GetWidth(), pos.y + GetHeight());
 
 		// draw current bounding rectangle, pink
 		TransformRect(bbox_t);
@@ -288,7 +268,32 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 	}
 }
 
-void Object::ResetForNextFrame() 
+int Object::GetWidth() const
+{
+	if (b_box_width > 0) {
+		return b_box_width;
+	}
+
+	if (animations.size() <= 0 || !animations[0]) {
+		return 0;
+	}
+
+	return animations[0]->GetWidth();
+}
+
+int Object::GetHeight() const
+{
+	if (b_box_height > 0) {
+		return b_box_height;
+	}
+
+	if (animations.size() <= 0 || !animations[0]) {
+		return 0;
+	}
+	return animations[0]->GetHeight();
+}
+
+void Object::ResetForNextFrame()
 {
 	m_kCurrentCollision.up = m_kCurrentCollision.down = m_kCurrentCollision.left = m_kCurrentCollision.right = 0;
 
@@ -301,6 +306,7 @@ void Object::ResetForNextFrame()
 }
 
 void Object::BaseShutdown() {
+	assert(m_pkLayer);
 	m_pkLayer->RemoveObject(this);
 
 	int i, max = animations.size();
@@ -323,30 +329,10 @@ void Object::BaseShutdown() {
 
 unsigned long Object::debug_object_id = 0;
 
-Object::Object() {
-	unique_id = Object::debug_object_id++;
-	m_pkLayer = NULL;
-	currentSprite = NULL;
-	currentAnimation = NULL;
-	flip_x = false; 
-	flip_y = false; 
-	is_dead = true;
-	debug_flag = false;
-	pos.x = pos.y = 0.0f;
-	display_time = -1;
-	rotate_angle = rotate_velocity = 0.0f;
-	use_rotation = false;
-	m_bDrawBoundingBox = false;
-	m_bCanCollide = false;
-	m_pkPhysicsBody = NULL;
-}
-
 void Object::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
 	// default is no action, this is overidden in higher classes
 }
-
-Object::~Object() {}
 
 void Object::PlayAnimation( uint uiIndex )
 {
@@ -364,7 +350,6 @@ void Object::PlayAnimation( uint uiIndex )
 		return;
 	}
 
-	// do nothing if we're already playing this animation
 	if (currentAnimation == animations[uiIndex])
 		return;
 
@@ -385,8 +370,176 @@ void Object::ApplyImpulse(const b2Vec2& v)
 
 void Object::UpdatePositionFromPhysicsLocation()
 {
-	pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - float(width) / 2;
-	pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - float(height) / 2;
+	pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - float(GetWidth()) / 2;
+	pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - float(GetHeight()) / 2;
+}
+
+bool Object::LoadFromObjectDef(XMLNode& xDef) {
+	SetObjectDefName(xDef.getAttribute("name"));
+
+	if (!Init())
+		return false;
+
+	if (!LoadObjectProperties(xDef))
+		return false;
+
+	if (!LoadObjectSounds(xDef))
+		return false;
+
+	if (!LoadObjectAnimations(xDef))
+		return false;
+
+	return true;
+}
+
+bool Object::LoadObjectSounds(XMLNode &xDef) {
+	if (xDef.nChildNode("sounds")) {
+		XMLNode xSounds = xDef.getChildNode("sounds");
+		if (!SOUND->LoadSounds(xSounds))
+			return false;
+	}
+
+	return true;
+}
+
+bool Object::LoadObjectProperties(XMLNode &xDef) {
+	XMLNode xProps = xDef.getChildNode("properties");
+
+	// TODO: these are overriding things set in Init()
+
+	properties.feels_gravity = xProps.nChildNode("affectedByGravity") != 0;
+	properties.feels_user_input = xProps.nChildNode("affectedByInput1") != 0;
+	properties.feels_friction = xProps.nChildNode("affectedByFriction") != 0;
+
+	properties.uses_physics_engine = xProps.nChildNode("solidObject") != 0;
+	properties.is_static = xProps.nChildNode("solidObject") != 0;
+
+	properties.do_our_own_rotation = xProps.nChildNode("noPhysicsRotate") != 0;
+	properties.is_sensor = xProps.nChildNode("sensorOnly") != 0;
+
+	properties.spawns_enemies = xProps.nChildNode("spawnsEnemies") != 0;
+
+	if (xProps.nChildNode("isOverlay")) {
+		properties.is_overlay = 1;
+	}
+
+	if (xProps.nChildNode("boundingBox") != 0)
+	{
+		XMLNode xBoundingBox = xProps.getChildNode("boundingBox");
+
+		if (!xBoundingBox.nChildNode("offset_x"))
+		{
+			return false;
+		}
+
+		if (!xBoundingBox.getChildNode("offset_x").getInt(b_box_offset_x) ||
+			!xBoundingBox.getChildNode("offset_y").getInt(b_box_offset_y) ||
+			!xBoundingBox.getChildNode("width").getInt(b_box_width) ||
+			!xBoundingBox.getChildNode("height").getInt(b_box_height))
+		{
+			TRACE("Invalid bounding box info.\n");
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool Object::LoadXMLInstanceProperties(XMLNode & xObj)
+{
+	return true;
+}
+
+// A helper function to load animations
+bool Object::LoadObjectAnimations(XMLNode &xDef) {
+	uint i;
+	int num_xml_animations, num_animation_slots_needed = -1, iterator;
+
+	Animation* anim = NULL;
+	std::string anim_name;
+	XMLNode xAnim, xAnims;
+
+	xAnims = xDef.getChildNode("animations");
+	num_xml_animations = xAnims.nChildNode("animation");
+
+	if (m_animationMapping.size())
+		num_animation_slots_needed = m_animationMapping.size();
+
+	animations.resize(max(num_xml_animations, num_animation_slots_needed));
+
+	// zero out all the animations to NULL
+	for (i = 0; i < animations.size(); ++i)
+		animations[i] = NULL;
+
+	// read everything from XML
+	for (i = iterator = 0; i<(uint)num_xml_animations; ++i)
+	{
+		xAnim = xAnims.getChildNode("animation", &iterator);
+		anim_name = xAnim.getAttribute("name");
+
+		// Load the animation	
+		anim = Animation::Load(xAnim, this);
+
+		if (!anim)
+			return false;
+
+		// if we have animation names (e.g. "walking") then use them to figure
+		// out which index we store this animation at
+		// if not, just put it in the next available index
+		uint index;
+		if (m_animationMapping.size())
+			index = m_animationMapping[anim_name];
+		else
+			index = i;
+
+		assert(index >= 0 && index < animations.size());
+		animations[index] = anim;
+	}
+	
+	std::string default_name;
+	int default_index;
+
+	if (m_animationMapping.size()) {
+		default_name = xAnims.getAttribute("default");
+		default_index = m_animationMapping[default_name];
+		currentAnimation = animations[default_index];
+	} else {
+		if (animations.size() > 0) {
+			currentAnimation = animations[0];
+		}
+	}
+
+	if (currentAnimation) {
+		currentSprite = currentAnimation->GetCurrentSprite();
+	}
+
+	return true;
+}
+
+Object::Object() {
+	Clear();
+}
+Object::~Object() {}
+
+Object* Object::AddPrototype(string type, Object * obj)
+{
+	TRACE("adding object prototype for '%s' ", type.c_str());
+	objectProtoTable[type] = obj;
+	return obj; // handy
+}
+
+Object* Object::CreateObject(std::string type)
+{
+	std::map<string, Object*>::iterator it;
+	it = objectProtoTable.find(type);
+	if (it == objectProtoTable.end()) {
+		TRACE("CreateObject(): Object type named '%s' not found", type.c_str());
+		return NULL;
+	}
+
+	Object* obj = it->second;
+		
+	return obj->Clone();
 }
 
 BOOST_CLASS_EXPORT_GUID(Object, "Object")

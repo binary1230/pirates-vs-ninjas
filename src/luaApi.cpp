@@ -24,14 +24,15 @@ int LUAAPI lua_engine_print(lua_State* lua) {
 }
 
 int LUAAPI lua_world_create_cutbars(lua_State* lua) {
-
 	const char* txt = lua_tostring(lua, -1);
 	int retval = 0;
+
+	#ifdef USE_OLD_LOADING_SYSTEM
 	
 	if (!WORLD) {
 		retval = -1;
 	} else {
-		CutBarObject* obj = (CutBarObject*)OBJECT_FACTORY->CreateObject("CutBars");
+		ObjectCutBars* obj = (ObjectCutBars*)OBJECT_FACTORY->CreateObject("CutBars");
 		if (!obj) {
 			retval = -1;
 		} else {
@@ -42,6 +43,8 @@ int LUAAPI lua_world_create_cutbars(lua_State* lua) {
 			WORLD->AddObject(obj);
 		}
 	}
+
+	#endif // USE_OLD_LOADING_SYSTEM
 
 	lua_pushnumber(lua, retval);
 	return 1;
@@ -76,7 +79,6 @@ int LUAAPI lua_world_textbox(lua_State* lua) {
 			retval = -1;
 		} else {
 			obj->Init();
-			obj->SetupCachedVariables();
 
 			if (txt)
 				obj->SetText(txt);

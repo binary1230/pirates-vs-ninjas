@@ -5,11 +5,11 @@
 
 #include "rect.h"
 #include "animations.h"
+#include "objectLayer.h"
 
 class Object;
 class Animation;
 class Sprite;
-class ObjectLayer;
 class ObjectFactory;
 class b2Body;
 
@@ -31,11 +31,11 @@ struct ObjectProperties
 	// TEMP HACK - this object spawns enemies
 	bool spawns_enemies;
 
-	//! If physical, another physical object cannot move through it
-	bool is_physical;
+	//! Whether we should register with the physics engine or not
+	bool uses_physics_engine;
 
 	//! If static, this object WILL NOT MOVE, ever.
-	//! Only matters if is_physical is on
+	//! Only matters if uses_physics_engine is on
 	bool is_static; 
 
 	//! If set, this object will not get a callback if being collided with
@@ -82,7 +82,7 @@ namespace boost {
 			ar & BOOST_SERIALIZATION_NVP(p.feels_user_input);
 			ar & BOOST_SERIALIZATION_NVP(p.feels_friction);
 			ar & BOOST_SERIALIZATION_NVP(p.spawns_enemies);
-			ar & BOOST_SERIALIZATION_NVP(p.is_physical);
+			ar & BOOST_SERIALIZATION_NVP(p.uses_physics_engine);
 			ar & BOOST_SERIALIZATION_NVP(p.is_static);
 			ar & BOOST_SERIALIZATION_NVP(p.is_sensor);
 			ar & BOOST_SERIALIZATION_NVP(p.ignores_physics_rotation);
@@ -109,7 +109,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.feels_user_input = 0;
 	p.feels_friction = 0;
 	p.is_overlay = 0;
-	p.is_physical = 0;
+	p.uses_physics_engine = 0;
 	p.use_angled_corners_collision_box = 0;
 	p.is_player = 0;
 	p.is_spring = 0;
@@ -129,6 +129,15 @@ inline void ClearProperties(struct ObjectProperties& p) {
 // Used for find()
 bool ObjectIsDead(Object* obj);
 
+#define IMPLEMENT_CLONE(TYPE) \
+   Object* Clone() const { return new TYPE(*this); }
+
+#define MAKE_PROTOTYPE(TYPE) \
+   Object* TYPE ## _myProtoype1 = Object::AddPrototype(#TYPE, new TYPE());
+
+#define MAKE_PROTOTYPE_ALIAS(TYPE, NAME) \
+   Object* TYPE ## _myProtoype2 = Object::AddPrototype(NAME, new TYPE());
+
 //! A drawable entity in the world
 
 //! Objects have physical properties associated with them, but do
@@ -142,7 +151,12 @@ class Object {
 		ar & BOOST_SERIALIZATION_NVP(objectDefName);
 		ar & BOOST_SERIALIZATION_NVP(controller_num);
 		ar & BOOST_SERIALIZATION_NVP(properties);
+		ar & BOOST_SERIALIZATION_NVP(m_pkLayer);
 	}
+
+	// implement "prototype pattern" for object creation
+	static map<std::string, Object*> objectProtoTable;
+	virtual Object* Clone() const = 0;
 
 	protected:
 
@@ -152,9 +166,6 @@ class Object {
 		//! Which controller (e.g. which joystick) use, if we are getting
 		//! input for this object
 		int controller_num;
-
-		//! CACHED level width and height
-		int level_width, level_height;
 		
 		//! Current position
 		b2Vec2 pos;
@@ -178,6 +189,7 @@ class Object {
 		bool flip_x;
 		bool flip_y;
 
+		void Clear();
 		bool BaseInit();	
 		void BaseShutdown();
 
@@ -215,6 +227,11 @@ class Object {
 
 		void UpdatePositionFromPhysicsLocation();
 
+		bool LoadObjectSounds(XMLNode& xDef);
+		virtual bool LoadObjectProperties(XMLNode& xDef);
+		virtual bool LoadXMLInstanceProperties(XMLNode& xObj);
+		bool LoadObjectAnimations(XMLNode& xDef);
+
 		//! Update display times
 		void UpdateDisplayTime();
 
@@ -225,13 +242,14 @@ class Object {
 		//! Update the fading stuff
 		void UpdateFade();
 
-		//! Width and Height of the object
+		//! optimization: cache Width and Height of the object
 		// (we may need to rethink where these come from)
-		int width, height;
+		// int width, height;
 
 		//! Bounding box offsets from the bottom left of the first sprite
 		// (maye need to play with these)
 		int b_box_offset_x, b_box_offset_y;
+		int b_box_width, b_box_height;
 
 		//! Rotational parameters
 		float rotate_angle, rotate_velocity;
@@ -240,8 +258,10 @@ class Object {
 		//! Whether to draw the bounding box or not
 		bool m_bDrawBoundingBox;
 
-		//! If this object should report collisions or not
-		bool m_bCanCollide;
+		b2Body* m_pkPhysicsBody;
+
+		// loading-only paramaters
+		AnimationMapping m_animationMapping;
 	
 	public:
 		// WRONG Protected constructor, this means we can't directly
@@ -356,17 +376,14 @@ class Object {
 		}
 
 		//! Get width/height of this object
-		inline int GetWidth() const {return width;};
-		inline int GetHeight() const {return height;};
+		int GetWidth() const;
+		int GetHeight() const;
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();
 		
 		struct ObjectProperties GetProperties() const { return properties; };
 		inline void SetProperties(struct ObjectProperties p) { properties = p;}
-
-		//! Setup some commonly used variables
-		void SetupCachedVariables();
 
 		//! Set which controller we monitor
 		void SetControllerNum(uint _c) {controller_num = _c;};
@@ -388,20 +405,20 @@ class Object {
 
 		ObjectLayer* const GetLayer() const {return m_pkLayer;};
 		void SetLayer(ObjectLayer* const l) {m_pkLayer = l;};
-		
-		//! Returns true if this type of object is able to collide with another
-		inline bool CanCollide() const {
-			return m_bCanCollide;
-		}
 
 		void SetObjectDefName(const char*);
 
+		std::string GetObjectDefName();
+
 		void ApplyImpulse(float x, float y);
 		void ApplyImpulse(const b2Vec2& v);
+
+		virtual bool LoadFromObjectDef(XMLNode & xDef);
 		
 		virtual ~Object();
 
-		b2Body* m_pkPhysicsBody;
+		static Object* AddPrototype(std::string type, Object* obj);
+		static Object* CreateObject(std::string type);
 
 		friend class ObjectFactory;
 };

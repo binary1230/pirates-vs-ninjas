@@ -14,13 +14,15 @@ enum DoorType {
 	RETURN_TO_LAST_MODE
 };
 
-class DoorObject : public Object {
+class ObjectDoor : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
-		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
+		ar & BOOST_SERIALIZATION_NVP(door_type);
+		ar & BOOST_SERIALIZATION_NVP(mode_to_jump_to_on_activate);
+		ar & BOOST_SERIALIZATION_NVP(door_name);
 	}
 
 	protected:
@@ -37,17 +39,24 @@ class DoorObject : public Object {
 		void DoDoorAction();
 	
 	public:
+		IMPLEMENT_CLONE(ObjectDoor)
+
 		bool Init();
+		void Clear();
 		void Shutdown();
 		
 		void Update();
+
+		virtual bool LoadXMLInstanceProperties(XMLNode & xObj);
+
+		virtual bool LoadObjectProperties(XMLNode & xDef);
 
 		// Activate this door.  when it is finished its animation,
 		// the door's action will happen (e.g. warp to next level)
 		void Activate();
 
-		DoorObject();
-		~DoorObject();
+		ObjectDoor();
+		~ObjectDoor();
 
 		inline const std::string& GetName() {return door_name;}
 			

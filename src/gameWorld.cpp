@@ -41,7 +41,8 @@ int GameWorld::GetCameraY() {
 void GameWorld::ShowText(	const char* txt, 
 							const char* avatar_filename, 
 							bool modal_active) {
-	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT);
+	#ifdef USE_OLD_LOADING_SYSTEM
+	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT); // broken?
 
 	if (!obj) {
 		TRACE("ERROR: Failed to create Txt object in ShowText()\n");
@@ -55,9 +56,19 @@ void GameWorld::ShowText(	const char* txt,
 		obj->SetAvatarFilename(avatar_filename);
 
 	AddObject(obj);
+	#endif // USE_OLD_LOADING_SYSTEM
 }
 
-int GameWorld::Init(XMLNode xMode) {
+void GameWorld::Clear() {
+	is_loading = false;
+	
+	m_objects.clear();
+	m_kLayers.clear();
+	m_included_effect_xml_files.clear();
+	m_included_objectdef_xml_files.clear();
+
+	m_bIsCameraShaking = CAMERA_SHAKE;
+	m_bgColorTop = m_bgColor = al_map_rgb_f(0.0f, 0.0f, 0.0f);
 	allow_player_offscreen = false;
 	use_scroll_speed = true;
 	m_iCameraTotalShakeTime = -1;
@@ -67,7 +78,15 @@ int GameWorld::Init(XMLNode xMode) {
 	m_pkCameraLookatTarget = NULL;
 	m_fCameraScrollSpeed = 1.0f;
 	m_bJumpedBackFromADoor = false;
-		
+	m_kObjectsToAdd.clear();
+	m_iCameraShakeTime = 0;
+	m_iCameraSideMargins = 40;
+	m_fCameraSnapRate = 3.0f;
+	camera_shake_x = 0;
+	camera_shake_y = 0;
+}
+
+int GameWorld::Init(XMLNode xMode) {
 	OBJECT_FACTORY->CreateInstance();
 	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) 
 	{
@@ -81,10 +100,6 @@ int GameWorld::Init(XMLNode xMode) {
 		TRACE("ERROR: InitSystem: failed to init EffectsManager!\n");
 		return -1;
 	}
-
-	m_kObjectsToAdd.clear();
-	m_objects.clear();
-	m_kLayers.clear();
 
 	EVENTS->CreateInstance();
 	if (!EVENTS || !EVENTS->Init()) 
@@ -385,6 +400,28 @@ void GameWorld::DoMainGameUpdate() {
 	ComputeNewCamera();						// Calc where to put the camera now
 }
 
+void GameWorld::SaveWorld(string filename)
+{
+	std::ofstream ofs(filename);
+	assert(ofs.good());
+	boost::archive::xml_oarchive oa(ofs);
+	oa << BOOST_SERIALIZATION_NVP(this);
+}
+
+void GameWorld::CreateWorld(string mode_filename = "") {
+	#ifdef USE_OLD_LOADING_SYSTEM
+		WORLD->CreateInstance();
+	#else
+		// create and open an archive for input
+		GameWorld* unserialized_world = NULL;
+		std::ifstream ifs(mode_filename);
+		boost::archive::xml_iarchive ia(ifs);
+		ia >> BOOST_SERIALIZATION_NVP(unserialized_world);
+
+		WORLD->SetInstance(unserialized_world);
+	#endif // USE_OLD_LOADING_SYSTEM
+}
+
 void GameWorld::LoadMusic(const char* music_file) {
 	if (music_file) {
 		SOUND->PlayMusic(music_file);
@@ -396,13 +433,13 @@ void GameWorld::LoadMusic(const char* music_file) {
 int GameWorld::Load(XMLNode &xMode) {
 
 	is_loading = true;
-
 	m_bJumpedBackFromADoor = false;
-	m_objects.clear();
 	m_kObjectsToAdd.clear();
-	
+
+	#if USE_OLD_LOADING_SYSTEM
 	if (LoadHeaderFromXML(xMode) == -1)
 		return -1;
+	#endif // OLD_LOAD
 
 	if (!PHYSICS->OnWorldInit())
 	{
@@ -410,6 +447,18 @@ int GameWorld::Load(XMLNode &xMode) {
 		return -1;
 	}
 
+
+	XMLNode* p_xObjDefs = NULL;
+
+	#if USE_OLD_LOADING_SYSTEM
+	XMLNode xObjectDefs = xMode.getChildNode("objectDefinitions");
+	p_xObjDefs = &xObjectDefs;
+	#endif // USE_OLD_LOADING_SYSTEM
+
+	if (!LoadObjectDefsFromXML(p_xObjDefs))
+		return -1;
+
+	#if USE_OLD_LOADING_SYSTEM
 	if (LoadObjectsFromXML(xMode) == -1) 
 	{
 		TRACE("ERROR: Failed loading objects from XML\n");
@@ -417,12 +466,35 @@ int GameWorld::Load(XMLNode &xMode) {
 	}
 
 	if (xMode.nChildNode("effects") == 1) {
-		m_xEffects = xMode.getChildNode("effects");
-		if (!EFFECTS->LoadEffectsFromXML(m_xEffects)) {
-			TRACE("ERROR: Can't load Effects XML!\n");
-			return -1;
+		XMLNode xEffects = xMode.getChildNode("effects");
+		int max = xEffects.nChildNode("include_xml_file");
+		int i, iterator;
+		for (i = iterator = 0; i < max; ++i) {
+			std::string effects_include_file = xEffects.getChildNode("include_xml_file", &iterator).getText();
+			m_included_effect_xml_files.push_back(effects_include_file);
 		}
 	}
+
+	if (xMode.nChildNode("music") == 1) {
+		m_szMusicFile = xMode.getChildNode("music").getText();
+	}
+
+	if (xMode.nChildNode("luaScript") == 1) {
+		m_szLuaScript = xMode.getChildNode("luaScript").getText();
+	}
+	#else 
+	if (!LoadObjects())
+		return -1;
+	#endif // OLD_LOAD
+
+
+
+	for (int i = 0; i < m_included_effect_xml_files.size(); ++i)
+	{
+		EFFECTS->LoadEffectsFromIncludedXml(m_included_effect_xml_files[i]);
+	}
+
+
 	
 	if (!GLOBALS->Value("debug_draw_bounding_boxes", Object::debug_draw_bounding_boxes))
 		Object::debug_draw_bounding_boxes = false;
@@ -430,46 +502,12 @@ int GameWorld::Load(XMLNode &xMode) {
 	GLOBALS->Value("camera_side_margins", m_iCameraSideMargins);
 	GLOBALS->Value("camera_snap_rate", m_fCameraSnapRate);
 
-	if (xMode.nChildNode("music") == 1) {
-		m_szMusicFile = xMode.getChildNode("music").getText();
+	if (m_szMusicFile.length() > 0) {
 		LoadMusic(m_szMusicFile.c_str());
 	}
 
-	exitInfo.useExitInfo = true;
-
-	// special case: if we're coming back from a portal, find it and put the players
-	// at that portal's position on the map
-	if (lastExitInfo.useExitInfo && lastExitInfo.useLastPortalName) {
-		ObjectListIter iter;
-		b2Vec2 portal_pos;
-		Object* player;
-		bool found = false;
-
-		// find the portal with the specified name 
-		for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
-			if ((*iter)->GetProperties().is_door && ((DoorObject*)(*iter))->GetName() == lastExitInfo.lastPortalName) {
-				found = true;
-				portal_pos = (*iter)->GetXY();
-				break;
-			}
-		}
-
-		if (!found) {
-			TRACE("ERROR: Tried to jump to a portal "
-											"that doesn't exist named '%s'!\n", 
-											lastExitInfo.lastPortalName);
-			return -1;
-		}
-
-		m_bJumpedBackFromADoor = true;
-
-		// find the player obejcts, set their XY to the portal's XY
-		for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
-			if ((*iter)->GetProperties().is_player) {
-				player = *iter;
-				player->SetXY(portal_pos);
-			}
-		} 
+	if (!InitJumpBackFromDoor()) {
+		return -1;
 	}
 
 	// Make sure the camera is centered on 
@@ -478,8 +516,7 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	// Load the LUA file if there is one
 	// Don't do this for the map editor, since it needs lua stuff too.
-	if (xMode.nChildNode("luaScript") == 1 && !OPTIONS->MapEditorEnabled()) {
-		m_szLuaScript = xMode.getChildNode("luaScript").getText();
+	if (!OPTIONS->MapEditorEnabled() && m_szLuaScript.length() > 0) {
 		LUA->LoadLuaScript(m_szLuaScript.c_str());
 	}
 
@@ -495,6 +532,68 @@ int GameWorld::Load(XMLNode &xMode) {
 	return 0;	
 }
 
+bool GameWorld::LoadObjects()
+{
+	#ifndef USE_OLD_LOADING_SYSTEM
+	
+	ObjectListIter iter;
+	for (iter = m_objects.begin(); iter != m_objects.end(); iter++)
+	{
+		Object* obj = (*iter);
+		XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(obj->GetObjectDefName());
+
+		assert(xDef);
+		
+		if (!obj->LoadFromObjectDef(*xDef))
+			return false;
+
+		obj->InitPhysics();
+	}
+
+	#endif // USE_NEW
+
+	return true;
+}
+
+bool GameWorld::InitJumpBackFromDoor()
+{
+	exitInfo.useExitInfo = true;
+
+	// special case: if we're coming back from a portal, find it and put the players
+	// at that portal's position on the map
+	if (lastExitInfo.useExitInfo && lastExitInfo.useLastPortalName) {
+		ObjectListIter iter;
+		b2Vec2 portal_pos;
+		Object* player;
+		bool found = false;
+
+		// find the portal with the specified name 
+		for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
+			if ((*iter)->GetProperties().is_door && ((ObjectDoor*)(*iter))->GetName() == lastExitInfo.lastPortalName) {
+				found = true;
+				portal_pos = (*iter)->GetXY();
+				break;
+			}
+		}
+
+		if (!found) {
+			TRACE("ERROR: Tried to jump to a portal that doesn't exist named '%s'!\n", lastExitInfo.lastPortalName);
+			return false;
+		}
+
+		m_bJumpedBackFromADoor = true;
+
+		// find the player obejcts, set their XY to the portal's XY
+		for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
+			if ((*iter)->GetProperties().is_player) {
+				player = *iter;
+				player->SetXY(portal_pos);
+			}
+		}
+	}
+	return true;
+}
+
 void GameWorld::CachePlayerObjects()
 {
 	ObjectListIter iter;
@@ -504,12 +603,13 @@ void GameWorld::CachePlayerObjects()
 		assert(*iter != NULL);
 		if ((*iter)->GetProperties().is_player ) 
 		{
-			PlayerObject* player = (PlayerObject*)(*iter);
+			ObjectPlayer* player = (ObjectPlayer*)(*iter);
 			m_kCachedPlayers.push_back(player);
 		}
 	} 
 }
 
+#if USE_OLD_LOADING_SYSTEM
 // Loads the header info from the Mode XML file
 int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 	XMLNode xInfo = xMode.getChildNode("info");
@@ -566,6 +666,7 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 
 	return 0;
 }
+#endif // USE_OLD_LOADING_SYSTEM
 
 /* example of how structure of our XML looks:
  * 
@@ -584,28 +685,39 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
  * </mode>
  */
 
-int GameWorld::LoadObjectDefsFromXML(XMLNode &xObjDefs) {
-	if (!OBJECT_FACTORY->LoadObjectDefsFromXML(xObjDefs)) 
-		return -1;
-	else
-		return 0;
+bool GameWorld::LoadObjectDefsFromXML(XMLNode *xObjDefs) {
+	int i;
+
+	#if USE_OLD_LOADING_SYSTEM
+	if (xObjDefs) {
+		int iterator, max;
+		max = xObjDefs->nChildNode("include_xml_file");
+		for (i = iterator = 0; i < max; i++) {
+			std::string file = xObjDefs->getChildNode("include_xml_file", &iterator).getText();
+			m_included_objectdef_xml_files.push_back(file);
+		}
+	}
+	#endif
+
+	for (i = 0; i < m_included_objectdef_xml_files.size(); ++i) {
+		if (!OBJECT_FACTORY->LoadObjectDefsFromIncludeXML(m_included_objectdef_xml_files[i])) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
-//! Master XML parsing routine for the physics simulation
+//! Master XML parsing routine
 //! Calls other helpers to deal with different parts of the XML.
 int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {	
-	int i, max, iterator = 0;  
-	XMLNode xMap, xObjDefs, xLayer;
-
-	m_pkCameraLookatTarget = NULL;
-
-	// 1) load all "object definitions" (e.g. [bad guy 1])
-	xObjDefs = xMode.getChildNode("objectDefinitions");
-
-	if (LoadObjectDefsFromXML(xObjDefs) != 0)
-		return -1;
-
 	// 2) load all the <object>s found in each <layer> in <map>
+#if USE_OLD_LOADING_SYSTEM
+	XMLNode xMap, xLayer;
+	int i, max, iterator = 0;
+
+	m_objects.clear();
+	m_pkCameraLookatTarget = NULL;
 	xMap = xMode.getChildNode("map");
 
 	max = xMap.nChildNode("layer");
@@ -625,6 +737,7 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 			return -1;
 		}
 	}
+#endif // USE_OLD_LOADING_SYSTEM
 
 	// Finished loading objects, do a few sanity checks
 	if (!m_pkCameraLookatTarget) {
@@ -638,31 +751,25 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 // Creates an instance of an object on the specified layer 
 int GameWorld::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
 
-		// get the object definition name
-		std::string objDefName = xObject.getAttribute("objectDef");
+	std::string objDefName = xObject.getAttribute("objectDef");
+	XMLNode* xObjectDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
 
-		// try to find that object definition
-		XMLNode* xObjectDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
+	if (!xObjectDef) {
+		TRACE("ERROR: Unable to find object definition of type '%s'\n", objDefName);
+		return -1;
+	}
 
-		if (!xObjectDef) {
-			TRACE("ERROR: Unable to find object definition of type '%s'\n", 
-											objDefName);
-			return -1;
-		}
+	if (LoadObjectFromXML(*xObjectDef, xObject, layer) == -1) {
+		TRACE("ERROR: Failed trying to load object of type '%s'\n", objDefName);
+		return -1;
+	}
 
-		// create the object from the objectDefinition
-		if (LoadObjectFromXML(*xObjectDef, xObject, layer) == -1) {
-			TRACE("ERROR: Failed trying to load object of type '%s'\n", 
-											objDefName);
-			return -1;
-		}
-
-		return 0;
+	return 0;
 }
 
 //! Parse XML info from a <layer> block
+#ifdef USE_OLD_LOADING_SYSTEM
 int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
-
 	int i, iterator, max;
 	XMLNode xObject;
 	std::string objDefName;
@@ -735,16 +842,18 @@ int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 
 	return 0;
 }
+#endif // USE_OLD_LOADING_SYSTEM
 
 // Do the REAL work of loading an object from XML
 int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 								 XMLNode &xObject,
 								 ObjectLayer* const layer) {
 
+	#ifdef USE_OLD_LOADING_SYSTEM
 	int x,y;
 
 	// Really create the instance of this object, it is BORN here:
-	Object* obj = OBJECT_FACTORY->CreateObjectFromXML(xObjectDef, xObject);
+	Object* obj = OBJECT_FACTORY->CreateObjectFromXML(xObjectDef, &xObject);
 
 	if (!obj)
 		return -1;
@@ -898,27 +1007,6 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 
 		obj->SetXY(x,y);
 
-		// check for velocity - <velx>, <vely>, and <vel_rotate>
-		/*
-		if (xPos.nChildNode("velx")>0) {
-			float velx;
-			if (!xPos.getChildNode("velx").getFloat(velx)) {
-				TRACE("-- Invalid velx!\n");
-				return -1;
-			}
-			obj->SetVelX(velx);
-		}
-
-		if (xPos.nChildNode("vely")>0) {
-			float vely;
-			if (!xPos.getChildNode("vely").getFloat(vely)) {
-				TRACE("-- Invalid vely!\n");
-				return -1;
-			}
-			obj->SetVelY(vely);
-		}
-		*/
-
 		if (xPos.nChildNode("vel_rotate")>0) {
 			float vel_rotate;
 			if (!xPos.getChildNode("vel_rotate").getFloat(vel_rotate)) {
@@ -962,6 +1050,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 
 	// Everything loaded OK, now we add it to the simulation
 	AddObject(obj, true);
+	#endif // USE_OLD_LOADING_SYSTEM
 
 	return 0;
 }
@@ -1001,7 +1090,7 @@ int GameWorld::GetAiFitnessScore() {
 	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
 		assert(*iter != NULL);
 		if (	(*iter)->GetProperties().is_player ) {
-			PlayerObject* player = (PlayerObject*)(*iter);
+			ObjectPlayer* player = (ObjectPlayer*)(*iter);
 			return player->GetNumRings();
 		}
 	} 
@@ -1011,19 +1100,7 @@ int GameWorld::GetAiFitnessScore() {
 #endif // AI_TRAINING
 
 GameWorld::GameWorld() {
-	is_loading = false;
-	m_bIsCameraShaking = CAMERA_SHAKE; //temp, usually false
-	m_iCameraTotalShakeTime = -1;
-}
-
-void GameWorld::SaveMap()
-{
-	const char* filename = "test-save.xml";
-
-	std::ofstream ofs(filename);
-	assert(ofs.good());
-	boost::archive::xml_oarchive oa(ofs);
-	oa << BOOST_SERIALIZATION_NVP(this);
+	Clear();
 }
 
 GameWorld::~GameWorld() {}
@@ -1042,3 +1119,6 @@ void GameWorld::AddNewObjectsIfNeeded()
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(GameWorld)
 BOOST_CLASS_EXPORT_GUID(GameWorld, "GameWorld")
+
+// increment this anytime we change the archive contents
+BOOST_CLASS_VERSION(GameWorld, 1)

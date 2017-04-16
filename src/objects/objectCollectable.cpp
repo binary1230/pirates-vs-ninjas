@@ -6,27 +6,40 @@
 #include "gameState.h"
 #include "gameSound.h"
 
-void CollectableObject::Shutdown() {
+void ObjectCollectable::Shutdown() {
 	BaseShutdown();
 }
 
-void CollectableObject::Update() {
+void ObjectCollectable::Update() {
 	BaseUpdate();
 	UpdateSimpleAnimations();
 }
 
-bool CollectableObject::Init() {
+bool ObjectCollectable::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_collectable = 1;
+	properties.is_ring = 1;
+	properties.uses_physics_engine = 1;
+	properties.is_static = 1;
+	properties.is_sensor = 1;
+
+	return true;
+}
+
+bool ObjectCollectable::Init() {
 	return BaseInit();
 }
 
-CollectableObject::CollectableObject() {}
-CollectableObject::~CollectableObject() {}
+ObjectCollectable::ObjectCollectable() {}
+ObjectCollectable::~ObjectCollectable() {}
 
-void CollectableObject::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
+void ObjectCollectable::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
 	if (obj->GetProperties().is_player) {
 		SOUND->PlaySound("ring");
 		is_dead = true;
 	}
 }
 
-BOOST_CLASS_EXPORT_GUID(CollectableObject, "CollectableObject")
+BOOST_CLASS_EXPORT_GUID(ObjectCollectable, "ObjectCollectable")

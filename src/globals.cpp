@@ -24,10 +24,10 @@ void StringSplit(std::string str, std::string delim, vector<std::string> &result
 	results.clear();
 	while( (cutAt = str.find_first_of(delim)) != -1 ) {
 		if(cutAt > 0) {
-			results.push_back(str.substr(cutAt));
+			results.push_back(str.substr(0, cutAt));
 		}
 
-		str = str.substr(str.length() - cutAt);
+		str = str.substr(cutAt + 1);
 	}
 	
 	if(str.length() > 0)	{

@@ -133,6 +133,27 @@ void ObjectText::SetModalActive(bool state) {
 		WORLD->SetModalObject(NULL);
 }
 
+bool ObjectText::LoadXMLInstanceProperties(XMLNode & xObj)
+{
+	if (xObj.nChildNode("text"))
+		SetText(xObj.getChildNode("text").getText());
+
+	if (xObj.nChildNode("avatar"))
+		SetAvatarFilename(xObj.getChildNode("avatar").getText());
+
+	return true;
+}
+
+bool ObjectText::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_overlay = 1;
+	properties.uses_physics_engine = 0;
+
+	return true;
+}
+
 bool ObjectText::Init() {
 	is_modal = false;
 	avatar_sprite = NULL;
@@ -142,9 +163,6 @@ bool ObjectText::Init() {
 
 	blink = false;
 	time_until_next_blink = BLINK_TIME;
-
-	properties.is_overlay = 1;
-	properties.is_physical = 0;
 
 	SetText("");
 	SetAvatarFilename("");
@@ -195,9 +213,13 @@ void ObjectText::Shutdown() {
 	BaseShutdown();
 }
 
-ObjectText::ObjectText() {
+void ObjectText::Clear() {
 	is_modal = false;
 	avatar_sprite = NULL;
+}
+
+ObjectText::ObjectText() {
+	Clear();
 }
 
 ObjectText::~ObjectText() {

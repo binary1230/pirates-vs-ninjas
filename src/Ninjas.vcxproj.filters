@@ -160,9 +160,6 @@
     <ClInclude Include="objects\objectPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="objects\objectPlayerHuman.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="objects\objectSpring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -301,9 +298,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="objects\objectPlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="objects\objectPlayerHuman.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="objects\objectSpring.cpp">

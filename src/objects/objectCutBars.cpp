@@ -4,26 +4,43 @@
 #include "rect.h"
 #include "globalDefines.h"
 
-bool CutBarObject::Init() {
-	real_pos = 0.0f;
-	time_active = 0;
 
+bool ObjectCutBars::LoadXMLInstanceProperties(XMLNode & xObj)
+{
+	if (xObj.nChildNode("text"))
+		SetText(xObj.getChildNode("text").getText());
+
+	Start();
+
+	return true;
+}
+
+bool ObjectCutBars::LoadObjectProperties(XMLNode &xDef) {
+	if (!Object::LoadObjectProperties(xDef))
+		return false;
+
+	properties.is_overlay = true;
+
+	return true;
+}
+
+bool ObjectCutBars::Init() {
 	// Load default values from global XML
-	if (	!GLOBALS->Value("cutbar_rate", rate) ||
-				!GLOBALS->Value("cutbar_maxsize", max_size) ||
-				!GLOBALS->Value("cutbar_alpha", alpha) ||
-				!GLOBALS->Value("cutbar_time_to_show", time_to_show)) {
+	if (!GLOBALS->Value("cutbar_rate", rate) ||
+		!GLOBALS->Value("cutbar_maxsize", max_size) ||
+		!GLOBALS->Value("cutbar_alpha", box_alpha) ||
+		!GLOBALS->Value("cutbar_time_to_show", time_to_show)) {
 		return false;
 	}
 
 	return BaseInit();
 }
 
-void CutBarObject::Shutdown() {
+void ObjectCutBars::Shutdown() {
 	BaseShutdown();
 }
 
-void CutBarObject::Update() {
+void ObjectCutBars::Update() {
 
 	switch (state) {
 
@@ -57,7 +74,7 @@ void CutBarObject::Update() {
 	}
 }
 
-void CutBarObject::Draw() {
+void ObjectCutBars::Draw() {
 	if (state == STATE_INACTIVE)
 		return;
 
@@ -67,33 +84,49 @@ void CutBarObject::Draw() {
 	// bottom bar
 	WINDOW->DrawRect(	0, 0,
 						screen_width, (int)real_pos,
-						al_map_rgb(0,0,0), true, alpha );
+						al_map_rgb(0,0,0), true, box_alpha );
 
 	// top bar
 	WINDOW->DrawRect(	0, screen_height,
 						screen_width, screen_height - (int)real_pos,
-						al_map_rgb(0,0,0), true, alpha );
+						al_map_rgb(0,0,0), true, box_alpha );
 
 	// text
 	if (state == STATE_ACTIVE)
 		WINDOW->DrawText(30, screen_height - max_size + 2, txt);
 }
 
-void CutBarObject::Stop() {
+void ObjectCutBars::Stop() {
 	state = STATE_INACTIVE;
 	is_dead = true;
 }
 
-void CutBarObject::Start() {
+void ObjectCutBars::Start() {
 	state = STATE_ROLL_IN;
 	real_pos = 0;
 }
 
-CutBarObject::CutBarObject() {
+void ObjectCutBars::Clear() {
+	Object::Clear();
+
 	txt = "PLACEHOLDER";
-	state = STATE_INACTIVE;
+	real_pos = 0.0f;
+	time_active = 0;
+
+	CutBarState state = STATE_INACTIVE;
+
+	rate = 1.0f;
+	max_size = 0;
+	time_to_show = 0;
+	time_active = 0;
+
+	box_alpha = 255;
 }
 
-CutBarObject::~CutBarObject() {}
+ObjectCutBars::ObjectCutBars() {
+	Clear();
+}
 
-BOOST_CLASS_EXPORT_GUID(CutBarObject, "CutBarObject")
+ObjectCutBars::~ObjectCutBars() {}
+
+BOOST_CLASS_EXPORT_GUID(ObjectCutBars, "ObjectCutBars")

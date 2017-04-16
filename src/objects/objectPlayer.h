@@ -9,7 +9,7 @@ class BaseInput;
 class Animation;
 class BaseInput;
 class ObjectFactory;
-class DoorObject;
+class ObjectDoor;
 
 enum PlayerState {
 	STANDING,
@@ -31,13 +31,12 @@ enum InputStateMask {
 };
 
 //! The Player object, represents our HERO on screen
-class PlayerObject : public Object {
+class ObjectPlayer : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
-		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
 	}
 
 	protected:
@@ -51,55 +50,30 @@ class PlayerObject : public Object {
 		// What we're currently doing
 		PlayerState m_kPlayerState;
 
-		void HandleInput();
-	
-		void UpdateState();
+		ObjectDoor* door_in_front_of_us;
+		int ring_count;
 
-		void DoCommonStuff();
+		bool m_bShouldNotSwitchAnimationsRightNow;
 
-		void LimitMaxHorizontalVelocityTo( float fMaxHorizontalVelocity );
-		void LimitMaxVerticalVelocityTo( float fMaxVerticalVelocity );
+		void Clear();
+
+		virtual bool LoadObjectProperties(XMLNode & xDef);
 
 		void DropBombsIfNeeded();
-
-		void DoStanding();
-		void DoWalking();
-		void DoRunning();
-		void DoSlidingDownWall();
-		
-		// return true if we're no longer in the air or doing something else
-		bool DoCommonAirStuff();
-		void DoJumping();
-		void DoFalling();
-
-		void DoWhistling();
-		void DoLookingUp();
-		void DoCrouchingDown();
-
-		void DoWalkThroughDoor();
 
 		void ScreenBoundsConstraint();
 		void UpdateSpriteFlip();
 		void UpdateRunningAnimationSpeed();
 		void UpdateLeftRightMotion();
 
-		virtual bool GetInput(uint key, uint controller_number) const = 0;
-		
-		DoorObject* door_in_front_of_us;
-		int ring_count;
-
-		// If the running animation is a skateboard (only set at init time)
-		bool on_skateboard;
-
-		bool m_bShouldNotSwitchAnimationsRightNow;
+		bool GetInput(uint key, uint controller_number) const;
 
 	public:
+		IMPLEMENT_CLONE(ObjectPlayer)
+
 		virtual bool Init();
 		virtual void Shutdown();
-		
-		//! Load object properties from XML
-		bool LoadPlayerProperties(XMLNode &xDef);		
-		
+
 		virtual void Update();
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 
@@ -108,8 +82,8 @@ class PlayerObject : public Object {
 		
 		int GetNumRings() {return ring_count;};
 			
-		PlayerObject();
-		virtual ~PlayerObject();
+		ObjectPlayer();
+		virtual ~ObjectPlayer();
 
 		bool WantsToSlideOnLeftSide();
 		bool WantsToSlideOnRightSide();
