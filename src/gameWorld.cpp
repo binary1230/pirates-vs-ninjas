@@ -90,28 +90,28 @@ int GameWorld::Init(XMLNode xMode) {
 	OBJECT_FACTORY->CreateInstance();
 	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) 
 	{
-		TRACE("ERROR: InitSystem: failed to init OBJECT_FACTORY!\n");
+		TRACE("ERROR: InitSystems: failed to init OBJECT_FACTORY!\n");
 		return -1;
 	}
 
 	EFFECTS->CreateInstance();
 	if ( !EFFECTS || !EFFECTS->Init() ) 
 	{
-		TRACE("ERROR: InitSystem: failed to init EffectsManager!\n");
+		TRACE("ERROR: InitSystems: failed to init EffectsManager!\n");
 		return -1;
 	}
 
 	EVENTS->CreateInstance();
 	if (!EVENTS || !EVENTS->Init()) 
 	{
-		TRACE("ERROR: InitSystem: failed to init EventsManager!\n");
+		TRACE("ERROR: InitSystems: failed to init EventsManager!\n");
 		return -1;
 	}
 
 	PHYSICS->CreateInstance();
 	if ( !PHYSICS || !PHYSICS->Init() )
 	{
-		TRACE("ERROR: InitSystem: failed to init PhysicsManager!\n");
+		TRACE("ERROR: InitSystems: failed to init PhysicsManager!\n");
 		return -1;
 	}
 
@@ -445,7 +445,7 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	if (!PHYSICS->OnWorldInit())
 	{
-		TRACE("ERROR: InitSystem: failed to init (part 2) PhysicsManager::OnLevelLoaded()!\n");
+		TRACE("ERROR: InitSystems: failed to init (part 2) PhysicsManager::OnLevelLoaded()!\n");
 		return -1;
 	}
 

@@ -17,6 +17,7 @@
 #include "basename.h"
 #include "window.h"
 #include "globals.h"
+#include "assetManager.h"
 
 DECLARE_SINGLETON(GameOptions)
 
@@ -27,6 +28,9 @@ void GameOptions::PrintBanner() {
 		"(c) 2017 Dominic Cerquetti, this program is Free Software\n"
 		"Licensed under the GNU GPL v2, see http://gnu.org\n\n",
 		VERSION_STRING);
+
+		TRACE("Current working directory: %s", AssetManager::GetCurrentWorkingDir().c_str());
+		TRACE("Current EXE Path: %s", AssetManager::GetCurrentExeFullPath().c_str());
 }
 
 void GameOptions::PrintOptions(const char* arg0) {

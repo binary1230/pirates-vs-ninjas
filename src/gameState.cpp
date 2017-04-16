@@ -101,7 +101,7 @@ int GameState::InitAllegro() {
 //! This is the first init function, it needs to initialize
 //! Allegro, the window, the input subsystem, and the default game mode
 //! BE CAREFUL, things need to be done IN ORDER here.
-int GameState::InitSystem() {
+int GameState::InitSystems() {
 		
 	TRACE("[Beginning Game Init]\n");
 				
@@ -113,14 +113,14 @@ int GameState::InitSystem() {
 
 	TRACE("[init: allegro]\n");
 	if (InitAllegro() < 0) {
-		TRACE("ERROR: InitSystem: failed to init allegro!\n");
+		TRACE("ERROR: InitSystems: failed to init allegro!\n");
 		return -1;
 	}
 
 	TRACE("[init: assetManager]\n");
 	ASSETMANAGER->CreateInstance();
 	if (!ASSETMANAGER || ASSETMANAGER->Init() < 0) {
-		TRACE("ERROR: InitSystem: failed to create assetManager!\n");
+		TRACE("ERROR: InitSystems: failed to create assetManager!\n");
 		return -1;
 	}
 
@@ -139,25 +139,25 @@ int GameState::InitSystem() {
 	WINDOW->CreateInstance();
 	if ( !WINDOW ||	WINDOW->Init(
 		screen_size_x, screen_size_y, OPTIONS->IsFullscreen(), OPTIONS->GraphicsMode()) < 0 ) {
-		TRACE("ERROR: InitSystem: failed to init window!\n");
+		TRACE("ERROR: InitSystems: failed to init window!\n");
 		return -1;
 	}
 
 	TRACE("[init: input subsystem]\n");
 	if (InitInput() == -1) {
-		TRACE("ERROR: InitSystem: failed to init input subsystem!\n");
+		TRACE("ERROR: InitSystems: failed to init input subsystem!\n");
 		return -1;
 	}
 
 	TRACE("[init: sound subsystem]\n");
 	if (InitSound() == -1) {
-		TRACE("ERROR: InitSystem: failed to init sound subsystem!\n");
+		TRACE("ERROR: InitSystems: failed to init sound subsystem!\n");
 	}
 
 	TRACE("[init: embedded lua scripting]\n");
 	LUA->CreateInstance();
 	if ( !LUA || !LUA->Init() ) {
-		TRACE("ERROR: InitSystem: failed to init lua scripting!\n");
+		TRACE("ERROR: InitSystems: failed to init lua scripting!\n");
 		return -1;
 	}
 		
@@ -170,7 +170,7 @@ int GameState::InitSystem() {
 
 	TRACE("[init: loading game modes]\n");
 	if (LoadGameModes() == -1) {
-		TRACE("ERROR: InitSystem: failed to init default game mode!\n");
+		TRACE("ERROR: InitSystems: failed to init default game mode!\n");
 		return -1;
 	}
 		
@@ -186,34 +186,6 @@ int GameState::LoadGameModes() {
 		return -1;
 
 	return modes->Init(xGame);
-}
- 
-int GameState::InitNetwork() {	
-
-#if 0 // TODO: Networking disabled (e.g. WAY broken, not even close yet)
-
-	int ret;
-	int port = OPTIONS->GetNetworkPortNumber();
-
-	if (!OPTIONS->IsNetworkEnabled())
-		return 0;
-
-	network = new GameNetwork();
-	if (!network)
-		return -1;
-
-	TRACE("NET: Port %i\n", port);
-	
-	if (OPTIONS->IsNetworkServer()) {
-		ret = network->InitServer(port);
-	} else {
-		ret = network->InitClient(port, OPTIONS->GetNetworkServerName());
-	}
-
-	return ret;
-#endif 
-
-	return 0;
 }
 
 //! Init sound subsystem
@@ -280,44 +252,46 @@ void GameState::OutputTotalRunningTime() {
 	if (minutes == 1) 
 		min_string = "minute";
 
-	fprintf(stderr, 
-			"[You ninja'd in the night for %i %s and %.2i seconds]\n",
-			minutes, min_string, seconds );
+	TRACE("[You ninja'd in the night for %i %s and %.2i seconds]\n", minutes, min_string, seconds );
 }
 
+bool GameState::Init(const int argc, const char* argv[]) {
+	#ifdef REDIRECT_STDERR
+		TRACE("Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
 
+		if (!freopen(REDIRECT_STDERR_FILENAME, "wt", stderr)) {
+			printf("Couldn't redirect stderr to "REDIRECT_STDERR_FILENAME "!");
+		}
 
-//! The 'main' function for the game
+		TRACE("Main: redirected output.\n");
+	#endif
 
-//! It takes a pointer to the game options (fullscreen/etc).
-//! It initializes everything, and returns 0 if successful
-//! or 1 on error.
-int GameState::RunGame() {
-	if (InitSystem() == -1) {
-		TRACE("ERROR: Failed to init game!\n");
-		return -1;	
+	OPTIONS->CreateInstance();
+	OPTIONS->PrintBanner();
+
+	OPTIONS->ParseArguments(argc, argv);
+	OPTIONS->PrintOptions(argv[0]);
+
+	if (!OPTIONS->IsValid()) {
+		TRACE("ERROR: Failed to init game - invalid commandline args!\n");
+		return false;
 	}
 
-	if (OPTIONS->GetDebugStartPaused()) 
-	debug_pause_toggle = 1;	
+	if (InitSystems() == -1) {
+		TRACE("ERROR: Failed to init game!\n");
+		return false;
+	}
+
+	if (OPTIONS->GetDebugStartPaused())
+		debug_pause_toggle = 1;
 
 	INPUT->Begin();
-			
+
 	TRACE("[running game...]\n");
-	MainLoop();
-	TRACE("[done running game!]\n");
-
-	OutputTotalRunningTime();
-
-	INPUT->End();
-	
-	Shutdown();
-	TRACE("[Exiting]\n");	
-
-	return 0;
+	return true;
 }
 
-void GameState::MainLoop() 
+void GameState::RunMainLoop_BlockingHelper()
 {
 	// NOT sure this is the best place for this:
 	/*if (OPTIONS->MapEditorEnabled()) 
@@ -460,7 +434,11 @@ void GameState::Draw() {
 }
 
 void GameState::Shutdown() {
-	TRACE("[Shutting Down]\n");	
+	TRACE("[Shutting Down]\n");
+
+	OutputTotalRunningTime();
+
+	INPUT->End();
 
 	if (INPUT) {
 		INPUT->Shutdown();
@@ -469,23 +447,11 @@ void GameState::Shutdown() {
 
 	al_destroy_timer(g_timer);
 	al_destroy_event_queue(event_queue);
-
-#if 0 // TODO: Networking disabled (e.g. WAY broken, not even close yet)
-	if (network) {
-		network->Shutdown();
-		delete network;
-	}
-#endif // WIN32
-
+	
 	if (modes) {
 		modes->Shutdown();
 		delete modes;
 	}
-
-	/*if (GUI) {
-		GUI->Shutdown();
-		GUI->FreeInstance();
-	}*/
 
 	if (LUA) {
 		LUA->Shutdown();
@@ -508,6 +474,8 @@ void GameState::Shutdown() {
 	}
 
 	GLOBALS->Shutdown();
+
+	OPTIONS->FreeInstance();
 
 	modes = NULL;
 	network = NULL;

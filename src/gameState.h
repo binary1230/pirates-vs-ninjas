@@ -38,7 +38,7 @@ class GameState {
 		bool IsUsingNetwork() {return network != NULL;};
 		
 		//! Initialize all game related stuff
-		int InitSystem();								
+		int InitSystems();								
 		
 		//! Init basic allegro stuff
 		int InitAllegro();
@@ -62,17 +62,11 @@ class GameState {
 		//! Load a game mode from an XML config file
 		int LoadGameModes();
 
-		//! Shutdown the game
-		void Shutdown();
-
 		//! Update the state of the game
 		void Update();
 
 		//! Draw the current state of the game
 		void Draw();
-
-		//! THE MAIN LOOP
-		void MainLoop();
 
 		//! Output the total running time
 		void OutputTotalRunningTime();
@@ -98,8 +92,15 @@ class GameState {
 		int m_iCurrentFps;
 					
 	public:
-		//! Run the actual game - calls MainLoop()
-		int RunGame();
+
+		//! Shutdown the game
+		void Shutdown();
+
+		//! Initialize
+		bool Init(const int argc, const char* argv[]);
+
+		//! THE MAIN LOOP
+		void RunMainLoop_BlockingHelper();
 
 		//! NOTE: Normally called by MainLoop()
 		//! Sometimes GUI's and things will have to call this directly from ON_IDLE msgs

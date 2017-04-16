@@ -1,3 +1,6 @@
+#include "startup.h"
+#include "startup.h"
+#include "startup.h"
 #include "stdafx.h"
 #include "startup.h"
 #include "gameState.h"
@@ -5,42 +8,39 @@
 #include "globals.h"
 #include "assetManager.h"
 
-// entry point for entire game
-// calling in here runs the game til we exit
-DllExport int start_ninjas_engine(const int argc, const char* argv[])
+// helper game running function
+// calling in here starts and runs the game til we exit.
+DllExport int run_ninjas_engine___helper(const int argc, const char* argv[])
 {
-#ifdef REDIRECT_STDERR
-	TRACE("Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
+	int ret_val = 0;
 
-	if (!freopen(REDIRECT_STDERR_FILENAME, "wt", stderr)) {
-		printf("Couldn't redirect stderr to "REDIRECT_STDERR_FILENAME "!");
+	if (!ninjas_engine_init(argc, argv)) {
+		ret_val = -1;
+	} else {
+		ninjas_engine_run__blocking_helper();
 	}
 
-	TRACE("Main: redirected output.\n");
-#endif
-
-	int ret_val = -1;
-
-	OPTIONS->CreateInstance();
-	assert(OPTIONS);
-
-	OPTIONS->PrintBanner();
-
-	TRACE("Current working directory: %s", AssetManager::GetCurrentWorkingDir().c_str());
-	TRACE("Current EXE Path: %s", AssetManager::GetCurrentExeFullPath().c_str());
-
-	OPTIONS->ParseArguments(argc, argv);
-	OPTIONS->PrintOptions(argv[0]);
-
-	if (OPTIONS->IsValid()) {
-		GAMESTATE->CreateInstance();
-		assert(GAMESTATE != NULL && "ERROR: Can't create gamestate instance!\n");
-
-		ret_val = GAMESTATE->RunGame();
-	}
-
-	GAMESTATE->FreeInstance();
-	OPTIONS->FreeInstance();
+	ninjas_engine_shutdown();
 
 	return ret_val;
+}
+
+DllExport bool ninjas_engine_init(const int argc, const char* argv[]) {
+	assert(!GAMESTATE);
+
+	GAMESTATE->CreateInstance();
+	return GAMESTATE->Init(argc, argv);
+}
+
+DllExport void ninjas_engine_shutdown() {
+	assert(GAMESTATE);
+
+	GAMESTATE->Shutdown();
+	GAMESTATE->FreeInstance();
+}
+
+DllExport void ninjas_engine_run__blocking_helper() {
+	assert(GAMESTATE);
+
+	GAMESTATE->RunMainLoop_BlockingHelper();
 }
