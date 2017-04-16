@@ -178,6 +178,12 @@
     <ClInclude Include="physicsDebugRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mapEditor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mapEditorGui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp">
@@ -316,6 +322,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="physicsDebugRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapEditorGui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

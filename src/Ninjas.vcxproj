@@ -323,6 +323,8 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="luaApi.h" />
     <ClInclude Include="luaManager.h" />
+    <ClInclude Include="mapEditor.h" />
+    <ClInclude Include="mapEditorGui.h" />
     <ClInclude Include="objectFactory.h" />
     <ClInclude Include="objectIDs.h" />
     <ClInclude Include="objectLayer.h" />
@@ -390,6 +392,8 @@
     <ClCompile Include="luaApi.cpp" />
     <ClCompile Include="luaManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mapEditor.cpp" />
+    <ClCompile Include="mapEditorGui.cpp" />
     <ClCompile Include="objectFactory.cpp" />
     <ClCompile Include="objectLayer.cpp" />
     <ClCompile Include="objects\object.cpp" />
