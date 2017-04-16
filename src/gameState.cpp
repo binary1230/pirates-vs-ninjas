@@ -124,7 +124,8 @@ int GameState::InitSystem() {
 		return -1;
 	}
 
-	ASSETMANAGER->AppendToSearchPath("data/");
+	ASSETMANAGER->AppendToSearchPath("data/");			// what we normally expect
+	ASSETMANAGER->AppendToSearchPath("../data/");		// for debugging in Visual studio
 
 	TRACE("[init: xml config]\n");
 
@@ -136,8 +137,8 @@ int GameState::InitSystem() {
 
 	TRACE("[init: window]\n");
 	WINDOW->CreateInstance();
-	if ( !WINDOW ||	WINDOW->Init(screen_size_x, screen_size_y, 
-									OPTIONS->IsFullscreen(), OPTIONS->GraphicsMode()) < 0 ) {
+	if ( !WINDOW ||	WINDOW->Init(
+		screen_size_x, screen_size_y, OPTIONS->IsFullscreen(), OPTIONS->GraphicsMode()) < 0 ) {
 		TRACE("ERROR: InitSystem: failed to init window!\n");
 		return -1;
 	}

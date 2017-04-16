@@ -17,6 +17,21 @@ void AssetManager::Free() {
 	FreeSamples();
 }
 
+string AssetManager::GetCurrentWorkingDir() {
+	char cCurrentPath[FILENAME_MAX];
+	if (!_getcwd(cCurrentPath, sizeof(cCurrentPath))) {
+		return "";
+	}
+
+	return string(cCurrentPath);
+}
+
+string AssetManager::GetCurrentExeFullPath() {
+	char buffer[MAX_PATH];
+	GetModuleFileName(NULL, buffer, MAX_PATH);
+	return string(buffer);
+}
+
 // XXX should make these templated...
 void AssetManager::FreeSamples() {
 	SampleListIter i;

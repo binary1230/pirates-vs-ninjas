@@ -97,7 +97,7 @@ Object* EffectsManager::TriggerObject(const Object* triggeringObject,
 
 	Object* newObj = NULL;
 
-#ifdef USE_OLD_LOADING_SYSTEM
+#if USE_OLD_LOADING_SYSTEM
 	// temporarily disabled, nothing really to do with loading system
 	newObj = OBJECT_FACTORY->CreateObject(effectName);
 
@@ -113,7 +113,7 @@ Object* EffectsManager::TriggerObject(const Object* triggeringObject,
 	const bool addImmediately = true;	// might be slightly risk to do this, 
 										// but needed for some physics stuff to work right away
 	WORLD->AddObject(newObj, addImmediately);
-#endif USE_OLD_LOADING_SYSTEM
+#endif // USE_OLD_LOADING_SYSTEM
 
 	return newObj;
 }

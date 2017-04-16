@@ -44,6 +44,8 @@
 
 // -----------------------------
 
+#define ALLEGRO_NO_MAGIC_MAIN // needed for building as a DLL, remove if not.
+
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>

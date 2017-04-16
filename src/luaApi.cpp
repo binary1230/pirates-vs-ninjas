@@ -27,7 +27,7 @@ int LUAAPI lua_world_create_cutbars(lua_State* lua) {
 	const char* txt = lua_tostring(lua, -1);
 	int retval = 0;
 
-	#ifdef USE_OLD_LOADING_SYSTEM
+	#if USE_OLD_LOADING_SYSTEM
 	
 	if (!WORLD) {
 		retval = -1;

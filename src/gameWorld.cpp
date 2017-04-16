@@ -41,7 +41,7 @@ int GameWorld::GetCameraY() {
 void GameWorld::ShowText(	const char* txt, 
 							const char* avatar_filename, 
 							bool modal_active) {
-	#ifdef USE_OLD_LOADING_SYSTEM
+	#if USE_OLD_LOADING_SYSTEM
 	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT); // broken?
 
 	if (!obj) {
@@ -152,6 +152,8 @@ void GameWorld::TransformWorldToView(int &x, int &y) {
 // Snap the camera to its target object
 // Useful when switching targets
 void GameWorld::SnapCamera() {
+
+	assert(m_pkCameraLookatTarget);
 
 	// center the camera on this object
 	m_iCameraX = 	int(
@@ -409,7 +411,7 @@ void GameWorld::SaveWorld(string filename)
 }
 
 void GameWorld::CreateWorld(string mode_filename = "") {
-	#ifdef USE_OLD_LOADING_SYSTEM
+	#if USE_OLD_LOADING_SYSTEM
 		WORLD->CreateInstance();
 	#else
 		// create and open an archive for input
@@ -534,7 +536,7 @@ int GameWorld::Load(XMLNode &xMode) {
 
 bool GameWorld::LoadObjects()
 {
-	#ifndef USE_OLD_LOADING_SYSTEM
+	#if USE_OLD_LOADING_SYSTEM == 0
 	
 	ObjectListIter iter;
 	for (iter = m_objects.begin(); iter != m_objects.end(); iter++)
@@ -768,7 +770,7 @@ int GameWorld::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
 }
 
 //! Parse XML info from a <layer> block
-#ifdef USE_OLD_LOADING_SYSTEM
+#if USE_OLD_LOADING_SYSTEM
 int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 	int i, iterator, max;
 	XMLNode xObject;
@@ -849,7 +851,7 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 								 XMLNode &xObject,
 								 ObjectLayer* const layer) {
 
-	#ifdef USE_OLD_LOADING_SYSTEM
+	#if USE_OLD_LOADING_SYSTEM
 	int x,y;
 
 	// Really create the instance of this object, it is BORN here:

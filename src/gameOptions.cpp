@@ -1,5 +1,5 @@
 /* GameOptions.cpp
- * (c) 2007 Dominic Cerquetti, licensed under the GPL v2
+ * (c) 2017 Dominic Cerquetti, licensed under the GPL v2
  *
  * Handles command line runtime switches (like '-h' '-v' etc)
  *
@@ -23,8 +23,8 @@ DECLARE_SINGLETON(GameOptions)
 void GameOptions::PrintBanner() {
 		TRACE(
 		"Ninja Engine (%s)\n"
-		"binary1230(at)yahoo.com | http://einsteinsbreakfast.com\n"
-		"(c) 2005 Dominic Cerquetti, this program is Free Software\n"
+		"binary1230(at)yahoo.com | http://github.com/binary1230/ninjas-engine\n"
+		"(c) 2017 Dominic Cerquetti, this program is Free Software\n"
 		"Licensed under the GNU GPL v2, see http://gnu.org\n\n",
 		VERSION_STRING);
 }

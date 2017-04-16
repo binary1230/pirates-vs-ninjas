@@ -46,8 +46,8 @@ class AssetManager {
 		void FreeSamples();
 		void Free();
 
-		//! Set the search path
-		void SetSearchPath(const char* path, ...);
+		static string GetCurrentExeFullPath();
+		static string GetCurrentWorkingDir();
 
 		//! Append a new path to the search path
 		void AppendToSearchPath(const char* path);

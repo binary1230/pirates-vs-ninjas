@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "window.h"
 
+#include "assetManager.h"
 #include "gameState.h"
 #include "globals.h"
 #include "sprite.h"
@@ -375,8 +376,8 @@ int GameWindow::Init( uint _width, uint _height,
 	SetTitle(VERSION_STRING);
 
 	// TODO: Font stuff should go in asset manager
-	// TODO: don't hardcore 'data' in here, use asset manager to get path. 2017
-	main_font = al_load_ttf_font("data/Vera.ttf", 12, 0);
+	string fontfile = ASSETMANAGER->GetPathOf("Vera.ttf");
+	main_font = al_load_ttf_font(fontfile.c_str(), 12, 0);
 	if (!main_font) {
 		TRACE("failed to create main font (does the file exist?)");
 		return -1;

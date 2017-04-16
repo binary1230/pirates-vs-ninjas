@@ -95,6 +95,9 @@ namespace boost {
 	} // namespace serialization
 } // namespace boost
 
-// #define USE_OLD_LOADING_SYSTEM 0
+#define USE_OLD_LOADING_SYSTEM 0
+
+// #define REDIRECT_STDERR 1
+#define REDIRECT_STDERR_FILENAME "/Users/dcerquetti/game.log"
 
 #endif // GLOBALS_H

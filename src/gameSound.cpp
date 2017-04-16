@@ -148,6 +148,8 @@ void GameSound::Shutdown() {
 	soundMap.clear();
 
 	sound_enabled = false;
+
+	al_uninstall_audio();
 }
 
 GameSound::GameSound() {
