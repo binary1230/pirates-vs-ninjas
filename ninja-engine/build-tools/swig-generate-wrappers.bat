@@ -1,5 +1,5 @@
 @echo building lua wrapper...
-packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i
+..\packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap_lua.cpp -c++ -lua swig\engine.i
 
 @echo building C# wrapper...
-packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -outfile  -c++ -csharp swig\engine.i
+..\packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -dllimport ninja-engine.dll -outfile ..\..\ninja-editor\ninja-engine.cs -c++ -csharp swig\engine.i

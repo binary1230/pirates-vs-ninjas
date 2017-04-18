@@ -162,17 +162,21 @@ char ** dupargv (const char **argv) {
   return copy;
 }
 
-bool GameOptions::ParseArguments(const int argc, const char* argv[]) {
-	
-	bool _fullscreen_option_set = false;
+bool GameOptions::ParseArguments(const int argc, const char* argv[]) 
+{	
+	Clear();
+
+	if (!argv) {
+		return true;
+	}
+
 	char** new_argv = dupargv(argv);
 	
 	if (!new_argv) {
 		return (is_valid = false);
 	}
 
-	Clear();
-
+	bool _fullscreen_option_set = false;
 	char c;
 
 	while ( (c = getopt(argc,new_argv,"fzwg:m:r:d:X23vsc:p:h89ea")) != -1) {

@@ -3,11 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ninja-engine", "ninja-engine/Ninjas.vcxproj", "{4AE14D51-384B-4F94-90A8-B43ABC748709}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ninja-engine", "ninja-engine\Ninjas.vcxproj", "{4AE14D51-384B-4F94-90A8-B43ABC748709}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game-bootstrapper", "game-bootstrapper\game-bootstrapper.vcxproj", "{2481C1B4-1553-410B-A7EC-385E6FB11AA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ninja-editor", "ninja-editor\ninja-editor.csproj", "{58E6FB33-20E6-404B-B4F1-2D08DBDF63EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4AE14D51-384B-4F94-90A8-B43ABC748709} = {4AE14D51-384B-4F94-90A8-B43ABC748709}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,7 +22,8 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4AE14D51-384B-4F94-90A8-B43ABC748709}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{4AE14D51-384B-4F94-90A8-B43ABC748709}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{4AE14D51-384B-4F94-90A8-B43ABC748709}.Debug|Any CPU.Build.0 = Debug|x64
 		{4AE14D51-384B-4F94-90A8-B43ABC748709}.Debug|x64.ActiveCfg = Debug|x64
 		{4AE14D51-384B-4F94-90A8-B43ABC748709}.Debug|x64.Build.0 = Debug|x64
 		{4AE14D51-384B-4F94-90A8-B43ABC748709}.Debug|x86.ActiveCfg = Debug|Win32
@@ -29,7 +33,8 @@ Global
 		{4AE14D51-384B-4F94-90A8-B43ABC748709}.Release|x64.Build.0 = Release|x64
 		{4AE14D51-384B-4F94-90A8-B43ABC748709}.Release|x86.ActiveCfg = Release|Win32
 		{4AE14D51-384B-4F94-90A8-B43ABC748709}.Release|x86.Build.0 = Release|Win32
-		{2481C1B4-1553-410B-A7EC-385E6FB11AA3}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{2481C1B4-1553-410B-A7EC-385E6FB11AA3}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{2481C1B4-1553-410B-A7EC-385E6FB11AA3}.Debug|Any CPU.Build.0 = Debug|x64
 		{2481C1B4-1553-410B-A7EC-385E6FB11AA3}.Debug|x64.ActiveCfg = Debug|x64
 		{2481C1B4-1553-410B-A7EC-385E6FB11AA3}.Debug|x64.Build.0 = Debug|x64
 		{2481C1B4-1553-410B-A7EC-385E6FB11AA3}.Debug|x86.ActiveCfg = Debug|Win32

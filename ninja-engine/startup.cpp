@@ -57,3 +57,8 @@ DllExport void ninjas_engine_tick() {
 	assert(GAMESTATE);
 	GAMESTATE->TickIfNeeded();
 }
+
+DllExport void ninjas_engine_test()
+{
+	TRACE("test42424242424");
+}

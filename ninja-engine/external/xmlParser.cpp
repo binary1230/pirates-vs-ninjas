@@ -347,12 +347,13 @@ XMLNode XMLNode::openFileHelper(const char *filename, XMLCSTR tag)
             ,filename,XMLNode::getError(pResults.error),pResults.nLine,pResults.nColumn,s1,s2,s3);
 
         // display message
-#ifdef WIN32
-        MessageBoxA(NULL,message,"XML Parsing error",MB_OK|MB_ICONERROR|MB_TOPMOST);
-#else
+		//#ifdef WIN32
+        //MessageBoxA(NULL,message,"XML Parsing error",MB_OK|MB_ICONERROR|MB_TOPMOST);
+		//#else
         TRACE("%s\n\nERROR: Error parsing xml invloving file '%s'\n",message, filename);
-#endif
-        exit(255);
+		//#endif
+		assert(false);
+		exit(255);
     }
     return xnode;
 }

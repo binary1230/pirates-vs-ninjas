@@ -23,9 +23,13 @@ DECLARE_SINGLETON(GameState)
 // returns: XMLNode of first GameMode to load
 int GameState::LoadXMLConfig(std::string xml_filename) {
 				
-	// XXX xmlParser just DIES on error
-	xml_filename = ASSETMANAGER->GetPathOf(xml_filename.c_str());
-	xGame = XMLNode::openFileHelper(xml_filename.c_str(), "game");
+	string xml_path = ASSETMANAGER->GetPathOf(xml_filename.c_str());
+	if (xml_path.length() <= 0) {
+		TRACE("Error: GameState can't find mater XML file named %s", xml_filename.c_str());
+		return -1;
+	}
+
+	xGame = XMLNode::openFileHelper(xml_path.c_str(), "game");
 	
 	XMLNode xInfo = xGame.getChildNode("info");
 
@@ -117,6 +121,7 @@ int GameState::InitSystems() {
 
 	ASSETMANAGER->AppendToSearchPath("data/");			// what we normally expect
 	ASSETMANAGER->AppendToSearchPath("../data/");		// for debugging in Visual studio
+	ASSETMANAGER->AppendToSearchPath("../../data/");		// for debugging in Visual studio
 
 	TRACE("[init: xml config]\n");
 
@@ -269,7 +274,8 @@ bool GameState::Init(const int argc, const char* argv[]) {
 	OPTIONS->PrintBanner();
 
 	OPTIONS->ParseArguments(argc, argv);
-	OPTIONS->PrintOptions(argv[0]);
+	if (argv) 
+		OPTIONS->PrintOptions(argv[0]);
 
 	if (!OPTIONS->IsValid()) {
 		TRACE("ERROR: Failed to init game - invalid commandline args!\n");
@@ -367,15 +373,17 @@ void GameState::Shutdown() {
 
 	OutputTotalRunningTime();
 
-	INPUT->End();
-
 	if (INPUT) {
+		INPUT->End();
 		INPUT->Shutdown();
 		INPUT->FreeInstance();
 	}
 
-	al_destroy_timer(m_timer);
-	al_destroy_event_queue(event_queue);
+	if (m_timer)
+		al_destroy_timer(m_timer);
+
+	if (event_queue)
+		al_destroy_event_queue(event_queue);
 	
 	if (modes) {
 		modes->Shutdown();
@@ -402,9 +410,11 @@ void GameState::Shutdown() {
 		WINDOW->FreeInstance();
 	}
 
-	GLOBALS->Shutdown();
+	if (GLOBALS)
+		GLOBALS->Shutdown();
 
-	OPTIONS->FreeInstance();
+	if (OPTIONS)
+		OPTIONS->FreeInstance();
 
 	modes = NULL;
 	network = NULL;
@@ -464,3 +474,29 @@ void GameState::UpdateDebugPausing()
 }
 
 
+
+#define M_PI 3.14159265358979323846
+
+/* Move the shape to a new location */
+void Shape::move(double dx, double dy) {
+	x += dx;
+	y += dy;
+}
+
+int Shape::nshapes = 0;
+
+double Circle::area() {
+	return M_PI*radius*radius;
+}
+
+double Circle::perimeter() {
+	return 2 * M_PI*radius;
+}
+
+double Square::area() {
+	return width*width;
+}
+
+double Square::perimeter() {
+	return 4 * width;
+}
