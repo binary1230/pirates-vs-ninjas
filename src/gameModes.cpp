@@ -154,8 +154,6 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", modeType.c_str());
 		return -1;
 	}
-
-	GAMESTATE->ResetAccumulatedTime();
 		
 	return 0;
 }

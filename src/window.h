@@ -131,9 +131,9 @@ class GameWindow {
 		//! Call LAST after all other drawing for the frame
 		void Update();
 
-		virtual ~GameWindow();
+		inline ALLEGRO_DISPLAY* GetDisplay() { return display; }
 
-		friend class MapSaver;
+		virtual ~GameWindow();
 };
 
 #define WINDOW GameWindow::GetInstance()

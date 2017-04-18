@@ -19,10 +19,6 @@
 
 DECLARE_SINGLETON(GameState)
 
-void GameState::ResetAccumulatedTime() {
-	g_iOutstanding_updates = 0;
-}
-
 // Parse the master XML file
 // returns: XMLNode of first GameMode to load
 int GameState::LoadXMLConfig(std::string xml_filename) {
@@ -84,12 +80,6 @@ int GameState::InitAllegro() {
 		TRACE("-- FATAL ERROR: Allegro_init() failed.\n");
 		return -1;
 	}
-	
-	// must be called SECOND
-	if (InitTimers() < 0) {
-		TRACE("-- FATAL ERROR: Can't init timers.\n");
-		return -1;
-	}
 
 	SetRandomSeed(42);	// for now, makes testing easier
 
@@ -108,6 +98,7 @@ int GameState::InitSystems() {
 	exit_game = false;
 	is_playing_back_demo = false;
 	debug_pause_toggle = false;
+	should_redraw = true;
 
 	RegisterObjectPrototypes();
 
@@ -173,6 +164,11 @@ int GameState::InitSystems() {
 		TRACE("ERROR: InitSystems: failed to init default game mode!\n");
 		return -1;
 	}
+
+	if (!InitAllegroEvents()) {
+		TRACE("ERROR: InitSystems: Can't init timers.\n");
+		return -1;
+	}
 		
 	TRACE("[init complete]\n");
 				
@@ -222,29 +218,31 @@ int GameState::InitInput() {
 
 //! Init game timers
 //! This MUST be called BEFORE any other allegro initializations.
-int GameState::InitTimers() {
-	TRACE("[Init: Timers]");
-
-	ALLEGRO_TIMER* g_timer = al_create_timer(ALLEGRO_BPS_TO_SECS(FPS));
-	if (!g_timer) {
-		TRACE("failed to create timer!\n");
-		return -1;
-	}
+bool GameState::InitAllegroEvents() {
+	TRACE("[Init: Timers/Events]");
 	
 	event_queue = al_create_event_queue();
 	if (!event_queue) {
 		TRACE("failed to create event_queue!\n");
-		return -1;
+		return false;
 	}
 
-	al_register_event_source(event_queue, al_get_timer_event_source(g_timer));
+	m_timer = al_create_timer(ALLEGRO_BPS_TO_SECS(FPS));
+	if (!m_timer) {
+		TRACE("failed to create timer!\n");
+		return false;
+	}
 
-	al_start_timer(g_timer);
-	return 0;
+	al_register_event_source(event_queue, al_get_timer_event_source(m_timer));
+	al_register_event_source(event_queue, al_get_display_event_source(WINDOW->GetDisplay()));
+
+	al_start_timer(m_timer);
+
+	return true;
 }
 
 void GameState::OutputTotalRunningTime() {
-	int seconds_played = int((float)g_iTicks / (float)FPS);
+	/*int seconds_played = int((float)m_iTicks / (float)FPS);
 	int seconds = seconds_played % 60;
 	int minutes = seconds_played / 60;
 	char* min_string = "minutes";
@@ -253,6 +251,7 @@ void GameState::OutputTotalRunningTime() {
 		min_string = "minute";
 
 	TRACE("[You ninja'd in the night for %i %s and %.2i seconds]\n", minutes, min_string, seconds );
+	*/
 }
 
 bool GameState::Init(const int argc, const char* argv[]) {
@@ -293,91 +292,36 @@ bool GameState::Init(const int argc, const char* argv[]) {
 
 void GameState::RunMainLoop_BlockingHelper()
 {
-	// NOT sure this is the best place for this:
-	/*if (OPTIONS->MapEditorEnabled()) 
-	{
-		// pray to god.
-		assert(WORLD);
-		MapEditor* pkMapEditor = (MapEditor*)(WORLD);
-
-		assert(pkMapEditor);
-		pkMapEditor->RunMapEditor();
-		return;
-	}*/
-
-	while (!exit_game) 
-	{
-		ALLEGRO_EVENT ev;
-		if (al_get_next_event(event_queue, &ev)) 
-		{
-			if (ev.type == ALLEGRO_EVENT_TIMER) 
-			{
-				OnTimer();
-			}
-		}
-
-		Tick();
+	while (!ShouldExit()) {
+		ProcessEvents();
+		TickIfNeeded();
 	}
 }
 
-//! The most important function.  It will make sure that the game 
-//! is updating at the correct speed, and it will Draw everything
-//! at the correct speed.
+void GameState::ProcessEvents() {
+	ALLEGRO_EVENT ev;
+	al_get_next_event(event_queue, &ev);
 
-// XXX NOTE: This is currently a bit more complex than it should be.
-// If you are trying to understand it, ignore all the DEBUG_ and pause junk.
-void GameState::Tick() 
-{
-	// outstanding_updates is incremented once every 1/30th of a sec.
-	// We may need to update more than once on slower computers
-	// before we can draw, in order to keep the game the same speed
-	// no matter the speed of the computer
-	while (g_iOutstanding_updates > 0 && !exit_game) 
-	{
-		// failsafe: If there are too many updates left, break out so we can draw.
-		// this will slow the actual gamespeed down, but it will at least draw
-		// You shouldn't see this unless either 1) something's wrong or 2) uber-slow computer
-		if (m_iCurrentFps <= 2 || g_iOutstanding_updates > 10) 
-		{
-			g_iOutstanding_updates = 0;
-			break;
-		}
-
-		Update();	// mode signals handled here
-
-		UpdateDebugPausing();
-
-		--g_iOutstanding_updates;
+	if (ev.type == ALLEGRO_EVENT_TIMER) {
+		should_redraw = true;
 	}
-
-	if (!exit_game) {
-		Draw();
-
-		if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT) && !OPTIONS->MapEditorEnabled())
-			WINDOW->Screenshot();
-
-		if (INPUT->KeyOnce(GAMEKEY_TOGGLE_PHYSICS_DISPLAY) && !OPTIONS->MapEditorEnabled() && PHYSICS)
-			PHYSICS->SetDrawDebug(!PHYSICS->GetDrawDebug());
-
-		if (INPUT->KeyOnce(GAMEKEY_SAVE_MAP))
-			WORLD->SaveWorld();
+	else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+		exit_game = true;
 	}
+}
 
-	// Normally, now that we're done one Tick, we wait around for the next 1/30th of a sec
-	// to pass us by.
-	//
-	// However in some debugging situations, we don't want to wait, we instead just want to bolt through
-	// the game as fast as possible (e.g. AI training, regression testing, fast forwarding, etc)
-	if (!OPTIONS->WaitForUpdates()) 
-		g_iOutstanding_updates = 1;
+void GameState::TickIfNeeded() {
+	if (!should_redraw || !al_is_event_queue_empty(event_queue))
+		return;
 
-	// wait for 1/30th sec to elapse (if we're on a fast computer)
-	// note: this should really be down() on a lock of some kind rather than
-	// just sleep randomly.
-	/*while (g_iOutstanding_updates <= 0 && !exit_game) {
-		// rest(5);	// 1/30 sec is 33 usec, we sleep for 5 to be conservative
-		// SPIN!! (not great..)
-	}*/ // dont need anymore?
+	should_redraw = false;
+	
+	Tick();
+}
+
+void GameState::Tick() {
+	Update();
+	Draw();
 }
 
 //! Update all game status
@@ -385,52 +329,37 @@ void GameState::Update() {
 	if (exit_game)
 		return;
 
+	if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT) && !OPTIONS->MapEditorEnabled())
+		WINDOW->Screenshot();
+
+	if (INPUT->KeyOnce(GAMEKEY_TOGGLE_PHYSICS_DISPLAY) && !OPTIONS->MapEditorEnabled() && PHYSICS)
+		PHYSICS->SetDrawDebug(!PHYSICS->GetDrawDebug());
+
+	if (INPUT->KeyOnce(GAMEKEY_SAVE_MAP))
+		WORLD->SaveWorld();
+
 	SOUND->Update();
 	INPUT->Update();
 	// GUI->Update();
 	WINDOW->Update(); // update fades.
 
 	modes->Update();
+
+	// UpdateDebugPausing();
 }
 
-void GameState::UpdateFPS()
-{ 
-	static int iTicksAtLastFrameDrawn = g_iTicks;
-	static int iAmountOfFramesDrawnSinceLastCheck = 0;
-
-	int iDiff = g_iTicks - iTicksAtLastFrameDrawn;
-
-	if (iDiff > FPS) {
-
-		// The new actual FPS rate for the last second:
-		m_iCurrentFps = iAmountOfFramesDrawnSinceLastCheck;
-
-		// TRACE("FPS: %d\n", m_iCurrentFps);
-
-		iAmountOfFramesDrawnSinceLastCheck = 0;
-		iTicksAtLastFrameDrawn = g_iTicks;
-	} else {
-		iAmountOfFramesDrawnSinceLastCheck++;
-	}
-}
-
-//! Draw the current mode
 void GameState::Draw() {
+	if (exit_game || !OPTIONS->DrawGraphics())
+		return;
 
-	UpdateFPS();
+	WINDOW->BeginDrawing();
+	WINDOW->Clear();
 
-	if (OPTIONS->DrawGraphics()) {
-		WINDOW->BeginDrawing();
-		WINDOW->Clear();
+	modes->Draw();
+	WINDOW->Draw();
 
-		// Tell everything to draw itself
-		modes->Draw();
-		WINDOW->Draw();
-		//GUI->Draw();
-
-		WINDOW->Flip();
-		WINDOW->EndDrawing();
-	}
+	WINDOW->Flip();
+	WINDOW->EndDrawing();
 }
 
 void GameState::Shutdown() {
@@ -445,7 +374,7 @@ void GameState::Shutdown() {
 		INPUT->FreeInstance();
 	}
 
-	al_destroy_timer(g_timer);
+	al_destroy_timer(m_timer);
 	al_destroy_event_queue(event_queue);
 	
 	if (modes) {
@@ -494,6 +423,9 @@ int GameState::GetRandomSeed() const {
 GameState::GameState() {
 	modes = NULL;
 	network = NULL;
+	// m_iOutstanding_updates = 0;
+	// m_iTicks = 0;
+	m_timer = NULL;
 }
 
 void GameState::SignalGameExit() {
@@ -506,12 +438,12 @@ GameState::~GameState() {}
 
 void GameState::UpdateDebugPausing()
 {
-	if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE) && !OPTIONS->MapEditorEnabled())
+	/*if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE) && !OPTIONS->MapEditorEnabled())
 		debug_pause_toggle = !debug_pause_toggle;
 
 	if (debug_pause_toggle)
 	{
-		int debug_update_count = g_iOutstanding_updates;
+		int debug_update_count = m_iOutstanding_updates;
 
 		while (debug_pause_toggle && !INPUT->KeyOnce(GAMEKEY_DEBUGSTEP)) 
 		{
@@ -527,53 +459,8 @@ void GameState::UpdateDebugPausing()
 				debug_pause_toggle = !debug_pause_toggle;
 		}
 
-		g_iOutstanding_updates = debug_update_count;
-	}
+		m_iOutstanding_updates = debug_update_count;
+	}*/
 }
-
-/*#define PVN_NETWORK_MAGIC_GREETING 123454321
-
-int GameState::InitNetworkServer() {
-	int port = OPTIONS->GetNetworkPortNumber();
-  ezSocketsPacket packet;
-	
-	TRACE("NET: Starting UDP network server on port %i\n", port);
-	
-  socket->mode = ezSockets::skUDP;
-  socket->Create(IPPROTO_UDP, SOCK_DGRAM);
-  socket->Bind(port);
-	
-	TRACE("NET: Waiting for client greeting..\n");
-
-	bool got_greeting = false;
-
-	while (!got_greeting) {
-		rest(100);
-		if (socket->ReadPack(packet)) {
-			int size = packet.Read4();
-      if (size != packet.Size-4)
-        TRACE("NET: WARN: Merged packets!\n");
-
-			// Expect MAGIC greeting from client
-			if (packet.Read4() != PVN_NETWORK_MAGIC_GREETING) {
-				TRACE("Incorrect MAGIC recieved from client, aborting!\n");
-				return -1;	
-			} else {
-				got_greeting = true;
-			}
-    }
-	}
-
-	rest(1000);
-	packet.ClearPacket();
-
-	// Send MAGIC greeting to client
-  packet.Write4(PVN_NETWORK_MAGIC_GREETING);
-	socket->SendPack(packet);
-
-	TRACE("NET: Server: Connected to client OK!\n");
-
-	return 0;
-}*/
 
 

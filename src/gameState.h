@@ -1,8 +1,6 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "timer.h"
-
 class GameState;
 class BaseInput;
 class GameMode;
@@ -21,7 +19,11 @@ class GameNetwork;
 class GameState {
 	DECLARE_SINGLETON_CLASS(GameState)
 
-	protected:	
+	protected:
+		ALLEGRO_TIMER* m_timer;
+
+		bool should_redraw;
+
 		//! Holds the current game's parsed XML data
 		XMLNode xGame;
 		
@@ -44,7 +46,7 @@ class GameState {
 		int InitAllegro();
 
 		//! Init game timing
-		int InitTimers();
+		bool InitAllegroEvents();
 		
 		//! Init input subsystems
 		int InitInput();								
@@ -102,6 +104,10 @@ class GameState {
 		//! THE MAIN LOOP
 		void RunMainLoop_BlockingHelper();
 
+		void ProcessEvents();
+
+		void TickIfNeeded();
+
 		//! NOTE: Normally called by MainLoop()
 		//! Sometimes GUI's and things will have to call this directly from ON_IDLE msgs
 		void Tick();
@@ -122,11 +128,6 @@ class GameState {
 		
 		//! The current mode calls this to signal it wants to end
 		void SignalEndCurrentMode();
-
-		//! Sets the accumulated time to zero
-		//! Useful for loading stuff so we don't jump 20-30 frames
-		//! after waiting for a level load
-		void ResetAccumulatedTime();
 
 		bool ShouldExit() { return exit_game; }
 		

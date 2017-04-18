@@ -11,4 +11,10 @@ DllExport void ninjas_engine_shutdown();
 
 DllExport void ninjas_engine_run__blocking_helper();
 
+DllExport bool ninjas_engine_should_exit();
+
+DllExport void ninjas_engine_process_events();
+
+DllExport void ninjas_engine_tick();
+
 #endif // STARTUP_H

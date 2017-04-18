@@ -314,12 +314,8 @@ void GameWindow::SetClearColor(uint r, uint g, uint b) {
 					1.0f );
 }
 
-int GameWindow::Init( uint _width, uint _height, 
-									bool _fullscreen, int _mode) {
-	
-	// int depth = DEFAULT_COLOR_DEPTH;
-	// int gfx_mode;
-	
+int GameWindow::Init( uint _width, uint _height, bool _fullscreen, int _mode) 
+{	
 	fade_rate = 0;
 	fade_alpha = 255;
 	fading_state = FADED_NONE;
@@ -327,40 +323,7 @@ int GameWindow::Init( uint _width, uint _height,
 	width = _width;
 	height = _height;
 
-	// Special case: We won't be drawing _anything_
-	//if (!OPTIONS->DrawGraphics() ) {
-	//	// Disabled in 2017 refactor -dom
-	//	TRACE("GameWindow: DISABLING ALL GRAPHICS\n");
-	//	set_gfx_mode(GFX_TEXT, 320, 240, 0, 0);
-	//	initialized = true;
-	//	return 0;
-	//}
-
 	al_set_new_display_flags(ALLEGRO_OPENGL);
-
-	/*
-	// removed in 2017 refactor.  no longer needed? -Dom
-
-	install_allegro_gl();
-	allegro_gl_clear_settings();
-
-	set_color_depth(depth);
-	uint gl_flags = AGL_COLOR_DEPTH | AGL_DOUBLEBUFFER | AGL_RENDERMETHOD;
-
-	if (!_fullscreen) {
-		gl_flags |= AGL_WINDOWED;
-	} else {
-		gl_flags |= AGL_FULLSCREEN;
-	}
-
-	allegro_gl_set(AGL_COLOR_DEPTH, depth);
-	allegro_gl_set(AGL_DOUBLEBUFFER, 1);
-	allegro_gl_set(AGL_Z_DEPTH, 24);
-	allegro_gl_set(AGL_WINDOWED, !_fullscreen);
-	allegro_gl_set(AGL_FULLSCREEN, _fullscreen);
-	allegro_gl_set(AGL_RENDERMETHOD, 1);
-	allegro_gl_set(AGL_SUGGEST, gl_flags);
-	*/
 
 	al_init_font_addon();
 	al_init_ttf_addon();
@@ -400,13 +363,11 @@ int GameWindow::Init( uint _width, uint _height,
 
 void GameWindow::SetTitle(const char* szTitle)
 {
-	// temp disabled 2017 refactor -Dom
-	// set_window_title(szTitle);
+	al_set_window_title(WINDOW->GetDisplay(), szTitle);
 }
 
 bool GameWindow::InitGL() {
 	glShadeModel(GL_FLAT);
-	// glPolygonMode(GL_FRONT, GL_FILL); // backface culling
 
 	glViewport(0, 0, SCREEN_W, SCREEN_H);
 	glMatrixMode(GL_PROJECTION); 
