@@ -11,7 +11,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 namespace MapEditor
-{ 
+{
     public partial class Main : Form
     {
         public Main()
@@ -56,6 +56,40 @@ namespace MapEditor
             }
 
             FastTimer.Enabled = true;
+        }
+
+        private void btn_GetObjects_Click(object sender, EventArgs e)
+        {
+            treeObjects.Nodes.Clear();
+
+            GameWorld world = GameWorld.GetInstance();
+
+            ObjectVector objects = world.GetObjects();
+
+            treeObjects.BeginUpdate();
+
+            foreach (Object o in objects)
+            {
+                string def = o.GetObjectDefName();
+                string layername = o.GetLayer().GetName();
+
+                TreeNode layerNode = null;
+                foreach (TreeNode n in treeObjects.Nodes)
+                {
+                    if (n.Text == layername)
+                    {
+                        layerNode = n;
+                        break;
+                    }
+                }
+
+                if (layerNode == null)
+                    layerNode = treeObjects.Nodes.Add(layername);
+
+                layerNode.Nodes.Add(def);
+            }
+
+            treeObjects.EndUpdate();
         }
     }
 }

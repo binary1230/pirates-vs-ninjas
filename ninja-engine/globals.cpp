@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "stdafx.h"
 #include "globals.h"
 
 void DebugTrace( const char * format, ... )

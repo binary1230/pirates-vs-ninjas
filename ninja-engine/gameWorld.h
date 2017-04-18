@@ -146,6 +146,11 @@ class GameWorld : public GameMode {
 			void Clear();
 
 		public:
+			// not a very effecient method.  call with map editor only
+			inline vector<Object*> GetObjects() {
+				return vector<Object*>{ std::begin(m_objects), std::end(m_objects) };
+			}
+
 			virtual int Init(XMLNode);
 			virtual void Shutdown();
 

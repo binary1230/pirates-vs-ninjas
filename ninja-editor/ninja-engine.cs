@@ -9,6 +9,323 @@
 //------------------------------------------------------------------------------
 
 
+public class ObjectVector : global::System.IDisposable, global::System.Collections.IEnumerable
+    , global::System.Collections.Generic.IList<Object>
+ {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+  protected bool swigCMemOwn;
+
+  internal ObjectVector(global::System.IntPtr cPtr, bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(ObjectVector obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+
+  ~ObjectVector() {
+    Dispose();
+  }
+
+  public virtual void Dispose() {
+    lock(this) {
+      if (swigCPtr.Handle != global::System.IntPtr.Zero) {
+        if (swigCMemOwn) {
+          swigCMemOwn = false;
+          enginePINVOKE.delete_ObjectVector(swigCPtr);
+        }
+        swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+      }
+      global::System.GC.SuppressFinalize(this);
+    }
+  }
+
+  public ObjectVector(global::System.Collections.ICollection c) : this() {
+    if (c == null)
+      throw new global::System.ArgumentNullException("c");
+    foreach (Object element in c) {
+      this.Add(element);
+    }
+  }
+
+  public bool IsFixedSize {
+    get {
+      return false;
+    }
+  }
+
+  public bool IsReadOnly {
+    get {
+      return false;
+    }
+  }
+
+  public Object this[int index]  {
+    get {
+      return getitem(index);
+    }
+    set {
+      setitem(index, value);
+    }
+  }
+
+  public int Capacity {
+    get {
+      return (int)capacity();
+    }
+    set {
+      if (value < size())
+        throw new global::System.ArgumentOutOfRangeException("Capacity");
+      reserve((uint)value);
+    }
+  }
+
+  public int Count {
+    get {
+      return (int)size();
+    }
+  }
+
+  public bool IsSynchronized {
+    get {
+      return false;
+    }
+  }
+
+  public void CopyTo(Object[] array)
+  {
+    CopyTo(0, array, 0, this.Count);
+  }
+
+  public void CopyTo(Object[] array, int arrayIndex)
+  {
+    CopyTo(0, array, arrayIndex, this.Count);
+  }
+
+  public void CopyTo(int index, Object[] array, int arrayIndex, int count)
+  {
+    if (array == null)
+      throw new global::System.ArgumentNullException("array");
+    if (index < 0)
+      throw new global::System.ArgumentOutOfRangeException("index", "Value is less than zero");
+    if (arrayIndex < 0)
+      throw new global::System.ArgumentOutOfRangeException("arrayIndex", "Value is less than zero");
+    if (count < 0)
+      throw new global::System.ArgumentOutOfRangeException("count", "Value is less than zero");
+    if (array.Rank > 1)
+      throw new global::System.ArgumentException("Multi dimensional array.", "array");
+    if (index+count > this.Count || arrayIndex+count > array.Length)
+      throw new global::System.ArgumentException("Number of elements to copy is too large.");
+    for (int i=0; i<count; i++)
+      array.SetValue(getitemcopy(index+i), arrayIndex+i);
+  }
+
+  global::System.Collections.Generic.IEnumerator<Object> global::System.Collections.Generic.IEnumerable<Object>.GetEnumerator() {
+    return new ObjectVectorEnumerator(this);
+  }
+
+  global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() {
+    return new ObjectVectorEnumerator(this);
+  }
+
+  public ObjectVectorEnumerator GetEnumerator() {
+    return new ObjectVectorEnumerator(this);
+  }
+
+  // Type-safe enumerator
+  /// Note that the IEnumerator documentation requires an InvalidOperationException to be thrown
+  /// whenever the collection is modified. This has been done for changes in the size of the
+  /// collection but not when one of the elements of the collection is modified as it is a bit
+  /// tricky to detect unmanaged code that modifies the collection under our feet.
+  public sealed class ObjectVectorEnumerator : global::System.Collections.IEnumerator
+    , global::System.Collections.Generic.IEnumerator<Object>
+  {
+    private ObjectVector collectionRef;
+    private int currentIndex;
+    private object currentObject;
+    private int currentSize;
+
+    public ObjectVectorEnumerator(ObjectVector collection) {
+      collectionRef = collection;
+      currentIndex = -1;
+      currentObject = null;
+      currentSize = collectionRef.Count;
+    }
+
+    // Type-safe iterator Current
+    public Object Current {
+      get {
+        if (currentIndex == -1)
+          throw new global::System.InvalidOperationException("Enumeration not started.");
+        if (currentIndex > currentSize - 1)
+          throw new global::System.InvalidOperationException("Enumeration finished.");
+        if (currentObject == null)
+          throw new global::System.InvalidOperationException("Collection modified.");
+        return (Object)currentObject;
+      }
+    }
+
+    // Type-unsafe IEnumerator.Current
+    object global::System.Collections.IEnumerator.Current {
+      get {
+        return Current;
+      }
+    }
+
+    public bool MoveNext() {
+      int size = collectionRef.Count;
+      bool moveOkay = (currentIndex+1 < size) && (size == currentSize);
+      if (moveOkay) {
+        currentIndex++;
+        currentObject = collectionRef[currentIndex];
+      } else {
+        currentObject = null;
+      }
+      return moveOkay;
+    }
+
+    public void Reset() {
+      currentIndex = -1;
+      currentObject = null;
+      if (collectionRef.Count != currentSize) {
+        throw new global::System.InvalidOperationException("Collection modified.");
+      }
+    }
+
+    public void Dispose() {
+        currentIndex = -1;
+        currentObject = null;
+    }
+  }
+
+  public void Clear() {
+    enginePINVOKE.ObjectVector_Clear(swigCPtr);
+  }
+
+  public void Add(Object x) {
+    enginePINVOKE.ObjectVector_Add(swigCPtr, Object.getCPtr(x));
+  }
+
+  private uint size() {
+    uint ret = enginePINVOKE.ObjectVector_size(swigCPtr);
+    return ret;
+  }
+
+  private uint capacity() {
+    uint ret = enginePINVOKE.ObjectVector_capacity(swigCPtr);
+    return ret;
+  }
+
+  private void reserve(uint n) {
+    enginePINVOKE.ObjectVector_reserve(swigCPtr, n);
+  }
+
+  public ObjectVector() : this(enginePINVOKE.new_ObjectVector__SWIG_0(), true) {
+  }
+
+  public ObjectVector(ObjectVector other) : this(enginePINVOKE.new_ObjectVector__SWIG_1(ObjectVector.getCPtr(other)), true) {
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public ObjectVector(int capacity) : this(enginePINVOKE.new_ObjectVector__SWIG_2(capacity), true) {
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  private Object getitemcopy(int index) {
+    global::System.IntPtr cPtr = enginePINVOKE.ObjectVector_getitemcopy(swigCPtr, index);
+    Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  private Object getitem(int index) {
+    global::System.IntPtr cPtr = enginePINVOKE.ObjectVector_getitem(swigCPtr, index);
+    Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  private void setitem(int index, Object val) {
+    enginePINVOKE.ObjectVector_setitem(swigCPtr, index, Object.getCPtr(val));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void AddRange(ObjectVector values) {
+    enginePINVOKE.ObjectVector_AddRange(swigCPtr, ObjectVector.getCPtr(values));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public ObjectVector GetRange(int index, int count) {
+    global::System.IntPtr cPtr = enginePINVOKE.ObjectVector_GetRange(swigCPtr, index, count);
+    ObjectVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new ObjectVector(cPtr, true);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void Insert(int index, Object x) {
+    enginePINVOKE.ObjectVector_Insert(swigCPtr, index, Object.getCPtr(x));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void InsertRange(int index, ObjectVector values) {
+    enginePINVOKE.ObjectVector_InsertRange(swigCPtr, index, ObjectVector.getCPtr(values));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void RemoveAt(int index) {
+    enginePINVOKE.ObjectVector_RemoveAt(swigCPtr, index);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void RemoveRange(int index, int count) {
+    enginePINVOKE.ObjectVector_RemoveRange(swigCPtr, index, count);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public static ObjectVector Repeat(Object value, int count) {
+    global::System.IntPtr cPtr = enginePINVOKE.ObjectVector_Repeat(Object.getCPtr(value), count);
+    ObjectVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new ObjectVector(cPtr, true);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void Reverse() {
+    enginePINVOKE.ObjectVector_Reverse__SWIG_0(swigCPtr);
+  }
+
+  public void Reverse(int index, int count) {
+    enginePINVOKE.ObjectVector_Reverse__SWIG_1(swigCPtr, index, count);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void SetRange(int index, ObjectVector values) {
+    enginePINVOKE.ObjectVector_SetRange(swigCPtr, index, ObjectVector.getCPtr(values));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public bool Contains(Object value) {
+    bool ret = enginePINVOKE.ObjectVector_Contains(swigCPtr, Object.getCPtr(value));
+    return ret;
+  }
+
+  public int IndexOf(Object value) {
+    int ret = enginePINVOKE.ObjectVector_IndexOf(swigCPtr, Object.getCPtr(value));
+    return ret;
+  }
+
+  public int LastIndexOf(Object value) {
+    int ret = enginePINVOKE.ObjectVector_LastIndexOf(swigCPtr, Object.getCPtr(value));
+    return ret;
+  }
+
+  public bool Remove(Object value) {
+    bool ret = enginePINVOKE.ObjectVector_Remove(swigCPtr, Object.getCPtr(value));
+    return ret;
+  }
+
+}
+
 public class GameModeExitInfo : global::System.IDisposable {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
@@ -49,37 +366,37 @@ public class GameModeExitInfo : global::System.IDisposable {
     } 
   }
 
-  public SWIGTYPE_p_std__string lastModeName {
+  public string lastModeName {
     set {
-      enginePINVOKE.GameModeExitInfo_lastModeName_set(swigCPtr, SWIGTYPE_p_std__string.getCPtr(value));
+      enginePINVOKE.GameModeExitInfo_lastModeName_set(swigCPtr, value);
       if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
-      SWIGTYPE_p_std__string ret = new SWIGTYPE_p_std__string(enginePINVOKE.GameModeExitInfo_lastModeName_get(swigCPtr), true);
+      string ret = enginePINVOKE.GameModeExitInfo_lastModeName_get(swigCPtr);
       if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public SWIGTYPE_p_std__string nextModeToLoad {
+  public string nextModeToLoad {
     set {
-      enginePINVOKE.GameModeExitInfo_nextModeToLoad_set(swigCPtr, SWIGTYPE_p_std__string.getCPtr(value));
+      enginePINVOKE.GameModeExitInfo_nextModeToLoad_set(swigCPtr, value);
       if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
-      SWIGTYPE_p_std__string ret = new SWIGTYPE_p_std__string(enginePINVOKE.GameModeExitInfo_nextModeToLoad_get(swigCPtr), true);
+      string ret = enginePINVOKE.GameModeExitInfo_nextModeToLoad_get(swigCPtr);
       if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public SWIGTYPE_p_std__string lastPortalName {
+  public string lastPortalName {
     set {
-      enginePINVOKE.GameModeExitInfo_lastPortalName_set(swigCPtr, SWIGTYPE_p_std__string.getCPtr(value));
+      enginePINVOKE.GameModeExitInfo_lastPortalName_set(swigCPtr, value);
       if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
-      SWIGTYPE_p_std__string ret = new SWIGTYPE_p_std__string(enginePINVOKE.GameModeExitInfo_lastPortalName_get(swigCPtr), true);
+      string ret = enginePINVOKE.GameModeExitInfo_lastPortalName_get(swigCPtr);
       if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
@@ -242,6 +559,11 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_FreeInstance();
   }
 
+  public ObjectVector GetObjects() {
+    ObjectVector ret = new ObjectVector(enginePINVOKE.GameWorld_GetObjects(swigCPtr), true);
+    return ret;
+  }
+
   public override int Init(SWIGTYPE_p_XMLNode arg0) {
     int ret = enginePINVOKE.GameWorld_Init(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(arg0));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
@@ -267,33 +589,32 @@ public class GameWorld : GameMode {
     return ret;
   }
 
-  public void SetModalObject(SWIGTYPE_p_Object obj) {
-    enginePINVOKE.GameWorld_SetModalObject(swigCPtr, SWIGTYPE_p_Object.getCPtr(obj));
+  public void SetModalObject(Object obj) {
+    enginePINVOKE.GameWorld_SetModalObject(swigCPtr, Object.getCPtr(obj));
   }
 
-  public void AddObject(SWIGTYPE_p_Object obj, bool addImmediately) {
-    enginePINVOKE.GameWorld_AddObject__SWIG_0(swigCPtr, SWIGTYPE_p_Object.getCPtr(obj), addImmediately);
+  public void AddObject(Object obj, bool addImmediately) {
+    enginePINVOKE.GameWorld_AddObject__SWIG_0(swigCPtr, Object.getCPtr(obj), addImmediately);
   }
 
-  public void AddObject(SWIGTYPE_p_Object obj) {
-    enginePINVOKE.GameWorld_AddObject__SWIG_1(swigCPtr, SWIGTYPE_p_Object.getCPtr(obj));
+  public void AddObject(Object obj) {
+    enginePINVOKE.GameWorld_AddObject__SWIG_1(swigCPtr, Object.getCPtr(obj));
   }
 
-  public SWIGTYPE_p_ObjectLayer FindLayer(string name) {
+  public ObjectLayer FindLayer(string name) {
     global::System.IntPtr cPtr = enginePINVOKE.GameWorld_FindLayer(swigCPtr, name);
-    SWIGTYPE_p_ObjectLayer ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_ObjectLayer(cPtr, false);
+    ObjectLayer ret = (cPtr == global::System.IntPtr.Zero) ? null : new ObjectLayer(cPtr, false);
     return ret;
   }
 
-  public SWIGTYPE_p_ObjectPlayer GetPlayer(SWIGTYPE_p_uint iIndex) {
-    global::System.IntPtr cPtr = enginePINVOKE.GameWorld_GetPlayer(swigCPtr, SWIGTYPE_p_uint.getCPtr(iIndex));
-    SWIGTYPE_p_ObjectPlayer ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_ObjectPlayer(cPtr, false);
-    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  public ObjectPlayer GetPlayer(uint iIndex) {
+    global::System.IntPtr cPtr = enginePINVOKE.GameWorld_GetPlayer(swigCPtr, iIndex);
+    ObjectPlayer ret = (cPtr == global::System.IntPtr.Zero) ? null : new ObjectPlayer(cPtr, false);
     return ret;
   }
 
-  public SWIGTYPE_p_uint GetNumPlayers() {
-    SWIGTYPE_p_uint ret = new SWIGTYPE_p_uint(enginePINVOKE.GameWorld_GetNumPlayers(swigCPtr), true);
+  public uint GetNumPlayers() {
+    uint ret = enginePINVOKE.GameWorld_GetNumPlayers(swigCPtr);
     return ret;
   }
 
@@ -309,8 +630,8 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_DoMainGameUpdate(swigCPtr);
   }
 
-  public static void CreateWorld(SWIGTYPE_p_string mode_filename) {
-    enginePINVOKE.GameWorld_CreateWorld(SWIGTYPE_p_string.getCPtr(mode_filename));
+  public static void CreateWorld(string mode_filename) {
+    enginePINVOKE.GameWorld_CreateWorld(mode_filename);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -390,8 +711,8 @@ public class GameWorld : GameMode {
     return ret;
   }
 
-  public void SaveWorld(SWIGTYPE_p_string filename) {
-    enginePINVOKE.GameWorld_SaveWorld__SWIG_0(swigCPtr, SWIGTYPE_p_string.getCPtr(filename));
+  public void SaveWorld(string filename) {
+    enginePINVOKE.GameWorld_SaveWorld__SWIG_0(swigCPtr, filename);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -671,6 +992,830 @@ public class Square : Shape {
 
 }
 
+public class ObjectLayer : global::System.IDisposable {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+  protected bool swigCMemOwn;
+
+  internal ObjectLayer(global::System.IntPtr cPtr, bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(ObjectLayer obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+
+  ~ObjectLayer() {
+    Dispose();
+  }
+
+  public virtual void Dispose() {
+    lock(this) {
+      if (swigCPtr.Handle != global::System.IntPtr.Zero) {
+        if (swigCMemOwn) {
+          swigCMemOwn = false;
+          enginePINVOKE.delete_ObjectLayer(swigCPtr);
+        }
+        swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+      }
+      global::System.GC.SuppressFinalize(this);
+    }
+  }
+
+  public bool Init() {
+    bool ret = enginePINVOKE.ObjectLayer_Init(swigCPtr);
+    return ret;
+  }
+
+  public void Shutdown() {
+    enginePINVOKE.ObjectLayer_Shutdown(swigCPtr);
+  }
+
+  public void SetName(string _name) {
+    enginePINVOKE.ObjectLayer_SetName(swigCPtr, _name);
+  }
+
+  public string GetName() {
+    string ret = enginePINVOKE.ObjectLayer_GetName(swigCPtr);
+    return ret;
+  }
+
+  public void SetScrollSpeed(float _scroll_speed) {
+    enginePINVOKE.ObjectLayer_SetScrollSpeed(swigCPtr, _scroll_speed);
+  }
+
+  public float GetScrollSpeed() {
+    float ret = enginePINVOKE.ObjectLayer_GetScrollSpeed(swigCPtr);
+    return ret;
+  }
+
+  public bool IsVisible() {
+    bool ret = enginePINVOKE.ObjectLayer_IsVisible(swigCPtr);
+    return ret;
+  }
+
+  public void SetVisible(bool _visible) {
+    enginePINVOKE.ObjectLayer_SetVisible(swigCPtr, _visible);
+  }
+
+  public void Draw() {
+    enginePINVOKE.ObjectLayer_Draw(swigCPtr);
+  }
+
+  public void AddObject(Object arg0) {
+    enginePINVOKE.ObjectLayer_AddObject(swigCPtr, Object.getCPtr(arg0));
+  }
+
+  public void RemoveObject(Object arg0) {
+    enginePINVOKE.ObjectLayer_RemoveObject(swigCPtr, Object.getCPtr(arg0));
+  }
+
+  public ObjectLayer() : this(enginePINVOKE.new_ObjectLayer(), true) {
+  }
+
+}
+
+public class CollisionDirection : global::System.IDisposable {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+  protected bool swigCMemOwn;
+
+  internal CollisionDirection(global::System.IntPtr cPtr, bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(CollisionDirection obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+
+  ~CollisionDirection() {
+    Dispose();
+  }
+
+  public virtual void Dispose() {
+    lock(this) {
+      if (swigCPtr.Handle != global::System.IntPtr.Zero) {
+        if (swigCMemOwn) {
+          swigCMemOwn = false;
+          enginePINVOKE.delete_CollisionDirection(swigCPtr);
+        }
+        swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+      }
+      global::System.GC.SuppressFinalize(this);
+    }
+  }
+
+  public uint up {
+    set {
+      enginePINVOKE.CollisionDirection_up_set(swigCPtr, value);
+    } 
+    get {
+      uint ret = enginePINVOKE.CollisionDirection_up_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public uint down {
+    set {
+      enginePINVOKE.CollisionDirection_down_set(swigCPtr, value);
+    } 
+    get {
+      uint ret = enginePINVOKE.CollisionDirection_down_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public uint left {
+    set {
+      enginePINVOKE.CollisionDirection_left_set(swigCPtr, value);
+    } 
+    get {
+      uint ret = enginePINVOKE.CollisionDirection_left_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public uint right {
+    set {
+      enginePINVOKE.CollisionDirection_right_set(swigCPtr, value);
+    } 
+    get {
+      uint ret = enginePINVOKE.CollisionDirection_right_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public CollisionDirection() : this(enginePINVOKE.new_CollisionDirection(), true) {
+  }
+
+}
+
+public class ObjectProperties : global::System.IDisposable {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+  protected bool swigCMemOwn;
+
+  internal ObjectProperties(global::System.IntPtr cPtr, bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(ObjectProperties obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+
+  ~ObjectProperties() {
+    Dispose();
+  }
+
+  public virtual void Dispose() {
+    lock(this) {
+      if (swigCPtr.Handle != global::System.IntPtr.Zero) {
+        if (swigCMemOwn) {
+          swigCMemOwn = false;
+          enginePINVOKE.delete_ObjectProperties(swigCPtr);
+        }
+        swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+      }
+      global::System.GC.SuppressFinalize(this);
+    }
+  }
+
+  public bool feels_gravity {
+    set {
+      enginePINVOKE.ObjectProperties_feels_gravity_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_feels_gravity_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool feels_user_input {
+    set {
+      enginePINVOKE.ObjectProperties_feels_user_input_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_feels_user_input_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool feels_friction {
+    set {
+      enginePINVOKE.ObjectProperties_feels_friction_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_feels_friction_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool spawns_enemies {
+    set {
+      enginePINVOKE.ObjectProperties_spawns_enemies_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_spawns_enemies_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool uses_physics_engine {
+    set {
+      enginePINVOKE.ObjectProperties_uses_physics_engine_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_uses_physics_engine_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_static {
+    set {
+      enginePINVOKE.ObjectProperties_is_static_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_static_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_sensor {
+    set {
+      enginePINVOKE.ObjectProperties_is_sensor_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_sensor_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool ignores_physics_rotation {
+    set {
+      enginePINVOKE.ObjectProperties_ignores_physics_rotation_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_ignores_physics_rotation_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool do_our_own_rotation {
+    set {
+      enginePINVOKE.ObjectProperties_do_our_own_rotation_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_do_our_own_rotation_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool use_angled_corners_collision_box {
+    set {
+      enginePINVOKE.ObjectProperties_use_angled_corners_collision_box_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_use_angled_corners_collision_box_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_overlay {
+    set {
+      enginePINVOKE.ObjectProperties_is_overlay_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_overlay_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_player {
+    set {
+      enginePINVOKE.ObjectProperties_is_player_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_player_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_spring {
+    set {
+      enginePINVOKE.ObjectProperties_is_spring_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_spring_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_collectable {
+    set {
+      enginePINVOKE.ObjectProperties_is_collectable_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_collectable_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_fan {
+    set {
+      enginePINVOKE.ObjectProperties_is_fan_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_fan_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_door {
+    set {
+      enginePINVOKE.ObjectProperties_is_door_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_door_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_ring {
+    set {
+      enginePINVOKE.ObjectProperties_is_ring_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_ring_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_ball {
+    set {
+      enginePINVOKE.ObjectProperties_is_ball_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_ball_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public bool is_badguy {
+    set {
+      enginePINVOKE.ObjectProperties_is_badguy_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.ObjectProperties_is_badguy_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public ObjectProperties() : this(enginePINVOKE.new_ObjectProperties(), true) {
+  }
+
+}
+
+public class Object : global::System.IDisposable {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+  protected bool swigCMemOwn;
+
+  internal Object(global::System.IntPtr cPtr, bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(Object obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+
+  ~Object() {
+    Dispose();
+  }
+
+  public virtual void Dispose() {
+    lock(this) {
+      if (swigCPtr.Handle != global::System.IntPtr.Zero) {
+        if (swigCMemOwn) {
+          swigCMemOwn = false;
+          enginePINVOKE.delete_Object(swigCPtr);
+        }
+        swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+      }
+      global::System.GC.SuppressFinalize(this);
+    }
+  }
+
+  public int tmp_debug_flag {
+    set {
+      enginePINVOKE.Object_tmp_debug_flag_set(swigCPtr, value);
+    } 
+    get {
+      int ret = enginePINVOKE.Object_tmp_debug_flag_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public static bool debug_draw_bounding_boxes {
+    set {
+      enginePINVOKE.Object_debug_draw_bounding_boxes_set(value);
+    } 
+    get {
+      bool ret = enginePINVOKE.Object_debug_draw_bounding_boxes_get();
+      return ret;
+    } 
+  }
+
+  public static uint debug_object_id {
+    set {
+      enginePINVOKE.Object_debug_object_id_set(value);
+    } 
+    get {
+      uint ret = enginePINVOKE.Object_debug_object_id_get();
+      return ret;
+    } 
+  }
+
+  public uint unique_id {
+    set {
+      enginePINVOKE.Object_unique_id_set(swigCPtr, value);
+    } 
+    get {
+      uint ret = enginePINVOKE.Object_unique_id_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public virtual bool Init() {
+    bool ret = enginePINVOKE.Object_Init(swigCPtr);
+    return ret;
+  }
+
+  public virtual void Shutdown() {
+    enginePINVOKE.Object_Shutdown(swigCPtr);
+  }
+
+  public virtual void Update() {
+    enginePINVOKE.Object_Update(swigCPtr);
+  }
+
+  public virtual void InitPhysics() {
+    enginePINVOKE.Object_InitPhysics(swigCPtr);
+  }
+
+  public virtual void PlayAnimation(uint uiIndex) {
+    enginePINVOKE.Object_PlayAnimation(swigCPtr, uiIndex);
+  }
+
+  public void SetDrawBounds(bool bDrawBounds) {
+    enginePINVOKE.Object_SetDrawBounds(swigCPtr, bDrawBounds);
+  }
+
+  public void FadeOut(int time) {
+    enginePINVOKE.Object_FadeOut(swigCPtr, time);
+  }
+
+  public virtual void Draw() {
+    enginePINVOKE.Object_Draw(swigCPtr);
+  }
+
+  public void Transform(SWIGTYPE_p_int x, SWIGTYPE_p_int y, int offset_x, int offset_y) {
+    enginePINVOKE.Object_Transform__SWIG_0(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y), offset_x, offset_y);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void Transform(SWIGTYPE_p_int x, SWIGTYPE_p_int y, int offset_x) {
+    enginePINVOKE.Object_Transform__SWIG_1(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y), offset_x);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void Transform(SWIGTYPE_p_int x, SWIGTYPE_p_int y) {
+    enginePINVOKE.Object_Transform__SWIG_2(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void TransformRect(SWIGTYPE_p__Rect r) {
+    enginePINVOKE.Object_TransformRect(swigCPtr, SWIGTYPE_p__Rect.getCPtr(r));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void SetDisplayTime(int time) {
+    enginePINVOKE.Object_SetDisplayTime(swigCPtr, time);
+  }
+
+  public int GetDisplayTime() {
+    int ret = enginePINVOKE.Object_GetDisplayTime(swigCPtr);
+    return ret;
+  }
+
+  public void DrawAtOffset(int x, int y, SWIGTYPE_p_Sprite arg2) {
+    enginePINVOKE.Object_DrawAtOffset__SWIG_0(swigCPtr, x, y, SWIGTYPE_p_Sprite.getCPtr(arg2));
+  }
+
+  public void DrawAtOffset(int x, int y) {
+    enginePINVOKE.Object_DrawAtOffset__SWIG_1(swigCPtr, x, y);
+  }
+
+  public int GetX() {
+    int ret = enginePINVOKE.Object_GetX(swigCPtr);
+    return ret;
+  }
+
+  public int GetY() {
+    int ret = enginePINVOKE.Object_GetY(swigCPtr);
+    return ret;
+  }
+
+  public SWIGTYPE_p_b2Vec2 GetXY() {
+    SWIGTYPE_p_b2Vec2 ret = new SWIGTYPE_p_b2Vec2(enginePINVOKE.Object_GetXY(swigCPtr), true);
+    return ret;
+  }
+
+  public void SetX(int _x) {
+    enginePINVOKE.Object_SetX(swigCPtr, _x);
+  }
+
+  public void SetY(int _y) {
+    enginePINVOKE.Object_SetY(swigCPtr, _y);
+  }
+
+  public void SetXY(int _x, int _y) {
+    enginePINVOKE.Object_SetXY__SWIG_0(swigCPtr, _x, _y);
+  }
+
+  public void SetXY(SWIGTYPE_p_b2Vec2 _pos) {
+    enginePINVOKE.Object_SetXY__SWIG_1(swigCPtr, SWIGTYPE_p_b2Vec2.getCPtr(_pos));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public int GetAlpha() {
+    int ret = enginePINVOKE.Object_GetAlpha(swigCPtr);
+    return ret;
+  }
+
+  public void SetAlpha(int a) {
+    enginePINVOKE.Object_SetAlpha(swigCPtr, a);
+  }
+
+  public void SetFlipX(bool val) {
+    enginePINVOKE.Object_SetFlipX(swigCPtr, val);
+  }
+
+  public void SetFlipY(bool val) {
+    enginePINVOKE.Object_SetFlipY(swigCPtr, val);
+  }
+
+  public float GetVelX() {
+    float ret = enginePINVOKE.Object_GetVelX(swigCPtr);
+    return ret;
+  }
+
+  public float GetVelY() {
+    float ret = enginePINVOKE.Object_GetVelY(swigCPtr);
+    return ret;
+  }
+
+  public SWIGTYPE_p_b2Vec2 GetVelXY() {
+    SWIGTYPE_p_b2Vec2 ret = new SWIGTYPE_p_b2Vec2(enginePINVOKE.Object_GetVelXY(swigCPtr), true);
+    return ret;
+  }
+
+  public void SetVelX(float _vx) {
+    enginePINVOKE.Object_SetVelX(swigCPtr, _vx);
+  }
+
+  public void SetVelY(float _vy) {
+    enginePINVOKE.Object_SetVelY(swigCPtr, _vy);
+  }
+
+  public void SetVelXY(float _vx, float _vy) {
+    enginePINVOKE.Object_SetVelXY__SWIG_0(swigCPtr, _vx, _vy);
+  }
+
+  public void SetVelXY(SWIGTYPE_p_b2Vec2 v) {
+    enginePINVOKE.Object_SetVelXY__SWIG_1(swigCPtr, SWIGTYPE_p_b2Vec2.getCPtr(v));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void SetVelRotate(float vel) {
+    enginePINVOKE.Object_SetVelRotate(swigCPtr, vel);
+  }
+
+  public void SetUseRotation(bool state) {
+    enginePINVOKE.Object_SetUseRotation(swigCPtr, state);
+  }
+
+  public int GetWidth() {
+    int ret = enginePINVOKE.Object_GetWidth(swigCPtr);
+    return ret;
+  }
+
+  public int GetHeight() {
+    int ret = enginePINVOKE.Object_GetHeight(swigCPtr);
+    return ret;
+  }
+
+  public void ResetForNextFrame() {
+    enginePINVOKE.Object_ResetForNextFrame(swigCPtr);
+  }
+
+  public ObjectProperties GetProperties() {
+    ObjectProperties ret = new ObjectProperties(enginePINVOKE.Object_GetProperties(swigCPtr), true);
+    return ret;
+  }
+
+  public void SetProperties(ObjectProperties p) {
+    enginePINVOKE.Object_SetProperties(swigCPtr, ObjectProperties.getCPtr(p));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void SetControllerNum(uint _c) {
+    enginePINVOKE.Object_SetControllerNum(swigCPtr, _c);
+  }
+
+  public uint GetControllerNum() {
+    uint ret = enginePINVOKE.Object_GetControllerNum(swigCPtr);
+    return ret;
+  }
+
+  public void SetDebugFlag(bool d) {
+    enginePINVOKE.Object_SetDebugFlag(swigCPtr, d);
+  }
+
+  public bool GetDebugFlag() {
+    bool ret = enginePINVOKE.Object_GetDebugFlag(swigCPtr);
+    return ret;
+  }
+
+  public virtual void OnCollide(Object obj, SWIGTYPE_p_b2WorldManifold pkbWorldManifold) {
+    enginePINVOKE.Object_OnCollide(swigCPtr, Object.getCPtr(obj), SWIGTYPE_p_b2WorldManifold.getCPtr(pkbWorldManifold));
+  }
+
+  public virtual void OnAnimationLooped() {
+    enginePINVOKE.Object_OnAnimationLooped(swigCPtr);
+  }
+
+  public bool IsDead() {
+    bool ret = enginePINVOKE.Object_IsDead(swigCPtr);
+    return ret;
+  }
+
+  public void SetIsDead(bool bVal) {
+    enginePINVOKE.Object_SetIsDead(swigCPtr, bVal);
+  }
+
+  public ObjectLayer GetLayer() {
+    global::System.IntPtr cPtr = enginePINVOKE.Object_GetLayer(swigCPtr);
+    ObjectLayer ret = (cPtr == global::System.IntPtr.Zero) ? null : new ObjectLayer(cPtr, false);
+    return ret;
+  }
+
+  public void SetLayer(ObjectLayer l) {
+    enginePINVOKE.Object_SetLayer(swigCPtr, ObjectLayer.getCPtr(l));
+  }
+
+  public void SetObjectDefName(string arg0) {
+    enginePINVOKE.Object_SetObjectDefName(swigCPtr, arg0);
+  }
+
+  public string GetObjectDefName() {
+    string ret = enginePINVOKE.Object_GetObjectDefName(swigCPtr);
+    return ret;
+  }
+
+  public void ApplyImpulse(float x, float y) {
+    enginePINVOKE.Object_ApplyImpulse__SWIG_0(swigCPtr, x, y);
+  }
+
+  public void ApplyImpulse(SWIGTYPE_p_b2Vec2 v) {
+    enginePINVOKE.Object_ApplyImpulse__SWIG_1(swigCPtr, SWIGTYPE_p_b2Vec2.getCPtr(v));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public virtual bool LoadFromObjectDef(SWIGTYPE_p_XMLNode xDef) {
+    bool ret = enginePINVOKE.Object_LoadFromObjectDef(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(xDef));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public static Object AddPrototype(string type, Object obj) {
+    global::System.IntPtr cPtr = enginePINVOKE.Object_AddPrototype(type, Object.getCPtr(obj));
+    Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public static Object CreateObject(string type) {
+    global::System.IntPtr cPtr = enginePINVOKE.Object_CreateObject(type);
+    Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+}
+
+public enum PlayerState {
+  STANDING,
+  JUMPING,
+  FALLING,
+  WALKING_THRU_DOOR,
+  SLIDING_DOWN_WALL
+}
+
+public enum InputStateMask {
+  INPUT_NOTHING = 0x0,
+  INPUT_JUMP = 0x1,
+  INPUT_ACTION1 = 0x2,
+  INPUT_LEFT = 0x4,
+  INPUT_RIGHT = 0x8,
+  INPUT_UP = 0x10,
+  INPUT_DOWN = 0x20
+}
+
+public class ObjectPlayer : Object {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal ObjectPlayer(global::System.IntPtr cPtr, bool cMemoryOwn) : base(enginePINVOKE.ObjectPlayer_SWIGUpcast(cPtr), cMemoryOwn) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(ObjectPlayer obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+
+  ~ObjectPlayer() {
+    Dispose();
+  }
+
+  public override void Dispose() {
+    lock(this) {
+      if (swigCPtr.Handle != global::System.IntPtr.Zero) {
+        if (swigCMemOwn) {
+          swigCMemOwn = false;
+          enginePINVOKE.delete_ObjectPlayer(swigCPtr);
+        }
+        swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+      }
+      global::System.GC.SuppressFinalize(this);
+      base.Dispose();
+    }
+  }
+
+  public virtual Object Clone() {
+    global::System.IntPtr cPtr = enginePINVOKE.ObjectPlayer_Clone(swigCPtr);
+    Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
+    return ret;
+  }
+
+  public override bool Init() {
+    bool ret = enginePINVOKE.ObjectPlayer_Init(swigCPtr);
+    return ret;
+  }
+
+  public override void Shutdown() {
+    enginePINVOKE.ObjectPlayer_Shutdown(swigCPtr);
+  }
+
+  public override void Update() {
+    enginePINVOKE.ObjectPlayer_Update(swigCPtr);
+  }
+
+  public override void OnCollide(Object obj, SWIGTYPE_p_b2WorldManifold pkbWorldManifold) {
+    enginePINVOKE.ObjectPlayer_OnCollide(swigCPtr, Object.getCPtr(obj), SWIGTYPE_p_b2WorldManifold.getCPtr(pkbWorldManifold));
+  }
+
+  public override void OnAnimationLooped() {
+    enginePINVOKE.ObjectPlayer_OnAnimationLooped(swigCPtr);
+  }
+
+  public override void PlayAnimation(uint uiIndex) {
+    enginePINVOKE.ObjectPlayer_PlayAnimation(swigCPtr, uiIndex);
+  }
+
+  public int GetNumRings() {
+    int ret = enginePINVOKE.ObjectPlayer_GetNumRings(swigCPtr);
+    return ret;
+  }
+
+  public ObjectPlayer() : this(enginePINVOKE.new_ObjectPlayer(), true) {
+  }
+
+  public bool WantsToSlideOnLeftSide() {
+    bool ret = enginePINVOKE.ObjectPlayer_WantsToSlideOnLeftSide(swigCPtr);
+    return ret;
+  }
+
+  public bool WantsToSlideOnRightSide() {
+    bool ret = enginePINVOKE.ObjectPlayer_WantsToSlideOnRightSide(swigCPtr);
+    return ret;
+  }
+
+  public bool WantsToSlideOnAnySide() {
+    bool ret = enginePINVOKE.ObjectPlayer_WantsToSlideOnAnySide(swigCPtr);
+    return ret;
+  }
+
+}
+
 class enginePINVOKE {
 
   protected class SWIGExceptionHelper {
@@ -849,6 +1994,84 @@ class enginePINVOKE {
   }
 
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_Clear")]
+  public static extern void ObjectVector_Clear(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_Add")]
+  public static extern void ObjectVector_Add(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_size")]
+  public static extern uint ObjectVector_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_capacity")]
+  public static extern uint ObjectVector_capacity(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_reserve")]
+  public static extern void ObjectVector_reserve(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_ObjectVector__SWIG_0")]
+  public static extern global::System.IntPtr new_ObjectVector__SWIG_0();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_ObjectVector__SWIG_1")]
+  public static extern global::System.IntPtr new_ObjectVector__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_ObjectVector__SWIG_2")]
+  public static extern global::System.IntPtr new_ObjectVector__SWIG_2(int jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_getitemcopy")]
+  public static extern global::System.IntPtr ObjectVector_getitemcopy(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_getitem")]
+  public static extern global::System.IntPtr ObjectVector_getitem(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_setitem")]
+  public static extern void ObjectVector_setitem(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_AddRange")]
+  public static extern void ObjectVector_AddRange(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_GetRange")]
+  public static extern global::System.IntPtr ObjectVector_GetRange(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_Insert")]
+  public static extern void ObjectVector_Insert(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_InsertRange")]
+  public static extern void ObjectVector_InsertRange(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_RemoveAt")]
+  public static extern void ObjectVector_RemoveAt(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_RemoveRange")]
+  public static extern void ObjectVector_RemoveRange(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_Repeat")]
+  public static extern global::System.IntPtr ObjectVector_Repeat(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_Reverse__SWIG_0")]
+  public static extern void ObjectVector_Reverse__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_Reverse__SWIG_1")]
+  public static extern void ObjectVector_Reverse__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_SetRange")]
+  public static extern void ObjectVector_SetRange(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_Contains")]
+  public static extern bool ObjectVector_Contains(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_IndexOf")]
+  public static extern int ObjectVector_IndexOf(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_LastIndexOf")]
+  public static extern int ObjectVector_LastIndexOf(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectVector_Remove")]
+  public static extern bool ObjectVector_Remove(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_ObjectVector")]
+  public static extern void delete_ObjectVector(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameModeExitInfo_useExitInfo_set")]
   public static extern void GameModeExitInfo_useExitInfo_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
@@ -856,22 +2079,22 @@ class enginePINVOKE {
   public static extern bool GameModeExitInfo_useExitInfo_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameModeExitInfo_lastModeName_set")]
-  public static extern void GameModeExitInfo_lastModeName_set(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void GameModeExitInfo_lastModeName_set(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameModeExitInfo_lastModeName_get")]
-  public static extern global::System.IntPtr GameModeExitInfo_lastModeName_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern string GameModeExitInfo_lastModeName_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameModeExitInfo_nextModeToLoad_set")]
-  public static extern void GameModeExitInfo_nextModeToLoad_set(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void GameModeExitInfo_nextModeToLoad_set(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameModeExitInfo_nextModeToLoad_get")]
-  public static extern global::System.IntPtr GameModeExitInfo_nextModeToLoad_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern string GameModeExitInfo_nextModeToLoad_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameModeExitInfo_lastPortalName_set")]
-  public static extern void GameModeExitInfo_lastPortalName_set(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void GameModeExitInfo_lastPortalName_set(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameModeExitInfo_lastPortalName_get")]
-  public static extern global::System.IntPtr GameModeExitInfo_lastPortalName_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern string GameModeExitInfo_lastPortalName_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameModeExitInfo_useNextModeToLoad_set")]
   public static extern void GameModeExitInfo_useNextModeToLoad_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -939,6 +2162,9 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_FreeInstance")]
   public static extern void GameWorld_FreeInstance();
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetObjects")]
+  public static extern global::System.IntPtr GameWorld_GetObjects(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_Init")]
   public static extern int GameWorld_Init(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
@@ -967,10 +2193,10 @@ class enginePINVOKE {
   public static extern global::System.IntPtr GameWorld_FindLayer(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetPlayer")]
-  public static extern global::System.IntPtr GameWorld_GetPlayer(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern global::System.IntPtr GameWorld_GetPlayer(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetNumPlayers")]
-  public static extern global::System.IntPtr GameWorld_GetNumPlayers(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern uint GameWorld_GetNumPlayers(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_Draw")]
   public static extern void GameWorld_Draw(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -982,7 +2208,7 @@ class enginePINVOKE {
   public static extern void GameWorld_DoMainGameUpdate(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_CreateWorld")]
-  public static extern void GameWorld_CreateWorld(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern void GameWorld_CreateWorld(string jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetWidth")]
   public static extern int GameWorld_GetWidth(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -1036,7 +2262,7 @@ class enginePINVOKE {
   public static extern bool GameWorld_PlayerAllowedOffscreen(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SaveWorld__SWIG_0")]
-  public static extern void GameWorld_SaveWorld__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void GameWorld_SaveWorld__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SaveWorld__SWIG_1")]
   public static extern void GameWorld_SaveWorld__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -1152,6 +2378,486 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_Square")]
   public static extern void delete_Square(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_SCREEN_SIZE_X_get")]
+  public static extern int DEFAULT_SCREEN_SIZE_X_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_SCREEN_SIZE_Y_get")]
+  public static extern int DEFAULT_SCREEN_SIZE_Y_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_VERSION_STRING_get")]
+  public static extern string VERSION_STRING_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_FPS_get")]
+  public static extern int FPS_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_TIMESTEP_get")]
+  public static extern int TIMESTEP_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ONEEIGHTY_OVER_PI_get")]
+  public static extern double ONEEIGHTY_OVER_PI_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_PI_OVER_ONEEIGHTY_get")]
+  public static extern double PI_OVER_ONEEIGHTY_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_TOLERANCE_get")]
+  public static extern double TOLERANCE_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_DEBUG_MSG_LEVEL_get")]
+  public static extern int DEFAULT_DEBUG_MSG_LEVEL_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_MUSIC_BUFFER_SIZE_get")]
+  public static extern int DEFAULT_MUSIC_BUFFER_SIZE_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_MUSIC_DATA_SIZE_get")]
+  public static extern int DEFAULT_MUSIC_DATA_SIZE_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_StringSplit")]
+  public static extern void StringSplit(string jarg1, string jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DebugTrace")]
+  public static extern void DebugTrace(string jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_USE_OLD_LOADING_SYSTEM_get")]
+  public static extern int USE_OLD_LOADING_SYSTEM_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_REDIRECT_STDERR_FILENAME_get")]
+  public static extern string REDIRECT_STDERR_FILENAME_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_Init")]
+  public static extern bool ObjectLayer_Init(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_Shutdown")]
+  public static extern void ObjectLayer_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_SetName")]
+  public static extern void ObjectLayer_SetName(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_GetName")]
+  public static extern string ObjectLayer_GetName(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_SetScrollSpeed")]
+  public static extern void ObjectLayer_SetScrollSpeed(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_GetScrollSpeed")]
+  public static extern float ObjectLayer_GetScrollSpeed(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_IsVisible")]
+  public static extern bool ObjectLayer_IsVisible(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_SetVisible")]
+  public static extern void ObjectLayer_SetVisible(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_Draw")]
+  public static extern void ObjectLayer_Draw(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_AddObject")]
+  public static extern void ObjectLayer_AddObject(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_RemoveObject")]
+  public static extern void ObjectLayer_RemoveObject(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_ObjectLayer")]
+  public static extern global::System.IntPtr new_ObjectLayer();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_ObjectLayer")]
+  public static extern void delete_ObjectLayer(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_CollisionDirection_up_set")]
+  public static extern void CollisionDirection_up_set(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_CollisionDirection_up_get")]
+  public static extern uint CollisionDirection_up_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_CollisionDirection_down_set")]
+  public static extern void CollisionDirection_down_set(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_CollisionDirection_down_get")]
+  public static extern uint CollisionDirection_down_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_CollisionDirection_left_set")]
+  public static extern void CollisionDirection_left_set(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_CollisionDirection_left_get")]
+  public static extern uint CollisionDirection_left_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_CollisionDirection_right_set")]
+  public static extern void CollisionDirection_right_set(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_CollisionDirection_right_get")]
+  public static extern uint CollisionDirection_right_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_CollisionDirection")]
+  public static extern global::System.IntPtr new_CollisionDirection();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_CollisionDirection")]
+  public static extern void delete_CollisionDirection(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_gravity_set")]
+  public static extern void ObjectProperties_feels_gravity_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_gravity_get")]
+  public static extern bool ObjectProperties_feels_gravity_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_user_input_set")]
+  public static extern void ObjectProperties_feels_user_input_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_user_input_get")]
+  public static extern bool ObjectProperties_feels_user_input_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_friction_set")]
+  public static extern void ObjectProperties_feels_friction_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_friction_get")]
+  public static extern bool ObjectProperties_feels_friction_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_spawns_enemies_set")]
+  public static extern void ObjectProperties_spawns_enemies_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_spawns_enemies_get")]
+  public static extern bool ObjectProperties_spawns_enemies_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_uses_physics_engine_set")]
+  public static extern void ObjectProperties_uses_physics_engine_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_uses_physics_engine_get")]
+  public static extern bool ObjectProperties_uses_physics_engine_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_static_set")]
+  public static extern void ObjectProperties_is_static_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_static_get")]
+  public static extern bool ObjectProperties_is_static_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_sensor_set")]
+  public static extern void ObjectProperties_is_sensor_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_sensor_get")]
+  public static extern bool ObjectProperties_is_sensor_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_ignores_physics_rotation_set")]
+  public static extern void ObjectProperties_ignores_physics_rotation_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_ignores_physics_rotation_get")]
+  public static extern bool ObjectProperties_ignores_physics_rotation_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_do_our_own_rotation_set")]
+  public static extern void ObjectProperties_do_our_own_rotation_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_do_our_own_rotation_get")]
+  public static extern bool ObjectProperties_do_our_own_rotation_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_use_angled_corners_collision_box_set")]
+  public static extern void ObjectProperties_use_angled_corners_collision_box_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_use_angled_corners_collision_box_get")]
+  public static extern bool ObjectProperties_use_angled_corners_collision_box_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_overlay_set")]
+  public static extern void ObjectProperties_is_overlay_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_overlay_get")]
+  public static extern bool ObjectProperties_is_overlay_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_player_set")]
+  public static extern void ObjectProperties_is_player_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_player_get")]
+  public static extern bool ObjectProperties_is_player_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_spring_set")]
+  public static extern void ObjectProperties_is_spring_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_spring_get")]
+  public static extern bool ObjectProperties_is_spring_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_collectable_set")]
+  public static extern void ObjectProperties_is_collectable_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_collectable_get")]
+  public static extern bool ObjectProperties_is_collectable_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_fan_set")]
+  public static extern void ObjectProperties_is_fan_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_fan_get")]
+  public static extern bool ObjectProperties_is_fan_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_door_set")]
+  public static extern void ObjectProperties_is_door_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_door_get")]
+  public static extern bool ObjectProperties_is_door_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_ring_set")]
+  public static extern void ObjectProperties_is_ring_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_ring_get")]
+  public static extern bool ObjectProperties_is_ring_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_ball_set")]
+  public static extern void ObjectProperties_is_ball_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_ball_get")]
+  public static extern bool ObjectProperties_is_ball_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_badguy_set")]
+  public static extern void ObjectProperties_is_badguy_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_badguy_get")]
+  public static extern bool ObjectProperties_is_badguy_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_ObjectProperties")]
+  public static extern global::System.IntPtr new_ObjectProperties();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_ObjectProperties")]
+  public static extern void delete_ObjectProperties(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ClearProperties")]
+  public static extern void ClearProperties(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_tmp_debug_flag_set")]
+  public static extern void Object_tmp_debug_flag_set(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_tmp_debug_flag_get")]
+  public static extern int Object_tmp_debug_flag_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_debug_draw_bounding_boxes_set")]
+  public static extern void Object_debug_draw_bounding_boxes_set(bool jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_debug_draw_bounding_boxes_get")]
+  public static extern bool Object_debug_draw_bounding_boxes_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_debug_object_id_set")]
+  public static extern void Object_debug_object_id_set(uint jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_debug_object_id_get")]
+  public static extern uint Object_debug_object_id_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_unique_id_set")]
+  public static extern void Object_unique_id_set(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_unique_id_get")]
+  public static extern uint Object_unique_id_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Init")]
+  public static extern bool Object_Init(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Shutdown")]
+  public static extern void Object_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Update")]
+  public static extern void Object_Update(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_InitPhysics")]
+  public static extern void Object_InitPhysics(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_PlayAnimation")]
+  public static extern void Object_PlayAnimation(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetDrawBounds")]
+  public static extern void Object_SetDrawBounds(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_FadeOut")]
+  public static extern void Object_FadeOut(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Draw")]
+  public static extern void Object_Draw(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Transform__SWIG_0")]
+  public static extern void Object_Transform__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4, int jarg5);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Transform__SWIG_1")]
+  public static extern void Object_Transform__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Transform__SWIG_2")]
+  public static extern void Object_Transform__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_TransformRect")]
+  public static extern void Object_TransformRect(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetDisplayTime")]
+  public static extern void Object_SetDisplayTime(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetDisplayTime")]
+  public static extern int Object_GetDisplayTime(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_DrawAtOffset__SWIG_0")]
+  public static extern void Object_DrawAtOffset__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_DrawAtOffset__SWIG_1")]
+  public static extern void Object_DrawAtOffset__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetX")]
+  public static extern int Object_GetX(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetY")]
+  public static extern int Object_GetY(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetXY")]
+  public static extern global::System.IntPtr Object_GetXY(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetX")]
+  public static extern void Object_SetX(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetY")]
+  public static extern void Object_SetY(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetXY__SWIG_0")]
+  public static extern void Object_SetXY__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetXY__SWIG_1")]
+  public static extern void Object_SetXY__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetAlpha")]
+  public static extern int Object_GetAlpha(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetAlpha")]
+  public static extern void Object_SetAlpha(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetFlipX")]
+  public static extern void Object_SetFlipX(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetFlipY")]
+  public static extern void Object_SetFlipY(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetVelX")]
+  public static extern float Object_GetVelX(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetVelY")]
+  public static extern float Object_GetVelY(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetVelXY")]
+  public static extern global::System.IntPtr Object_GetVelXY(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetVelX")]
+  public static extern void Object_SetVelX(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetVelY")]
+  public static extern void Object_SetVelY(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetVelXY__SWIG_0")]
+  public static extern void Object_SetVelXY__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2, float jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetVelXY__SWIG_1")]
+  public static extern void Object_SetVelXY__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetVelRotate")]
+  public static extern void Object_SetVelRotate(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetUseRotation")]
+  public static extern void Object_SetUseRotation(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetWidth")]
+  public static extern int Object_GetWidth(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetHeight")]
+  public static extern int Object_GetHeight(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ResetForNextFrame")]
+  public static extern void Object_ResetForNextFrame(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetProperties")]
+  public static extern global::System.IntPtr Object_GetProperties(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetProperties")]
+  public static extern void Object_SetProperties(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetControllerNum")]
+  public static extern void Object_SetControllerNum(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetControllerNum")]
+  public static extern uint Object_GetControllerNum(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetDebugFlag")]
+  public static extern void Object_SetDebugFlag(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetDebugFlag")]
+  public static extern bool Object_GetDebugFlag(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_OnCollide")]
+  public static extern void Object_OnCollide(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_OnAnimationLooped")]
+  public static extern void Object_OnAnimationLooped(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_IsDead")]
+  public static extern bool Object_IsDead(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetIsDead")]
+  public static extern void Object_SetIsDead(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetLayer")]
+  public static extern global::System.IntPtr Object_GetLayer(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetLayer")]
+  public static extern void Object_SetLayer(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetObjectDefName")]
+  public static extern void Object_SetObjectDefName(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetObjectDefName")]
+  public static extern string Object_GetObjectDefName(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ApplyImpulse__SWIG_0")]
+  public static extern void Object_ApplyImpulse__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2, float jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ApplyImpulse__SWIG_1")]
+  public static extern void Object_ApplyImpulse__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_LoadFromObjectDef")]
+  public static extern bool Object_LoadFromObjectDef(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_Object")]
+  public static extern void delete_Object(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_AddPrototype")]
+  public static extern global::System.IntPtr Object_AddPrototype(string jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_CreateObject")]
+  public static extern global::System.IntPtr Object_CreateObject(string jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectIsDead")]
+  public static extern bool ObjectIsDead(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_Clone")]
+  public static extern global::System.IntPtr ObjectPlayer_Clone(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_Init")]
+  public static extern bool ObjectPlayer_Init(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_Shutdown")]
+  public static extern void ObjectPlayer_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_Update")]
+  public static extern void ObjectPlayer_Update(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_OnCollide")]
+  public static extern void ObjectPlayer_OnCollide(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_OnAnimationLooped")]
+  public static extern void ObjectPlayer_OnAnimationLooped(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_PlayAnimation")]
+  public static extern void ObjectPlayer_PlayAnimation(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_GetNumRings")]
+  public static extern int ObjectPlayer_GetNumRings(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_ObjectPlayer")]
+  public static extern global::System.IntPtr new_ObjectPlayer();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_ObjectPlayer")]
+  public static extern void delete_ObjectPlayer(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_WantsToSlideOnLeftSide")]
+  public static extern bool ObjectPlayer_WantsToSlideOnLeftSide(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_WantsToSlideOnRightSide")]
+  public static extern bool ObjectPlayer_WantsToSlideOnRightSide(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_WantsToSlideOnAnySide")]
+  public static extern bool ObjectPlayer_WantsToSlideOnAnySide(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SWIGUpcast")]
   public static extern global::System.IntPtr GameWorld_SWIGUpcast(global::System.IntPtr jarg1);
 
@@ -1160,23 +2866,90 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Square_SWIGUpcast")]
   public static extern global::System.IntPtr Square_SWIGUpcast(global::System.IntPtr jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_SWIGUpcast")]
+  public static extern global::System.IntPtr ObjectPlayer_SWIGUpcast(global::System.IntPtr jarg1);
 }
 
 public class engine {
+  public static void StringSplit(string str, string delim, SWIGTYPE_p_std__vectorT_std__string_t results) {
+    enginePINVOKE.StringSplit(str, delim, SWIGTYPE_p_std__vectorT_std__string_t.getCPtr(results));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public static void DebugTrace(string format) {
+    enginePINVOKE.DebugTrace(format);
+  }
+
+  public static void ClearProperties(ObjectProperties p) {
+    enginePINVOKE.ClearProperties(ObjectProperties.getCPtr(p));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public static bool ObjectIsDead(Object obj) {
+    bool ret = enginePINVOKE.ObjectIsDead(Object.getCPtr(obj));
+    return ret;
+  }
+
+  public static readonly int DEFAULT_SCREEN_SIZE_X = enginePINVOKE.DEFAULT_SCREEN_SIZE_X_get();
+  public static readonly int DEFAULT_SCREEN_SIZE_Y = enginePINVOKE.DEFAULT_SCREEN_SIZE_Y_get();
+  public static readonly string VERSION_STRING = enginePINVOKE.VERSION_STRING_get();
+  public static readonly int FPS = enginePINVOKE.FPS_get();
+  public static readonly int TIMESTEP = enginePINVOKE.TIMESTEP_get();
+  public static readonly double ONEEIGHTY_OVER_PI = enginePINVOKE.ONEEIGHTY_OVER_PI_get();
+  public static readonly double PI_OVER_ONEEIGHTY = enginePINVOKE.PI_OVER_ONEEIGHTY_get();
+  public static readonly double TOLERANCE = enginePINVOKE.TOLERANCE_get();
+  public static readonly int DEFAULT_DEBUG_MSG_LEVEL = enginePINVOKE.DEFAULT_DEBUG_MSG_LEVEL_get();
+  public static readonly int DEFAULT_MUSIC_BUFFER_SIZE = enginePINVOKE.DEFAULT_MUSIC_BUFFER_SIZE_get();
+  public static readonly int DEFAULT_MUSIC_DATA_SIZE = enginePINVOKE.DEFAULT_MUSIC_DATA_SIZE_get();
+  public static readonly int USE_OLD_LOADING_SYSTEM = enginePINVOKE.USE_OLD_LOADING_SYSTEM_get();
+  public static readonly string REDIRECT_STDERR_FILENAME = enginePINVOKE.REDIRECT_STDERR_FILENAME_get();
 }
 
-public class SWIGTYPE_p_uint {
+public class SWIGTYPE_p_b2Vec2 {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
-  internal SWIGTYPE_p_uint(global::System.IntPtr cPtr, bool futureUse) {
+  internal SWIGTYPE_p_b2Vec2(global::System.IntPtr cPtr, bool futureUse) {
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  protected SWIGTYPE_p_uint() {
+  protected SWIGTYPE_p_b2Vec2() {
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
   }
 
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_uint obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_b2Vec2 obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+}
+
+public class SWIGTYPE_p_std__vectorT_std__string_t {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal SWIGTYPE_p_std__vectorT_std__string_t(global::System.IntPtr cPtr, bool futureUse) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  protected SWIGTYPE_p_std__vectorT_std__string_t() {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_std__vectorT_std__string_t obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+}
+
+public class SWIGTYPE_p_b2WorldManifold {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal SWIGTYPE_p_b2WorldManifold(global::System.IntPtr cPtr, bool futureUse) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  protected SWIGTYPE_p_b2WorldManifold() {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_b2WorldManifold obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 }
@@ -1197,22 +2970,6 @@ public class SWIGTYPE_p_p_char {
   }
 }
 
-public class SWIGTYPE_p_std__string {
-  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
-
-  internal SWIGTYPE_p_std__string(global::System.IntPtr cPtr, bool futureUse) {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
-  }
-
-  protected SWIGTYPE_p_std__string() {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-  }
-
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_std__string obj) {
-    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
-  }
-}
-
 public class SWIGTYPE_p_XMLNode {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
@@ -1229,66 +2986,18 @@ public class SWIGTYPE_p_XMLNode {
   }
 }
 
-public class SWIGTYPE_p_Object {
+public class SWIGTYPE_p_Sprite {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
-  internal SWIGTYPE_p_Object(global::System.IntPtr cPtr, bool futureUse) {
+  internal SWIGTYPE_p_Sprite(global::System.IntPtr cPtr, bool futureUse) {
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  protected SWIGTYPE_p_Object() {
+  protected SWIGTYPE_p_Sprite() {
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
   }
 
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_Object obj) {
-    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
-  }
-}
-
-public class SWIGTYPE_p_ObjectLayer {
-  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
-
-  internal SWIGTYPE_p_ObjectLayer(global::System.IntPtr cPtr, bool futureUse) {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
-  }
-
-  protected SWIGTYPE_p_ObjectLayer() {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-  }
-
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_ObjectLayer obj) {
-    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
-  }
-}
-
-public class SWIGTYPE_p_string {
-  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
-
-  internal SWIGTYPE_p_string(global::System.IntPtr cPtr, bool futureUse) {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
-  }
-
-  protected SWIGTYPE_p_string() {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-  }
-
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_string obj) {
-    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
-  }
-}
-
-public class SWIGTYPE_p_ObjectPlayer {
-  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
-
-  internal SWIGTYPE_p_ObjectPlayer(global::System.IntPtr cPtr, bool futureUse) {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
-  }
-
-  protected SWIGTYPE_p_ObjectPlayer() {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-  }
-
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_ObjectPlayer obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_Sprite obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 }
@@ -1305,6 +3014,22 @@ public class SWIGTYPE_p_int {
   }
 
   internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_int obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+}
+
+public class SWIGTYPE_p__Rect {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal SWIGTYPE_p__Rect(global::System.IntPtr cPtr, bool futureUse) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  protected SWIGTYPE_p__Rect() {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p__Rect obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 }

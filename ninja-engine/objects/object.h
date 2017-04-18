@@ -1,5 +1,5 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef __OBJECT_H
+#define __OBJECT_H
 
 #include "globals.h"
 
@@ -7,7 +7,7 @@
 #include "animations.h"
 #include "objectLayer.h"
 
-class Object;
+// class Object;
 class Animation;
 class Sprite;
 class ObjectFactory;
@@ -125,9 +125,6 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.ignores_physics_rotation = 0;
 	p.do_our_own_rotation = 0;
 }
-
-// Used for find()
-bool ObjectIsDead(Object* obj);
 
 #define IMPLEMENT_CLONE(TYPE) \
    Object* Clone() const { return new TYPE(*this); }
@@ -423,6 +420,11 @@ class Object {
 		friend class ObjectFactory;
 };
 
-BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
+// Used for find()
+bool ObjectIsDead(Object* obj);
 
-#endif // OBJECT_H
+#if !defined(SWIG) 
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
+#endif // SWIG
+
+#endif // __OBJECT_H

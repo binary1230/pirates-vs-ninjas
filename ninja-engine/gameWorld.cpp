@@ -349,13 +349,13 @@ void GameWorld::RemoveDeadObjectsIfNeeded() {
 	}
 }
 
-//! Update all objects
-void GameWorld::UpdateObjects() 
+//! Update all objects 
+void GameWorld::UpdateObjects()  
 {
 	AddNewObjectsIfNeeded();
 	RemoveDeadObjectsIfNeeded();
 	
-	// Do the physics simulation + update
+	// Do the physics simulation + update 
 	for (ObjectListIter iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
 		
 		Object* obj = *iter;

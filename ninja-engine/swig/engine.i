@@ -12,15 +12,30 @@
  *
  * */
 
-%module engine
-%{
-#include "../stdafx.h"
-#include "../gameMode.h"
-#include "../gameWorld.h"
-#include "../gameState.h"
+%begin %{
+#include "stdafx.h"
 %}
 
-%include "../singleton.h"
-%include "../gameMode.h"
-%include "../gameWorld.h"
-%include "../gameState.h"
+%module engine
+%{
+#include "gameMode.h"
+#include "gameWorld.h"
+#include "gameState.h"
+#include "objects/objectPlayer.h"
+%}
+
+%include <std_map.i>
+%include <std_vector.i>
+%include <std_string.i>
+
+using namespace std;
+%template(ObjectVector) std::vector<Object*>;
+
+%include "singleton.h"
+%include "gameMode.h"
+%include "gameWorld.h"
+%include "gameState.h"
+%include "globals.h"
+%include "objectLayer.h"
+%include "objects/object.h"
+%include "objects/objectPlayer.h"

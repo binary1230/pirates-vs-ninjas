@@ -306,7 +306,8 @@ void GameState::RunMainLoop_BlockingHelper()
 
 void GameState::ProcessEvents() {
 	ALLEGRO_EVENT ev;
-	al_get_next_event(event_queue, &ev);
+	if (!al_get_next_event(event_queue, &ev))
+		return;
 
 	if (ev.type == ALLEGRO_EVENT_TIMER) {
 		should_redraw = true;
@@ -317,7 +318,7 @@ void GameState::ProcessEvents() {
 }
 
 void GameState::TickIfNeeded() {
-	if (!should_redraw || !al_is_event_queue_empty(event_queue))
+	if (!should_redraw)
 		return;
 
 	should_redraw = false;

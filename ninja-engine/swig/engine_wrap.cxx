@@ -8,6 +8,9 @@
  * interface file instead.
  * ----------------------------------------------------------------------------- */
 
+#include "stdafx.h"
+
+
 
 #ifndef SWIGCSHARP
 #define SWIGCSHARP
@@ -299,15 +302,583 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_engine(SWIG_CSharpStringH
 #define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, msg, ""); return nullreturn; } else
 
 
-#include "../stdafx.h"
-#include "../gameMode.h"
-#include "../gameWorld.h"
-#include "../gameState.h"
+#include "gameMode.h"
+#include "gameWorld.h"
+#include "gameState.h"
+#include "objects/objectPlayer.h"
 
+
+#include <map>
+#include <algorithm>
+#include <stdexcept>
+
+
+#include <stdexcept>
+
+
+#include <vector>
+#include <algorithm>
+#include <stdexcept>
+
+
+#include <string>
+
+SWIGINTERN std::vector< Object * > *new_std_vector_Sl_Object_Sm__Sg___SWIG_2(int capacity){
+        std::vector< Object * >* pv = 0;
+        if (capacity >= 0) {
+          pv = new std::vector< Object * >();
+          pv->reserve(capacity);
+       } else {
+          throw std::out_of_range("capacity");
+       }
+       return pv;
+      }
+SWIGINTERN Object *std_vector_Sl_Object_Sm__Sg__getitemcopy(std::vector< Object * > *self,int index){
+        if (index>=0 && index<(int)self->size())
+          return (*self)[index];
+        else
+          throw std::out_of_range("index");
+      }
+SWIGINTERN Object *const &std_vector_Sl_Object_Sm__Sg__getitem(std::vector< Object * > *self,int index){
+        if (index>=0 && index<(int)self->size())
+          return (*self)[index];
+        else
+          throw std::out_of_range("index");
+      }
+SWIGINTERN void std_vector_Sl_Object_Sm__Sg__setitem(std::vector< Object * > *self,int index,Object *const &val){
+        if (index>=0 && index<(int)self->size())
+          (*self)[index] = val;
+        else
+          throw std::out_of_range("index");
+      }
+SWIGINTERN void std_vector_Sl_Object_Sm__Sg__AddRange(std::vector< Object * > *self,std::vector< Object * > const &values){
+        self->insert(self->end(), values.begin(), values.end());
+      }
+SWIGINTERN std::vector< Object * > *std_vector_Sl_Object_Sm__Sg__GetRange(std::vector< Object * > *self,int index,int count){
+        if (index < 0)
+          throw std::out_of_range("index");
+        if (count < 0)
+          throw std::out_of_range("count");
+        if (index >= (int)self->size()+1 || index+count > (int)self->size())
+          throw std::invalid_argument("invalid range");
+        return new std::vector< Object * >(self->begin()+index, self->begin()+index+count);
+      }
+SWIGINTERN void std_vector_Sl_Object_Sm__Sg__Insert(std::vector< Object * > *self,int index,Object *const &x){
+        if (index>=0 && index<(int)self->size()+1)
+          self->insert(self->begin()+index, x);
+        else
+          throw std::out_of_range("index");
+      }
+SWIGINTERN void std_vector_Sl_Object_Sm__Sg__InsertRange(std::vector< Object * > *self,int index,std::vector< Object * > const &values){
+        if (index>=0 && index<(int)self->size()+1)
+          self->insert(self->begin()+index, values.begin(), values.end());
+        else
+          throw std::out_of_range("index");
+      }
+SWIGINTERN void std_vector_Sl_Object_Sm__Sg__RemoveAt(std::vector< Object * > *self,int index){
+        if (index>=0 && index<(int)self->size())
+          self->erase(self->begin() + index);
+        else
+          throw std::out_of_range("index");
+      }
+SWIGINTERN void std_vector_Sl_Object_Sm__Sg__RemoveRange(std::vector< Object * > *self,int index,int count){
+        if (index < 0)
+          throw std::out_of_range("index");
+        if (count < 0)
+          throw std::out_of_range("count");
+        if (index >= (int)self->size()+1 || index+count > (int)self->size())
+          throw std::invalid_argument("invalid range");
+        self->erase(self->begin()+index, self->begin()+index+count);
+      }
+SWIGINTERN std::vector< Object * > *std_vector_Sl_Object_Sm__Sg__Repeat(Object *const &value,int count){
+        if (count < 0)
+          throw std::out_of_range("count");
+        return new std::vector< Object * >(count, value);
+      }
+SWIGINTERN void std_vector_Sl_Object_Sm__Sg__Reverse__SWIG_0(std::vector< Object * > *self){
+        std::reverse(self->begin(), self->end());
+      }
+SWIGINTERN void std_vector_Sl_Object_Sm__Sg__Reverse__SWIG_1(std::vector< Object * > *self,int index,int count){
+        if (index < 0)
+          throw std::out_of_range("index");
+        if (count < 0)
+          throw std::out_of_range("count");
+        if (index >= (int)self->size()+1 || index+count > (int)self->size())
+          throw std::invalid_argument("invalid range");
+        std::reverse(self->begin()+index, self->begin()+index+count);
+      }
+SWIGINTERN void std_vector_Sl_Object_Sm__Sg__SetRange(std::vector< Object * > *self,int index,std::vector< Object * > const &values){
+        if (index < 0)
+          throw std::out_of_range("index");
+        if (index+values.size() > self->size())
+          throw std::out_of_range("index");
+        std::copy(values.begin(), values.end(), self->begin()+index);
+      }
+SWIGINTERN bool std_vector_Sl_Object_Sm__Sg__Contains(std::vector< Object * > *self,Object *const &value){
+        return std::find(self->begin(), self->end(), value) != self->end();
+      }
+SWIGINTERN int std_vector_Sl_Object_Sm__Sg__IndexOf(std::vector< Object * > *self,Object *const &value){
+        int index = -1;
+        std::vector< Object * >::iterator it = std::find(self->begin(), self->end(), value);
+        if (it != self->end())
+          index = (int)(it - self->begin());
+        return index;
+      }
+SWIGINTERN int std_vector_Sl_Object_Sm__Sg__LastIndexOf(std::vector< Object * > *self,Object *const &value){
+        int index = -1;
+        std::vector< Object * >::reverse_iterator rit = std::find(self->rbegin(), self->rend(), value);
+        if (rit != self->rend())
+          index = (int)(self->rend() - 1 - rit);
+        return index;
+      }
+SWIGINTERN bool std_vector_Sl_Object_Sm__Sg__Remove(std::vector< Object * > *self,Object *const &value){
+        std::vector< Object * >::iterator it = std::find(self->begin(), self->end(), value);
+        if (it != self->end()) {
+          self->erase(it);
+	  return true;
+        }
+        return false;
+      }
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_Clear(void * jarg1) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  (arg1)->clear();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_Add(void * jarg1, void * jarg2) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  Object **arg2 = 0 ;
+  Object *temp2 = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  temp2 = (Object *)jarg2;
+  arg2 = (Object **)&temp2; 
+  (arg1)->push_back((Object *const &)*arg2);
+}
+
+
+SWIGEXPORT unsigned long SWIGSTDCALL CSharp_ObjectVector_size(void * jarg1) {
+  unsigned long jresult ;
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  std::vector< Object * >::size_type result;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  result = ((std::vector< Object * > const *)arg1)->size();
+  jresult = (unsigned long)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned long SWIGSTDCALL CSharp_ObjectVector_capacity(void * jarg1) {
+  unsigned long jresult ;
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  std::vector< Object * >::size_type result;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  result = ((std::vector< Object * > const *)arg1)->capacity();
+  jresult = (unsigned long)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_reserve(void * jarg1, unsigned long jarg2) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  std::vector< Object * >::size_type arg2 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (std::vector< Object * >::size_type)jarg2; 
+  (arg1)->reserve(arg2);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectVector__SWIG_0() {
+  void * jresult ;
+  std::vector< Object * > *result = 0 ;
+  
+  result = (std::vector< Object * > *)new std::vector< Object * >();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectVector__SWIG_1(void * jarg1) {
+  void * jresult ;
+  std::vector< Object * > *arg1 = 0 ;
+  std::vector< Object * > *result = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1;
+  if (!arg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< Object * > const & type is null", 0);
+    return 0;
+  } 
+  result = (std::vector< Object * > *)new std::vector< Object * >((std::vector< Object * > const &)*arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectVector__SWIG_2(int jarg1) {
+  void * jresult ;
+  int arg1 ;
+  std::vector< Object * > *result = 0 ;
+  
+  arg1 = (int)jarg1; 
+  try {
+    result = (std::vector< Object * > *)new_std_vector_Sl_Object_Sm__Sg___SWIG_2(arg1);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return 0;
+  }
+  
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectVector_getitemcopy(void * jarg1, int jarg2) {
+  void * jresult ;
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  Object *result = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  try {
+    result = (Object *)std_vector_Sl_Object_Sm__Sg__getitemcopy(arg1,arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return 0;
+  }
+  
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectVector_getitem(void * jarg1, int jarg2) {
+  void * jresult ;
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  Object **result = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  try {
+    result = (Object **) &std_vector_Sl_Object_Sm__Sg__getitem(arg1,arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return 0;
+  }
+  
+  jresult = (void *)*result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_setitem(void * jarg1, int jarg2, void * jarg3) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  Object **arg3 = 0 ;
+  Object *temp3 = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  temp3 = (Object *)jarg3;
+  arg3 = (Object **)&temp3; 
+  try {
+    std_vector_Sl_Object_Sm__Sg__setitem(arg1,arg2,(Object *const &)*arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return ;
+  }
+  
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_AddRange(void * jarg1, void * jarg2) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  std::vector< Object * > *arg2 = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (std::vector< Object * > *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< Object * > const & type is null", 0);
+    return ;
+  } 
+  std_vector_Sl_Object_Sm__Sg__AddRange(arg1,(std::vector< Object * > const &)*arg2);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectVector_GetRange(void * jarg1, int jarg2, int jarg3) {
+  void * jresult ;
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  std::vector< Object * > *result = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  try {
+    result = (std::vector< Object * > *)std_vector_Sl_Object_Sm__Sg__GetRange(arg1,arg2,arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return 0;
+  }
+  catch(std::invalid_argument &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentException, (&_e)->what(), "");
+    return 0;
+  }
+  
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_Insert(void * jarg1, int jarg2, void * jarg3) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  Object **arg3 = 0 ;
+  Object *temp3 = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  temp3 = (Object *)jarg3;
+  arg3 = (Object **)&temp3; 
+  try {
+    std_vector_Sl_Object_Sm__Sg__Insert(arg1,arg2,(Object *const &)*arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return ;
+  }
+  
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_InsertRange(void * jarg1, int jarg2, void * jarg3) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  std::vector< Object * > *arg3 = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (std::vector< Object * > *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< Object * > const & type is null", 0);
+    return ;
+  } 
+  try {
+    std_vector_Sl_Object_Sm__Sg__InsertRange(arg1,arg2,(std::vector< Object * > const &)*arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return ;
+  }
+  
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_RemoveAt(void * jarg1, int jarg2) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  try {
+    std_vector_Sl_Object_Sm__Sg__RemoveAt(arg1,arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return ;
+  }
+  
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_RemoveRange(void * jarg1, int jarg2, int jarg3) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  try {
+    std_vector_Sl_Object_Sm__Sg__RemoveRange(arg1,arg2,arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return ;
+  }
+  catch(std::invalid_argument &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentException, (&_e)->what(), "");
+    return ;
+  }
+  
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectVector_Repeat(void * jarg1, int jarg2) {
+  void * jresult ;
+  Object **arg1 = 0 ;
+  int arg2 ;
+  Object *temp1 = 0 ;
+  std::vector< Object * > *result = 0 ;
+  
+  temp1 = (Object *)jarg1;
+  arg1 = (Object **)&temp1; 
+  arg2 = (int)jarg2; 
+  try {
+    result = (std::vector< Object * > *)std_vector_Sl_Object_Sm__Sg__Repeat((Object *const &)*arg1,arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return 0;
+  }
+  
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_Reverse__SWIG_0(void * jarg1) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  std_vector_Sl_Object_Sm__Sg__Reverse__SWIG_0(arg1);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_Reverse__SWIG_1(void * jarg1, int jarg2, int jarg3) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  try {
+    std_vector_Sl_Object_Sm__Sg__Reverse__SWIG_1(arg1,arg2,arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return ;
+  }
+  catch(std::invalid_argument &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentException, (&_e)->what(), "");
+    return ;
+  }
+  
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectVector_SetRange(void * jarg1, int jarg2, void * jarg3) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  int arg2 ;
+  std::vector< Object * > *arg3 = 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (std::vector< Object * > *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< Object * > const & type is null", 0);
+    return ;
+  } 
+  try {
+    std_vector_Sl_Object_Sm__Sg__SetRange(arg1,arg2,(std::vector< Object * > const &)*arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, 0, (&_e)->what());
+    return ;
+  }
+  
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectVector_Contains(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  Object **arg2 = 0 ;
+  Object *temp2 = 0 ;
+  bool result;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  temp2 = (Object *)jarg2;
+  arg2 = (Object **)&temp2; 
+  result = (bool)std_vector_Sl_Object_Sm__Sg__Contains(arg1,(Object *const &)*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ObjectVector_IndexOf(void * jarg1, void * jarg2) {
+  int jresult ;
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  Object **arg2 = 0 ;
+  Object *temp2 = 0 ;
+  int result;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  temp2 = (Object *)jarg2;
+  arg2 = (Object **)&temp2; 
+  result = (int)std_vector_Sl_Object_Sm__Sg__IndexOf(arg1,(Object *const &)*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ObjectVector_LastIndexOf(void * jarg1, void * jarg2) {
+  int jresult ;
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  Object **arg2 = 0 ;
+  Object *temp2 = 0 ;
+  int result;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  temp2 = (Object *)jarg2;
+  arg2 = (Object **)&temp2; 
+  result = (int)std_vector_Sl_Object_Sm__Sg__LastIndexOf(arg1,(Object *const &)*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectVector_Remove(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  Object **arg2 = 0 ;
+  Object *temp2 = 0 ;
+  bool result;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  temp2 = (Object *)jarg2;
+  arg2 = (Object **)&temp2; 
+  result = (bool)std_vector_Sl_Object_Sm__Sg__Remove(arg1,(Object *const &)*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectVector(void * jarg1) {
+  std::vector< Object * > *arg1 = (std::vector< Object * > *) 0 ;
+  
+  arg1 = (std::vector< Object * > *)jarg1; 
+  delete arg1;
+}
+
 
 SWIGEXPORT void SWIGSTDCALL CSharp_GameModeExitInfo_useExitInfo_set(void * jarg1, unsigned int jarg2) {
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
@@ -331,86 +902,83 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameModeExitInfo_useExitInfo_get(void
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameModeExitInfo_lastModeName_set(void * jarg1, void * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameModeExitInfo_lastModeName_set(void * jarg1, char * jarg2) {
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
-  std::string arg2 ;
-  std::string *argp2 ;
+  std::string *arg2 = 0 ;
   
   arg1 = (GameModeExitInfo *)jarg1; 
-  argp2 = (std::string *)jarg2; 
-  if (!argp2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Attempt to dereference null std::string", 0);
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
     return ;
   }
-  arg2 = *argp2; 
-  if (arg1) (arg1)->lastModeName = arg2;
+  std::string arg2_str(jarg2);
+  arg2 = &arg2_str; 
+  if (arg1) (arg1)->lastModeName = *arg2;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_GameModeExitInfo_lastModeName_get(void * jarg1) {
-  void * jresult ;
+SWIGEXPORT char * SWIGSTDCALL CSharp_GameModeExitInfo_lastModeName_get(void * jarg1) {
+  char * jresult ;
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
-  std::string result;
+  std::string *result = 0 ;
   
   arg1 = (GameModeExitInfo *)jarg1; 
-  result =  ((arg1)->lastModeName);
-  jresult = new std::string((const std::string &)result); 
+  result = (std::string *) & ((arg1)->lastModeName);
+  jresult = SWIG_csharp_string_callback(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameModeExitInfo_nextModeToLoad_set(void * jarg1, void * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameModeExitInfo_nextModeToLoad_set(void * jarg1, char * jarg2) {
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
-  std::string arg2 ;
-  std::string *argp2 ;
+  std::string *arg2 = 0 ;
   
   arg1 = (GameModeExitInfo *)jarg1; 
-  argp2 = (std::string *)jarg2; 
-  if (!argp2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Attempt to dereference null std::string", 0);
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
     return ;
   }
-  arg2 = *argp2; 
-  if (arg1) (arg1)->nextModeToLoad = arg2;
+  std::string arg2_str(jarg2);
+  arg2 = &arg2_str; 
+  if (arg1) (arg1)->nextModeToLoad = *arg2;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_GameModeExitInfo_nextModeToLoad_get(void * jarg1) {
-  void * jresult ;
+SWIGEXPORT char * SWIGSTDCALL CSharp_GameModeExitInfo_nextModeToLoad_get(void * jarg1) {
+  char * jresult ;
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
-  std::string result;
+  std::string *result = 0 ;
   
   arg1 = (GameModeExitInfo *)jarg1; 
-  result =  ((arg1)->nextModeToLoad);
-  jresult = new std::string((const std::string &)result); 
+  result = (std::string *) & ((arg1)->nextModeToLoad);
+  jresult = SWIG_csharp_string_callback(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameModeExitInfo_lastPortalName_set(void * jarg1, void * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameModeExitInfo_lastPortalName_set(void * jarg1, char * jarg2) {
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
-  std::string arg2 ;
-  std::string *argp2 ;
+  std::string *arg2 = 0 ;
   
   arg1 = (GameModeExitInfo *)jarg1; 
-  argp2 = (std::string *)jarg2; 
-  if (!argp2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Attempt to dereference null std::string", 0);
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
     return ;
   }
-  arg2 = *argp2; 
-  if (arg1) (arg1)->lastPortalName = arg2;
+  std::string arg2_str(jarg2);
+  arg2 = &arg2_str; 
+  if (arg1) (arg1)->lastPortalName = *arg2;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_GameModeExitInfo_lastPortalName_get(void * jarg1) {
-  void * jresult ;
+SWIGEXPORT char * SWIGSTDCALL CSharp_GameModeExitInfo_lastPortalName_get(void * jarg1) {
+  char * jresult ;
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
-  std::string result;
+  std::string *result = 0 ;
   
   arg1 = (GameModeExitInfo *)jarg1; 
-  result =  ((arg1)->lastPortalName);
-  jresult = new std::string((const std::string &)result); 
+  result = (std::string *) & ((arg1)->lastPortalName);
+  jresult = SWIG_csharp_string_callback(result->c_str()); 
   return jresult;
 }
 
@@ -643,6 +1211,18 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_FreeInstance() {
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetObjects(void * jarg1) {
+  void * jresult ;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  std::vector< Object * > result;
+  
+  arg1 = (GameWorld *)jarg1; 
+  result = (arg1)->GetObjects();
+  jresult = new std::vector< Object * >((const std::vector< Object * > &)result); 
+  return jresult;
+}
+
+
 SWIGEXPORT int SWIGSTDCALL CSharp_GameWorld_Init(void * jarg1, void * jarg2) {
   int jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -753,34 +1333,28 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_FindLayer(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetPlayer(void * jarg1, void * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetPlayer(void * jarg1, unsigned int jarg2) {
   void * jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
   uint arg2 ;
-  uint *argp2 ;
   ObjectPlayer *result = 0 ;
   
   arg1 = (GameWorld *)jarg1; 
-  argp2 = (uint *)jarg2; 
-  if (!argp2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Attempt to dereference null uint", 0);
-    return 0;
-  }
-  arg2 = *argp2; 
+  arg2 = (uint)jarg2; 
   result = (ObjectPlayer *)(arg1)->GetPlayer(arg2);
   jresult = (void *)result; 
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetNumPlayers(void * jarg1) {
-  void * jresult ;
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_GetNumPlayers(void * jarg1) {
+  unsigned int jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
   uint result;
   
   arg1 = (GameWorld *)jarg1; 
-  result = (arg1)->GetNumPlayers();
-  jresult = new uint((const uint &)result); 
+  result = (uint)(arg1)->GetNumPlayers();
+  jresult = result; 
   return jresult;
 }
 
@@ -809,16 +1383,14 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_DoMainGameUpdate(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_CreateWorld(void * jarg1) {
-  string arg1 ;
-  string *argp1 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_CreateWorld(char * jarg1) {
+  std::string arg1 ;
   
-  argp1 = (string *)jarg1; 
-  if (!argp1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Attempt to dereference null string", 0);
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
     return ;
   }
-  arg1 = *argp1; 
+  (&arg1)->assign(jarg1); 
   GameWorld::CreateWorld(arg1);
 }
 
@@ -1029,18 +1601,16 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_PlayerAllowedOffscreen(void
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SaveWorld__SWIG_0(void * jarg1, void * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SaveWorld__SWIG_0(void * jarg1, char * jarg2) {
   GameWorld *arg1 = (GameWorld *) 0 ;
-  string arg2 ;
-  string *argp2 ;
+  std::string arg2 ;
   
   arg1 = (GameWorld *)jarg1; 
-  argp2 = (string *)jarg2; 
-  if (!argp2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Attempt to dereference null string", 0);
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
     return ;
   }
-  arg2 = *argp2; 
+  (&arg2)->assign(jarg2); 
   (arg1)->SaveWorld(arg2);
 }
 
@@ -1417,6 +1987,1793 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_Square(void * jarg1) {
 }
 
 
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_SCREEN_SIZE_X_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(1024);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_SCREEN_SIZE_Y_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(650);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_VERSION_STRING_get() {
+  char * jresult ;
+  char *result = 0 ;
+  
+  result = (char *)("ninjas-engine");
+  jresult = SWIG_csharp_string_callback((const char *)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_FPS_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(60);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_TIMESTEP_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(1/60);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT double SWIGSTDCALL CSharp_ONEEIGHTY_OVER_PI_get() {
+  double jresult ;
+  double result;
+  
+  result = (double)(57.2957795);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT double SWIGSTDCALL CSharp_PI_OVER_ONEEIGHTY_get() {
+  double jresult ;
+  double result;
+  
+  result = (double)(0.0174532925);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT double SWIGSTDCALL CSharp_TOLERANCE_get() {
+  double jresult ;
+  double result;
+  
+  result = (double)(0.00001);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_DEBUG_MSG_LEVEL_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(0);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_MUSIC_BUFFER_SIZE_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)((1 << 16));
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_MUSIC_DATA_SIZE_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)((1 << 15));
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_StringSplit(char * jarg1, char * jarg2, void * jarg3) {
+  std::string arg1 ;
+  std::string arg2 ;
+  std::vector< std::string > *arg3 = 0 ;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  (&arg1)->assign(jarg1); 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  (&arg2)->assign(jarg2); 
+  arg3 = (std::vector< std::string > *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > & type is null", 0);
+    return ;
+  } 
+  StringSplit(arg1,arg2,*arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_DebugTrace(char * jarg1) {
+  char *arg1 = (char *) 0 ;
+  void *arg2 = 0 ;
+  
+  arg1 = (char *)jarg1; 
+  DebugTrace((char const *)arg1,arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_USE_OLD_LOADING_SYSTEM_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(0);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_REDIRECT_STDERR_FILENAME_get() {
+  char * jresult ;
+  char *result = 0 ;
+  
+  result = (char *)("/Users/dcerquetti/game.log");
+  jresult = SWIG_csharp_string_callback((const char *)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectLayer_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_Shutdown(void * jarg1) {
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_SetName(void * jarg1, char * jarg2) {
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  arg2 = (char *)jarg2; 
+  (arg1)->SetName((char const *)arg2);
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_ObjectLayer_GetName(void * jarg1) {
+  char * jresult ;
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  char *result = 0 ;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  result = (char *)(arg1)->GetName();
+  jresult = SWIG_csharp_string_callback((const char *)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_SetScrollSpeed(void * jarg1, float jarg2) {
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  float arg2 ;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  arg2 = (float)jarg2; 
+  (arg1)->SetScrollSpeed(arg2);
+}
+
+
+SWIGEXPORT float SWIGSTDCALL CSharp_ObjectLayer_GetScrollSpeed(void * jarg1) {
+  float jresult ;
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  float result;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  result = (float)(arg1)->GetScrollSpeed();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectLayer_IsVisible(void * jarg1) {
+  unsigned int jresult ;
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  result = (bool)(arg1)->IsVisible();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_SetVisible(void * jarg1, unsigned int jarg2) {
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetVisible(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_Draw(void * jarg1) {
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  (arg1)->Draw();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_AddObject(void * jarg1, void * jarg2) {
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  (arg1)->AddObject(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_RemoveObject(void * jarg1, void * jarg2) {
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  (arg1)->RemoveObject(arg2);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectLayer() {
+  void * jresult ;
+  ObjectLayer *result = 0 ;
+  
+  result = (ObjectLayer *)new ObjectLayer();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectLayer(void * jarg1) {
+  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
+  
+  arg1 = (ObjectLayer *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_CollisionDirection_up_set(void * jarg1, unsigned int jarg2) {
+  CollisionDirection *arg1 = (CollisionDirection *) 0 ;
+  unsigned int arg2 ;
+  
+  arg1 = (CollisionDirection *)jarg1; 
+  arg2 = (unsigned int)jarg2; 
+  if (arg1) (arg1)->up = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_CollisionDirection_up_get(void * jarg1) {
+  unsigned int jresult ;
+  CollisionDirection *arg1 = (CollisionDirection *) 0 ;
+  unsigned int result;
+  
+  arg1 = (CollisionDirection *)jarg1; 
+  result = (unsigned int) ((arg1)->up);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_CollisionDirection_down_set(void * jarg1, unsigned int jarg2) {
+  CollisionDirection *arg1 = (CollisionDirection *) 0 ;
+  unsigned int arg2 ;
+  
+  arg1 = (CollisionDirection *)jarg1; 
+  arg2 = (unsigned int)jarg2; 
+  if (arg1) (arg1)->down = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_CollisionDirection_down_get(void * jarg1) {
+  unsigned int jresult ;
+  CollisionDirection *arg1 = (CollisionDirection *) 0 ;
+  unsigned int result;
+  
+  arg1 = (CollisionDirection *)jarg1; 
+  result = (unsigned int) ((arg1)->down);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_CollisionDirection_left_set(void * jarg1, unsigned int jarg2) {
+  CollisionDirection *arg1 = (CollisionDirection *) 0 ;
+  unsigned int arg2 ;
+  
+  arg1 = (CollisionDirection *)jarg1; 
+  arg2 = (unsigned int)jarg2; 
+  if (arg1) (arg1)->left = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_CollisionDirection_left_get(void * jarg1) {
+  unsigned int jresult ;
+  CollisionDirection *arg1 = (CollisionDirection *) 0 ;
+  unsigned int result;
+  
+  arg1 = (CollisionDirection *)jarg1; 
+  result = (unsigned int) ((arg1)->left);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_CollisionDirection_right_set(void * jarg1, unsigned int jarg2) {
+  CollisionDirection *arg1 = (CollisionDirection *) 0 ;
+  unsigned int arg2 ;
+  
+  arg1 = (CollisionDirection *)jarg1; 
+  arg2 = (unsigned int)jarg2; 
+  if (arg1) (arg1)->right = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_CollisionDirection_right_get(void * jarg1) {
+  unsigned int jresult ;
+  CollisionDirection *arg1 = (CollisionDirection *) 0 ;
+  unsigned int result;
+  
+  arg1 = (CollisionDirection *)jarg1; 
+  result = (unsigned int) ((arg1)->right);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_CollisionDirection() {
+  void * jresult ;
+  CollisionDirection *result = 0 ;
+  
+  result = (CollisionDirection *)new CollisionDirection();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_CollisionDirection(void * jarg1) {
+  CollisionDirection *arg1 = (CollisionDirection *) 0 ;
+  
+  arg1 = (CollisionDirection *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_feels_gravity_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->feels_gravity = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_feels_gravity_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->feels_gravity);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_feels_user_input_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->feels_user_input = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_feels_user_input_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->feels_user_input);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_feels_friction_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->feels_friction = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_feels_friction_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->feels_friction);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_spawns_enemies_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->spawns_enemies = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_spawns_enemies_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->spawns_enemies);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_uses_physics_engine_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->uses_physics_engine = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_uses_physics_engine_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->uses_physics_engine);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_static_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_static = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_static_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_static);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_sensor_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_sensor = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_sensor_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_sensor);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_ignores_physics_rotation_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->ignores_physics_rotation = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_ignores_physics_rotation_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->ignores_physics_rotation);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_do_our_own_rotation_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->do_our_own_rotation = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_do_our_own_rotation_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->do_our_own_rotation);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_use_angled_corners_collision_box_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->use_angled_corners_collision_box = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_use_angled_corners_collision_box_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->use_angled_corners_collision_box);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_overlay_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_overlay = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_overlay_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_overlay);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_player_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_player = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_player_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_player);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_spring_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_spring = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_spring_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_spring);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_collectable_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_collectable = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_collectable_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_collectable);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_fan_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_fan = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_fan_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_fan);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_door_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_door = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_door_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_door);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_ring_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_ring = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_ring_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_ring);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_ball_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_ball = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_ball_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_ball);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_badguy_set(void * jarg1, unsigned int jarg2) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->is_badguy = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_badguy_get(void * jarg1) {
+  unsigned int jresult ;
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  result = (bool) ((arg1)->is_badguy);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectProperties() {
+  void * jresult ;
+  ObjectProperties *result = 0 ;
+  
+  result = (ObjectProperties *)new ObjectProperties();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectProperties(void * jarg1) {
+  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
+  
+  arg1 = (ObjectProperties *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ClearProperties(void * jarg1) {
+  ObjectProperties *arg1 = 0 ;
+  
+  arg1 = (ObjectProperties *)jarg1;
+  if (!arg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "ObjectProperties & type is null", 0);
+    return ;
+  } 
+  ClearProperties(*arg1);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_tmp_debug_flag_set(void * jarg1, int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->tmp_debug_flag = arg2;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_tmp_debug_flag_get(void * jarg1) {
+  int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  int result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (int) ((arg1)->tmp_debug_flag);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_debug_draw_bounding_boxes_set(unsigned int jarg1) {
+  bool arg1 ;
+  
+  arg1 = jarg1 ? true : false; 
+  Object::debug_draw_bounding_boxes = arg1;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_debug_draw_bounding_boxes_get() {
+  unsigned int jresult ;
+  bool result;
+  
+  result = (bool)Object::debug_draw_bounding_boxes;
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_debug_object_id_set(unsigned long jarg1) {
+  unsigned long arg1 ;
+  
+  arg1 = (unsigned long)jarg1; 
+  Object::debug_object_id = arg1;
+}
+
+
+SWIGEXPORT unsigned long SWIGSTDCALL CSharp_Object_debug_object_id_get() {
+  unsigned long jresult ;
+  unsigned long result;
+  
+  result = (unsigned long)Object::debug_object_id;
+  jresult = (unsigned long)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_unique_id_set(void * jarg1, unsigned long jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  unsigned long arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (unsigned long)jarg2; 
+  if (arg1) (arg1)->unique_id = arg2;
+}
+
+
+SWIGEXPORT unsigned long SWIGSTDCALL CSharp_Object_unique_id_get(void * jarg1) {
+  unsigned long jresult ;
+  Object *arg1 = (Object *) 0 ;
+  unsigned long result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (unsigned long) ((arg1)->unique_id);
+  jresult = (unsigned long)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_Init(void * jarg1) {
+  unsigned int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  bool result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_Shutdown(void * jarg1) {
+  Object *arg1 = (Object *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_Update(void * jarg1) {
+  Object *arg1 = (Object *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_InitPhysics(void * jarg1) {
+  Object *arg1 = (Object *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  (arg1)->InitPhysics();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_PlayAnimation(void * jarg1, unsigned int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  uint arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (uint)jarg2; 
+  (arg1)->PlayAnimation(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetDrawBounds(void * jarg1, unsigned int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetDrawBounds(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_FadeOut(void * jarg1, int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->FadeOut(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_Draw(void * jarg1) {
+  Object *arg1 = (Object *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  (arg1)->Draw();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_Transform__SWIG_0(void * jarg1, void * jarg2, void * jarg3, int jarg4, int jarg5) {
+  Object *arg1 = (Object *) 0 ;
+  int *arg2 = 0 ;
+  int *arg3 = 0 ;
+  int *arg4 = 0 ;
+  int *arg5 = 0 ;
+  int temp4 ;
+  int temp5 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    return ;
+  } 
+  arg3 = (int *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    return ;
+  } 
+  temp4 = (int)jarg4; 
+  arg4 = &temp4; 
+  temp5 = (int)jarg5; 
+  arg5 = &temp5; 
+  (arg1)->Transform(*arg2,*arg3,(int const &)*arg4,(int const &)*arg5);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_Transform__SWIG_1(void * jarg1, void * jarg2, void * jarg3, int jarg4) {
+  Object *arg1 = (Object *) 0 ;
+  int *arg2 = 0 ;
+  int *arg3 = 0 ;
+  int *arg4 = 0 ;
+  int temp4 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    return ;
+  } 
+  arg3 = (int *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    return ;
+  } 
+  temp4 = (int)jarg4; 
+  arg4 = &temp4; 
+  (arg1)->Transform(*arg2,*arg3,(int const &)*arg4);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_Transform__SWIG_2(void * jarg1, void * jarg2, void * jarg3) {
+  Object *arg1 = (Object *) 0 ;
+  int *arg2 = 0 ;
+  int *arg3 = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    return ;
+  } 
+  arg3 = (int *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    return ;
+  } 
+  (arg1)->Transform(*arg2,*arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_TransformRect(void * jarg1, void * jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  _Rect *arg2 = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (_Rect *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "_Rect & type is null", 0);
+    return ;
+  } 
+  (arg1)->TransformRect(*arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetDisplayTime(void * jarg1, int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->SetDisplayTime(arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetDisplayTime(void * jarg1) {
+  int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  int result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (int)(arg1)->GetDisplayTime();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_DrawAtOffset__SWIG_0(void * jarg1, int jarg2, int jarg3, void * jarg4) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  Sprite *arg4 = (Sprite *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  arg4 = (Sprite *)jarg4; 
+  (arg1)->DrawAtOffset(arg2,arg3,arg4);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_DrawAtOffset__SWIG_1(void * jarg1, int jarg2, int jarg3) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  (arg1)->DrawAtOffset(arg2,arg3);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetX(void * jarg1) {
+  int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  int result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (int)((Object const *)arg1)->GetX();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetY(void * jarg1) {
+  int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  int result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (int)((Object const *)arg1)->GetY();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_GetXY(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  b2Vec2 result;
+  
+  arg1 = (Object *)jarg1; 
+  result = ((Object const *)arg1)->GetXY();
+  jresult = new b2Vec2((const b2Vec2 &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetX(void * jarg1, int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->SetX(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetY(void * jarg1, int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->SetY(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetXY__SWIG_0(void * jarg1, int jarg2, int jarg3) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  (arg1)->SetXY(arg2,arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetXY__SWIG_1(void * jarg1, void * jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  b2Vec2 *arg2 = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (b2Vec2 *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "b2Vec2 const & type is null", 0);
+    return ;
+  } 
+  (arg1)->SetXY((b2Vec2 const &)*arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetAlpha(void * jarg1) {
+  int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  int result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (int)(arg1)->GetAlpha();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetAlpha(void * jarg1, int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->SetAlpha(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetFlipX(void * jarg1, unsigned int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetFlipX(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetFlipY(void * jarg1, unsigned int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetFlipY(arg2);
+}
+
+
+SWIGEXPORT float SWIGSTDCALL CSharp_Object_GetVelX(void * jarg1) {
+  float jresult ;
+  Object *arg1 = (Object *) 0 ;
+  float result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (float)(arg1)->GetVelX();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT float SWIGSTDCALL CSharp_Object_GetVelY(void * jarg1) {
+  float jresult ;
+  Object *arg1 = (Object *) 0 ;
+  float result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (float)(arg1)->GetVelY();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_GetVelXY(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  b2Vec2 result;
+  
+  arg1 = (Object *)jarg1; 
+  result = ((Object const *)arg1)->GetVelXY();
+  jresult = new b2Vec2((const b2Vec2 &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetVelX(void * jarg1, float jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  float arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (float)jarg2; 
+  (arg1)->SetVelX(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetVelY(void * jarg1, float jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  float arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (float)jarg2; 
+  (arg1)->SetVelY(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetVelXY__SWIG_0(void * jarg1, float jarg2, float jarg3) {
+  Object *arg1 = (Object *) 0 ;
+  float arg2 ;
+  float arg3 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (float)jarg2; 
+  arg3 = (float)jarg3; 
+  (arg1)->SetVelXY(arg2,arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetVelXY__SWIG_1(void * jarg1, void * jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  b2Vec2 *arg2 = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (b2Vec2 *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "b2Vec2 const & type is null", 0);
+    return ;
+  } 
+  (arg1)->SetVelXY((b2Vec2 const &)*arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetVelRotate(void * jarg1, float jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  float arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (float)jarg2; 
+  (arg1)->SetVelRotate(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetUseRotation(void * jarg1, unsigned int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetUseRotation(arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetWidth(void * jarg1) {
+  int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  int result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (int)((Object const *)arg1)->GetWidth();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetHeight(void * jarg1) {
+  int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  int result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (int)((Object const *)arg1)->GetHeight();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_ResetForNextFrame(void * jarg1) {
+  Object *arg1 = (Object *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  (arg1)->ResetForNextFrame();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_GetProperties(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectProperties result;
+  
+  arg1 = (Object *)jarg1; 
+  result = ((Object const *)arg1)->GetProperties();
+  jresult = new ObjectProperties((const ObjectProperties &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetProperties(void * jarg1, void * jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  ObjectProperties arg2 ;
+  ObjectProperties *argp2 ;
+  
+  arg1 = (Object *)jarg1; 
+  argp2 = (ObjectProperties *)jarg2; 
+  if (!argp2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Attempt to dereference null ObjectProperties", 0);
+    return ;
+  }
+  arg2 = *argp2; 
+  (arg1)->SetProperties(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetControllerNum(void * jarg1, unsigned int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  uint arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (uint)jarg2; 
+  (arg1)->SetControllerNum(arg2);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_GetControllerNum(void * jarg1) {
+  unsigned int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  uint result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (uint)((Object const *)arg1)->GetControllerNum();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetDebugFlag(void * jarg1, unsigned int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetDebugFlag(arg2);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_GetDebugFlag(void * jarg1) {
+  unsigned int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  bool result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (bool)((Object const *)arg1)->GetDebugFlag();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_OnCollide(void * jarg1, void * jarg2, void * jarg3) {
+  Object *arg1 = (Object *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  b2WorldManifold *arg3 = (b2WorldManifold *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  arg3 = (b2WorldManifold *)jarg3; 
+  (arg1)->OnCollide(arg2,(b2WorldManifold const *)arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_OnAnimationLooped(void * jarg1) {
+  Object *arg1 = (Object *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  (arg1)->OnAnimationLooped();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_IsDead(void * jarg1) {
+  unsigned int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  bool result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (bool)((Object const *)arg1)->IsDead();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetIsDead(void * jarg1, unsigned int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetIsDead(arg2);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_GetLayer(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectLayer *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectLayer *)((Object const *)arg1)->GetLayer();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetLayer(void * jarg1, void * jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  ObjectLayer *arg2 = (ObjectLayer *) (ObjectLayer *)0 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (ObjectLayer *)jarg2; 
+  (arg1)->SetLayer(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetObjectDefName(void * jarg1, char * jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (char *)jarg2; 
+  (arg1)->SetObjectDefName((char const *)arg2);
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_Object_GetObjectDefName(void * jarg1) {
+  char * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  std::string result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (arg1)->GetObjectDefName();
+  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_ApplyImpulse__SWIG_0(void * jarg1, float jarg2, float jarg3) {
+  Object *arg1 = (Object *) 0 ;
+  float arg2 ;
+  float arg3 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (float)jarg2; 
+  arg3 = (float)jarg3; 
+  (arg1)->ApplyImpulse(arg2,arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_ApplyImpulse__SWIG_1(void * jarg1, void * jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  b2Vec2 *arg2 = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (b2Vec2 *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "b2Vec2 const & type is null", 0);
+    return ;
+  } 
+  (arg1)->ApplyImpulse((b2Vec2 const &)*arg2);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_LoadFromObjectDef(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->LoadFromObjectDef(*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_Object(void * jarg1) {
+  Object *arg1 = (Object *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_AddPrototype(char * jarg1, void * jarg2) {
+  void * jresult ;
+  std::string arg1 ;
+  Object *arg2 = (Object *) 0 ;
+  Object *result = 0 ;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  (&arg1)->assign(jarg1); 
+  arg2 = (Object *)jarg2; 
+  result = (Object *)Object::AddPrototype(arg1,arg2);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_CreateObject(char * jarg1) {
+  void * jresult ;
+  std::string arg1 ;
+  Object *result = 0 ;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  (&arg1)->assign(jarg1); 
+  result = (Object *)Object::CreateObject(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectIsDead(void * jarg1) {
+  unsigned int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  bool result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (bool)ObjectIsDead(arg1);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectPlayer_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  result = (Object *)((ObjectPlayer const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectPlayer_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectPlayer_Shutdown(void * jarg1) {
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectPlayer_Update(void * jarg1) {
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectPlayer_OnCollide(void * jarg1, void * jarg2, void * jarg3) {
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  b2WorldManifold *arg3 = (b2WorldManifold *) 0 ;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  arg3 = (b2WorldManifold *)jarg3; 
+  (arg1)->OnCollide(arg2,(b2WorldManifold const *)arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectPlayer_OnAnimationLooped(void * jarg1) {
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  (arg1)->OnAnimationLooped();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectPlayer_PlayAnimation(void * jarg1, unsigned int jarg2) {
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  uint arg2 ;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  arg2 = (uint)jarg2; 
+  (arg1)->PlayAnimation(arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ObjectPlayer_GetNumRings(void * jarg1) {
+  int jresult ;
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  int result;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  result = (int)(arg1)->GetNumRings();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectPlayer() {
+  void * jresult ;
+  ObjectPlayer *result = 0 ;
+  
+  result = (ObjectPlayer *)new ObjectPlayer();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectPlayer(void * jarg1) {
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectPlayer_WantsToSlideOnLeftSide(void * jarg1) {
+  unsigned int jresult ;
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  result = (bool)(arg1)->WantsToSlideOnLeftSide();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectPlayer_WantsToSlideOnRightSide(void * jarg1) {
+  unsigned int jresult ;
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  result = (bool)(arg1)->WantsToSlideOnRightSide();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectPlayer_WantsToSlideOnAnySide(void * jarg1) {
+  unsigned int jresult ;
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  result = (bool)(arg1)->WantsToSlideOnAnySide();
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT GameMode * SWIGSTDCALL CSharp_GameWorld_SWIGUpcast(GameWorld *jarg1) {
     return (GameMode *)jarg1;
 }
@@ -1427,6 +3784,10 @@ SWIGEXPORT Shape * SWIGSTDCALL CSharp_Circle_SWIGUpcast(Circle *jarg1) {
 
 SWIGEXPORT Shape * SWIGSTDCALL CSharp_Square_SWIGUpcast(Square *jarg1) {
     return (Shape *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectPlayer_SWIGUpcast(ObjectPlayer *jarg1) {
+    return (Object *)jarg1;
 }
 
 #ifdef __cplusplus
