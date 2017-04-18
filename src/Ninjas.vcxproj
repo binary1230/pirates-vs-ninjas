@@ -124,7 +124,7 @@
       <AdditionalLibraryDirectories>packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
+      <Command>build-tools\swig-generate-wrappers.bat</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Build swig wrapper</Message>
@@ -145,7 +145,7 @@
       <AdditionalLibraryDirectories>packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
+      <Command>build-tools\swig-generate-wrappers.bat</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Build swig wrapper</Message>
@@ -178,7 +178,7 @@
       <AdditionalLibraryDirectories>packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
+      <Command>build-tools\swig-generate-wrappers.bat</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Build swig wrapper</Message>
@@ -203,7 +203,7 @@
       <AdditionalLibraryDirectories>packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>packages\swigwin.3.0.9\tools\swigwin-3.0.9\swig.exe -o engine_wrap.cpp -c++ -lua swig\engine.i</Command>
+      <Command>build-tools\swig-generate-wrappers.bat</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Build swig wrapper</Message>
