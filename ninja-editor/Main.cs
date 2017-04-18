@@ -23,11 +23,15 @@ namespace MapEditor
         {
             GameState game = GameState.GetInstance();
 
-            if (!game.ShouldExit())
+            if (game.ShouldExit())
             {
-                game.ProcessEvents();
-                game.TickIfNeeded();
+                FastTimer.Enabled = false;
+                Close();
+                return;    
             }
+
+            game.ProcessEvents();
+            game.TickIfNeeded();
         }
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
@@ -35,7 +39,6 @@ namespace MapEditor
             FastTimer.Enabled = false;
 
             GameState game = GameState.GetInstance();
-
             game.Shutdown();
 
             GameState.FreeInstance();
