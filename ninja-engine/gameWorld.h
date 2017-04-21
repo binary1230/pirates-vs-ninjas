@@ -173,6 +173,10 @@ class GameWorld : public GameMode {
 			//! Find a layer by name
 			ObjectLayer* FindLayer(const char* name);
 
+			inline vector<ObjectLayer*> GetLayers() {
+				return m_kLayers;
+			}
+
 			ObjectPlayer* GetPlayer(uint iIndex)
 			{
 				assert(iIndex >= 0 && iIndex < m_kCachedPlayers.size());

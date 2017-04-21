@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "gameState.h"
 
-// #include "gui.h"
 #include "gameOptions.h"
 #include "input.h"
 #include "window.h"
@@ -12,7 +11,6 @@
 #include "gameModes.h"
 #include "globalDefines.h"
 #include "luaManager.h"
-// #include "mapEditor.h"
 #include "physics.h"
 #include "gameWorld.h"
 #include "objectFactory.h"
@@ -101,7 +99,7 @@ int GameState::InitSystems() {
 				
 	exit_game = false;
 	is_playing_back_demo = false;
-	debug_pause_toggle = false;
+	paused = false;
 	should_redraw = true;
 
 	RegisterObjectPrototypes();
@@ -246,20 +244,7 @@ bool GameState::InitAllegroEvents() {
 	return true;
 }
 
-void GameState::OutputTotalRunningTime() {
-	/*int seconds_played = int((float)m_iTicks / (float)FPS);
-	int seconds = seconds_played % 60;
-	int minutes = seconds_played / 60;
-	char* min_string = "minutes";
-
-	if (minutes == 1) 
-		min_string = "minute";
-
-	TRACE("[You ninja'd in the night for %i %s and %.2i seconds]\n", minutes, min_string, seconds );
-	*/
-}
-
-bool GameState::Init(const int argc, const char* argv[]) {
+bool GameState::Init(const int argc, const char** argv) {
 	#ifdef REDIRECT_STDERR
 		TRACE("Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
 
@@ -288,7 +273,7 @@ bool GameState::Init(const int argc, const char* argv[]) {
 	}
 
 	if (OPTIONS->GetDebugStartPaused())
-		debug_pause_toggle = 1;
+		paused = 1;
 
 	INPUT->Begin();
 
@@ -331,28 +316,39 @@ void GameState::Tick() {
 	Draw();
 }
 
+void GameState::SetPhysicsDebugDraw(bool value) {
+	PHYSICS->SetDrawDebug(value);
+}
+
+void GameState::UpdateGlobalInput()
+{
+	if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
+		WINDOW->Screenshot();
+
+	if (INPUT->KeyOnce(GAMEKEY_TOGGLE_PHYSICS_DISPLAY))
+		SetPhysicsDebugDraw(!PHYSICS->GetDrawDebug());
+
+	if (INPUT->KeyOnce(GAMEKEY_SAVE_MAP))
+		WORLD->SaveWorld();
+
+	if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
+		SetPaused(!IsPaused());
+}
+
 //! Update all game status
 void GameState::Update() {
 	if (exit_game)
 		return;
 
-	if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT) && !OPTIONS->MapEditorEnabled())
-		WINDOW->Screenshot();
-
-	if (INPUT->KeyOnce(GAMEKEY_TOGGLE_PHYSICS_DISPLAY) && !OPTIONS->MapEditorEnabled() && PHYSICS)
-		PHYSICS->SetDrawDebug(!PHYSICS->GetDrawDebug());
-
-	if (INPUT->KeyOnce(GAMEKEY_SAVE_MAP))
-		WORLD->SaveWorld();
+	UpdateGlobalInput();
 
 	SOUND->Update();
 	INPUT->Update();
-	// GUI->Update();
-	WINDOW->Update(); // update fades.
 
-	modes->Update();
-
-	// UpdateDebugPausing();
+	if (!paused || INPUT->KeyOnce(GAMEKEY_DEBUGSTEP)) {
+		WINDOW->Update(); // update fades
+		modes->Update();
+	}
 }
 
 void GameState::Draw() {
@@ -371,8 +367,6 @@ void GameState::Draw() {
 
 void GameState::Shutdown() {
 	TRACE("[Shutting Down]\n");
-
-	OutputTotalRunningTime();
 
 	if (INPUT) {
 		INPUT->End();
@@ -434,8 +428,6 @@ int GameState::GetRandomSeed() const {
 GameState::GameState() {
 	modes = NULL;
 	network = NULL;
-	// m_iOutstanding_updates = 0;
-	// m_iTicks = 0;
 	m_timer = NULL;
 }
 
@@ -446,58 +438,3 @@ void GameState::SignalGameExit() {
 }
 
 GameState::~GameState() {}
-
-void GameState::UpdateDebugPausing()
-{
-	/*if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE) && !OPTIONS->MapEditorEnabled())
-		debug_pause_toggle = !debug_pause_toggle;
-
-	if (debug_pause_toggle)
-	{
-		int debug_update_count = m_iOutstanding_updates;
-
-		while (debug_pause_toggle && !INPUT->KeyOnce(GAMEKEY_DEBUGSTEP)) 
-		{
-			INPUT->Update();
-			SOUND->Update();
-
-			Draw();
-
-			if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
-				WINDOW->Screenshot();
-
-			if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
-				debug_pause_toggle = !debug_pause_toggle;
-		}
-
-		m_iOutstanding_updates = debug_update_count;
-	}*/
-}
-
-
-
-#define M_PI 3.14159265358979323846
-
-/* Move the shape to a new location */
-void Shape::move(double dx, double dy) {
-	x += dx;
-	y += dy;
-}
-
-int Shape::nshapes = 0;
-
-double Circle::area() {
-	return M_PI*radius*radius;
-}
-
-double Circle::perimeter() {
-	return 2 * M_PI*radius;
-}
-
-double Square::area() {
-	return width*width;
-}
-
-double Square::perimeter() {
-	return 4 * width;
-}

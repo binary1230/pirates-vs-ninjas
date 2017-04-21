@@ -70,9 +70,6 @@ class GameState {
 		//! Draw the current state of the game
 		void Draw();
 
-		//! Output the total running time
-		void OutputTotalRunningTime();
-
 		//! Update FPS display
 		void UpdateFPS();
 		
@@ -80,7 +77,7 @@ class GameState {
 		bool exit_game;	
 	
 		//! Flag to enable DEBUG pause toggling
-		bool debug_pause_toggle;
+		bool paused;
 
 		//! If a game has the same random seed, it will
 		//! return the EXACT same sequence of random numbers.
@@ -99,7 +96,7 @@ class GameState {
 		void Shutdown();
 
 		//! Initialize
-		bool Init(const int argc, const char* argv[]);
+		bool Init(const int argc, const char** argv);
 
 		//! THE MAIN LOOP
 		void RunMainLoop_BlockingHelper();
@@ -112,10 +109,20 @@ class GameState {
 		//! Sometimes GUI's and things will have to call this directly from ON_IDLE msgs
 		void Tick();
 
-		void UpdateDebugPausing();
+		void SetPhysicsDebugDraw(bool value);
+
+		void UpdateGlobalInput();
 
 		//! Set the random seed value
  		void SetRandomSeed(int);
+
+		inline bool IsPaused() {
+			return paused;
+		}
+
+		inline void SetPaused(bool newState) {
+			paused = newState;
+		}
 		
 		//! Get the random seed value
 		int GetRandomSeed() const;
@@ -133,41 +140,6 @@ class GameState {
 		
 		~GameState();
 };
-
-
-class Shape {
-public:
-	Shape() {
-		nshapes++;
-	}
-	virtual ~Shape() {
-		nshapes--;
-	}
-	double  x, y;
-	void    move(double dx, double dy);
-	virtual double area() = 0;
-	virtual double perimeter() = 0;
-	static  int nshapes;
-};
-
-class Circle : public Shape {
-private:
-	double radius;
-public:
-	Circle(double r) : radius(r) { }
-	virtual double area();
-	virtual double perimeter();
-};
-
-class Square : public Shape {
-private:
-	double width;
-public:
-	Square(double w) : width(w) { }
-	virtual double area();
-	virtual double perimeter();
-};
-
 
 #define GAMESTATE GameState::GetInstance()
 

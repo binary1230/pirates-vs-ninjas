@@ -22,7 +22,10 @@
 #include "gameWorld.h"
 #include "gameState.h"
 #include "objects/objectPlayer.h"
+#include "objectFactory.h"
 %}
+
+
 
 %include <std_map.i>
 %include <std_vector.i>
@@ -30,6 +33,7 @@
 
 using namespace std;
 %template(ObjectVector) std::vector<Object*>;
+%template(ObjectLayerVector) std::vector<ObjectLayer*>;
 
 %include "singleton.h"
 %include "gameMode.h"
@@ -39,3 +43,4 @@ using namespace std;
 %include "objectLayer.h"
 %include "objects/object.h"
 %include "objects/objectPlayer.h"
+%include "objectFactory.h"

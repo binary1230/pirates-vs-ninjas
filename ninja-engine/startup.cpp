@@ -25,7 +25,7 @@ DllExport int run_ninjas_engine___helper(const int argc, const char* argv[])
 	return ret_val;
 }
 
-DllExport bool ninjas_engine_init(const int argc, const char* argv[]) {
+DllExport bool ninjas_engine_init(const int argc, const char** argv) {
 	assert(!GAMESTATE);
 	GAMESTATE->CreateInstance();
 	return GAMESTATE->Init(argc, argv);

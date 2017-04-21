@@ -59,12 +59,8 @@ void GameOptions::PrintOptions(const char* arg0) {
 
 		"-2            | (DEBUG) use 640x480 instead of 320x240\n"
 		"-z            | (DEBUG) use 800x600 (z?? z?? wtf.)\n"
-		"-3            | (DEBUG) start the game paused (press F1 and F2 in game)\n"
+		"-p            | (DEBUG) start the game paused (press F1 and F2 in game)\n"
 		"-v            | (DEBUG) show debugging messages\n\n"
-
-		"-s            | (EXPERIMENTAL) start game as a server\n\n"
-		"-c servername | (EXPERIMENTAL) connect to game server [servername]\n"
-		"-p portnumber | (EXPERIMENTAL) connect to game server port\n\n"
 
 		"-8            | Run game as fast as possible (not for human playing)\n"
 		"-9            | Do not do anything interactive (not for human playing)\n"
@@ -282,7 +278,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[])
 				break;
 	
 			// Network port #
-			case 'p':
+			case 'n':
 				network_port_num = strtoul(optarg, NULL, 10);
 				network_enabled = true;
 				break;
