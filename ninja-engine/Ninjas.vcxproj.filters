@@ -17,7 +17,6 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="Doxyfile.in" />
-    <None Include="swig\engine.i" />
     <None Include="lua\mapeditorGUI.lua" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -178,6 +177,9 @@
     <ClInclude Include="startup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="editor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp">
@@ -318,5 +320,11 @@
     <ClCompile Include="swig\engine_wrap.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="editor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="swig\engine.i" />
   </ItemGroup>
 </Project>

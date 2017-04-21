@@ -29,6 +29,8 @@ namespace MapEditor
             game.SetPaused(true);
             Paused = true;
 
+            GameWorld.GetInstance().InitEditor();
+
             return true;
         }
 

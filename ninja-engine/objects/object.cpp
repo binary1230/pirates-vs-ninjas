@@ -82,6 +82,9 @@ void Object::UpdateDisplayTime() {
 
 void Object::InitPhysics()
 {
+	if (m_pkPhysicsBody)
+		return; // already init'd
+
 	if (!PHYSICS)
 	{
 		TRACE("ERROR: Physics subsystem not yet initialized! Can't init object physics!");
@@ -374,6 +377,13 @@ void Object::UpdatePositionFromPhysicsLocation()
 	pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - float(GetHeight()) / 2;
 }
 
+bool Object::FinishLoading()
+{
+	XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(GetObjectDefName());
+	assert(xDef);
+	return LoadFromObjectDef(*xDef);
+}
+
 bool Object::LoadFromObjectDef(XMLNode& xDef) {
 	SetObjectDefName(xDef.getAttribute("name"));
 
@@ -388,6 +398,10 @@ bool Object::LoadFromObjectDef(XMLNode& xDef) {
 
 	if (!LoadObjectAnimations(xDef))
 		return false;
+
+	#if USE_OLD_LOADING_SYSTEM == 0
+	InitPhysics();
+	#endif
 
 	return true;
 }

@@ -224,6 +224,7 @@ class Object {
 
 		void UpdatePositionFromPhysicsLocation();
 
+		virtual bool LoadFromObjectDef(XMLNode & xDef);
 		bool LoadObjectSounds(XMLNode& xDef);
 		virtual bool LoadObjectProperties(XMLNode& xDef);
 		virtual bool LoadXMLInstanceProperties(XMLNode& xObj);
@@ -410,7 +411,7 @@ class Object {
 		void ApplyImpulse(float x, float y);
 		void ApplyImpulse(const b2Vec2& v);
 
-		virtual bool LoadFromObjectDef(XMLNode & xDef);
+		bool FinishLoading();
 		
 		virtual ~Object();
 

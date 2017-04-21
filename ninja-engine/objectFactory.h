@@ -26,11 +26,12 @@ class ObjectFactory {
 		//! is which frames it has, movement speed, etc
 		ObjectDefMapping objectDefs;
 
-		std::string GetClassNameFromXML(XMLNode &xObjectDef);
-
 	public:
 		int Init();
 		void Shutdown();
+
+		//! Return the name of a class of object that an objectDef wants to use
+		std::string GetClassNameFromXML(XMLNode &xObjectDef);
 		
 		// Create an object from an XML node
 		Object* CreateObjectFromXML(XMLNode &xObjectDef, XMLNode *xObject);

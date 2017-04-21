@@ -70,6 +70,7 @@ namespace MapEditor
                 lstObjectDefs.Items.Add(objectDefName);
             }
 
+            lstLayers.Items.Clear();
             foreach (string layer in gameWrapper.GetLayerNames())
             {
                 lstLayers.Items.Add(layer);
@@ -118,7 +119,10 @@ namespace MapEditor
 
         private void btn_Create_Click(object sender, EventArgs e)
         {
+            string currentLayer = lstLayers.SelectedItem.ToString();
+            string currentObjDef = lstObjectDefs.SelectedItem.ToString();
 
+            GameWorld.GetInstance().GetEditor().CreateObject(currentObjDef, currentLayer);
         }
 
         private void btnPaused_Click(object sender, EventArgs e)
@@ -130,14 +134,15 @@ namespace MapEditor
         private void OnPauseStatusChanged()
         {
             bool paused = gameWrapper.Paused;
+            wasPaused = paused;
 
             btnPause.Text = paused ? "Play" : "Pause";
-            btn_Create.Enabled = !paused;
-            btn_GetObjects.Enabled = !paused;
+            btn_Create.Enabled = paused;
+            btn_GetObjects.Enabled = paused;
 
-            lstLayers.Enabled = !paused;
-            lstObjectDefs.Enabled = !paused;
-            treeObjects.Enabled = !paused;
+            lstLayers.Enabled = paused;
+            lstObjectDefs.Enabled = paused;
+            treeObjects.Enabled = paused;
 
             if (paused)
             {

@@ -307,6 +307,7 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_engine(SWIG_CSharpStringH
 #include "gameState.h"
 #include "objects/objectPlayer.h"
 #include "objectFactory.h"
+#include "editor.h"
 
 
 #include <map>
@@ -1801,6 +1802,26 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_Shutdown(void * jarg1) {
   
   arg1 = (GameWorld *)jarg1; 
   (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_InitEditor(void * jarg1) {
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  (arg1)->InitEditor();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetEditor(void * jarg1) {
+  void * jresult ;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Editor *result = 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  result = (Editor *)(arg1)->GetEditor();
+  jresult = (void *)result; 
+  return jresult;
 }
 
 
@@ -3969,19 +3990,13 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_ApplyImpulse__SWIG_1(void * jarg1, voi
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_LoadFromObjectDef(void * jarg1, void * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_FinishLoading(void * jarg1) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
-  XMLNode *arg2 = 0 ;
   bool result;
   
   arg1 = (Object *)jarg1; 
-  arg2 = (XMLNode *)jarg2;
-  if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
-    return 0;
-  } 
-  result = (bool)(arg1)->LoadFromObjectDef(*arg2);
+  result = (bool)(arg1)->FinishLoading();
   jresult = result; 
   return jresult;
 }
@@ -4225,6 +4240,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ObjectFactory_Shutdown(void * jarg1) {
 }
 
 
+SWIGEXPORT char * SWIGSTDCALL CSharp_ObjectFactory_GetClassNameFromXML(void * jarg1, void * jarg2) {
+  char * jresult ;
+  ObjectFactory *arg1 = (ObjectFactory *) 0 ;
+  XMLNode *arg2 = 0 ;
+  std::string result;
+  
+  arg1 = (ObjectFactory *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (arg1)->GetClassNameFromXML(*arg2);
+  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
+  return jresult;
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectFactory_CreateObjectFromXML(void * jarg1, void * jarg2, void * jarg3) {
   void * jresult ;
   ObjectFactory *arg1 = (ObjectFactory *) 0 ;
@@ -4379,6 +4412,72 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectFactory(void * jarg1) {
 
 SWIGEXPORT void SWIGSTDCALL CSharp_RegisterObjectPrototypes() {
   RegisterObjectPrototypes();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_Editor() {
+  void * jresult ;
+  Editor *result = 0 ;
+  
+  result = (Editor *)new Editor();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_Editor(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Editor_CreateObject(void * jarg1, char * jarg2, char * jarg3) {
+  void * jresult ;
+  Editor *arg1 = (Editor *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = (char *)jarg2; 
+  arg3 = (char *)jarg3; 
+  result = (Object *)(arg1)->CreateObject(arg2,arg3);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_UpdateSelectedObjectPosition(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->UpdateSelectedObjectPosition();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_UnselectCurrentlySelectedObject(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->UnselectCurrentlySelectedObject();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_Draw(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->Draw();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_Update(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->Update();
 }
 
 

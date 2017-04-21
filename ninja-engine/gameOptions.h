@@ -63,8 +63,6 @@ class GameOptions {
 		//! For normal play, this should be true
 		//! For AI training or testing, you can set this to false to run fast
 		bool wait_for_updates;
-
-		bool map_editor_enabled;
 		
 	public:
 		//! Print the list of available options to stdout
@@ -127,8 +125,6 @@ class GameOptions {
 
 		inline bool		DrawGraphics() {return draw_graphics;}
 		inline bool		WaitForUpdates() {return wait_for_updates;}
-
-		inline bool 	MapEditorEnabled() {return map_editor_enabled;}
 		
 		virtual ~GameOptions();
 };

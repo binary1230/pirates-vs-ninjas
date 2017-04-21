@@ -23,6 +23,7 @@
 #include "gameState.h"
 #include "objects/objectPlayer.h"
 #include "objectFactory.h"
+#include "editor.h"
 %}
 
 
@@ -44,3 +45,4 @@ using namespace std;
 %include "objects/object.h"
 %include "objects/objectPlayer.h"
 %include "objectFactory.h"
+%include "editor.h"

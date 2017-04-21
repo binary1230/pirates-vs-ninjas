@@ -21,6 +21,7 @@
 #include "globalDefines.h"
 #include "eventManager.h"
 #include "physics.h"
+#include "editor.h"
 
 DECLARE_SINGLETON(GameWorld)
 
@@ -61,6 +62,7 @@ void GameWorld::ShowText(	const char* txt,
 
 void GameWorld::Clear() {
 	is_loading = false;
+	map_editor = NULL;
 	
 	m_objects.clear();
 	m_kLayers.clear();
@@ -247,7 +249,7 @@ void GameWorld::Shutdown()
 
 	if (EVENTS) 
 	{
-		if (!OPTIONS->MapEditorEnabled())
+		if (!map_editor)
 			EVENTS->OnUnLoad();
 
 		EVENTS->Shutdown();
@@ -293,6 +295,15 @@ void GameWorld::Shutdown()
 	}
 
 	LUA->ReleaseCurrentLuaScript();
+
+	if (map_editor) {
+		delete map_editor;
+	}
+}
+
+void GameWorld::InitEditor()
+{
+	map_editor = new Editor();
 }
 
 //! Draw all objects in this physics simulation
@@ -313,11 +324,11 @@ void GameWorld::Draw()
 		m_kLayers[i]->Draw();
 	}
 
-	// Debug only.
 	PHYSICS->Draw();
-}
 
-#define CLEAR_SCREEN_STRING "\033[H\033[J\r\n"
+	if (map_editor)
+		map_editor->Draw();
+}
 
 void GameWorld::RemoveDeadObjectsIfNeeded() {
 	Object* obj;
@@ -349,13 +360,11 @@ void GameWorld::RemoveDeadObjectsIfNeeded() {
 	}
 }
 
-//! Update all objects 
 void GameWorld::UpdateObjects()  
 {
 	AddNewObjectsIfNeeded();
 	RemoveDeadObjectsIfNeeded();
 	
-	// Do the physics simulation + update 
 	for (ObjectListIter iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
 		
 		Object* obj = *iter;
@@ -370,20 +379,21 @@ void GameWorld::UpdateObjects()
 	}
 }
 
-//! Master update 
 void GameWorld::Update() {
-	DoMainGameUpdate();
-}
-
-void GameWorld::DoMainGameUpdate() {
-
-	// If they pressed the 'exit' key (typically ESCAPE)
-	// Then end the physics simulation
 	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
-    GAMESTATE->SignalGameExit();			// for real
+		GAMESTATE->SignalGameExit();
 		return;
 	}
 
+	if (!GAMESTATE->IsPaused()) {
+		DoMainGameUpdate();
+	}
+
+	if (map_editor)
+		map_editor->Update();
+}
+
+void GameWorld::DoMainGameUpdate() {
 	for (ObjectListIter iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
 
 		Object* obj = *iter;
@@ -414,7 +424,6 @@ void GameWorld::CreateWorld(string mode_filename = "") {
 	#if USE_OLD_LOADING_SYSTEM
 		WORLD->CreateInstance();
 	#else
-		// create and open an archive for input
 		GameWorld* unserialized_world = NULL;
 		std::ifstream ifs(mode_filename);
 		boost::archive::xml_iarchive ia(ifs);
@@ -448,7 +457,6 @@ int GameWorld::Load(XMLNode &xMode) {
 		TRACE("ERROR: InitSystems: failed to init (part 2) PhysicsManager::OnLevelLoaded()!\n");
 		return -1;
 	}
-
 
 	XMLNode* p_xObjDefs = NULL;
 
@@ -485,19 +493,15 @@ int GameWorld::Load(XMLNode &xMode) {
 		m_szLuaScript = xMode.getChildNode("luaScript").getText();
 	}
 	#else 
-	if (!LoadObjects())
+	if (!FinishLoadingObjects())
 		return -1;
 	#endif // OLD_LOAD
-
-
 
 	for (int i = 0; i < m_included_effect_xml_files.size(); ++i)
 	{
 		EFFECTS->LoadEffectsFromIncludedXml(m_included_effect_xml_files[i]);
 	}
 
-
-	
 	if (!GLOBALS->Value("debug_draw_bounding_boxes", Object::debug_draw_bounding_boxes))
 		Object::debug_draw_bounding_boxes = false;
 
@@ -518,13 +522,13 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	// Load the LUA file if there is one
 	// Don't do this for the map editor, since it needs lua stuff too.
-	if (!OPTIONS->MapEditorEnabled() && m_szLuaScript.length() > 0) {
+	if (!map_editor && m_szLuaScript.length() > 0) {
 		LUA->LoadLuaScript(m_szLuaScript.c_str());
 	}
 
 	is_loading = false;
 
-	if (!OPTIONS->MapEditorEnabled())
+	if (!map_editor)
 		EVENTS->OnLoad();
 	
 	m_bJumpedBackFromADoor = false;
@@ -534,24 +538,16 @@ int GameWorld::Load(XMLNode &xMode) {
 	return 0;	
 }
 
-bool GameWorld::LoadObjects()
+bool GameWorld::FinishLoadingObjects()
 {
 	#if USE_OLD_LOADING_SYSTEM == 0
-	
 	ObjectListIter iter;
 	for (iter = m_objects.begin(); iter != m_objects.end(); iter++)
 	{
 		Object* obj = (*iter);
-		XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(obj->GetObjectDefName());
-
-		assert(xDef);
-		
-		if (!obj->LoadFromObjectDef(*xDef))
+		if (!obj->FinishLoading())
 			return false;
-
-		obj->InitPhysics();
 	}
-
 	#endif // USE_NEW
 
 	return true;

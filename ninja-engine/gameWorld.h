@@ -9,6 +9,7 @@ class Object;
 class ObjectFactory;
 class ObjectLayer;
 class ObjectPlayer;
+class Editor;
 			
 // note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
@@ -44,6 +45,8 @@ class GameWorld : public GameMode {
 		}
 
 		protected:
+			Editor* map_editor;
+
 			//! Filename of music, or NULL if none
 			std::string m_szMusicFile;
 
@@ -112,7 +115,7 @@ class GameWorld : public GameMode {
 			//! Sets up simulation from an XML file
 			//XXX should be moved into a friend factory class, or something.
 			int Load(XMLNode&);
-			bool LoadObjects();
+			bool FinishLoadingObjects();
 			int LoadHeaderFromXML(XMLNode&);
 			int LoadObjectsFromXML(XMLNode&);
 			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer* const);
@@ -153,6 +156,11 @@ class GameWorld : public GameMode {
 
 			virtual int Init(XMLNode);
 			virtual void Shutdown();
+
+			virtual void InitEditor();
+			inline Editor* GetEditor() {
+				return map_editor;
+			}
 
 			bool UseScrollSpeed() {return use_scroll_speed;}
 
@@ -234,6 +242,8 @@ class GameWorld : public GameMode {
 			void SaveWorld(string filename = "test-save.xml");
 
 			virtual ~GameWorld();
+
+			friend class Editor;
 };
 
 #define WORLD (GameWorld::GetInstance())

@@ -258,6 +258,7 @@
     <ClInclude Include="assetManager.h" />
     <ClInclude Include="basename.h" />
     <ClInclude Include="credits.h" />
+    <ClInclude Include="editor.h" />
     <ClInclude Include="effectsManager.h" />
     <ClInclude Include="eventManager.h" />
     <ClInclude Include="external\XGetopt.h" />
@@ -329,6 +330,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="editor.cpp" />
     <ClCompile Include="effectsManager.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>

@@ -891,6 +891,16 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_Shutdown(swigCPtr);
   }
 
+  public virtual void InitEditor() {
+    enginePINVOKE.GameWorld_InitEditor(swigCPtr);
+  }
+
+  public Editor GetEditor() {
+    global::System.IntPtr cPtr = enginePINVOKE.GameWorld_GetEditor(swigCPtr);
+    Editor ret = (cPtr == global::System.IntPtr.Zero) ? null : new Editor(cPtr, false);
+    return ret;
+  }
+
   public bool UseScrollSpeed() {
     bool ret = enginePINVOKE.GameWorld_UseScrollSpeed(swigCPtr);
     return ret;
@@ -1862,9 +1872,8 @@ public class Object : global::System.IDisposable {
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public virtual bool LoadFromObjectDef(SWIGTYPE_p_XMLNode xDef) {
-    bool ret = enginePINVOKE.Object_LoadFromObjectDef(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(xDef));
-    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  public bool FinishLoading() {
+    bool ret = enginePINVOKE.Object_FinishLoading(swigCPtr);
     return ret;
   }
 
@@ -2044,6 +2053,12 @@ public class ObjectFactory : global::System.IDisposable {
     enginePINVOKE.ObjectFactory_Shutdown(swigCPtr);
   }
 
+  public string GetClassNameFromXML(SWIGTYPE_p_XMLNode xObjectDef) {
+    string ret = enginePINVOKE.ObjectFactory_GetClassNameFromXML(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(xObjectDef));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
   public Object CreateObjectFromXML(SWIGTYPE_p_XMLNode xObjectDef, SWIGTYPE_p_XMLNode xObject) {
     global::System.IntPtr cPtr = enginePINVOKE.ObjectFactory_CreateObjectFromXML(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(xObjectDef), SWIGTYPE_p_XMLNode.getCPtr(xObject));
     Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
@@ -2091,6 +2106,63 @@ public class ObjectFactory : global::System.IDisposable {
     bool ret = enginePINVOKE.ObjectFactory_LoadObjectDefsFromIncludeXML(swigCPtr, file);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
+  }
+
+}
+
+public class Editor : global::System.IDisposable {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+  protected bool swigCMemOwn;
+
+  internal Editor(global::System.IntPtr cPtr, bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(Editor obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+
+  ~Editor() {
+    Dispose();
+  }
+
+  public virtual void Dispose() {
+    lock(this) {
+      if (swigCPtr.Handle != global::System.IntPtr.Zero) {
+        if (swigCMemOwn) {
+          swigCMemOwn = false;
+          enginePINVOKE.delete_Editor(swigCPtr);
+        }
+        swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+      }
+      global::System.GC.SuppressFinalize(this);
+    }
+  }
+
+  public Editor() : this(enginePINVOKE.new_Editor(), true) {
+  }
+
+  public Object CreateObject(string objDefName, string layerName) {
+    global::System.IntPtr cPtr = enginePINVOKE.Editor_CreateObject(swigCPtr, objDefName, layerName);
+    Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
+    return ret;
+  }
+
+  public void UpdateSelectedObjectPosition() {
+    enginePINVOKE.Editor_UpdateSelectedObjectPosition(swigCPtr);
+  }
+
+  public void UnselectCurrentlySelectedObject() {
+    enginePINVOKE.Editor_UnselectCurrentlySelectedObject(swigCPtr);
+  }
+
+  public void Draw() {
+    enginePINVOKE.Editor_Draw(swigCPtr);
+  }
+
+  public void Update() {
+    enginePINVOKE.Editor_Update(swigCPtr);
   }
 
 }
@@ -2527,6 +2599,12 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_Shutdown")]
   public static extern void GameWorld_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_InitEditor")]
+  public static extern void GameWorld_InitEditor(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetEditor")]
+  public static extern global::System.IntPtr GameWorld_GetEditor(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_UseScrollSpeed")]
   public static extern bool GameWorld_UseScrollSpeed(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -3119,8 +3197,8 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ApplyImpulse__SWIG_1")]
   public static extern void Object_ApplyImpulse__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_LoadFromObjectDef")]
-  public static extern bool Object_LoadFromObjectDef(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_FinishLoading")]
+  public static extern bool Object_FinishLoading(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_Object")]
   public static extern void delete_Object(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -3191,6 +3269,9 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectFactory_Shutdown")]
   public static extern void ObjectFactory_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectFactory_GetClassNameFromXML")]
+  public static extern string ObjectFactory_GetClassNameFromXML(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectFactory_CreateObjectFromXML")]
   public static extern global::System.IntPtr ObjectFactory_CreateObjectFromXML(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
@@ -3220,6 +3301,27 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_RegisterObjectPrototypes")]
   public static extern void RegisterObjectPrototypes();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_Editor")]
+  public static extern global::System.IntPtr new_Editor();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_Editor")]
+  public static extern void delete_Editor(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_CreateObject")]
+  public static extern global::System.IntPtr Editor_CreateObject(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2, string jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_UpdateSelectedObjectPosition")]
+  public static extern void Editor_UpdateSelectedObjectPosition(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_UnselectCurrentlySelectedObject")]
+  public static extern void Editor_UnselectCurrentlySelectedObject(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_Draw")]
+  public static extern void Editor_Draw(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_Update")]
+  public static extern void Editor_Update(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SWIGUpcast")]
   public static extern global::System.IntPtr GameWorld_SWIGUpcast(global::System.IntPtr jarg1);

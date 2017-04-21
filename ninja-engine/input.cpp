@@ -71,6 +71,10 @@ int Input::ResolveControllerKey(uint gameKey, uint controller_number) {
 	return outKey;
 }
 
+int Input::MouseX() {
+	return mouse_x_pos;
+}
+
 int Input::MouseY() {
 	return mouse_y_pos;
 }
@@ -116,9 +120,6 @@ void Input::UpdateMouseButtonReleases() {
 
 // -------------------------------------------------------------
 
-int Input::MouseX() {
-	return mouse_x_pos;
-}
 
 // REMEMBER, controller numbers start at 1
 // 
@@ -409,7 +410,7 @@ bool Input::InitLive() {
 }
 
 bool Input::CommonInit() {
-	// al_install_mouse();
+	al_install_mouse();
 	al_install_keyboard();
 	// al_install_joystick();
 
@@ -591,9 +592,12 @@ void Input::UpdateLive() {
 	DoJoystickUpdateHack();
 
 	// get the mouse from global allegro variables
-	//mouse_x_pos = ::mouse_x;
-	//mouse_y_pos = ::mouse_y;
-	//mouse_buttons = ::mouse_b; // need to port, 2017
+	ALLEGRO_MOUSE_STATE state;
+
+	al_get_mouse_state(&state);
+	mouse_x_pos = state.x;
+	mouse_y_pos = state.y;
+	mouse_buttons = state.buttons; // need to port, 2017
 }
 
 // These are for an XBOX controller

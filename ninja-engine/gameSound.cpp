@@ -41,7 +41,7 @@ bool GameSound::IsThisMusicPlayingAlready(std::string name) {
 }
 
 bool GameSound::PlayMusic(const char* name) {
-	if (!sound_enabled || OPTIONS->MapEditorEnabled())
+	if (!sound_enabled)
 		return true;
 
 	if (IsThisMusicPlayingAlready(name))

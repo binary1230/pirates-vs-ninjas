@@ -8,7 +8,6 @@
 #include "window.h"
 #include "gameSound.h"
 #include "gameState.h"
-// #include "mapEditor.h"
 #include "gameOptions.h"
 
 // LUA: Debug only - print something to stderr from lua
@@ -210,17 +209,6 @@ int LUAAPI lua_jumped_back_from_a_door(lua_State* lua) {
 	lua_pushnumber(lua, retval);
 	return 1;
 }
-
-// Totally stupid. just implement as a singleton.
-/*MapEditor* GetMapEditorInstance()
-{
-	if (!OPTIONS || !WORLD || !OPTIONS->MapEditorEnabled())
-		return NULL;
-
-	// pray to god. cast from nowhere.
-	assert(WORLD);
-	return (MapEditor*)(WORLD); // BAD IDEA. DANGEROUS CAST.
-}*/
 
 int LUAAPI lua_engine_should_exit_game(lua_State* lua) 
 {

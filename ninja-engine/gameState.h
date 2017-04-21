@@ -78,6 +78,7 @@ class GameState {
 	
 		//! Flag to enable DEBUG pause toggling
 		bool paused;
+		bool unpause_only_this_frame;
 
 		//! If a game has the same random seed, it will
 		//! return the EXACT same sequence of random numbers.

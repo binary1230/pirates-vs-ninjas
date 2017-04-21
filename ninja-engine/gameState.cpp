@@ -100,6 +100,7 @@ int GameState::InitSystems() {
 	exit_game = false;
 	is_playing_back_demo = false;
 	paused = false;
+	unpause_only_this_frame = false;
 	should_redraw = true;
 
 	RegisterObjectPrototypes();
@@ -322,6 +323,15 @@ void GameState::SetPhysicsDebugDraw(bool value) {
 
 void GameState::UpdateGlobalInput()
 {
+	if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
+		SetPaused(!IsPaused());
+
+	unpause_only_this_frame = false;
+	if (paused && INPUT->KeyOnce(GAMEKEY_DEBUGSTEP)) {
+		unpause_only_this_frame = true;
+		paused = false;
+	}
+
 	if (INPUT->KeyOnce(GAMEKEY_SCREENSHOT))
 		WINDOW->Screenshot();
 
@@ -330,9 +340,6 @@ void GameState::UpdateGlobalInput()
 
 	if (INPUT->KeyOnce(GAMEKEY_SAVE_MAP))
 		WORLD->SaveWorld();
-
-	if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
-		SetPaused(!IsPaused());
 }
 
 //! Update all game status
@@ -345,9 +352,12 @@ void GameState::Update() {
 	SOUND->Update();
 	INPUT->Update();
 
-	if (!paused || INPUT->KeyOnce(GAMEKEY_DEBUGSTEP)) {
-		WINDOW->Update(); // update fades
-		modes->Update();
+	modes->Update();
+	WINDOW->Update(); // update fades
+
+	if (unpause_only_this_frame) {
+		unpause_only_this_frame = false;
+		paused = true;
 	}
 }
 

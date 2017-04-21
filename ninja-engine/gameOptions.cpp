@@ -54,7 +54,6 @@ void GameOptions::PrintOptions(const char* arg0) {
 
 		"-X            | disable sound\n\n"
 
-		"-e            | (EXPERIMENTAL) start as map editor\n"
 		"-a            | (EXPERIMENTAL) start as animation editor\n\n"
 
 		"-2            | (DEBUG) use 640x480 instead of 320x240\n"
@@ -96,8 +95,6 @@ void GameOptions::Clear() {
 
 	draw_graphics = true;
 	wait_for_updates = true;
-
-	map_editor_enabled = false;
 
 	is_valid = true;
 }
@@ -180,10 +177,6 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[])
 
 			case 'm':
 				first_mode = optarg;
-				break;
-
-			case 'e':
-				map_editor_enabled = true;
 				break;
 
 			case 'a':
