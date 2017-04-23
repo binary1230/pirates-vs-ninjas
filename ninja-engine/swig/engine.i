@@ -18,6 +18,7 @@
 
 %module engine
 %{
+#include "globals.h"
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
@@ -37,10 +38,10 @@ using namespace std;
 %template(ObjectLayerVector) std::vector<ObjectLayer*>;
 
 %include "singleton.h"
+%include "globals.h"
 %include "gameMode.h"
 %include "gameWorld.h"
 %include "gameState.h"
-%include "globals.h"
 %include "objectLayer.h"
 %include "objects/object.h"
 %include "objects/objectPlayer.h"

@@ -4,6 +4,7 @@
 #include "window.h"
 #include "object.h"
 #include "physicsDebugRenderer.h"
+#include "gameState.h"
 
 // NOTE: do NOT new/delete ANY physics objects EXCEPT m_pkWorld
 // 50 pixels == 1 meter in physics here
@@ -44,7 +45,6 @@ bool PhysicsManager::Init()
 {
 	m_fPhysicsSimulatorTimeStep = 1.0f / FPS;
 	m_iPhysicsSimulatorIterations = 10;
-	bDrawDebugBoxes = false;
 
 	return true;
 }
@@ -69,7 +69,7 @@ void PhysicsManager::Shutdown()
 
 void PhysicsManager::Draw()
 {
-	if (bDrawDebugBoxes)
+	if (GAMESTATE->GetPhysicsDebugDraw())
 		m_pkPhysicsWorld->DrawDebugData();
 }
 

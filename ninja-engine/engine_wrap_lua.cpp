@@ -2745,6 +2745,7 @@ typedef struct{} LANGUAGE_OBJ;
 }
 
 
+#include "globals.h"
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
@@ -4031,6 +4032,55 @@ static swig_lua_namespace swig_ObjectLayerVector_Sf_SwigStatic = {
 static swig_lua_class *swig_ObjectLayerVector_bases[] = {0};
 static const char *swig_ObjectLayerVector_base_names[] = {0};
 static swig_lua_class _wrap_class_ObjectLayerVector = { "ObjectLayerVector", "ObjectLayerVector", &SWIGTYPE_p_std__vectorT_ObjectLayer_p_t,_proxy__wrap_new_ObjectLayerVector, swig_delete_ObjectLayerVector, swig_ObjectLayerVector_methods, swig_ObjectLayerVector_attributes, &swig_ObjectLayerVector_Sf_SwigStatic, swig_ObjectLayerVector_meta, swig_ObjectLayerVector_bases, swig_ObjectLayerVector_base_names };
+
+static int _wrap_StringSplit(lua_State* L) {
+  int SWIG_arg = 0;
+  std::string arg1 ;
+  std::string arg2 ;
+  std::vector< std::string > *arg3 = 0 ;
+  
+  SWIG_check_num_args("StringSplit",3,3)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("StringSplit",1,"std::string");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("StringSplit",2,"std::string");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("StringSplit",3,"std::vector< std::string > &");
+  (&arg1)->assign(lua_tostring(L,1),lua_rawlen(L,1));
+  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_std__vectorT_std__string_t,0))){
+    SWIG_fail_ptr("StringSplit",3,SWIGTYPE_p_std__vectorT_std__string_t);
+  }
+  
+  StringSplit(arg1,arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_DebugTrace(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  void *arg2 = 0 ;
+  
+  SWIG_check_num_args("DebugTrace",1,1)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("DebugTrace",1,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  DebugTrace((char const *)arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
 
 static int _wrap_GameModeExitInfo_useExitInfo_set(lua_State* L) {
   int SWIG_arg = 0;
@@ -6319,32 +6369,6 @@ fail:
 }
 
 
-static int _wrap_GameState_SetPhysicsDebugDraw(lua_State* L) {
-  int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("GameState::SetPhysicsDebugDraw",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::SetPhysicsDebugDraw",1,"GameState *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameState::SetPhysicsDebugDraw",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_SetPhysicsDebugDraw",1,SWIGTYPE_p_GameState);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetPhysicsDebugDraw(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_GameState_UpdateGlobalInput(lua_State* L) {
   int SWIG_arg = 0;
   GameState *arg1 = (GameState *) 0 ;
@@ -6562,6 +6586,56 @@ fail:
 }
 
 
+static int _wrap_GameState_GetPhysicsDebugDraw(lua_State* L) {
+  int SWIG_arg = 0;
+  GameState *arg1 = (GameState *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameState::GetPhysicsDebugDraw",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::GetPhysicsDebugDraw",1,"GameState *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
+    SWIG_fail_ptr("GameState_GetPhysicsDebugDraw",1,SWIGTYPE_p_GameState);
+  }
+  
+  result = (bool)(arg1)->GetPhysicsDebugDraw();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameState_SetPhysicsDebugDraw(lua_State* L) {
+  int SWIG_arg = 0;
+  GameState *arg1 = (GameState *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("GameState::SetPhysicsDebugDraw",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::SetPhysicsDebugDraw",1,"GameState *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameState::SetPhysicsDebugDraw",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
+    SWIG_fail_ptr("GameState_SetPhysicsDebugDraw",1,SWIGTYPE_p_GameState);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetPhysicsDebugDraw(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_GameState(void *obj) {
 GameState *arg1 = (GameState *) obj;
 delete arg1;
@@ -6576,7 +6650,6 @@ static swig_lua_method swig_GameState_methods[]= {
     { "ProcessEvents", _wrap_GameState_ProcessEvents},
     { "TickIfNeeded", _wrap_GameState_TickIfNeeded},
     { "Tick", _wrap_GameState_Tick},
-    { "SetPhysicsDebugDraw", _wrap_GameState_SetPhysicsDebugDraw},
     { "UpdateGlobalInput", _wrap_GameState_UpdateGlobalInput},
     { "SetRandomSeed", _wrap_GameState_SetRandomSeed},
     { "IsPaused", _wrap_GameState_IsPaused},
@@ -6586,6 +6659,8 @@ static swig_lua_method swig_GameState_methods[]= {
     { "SignalGameExit", _wrap_GameState_SignalGameExit},
     { "SignalEndCurrentMode", _wrap_GameState_SignalEndCurrentMode},
     { "ShouldExit", _wrap_GameState_ShouldExit},
+    { "GetPhysicsDebugDraw", _wrap_GameState_GetPhysicsDebugDraw},
+    { "SetPhysicsDebugDraw", _wrap_GameState_SetPhysicsDebugDraw},
     {0,0}
 };
 static swig_lua_method swig_GameState_meta[] = {
@@ -6620,55 +6695,6 @@ static swig_lua_namespace swig_GameState_Sf_SwigStatic = {
 static swig_lua_class *swig_GameState_bases[] = {0};
 static const char *swig_GameState_base_names[] = {0};
 static swig_lua_class _wrap_class_GameState = { "GameState", "GameState", &SWIGTYPE_p_GameState,0, swig_delete_GameState, swig_GameState_methods, swig_GameState_attributes, &swig_GameState_Sf_SwigStatic, swig_GameState_meta, swig_GameState_bases, swig_GameState_base_names };
-
-static int _wrap_StringSplit(lua_State* L) {
-  int SWIG_arg = 0;
-  std::string arg1 ;
-  std::string arg2 ;
-  std::vector< std::string > *arg3 = 0 ;
-  
-  SWIG_check_num_args("StringSplit",3,3)
-  if(!lua_isstring(L,1)) SWIG_fail_arg("StringSplit",1,"std::string");
-  if(!lua_isstring(L,2)) SWIG_fail_arg("StringSplit",2,"std::string");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("StringSplit",3,"std::vector< std::string > &");
-  (&arg1)->assign(lua_tostring(L,1),lua_rawlen(L,1));
-  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_std__vectorT_std__string_t,0))){
-    SWIG_fail_ptr("StringSplit",3,SWIGTYPE_p_std__vectorT_std__string_t);
-  }
-  
-  StringSplit(arg1,arg2,*arg3);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_DebugTrace(lua_State* L) {
-  int SWIG_arg = 0;
-  char *arg1 = (char *) 0 ;
-  void *arg2 = 0 ;
-  
-  SWIG_check_num_args("DebugTrace",1,1)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("DebugTrace",1,"char const *");
-  arg1 = (char *)lua_tostring(L, 1);
-  DebugTrace((char const *)arg1,arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
 
 static int _wrap_ObjectLayer_Init(lua_State* L) {
   int SWIG_arg = 0;
@@ -11558,6 +11584,56 @@ fail:
 }
 
 
+static int _wrap_Editor_GetSnapToGrid(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Editor::GetSnapToGrid",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::GetSnapToGrid",1,"Editor *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_GetSnapToGrid",1,SWIGTYPE_p_Editor);
+  }
+  
+  result = (bool)(arg1)->GetSnapToGrid();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_SetSnapToGrid(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("Editor::SetSnapToGrid",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::SetSnapToGrid",1,"Editor *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Editor::SetSnapToGrid",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_SetSnapToGrid",1,SWIGTYPE_p_Editor);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetSnapToGrid(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_Editor(void *obj) {
 Editor *arg1 = (Editor *) obj;
 delete arg1;
@@ -11579,6 +11655,8 @@ static swig_lua_method swig_Editor_methods[]= {
     { "UnselectCurrentlySelectedObject", _wrap_Editor_UnselectCurrentlySelectedObject},
     { "Draw", _wrap_Editor_Draw},
     { "Update", _wrap_Editor_Update},
+    { "GetSnapToGrid", _wrap_Editor_GetSnapToGrid},
+    { "SetSnapToGrid", _wrap_Editor_SetSnapToGrid},
     {0,0}
 };
 static swig_lua_method swig_Editor_meta[] = {
@@ -11644,6 +11722,8 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {0,0,0,0,0,0}
 };
 static swig_lua_method swig_SwigModule_methods[]= {
+    { "StringSplit", _wrap_StringSplit},
+    { "DebugTrace", _wrap_DebugTrace},
     { "GameWorld_GetInstance", _wrap_GameWorld_GetInstance},
     { "GameWorld_SetInstance", _wrap_GameWorld_SetInstance},
     { "GameWorld_CreateInstance", _wrap_GameWorld_CreateInstance},
@@ -11653,8 +11733,6 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "GameState_SetInstance", _wrap_GameState_SetInstance},
     { "GameState_CreateInstance", _wrap_GameState_CreateInstance},
     { "GameState_FreeInstance", _wrap_GameState_FreeInstance},
-    { "StringSplit", _wrap_StringSplit},
-    { "DebugTrace", _wrap_DebugTrace},
     { "ClearProperties", _wrap_ClearProperties},
     { "Object_AddPrototype", _wrap_Object_AddPrototype},
     { "Object_CreateObject", _wrap_Object_CreateObject},

@@ -317,10 +317,6 @@ void GameState::Tick() {
 	Draw();
 }
 
-void GameState::SetPhysicsDebugDraw(bool value) {
-	PHYSICS->SetDrawDebug(value);
-}
-
 void GameState::UpdateGlobalInput()
 {
 	if (INPUT->KeyOnce(GAMEKEY_DEBUGPAUSE))
@@ -336,7 +332,7 @@ void GameState::UpdateGlobalInput()
 		WINDOW->Screenshot();
 
 	if (INPUT->KeyOnce(GAMEKEY_TOGGLE_PHYSICS_DISPLAY))
-		SetPhysicsDebugDraw(!PHYSICS->GetDrawDebug());
+		SetPhysicsDebugDraw(!GetPhysicsDebugDraw());
 
 	if (INPUT->KeyOnce(GAMEKEY_SAVE_MAP))
 		WORLD->SaveWorld();
@@ -439,6 +435,7 @@ GameState::GameState() {
 	modes = NULL;
 	network = NULL;
 	m_timer = NULL;
+	_PhysicsDebugDraw = false;
 }
 
 void GameState::SignalGameExit() {

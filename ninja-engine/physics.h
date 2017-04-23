@@ -49,8 +49,6 @@ class PhysicsManager
 		void ProcessCollisions();
 		void ProcessCollision(PhysicsContactInfo* pkb2Contact);
 
-		bool bDrawDebugBoxes;
-
 		friend class PhysicsContactListener;
 
 	public:
@@ -74,9 +72,6 @@ class PhysicsManager
 
 		void RemoveFromWorld(b2Body* pkBodyToRemove);
 	
-		void SetDrawDebug(bool bVal)	{ bDrawDebugBoxes = bVal; }
-		bool GetDrawDebug() const		{ return bDrawDebugBoxes; }
-
 		void Shutdown();
 
 		void Update();

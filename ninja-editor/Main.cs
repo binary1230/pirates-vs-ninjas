@@ -35,6 +35,9 @@ namespace MapEditor
             }
             wasPaused = gameWrapper.Paused;
 
+            chkSnapToGrid.Checked = GameWorld.GetInstance().GetEditor().GetSnapToGrid();
+            chkDrawPhysicsDebug.Checked = GameState.GetInstance().GetPhysicsDebugDraw();
+
             if (gameWrapper.ShouldExit)
             {
                 FastTimer.Enabled = false;
@@ -63,6 +66,11 @@ namespace MapEditor
             wasPaused = gameWrapper.Paused;
 
             FastTimer.Enabled = true;
+
+            // hack: force editor window to the front
+            this.WindowState = FormWindowState.Minimized;
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
         }
 
         private void LoadGameLists()
@@ -166,6 +174,11 @@ namespace MapEditor
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             GameState.GetInstance().SetPhysicsDebugDraw(chkDrawPhysicsDebug.Checked);
+        }
+
+        private void chkSnapToGrid_CheckedChanged(object sender, EventArgs e)
+        {
+            GameWorld.GetInstance().GetEditor().SetSnapToGrid(chkSnapToGrid.Checked);
         }
     }
 }

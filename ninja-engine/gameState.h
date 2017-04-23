@@ -110,8 +110,6 @@ class GameState {
 		//! Sometimes GUI's and things will have to call this directly from ON_IDLE msgs
 		void Tick();
 
-		void SetPhysicsDebugDraw(bool value);
-
 		void UpdateGlobalInput();
 
 		//! Set the random seed value
@@ -140,6 +138,8 @@ class GameState {
 		bool ShouldExit() { return exit_game; }
 		
 		~GameState();
+
+		CREATE_PROPERTY(bool, PhysicsDebugDraw)
 };
 
 #define GAMESTATE GameState::GetInstance()

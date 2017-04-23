@@ -160,6 +160,7 @@
             this.chkSnapToGrid.TabIndex = 1;
             this.chkSnapToGrid.Text = "Snap To Grid";
             this.chkSnapToGrid.UseVisualStyleBackColor = true;
+            this.chkSnapToGrid.CheckedChanged += new System.EventHandler(this.chkSnapToGrid_CheckedChanged);
             // 
             // Main
             // 

@@ -95,6 +95,13 @@ namespace boost {
 	} // namespace serialization
 } // namespace boost
 
+#define CREATE_PROPERTY(type, var)							\
+	protected:												\
+		type _##var;										\
+	public:													\
+		inline type Get##var() { return _##var; }			\
+		inline void Set##var(type val)	{ _##var = val;	}
+
 #define USE_OLD_LOADING_SYSTEM 0
 
 // #define REDIRECT_STDERR 1

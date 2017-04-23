@@ -1,6 +1,8 @@
 #ifndef MAP_EDITOR_H
 #define MAP_EDITOR_H
 
+#include "globals.h"
+
 class Object;
 
 //! A helper component for working in map editor mode
@@ -20,8 +22,8 @@ class Editor {
 
 		void Draw();
 		void Update();
-
-		bool snap_to_grid;
+		
+		CREATE_PROPERTY(bool, SnapToGrid)
 };
 
 #endif // MAP_EDITOR_H

@@ -302,6 +302,7 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_engine(SWIG_CSharpStringH
 #define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, msg, ""); return nullreturn; } else
 
 
+#include "globals.h"
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
@@ -1434,6 +1435,169 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectLayerVector(void * jarg1) {
 }
 
 
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_SCREEN_SIZE_X_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(1024);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_SCREEN_SIZE_Y_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(650);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_VERSION_STRING_get() {
+  char * jresult ;
+  char *result = 0 ;
+  
+  result = (char *)("ninjas-engine");
+  jresult = SWIG_csharp_string_callback((const char *)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_FPS_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(60);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_TIMESTEP_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(1/60);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT double SWIGSTDCALL CSharp_ONEEIGHTY_OVER_PI_get() {
+  double jresult ;
+  double result;
+  
+  result = (double)(57.2957795);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT double SWIGSTDCALL CSharp_PI_OVER_ONEEIGHTY_get() {
+  double jresult ;
+  double result;
+  
+  result = (double)(0.0174532925);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT double SWIGSTDCALL CSharp_TOLERANCE_get() {
+  double jresult ;
+  double result;
+  
+  result = (double)(0.00001);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_DEBUG_MSG_LEVEL_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(0);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_MUSIC_BUFFER_SIZE_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)((1 << 16));
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_MUSIC_DATA_SIZE_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)((1 << 15));
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_StringSplit(char * jarg1, char * jarg2, void * jarg3) {
+  std::string arg1 ;
+  std::string arg2 ;
+  std::vector< std::string > *arg3 = 0 ;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  (&arg1)->assign(jarg1); 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  (&arg2)->assign(jarg2); 
+  arg3 = (std::vector< std::string > *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > & type is null", 0);
+    return ;
+  } 
+  StringSplit(arg1,arg2,*arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_DebugTrace(char * jarg1) {
+  char *arg1 = (char *) 0 ;
+  void *arg2 = 0 ;
+  
+  arg1 = (char *)jarg1; 
+  DebugTrace((char const *)arg1,arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_USE_OLD_LOADING_SYSTEM_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)(0);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_REDIRECT_STDERR_FILENAME_get() {
+  char * jresult ;
+  char *result = 0 ;
+  
+  result = (char *)("/Users/dcerquetti/game.log");
+  jresult = SWIG_csharp_string_callback((const char *)result); 
+  return jresult;
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_GameModeExitInfo_useExitInfo_set(void * jarg1, unsigned int jarg2) {
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
   bool arg2 ;
@@ -2277,16 +2441,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameState_Tick(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SetPhysicsDebugDraw(void * jarg1, unsigned int jarg2) {
-  GameState *arg1 = (GameState *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (GameState *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  (arg1)->SetPhysicsDebugDraw(arg2);
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_GameState_UpdateGlobalInput(void * jarg1) {
   GameState *arg1 = (GameState *) 0 ;
   
@@ -2387,166 +2541,25 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_GameState(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_SCREEN_SIZE_X_get() {
-  int jresult ;
-  int result;
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameState_GetPhysicsDebugDraw(void * jarg1) {
+  unsigned int jresult ;
+  GameState *arg1 = (GameState *) 0 ;
+  bool result;
   
-  result = (int)(1024);
+  arg1 = (GameState *)jarg1; 
+  result = (bool)(arg1)->GetPhysicsDebugDraw();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_SCREEN_SIZE_Y_get() {
-  int jresult ;
-  int result;
+SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SetPhysicsDebugDraw(void * jarg1, unsigned int jarg2) {
+  GameState *arg1 = (GameState *) 0 ;
+  bool arg2 ;
   
-  result = (int)(650);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_VERSION_STRING_get() {
-  char * jresult ;
-  char *result = 0 ;
-  
-  result = (char *)("ninjas-engine");
-  jresult = SWIG_csharp_string_callback((const char *)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_FPS_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)(60);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_TIMESTEP_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)(1/60);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_ONEEIGHTY_OVER_PI_get() {
-  double jresult ;
-  double result;
-  
-  result = (double)(57.2957795);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_PI_OVER_ONEEIGHTY_get() {
-  double jresult ;
-  double result;
-  
-  result = (double)(0.0174532925);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_TOLERANCE_get() {
-  double jresult ;
-  double result;
-  
-  result = (double)(0.00001);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_DEBUG_MSG_LEVEL_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)(0);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_MUSIC_BUFFER_SIZE_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)((1 << 16));
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_MUSIC_DATA_SIZE_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)((1 << 15));
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_StringSplit(char * jarg1, char * jarg2, void * jarg3) {
-  std::string arg1 ;
-  std::string arg2 ;
-  std::vector< std::string > *arg3 = 0 ;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return ;
-  }
-  (&arg1)->assign(jarg1); 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return ;
-  }
-  (&arg2)->assign(jarg2); 
-  arg3 = (std::vector< std::string > *)jarg3;
-  if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > & type is null", 0);
-    return ;
-  } 
-  StringSplit(arg1,arg2,*arg3);
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_DebugTrace(char * jarg1) {
-  char *arg1 = (char *) 0 ;
-  void *arg2 = 0 ;
-  
-  arg1 = (char *)jarg1; 
-  DebugTrace((char const *)arg1,arg2);
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_USE_OLD_LOADING_SYSTEM_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)(0);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_REDIRECT_STDERR_FILENAME_get() {
-  char * jresult ;
-  char *result = 0 ;
-  
-  result = (char *)("/Users/dcerquetti/game.log");
-  jresult = SWIG_csharp_string_callback((const char *)result); 
-  return jresult;
+  arg1 = (GameState *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetPhysicsDebugDraw(arg2);
 }
 
 
@@ -4454,6 +4467,28 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_Update(void * jarg1) {
   
   arg1 = (Editor *)jarg1; 
   (arg1)->Update();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Editor_GetSnapToGrid(void * jarg1) {
+  unsigned int jresult ;
+  Editor *arg1 = (Editor *) 0 ;
+  bool result;
+  
+  arg1 = (Editor *)jarg1; 
+  result = (bool)(arg1)->GetSnapToGrid();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetSnapToGrid(void * jarg1, unsigned int jarg2) {
+  Editor *arg1 = (Editor *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetSnapToGrid(arg2);
 }
 
 

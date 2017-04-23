@@ -1117,10 +1117,6 @@ public class GameState : global::System.IDisposable {
     enginePINVOKE.GameState_Tick(swigCPtr);
   }
 
-  public void SetPhysicsDebugDraw(bool value) {
-    enginePINVOKE.GameState_SetPhysicsDebugDraw(swigCPtr, value);
-  }
-
   public void UpdateGlobalInput() {
     enginePINVOKE.GameState_UpdateGlobalInput(swigCPtr);
   }
@@ -1159,6 +1155,15 @@ public class GameState : global::System.IDisposable {
   public bool ShouldExit() {
     bool ret = enginePINVOKE.GameState_ShouldExit(swigCPtr);
     return ret;
+  }
+
+  public bool GetPhysicsDebugDraw() {
+    bool ret = enginePINVOKE.GameState_GetPhysicsDebugDraw(swigCPtr);
+    return ret;
+  }
+
+  public void SetPhysicsDebugDraw(bool val) {
+    enginePINVOKE.GameState_SetPhysicsDebugDraw(swigCPtr, val);
   }
 
 }
@@ -2155,6 +2160,15 @@ public class Editor : global::System.IDisposable {
     enginePINVOKE.Editor_Update(swigCPtr);
   }
 
+  public bool GetSnapToGrid() {
+    bool ret = enginePINVOKE.Editor_GetSnapToGrid(swigCPtr);
+    return ret;
+  }
+
+  public void SetSnapToGrid(bool val) {
+    enginePINVOKE.Editor_SetSnapToGrid(swigCPtr, val);
+  }
+
 }
 
 class enginePINVOKE {
@@ -2491,6 +2505,51 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_ObjectLayerVector")]
   public static extern void delete_ObjectLayerVector(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_SCREEN_SIZE_X_get")]
+  public static extern int DEFAULT_SCREEN_SIZE_X_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_SCREEN_SIZE_Y_get")]
+  public static extern int DEFAULT_SCREEN_SIZE_Y_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_VERSION_STRING_get")]
+  public static extern string VERSION_STRING_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_FPS_get")]
+  public static extern int FPS_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_TIMESTEP_get")]
+  public static extern int TIMESTEP_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ONEEIGHTY_OVER_PI_get")]
+  public static extern double ONEEIGHTY_OVER_PI_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_PI_OVER_ONEEIGHTY_get")]
+  public static extern double PI_OVER_ONEEIGHTY_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_TOLERANCE_get")]
+  public static extern double TOLERANCE_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_DEBUG_MSG_LEVEL_get")]
+  public static extern int DEFAULT_DEBUG_MSG_LEVEL_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_MUSIC_BUFFER_SIZE_get")]
+  public static extern int DEFAULT_MUSIC_BUFFER_SIZE_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_MUSIC_DATA_SIZE_get")]
+  public static extern int DEFAULT_MUSIC_DATA_SIZE_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_StringSplit")]
+  public static extern void StringSplit(string jarg1, string jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DebugTrace")]
+  public static extern void DebugTrace(string jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_USE_OLD_LOADING_SYSTEM_get")]
+  public static extern int USE_OLD_LOADING_SYSTEM_get();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_REDIRECT_STDERR_FILENAME_get")]
+  public static extern string REDIRECT_STDERR_FILENAME_get();
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameModeExitInfo_useExitInfo_set")]
   public static extern void GameModeExitInfo_useExitInfo_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
@@ -2722,9 +2781,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_Tick")]
   public static extern void GameState_Tick(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_SetPhysicsDebugDraw")]
-  public static extern void GameState_SetPhysicsDebugDraw(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_UpdateGlobalInput")]
   public static extern void GameState_UpdateGlobalInput(global::System.Runtime.InteropServices.HandleRef jarg1);
 
@@ -2755,50 +2811,11 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_GameState")]
   public static extern void delete_GameState(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_SCREEN_SIZE_X_get")]
-  public static extern int DEFAULT_SCREEN_SIZE_X_get();
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_GetPhysicsDebugDraw")]
+  public static extern bool GameState_GetPhysicsDebugDraw(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_SCREEN_SIZE_Y_get")]
-  public static extern int DEFAULT_SCREEN_SIZE_Y_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_VERSION_STRING_get")]
-  public static extern string VERSION_STRING_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_FPS_get")]
-  public static extern int FPS_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_TIMESTEP_get")]
-  public static extern int TIMESTEP_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ONEEIGHTY_OVER_PI_get")]
-  public static extern double ONEEIGHTY_OVER_PI_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_PI_OVER_ONEEIGHTY_get")]
-  public static extern double PI_OVER_ONEEIGHTY_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_TOLERANCE_get")]
-  public static extern double TOLERANCE_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_DEBUG_MSG_LEVEL_get")]
-  public static extern int DEFAULT_DEBUG_MSG_LEVEL_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_MUSIC_BUFFER_SIZE_get")]
-  public static extern int DEFAULT_MUSIC_BUFFER_SIZE_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_MUSIC_DATA_SIZE_get")]
-  public static extern int DEFAULT_MUSIC_DATA_SIZE_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_StringSplit")]
-  public static extern void StringSplit(string jarg1, string jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DebugTrace")]
-  public static extern void DebugTrace(string jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_USE_OLD_LOADING_SYSTEM_get")]
-  public static extern int USE_OLD_LOADING_SYSTEM_get();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_REDIRECT_STDERR_FILENAME_get")]
-  public static extern string REDIRECT_STDERR_FILENAME_get();
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_SetPhysicsDebugDraw")]
+  public static extern void GameState_SetPhysicsDebugDraw(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_Init")]
   public static extern bool ObjectLayer_Init(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -3306,6 +3323,12 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_Update")]
   public static extern void Editor_Update(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_GetSnapToGrid")]
+  public static extern bool Editor_GetSnapToGrid(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_SetSnapToGrid")]
+  public static extern void Editor_SetSnapToGrid(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SWIGUpcast")]
   public static extern global::System.IntPtr GameWorld_SWIGUpcast(global::System.IntPtr jarg1);

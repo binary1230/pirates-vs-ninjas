@@ -44,7 +44,7 @@ void Editor::UpdateSelectedObjectPosition()
 	int x = (int)(INPUT->MouseX() / selection->GetLayer()->GetScrollSpeed()) + WORLD->m_iCameraX;
 	int y = (int)((WINDOW->Height() - INPUT->MouseY()) / selection->GetLayer()->GetScrollSpeed()) + WORLD->m_iCameraY;
 
-	if (snap_to_grid)
+	if (_SnapToGrid)
 	{
 		x -= x % grid_resolution;
 		y -= y % grid_resolution;
@@ -85,7 +85,7 @@ Editor::Editor()
 {
 	selection = NULL;
 	grid_resolution = 30;
-	snap_to_grid = false;
+	_SnapToGrid = false;
 }
 
 Editor::~Editor()
