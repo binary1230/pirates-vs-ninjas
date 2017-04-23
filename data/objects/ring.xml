@@ -6,10 +6,20 @@
 	<animations default="default">
 		<animation name="default">
 			<frames>
-				<frame name="ring1.png" duration="4" />
-				<frame name="ring2.png" duration="4" />
-				<frame name="ring3.png" duration="4" />
-				<frame name="ring4.png" duration="4" />
+				<frame name="spinners/spinner0001.png" duration="2" />
+				<frame name="spinners/spinner0002.png" duration="2" />
+				<frame name="spinners/spinner0003.png" duration="2" />
+				<frame name="spinners/spinner0004.png" duration="2" />
+				<frame name="spinners/spinner0005.png" duration="2" />
+				<frame name="spinners/spinner0005.png" duration="2" />
+				<frame name="spinners/spinner0006.png" duration="2" />
+				<frame name="spinners/spinner0007.png" duration="2" />
+				<frame name="spinners/spinner0008.png" duration="2" />
+				<frame name="spinners/spinner0009.png" duration="2" />
+				<frame name="spinners/spinner0010.png" duration="2" />
+				<frame name="spinners/spinner0011.png" duration="2" />
+				<frame name="spinners/spinner0012.png" duration="2" />
+				<frame name="spinners/spinner0013.png" duration="2" />
 			</frames>
 			<show_in_order />
 			<repeat />
