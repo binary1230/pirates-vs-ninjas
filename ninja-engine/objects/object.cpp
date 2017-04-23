@@ -95,7 +95,7 @@ void Object::InitPhysics()
 		return;
 	}
 
-	if (!properties.uses_physics_engine || !create_physics_body)
+	if (!properties.uses_physics_engine)
 		return;
 
 	// TODO: remove hardcoded junk here
@@ -134,7 +134,6 @@ void Object::FadeOut(int time) {
 void Object::Clear() {
 	m_animationMapping.clear();
 	m_bDrawBoundingBox = false;
-	create_physics_body = true;
 	tmp_debug_flag = 0;
 	ClearProperties(properties);
 	is_dead = false;

@@ -113,6 +113,15 @@ void PhysicsManager::CreatePolygonWithRoundedEdges(float hx, float hy, b2Polygon
 	shapeOut.Set(vertices, count);
 }
 
+void PhysicsManager::UpdatePhysicsBodyPosition(b2Body* body, float x, float y, int width, int height) {
+	assert(body);
+	
+	float halfWidth = PIXELS_TO_METERS(width) / 2;
+	float halfHeight = PIXELS_TO_METERS(height) / 2;
+
+	body->SetTransform(b2Vec2(PIXELS_TO_METERS(x) + halfWidth, PIXELS_TO_METERS(y) + halfHeight), body->GetAngle());
+}
+
 b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation /*= false */, bool bSensorOnly /*= false*/, bool useRoundedBottom )
 {
 	b2BodyDef bodyDef;
@@ -121,10 +130,6 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	assert(width > 0.0f);
 	assert(height > 0.0f);
 
-	float halfWidth = PIXELS_TO_METERS(width) / 2;
-	float halfHeight = PIXELS_TO_METERS(height) / 2;
-
-	bodyDef.position.Set(PIXELS_TO_METERS(x) + halfWidth, PIXELS_TO_METERS(y) + halfHeight);
 	bodyDef.fixedRotation = bDontAllowRotation;
 	// bodyDef.linearDamping = 2.0f;
 
@@ -133,6 +138,11 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 
 	b2Body* pkBody = m_pkPhysicsWorld->CreateBody(&bodyDef);
 	assert(pkBody);
+
+	UpdatePhysicsBodyPosition(pkBody, x, y, width, height);
+
+	float halfWidth = PIXELS_TO_METERS(width) / 2;
+	float halfHeight = PIXELS_TO_METERS(height) / 2;
 
 	b2PolygonShape shapeDef;
 	if (!useRoundedBottom)

@@ -6,6 +6,7 @@
 #include "rect.h"
 #include "animations.h"
 #include "objectLayer.h"
+#include "physics.h"
 
 // class Object;
 class Animation;
@@ -225,10 +226,6 @@ class Object {
 
 		void UpdatePositionFromPhysicsLocation();
 
-		//! used primarily for map editor and loading
-		//! if false, we will skip creating a physics body
-		bool create_physics_body;
-
 		virtual bool LoadFromObjectDef(XMLNode & xDef);
 		bool LoadObjectSounds(XMLNode& xDef);
 		virtual bool LoadObjectProperties(XMLNode& xDef);
@@ -322,14 +319,15 @@ class Object {
 		inline int GetY() const				{ return (int)pos.y; }
 		inline b2Vec2 GetXY() const { return pos; }; 
 
-		inline void SetX(const int _x) 		{ pos.x = _x; }
-		inline void SetY(const int _y) 		{ pos.y = _y; }
+		inline void SetX(const int _x) { SetXY(b2Vec2(_x, pos.y)); }
+		inline void SetY(const int _y) { SetXY(b2Vec2(pos.x, _y)); }
 		inline void SetXY(const int _x, const int _y) {
-				pos.x = _x;
-				pos.y = _y;
+			SetXY(b2Vec2(_x, _y));
 		}
 		inline void SetXY(const b2Vec2 &_pos) {
 			pos = _pos;
+			if (m_pkPhysicsBody)
+				PHYSICS->UpdatePhysicsBodyPosition(m_pkPhysicsBody, pos.x, pos.y, GetWidth(), GetHeight());
 		}
 
 		inline int GetAlpha() { return alpha; };

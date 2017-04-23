@@ -70,6 +70,8 @@ class PhysicsManager
 
 		void CreatePolygonWithRoundedEdges(float hx, float hy, b2PolygonShape & shapeOut);
 
+		void UpdatePhysicsBodyPosition(b2Body * body, float x, float y, int width, int height);
+
 		void RemoveFromWorld(b2Body* pkBodyToRemove);
 	
 		void Shutdown();

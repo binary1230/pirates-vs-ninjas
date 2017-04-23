@@ -13,8 +13,6 @@ Object * Editor::CreateObject(char * objDefName, char * layerName)
 
 	string className = OBJECT_FACTORY->GetClassNameFromXML(*xDef);
 	Object* obj = Object::CreateObject(className);
-	
-	obj->create_physics_body = false;
 
 	ObjectLayer* layer = WORLD->FindLayer(layerName);
 	assert(layer);
@@ -59,9 +57,6 @@ void Editor::UnselectCurrentlySelectedObject()
 		return;
 
 	selection->SetDrawBounds(false);
-
-	selection->create_physics_body = true;
-	selection->InitPhysics();
 
 	// just remove our reference to it, it's already inserted into the world.
 	selection = NULL;
