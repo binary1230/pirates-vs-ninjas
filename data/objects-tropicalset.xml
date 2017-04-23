@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- A list of objects that will be in common with tropical levels -->
+
+<objectDefinitions>
+	<include_xml_file>objects/obj_background_night.xml</include_xml_file>
+	<include_xml_file>objects/greenblock.xml</include_xml_file>
+	<include_xml_file>objects/spawner.xml</include_xml_file>
+	<include_xml_file>objects/enemy1.xml</include_xml_file>
+	<include_xml_file>objects/smallblock.xml</include_xml_file>
+	<include_xml_file>objects/block3.xml</include_xml_file>
+	<include_xml_file>objects/obj_s_palm_tall.xml</include_xml_file>
+	<include_xml_file>objects/flower1.xml</include_xml_file>
+	<include_xml_file>objects/flower2.xml</include_xml_file>
+	<include_xml_file>objects/fan.xml</include_xml_file>
+	<include_xml_file>objects/cloud.xml</include_xml_file>
+	<include_xml_file>objects/cloud2.xml</include_xml_file>
+	<include_xml_file>objects/door.xml</include_xml_file>
+	<include_xml_file>objects/sign-arrow.xml</include_xml_file>
+	<include_xml_file>objects/sign-arrow-up.xml</include_xml_file>
+	<include_xml_file>objects/sign-haha.xml</include_xml_file>
+	<include_xml_file>objects/sign-credits.xml</include_xml_file>
+	<include_xml_file>objects/sign-up.xml</include_xml_file>
+	<include_xml_file>objects/sign-leftright.xml</include_xml_file>
+	<include_xml_file>objects/sign-jump.xml</include_xml_file>
+	<include_xml_file>objects/totem1.xml</include_xml_file>
+	<include_xml_file>objects/spring-up.xml</include_xml_file>
+	<include_xml_file>objects/spring-right.xml</include_xml_file>
+</objectDefinitions>

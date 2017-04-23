@@ -18625,32 +18625,10 @@
 		<item>common-effects.xml</item>
 	</m_included_effect_xml_files>
 	<m_included_objectdef_xml_files>
-		<count>24</count>
+		<count>2</count>
 		<item_version>0</item_version>
 		<item>common-objects.xml</item>
-		<item>objects/obj_background_night.xml</item>
-		<item>objects/greenblock.xml</item>
-		<item>objects/spawner.xml</item>
-		<item>objects/enemy1.xml</item>
-		<item>objects/smallblock.xml</item>
-		<item>objects/block3.xml</item>
-		<item>objects/obj_s_palm_tall.xml</item>
-		<item>objects/flower1.xml</item>
-		<item>objects/flower2.xml</item>
-		<item>objects/fan.xml</item>
-		<item>objects/cloud.xml</item>
-		<item>objects/cloud2.xml</item>
-		<item>objects/door.xml</item>
-		<item>objects/sign-arrow.xml</item>
-		<item>objects/sign-arrow-up.xml</item>
-		<item>objects/sign-haha.xml</item>
-		<item>objects/sign-credits.xml</item>
-		<item>objects/sign-up.xml</item>
-		<item>objects/sign-leftright.xml</item>
-		<item>objects/sign-jump.xml</item>
-		<item>objects/totem1.xml</item>
-		<item>objects/spring-up.xml</item>
-		<item>objects/spring-right.xml</item>
+		<item>objects-tropicalset.xml</item>
 	</m_included_objectdef_xml_files>
 </this>
 </boost_serialization>
