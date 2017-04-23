@@ -41,7 +41,6 @@ void GameModes::DoEndCurrentMode() {
 
 	// actually end the mode
 	if (currentMode) {
-		DoAIEndStuff();
 		exitInfo = currentMode->GetExitInfo();
 		currentMode->Shutdown();
 		LUA->Clear();
@@ -232,34 +231,3 @@ GameModes::GameModes() {
 GameModes::~GameModes() {
 	Shutdown();
 }
-
-// ------ EXPERIMENTAL AI STUFF ------
-
-#ifndef AI_TRAINING
-void GameModes::DoAIEndStuff() {}
-#else
-
-#define AI_RESULTS_FILE "AI-results.txt"
-
-// experimental: compute ending AI stuff for this mode
-void GameModes::DoAIEndStuff() {
-
-	// output the fitness score
-	int score = currentMode->GetAiFitnessScore();
-
-	// print it to a file
-	TRACE("AI: Writing end-game fitness score to file '" 
-									AI_RESULTS_FILE "'.\n");
-
-	FILE* f = fopen(AI_RESULTS_FILE, "w");
-	if (!f) {
-		TRACE("AI: ERROR: Can't open AI results file for writing!\n");
-		return;
-	}
-
-	fprintf(f, "%i\n", score);
-
-	fclose(f);
-}
-
-#endif // AI_TRAINING

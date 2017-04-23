@@ -1665,18 +1665,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameMode_Update(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_GameMode_GetAiFitnessScore(void * jarg1) {
-  int jresult ;
-  GameMode *arg1 = (GameMode *) 0 ;
-  int result;
-  
-  arg1 = (GameMode *)jarg1; 
-  result = (int)(arg1)->GetAiFitnessScore();
-  jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_GameMode_SetExitInfo(void * jarg1, void * jarg2) {
   GameMode *arg1 = (GameMode *) 0 ;
   GameModeExitInfo *arg2 = 0 ;
@@ -2150,18 +2138,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SnapCamera(void * jarg1) {
   
   arg1 = (GameWorld *)jarg1; 
   (arg1)->SnapCamera();
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_GameWorld_GetAiFitnessScore(void * jarg1) {
-  int jresult ;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  int result;
-  
-  arg1 = (GameWorld *)jarg1; 
-  result = (int)(arg1)->GetAiFitnessScore();
-  jresult = result; 
-  return jresult;
 }
 
 

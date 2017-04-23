@@ -5,6 +5,10 @@ class Object;
 
 //! A helper component for working in map editor mode
 class Editor {
+	protected:
+		Object* selection;
+		uint grid_resolution;
+
 	public:
 		Editor();
 		~Editor();
@@ -17,8 +21,7 @@ class Editor {
 		void Draw();
 		void Update();
 
-	private:
-		Object* selection;
+		bool snap_to_grid;
 };
 
 #endif // MAP_EDITOR_H

@@ -802,11 +802,6 @@ public class GameMode : global::System.IDisposable {
     enginePINVOKE.GameMode_Update(swigCPtr);
   }
 
-  public virtual int GetAiFitnessScore() {
-    int ret = enginePINVOKE.GameMode_GetAiFitnessScore(swigCPtr);
-    return ret;
-  }
-
   public void SetExitInfo(GameModeExitInfo info) {
     enginePINVOKE.GameMode_SetExitInfo(swigCPtr, GameModeExitInfo.getCPtr(info));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
@@ -1027,11 +1022,6 @@ public class GameWorld : GameMode {
 
   public void SnapCamera() {
     enginePINVOKE.GameWorld_SnapCamera(swigCPtr);
-  }
-
-  public override int GetAiFitnessScore() {
-    int ret = enginePINVOKE.GameWorld_GetAiFitnessScore(swigCPtr);
-    return ret;
   }
 
   public void AllowPlayerOffscreen(bool state) {
@@ -2561,9 +2551,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameMode_Update")]
   public static extern void GameMode_Update(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameMode_GetAiFitnessScore")]
-  public static extern int GameMode_GetAiFitnessScore(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameMode_SetExitInfo")]
   public static extern void GameMode_SetExitInfo(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
@@ -2689,9 +2676,6 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SnapCamera")]
   public static extern void GameWorld_SnapCamera(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetAiFitnessScore")]
-  public static extern int GameWorld_GetAiFitnessScore(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_AllowPlayerOffscreen")]
   public static extern void GameWorld_AllowPlayerOffscreen(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);

@@ -13,6 +13,8 @@ Object * Editor::CreateObject(char * objDefName, char * layerName)
 
 	string className = OBJECT_FACTORY->GetClassNameFromXML(*xDef);
 	Object* obj = Object::CreateObject(className);
+	
+	obj->create_physics_body = false;
 
 	ObjectLayer* layer = WORLD->FindLayer(layerName);
 	assert(layer);
@@ -38,14 +40,15 @@ void Editor::UpdateSelectedObjectPosition()
 
 	assert(selection->GetLayer());
 
+	// transform mouse input to compensate for scroll speeds on layers
 	int x = (int)(INPUT->MouseX() / selection->GetLayer()->GetScrollSpeed()) + WORLD->m_iCameraX;
 	int y = (int)((WINDOW->Height() - INPUT->MouseY()) / selection->GetLayer()->GetScrollSpeed()) + WORLD->m_iCameraY;
 
-	/*if (m_iGridResolution != 1)
+	if (snap_to_grid)
 	{
-		x -= x % m_iGridResolution;
-		y -= y % m_iGridResolution;
-	}*/
+		x -= x % grid_resolution;
+		y -= y % grid_resolution;
+	}
 
 	selection->SetXY(x, y);
 }
@@ -56,6 +59,9 @@ void Editor::UnselectCurrentlySelectedObject()
 		return;
 
 	selection->SetDrawBounds(false);
+
+	selection->create_physics_body = true;
+	selection->InitPhysics();
 
 	// just remove our reference to it, it's already inserted into the world.
 	selection = NULL;
@@ -75,10 +81,11 @@ void Editor::Update()
 		UnselectCurrentlySelectedObject();
 }
 
-
 Editor::Editor()
 {
 	selection = NULL;
+	grid_resolution = 30;
+	snap_to_grid = false;
 }
 
 Editor::~Editor()

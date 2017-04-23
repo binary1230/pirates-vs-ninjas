@@ -83,7 +83,10 @@ void Object::UpdateDisplayTime() {
 void Object::InitPhysics()
 {
 	if (m_pkPhysicsBody)
-		return; // already init'd
+	{
+		TRACE("WARNING: physics already initialized for this object, skipping.");
+		return;
+	}
 
 	if (!PHYSICS)
 	{
@@ -92,11 +95,10 @@ void Object::InitPhysics()
 		return;
 	}
 
-	if (!properties.uses_physics_engine)
+	if (!properties.uses_physics_engine || !create_physics_body)
 		return;
 
-	// WHO'S READY FOR THE HACKS?!?!?!?
-	// TODO: DONT HARDCORE, I WILL KILL YOU
+	// TODO: remove hardcoded junk here
 	float fDensity = 0.1f;
 	if (properties.is_player)
 		fDensity = 0.1f;
@@ -132,6 +134,7 @@ void Object::FadeOut(int time) {
 void Object::Clear() {
 	m_animationMapping.clear();
 	m_bDrawBoundingBox = false;
+	create_physics_body = true;
 	tmp_debug_flag = 0;
 	ClearProperties(properties);
 	is_dead = false;

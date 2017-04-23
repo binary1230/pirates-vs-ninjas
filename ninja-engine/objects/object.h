@@ -12,6 +12,7 @@ class Animation;
 class Sprite;
 class ObjectFactory;
 class b2Body;
+class Editor;
 
 struct CollisionDirection {
 	unsigned up : 1;
@@ -224,6 +225,10 @@ class Object {
 
 		void UpdatePositionFromPhysicsLocation();
 
+		//! used primarily for map editor and loading
+		//! if false, we will skip creating a physics body
+		bool create_physics_body;
+
 		virtual bool LoadFromObjectDef(XMLNode & xDef);
 		bool LoadObjectSounds(XMLNode& xDef);
 		virtual bool LoadObjectProperties(XMLNode& xDef);
@@ -419,6 +424,7 @@ class Object {
 		static Object* CreateObject(std::string type);
 
 		friend class ObjectFactory;
+		friend class Editor;
 };
 
 // Used for find()

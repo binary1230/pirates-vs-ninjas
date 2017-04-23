@@ -17,6 +17,9 @@ namespace MapEditor
         GameWrapper gameWrapper = new GameWrapper();
         bool wasPaused = false;
 
+        string lastLayerName = "foreground";
+        string lastObjectDefName = "block3";
+
         public Main()
         {
             InitializeComponent();
@@ -133,8 +136,7 @@ namespace MapEditor
 
         private void OnPauseStatusChanged()
         {
-            bool paused = gameWrapper.Paused;
-            wasPaused = paused;
+            bool paused = wasPaused = gameWrapper.Paused;
 
             btnPause.Text = paused ? "Play" : "Pause";
             btn_Create.Enabled = paused;
@@ -147,12 +149,23 @@ namespace MapEditor
             if (paused)
             {
                 LoadGameLists();
+
+                lstLayers.SelectedIndex = lstLayers.FindString(lastLayerName);
+                lstObjectDefs.SelectedIndex = lstObjectDefs.FindString(lastObjectDefName);
+            }
+            else
+            {
+                if (lstLayers.SelectedItem != null)
+                    lastLayerName = lstLayers.SelectedItem.ToString();
+
+                if (lstObjectDefs.SelectedItem != null)
+                    lastObjectDefName = lstObjectDefs.SelectedItem.ToString();
             }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            GameState.GetInstance().SetPhysicsDebugDraw(checkBox1.Checked);
+            GameState.GetInstance().SetPhysicsDebugDraw(chkDrawPhysicsDebug.Checked);
         }
     }
 }

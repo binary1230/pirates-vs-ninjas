@@ -4558,30 +4558,6 @@ fail:
 }
 
 
-static int _wrap_GameMode_GetAiFitnessScore(lua_State* L) {
-  int SWIG_arg = 0;
-  GameMode *arg1 = (GameMode *) 0 ;
-  int result;
-  
-  SWIG_check_num_args("GameMode::GetAiFitnessScore",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameMode::GetAiFitnessScore",1,"GameMode *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameMode,0))){
-    SWIG_fail_ptr("GameMode_GetAiFitnessScore",1,SWIGTYPE_p_GameMode);
-  }
-  
-  result = (int)(arg1)->GetAiFitnessScore();
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_GameMode_SetExitInfo(lua_State* L) {
   int SWIG_arg = 0;
   GameMode *arg1 = (GameMode *) 0 ;
@@ -4702,7 +4678,6 @@ static swig_lua_method swig_GameMode_methods[]= {
     { "Shutdown", _wrap_GameMode_Shutdown},
     { "Draw", _wrap_GameMode_Draw},
     { "Update", _wrap_GameMode_Update},
-    { "GetAiFitnessScore", _wrap_GameMode_GetAiFitnessScore},
     { "SetExitInfo", _wrap_GameMode_SetExitInfo},
     { "GetExitInfo", _wrap_GameMode_GetExitInfo},
     { "SetOldExitInfo", _wrap_GameMode_SetOldExitInfo},
@@ -5900,30 +5875,6 @@ fail:
 }
 
 
-static int _wrap_GameWorld_GetAiFitnessScore(lua_State* L) {
-  int SWIG_arg = 0;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  int result;
-  
-  SWIG_check_num_args("GameWorld::GetAiFitnessScore",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::GetAiFitnessScore",1,"GameWorld *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_GetAiFitnessScore",1,SWIGTYPE_p_GameWorld);
-  }
-  
-  result = (int)(arg1)->GetAiFitnessScore();
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_GameWorld_AllowPlayerOffscreen(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -6108,7 +6059,6 @@ static swig_lua_method swig_GameWorld_methods[]= {
     { "TransformViewToScreen", _wrap_GameWorld_TransformViewToScreen},
     { "ShowText", _wrap_GameWorld_ShowText},
     { "SnapCamera", _wrap_GameWorld_SnapCamera},
-    { "GetAiFitnessScore", _wrap_GameWorld_GetAiFitnessScore},
     { "AllowPlayerOffscreen", _wrap_GameWorld_AllowPlayerOffscreen},
     { "PlayerAllowedOffscreen", _wrap_GameWorld_PlayerAllowedOffscreen},
     { "SaveWorld", _wrap_GameWorld_SaveWorld},

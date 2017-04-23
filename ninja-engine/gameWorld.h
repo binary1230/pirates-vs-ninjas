@@ -140,9 +140,6 @@ class GameWorld : public GameMode {
 			Object* modal_active;
 
 			vector<ObjectPlayer*> m_kCachedPlayers;
-			
-			//! Do the real work of adding an object to the global object list
-			void DoAddObject(Object* obj);
 		
 			void RemoveDeadObjectsIfNeeded();
 
@@ -225,9 +222,6 @@ class GameWorld : public GameMode {
 			//! target's position rather than doing the nice
 			//! floaty thing
 			void SnapCamera();
-			
-			//! Experimental: Get AI fitness score for AI traning
-			int GetAiFitnessScore();
 
 			//! Allows the player to remain offscreen
 			//! Only use for cinematics.

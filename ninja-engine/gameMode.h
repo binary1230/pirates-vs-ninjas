@@ -67,9 +67,6 @@ class GameMode {
 			//! Update this mode
 			virtual void Update() = 0;
 
-			//! Experimental: get the AI fitness score for AI training	
-			virtual int GetAiFitnessScore() {return 0;}
-
 			//! Get the exit info from this mode
 			//! NOTE: Not all modes return meaningful exit info
 			void SetExitInfo(const GameModeExitInfo& info) {exitInfo = info;}

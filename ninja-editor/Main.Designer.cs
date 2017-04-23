@@ -38,9 +38,10 @@
             this.lblLayers = new System.Windows.Forms.Label();
             this.btnPause = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkDrawPhysicsDebug = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lstLayers = new System.Windows.Forms.ListBox();
+            this.chkSnapToGrid = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -114,7 +115,8 @@
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.chkSnapToGrid);
+            this.groupBox1.Controls.Add(this.chkDrawPhysicsDebug);
             this.groupBox1.Location = new System.Drawing.Point(522, 9);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(169, 100);
@@ -122,16 +124,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
             // 
-            // checkBox1
+            // chkDrawPhysicsDebug
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(7, 20);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(125, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Draw Physics Debug";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.chkDrawPhysicsDebug.AutoSize = true;
+            this.chkDrawPhysicsDebug.Location = new System.Drawing.Point(7, 20);
+            this.chkDrawPhysicsDebug.Name = "chkDrawPhysicsDebug";
+            this.chkDrawPhysicsDebug.Size = new System.Drawing.Size(125, 17);
+            this.chkDrawPhysicsDebug.TabIndex = 0;
+            this.chkDrawPhysicsDebug.Text = "Draw Physics Debug";
+            this.chkDrawPhysicsDebug.UseVisualStyleBackColor = true;
+            this.chkDrawPhysicsDebug.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // label3
             // 
@@ -148,6 +150,16 @@
             this.lstLayers.Name = "lstLayers";
             this.lstLayers.Size = new System.Drawing.Size(147, 264);
             this.lstLayers.TabIndex = 8;
+            // 
+            // chkSnapToGrid
+            // 
+            this.chkSnapToGrid.AutoSize = true;
+            this.chkSnapToGrid.Location = new System.Drawing.Point(7, 42);
+            this.chkSnapToGrid.Name = "chkSnapToGrid";
+            this.chkSnapToGrid.Size = new System.Drawing.Size(89, 17);
+            this.chkSnapToGrid.TabIndex = 1;
+            this.chkSnapToGrid.Text = "Snap To Grid";
+            this.chkSnapToGrid.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -186,9 +198,10 @@
         private System.Windows.Forms.Label lblLayers;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkDrawPhysicsDebug;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox lstLayers;
+        private System.Windows.Forms.CheckBox chkSnapToGrid;
     }
 }
 

@@ -2,7 +2,6 @@
 #include "gameWorld.h"
 
 #include "luaManager.h"
-#include "ai.h"
 #include "assetManager.h"
 #include "globals.h"
 #include "objectFactory.h"
@@ -1067,35 +1066,13 @@ void GameWorld::AddObject(Object* obj, bool addImmediately) {
 	assert(obj->GetLayer() != NULL);
 
 	if (addImmediately) {
-		DoAddObject(obj);
+		m_objects.push_front(obj);
+		obj->InitPhysics();
+		obj->GetLayer()->AddObject(obj);
 	} else {
 		m_kObjectsToAdd.push_back(obj);
 	}
 }
-
-void GameWorld::DoAddObject(Object* obj) {
-	m_objects.push_front(obj);
-	obj->InitPhysics();
-	obj->GetLayer()->AddObject(obj);
-}
-
-#ifndef AI_TRAINING
-int GameWorld::GetAiFitnessScore() {return 0;};
-#else
-int GameWorld::GetAiFitnessScore() {
-	ObjectListIter iter;
-	
-	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
-		assert(*iter != NULL);
-		if (	(*iter)->GetProperties().is_player ) {
-			ObjectPlayer* player = (ObjectPlayer*)(*iter);
-			return player->GetNumRings();
-		}
-	} 
-
-	return 0;
-}
-#endif // AI_TRAINING
 
 GameWorld::GameWorld() {
 	Clear();
