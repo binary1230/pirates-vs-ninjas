@@ -83,10 +83,5 @@ namespace MapEditor
 
             return layerNames;
         }
-
-        public void CreateObjectAtCursor()
-        {
-
-        }
     }
 }

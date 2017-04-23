@@ -2121,6 +2121,14 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_DoMainGameUpdate(void * jarg1) {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SaveWorldOverCurrentFile(void * jarg1) {
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  (arg1)->SaveWorldOverCurrentFile();
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_CreateWorld(char * jarg1) {
   std::string arg1 ;
   
@@ -4435,6 +4443,18 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Editor_CreateObject(void * jarg1, char * ja
   result = (Object *)(arg1)->CreateObject(arg2,arg3);
   jresult = (void *)result; 
   return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_CreateAndSelectObject(void * jarg1, char * jarg2, char * jarg3) {
+  Editor *arg1 = (Editor *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = (char *)jarg2; 
+  arg3 = (char *)jarg3; 
+  (arg1)->CreateAndSelectObject(arg2,arg3);
 }
 
 

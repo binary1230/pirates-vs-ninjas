@@ -957,6 +957,10 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_DoMainGameUpdate(swigCPtr);
   }
 
+  public void SaveWorldOverCurrentFile() {
+    enginePINVOKE.GameWorld_SaveWorldOverCurrentFile(swigCPtr);
+  }
+
   public static void CreateWorld(string mode_filename) {
     enginePINVOKE.GameWorld_CreateWorld(mode_filename);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
@@ -2144,6 +2148,10 @@ public class Editor : global::System.IDisposable {
     return ret;
   }
 
+  public void CreateAndSelectObject(string objDefName, string layerName) {
+    enginePINVOKE.Editor_CreateAndSelectObject(swigCPtr, objDefName, layerName);
+  }
+
   public void UpdateSelectedObjectPosition() {
     enginePINVOKE.Editor_UpdateSelectedObjectPosition(swigCPtr);
   }
@@ -2690,6 +2698,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_DoMainGameUpdate")]
   public static extern void GameWorld_DoMainGameUpdate(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SaveWorldOverCurrentFile")]
+  public static extern void GameWorld_SaveWorldOverCurrentFile(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_CreateWorld")]
   public static extern void GameWorld_CreateWorld(string jarg1);
@@ -3311,6 +3322,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_CreateObject")]
   public static extern global::System.IntPtr Editor_CreateObject(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2, string jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_CreateAndSelectObject")]
+  public static extern void Editor_CreateAndSelectObject(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2, string jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_UpdateSelectedObjectPosition")]
   public static extern void Editor_UpdateSelectedObjectPosition(global::System.Runtime.InteropServices.HandleRef jarg1);

@@ -17,6 +17,8 @@ class Editor {
 
 		Object* CreateObject(char* objDefName, char* layerName);
 
+		void CreateAndSelectObject(char * objDefName, char * layerName);
+
 		void UpdateSelectedObjectPosition();
 		void UnselectCurrentlySelectedObject();
 

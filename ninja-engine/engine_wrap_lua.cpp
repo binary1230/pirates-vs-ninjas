@@ -5374,6 +5374,29 @@ fail:
 }
 
 
+static int _wrap_GameWorld_SaveWorldOverCurrentFile(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  
+  SWIG_check_num_args("GameWorld::SaveWorldOverCurrentFile",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::SaveWorldOverCurrentFile",1,"GameWorld *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_SaveWorldOverCurrentFile",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  (arg1)->SaveWorldOverCurrentFile();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_GameWorld_CreateWorld(lua_State* L) {
   int SWIG_arg = 0;
   std::string arg1 ;
@@ -6098,6 +6121,7 @@ static swig_lua_method swig_GameWorld_methods[]= {
     { "Draw", _wrap_GameWorld_Draw},
     { "Update", _wrap_GameWorld_Update},
     { "DoMainGameUpdate", _wrap_GameWorld_DoMainGameUpdate},
+    { "SaveWorldOverCurrentFile", _wrap_GameWorld_SaveWorldOverCurrentFile},
     { "GetWidth", _wrap_GameWorld_GetWidth},
     { "GetHeight", _wrap_GameWorld_GetHeight},
     { "ComputeNewCamera", _wrap_GameWorld_ComputeNewCamera},
@@ -11492,6 +11516,35 @@ fail:
 }
 
 
+static int _wrap_Editor_CreateAndSelectObject(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  
+  SWIG_check_num_args("Editor::CreateAndSelectObject",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::CreateAndSelectObject",1,"Editor *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Editor::CreateAndSelectObject",2,"char *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Editor::CreateAndSelectObject",3,"char *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_CreateAndSelectObject",1,SWIGTYPE_p_Editor);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  (arg1)->CreateAndSelectObject(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Editor_UpdateSelectedObjectPosition(lua_State* L) {
   int SWIG_arg = 0;
   Editor *arg1 = (Editor *) 0 ;
@@ -11651,6 +11704,7 @@ static swig_lua_attribute swig_Editor_attributes[] = {
 };
 static swig_lua_method swig_Editor_methods[]= {
     { "CreateObject", _wrap_Editor_CreateObject},
+    { "CreateAndSelectObject", _wrap_Editor_CreateAndSelectObject},
     { "UpdateSelectedObjectPosition", _wrap_Editor_UpdateSelectedObjectPosition},
     { "UnselectCurrentlySelectedObject", _wrap_Editor_UnselectCurrentlySelectedObject},
     { "Draw", _wrap_Editor_Draw},

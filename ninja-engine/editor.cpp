@@ -18,15 +18,20 @@ Object * Editor::CreateObject(char * objDefName, char * layerName)
 	assert(layer);
 	obj->SetLayer(layer);
 
-	selection = obj;
-	UpdateSelectedObjectPosition();
-
 	obj->SetObjectDefName(objDefName);
 	obj->FinishLoading();
 
 	WORLD->AddObject(obj, true);
 
 	return obj;
+}
+
+void Editor::CreateAndSelectObject(char* objDefName, char* layerName) 
+{
+	Object* obj = CreateObject(objDefName, layerName);
+
+	selection = obj;
+	UpdateSelectedObjectPosition();
 }
 
 void Editor::UpdateSelectedObjectPosition()

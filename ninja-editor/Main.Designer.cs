@@ -38,10 +38,10 @@
             this.lblLayers = new System.Windows.Forms.Label();
             this.btnPause = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkSnapToGrid = new System.Windows.Forms.CheckBox();
             this.chkDrawPhysicsDebug = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lstLayers = new System.Windows.Forms.ListBox();
-            this.chkSnapToGrid = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,6 +124,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
             // 
+            // chkSnapToGrid
+            // 
+            this.chkSnapToGrid.AutoSize = true;
+            this.chkSnapToGrid.Location = new System.Drawing.Point(7, 42);
+            this.chkSnapToGrid.Name = "chkSnapToGrid";
+            this.chkSnapToGrid.Size = new System.Drawing.Size(89, 17);
+            this.chkSnapToGrid.TabIndex = 1;
+            this.chkSnapToGrid.Text = "Snap To Grid";
+            this.chkSnapToGrid.UseVisualStyleBackColor = true;
+            this.chkSnapToGrid.CheckedChanged += new System.EventHandler(this.chkSnapToGrid_CheckedChanged);
+            // 
             // chkDrawPhysicsDebug
             // 
             this.chkDrawPhysicsDebug.AutoSize = true;
@@ -150,17 +161,6 @@
             this.lstLayers.Name = "lstLayers";
             this.lstLayers.Size = new System.Drawing.Size(147, 264);
             this.lstLayers.TabIndex = 8;
-            // 
-            // chkSnapToGrid
-            // 
-            this.chkSnapToGrid.AutoSize = true;
-            this.chkSnapToGrid.Location = new System.Drawing.Point(7, 42);
-            this.chkSnapToGrid.Name = "chkSnapToGrid";
-            this.chkSnapToGrid.Size = new System.Drawing.Size(89, 17);
-            this.chkSnapToGrid.TabIndex = 1;
-            this.chkSnapToGrid.Text = "Snap To Grid";
-            this.chkSnapToGrid.UseVisualStyleBackColor = true;
-            this.chkSnapToGrid.CheckedChanged += new System.EventHandler(this.chkSnapToGrid_CheckedChanged);
             // 
             // Main
             // 
