@@ -411,6 +411,11 @@ void GameWorld::DoMainGameUpdate() {
 	ComputeNewCamera();						// Calc where to put the camera now
 }
 
+void GameWorld::SaveWorldOverCurrentFile() 
+{
+	SaveWorld(exitInfo.lastModeName);
+}
+
 void GameWorld::SaveWorld(string filename)
 {
 	std::ofstream ofs(filename);

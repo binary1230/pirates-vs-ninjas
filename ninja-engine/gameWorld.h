@@ -198,6 +198,8 @@ class GameWorld : public GameMode {
 
 			void DoMainGameUpdate();
 
+			void SaveWorldOverCurrentFile();
+
 			static void CreateWorld(string mode_filename);
 
 			int GetWidth() {return m_iLevelWidth;};
