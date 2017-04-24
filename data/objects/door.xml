@@ -13,6 +13,7 @@
 		</animation>
 		<animation name="opening">
 			<frames>
+				<frame type="sound" data="door3"/>
 				<frame name="door1-open1.png" duration=4 />
 				<frame name="door1-open2.png" duration=3 />
 				<frame name="door1-open3.png" duration=3 />
@@ -27,6 +28,9 @@
 		<solidObject/>
 		<sensorOnly/>
 	</properties>
+	<sounds>
+		<sound name="door3">sounds/door.wav</sound> <!-- REMEMBER, this will overwrite other sfx named door3 -DomPastSelf -->
+	</sounds>
 </objectDef>
 
 </objectDefinitions>
