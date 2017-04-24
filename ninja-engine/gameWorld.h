@@ -4,6 +4,7 @@
 #include "objectLayer.h"
 #include "gameMode.h"
 #include "object.h"
+#include "globals.h"
 
 class Object;
 class ObjectFactory;
@@ -145,6 +146,8 @@ class GameWorld : public GameMode {
 
 			void Clear();
 
+			CREATE_PROPERTY(bool, UseNewLoadingSystem)
+
 		public:
 			// not a very effecient method.  call with map editor only
 			inline vector<Object*> GetObjects() {
@@ -199,7 +202,7 @@ class GameWorld : public GameMode {
 
 			void SaveWorldOverCurrentFile();
 
-			static void CreateWorld(string mode_filename);
+			static void CreateWorld(string mode_filename, bool use_new_loading_system = false);
 
 			int GetWidth() {return m_iLevelWidth;};
 			int GetHeight() {return m_iLevelHeight;};

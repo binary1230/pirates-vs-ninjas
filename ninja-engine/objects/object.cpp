@@ -401,9 +401,8 @@ bool Object::LoadFromObjectDef(XMLNode& xDef) {
 	if (!LoadObjectAnimations(xDef))
 		return false;
 
-	#if USE_OLD_LOADING_SYSTEM == 0
-	InitPhysics();
-	#endif
+	if (WORLD->GetUseNewLoadingSystem())
+		InitPhysics();
 
 	return true;
 }

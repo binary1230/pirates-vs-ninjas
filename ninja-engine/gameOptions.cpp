@@ -73,8 +73,9 @@ void GameOptions::PrintOptions(const char* arg0) {
 void GameOptions::Clear() {
 	fullscreen = false;
 	show_help = false;
+	_MapEditorEnabled = false;
 	
-	first_mode = "";
+	_FirstMode = "";
 
 	record_demo = false;
 	playback_demo = false;
@@ -173,11 +174,11 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[])
 		switch (c) {
 
 			case 'm':
-				first_mode = optarg;
+				_FirstMode = optarg;
 				break;
 
 			case 'a':
-				first_mode = "data/animationeditor.xml"; // such a dumb hacky way to start
+				_FirstMode = "data/animationeditor.xml"; // such a dumb hacky way to start
 				break;
 
 			// get demo filename

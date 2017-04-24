@@ -4206,6 +4206,56 @@ fail:
 }
 
 
+static int _wrap_GameOptions_GetFirstMode(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  std::string result;
+  
+  SWIG_check_num_args("GameOptions::GetFirstMode",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::GetFirstMode",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_GetFirstMode",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (arg1)->GetFirstMode();
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_SetFirstMode(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  std::string arg2 ;
+  
+  SWIG_check_num_args("GameOptions::SetFirstMode",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::SetFirstMode",1,"GameOptions *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("GameOptions::SetFirstMode",2,"std::string");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_SetFirstMode",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  (arg1)->SetFirstMode(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_GameOptions_PrintOptions(lua_State* L) {
   int SWIG_arg = 0;
   GameOptions *arg1 = (GameOptions *) 0 ;
@@ -4610,6 +4660,8 @@ static swig_lua_attribute swig_GameOptions_attributes[] = {
 static swig_lua_method swig_GameOptions_methods[]= {
     { "GetMapEditorEnabled", _wrap_GameOptions_GetMapEditorEnabled},
     { "SetMapEditorEnabled", _wrap_GameOptions_SetMapEditorEnabled},
+    { "GetFirstMode", _wrap_GameOptions_GetFirstMode},
+    { "SetFirstMode", _wrap_GameOptions_SetFirstMode},
     { "PrintOptions", _wrap_GameOptions_PrintOptions},
     { "PrintBanner", _wrap_GameOptions_PrintBanner},
     { "ParseArguments", _wrap_GameOptions_ParseArguments},
@@ -5414,6 +5466,56 @@ fail:
 }
 
 
+static int _wrap_GameWorld_GetUseNewLoadingSystem(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameWorld::GetUseNewLoadingSystem",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::GetUseNewLoadingSystem",1,"GameWorld *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_GetUseNewLoadingSystem",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  result = (bool)(arg1)->GetUseNewLoadingSystem();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_SetUseNewLoadingSystem(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("GameWorld::SetUseNewLoadingSystem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::SetUseNewLoadingSystem",1,"GameWorld *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameWorld::SetUseNewLoadingSystem",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_SetUseNewLoadingSystem",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetUseNewLoadingSystem(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_GameWorld_GetObjects(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -5953,7 +6055,29 @@ fail:
 }
 
 
-static int _wrap_GameWorld_CreateWorld(lua_State* L) {
+static int _wrap_GameWorld_CreateWorld__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  std::string arg1 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("GameWorld::CreateWorld",2,2)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("GameWorld::CreateWorld",1,"std::string");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameWorld::CreateWorld",2,"bool");
+  (&arg1)->assign(lua_tostring(L,1),lua_rawlen(L,1));
+  arg2 = (lua_toboolean(L, 2)!=0);
+  GameWorld::CreateWorld(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_CreateWorld__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   std::string arg1 ;
   
@@ -5969,6 +6093,45 @@ static int _wrap_GameWorld_CreateWorld(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_CreateWorld(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 1) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      return _wrap_GameWorld_CreateWorld__SWIG_1(L);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isboolean(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_GameWorld_CreateWorld__SWIG_0(L);
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'GameWorld_CreateWorld'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    GameWorld::CreateWorld(std::string,bool)\n"
+    "    GameWorld::CreateWorld(std::string)\n");
+  lua_error(L);return 0;
 }
 
 
@@ -6660,6 +6823,8 @@ static swig_lua_attribute swig_GameWorld_attributes[] = {
     {0,0,0}
 };
 static swig_lua_method swig_GameWorld_methods[]= {
+    { "GetUseNewLoadingSystem", _wrap_GameWorld_GetUseNewLoadingSystem},
+    { "SetUseNewLoadingSystem", _wrap_GameWorld_SetUseNewLoadingSystem},
     { "GetObjects", _wrap_GameWorld_GetObjects},
     { "Init", _wrap_GameWorld_Init},
     { "Shutdown", _wrap_GameWorld_Shutdown},
@@ -12314,7 +12479,6 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {SWIG_LUA_CONSTTAB_INT("DEFAULT_DEBUG_MSG_LEVEL", 0)},
     {SWIG_LUA_CONSTTAB_INT("DEFAULT_MUSIC_BUFFER_SIZE", (1 << 16))},
     {SWIG_LUA_CONSTTAB_INT("DEFAULT_MUSIC_DATA_SIZE", (1 << 15))},
-    {SWIG_LUA_CONSTTAB_INT("USE_OLD_LOADING_SYSTEM", 0)},
     {SWIG_LUA_CONSTTAB_STRING("REDIRECT_STDERR_FILENAME", "/Users/dcerquetti/game.log")},
     {SWIG_LUA_CONSTTAB_INT("STANDING", STANDING)},
     {SWIG_LUA_CONSTTAB_INT("JUMPING", JUMPING)},

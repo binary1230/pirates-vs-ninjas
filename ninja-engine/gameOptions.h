@@ -35,9 +35,6 @@ class GameOptions {
 		//! Requested graphics mode (double buffering, pageflipping, nothing, etc)
 		int graphics_mode;
 
-		//! The first mode we should use (leave "" to select the default mode)
-		std::string first_mode;
-
 		//! If true, start the game in debug pause mode
 		bool debug_start_paused;
 
@@ -55,6 +52,7 @@ class GameOptions {
 		bool wait_for_updates;
 		
 		CREATE_PROPERTY(bool, MapEditorEnabled)
+		CREATE_PROPERTY(string, FirstMode)
 
 	public:
 		//! Print the list of available options to stdout
@@ -92,8 +90,8 @@ class GameOptions {
 
 		//! Get the user-overridden mode XML filename, or "" if none
 		inline const char* GetFirstModeOverride() {
-			if (first_mode.length() > 0)
-				return first_mode.c_str();
+			if (_FirstMode.length() > 0)
+				return _FirstMode.c_str();
 		 	else 
 				return NULL;
 		}

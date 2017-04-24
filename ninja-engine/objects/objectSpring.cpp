@@ -72,7 +72,7 @@ bool ObjectSpring::LoadObjectProperties(XMLNode &xDef) {
 	properties.is_static = 1;
 	properties.is_sensor = 1;
 
-	#if USE_OLD_LOADING_SYSTEM
+	/*#if USE_OLD_LOADING_SYSTEM
 	// we should be able to re-enable this later, there's some bugginess with load ordering and defaults when using
 	// the serialized data.
 	if (xDef.nChildNode("springDirection") == 1) {
@@ -80,7 +80,7 @@ bool ObjectSpring::LoadObjectProperties(XMLNode &xDef) {
 			return false;
 		}
 	}
-	#endif
+	#endif*/
 
 	return true;
 }

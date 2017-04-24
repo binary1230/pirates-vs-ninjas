@@ -248,6 +248,10 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build-tools\swig-generate-wrappers.bat</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Swig</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">swig/engine_wrap.cxx;engine_wrap_lua.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">gameWorld.cpp;gameState.cpp;globals.h;gameWorld.h;gameState.h;object.h;object.cpp;editor.cpp;editor.h;objects/objectPlayer.cpp;objects/objectPlayer.h;</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">gameWorld.cpp;gameState.cpp;globals.h;gameWorld.h;gameState.h;object.h;object.cpp;editor.cpp;editor.h;objects/objectPlayer.cpp;objects/objectPlayer.h;</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gameWorld.cpp;gameState.cpp;globals.h;gameWorld.h;gameState.h;object.h;object.cpp;editor.cpp;editor.h;objects/objectPlayer.cpp;objects/objectPlayer.h;</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gameWorld.cpp;gameState.cpp;globals.h;gameWorld.h;gameState.h;object.h;object.cpp;editor.cpp;editor.h;objects/objectPlayer.cpp;objects/objectPlayer.h;</AdditionalInputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

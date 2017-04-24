@@ -700,6 +700,16 @@ public class GameOptions : global::System.IDisposable {
     enginePINVOKE.GameOptions_SetMapEditorEnabled(swigCPtr, val);
   }
 
+  public string GetFirstMode() {
+    string ret = enginePINVOKE.GameOptions_GetFirstMode(swigCPtr);
+    return ret;
+  }
+
+  public void SetFirstMode(string val) {
+    enginePINVOKE.GameOptions_SetFirstMode(swigCPtr, val);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public void PrintOptions(string arg0) {
     enginePINVOKE.GameOptions_PrintOptions(swigCPtr, arg0);
   }
@@ -1007,6 +1017,15 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_FreeInstance();
   }
 
+  public bool GetUseNewLoadingSystem() {
+    bool ret = enginePINVOKE.GameWorld_GetUseNewLoadingSystem(swigCPtr);
+    return ret;
+  }
+
+  public void SetUseNewLoadingSystem(bool val) {
+    enginePINVOKE.GameWorld_SetUseNewLoadingSystem(swigCPtr, val);
+  }
+
   public ObjectVector GetObjects() {
     ObjectVector ret = new ObjectVector(enginePINVOKE.GameWorld_GetObjects(swigCPtr), true);
     return ret;
@@ -1093,8 +1112,13 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_SaveWorldOverCurrentFile(swigCPtr);
   }
 
+  public static void CreateWorld(string mode_filename, bool use_new_loading_system) {
+    enginePINVOKE.GameWorld_CreateWorld__SWIG_0(mode_filename, use_new_loading_system);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public static void CreateWorld(string mode_filename) {
-    enginePINVOKE.GameWorld_CreateWorld(mode_filename);
+    enginePINVOKE.GameWorld_CreateWorld__SWIG_1(mode_filename);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -2684,9 +2708,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DebugTrace")]
   public static extern void DebugTrace(string jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_USE_OLD_LOADING_SYSTEM_get")]
-  public static extern int USE_OLD_LOADING_SYSTEM_get();
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_REDIRECT_STDERR_FILENAME_get")]
   public static extern string REDIRECT_STDERR_FILENAME_get();
 
@@ -2707,6 +2728,12 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameOptions_SetMapEditorEnabled")]
   public static extern void GameOptions_SetMapEditorEnabled(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameOptions_GetFirstMode")]
+  public static extern string GameOptions_GetFirstMode(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameOptions_SetFirstMode")]
+  public static extern void GameOptions_SetFirstMode(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameOptions_PrintOptions")]
   public static extern void GameOptions_PrintOptions(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
@@ -2846,6 +2873,12 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_FreeInstance")]
   public static extern void GameWorld_FreeInstance();
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetUseNewLoadingSystem")]
+  public static extern bool GameWorld_GetUseNewLoadingSystem(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SetUseNewLoadingSystem")]
+  public static extern void GameWorld_SetUseNewLoadingSystem(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetObjects")]
   public static extern global::System.IntPtr GameWorld_GetObjects(global::System.Runtime.InteropServices.HandleRef jarg1);
 
@@ -2900,8 +2933,11 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SaveWorldOverCurrentFile")]
   public static extern void GameWorld_SaveWorldOverCurrentFile(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_CreateWorld")]
-  public static extern void GameWorld_CreateWorld(string jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_CreateWorld__SWIG_0")]
+  public static extern void GameWorld_CreateWorld__SWIG_0(string jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_CreateWorld__SWIG_1")]
+  public static extern void GameWorld_CreateWorld__SWIG_1(string jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetWidth")]
   public static extern int GameWorld_GetWidth(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -3584,7 +3620,6 @@ public class engine {
   public static readonly int DEFAULT_DEBUG_MSG_LEVEL = enginePINVOKE.DEFAULT_DEBUG_MSG_LEVEL_get();
   public static readonly int DEFAULT_MUSIC_BUFFER_SIZE = enginePINVOKE.DEFAULT_MUSIC_BUFFER_SIZE_get();
   public static readonly int DEFAULT_MUSIC_DATA_SIZE = enginePINVOKE.DEFAULT_MUSIC_DATA_SIZE_get();
-  public static readonly int USE_OLD_LOADING_SYSTEM = enginePINVOKE.USE_OLD_LOADING_SYSTEM_get();
   public static readonly string REDIRECT_STDERR_FILENAME = enginePINVOKE.REDIRECT_STDERR_FILENAME_get();
 }
 

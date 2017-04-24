@@ -114,7 +114,7 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 	// actually create the new mode
 	if (modeType == "simulation") 
 	{
-		GameWorld::CreateWorld(mode_filename);
+		GameWorld::CreateWorld(mode_filename, forceSimulation);
 		currentMode = WORLD;
 	} 
 	else if (modeType == "credits") 
@@ -224,7 +224,7 @@ void GameModes::Shutdown() {
 
 GameModes::GameModes() {
 	currentModeIndex = 0;
-  currentMode = NULL;
+	currentMode = NULL;
 }
 
 GameModes::~GameModes() {

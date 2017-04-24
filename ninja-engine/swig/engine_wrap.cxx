@@ -1579,16 +1579,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_DebugTrace(char * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_USE_OLD_LOADING_SYSTEM_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)(0);
-  jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT char * SWIGSTDCALL CSharp_REDIRECT_STDERR_FILENAME_get() {
   char * jresult ;
   char *result = 0 ;
@@ -1646,6 +1636,32 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_SetMapEditorEnabled(void * jarg1,
   arg1 = (GameOptions *)jarg1; 
   arg2 = jarg2 ? true : false; 
   (arg1)->SetMapEditorEnabled(arg2);
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_GameOptions_GetFirstMode(void * jarg1) {
+  char * jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  std::string result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (arg1)->GetFirstMode();
+  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_SetFirstMode(void * jarg1, char * jarg2) {
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = (GameOptions *)jarg1; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  (&arg2)->assign(jarg2); 
+  (arg1)->SetFirstMode(arg2);
 }
 
 
@@ -2162,6 +2178,28 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_FreeInstance() {
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_GetUseNewLoadingSystem(void * jarg1) {
+  unsigned int jresult ;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  bool result;
+  
+  arg1 = (GameWorld *)jarg1; 
+  result = (bool)(arg1)->GetUseNewLoadingSystem();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetUseNewLoadingSystem(void * jarg1, unsigned int jarg2) {
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetUseNewLoadingSystem(arg2);
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetObjects(void * jarg1) {
   void * jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -2366,7 +2404,21 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SaveWorldOverCurrentFile(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_CreateWorld(char * jarg1) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_CreateWorld__SWIG_0(char * jarg1, unsigned int jarg2) {
+  std::string arg1 ;
+  bool arg2 ;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  (&arg1)->assign(jarg1); 
+  arg2 = jarg2 ? true : false; 
+  GameWorld::CreateWorld(arg1,arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_CreateWorld__SWIG_1(char * jarg1) {
   std::string arg1 ;
   
   if (!jarg1) {

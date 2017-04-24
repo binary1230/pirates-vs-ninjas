@@ -41,7 +41,7 @@ int GameWorld::GetCameraY() {
 void GameWorld::ShowText(	const char* txt, 
 							const char* avatar_filename, 
 							bool modal_active) {
-	#if USE_OLD_LOADING_SYSTEM
+	
 	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT); // broken?
 
 	if (!obj) {
@@ -56,7 +56,6 @@ void GameWorld::ShowText(	const char* txt,
 		obj->SetAvatarFilename(avatar_filename);
 
 	AddObject(obj);
-	#endif // USE_OLD_LOADING_SYSTEM
 }
 
 void GameWorld::Clear() {
@@ -422,17 +421,19 @@ void GameWorld::SaveWorld(string filename)
 	oa << BOOST_SERIALIZATION_NVP(this);
 }
 
-void GameWorld::CreateWorld(string mode_filename = "") {
-	#if USE_OLD_LOADING_SYSTEM
+void GameWorld::CreateWorld(string mode_filename = "", bool use_new_loading_system) {
+	if (!use_new_loading_system) {
 		WORLD->CreateInstance();
-	#else
+	} else {
 		GameWorld* unserialized_world = NULL;
 		std::ifstream ifs(mode_filename);
 		boost::archive::xml_iarchive ia(ifs);
 		ia >> BOOST_SERIALIZATION_NVP(unserialized_world);
 
 		WORLD->SetInstance(unserialized_world);
-	#endif // USE_OLD_LOADING_SYSTEM
+	}
+
+	WORLD->SetUseNewLoadingSystem(use_new_loading_system);
 }
 
 void GameWorld::LoadMusic(const char* music_file) {
@@ -449,10 +450,10 @@ int GameWorld::Load(XMLNode &xMode) {
 	m_bJumpedBackFromADoor = false;
 	m_kObjectsToAdd.clear();
 
-	#if USE_OLD_LOADING_SYSTEM
-	if (LoadHeaderFromXML(xMode) == -1)
-		return -1;
-	#endif // OLD_LOAD
+	if (!_UseNewLoadingSystem) {
+		if (LoadHeaderFromXML(xMode) == -1)
+			return -1;
+	}
 
 	if (!PHYSICS->OnWorldInit())
 	{
@@ -462,42 +463,42 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	XMLNode* p_xObjDefs = NULL;
 
-	#if USE_OLD_LOADING_SYSTEM
-	XMLNode xObjectDefs = xMode.getChildNode("objectDefinitions");
-	p_xObjDefs = &xObjectDefs;
-	#endif // USE_OLD_LOADING_SYSTEM
+	if (!_UseNewLoadingSystem) {
+		XMLNode xObjectDefs = xMode.getChildNode("objectDefinitions");
+		p_xObjDefs = &xObjectDefs;
+	}
 
 	if (!LoadObjectDefsFromXML(p_xObjDefs))
 		return -1;
 
-	#if USE_OLD_LOADING_SYSTEM
-	if (LoadObjectsFromXML(xMode) == -1) 
-	{
-		TRACE("ERROR: Failed loading objects from XML\n");
-		return -1;
-	}
-
-	if (xMode.nChildNode("effects") == 1) {
-		XMLNode xEffects = xMode.getChildNode("effects");
-		int max = xEffects.nChildNode("include_xml_file");
-		int i, iterator;
-		for (i = iterator = 0; i < max; ++i) {
-			std::string effects_include_file = xEffects.getChildNode("include_xml_file", &iterator).getText();
-			m_included_effect_xml_files.push_back(effects_include_file);
+	if (!_UseNewLoadingSystem) {
+		if (LoadObjectsFromXML(xMode) == -1)
+		{
+			TRACE("ERROR: Failed loading objects from XML\n");
+			return -1;
 		}
-	}
 
-	if (xMode.nChildNode("music") == 1) {
-		m_szMusicFile = xMode.getChildNode("music").getText();
-	}
+		if (xMode.nChildNode("effects") == 1) {
+			XMLNode xEffects = xMode.getChildNode("effects");
+			int max = xEffects.nChildNode("include_xml_file");
+			int i, iterator;
+			for (i = iterator = 0; i < max; ++i) {
+				std::string effects_include_file = xEffects.getChildNode("include_xml_file", &iterator).getText();
+				m_included_effect_xml_files.push_back(effects_include_file);
+			}
+		}
 
-	if (xMode.nChildNode("luaScript") == 1) {
-		m_szLuaScript = xMode.getChildNode("luaScript").getText();
+		if (xMode.nChildNode("music") == 1) {
+			m_szMusicFile = xMode.getChildNode("music").getText();
+		}
+
+		if (xMode.nChildNode("luaScript") == 1) {
+			m_szLuaScript = xMode.getChildNode("luaScript").getText();
+		}
+	} else {
+		if (!FinishLoadingObjects())
+			return -1;
 	}
-	#else 
-	if (!FinishLoadingObjects())
-		return -1;
-	#endif // OLD_LOAD
 
 	for (int i = 0; i < m_included_effect_xml_files.size(); ++i)
 	{
@@ -542,15 +543,15 @@ int GameWorld::Load(XMLNode &xMode) {
 
 bool GameWorld::FinishLoadingObjects()
 {
-	#if USE_OLD_LOADING_SYSTEM == 0
-	ObjectListIter iter;
-	for (iter = m_objects.begin(); iter != m_objects.end(); iter++)
-	{
-		Object* obj = (*iter);
-		if (!obj->FinishLoading())
-			return false;
+	if (_UseNewLoadingSystem) {
+		ObjectListIter iter;
+		for (iter = m_objects.begin(); iter != m_objects.end(); iter++)
+		{
+			Object* obj = (*iter);
+			if (!obj->FinishLoading())
+				return false;
+		}
 	}
-	#endif // USE_NEW
 
 	return true;
 }
@@ -609,9 +610,11 @@ void GameWorld::CachePlayerObjects()
 	} 
 }
 
-#if USE_OLD_LOADING_SYSTEM
 // Loads the header info from the Mode XML file
+// OLD LOADING SYSTEM ONLY.  new serialization system doesn't use this
 int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
+	assert(!_UseNewLoadingSystem);
+
 	XMLNode xInfo = xMode.getChildNode("info");
 
 	TRACE(" Loading Level: '%s'\n", xInfo.getChildNode("description").getText() );
@@ -666,7 +669,6 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 
 	return 0;
 }
-#endif // USE_OLD_LOADING_SYSTEM
 
 /* example of how structure of our XML looks:
  * 
@@ -688,16 +690,16 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 bool GameWorld::LoadObjectDefsFromXML(XMLNode *xObjDefs) {
 	int i;
 
-	#if USE_OLD_LOADING_SYSTEM
-	if (xObjDefs) {
-		int iterator, max;
-		max = xObjDefs->nChildNode("include_xml_file");
-		for (i = iterator = 0; i < max; i++) {
-			std::string file = xObjDefs->getChildNode("include_xml_file", &iterator).getText();
-			m_included_objectdef_xml_files.push_back(file);
+	if (!_UseNewLoadingSystem) {
+		if (xObjDefs) {
+			int iterator, max;
+			max = xObjDefs->nChildNode("include_xml_file");
+			for (i = iterator = 0; i < max; i++) {
+				std::string file = xObjDefs->getChildNode("include_xml_file", &iterator).getText();
+				m_included_objectdef_xml_files.push_back(file);
+			}
 		}
 	}
-	#endif
 
 	for (i = 0; i < m_included_objectdef_xml_files.size(); ++i) {
 		if (!OBJECT_FACTORY->LoadObjectDefsFromIncludeXML(m_included_objectdef_xml_files[i])) {
@@ -711,33 +713,33 @@ bool GameWorld::LoadObjectDefsFromXML(XMLNode *xObjDefs) {
 //! Master XML parsing routine
 //! Calls other helpers to deal with different parts of the XML.
 int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {	
-	// 2) load all the <object>s found in each <layer> in <map>
-#if USE_OLD_LOADING_SYSTEM
-	XMLNode xMap, xLayer;
-	int i, max, iterator = 0;
+	if (!_UseNewLoadingSystem) {
+		// load all the <object>s found in each <layer> in <map>
+		XMLNode xMap, xLayer;
+		int i, max, iterator = 0;
 
-	m_objects.clear();
-	m_pkCameraLookatTarget = NULL;
-	xMap = xMode.getChildNode("map");
+		m_objects.clear();
+		m_pkCameraLookatTarget = NULL;
+		xMap = xMode.getChildNode("map");
 
-	max = xMap.nChildNode("layer");
+		max = xMap.nChildNode("layer");
 
-	// Parse each layer
-	iterator = 0;
-	for (i=0; i < max; i++) {
-		xLayer = xMap.getChildNode("layer", &iterator);
-		
-		ObjectLayer* layer = new ObjectLayer();
-		assert(layer != NULL);
+		// Parse each layer
+		iterator = 0;
+		for (i = 0; i < max; i++) {
+			xLayer = xMap.getChildNode("layer", &iterator);
 
-		layer->Init();
-		m_kLayers.push_back(layer);
-		
-		if (LoadLayerFromXML(xLayer, layer) == -1) {
-			return -1;
+			ObjectLayer* layer = new ObjectLayer();
+			assert(layer != NULL);
+
+			layer->Init();
+			m_kLayers.push_back(layer);
+
+			if (LoadLayerFromXML(xLayer, layer) == -1) {
+				return -1;
+			}
 		}
 	}
-#endif // USE_OLD_LOADING_SYSTEM
 
 	// Finished loading objects, do a few sanity checks
 	if (!m_pkCameraLookatTarget) {
@@ -768,8 +770,10 @@ int GameWorld::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
 }
 
 //! Parse XML info from a <layer> block
-#if USE_OLD_LOADING_SYSTEM
+//! NOTE: Old loading system only, new serialization system doesn't use this.
 int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
+	assert(!_UseNewLoadingSystem);
+
 	int i, iterator, max;
 	XMLNode xObject;
 	std::string objDefName;
@@ -842,14 +846,15 @@ int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
 
 	return 0;
 }
-#endif // USE_OLD_LOADING_SYSTEM
 
 // Do the REAL work of loading an object from XML
+// Old loading system only, new system doesn't use this.
 int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 								 XMLNode &xObject,
 								 ObjectLayer* const layer) {
 
-	#if USE_OLD_LOADING_SYSTEM
+	assert(!_UseNewLoadingSystem);
+
 	int x,y;
 
 	// Really create the instance of this object, it is BORN here:
@@ -1050,8 +1055,6 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 
 	// Everything loaded OK, now we add it to the simulation
 	AddObject(obj, true);
-	#endif // USE_OLD_LOADING_SYSTEM
-
 	return 0;
 }
 

@@ -155,13 +155,6 @@ int GameState::InitSystems() {
 		TRACE("ERROR: InitSystems: failed to init lua scripting!\n");
 		return -1;
 	}
-		
-	/*TRACE("[init: gui manager]\n");
-	GUI->CreateInstance();
-	if ( !GUI || !GUI->Init() ) {
-		TRACE("ERROR: InitSystem: failed to init gui!\n");
-		return -1;
-	}*/
 
 	TRACE("[init: loading game modes]\n");
 	if (LoadGameModes() == -1) {
@@ -288,16 +281,20 @@ void GameState::RunMainLoop_BlockingHelper()
 	}
 }
 
-void GameState::ProcessEvents() {
+void GameState::ProcessEvents() 
+{
 	ALLEGRO_EVENT ev;
-	if (!al_get_next_event(event_queue, &ev))
-		return;
-
-	if (ev.type == ALLEGRO_EVENT_TIMER) {
-		should_redraw = true;
-	}
-	else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-		exit_game = true;
+	while (al_get_next_event(event_queue, &ev)) {
+		if (ev.type == ALLEGRO_EVENT_TIMER) {
+			// important note: this event, on mode loads, may trigger dozens of times 
+			// because the timer was triggering during the loads.
+			// we handle this in a way that is able to ignore those queued up extra ticks so the game
+			// doesn't run fast until we're caught up.
+			should_redraw = true;
+		}
+		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+			exit_game = true;
+		}
 	}
 }
 
@@ -372,14 +369,16 @@ void GameState::Draw() {
 void GameState::Shutdown() {
 	TRACE("[Shutting Down]\n");
 
+	if (m_timer) {
+		al_destroy_timer(m_timer);
+		m_timer = NULL;
+	}
+
 	if (INPUT) {
 		INPUT->End();
 		INPUT->Shutdown();
 		INPUT->FreeInstance();
 	}
-
-	if (m_timer)
-		al_destroy_timer(m_timer);
 
 	if (event_queue)
 		al_destroy_event_queue(event_queue);
