@@ -22,15 +22,15 @@
 DECLARE_SINGLETON(GameOptions)
 
 void GameOptions::PrintBanner() {
-		TRACE(
-		"Ninja Engine (%s)\n"
-		"binary1230(at)yahoo.com | http://github.com/binary1230/ninjas-engine\n"
-		"(c) 2017 Dominic Cerquetti, this program is Free Software\n"
-		"Licensed under the GNU GPL v2, see http://gnu.org\n\n",
-		VERSION_STRING);
+	TRACE(
+	"Ninja Engine (%s)\n"
+	"binary1230(at)yahoo.com | http://github.com/binary1230/ninjas-engine\n"
+	"(c) 2017 Dominic Cerquetti, this program is Free Software\n"
+	"Licensed under the GNU GPL v2, see http://gnu.org\n\n",
+	VERSION_STRING);
 
-		TRACE("Current working directory: %s", AssetManager::GetCurrentWorkingDir().c_str());
-		TRACE("Current EXE Path: %s", AssetManager::GetCurrentExeFullPath().c_str());
+	TRACE("Current working directory: %s", AssetManager::GetCurrentWorkingDir().c_str());
+	TRACE("Current EXE Path: %s", AssetManager::GetCurrentExeFullPath().c_str());
 }
 
 void GameOptions::PrintOptions(const char* arg0) {
@@ -87,11 +87,6 @@ void GameOptions::Clear() {
 	debug_message_level = DEFAULT_DEBUG_MSG_LEVEL;
 
 	graphics_mode = MODE_DOUBLEBUFFERING;	
-
-	network_enabled = 0;
-	network_port_num = -1;
-	network_server_name = "";
-	network_start_as_server = false;
 
 	draw_graphics = true;
 	wait_for_updates = true;
@@ -157,6 +152,8 @@ char ** dupargv (const char **argv) {
 
 bool GameOptions::ParseArguments(const int argc, const char* argv[]) 
 {	
+	PrintBanner();
+
 	Clear();
 
 	if (!argv) {
@@ -258,24 +255,6 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[])
 				debug_message_level = 1;
 				break;
 	
-			// Network: Start game as server
-			case 's':
-				network_start_as_server = true;
-				network_enabled = true;
-				break;
-	
-			// Network server name
-			case 'c':
-				network_server_name = std::string(optarg);
-				network_enabled = true;
-				break;
-	
-			// Network port #
-			case 'n':
-				network_port_num = strtoul(optarg, NULL, 10);
-				network_enabled = true;
-				break;
-
 			// Update as fast as possible, useful for AI training
 			case '8':
 				wait_for_updates = false;
@@ -302,34 +281,15 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[])
 		new_argv = NULL;
 	}
 
+	if (argv)
+		OPTIONS->PrintOptions(argv[0]);
+
 	return IsValid();
 }
 
 bool GameOptions::IsValid() {
-
 	if (!is_valid)
 		return false;
-
-	if (network_enabled) {
-
-		if (network_port_num == -1) {
-			TRACE("Options ==> ERROR\n You MUST specify a port with (-p).\n\n");
-			return (is_valid = false);
-		} else if (network_port_num <= 0) {
-			TRACE("Options ==> ERROR\n (-p) Port # out of range.\n\n");
-			return (is_valid = false);
-		}
-
-
-		// if we aren't to start as a server, but they didn't give us a server name
-		// (btw, ^ is XOR) [YES.]
-		if (!(network_start_as_server ^ (network_server_name.length() > 0))) {
-			TRACE(	"Options ==> ERROR\n"
-					"To start with networking, you must specify ONLY ONE\n"
-					"of the following: (-c) or (-s servername)\n\n");
-			return (is_valid = false);
-		}
-	}
 
 	return (is_valid = true);
 }

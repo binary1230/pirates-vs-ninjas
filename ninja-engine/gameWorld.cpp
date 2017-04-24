@@ -88,6 +88,9 @@ void GameWorld::Clear() {
 }
 
 int GameWorld::Init(XMLNode xMode) {
+	if (OPTIONS->GetMapEditorEnabled())
+		map_editor = new Editor();
+
 	OBJECT_FACTORY->CreateInstance();
 	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) 
 	{
@@ -298,11 +301,6 @@ void GameWorld::Shutdown()
 	if (map_editor) {
 		delete map_editor;
 	}
-}
-
-void GameWorld::InitEditor()
-{
-	map_editor = new Editor();
 }
 
 //! Draw all objects in this physics simulation

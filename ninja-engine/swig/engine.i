@@ -19,6 +19,7 @@
 %module engine
 %{
 #include "globals.h"
+#include "gameOptions.h"
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
@@ -39,6 +40,7 @@ using namespace std;
 
 %include "singleton.h"
 %include "globals.h"
+%include "gameOptions.h"
 %include "gameMode.h"
 %include "gameWorld.h"
 %include "gameState.h"

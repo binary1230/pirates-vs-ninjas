@@ -22,14 +22,17 @@ namespace MapEditor
         {
             GameState.CreateInstance();
             GameState game = GameState.GetInstance();
-            
+
+            GameOptions.CreateInstance();
+            GameOptions options = GameOptions.GetInstance();
+
+            options.SetMapEditorEnabled(true);
+
             if (!game.Init(0, null))
                 return false;
 
             game.SetPaused(true);
             Paused = true;
-
-            GameWorld.GetInstance().InitEditor();
 
             return true;
         }

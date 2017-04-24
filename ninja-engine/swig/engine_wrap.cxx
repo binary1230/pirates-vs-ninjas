@@ -303,6 +303,7 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_engine(SWIG_CSharpStringH
 
 
 #include "globals.h"
+#include "gameOptions.h"
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
@@ -1598,6 +1599,250 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_REDIRECT_STDERR_FILENAME_get() {
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameOptions_GetInstance() {
+  void * jresult ;
+  GameOptions *result = 0 ;
+  
+  result = (GameOptions *)GameOptions::GetInstance();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_SetInstance(void * jarg1) {
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  
+  arg1 = (GameOptions *)jarg1; 
+  GameOptions::SetInstance(arg1);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_CreateInstance() {
+  GameOptions::CreateInstance();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_FreeInstance() {
+  GameOptions::FreeInstance();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_GetMapEditorEnabled(void * jarg1) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (bool)(arg1)->GetMapEditorEnabled();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_SetMapEditorEnabled(void * jarg1, unsigned int jarg2) {
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (GameOptions *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetMapEditorEnabled(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_PrintOptions(void * jarg1, char * jarg2) {
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  arg1 = (GameOptions *)jarg1; 
+  arg2 = (char *)jarg2; 
+  (arg1)->PrintOptions((char const *)arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_PrintBanner(void * jarg1) {
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  
+  arg1 = (GameOptions *)jarg1; 
+  (arg1)->PrintBanner();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_ParseArguments(void * jarg1, int jarg2, void * jarg3) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  int arg2 ;
+  char **arg3 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (char **)jarg3; 
+  result = (bool)(arg1)->ParseArguments(arg2,(char const *(*))arg3);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_IsValid(void * jarg1) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (bool)(arg1)->IsValid();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_Clear(void * jarg1) {
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  
+  arg1 = (GameOptions *)jarg1; 
+  (arg1)->Clear();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_IsFullscreen(void * jarg1) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (bool)(arg1)->IsFullscreen();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_GameOptions_GetDemoFilename(void * jarg1) {
+  char * jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  char *result = 0 ;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (char *)(arg1)->GetDemoFilename();
+  jresult = SWIG_csharp_string_callback((const char *)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_RecordDemo(void * jarg1) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (bool)(arg1)->RecordDemo();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_PlaybackDemo(void * jarg1) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (bool)(arg1)->PlaybackDemo();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GameOptions_GraphicsMode(void * jarg1) {
+  int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  int result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (int)(arg1)->GraphicsMode();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_GameOptions_GetFirstModeOverride(void * jarg1) {
+  char * jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  char *result = 0 ;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (char *)(arg1)->GetFirstModeOverride();
+  jresult = SWIG_csharp_string_callback((const char *)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_SoundEnabled(void * jarg1) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (bool)(arg1)->SoundEnabled();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_GetDebugStartPaused(void * jarg1) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (bool)(arg1)->GetDebugStartPaused();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GameOptions_GetDebugMessageLevel(void * jarg1) {
+  int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  int result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (int)(arg1)->GetDebugMessageLevel();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_DrawGraphics(void * jarg1) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (bool)(arg1)->DrawGraphics();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_WaitForUpdates(void * jarg1) {
+  unsigned int jresult ;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  arg1 = (GameOptions *)jarg1; 
+  result = (bool)(arg1)->WaitForUpdates();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_GameOptions(void * jarg1) {
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  
+  arg1 = (GameOptions *)jarg1; 
+  delete arg1;
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_GameModeExitInfo_useExitInfo_set(void * jarg1, unsigned int jarg2) {
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
   bool arg2 ;
@@ -1954,14 +2199,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_Shutdown(void * jarg1) {
   
   arg1 = (GameWorld *)jarg1; 
   (arg1)->Shutdown();
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_InitEditor(void * jarg1) {
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  
-  arg1 = (GameWorld *)jarg1; 
-  (arg1)->InitEditor();
 }
 
 

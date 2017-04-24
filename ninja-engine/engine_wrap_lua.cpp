@@ -2699,36 +2699,37 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_Editor swig_types[1]
 #define SWIGTYPE_p_GameMode swig_types[2]
 #define SWIGTYPE_p_GameModeExitInfo swig_types[3]
-#define SWIGTYPE_p_GameState swig_types[4]
-#define SWIGTYPE_p_GameWorld swig_types[5]
-#define SWIGTYPE_p_Object swig_types[6]
-#define SWIGTYPE_p_ObjectFactory swig_types[7]
-#define SWIGTYPE_p_ObjectLayer swig_types[8]
-#define SWIGTYPE_p_ObjectPlayer swig_types[9]
-#define SWIGTYPE_p_ObjectProperties swig_types[10]
-#define SWIGTYPE_p_Sprite swig_types[11]
-#define SWIGTYPE_p_XMLNode swig_types[12]
-#define SWIGTYPE_p__Rect swig_types[13]
-#define SWIGTYPE_p_b2Vec2 swig_types[14]
-#define SWIGTYPE_p_b2WorldManifold swig_types[15]
-#define SWIGTYPE_p_int swig_types[16]
-#define SWIGTYPE_p_listT_Object_p_t swig_types[17]
-#define SWIGTYPE_p_listT_Object_p_t__const_iterator swig_types[18]
-#define SWIGTYPE_p_listT_Object_p_t__const_reverse_iterator swig_types[19]
-#define SWIGTYPE_p_listT_Object_p_t__iterator swig_types[20]
-#define SWIGTYPE_p_listT_Object_p_t__reverse_iterator swig_types[21]
-#define SWIGTYPE_p_p_char swig_types[22]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[23]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[24]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[25]
-#define SWIGTYPE_p_std__string swig_types[26]
-#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[27]
-#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[28]
-#define SWIGTYPE_p_std__vectorT_Object_p_t__iterator swig_types[29]
-#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[30]
-#define SWIGTYPE_p_unsigned_int swig_types[31]
-static swig_type_info *swig_types[33];
-static swig_module_info swig_module = {swig_types, 32, 0, 0, 0, 0};
+#define SWIGTYPE_p_GameOptions swig_types[4]
+#define SWIGTYPE_p_GameState swig_types[5]
+#define SWIGTYPE_p_GameWorld swig_types[6]
+#define SWIGTYPE_p_Object swig_types[7]
+#define SWIGTYPE_p_ObjectFactory swig_types[8]
+#define SWIGTYPE_p_ObjectLayer swig_types[9]
+#define SWIGTYPE_p_ObjectPlayer swig_types[10]
+#define SWIGTYPE_p_ObjectProperties swig_types[11]
+#define SWIGTYPE_p_Sprite swig_types[12]
+#define SWIGTYPE_p_XMLNode swig_types[13]
+#define SWIGTYPE_p__Rect swig_types[14]
+#define SWIGTYPE_p_b2Vec2 swig_types[15]
+#define SWIGTYPE_p_b2WorldManifold swig_types[16]
+#define SWIGTYPE_p_int swig_types[17]
+#define SWIGTYPE_p_listT_Object_p_t swig_types[18]
+#define SWIGTYPE_p_listT_Object_p_t__const_iterator swig_types[19]
+#define SWIGTYPE_p_listT_Object_p_t__const_reverse_iterator swig_types[20]
+#define SWIGTYPE_p_listT_Object_p_t__iterator swig_types[21]
+#define SWIGTYPE_p_listT_Object_p_t__reverse_iterator swig_types[22]
+#define SWIGTYPE_p_p_char swig_types[23]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[24]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[25]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[26]
+#define SWIGTYPE_p_std__string swig_types[27]
+#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[28]
+#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[29]
+#define SWIGTYPE_p_std__vectorT_Object_p_t__iterator swig_types[30]
+#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[31]
+#define SWIGTYPE_p_unsigned_int swig_types[32]
+static swig_type_info *swig_types[34];
+static swig_module_info swig_module = {swig_types, 33, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2746,6 +2747,7 @@ typedef struct{} LANGUAGE_OBJ;
 
 
 #include "globals.h"
+#include "gameOptions.h"
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
@@ -4082,6 +4084,583 @@ fail:
 }
 
 
+static int _wrap_GameOptions_GetInstance(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *result = 0 ;
+  
+  SWIG_check_num_args("GameOptions::GetInstance",0,0)
+  result = (GameOptions *)GameOptions::GetInstance();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_GameOptions,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_SetInstance(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  
+  SWIG_check_num_args("GameOptions::SetInstance",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::SetInstance",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_SetInstance",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  GameOptions::SetInstance(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_CreateInstance(lua_State* L) {
+  int SWIG_arg = 0;
+  
+  SWIG_check_num_args("GameOptions::CreateInstance",0,0)
+  GameOptions::CreateInstance();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_FreeInstance(lua_State* L) {
+  int SWIG_arg = 0;
+  
+  SWIG_check_num_args("GameOptions::FreeInstance",0,0)
+  GameOptions::FreeInstance();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_GetMapEditorEnabled(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::GetMapEditorEnabled",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::GetMapEditorEnabled",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_GetMapEditorEnabled",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (bool)(arg1)->GetMapEditorEnabled();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_SetMapEditorEnabled(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("GameOptions::SetMapEditorEnabled",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::SetMapEditorEnabled",1,"GameOptions *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameOptions::SetMapEditorEnabled",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_SetMapEditorEnabled",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetMapEditorEnabled(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_PrintOptions(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  SWIG_check_num_args("GameOptions::PrintOptions",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::PrintOptions",1,"GameOptions *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("GameOptions::PrintOptions",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_PrintOptions",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  (arg1)->PrintOptions((char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_PrintBanner(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  
+  SWIG_check_num_args("GameOptions::PrintBanner",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::PrintBanner",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_PrintBanner",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  (arg1)->PrintBanner();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_ParseArguments(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  int arg2 ;
+  char **arg3 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::ParseArguments",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::ParseArguments",1,"GameOptions *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("GameOptions::ParseArguments",2,"int const");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("GameOptions::ParseArguments",3,"char const *[]");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_ParseArguments",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  arg2 = (int const)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_p_char,0))){
+    SWIG_fail_ptr("GameOptions_ParseArguments",3,SWIGTYPE_p_p_char);
+  }
+  
+  result = (bool)(arg1)->ParseArguments(arg2,(char const *(*))arg3);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_IsValid(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::IsValid",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::IsValid",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_IsValid",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (bool)(arg1)->IsValid();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_Clear(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  
+  SWIG_check_num_args("GameOptions::Clear",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::Clear",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_Clear",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  (arg1)->Clear();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_IsFullscreen(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::IsFullscreen",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::IsFullscreen",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_IsFullscreen",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (bool)(arg1)->IsFullscreen();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_GetDemoFilename(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  char *result = 0 ;
+  
+  SWIG_check_num_args("GameOptions::GetDemoFilename",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::GetDemoFilename",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_GetDemoFilename",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (char *)(arg1)->GetDemoFilename();
+  lua_pushstring(L,(const char *)result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_RecordDemo(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::RecordDemo",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::RecordDemo",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_RecordDemo",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (bool)(arg1)->RecordDemo();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_PlaybackDemo(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::PlaybackDemo",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::PlaybackDemo",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_PlaybackDemo",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (bool)(arg1)->PlaybackDemo();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_GraphicsMode(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("GameOptions::GraphicsMode",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::GraphicsMode",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_GraphicsMode",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (int)(arg1)->GraphicsMode();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_GetFirstModeOverride(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  char *result = 0 ;
+  
+  SWIG_check_num_args("GameOptions::GetFirstModeOverride",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::GetFirstModeOverride",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_GetFirstModeOverride",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (char *)(arg1)->GetFirstModeOverride();
+  lua_pushstring(L,(const char *)result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_SoundEnabled(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::SoundEnabled",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::SoundEnabled",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_SoundEnabled",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (bool)(arg1)->SoundEnabled();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_GetDebugStartPaused(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::GetDebugStartPaused",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::GetDebugStartPaused",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_GetDebugStartPaused",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (bool)(arg1)->GetDebugStartPaused();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_GetDebugMessageLevel(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("GameOptions::GetDebugMessageLevel",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::GetDebugMessageLevel",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_GetDebugMessageLevel",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (int)(arg1)->GetDebugMessageLevel();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_DrawGraphics(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::DrawGraphics",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::DrawGraphics",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_DrawGraphics",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (bool)(arg1)->DrawGraphics();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameOptions_WaitForUpdates(lua_State* L) {
+  int SWIG_arg = 0;
+  GameOptions *arg1 = (GameOptions *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameOptions::WaitForUpdates",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::WaitForUpdates",1,"GameOptions *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
+    SWIG_fail_ptr("GameOptions_WaitForUpdates",1,SWIGTYPE_p_GameOptions);
+  }
+  
+  result = (bool)(arg1)->WaitForUpdates();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_GameOptions(void *obj) {
+GameOptions *arg1 = (GameOptions *) obj;
+delete arg1;
+}
+static swig_lua_attribute swig_GameOptions_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_method swig_GameOptions_methods[]= {
+    { "GetMapEditorEnabled", _wrap_GameOptions_GetMapEditorEnabled},
+    { "SetMapEditorEnabled", _wrap_GameOptions_SetMapEditorEnabled},
+    { "PrintOptions", _wrap_GameOptions_PrintOptions},
+    { "PrintBanner", _wrap_GameOptions_PrintBanner},
+    { "ParseArguments", _wrap_GameOptions_ParseArguments},
+    { "IsValid", _wrap_GameOptions_IsValid},
+    { "Clear", _wrap_GameOptions_Clear},
+    { "IsFullscreen", _wrap_GameOptions_IsFullscreen},
+    { "GetDemoFilename", _wrap_GameOptions_GetDemoFilename},
+    { "RecordDemo", _wrap_GameOptions_RecordDemo},
+    { "PlaybackDemo", _wrap_GameOptions_PlaybackDemo},
+    { "GraphicsMode", _wrap_GameOptions_GraphicsMode},
+    { "GetFirstModeOverride", _wrap_GameOptions_GetFirstModeOverride},
+    { "SoundEnabled", _wrap_GameOptions_SoundEnabled},
+    { "GetDebugStartPaused", _wrap_GameOptions_GetDebugStartPaused},
+    { "GetDebugMessageLevel", _wrap_GameOptions_GetDebugMessageLevel},
+    { "DrawGraphics", _wrap_GameOptions_DrawGraphics},
+    { "WaitForUpdates", _wrap_GameOptions_WaitForUpdates},
+    {0,0}
+};
+static swig_lua_method swig_GameOptions_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_GameOptions_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_GameOptions_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_GameOptions_Sf_SwigStatic_methods[]= {
+    { "GetInstance", _wrap_GameOptions_GetInstance},
+    { "SetInstance", _wrap_GameOptions_SetInstance},
+    { "CreateInstance", _wrap_GameOptions_CreateInstance},
+    { "FreeInstance", _wrap_GameOptions_FreeInstance},
+    {0,0}
+};
+static swig_lua_class* swig_GameOptions_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_GameOptions_Sf_SwigStatic = {
+    "GameOptions",
+    swig_GameOptions_Sf_SwigStatic_methods,
+    swig_GameOptions_Sf_SwigStatic_attributes,
+    swig_GameOptions_Sf_SwigStatic_constants,
+    swig_GameOptions_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_GameOptions_bases[] = {0};
+static const char *swig_GameOptions_base_names[] = {0};
+static swig_lua_class _wrap_class_GameOptions = { "GameOptions", "GameOptions", &SWIGTYPE_p_GameOptions,0, swig_delete_GameOptions, swig_GameOptions_methods, swig_GameOptions_attributes, &swig_GameOptions_Sf_SwigStatic, swig_GameOptions_meta, swig_GameOptions_bases, swig_GameOptions_base_names };
+
 static int _wrap_GameModeExitInfo_useExitInfo_set(lua_State* L) {
   int SWIG_arg = 0;
   GameModeExitInfo *arg1 = (GameModeExitInfo *) 0 ;
@@ -4907,29 +5486,6 @@ static int _wrap_GameWorld_Shutdown(lua_State* L) {
   }
   
   (arg1)->Shutdown();
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_GameWorld_InitEditor(lua_State* L) {
-  int SWIG_arg = 0;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  
-  SWIG_check_num_args("GameWorld::InitEditor",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::InitEditor",1,"GameWorld *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_InitEditor",1,SWIGTYPE_p_GameWorld);
-  }
-  
-  (arg1)->InitEditor();
   
   return SWIG_arg;
   
@@ -6107,7 +6663,6 @@ static swig_lua_method swig_GameWorld_methods[]= {
     { "GetObjects", _wrap_GameWorld_GetObjects},
     { "Init", _wrap_GameWorld_Init},
     { "Shutdown", _wrap_GameWorld_Shutdown},
-    { "InitEditor", _wrap_GameWorld_InitEditor},
     { "GetEditor", _wrap_GameWorld_GetEditor},
     { "UseScrollSpeed", _wrap_GameWorld_UseScrollSpeed},
     { "IsLoading", _wrap_GameWorld_IsLoading},
@@ -11778,6 +12333,10 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
 static swig_lua_method swig_SwigModule_methods[]= {
     { "StringSplit", _wrap_StringSplit},
     { "DebugTrace", _wrap_DebugTrace},
+    { "GameOptions_GetInstance", _wrap_GameOptions_GetInstance},
+    { "GameOptions_SetInstance", _wrap_GameOptions_SetInstance},
+    { "GameOptions_CreateInstance", _wrap_GameOptions_CreateInstance},
+    { "GameOptions_FreeInstance", _wrap_GameOptions_FreeInstance},
     { "GameWorld_GetInstance", _wrap_GameWorld_GetInstance},
     { "GameWorld_SetInstance", _wrap_GameWorld_SetInstance},
     { "GameWorld_CreateInstance", _wrap_GameWorld_CreateInstance},
@@ -11802,6 +12361,7 @@ static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_string,
 &_wrap_class_ObjectVector,
 &_wrap_class_ObjectLayerVector,
+&_wrap_class_GameOptions,
 &_wrap_class_GameModeExitInfo,
 &_wrap_class_GameMode,
 &_wrap_class_GameWorld,
@@ -11843,6 +12403,7 @@ static swig_type_info _swigt__p_CollisionDirection = {"_p_CollisionDirection", "
 static swig_type_info _swigt__p_Editor = {"_p_Editor", "Editor *", 0, 0, (void*)&_wrap_class_Editor, 0};
 static swig_type_info _swigt__p_GameMode = {"_p_GameMode", "GameMode *", 0, 0, (void*)&_wrap_class_GameMode, 0};
 static swig_type_info _swigt__p_GameModeExitInfo = {"_p_GameModeExitInfo", "GameModeExitInfo *", 0, 0, (void*)&_wrap_class_GameModeExitInfo, 0};
+static swig_type_info _swigt__p_GameOptions = {"_p_GameOptions", "GameOptions *", 0, 0, (void*)&_wrap_class_GameOptions, 0};
 static swig_type_info _swigt__p_GameState = {"_p_GameState", "GameState *", 0, 0, (void*)&_wrap_class_GameState, 0};
 static swig_type_info _swigt__p_GameWorld = {"_p_GameWorld", "GameWorld *", 0, 0, (void*)&_wrap_class_GameWorld, 0};
 static swig_type_info _swigt__p_Object = {"_p_Object", "Object *", 0, 0, (void*)&_wrap_class_Object, 0};
@@ -11877,6 +12438,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Editor,
   &_swigt__p_GameMode,
   &_swigt__p_GameModeExitInfo,
+  &_swigt__p_GameOptions,
   &_swigt__p_GameState,
   &_swigt__p_GameWorld,
   &_swigt__p_Object,
@@ -11911,6 +12473,7 @@ static swig_cast_info _swigc__p_CollisionDirection[] = {  {&_swigt__p_CollisionD
 static swig_cast_info _swigc__p_Editor[] = {  {&_swigt__p_Editor, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameMode[] = {  {&_swigt__p_GameWorld, _p_GameWorldTo_p_GameMode, 0, 0},  {&_swigt__p_GameMode, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameModeExitInfo[] = {  {&_swigt__p_GameModeExitInfo, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_GameOptions[] = {  {&_swigt__p_GameOptions, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameState[] = {  {&_swigt__p_GameState, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameWorld[] = {  {&_swigt__p_GameWorld, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Object[] = {  {&_swigt__p_Object, 0, 0, 0},  {&_swigt__p_ObjectPlayer, _p_ObjectPlayerTo_p_Object, 0, 0},{0, 0, 0, 0}};
@@ -11945,6 +12508,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Editor,
   _swigc__p_GameMode,
   _swigc__p_GameModeExitInfo,
+  _swigc__p_GameOptions,
   _swigc__p_GameState,
   _swigc__p_GameWorld,
   _swigc__p_Object,

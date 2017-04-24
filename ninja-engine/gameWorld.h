@@ -154,7 +154,6 @@ class GameWorld : public GameMode {
 			virtual int Init(XMLNode);
 			virtual void Shutdown();
 
-			virtual void InitEditor();
 			inline Editor* GetEditor() {
 				return map_editor;
 			}

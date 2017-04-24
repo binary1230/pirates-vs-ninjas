@@ -9,7 +9,6 @@
 #include "gameMenu.h"
 #include "credits.h"
 #include "gameOptions.h"
-// #include "mapEditor.h"
 #include "luaManager.h"
 #include "animationeditor.h"
 

@@ -1,5 +1,7 @@
 // reads command line arguments and parse them
 
+#include "globals.h"
+
 #ifndef ARGS_H
 #define ARGS_H
 
@@ -42,18 +44,6 @@ class GameOptions {
 		//! Debug message level (default is DEFAULT_DEBUG_MSG_LEVEL)
 		int debug_message_level;
 
-		//! Network server to connect to
-		std::string network_server_name;
-
-		//! Network port to use
-		int network_port_num;
-
-		//! True if we are starting the game as a server
-		bool network_start_as_server;
-
-		//! True if networking is enabled
-		bool network_enabled;
-
 		//! Whether to do any drawing at all.  If false, no window appears
 		//! (Useful for running AI training faster)
 		bool draw_graphics;
@@ -64,6 +54,8 @@ class GameOptions {
 		//! For AI training or testing, you can set this to false to run fast
 		bool wait_for_updates;
 		
+		CREATE_PROPERTY(bool, MapEditorEnabled)
+
 	public:
 		//! Print the list of available options to stdout
 		void PrintOptions(const char* arg0);
@@ -115,13 +107,6 @@ class GameOptions {
 		//! Return the debug message level.
 		//! Right now, 0 = no messages, 1 = all messages
 		inline int GetDebugMessageLevel() {return debug_message_level;}
-
-		inline bool		IsNetworkEnabled() {return network_enabled;}
-		inline bool 	IsNetworkServer() {return network_start_as_server;}
-		inline int 		GetNetworkPortNumber() {return network_port_num;}
-		inline const char* GetNetworkServerName() {
-			return network_server_name.c_str();
-		}
 
 		inline bool		DrawGraphics() {return draw_graphics;}
 		inline bool		WaitForUpdates() {return wait_for_updates;}

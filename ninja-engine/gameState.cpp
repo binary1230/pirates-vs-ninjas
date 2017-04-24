@@ -247,21 +247,19 @@ bool GameState::InitAllegroEvents() {
 
 bool GameState::Init(const int argc, const char** argv) {
 	#ifdef REDIRECT_STDERR
-		TRACE("Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
+	TRACE("Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
 
-		if (!freopen(REDIRECT_STDERR_FILENAME, "wt", stderr)) {
-			printf("Couldn't redirect stderr to "REDIRECT_STDERR_FILENAME "!");
-		}
+	if (!freopen(REDIRECT_STDERR_FILENAME, "wt", stderr)) {
+		printf("Couldn't redirect stderr to "REDIRECT_STDERR_FILENAME "!");
+	}
 
-		TRACE("Main: redirected output.\n");
+	TRACE("Main: redirected output.\n");
 	#endif
 
-	OPTIONS->CreateInstance();
-	OPTIONS->PrintBanner();
-
-	OPTIONS->ParseArguments(argc, argv);
-	if (argv) 
-		OPTIONS->PrintOptions(argv[0]);
+	if (!OPTIONS) {
+		OPTIONS->CreateInstance();
+		OPTIONS->ParseArguments(argc, argv);
+	}
 
 	if (!OPTIONS->IsValid()) {
 		TRACE("ERROR: Failed to init game - invalid commandline args!\n");
