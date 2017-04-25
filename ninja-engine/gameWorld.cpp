@@ -456,6 +456,8 @@ int GameWorld::Load(XMLNode &xMode) {
 			return -1;
 	}
 
+	WINDOW->SetClearColor(m_bgColor.r, m_bgColor.g, m_bgColor.b);
+
 	if (!PHYSICS->OnWorldInit())
 	{
 		TRACE("ERROR: InitSystems: failed to init (part 2) PhysicsManager::OnLevelLoaded()!\n");
@@ -634,9 +636,7 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 
 	m_bgColor = al_map_rgb_f(0.0f, 0.0f, 0.0f);
 
-	if (xProps.nChildNode("bgcolor") != 1) {
-		WINDOW->SetClearColor(0,0,0);
-	} else {
+	if (xProps.nChildNode("bgcolor") == 1) {
 		xColor = xProps.getChildNode("bgcolor");
 		int r,g,b;
 	
@@ -649,7 +649,6 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 		}
 
 		m_bgColor = al_map_rgb(r,g,b);
-		WINDOW->SetClearColor(r,g,b);
 	}
 
 	m_bgColorTop = al_map_rgb_f(-1.0f, -1.0f, -1.0f);

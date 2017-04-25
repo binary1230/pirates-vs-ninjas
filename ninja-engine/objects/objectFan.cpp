@@ -16,8 +16,8 @@ void ObjectFan::Shutdown() {
 }
 
 void ObjectFan::Update() {
-	use_rotation = true;
-	rotate_velocity *= FAN_DECAY_RATE;
+	_use_rotation = true;
+	_rotate_velocity *= FAN_DECAY_RATE;
 	
 	BaseUpdate();
 	UpdateSimpleAnimations();
@@ -36,7 +36,7 @@ void ObjectFan::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) 
 			direction = 1.0f;
 
 		// calc the new rotational velocity
-		rotate_velocity = direction * std::max(DEFAULT_FAN_VELOCITY*player_factor, (float)fabs(rotate_velocity));
+		_rotate_velocity = direction * std::max(DEFAULT_FAN_VELOCITY*player_factor, (float)fabs(_rotate_velocity));
 	}
 }
 

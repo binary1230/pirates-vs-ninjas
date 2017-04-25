@@ -144,13 +144,18 @@ inline void ClearProperties(struct ObjectProperties& p) {
 class Object {
 	friend class boost::serialization::access;
 	template<class Archive>
-	void serialize(Archive & ar, const unsigned int /* file_version */)
+	void serialize(Archive & ar, const unsigned int file_version)
 	{
 		ar & BOOST_SERIALIZATION_NVP(pos);
 		ar & BOOST_SERIALIZATION_NVP(objectDefName);
 		ar & BOOST_SERIALIZATION_NVP(controller_num);
 		ar & BOOST_SERIALIZATION_NVP(properties);
 		ar & BOOST_SERIALIZATION_NVP(m_pkLayer);
+
+		if (file_version >= 2) {
+			ar & BOOST_SERIALIZATION_NVP(_use_rotation);
+			ar & BOOST_SERIALIZATION_NVP(_rotate_velocity);
+		}
 	}
 
 	// implement "prototype pattern" for object creation
@@ -252,14 +257,14 @@ class Object {
 		int b_box_width, b_box_height;
 
 		//! Rotational parameters
-		float rotate_angle, rotate_velocity;
-		bool use_rotation;
+		float rotate_angle, _rotate_velocity;
+		bool _use_rotation;
 
 		//! Whether to draw the bounding box or not
 		bool m_bDrawBoundingBox;
 		ALLEGRO_COLOR _bounding_box_color;
 
-		b2Body* m_pkPhysicsBody;
+		b2Body* _physics_body;
 
 		// loading-only paramaters
 		AnimationMapping m_animationMapping;
@@ -328,8 +333,8 @@ class Object {
 		}
 		inline void SetXY(const b2Vec2 &_pos) {
 			pos = _pos;
-			if (m_pkPhysicsBody)
-				PHYSICS->UpdatePhysicsBodyPosition(m_pkPhysicsBody, pos.x, pos.y, GetWidth(), GetHeight());
+			if (_physics_body)
+				PHYSICS->UpdatePhysicsBodyPosition(_physics_body, pos.x, pos.y, GetWidth(), GetHeight());
 		}
 
 		inline int GetAlpha() { return alpha; };
@@ -340,42 +345,42 @@ class Object {
 
 		//! Functions to get/set velocity
 		inline float GetVelX() 					{ 
-			return m_pkPhysicsBody ? m_pkPhysicsBody->GetLinearVelocity().x : 0.0f; 
+			return _physics_body ? _physics_body->GetLinearVelocity().x : 0.0f; 
 		}
 
 		inline float GetVelY() 					{ 
-			return m_pkPhysicsBody ? m_pkPhysicsBody->GetLinearVelocity().y : 0.0f; 
+			return _physics_body ? _physics_body->GetLinearVelocity().y : 0.0f; 
 		}
 
 		inline b2Vec2 GetVelXY() const { 
-			return m_pkPhysicsBody ? m_pkPhysicsBody->GetLinearVelocity() : b2Vec2(0.0f, 0.0f); 
+			return _physics_body ? _physics_body->GetLinearVelocity() : b2Vec2(0.0f, 0.0f); 
 		}
 
 		inline void SetVelX(const float _vx) 		{ 
-			if (m_pkPhysicsBody)
-				m_pkPhysicsBody->SetLinearVelocity(b2Vec2(_vx, m_pkPhysicsBody->GetLinearVelocity().y));
+			if (_physics_body)
+				_physics_body->SetLinearVelocity(b2Vec2(_vx, _physics_body->GetLinearVelocity().y));
 		}
 		inline void SetVelY(const float _vy) 		{ 
-			if (m_pkPhysicsBody)
-				m_pkPhysicsBody->SetLinearVelocity(b2Vec2(m_pkPhysicsBody->GetLinearVelocity().x, _vy));
+			if (_physics_body)
+				_physics_body->SetLinearVelocity(b2Vec2(_physics_body->GetLinearVelocity().x, _vy));
 		}
 
 		inline void SetVelXY(const float _vx, const float _vy) {
-			if (m_pkPhysicsBody)
-				m_pkPhysicsBody->SetLinearVelocity(b2Vec2(_vx, _vy));
+			if (_physics_body)
+				_physics_body->SetLinearVelocity(b2Vec2(_vx, _vy));
 		}
 
 		inline void SetVelXY(const b2Vec2& v) {
-			if (m_pkPhysicsBody)
-				m_pkPhysicsBody->SetLinearVelocity(v); 
+			if (_physics_body)
+				_physics_body->SetLinearVelocity(v); 
 		}
 		
 		inline void SetVelRotate(const float vel) {
-			rotate_velocity = vel;
+			_rotate_velocity = vel;
 		}
 
 		inline void SetUseRotation(const bool state) {
-			use_rotation = state;
+			_use_rotation = state;
 		}
 
 		//! Get width/height of this object
@@ -436,6 +441,7 @@ bool ObjectIsDead(Object* obj);
 
 #if !defined(SWIG) 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
+BOOST_CLASS_VERSION(Object, 2)
 #endif // SWIG
 
 #endif // __OBJECT_H

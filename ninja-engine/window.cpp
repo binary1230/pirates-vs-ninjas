@@ -307,11 +307,8 @@ void GameWindow::DrawSprite(Sprite* sprite, int x, int y,
 	// sprite->use_alpha, alpha 
 }
 
-void GameWindow::SetClearColor(uint r, uint g, uint b) {
-	glClearColor(	float(r)/256.0f, 
-					float(g)/256.0f, 
-					float(b)/256.0f,
-					1.0f );
+void GameWindow::SetClearColor(float r, float g, float b) {
+	glClearColor(r, g, b, 1.0f);
 }
 
 int GameWindow::Init( uint _width, uint _height, bool _fullscreen, int _mode) 

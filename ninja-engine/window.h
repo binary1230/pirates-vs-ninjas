@@ -99,7 +99,7 @@ class GameWindow {
 										int bottom_y, int top_y, 
 										int level_height );
 
-		void SetClearColor(uint r, uint g, uint b);
+		void SetClearColor(float r, float g, float b);
 
 		void BeginDrawing();
 		void EndDrawing();

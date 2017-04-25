@@ -46,23 +46,23 @@ void Object::BaseUpdate() {
 	UpdateDisplayTime();
 	UpdateFade();
 
-	if (m_pkPhysicsBody)
+	if (_physics_body)
 	{
 		UpdatePositionFromPhysicsLocation();
 
 		if (!properties.do_our_own_rotation)
 		{
-			use_rotation = true;
-			rotate_angle = RAD_TO_DEG(-m_pkPhysicsBody->GetAngle());
+			_use_rotation = true;
+			rotate_angle = RAD_TO_DEG(-_physics_body->GetAngle());
 		}
 	}
 
-	if (use_rotation)
+	if (_use_rotation)
 	{
 		if (properties.do_our_own_rotation)
 		{
 			// ignore physics for rotation, use our own
-			rotate_angle += rotate_velocity;
+			rotate_angle += _rotate_velocity;
 		}
 	}
 }
@@ -82,7 +82,7 @@ void Object::UpdateDisplayTime() {
 
 void Object::InitPhysics()
 {
-	if (m_pkPhysicsBody)
+	if (_physics_body)
 	{
 		TRACE("WARNING: physics already initialized for this object, skipping.");
 		return;
@@ -104,11 +104,11 @@ void Object::InitPhysics()
 		fDensity = 0.1f;
 
 	if (properties.is_static)
-		m_pkPhysicsBody = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, GetWidth(), GetHeight(), properties.is_sensor);
+		_physics_body = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, GetWidth(), GetHeight(), properties.is_sensor);
 	else
-		m_pkPhysicsBody = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, GetWidth(), GetHeight(), properties.ignores_physics_rotation, fDensity, properties.use_angled_corners_collision_box);
+		_physics_body = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, GetWidth(), GetHeight(), properties.ignores_physics_rotation, fDensity, properties.use_angled_corners_collision_box);
 
-	m_pkPhysicsBody->SetUserData(this);
+	_physics_body->SetUserData(this);
 }
 
 void Object::UpdateFade() {
@@ -142,8 +142,8 @@ void Object::Clear() {
 	alpha = 255;
 	display_time = -1;
 	controller_num = 0;
-	rotate_angle = rotate_velocity = 0.0f;
-	use_rotation = false;
+	rotate_angle = _rotate_velocity = 0.0f;
+	_use_rotation = false;
 	b_box_offset_x = b_box_offset_y = 0;
 	b_box_width = b_box_height = 0;
 	m_pkLayer = NULL;
@@ -160,7 +160,7 @@ void Object::Clear() {
 	alpha = 255;
 	b_box_offset_x = b_box_offset_y = 0;
 	m_bDrawBoundingBox = false;
-	m_pkPhysicsBody = NULL;
+	_physics_body = NULL;
 	debug_flag = false;
 
 	unique_id = Object::debug_object_id++;
@@ -250,13 +250,13 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 		sprite_to_draw = currentSprite;
 
 	if (sprite_to_draw)
-		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha);
+		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, _use_rotation, rotate_angle, alpha);
 
 	#if DEBUG_DRAW_SPRITE
 	if (sprite_to_draw && (b_box_offset_x || b_box_offset_y))
 	{
 		const bool bOnlyDrawBoundingBox = true;
-		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, use_rotation, rotate_angle, alpha, bOnlyDrawBoundingBox);
+		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, _use_rotation, rotate_angle, alpha, bOnlyDrawBoundingBox);
 	}
 	#endif
 
@@ -302,9 +302,9 @@ void Object::ResetForNextFrame()
 {
 	m_kCurrentCollision.up = m_kCurrentCollision.down = m_kCurrentCollision.left = m_kCurrentCollision.right = 0;
 
-	if (m_pkPhysicsBody)
+	if (_physics_body)
 	{
-		const b2Vec2& kPos = m_pkPhysicsBody->GetPosition();
+		const b2Vec2& kPos = _physics_body->GetPosition();
 		pos.x = kPos.x;
 		pos.y = kPos.y;
 	}
@@ -328,8 +328,8 @@ void Object::BaseShutdown() {
 	is_dead = true;
 	display_time = -1;
 
-	if (PHYSICS && m_pkPhysicsBody)
-		PHYSICS->RemoveFromWorld(m_pkPhysicsBody);
+	if (PHYSICS && _physics_body)
+		PHYSICS->RemoveFromWorld(_physics_body);
 }
 
 unsigned long Object::debug_object_id = 0;
@@ -369,14 +369,14 @@ void Object::ApplyImpulse( float x, float y )
 
 void Object::ApplyImpulse(const b2Vec2& v)
 {
-	if (m_pkPhysicsBody)
-		m_pkPhysicsBody->ApplyLinearImpulseToCenter(v, true);
+	if (_physics_body)
+		_physics_body->ApplyLinearImpulseToCenter(v, true);
 }
 
 void Object::UpdatePositionFromPhysicsLocation()
 {
-	pos.x = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().x) - float(GetWidth()) / 2;
-	pos.y = METERS_TO_PIXELS(m_pkPhysicsBody->GetPosition().y) - float(GetHeight()) / 2;
+	pos.x = METERS_TO_PIXELS(_physics_body->GetPosition().x) - float(GetWidth()) / 2;
+	pos.y = METERS_TO_PIXELS(_physics_body->GetPosition().y) - float(GetHeight()) / 2;
 }
 
 bool Object::FinishLoading()

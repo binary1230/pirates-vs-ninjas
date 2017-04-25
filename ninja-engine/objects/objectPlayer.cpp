@@ -89,8 +89,8 @@ void ObjectPlayer::UpdateLeftRightMotion()
 			velChange *= boost;
 		}
 
-		assert(m_pkPhysicsBody);
-		float impulse = m_pkPhysicsBody->GetMass() * velChange;
+		assert(_physics_body);
+		float impulse = _physics_body->GetMass() * velChange;
 
 		ApplyImpulse(impulse, 0.0f);
 	}
@@ -125,8 +125,8 @@ void ObjectPlayer::Update()
 
 		if (INPUT->KeyOnce(PLAYERKEY_JUMP, controller_num))
 		{
-			m_pkPhysicsBody->ApplyLinearImpulseToCenter(
-				b2Vec2(0.0f, m_pkPhysicsBody->GetMass() * DEFAULT_JUMP_VELOCITY), true
+			_physics_body->ApplyLinearImpulseToCenter(
+				b2Vec2(0.0f, _physics_body->GetMass() * DEFAULT_JUMP_VELOCITY), true
 			);
 			SOUND->PlaySound("jump");
 			m_kPlayerState = JUMPING;
@@ -212,7 +212,7 @@ void ObjectPlayer::Update()
 			// HACK: offset just the tiniest amount to make us not collide with the wall anymore.
 			const int iOffset = 3;
 			int iHackPixelOffset = m_kCurrentCollision.left ? iOffset : -iOffset;
-			m_pkPhysicsBody->SetTransform(m_pkPhysicsBody->GetWorldCenter() + b2Vec2(PIXELS_TO_METERS(iHackPixelOffset), 0.0f), m_pkPhysicsBody->GetAngle());
+			_physics_body->SetTransform(_physics_body->GetWorldCenter() + b2Vec2(PIXELS_TO_METERS(iHackPixelOffset), 0.0f), _physics_body->GetAngle());
 
 			SetVelY(DEFAULT_JUMP_VELOCITY * 0.9f);
 
@@ -325,16 +325,16 @@ void ObjectPlayer::ScreenBoundsConstraint() {
 		if (pos.x < 0) {
 			SetVelX(0.0f);
 			int newPosX = 20;
-			m_pkPhysicsBody->SetTransform(b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), m_pkPhysicsBody->GetAngle());
+			_physics_body->SetTransform(b2Vec2(PIXELS_TO_METERS(newPosX), _physics_body->GetWorldCenter().y), _physics_body->GetAngle());
 			pos.x = newPosX;
 			UpdatePositionFromPhysicsLocation();
 		}
 		else if (pos.x >(WORLD->GetWidth() - GetWidth())) {
 			SetVelX(0.0f);
 			float newPosX = WORLD->GetWidth() - GetWidth();
-			m_pkPhysicsBody->SetTransform(
-				b2Vec2(PIXELS_TO_METERS(newPosX), m_pkPhysicsBody->GetWorldCenter().y), 
-				m_pkPhysicsBody->GetAngle()
+			_physics_body->SetTransform(
+				b2Vec2(PIXELS_TO_METERS(newPosX), _physics_body->GetWorldCenter().y), 
+				_physics_body->GetAngle()
 			);
 			UpdatePositionFromPhysicsLocation();
 		}
