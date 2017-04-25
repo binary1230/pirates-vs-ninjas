@@ -2426,29 +2426,19 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SaveWorldOverCurrentFile(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_CreateWorld__SWIG_0(char * jarg1, unsigned int jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_CreateWorld(char * jarg1) {
+  void * jresult ;
   std::string arg1 ;
-  bool arg2 ;
+  GameWorld *result = 0 ;
   
   if (!jarg1) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return ;
+    return 0;
   }
   (&arg1)->assign(jarg1); 
-  arg2 = jarg2 ? true : false; 
-  GameWorld::CreateWorld(arg1,arg2);
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_CreateWorld__SWIG_1(char * jarg1) {
-  std::string arg1 ;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return ;
-  }
-  (&arg1)->assign(jarg1); 
-  GameWorld::CreateWorld(arg1);
+  result = (GameWorld *)GameWorld::CreateWorld(arg1);
+  jresult = (void *)result; 
+  return jresult;
 }
 
 

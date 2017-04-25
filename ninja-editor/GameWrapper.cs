@@ -29,7 +29,7 @@ namespace MapEditor
             GameOptions options = GameOptions.GetInstance();
 
             options.SetMapEditorEnabled(true);
-            options.SetFirstMode("level2-simulation.xml");
+            options.SetFirstMode("level_1.xml");
 
             if (!game.Init(0, null))
                 return false;

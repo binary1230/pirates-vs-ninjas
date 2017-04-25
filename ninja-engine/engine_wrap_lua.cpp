@@ -6106,37 +6106,16 @@ fail:
 }
 
 
-static int _wrap_GameWorld_CreateWorld__SWIG_0(lua_State* L) {
+static int _wrap_GameWorld_CreateWorld(lua_State* L) {
   int SWIG_arg = 0;
   std::string arg1 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("GameWorld::CreateWorld",2,2)
-  if(!lua_isstring(L,1)) SWIG_fail_arg("GameWorld::CreateWorld",1,"std::string");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameWorld::CreateWorld",2,"bool");
-  (&arg1)->assign(lua_tostring(L,1),lua_rawlen(L,1));
-  arg2 = (lua_toboolean(L, 2)!=0);
-  GameWorld::CreateWorld(arg1,arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_GameWorld_CreateWorld__SWIG_1(lua_State* L) {
-  int SWIG_arg = 0;
-  std::string arg1 ;
+  GameWorld *result = 0 ;
   
   SWIG_check_num_args("GameWorld::CreateWorld",1,1)
   if(!lua_isstring(L,1)) SWIG_fail_arg("GameWorld::CreateWorld",1,"std::string");
   (&arg1)->assign(lua_tostring(L,1),lua_rawlen(L,1));
-  GameWorld::CreateWorld(arg1);
-  
+  result = (GameWorld *)GameWorld::CreateWorld(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_GameWorld,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6144,45 +6123,6 @@ static int _wrap_GameWorld_CreateWorld__SWIG_1(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
-}
-
-
-static int _wrap_GameWorld_CreateWorld(lua_State* L) {
-  int argc;
-  int argv[3]={
-    1,2,3
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 1) {
-    int _v;
-    {
-      _v = lua_isstring(L,argv[0]);
-    }
-    if (_v) {
-      return _wrap_GameWorld_CreateWorld__SWIG_1(L);
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    {
-      _v = lua_isstring(L,argv[0]);
-    }
-    if (_v) {
-      {
-        _v = lua_isboolean(L,argv[1]);
-      }
-      if (_v) {
-        return _wrap_GameWorld_CreateWorld__SWIG_0(L);
-      }
-    }
-  }
-  
-  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'GameWorld_CreateWorld'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    GameWorld::CreateWorld(std::string,bool)\n"
-    "    GameWorld::CreateWorld(std::string)\n");
-  lua_error(L);return 0;
 }
 
 

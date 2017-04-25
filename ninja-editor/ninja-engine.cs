@@ -1121,14 +1121,11 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_SaveWorldOverCurrentFile(swigCPtr);
   }
 
-  public static void CreateWorld(string mode_filename, bool use_new_loading_system) {
-    enginePINVOKE.GameWorld_CreateWorld__SWIG_0(mode_filename, use_new_loading_system);
+  public static GameWorld CreateWorld(string mode_filename) {
+    global::System.IntPtr cPtr = enginePINVOKE.GameWorld_CreateWorld(mode_filename);
+    GameWorld ret = (cPtr == global::System.IntPtr.Zero) ? null : new GameWorld(cPtr, false);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public static void CreateWorld(string mode_filename) {
-    enginePINVOKE.GameWorld_CreateWorld__SWIG_1(mode_filename);
-    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
   }
 
   public int GetWidth() {
@@ -3005,11 +3002,8 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SaveWorldOverCurrentFile")]
   public static extern void GameWorld_SaveWorldOverCurrentFile(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_CreateWorld__SWIG_0")]
-  public static extern void GameWorld_CreateWorld__SWIG_0(string jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_CreateWorld__SWIG_1")]
-  public static extern void GameWorld_CreateWorld__SWIG_1(string jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_CreateWorld")]
+  public static extern global::System.IntPtr GameWorld_CreateWorld(string jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetWidth")]
   public static extern int GameWorld_GetWidth(global::System.Runtime.InteropServices.HandleRef jarg1);

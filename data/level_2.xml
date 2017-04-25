@@ -3470,7 +3470,7 @@
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
 			<door_type>0</door_type>
-			<mode_to_jump_to_on_activate>jouten-shop.xml</mode_to_jump_to_on_activate>
+			<mode_to_jump_to_on_activate>level_2_shop.xml</mode_to_jump_to_on_activate>
 			<door_name>joutenShop</door_name>
 		</item>
 		<item class_id_reference="10" object_id_reference="_7"></item>

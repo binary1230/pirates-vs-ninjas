@@ -203,7 +203,7 @@ class GameWorld : public GameMode {
 
 			void SaveWorldOverCurrentFile();
 
-			static void CreateWorld(string mode_filename, bool use_new_loading_system = false);
+			static GameWorld* CreateWorld(string mode_filename);
 
 			int GetWidth() {return m_iLevelWidth;};
 			int GetHeight() {return m_iLevelHeight;};

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="14">
+<this class_id="0" tracking_level="1" version="1" object_id="_0">
+	<GameMode class_id="1" tracking_level="0" version="0"></GameMode>
+	<objects class_id="2" tracking_level="0" version="0">
+		<count>9</count>
+		<item_version>0</item_version>
+		<item class_id="3" class_name="ObjectCutBars" tracking_level="1" version="0" object_id="_1">
+			<Object class_id="4" tracking_level="0" version="2">
+				<pos class_id="5" tracking_level="0" version="0">
+					<x>0.000000000e+00</x>
+					<y>0.000000000e+00</y>
+				</pos>
+				<objectDefName>CutBars</objectDefName>
+				<controller_num>0</controller_num>
+				<properties class_id="6" tracking_level="0" version="0">
+					<p.feels_gravity>0</p.feels_gravity>
+					<p.feels_user_input>0</p.feels_user_input>
+					<p.feels_friction>0</p.feels_friction>
+					<p.spawns_enemies>0</p.spawns_enemies>
+					<p.uses_physics_engine>0</p.uses_physics_engine>
+					<p.is_static>0</p.is_static>
+					<p.is_sensor>0</p.is_sensor>
+					<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
+					<p.do_our_own_rotation>0</p.do_our_own_rotation>
+					<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
+					<p.is_overlay>1</p.is_overlay>
+					<p.is_player>0</p.is_player>
+					<p.is_spring>0</p.is_spring>
+					<p.is_collectable>0</p.is_collectable>
+					<p.is_fan>0</p.is_fan>
+					<p.is_door>0</p.is_door>
+					<p.is_ring>0</p.is_ring>
+					<p.is_ball>0</p.is_ball>
+					<p.is_badguy>0</p.is_badguy>
+				</properties>
+				<m_pkLayer class_id="7" tracking_level="1" version="0" object_id="_2">
+					<objects>
+						<count>1</count>
+						<item_version>0</item_version>
+						<item class_id_reference="3" object_id_reference="_1"></item>
+					</objects>
+					<scroll_speed>1.000000000e+00</scroll_speed>
+					<name>overlays</name>
+					<visible>1</visible>
+				</m_pkLayer>
+				<_use_rotation>0</_use_rotation>
+				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+			</Object>
+		</item>
+		<item class_id="8" class_name="ObjectPlayer" tracking_level="1" version="0" object_id="_3">
+			<Object>
+				<pos>
+					<x>1.500000000e+01</x>
+					<y>2.000000000e+01</y>
+				</pos>
+				<objectDefName>amaya</objectDefName>
+				<controller_num>1</controller_num>
+				<properties>
+					<p.feels_gravity>1</p.feels_gravity>
+					<p.feels_user_input>1</p.feels_user_input>
+					<p.feels_friction>1</p.feels_friction>
+					<p.spawns_enemies>0</p.spawns_enemies>
+					<p.uses_physics_engine>1</p.uses_physics_engine>
+					<p.is_static>0</p.is_static>
+					<p.is_sensor>0</p.is_sensor>
+					<p.ignores_physics_rotation>1</p.ignores_physics_rotation>
+					<p.do_our_own_rotation>0</p.do_our_own_rotation>
+					<p.use_angled_corners_collision_box>1</p.use_angled_corners_collision_box>
+					<p.is_overlay>0</p.is_overlay>
+					<p.is_player>1</p.is_player>
+					<p.is_spring>0</p.is_spring>
+					<p.is_collectable>0</p.is_collectable>
+					<p.is_fan>0</p.is_fan>
+					<p.is_door>0</p.is_door>
+					<p.is_ring>0</p.is_ring>
+					<p.is_ball>0</p.is_ball>
+					<p.is_badguy>0</p.is_badguy>
+				</properties>
+				<m_pkLayer class_id_reference="7" object_id="_4">
+					<objects>
+						<count>2</count>
+						<item_version>0</item_version>
+						<item class_id_reference="8" object_id_reference="_3"></item>
+						<item class_id="9" class_name="ObjectDoor" tracking_level="1" version="0" object_id="_5">
+							<Object>
+								<pos>
+									<x>5.000000000e+01</x>
+									<y>2.000000000e+01</y>
+								</pos>
+								<objectDefName>door-bright</objectDefName>
+								<controller_num>0</controller_num>
+								<properties>
+									<p.feels_gravity>0</p.feels_gravity>
+									<p.feels_user_input>0</p.feels_user_input>
+									<p.feels_friction>0</p.feels_friction>
+									<p.spawns_enemies>0</p.spawns_enemies>
+									<p.uses_physics_engine>1</p.uses_physics_engine>
+									<p.is_static>1</p.is_static>
+									<p.is_sensor>1</p.is_sensor>
+									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
+									<p.do_our_own_rotation>0</p.do_our_own_rotation>
+									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
+									<p.is_overlay>0</p.is_overlay>
+									<p.is_player>0</p.is_player>
+									<p.is_spring>0</p.is_spring>
+									<p.is_collectable>0</p.is_collectable>
+									<p.is_fan>0</p.is_fan>
+									<p.is_door>1</p.is_door>
+									<p.is_ring>0</p.is_ring>
+									<p.is_ball>0</p.is_ball>
+									<p.is_badguy>0</p.is_badguy>
+								</properties>
+								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<_use_rotation>0</_use_rotation>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+							<door_type>3</door_type>
+							<mode_to_jump_to_on_activate></mode_to_jump_to_on_activate>
+							<door_name>joutenShop</door_name>
+						</item>
+					</objects>
+					<scroll_speed>1.000000000e+00</scroll_speed>
+					<name>fg</name>
+					<visible>1</visible>
+				</m_pkLayer>
+				<_use_rotation>0</_use_rotation>
+				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+			</Object>
+		</item>
+		<item class_id_reference="9" object_id_reference="_5"></item>
+		<item class_id="10" class_name="ObjectStatic" tracking_level="1" version="0" object_id="_6">
+			<Object>
+				<pos>
+					<x>0.000000000e+00</x>
+					<y>0.000000000e+00</y>
+				</pos>
+				<objectDefName>jouten-shop</objectDefName>
+				<controller_num>0</controller_num>
+				<properties>
+					<p.feels_gravity>0</p.feels_gravity>
+					<p.feels_user_input>0</p.feels_user_input>
+					<p.feels_friction>0</p.feels_friction>
+					<p.spawns_enemies>0</p.spawns_enemies>
+					<p.uses_physics_engine>0</p.uses_physics_engine>
+					<p.is_static>1</p.is_static>
+					<p.is_sensor>0</p.is_sensor>
+					<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
+					<p.do_our_own_rotation>0</p.do_our_own_rotation>
+					<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
+					<p.is_overlay>0</p.is_overlay>
+					<p.is_player>0</p.is_player>
+					<p.is_spring>0</p.is_spring>
+					<p.is_collectable>0</p.is_collectable>
+					<p.is_fan>0</p.is_fan>
+					<p.is_door>0</p.is_door>
+					<p.is_ring>0</p.is_ring>
+					<p.is_ball>0</p.is_ball>
+					<p.is_badguy>0</p.is_badguy>
+				</properties>
+				<m_pkLayer class_id_reference="7" object_id="_7">
+					<objects>
+						<count>6</count>
+						<item_version>0</item_version>
+						<item class_id_reference="10" object_id_reference="_6"></item>
+						<item class_id_reference="10" object_id="_8">
+							<Object>
+								<pos>
+									<x>8.000000000e+02</x>
+									<y>0.000000000e+00</y>
+								</pos>
+								<objectDefName>block3</objectDefName>
+								<controller_num>0</controller_num>
+								<properties>
+									<p.feels_gravity>0</p.feels_gravity>
+									<p.feels_user_input>0</p.feels_user_input>
+									<p.feels_friction>0</p.feels_friction>
+									<p.spawns_enemies>0</p.spawns_enemies>
+									<p.uses_physics_engine>1</p.uses_physics_engine>
+									<p.is_static>1</p.is_static>
+									<p.is_sensor>0</p.is_sensor>
+									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
+									<p.do_our_own_rotation>0</p.do_our_own_rotation>
+									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
+									<p.is_overlay>0</p.is_overlay>
+									<p.is_player>0</p.is_player>
+									<p.is_spring>0</p.is_spring>
+									<p.is_collectable>0</p.is_collectable>
+									<p.is_fan>0</p.is_fan>
+									<p.is_door>0</p.is_door>
+									<p.is_ring>0</p.is_ring>
+									<p.is_ball>0</p.is_ball>
+									<p.is_badguy>0</p.is_badguy>
+								</properties>
+								<m_pkLayer class_id_reference="7" object_id_reference="_7"></m_pkLayer>
+								<_use_rotation>0</_use_rotation>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="10" object_id="_9">
+							<Object>
+								<pos>
+									<x>6.000000000e+02</x>
+									<y>0.000000000e+00</y>
+								</pos>
+								<objectDefName>block3</objectDefName>
+								<controller_num>0</controller_num>
+								<properties>
+									<p.feels_gravity>0</p.feels_gravity>
+									<p.feels_user_input>0</p.feels_user_input>
+									<p.feels_friction>0</p.feels_friction>
+									<p.spawns_enemies>0</p.spawns_enemies>
+									<p.uses_physics_engine>1</p.uses_physics_engine>
+									<p.is_static>1</p.is_static>
+									<p.is_sensor>0</p.is_sensor>
+									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
+									<p.do_our_own_rotation>0</p.do_our_own_rotation>
+									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
+									<p.is_overlay>0</p.is_overlay>
+									<p.is_player>0</p.is_player>
+									<p.is_spring>0</p.is_spring>
+									<p.is_collectable>0</p.is_collectable>
+									<p.is_fan>0</p.is_fan>
+									<p.is_door>0</p.is_door>
+									<p.is_ring>0</p.is_ring>
+									<p.is_ball>0</p.is_ball>
+									<p.is_badguy>0</p.is_badguy>
+								</properties>
+								<m_pkLayer class_id_reference="7" object_id_reference="_7"></m_pkLayer>
+								<_use_rotation>0</_use_rotation>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="10" object_id="_10">
+							<Object>
+								<pos>
+									<x>4.000000000e+02</x>
+									<y>0.000000000e+00</y>
+								</pos>
+								<objectDefName>block3</objectDefName>
+								<controller_num>0</controller_num>
+								<properties>
+									<p.feels_gravity>0</p.feels_gravity>
+									<p.feels_user_input>0</p.feels_user_input>
+									<p.feels_friction>0</p.feels_friction>
+									<p.spawns_enemies>0</p.spawns_enemies>
+									<p.uses_physics_engine>1</p.uses_physics_engine>
+									<p.is_static>1</p.is_static>
+									<p.is_sensor>0</p.is_sensor>
+									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
+									<p.do_our_own_rotation>0</p.do_our_own_rotation>
+									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
+									<p.is_overlay>0</p.is_overlay>
+									<p.is_player>0</p.is_player>
+									<p.is_spring>0</p.is_spring>
+									<p.is_collectable>0</p.is_collectable>
+									<p.is_fan>0</p.is_fan>
+									<p.is_door>0</p.is_door>
+									<p.is_ring>0</p.is_ring>
+									<p.is_ball>0</p.is_ball>
+									<p.is_badguy>0</p.is_badguy>
+								</properties>
+								<m_pkLayer class_id_reference="7" object_id_reference="_7"></m_pkLayer>
+								<_use_rotation>0</_use_rotation>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="10" object_id="_11">
+							<Object>
+								<pos>
+									<x>2.000000000e+02</x>
+									<y>0.000000000e+00</y>
+								</pos>
+								<objectDefName>block3</objectDefName>
+								<controller_num>0</controller_num>
+								<properties>
+									<p.feels_gravity>0</p.feels_gravity>
+									<p.feels_user_input>0</p.feels_user_input>
+									<p.feels_friction>0</p.feels_friction>
+									<p.spawns_enemies>0</p.spawns_enemies>
+									<p.uses_physics_engine>1</p.uses_physics_engine>
+									<p.is_static>1</p.is_static>
+									<p.is_sensor>0</p.is_sensor>
+									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
+									<p.do_our_own_rotation>0</p.do_our_own_rotation>
+									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
+									<p.is_overlay>0</p.is_overlay>
+									<p.is_player>0</p.is_player>
+									<p.is_spring>0</p.is_spring>
+									<p.is_collectable>0</p.is_collectable>
+									<p.is_fan>0</p.is_fan>
+									<p.is_door>0</p.is_door>
+									<p.is_ring>0</p.is_ring>
+									<p.is_ball>0</p.is_ball>
+									<p.is_badguy>0</p.is_badguy>
+								</properties>
+								<m_pkLayer class_id_reference="7" object_id_reference="_7"></m_pkLayer>
+								<_use_rotation>0</_use_rotation>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="10" object_id="_12">
+							<Object>
+								<pos>
+									<x>0.000000000e+00</x>
+									<y>0.000000000e+00</y>
+								</pos>
+								<objectDefName>block3</objectDefName>
+								<controller_num>0</controller_num>
+								<properties>
+									<p.feels_gravity>0</p.feels_gravity>
+									<p.feels_user_input>0</p.feels_user_input>
+									<p.feels_friction>0</p.feels_friction>
+									<p.spawns_enemies>0</p.spawns_enemies>
+									<p.uses_physics_engine>1</p.uses_physics_engine>
+									<p.is_static>1</p.is_static>
+									<p.is_sensor>0</p.is_sensor>
+									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
+									<p.do_our_own_rotation>0</p.do_our_own_rotation>
+									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
+									<p.is_overlay>0</p.is_overlay>
+									<p.is_player>0</p.is_player>
+									<p.is_spring>0</p.is_spring>
+									<p.is_collectable>0</p.is_collectable>
+									<p.is_fan>0</p.is_fan>
+									<p.is_door>0</p.is_door>
+									<p.is_ring>0</p.is_ring>
+									<p.is_ball>0</p.is_ball>
+									<p.is_badguy>0</p.is_badguy>
+								</properties>
+								<m_pkLayer class_id_reference="7" object_id_reference="_7"></m_pkLayer>
+								<_use_rotation>0</_use_rotation>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+					</objects>
+					<scroll_speed>1.000000000e+00</scroll_speed>
+					<name>bg_objects</name>
+					<visible>1</visible>
+				</m_pkLayer>
+				<_use_rotation>0</_use_rotation>
+				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+			</Object>
+		</item>
+		<item class_id_reference="10" object_id_reference="_8"></item>
+		<item class_id_reference="10" object_id_reference="_9"></item>
+		<item class_id_reference="10" object_id_reference="_10"></item>
+		<item class_id_reference="10" object_id_reference="_11"></item>
+		<item class_id_reference="10" object_id_reference="_12"></item>
+	</objects>
+	<layers class_id="11" tracking_level="0" version="0">
+		<count>3</count>
+		<item_version>0</item_version>
+		<item class_id_reference="7" object_id_reference="_7"></item>
+		<item class_id_reference="7" object_id_reference="_4"></item>
+		<item class_id_reference="7" object_id_reference="_2"></item>
+	</layers>
+	<bgcolor class_id="12" tracking_level="0" version="0">
+		<r>0.000000000e+00</r>
+		<g>0.000000000e+00</g>
+		<b>0.000000000e+00</b>
+		<a>1.000000000e+00</a>
+	</bgcolor>
+	<bgcolor_top>
+		<r>-1.000000000e+00</r>
+		<g>-1.000000000e+00</g>
+		<b>-1.000000000e+00</b>
+		<a>1.000000000e+00</a>
+	</bgcolor_top>
+	<music>jouten-shop.ogg</music>
+	<width>640</width>
+	<height>480</height>
+	<lua_script></lua_script>
+	<m_pkCameraLookatTarget class_id_reference="8" object_id_reference="_3"></m_pkCameraLookatTarget>
+	<m_included_effect_xml_files class_id="13" tracking_level="0" version="0">
+		<count>1</count>
+		<item_version>0</item_version>
+		<item>common-effects.xml</item>
+	</m_included_effect_xml_files>
+	<m_included_objectdef_xml_files>
+		<count>4</count>
+		<item_version>0</item_version>
+		<item>common-objects.xml</item>
+		<item>objects/door2.xml</item>
+		<item>objects/jouten-shop.xml</item>
+		<item>objects/block3.xml</item>
+	</m_included_objectdef_xml_files>
+</this>
+</boost_serialization>
+

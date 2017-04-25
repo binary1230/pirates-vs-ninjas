@@ -11,9 +11,9 @@
 	<xpos>25</xpos>
 
 	<ypositions>
-		<ypos>142<action>NewGame</action></ypos>
-		<ypos>167<disabled /></ypos>
-		<ypos>193<action>Quit</action></ypos>
+		<ypos>230<action>NewGame</action></ypos>
+		<ypos>250<disabled /></ypos>
+		<ypos>280<action>Quit</action></ypos>
 	</ypositions>
 
 	<moveSound>menu/move.wav</moveSound>

@@ -422,7 +422,9 @@ void GameWorld::SaveWorld(string filename)
 	oa << BOOST_SERIALIZATION_NVP(this);
 }
 
-void GameWorld::CreateWorld(string mode_filename = "", bool use_new_loading_system) {
+GameWorld* GameWorld::CreateWorld(string mode_filename = "") {
+	bool use_new_loading_system = mode_filename.find("-oldformat") == mode_filename.npos;
+
 	if (!use_new_loading_system) {
 		WORLD->CreateInstance();
 	} else {
@@ -435,6 +437,7 @@ void GameWorld::CreateWorld(string mode_filename = "", bool use_new_loading_syst
 	}
 
 	WORLD->SetUseNewLoadingSystem(use_new_loading_system);
+	return WORLD;
 }
 
 void GameWorld::LoadMusic(const char* music_file) {

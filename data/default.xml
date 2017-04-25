@@ -4,8 +4,8 @@
 <game>
 	<info>
 		Pirates Versus Ninjas
-		<requires_engine_version>0.2-beta</requires_engine_version>
-		<game_version>0.8</game_version>
+		<requires_engine_version>0.6</requires_engine_version>
+		<game_version>0.9</game_version>
 		<author>Dominic Cerquetti</author>
 	</info>
 
@@ -18,11 +18,11 @@
 	<mode_file>level2.xml</mode_file>
 	-->
 
-	<mode_file>menu.xml</mode_file>
-	<mode_file>level1-simulation.xml</mode_file>
-	<mode_file>level2-simulation.xml</mode_file> 
-	<mode_file>level2-fall.xml</mode_file>
-	<mode_file>credits.xml</mode_file>
+	<mode_file type="menu">menu.xml</mode_file>
+	<mode_file>level_1.xml</mode_file>
+	<mode_file>level_2.xml</mode_file> 
+	<mode_file>level_3.xml</mode_file>
+	<mode_file type="credits">credits.xml</mode_file>
 	
 	<!--
 	<mode_file>jouten-shop.xml</mode_file>

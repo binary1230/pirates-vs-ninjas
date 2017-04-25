@@ -53,12 +53,14 @@ void GameMenu::Draw() {
 
 	WINDOW->DrawSprite(back, x_offset, y_offset);
 
+	int hacky_offset = 350;
+
 	WINDOW->DrawSprite(selector,
-		x_pos1,
+		x_pos1 + hacky_offset,
 		y_offset + y_pos[current_pos]);
 
 	WINDOW->DrawSprite(selector,
-		x_pos2,
+		x_pos2 - hacky_offset,
 		y_offset + y_pos[current_pos], true);
 
 #ifdef DEBUG_VERSION_PRINT

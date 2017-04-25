@@ -90,32 +90,27 @@ std::string GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldExitInfo) {
 	currentMode = NULL;
 
-	#ifdef AI_TRAINING
-	TRACE(" AI: Enabling AI Training.\n");
-	#endif
-
 	TRACE(" Mode Info: filename '%s'\n", mode_filename.c_str() );
 	mode_filename = ASSETMANAGER->GetPathOf(mode_filename.c_str());
 
 	string modeType;
 	XMLNode xMode;
+	
+	bool isSimulation = mode_filename.find("level_") != mode_filename.npos;
 
-	bool forceSimulation = mode_filename.find("simulation") != mode_filename.npos;
-
-	if (forceSimulation) {
-		modeType = "simulation";
+	if (isSimulation) {
+		modeType = "simulation";	
 	} else {
+		// if we can't figure out what it is, look inside the included XML file
 		xMode = XMLNode::openFileHelper(mode_filename.c_str(), "gameMode");
 		modeType = xMode.getAttribute("type");
 	}
 
 	TRACE(" Mode Info: type = '%s'\n", modeType.c_str());
 
-	// actually create the new mode
 	if (modeType == "simulation") 
 	{
-		GameWorld::CreateWorld(mode_filename, forceSimulation);
-		currentMode = WORLD;
+		currentMode = GameWorld::CreateWorld(mode_filename);
 	} 
 	else if (modeType == "credits") 
 	{
