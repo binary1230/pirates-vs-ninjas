@@ -11337,6 +11337,32 @@ fail:
 }
 
 
+static int _wrap_Object_ResetVolatileState(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  VolatileStateLevel arg2 ;
+  
+  SWIG_check_num_args("Object::ResetVolatileState",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::ResetVolatileState",1,"Object *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Object::ResetVolatileState",2,"VolatileStateLevel");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_ResetVolatileState",1,SWIGTYPE_p_Object);
+  }
+  
+  arg2 = (VolatileStateLevel)(int)lua_tonumber(L, 2);
+  (arg1)->ResetVolatileState(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Object_AddPrototype(lua_State* L) {
   int SWIG_arg = 0;
   std::string arg1 ;
@@ -11445,6 +11471,7 @@ static swig_lua_method swig_Object_methods[]= {
     { "ApplyImpulse", _wrap_Object_ApplyImpulse},
     { "FinishLoading", _wrap_Object_FinishLoading},
     { "ContainsPoint", _wrap_Object_ContainsPoint},
+    { "ResetVolatileState", _wrap_Object_ResetVolatileState},
     {0,0}
 };
 static swig_lua_method swig_Object_meta[] = {
@@ -11624,6 +11651,32 @@ static int _wrap_ObjectPlayer_OnCollide(lua_State* L) {
   }
   
   (arg1)->OnCollide(arg2,(b2WorldManifold const *)arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ObjectPlayer_ResetVolatileState(lua_State* L) {
+  int SWIG_arg = 0;
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  VolatileStateLevel arg2 ;
+  
+  SWIG_check_num_args("ObjectPlayer::ResetVolatileState",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectPlayer::ResetVolatileState",1,"ObjectPlayer *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ObjectPlayer::ResetVolatileState",2,"VolatileStateLevel");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectPlayer,0))){
+    SWIG_fail_ptr("ObjectPlayer_ResetVolatileState",1,SWIGTYPE_p_ObjectPlayer);
+  }
+  
+  arg2 = (VolatileStateLevel)(int)lua_tonumber(L, 2);
+  (arg1)->ResetVolatileState(arg2);
   
   return SWIG_arg;
   
@@ -11819,6 +11872,7 @@ static swig_lua_method swig_ObjectPlayer_methods[]= {
     { "Shutdown", _wrap_ObjectPlayer_Shutdown},
     { "Update", _wrap_ObjectPlayer_Update},
     { "OnCollide", _wrap_ObjectPlayer_OnCollide},
+    { "ResetVolatileState", _wrap_ObjectPlayer_ResetVolatileState},
     { "OnAnimationLooped", _wrap_ObjectPlayer_OnAnimationLooped},
     { "PlayAnimation", _wrap_ObjectPlayer_PlayAnimation},
     { "GetNumRings", _wrap_ObjectPlayer_GetNumRings},
@@ -12601,6 +12655,32 @@ fail:
 }
 
 
+static int _wrap_Editor_ResetVolatileLevelState(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  VolatileStateLevel arg2 ;
+  
+  SWIG_check_num_args("Editor::ResetVolatileLevelState",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::ResetVolatileLevelState",1,"Editor *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Editor::ResetVolatileLevelState",2,"VolatileStateLevel");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_ResetVolatileLevelState",1,SWIGTYPE_p_Editor);
+  }
+  
+  arg2 = (VolatileStateLevel)(int)lua_tonumber(L, 2);
+  (arg1)->ResetVolatileLevelState(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Editor_UpdateMove(lua_State* L) {
   int SWIG_arg = 0;
   Editor *arg1 = (Editor *) 0 ;
@@ -12796,6 +12876,7 @@ static swig_lua_method swig_Editor_methods[]= {
     { "Draw", _wrap_Editor_Draw},
     { "CommonUpdate", _wrap_Editor_CommonUpdate},
     { "NoModeUpdate", _wrap_Editor_NoModeUpdate},
+    { "ResetVolatileLevelState", _wrap_Editor_ResetVolatileLevelState},
     { "UpdateMove", _wrap_Editor_UpdateMove},
     { "GetObjectUnderCursor", _wrap_Editor_GetObjectUnderCursor},
     { "SetDrawBoundingBoxes_AllObjects", _wrap_Editor_SetDrawBoundingBoxes_AllObjects},
@@ -12852,6 +12933,8 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {SWIG_LUA_CONSTTAB_INT("DEFAULT_MUSIC_BUFFER_SIZE", (1 << 16))},
     {SWIG_LUA_CONSTTAB_INT("DEFAULT_MUSIC_DATA_SIZE", (1 << 15))},
     {SWIG_LUA_CONSTTAB_STRING("REDIRECT_STDERR_FILENAME", "/Users/dcerquetti/game.log")},
+    {SWIG_LUA_CONSTTAB_INT("LEVEL_ITEMS", LEVEL_ITEMS)},
+    {SWIG_LUA_CONSTTAB_INT("LEVEL_PLAYERS", LEVEL_PLAYERS)},
     {SWIG_LUA_CONSTTAB_INT("STANDING", STANDING)},
     {SWIG_LUA_CONSTTAB_INT("JUMPING", JUMPING)},
     {SWIG_LUA_CONSTTAB_INT("FALLING", FALLING)},

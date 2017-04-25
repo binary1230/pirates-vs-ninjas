@@ -100,10 +100,6 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 
 	if (isSimulation) {
 		modeType = "simulation";	
-	} else {
-		// if we can't figure out what it is, look inside the included XML file
-		xMode = XMLNode::openFileHelper(mode_filename.c_str(), "gameMode");
-		modeType = xMode.getAttribute("type");
 	}
 
 	TRACE(" Mode Info: type = '%s'\n", modeType.c_str());
@@ -111,6 +107,17 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 	if (modeType == "simulation") 
 	{
 		currentMode = GameWorld::CreateWorld(mode_filename);
+	} 
+	
+	if (!isSimulation || !WORLD->GetUseNewLoadingSystem()) {
+		// if we can't figure out what it is, look inside the included XML file
+		xMode = XMLNode::openFileHelper(mode_filename.c_str(), "gameMode");
+		modeType = xMode.getAttribute("type");
+	}
+	
+	if (modeType == "simulation")
+	{
+		// do nothing now, special cased it above.
 	} 
 	else if (modeType == "credits") 
 	{

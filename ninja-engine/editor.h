@@ -2,8 +2,8 @@
 #define MAP_EDITOR_H
 
 #include "globals.h"
+#include "object.h"
 
-class Object;
 class ObjectLayer;
 
 enum EditorMode {
@@ -52,6 +52,7 @@ class Editor {
 		void Draw();
 		void CommonUpdate();
 		void NoModeUpdate();
+		void ResetVolatileLevelState(VolatileStateLevel level);
 		void UpdateMove();
 		Object * GetObjectUnderCursor();
 		void SetDrawBoundingBoxes_AllObjects(bool should_draw);

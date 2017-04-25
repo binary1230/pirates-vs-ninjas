@@ -38,6 +38,8 @@ int LUAAPI lua_world_create_cutbars(lua_State* lua) {
 
 			obj->SetLayer( WORLD->FindLayer("overlays") );
 			WORLD->AddObject(obj);
+
+			obj->Start();
 		}
 	}
 

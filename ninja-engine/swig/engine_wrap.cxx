@@ -4344,6 +4344,16 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_ContainsPoint(void * jarg1, vo
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_ResetVolatileState(void * jarg1, int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  VolatileStateLevel arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (VolatileStateLevel)jarg2; 
+  (arg1)->ResetVolatileState(arg2);
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_Object_AddPrototype(char * jarg1, void * jarg2) {
   void * jresult ;
   std::string arg1 ;
@@ -4439,6 +4449,16 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ObjectPlayer_OnCollide(void * jarg1, void * j
   arg2 = (Object *)jarg2; 
   arg3 = (b2WorldManifold *)jarg3; 
   (arg1)->OnCollide(arg2,(b2WorldManifold const *)arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectPlayer_ResetVolatileState(void * jarg1, int jarg2) {
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  VolatileStateLevel arg2 ;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  arg2 = (VolatileStateLevel)jarg2; 
+  (arg1)->ResetVolatileState(arg2);
 }
 
 
@@ -4872,6 +4892,16 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_NoModeUpdate(void * jarg1) {
   
   arg1 = (Editor *)jarg1; 
   (arg1)->NoModeUpdate();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_ResetVolatileLevelState(void * jarg1, int jarg2) {
+  Editor *arg1 = (Editor *) 0 ;
+  VolatileStateLevel arg2 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = (VolatileStateLevel)jarg2; 
+  (arg1)->ResetVolatileLevelState(arg2);
 }
 
 

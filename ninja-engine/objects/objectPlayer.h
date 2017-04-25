@@ -50,6 +50,9 @@ class ObjectPlayer : public Object {
 		// What we're currently doing
 		PlayerState m_kPlayerState;
 
+		//! position saved from when we were loaded, useful for map editor and such.
+		b2Vec2 _pos_at_load;
+
 		ObjectDoor* door_in_front_of_us;
 		int ring_count;
 
@@ -76,6 +79,8 @@ class ObjectPlayer : public Object {
 
 		virtual void Update();
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
+
+		virtual void ResetVolatileState(VolatileStateLevel level);
 
 		virtual void OnAnimationLooped();
 		virtual void PlayAnimation(uint uiIndex);

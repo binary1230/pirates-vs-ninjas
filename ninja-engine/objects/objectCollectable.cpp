@@ -32,13 +32,27 @@ bool ObjectCollectable::Init() {
 	return BaseInit();
 }
 
-ObjectCollectable::ObjectCollectable() {}
+void ObjectCollectable::ResetVolatileState(VolatileStateLevel level) {
+	if (level >= LEVEL_ITEMS) {
+		_Consumed = false;
+		_dont_draw = false;
+	}
+}
+
+ObjectCollectable::ObjectCollectable() 
+{
+	_Consumed = false;
+}
 ObjectCollectable::~ObjectCollectable() {}
 
 void ObjectCollectable::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
+	if (_Consumed)
+		return;
+
 	if (obj->GetProperties().is_player) {
 		SOUND->PlaySound("ring");
-		is_dead = true;
+		_Consumed = true;
+		_dont_draw = true;
 	}
 }
 

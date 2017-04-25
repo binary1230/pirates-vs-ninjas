@@ -132,6 +132,7 @@ void Object::FadeOut(int time) {
 }
 
 void Object::Clear() {
+	_dont_draw = false;
 	m_animationMapping.clear();
 	m_bDrawBoundingBox = false;
 	tmp_debug_flag = 0;
@@ -170,11 +171,16 @@ bool Object::BaseInit() {
 	return true;
 }
 
+void Object::ResetVolatileState(VolatileStateLevel level) {}
+
 void Object::Draw() {
 	assert(WORLD != NULL);
 
 	if (tmp_debug_flag)
 		TRACE("DEBUG FLAG!!\n");
+
+	if (_dont_draw)
+		return;
 
 	int flip_offset_x = -b_box_offset_x;
 	int flip_offset_y = 0;
@@ -381,7 +387,12 @@ void Object::UpdatePositionFromPhysicsLocation()
 
 bool Object::FinishLoading()
 {
-	XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(GetObjectDefName());
+	string objectDefName = GetObjectDefName();
+	XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(objectDefName);
+	if (!xDef) {
+		TRACE("Can't find object def named: %s", objectDefName.c_str());
+		return false;
+	}
 	assert(xDef);
 	return LoadFromObjectDef(*xDef);
 }

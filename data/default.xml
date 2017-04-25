@@ -19,6 +19,8 @@
 	-->
 
 	<mode_file type="menu">menu.xml</mode_file>
+	
+	<mode_file>level_0.xml</mode_file>
 	<mode_file>level_1.xml</mode_file>
 	<mode_file>level_2.xml</mode_file> 
 	<mode_file>level_3.xml</mode_file>

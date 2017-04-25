@@ -20,6 +20,7 @@ class ObjectCollectable : public Object {
 		IMPLEMENT_CLONE(ObjectCollectable)
 
 		bool Init();
+		virtual void ResetVolatileState(VolatileStateLevel level);
 		void Shutdown();
 		
 		void Update();
@@ -30,6 +31,8 @@ class ObjectCollectable : public Object {
 		~ObjectCollectable();
 
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
+
+		CREATE_PROPERTY(bool, Consumed);
 	
 		friend class ObjectFactory;
 };

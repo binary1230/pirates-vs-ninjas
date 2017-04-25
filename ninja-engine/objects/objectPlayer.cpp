@@ -15,6 +15,7 @@
 #include "effectsManager.h"
 #include "globalDefines.h"
 #include "physics.h"
+#include "objectCollectable.h"
 
 #define DEFAULT_JUMP_VELOCITY 9.0f
 #define DEFAULT_DRAG 0.95f
@@ -230,7 +231,7 @@ void ObjectPlayer::Update()
 		}
 		break;
 	default:
-		TRACE(" -- PLAYEROBJECT ERROR: Unkown state asked for!\n");
+		TRACE(" -- PLAYEROBJECT ERROR: Unkown _state asked for!\n");
 		assert(false);
 		break;
 	}
@@ -280,9 +281,12 @@ void ObjectPlayer::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 			SetVelY(sObj->GetSpringVector().y);
 		}
 	}
+}
 
-	if (obj->GetProperties().is_ring)
-		++ring_count;
+void ObjectPlayer::ResetVolatileState(VolatileStateLevel level) {
+	if (level >= LEVEL_PLAYERS) {
+		SetXY(_pos_at_load);
+	}
 }
 
 void ObjectPlayer::DropBombsIfNeeded()
@@ -387,6 +391,8 @@ bool ObjectPlayer::LoadObjectProperties(XMLNode &xDef) {
 	properties.use_angled_corners_collision_box = 1;
 
 	XMLNode xProps = xDef.getChildNode("properties");
+
+	_pos_at_load = pos;
 
 	return	xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
 			xProps.getChildNode("minVelocity").getFloat(min_velocity) &&

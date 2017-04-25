@@ -107,6 +107,14 @@ void Editor::CommonUpdate() {
 	if (INPUT->RealKeyOnce(ALLEGRO_KEY_G)) {
 		_SnapToGrid = !_SnapToGrid;
 	}
+
+	if (INPUT->RealKeyOnce(ALLEGRO_KEY_R)) {
+		ResetVolatileLevelState(LEVEL_ITEMS);
+	}
+
+	if (INPUT->RealKeyOnce(ALLEGRO_KEY_P)) {
+		ResetVolatileLevelState(LEVEL_PLAYERS);
+	}
 }
 
 void Editor::NoModeUpdate() {
@@ -137,6 +145,15 @@ void Editor::NoModeUpdate() {
 	}
 }
 
+// reset anything "volatile" that shouldn't get saved, like whether we picked up coins, player initial position, etc
+void Editor::ResetVolatileLevelState(VolatileStateLevel level) {
+	for (ObjectListIter iter = WORLD->m_objects.begin(); iter != WORLD->m_objects.end(); ++iter) {
+		Object* obj = *iter;
+
+		obj->ResetVolatileState(level);
+	}
+}
+
 void Editor::UpdateMove() {
 	assert(_mode == EDITOR_MOVE);
 	assert(_selection);
@@ -151,6 +168,7 @@ void Editor::UpdateMove() {
 	}
 
 	bool endMode =	INPUT->RealKeyOnce(ALLEGRO_KEY_ESCAPE) || 
+					INPUT->MouseButtonOnce(MOUSE_RIGHT_BTN) ||
 					(_pausedChanged && !GAMESTATE->IsPaused());
 
 	if (endMode) {

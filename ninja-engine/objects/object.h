@@ -22,6 +22,11 @@ struct CollisionDirection {
 	unsigned right : 1;
 };
 
+enum VolatileStateLevel {
+	LEVEL_ITEMS,
+	LEVEL_PLAYERS,
+};
+
 //! Various properties of an Object
 struct ObjectProperties 
 {
@@ -192,6 +197,8 @@ class Object {
 		//! Whether to flip the sprite when drawing
 		bool flip_x;
 		bool flip_y;
+
+		bool _dont_draw;
 
 		void Clear();
 		bool BaseInit();	
@@ -428,6 +435,8 @@ class Object {
 		//! True if the point 'p' is contained in the layer-space coordinates for this object
 		//! (layer-space = object's bounding box adjusted for layer scroll speeds)
 		bool ContainsPoint(const b2Vec2& p) const;
+
+		virtual void ResetVolatileState(VolatileStateLevel level);
 
 		static Object* AddPrototype(std::string type, Object* obj);
 		static Object* CreateObject(std::string type);

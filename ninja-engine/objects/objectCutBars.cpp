@@ -26,10 +26,10 @@ bool ObjectCutBars::LoadObjectProperties(XMLNode &xDef) {
 
 bool ObjectCutBars::Init() {
 	// Load default values from global XML
-	if (!GLOBALS->Value("cutbar_rate", rate) ||
-		!GLOBALS->Value("cutbar_maxsize", max_size) ||
-		!GLOBALS->Value("cutbar_alpha", box_alpha) ||
-		!GLOBALS->Value("cutbar_time_to_show", time_to_show)) {
+	if (!GLOBALS->Value("cutbar_rate", _rate) ||
+		!GLOBALS->Value("cutbar_maxsize", _max_size) ||
+		!GLOBALS->Value("cutbar_alpha", _box_alpha) ||
+		!GLOBALS->Value("cutbar_time_to_show", _time_to_show)) {
 		return false;
 	}
 
@@ -42,32 +42,32 @@ void ObjectCutBars::Shutdown() {
 
 void ObjectCutBars::Update() {
 
-	switch (state) {
+	switch (_state) {
 
 		case STATE_INACTIVE:
 			// do nothing
 			break;
 
 		case STATE_ROLL_IN:
-			real_pos += rate;
-			if (real_pos >= max_size) {
-				real_pos = max_size;
-				state = STATE_ACTIVE;
-				time_active = 0;
+			_real_pos += _rate;
+			if (_real_pos >= _max_size) {
+				_real_pos = _max_size;
+				_state = STATE_ACTIVE;
+				_time_active = 0;
 			}
 			break;
 
 		case STATE_ACTIVE:
-			++time_active;
-			if (time_active >= time_to_show)
-				state = STATE_ROLL_OUT;
+			++_time_active;
+			if (_time_active >= _time_to_show)
+				_state = STATE_ROLL_OUT;
 			break;
 
 		case STATE_ROLL_OUT:
-			real_pos -= rate;
-			if (real_pos <= 0) {
-				real_pos = 0;
-				state = STATE_INACTIVE;
+			_real_pos -= _rate;
+			if (_real_pos <= 0) {
+				_real_pos = 0;
+				_state = STATE_INACTIVE;
 				Stop();
 			}
 			break;
@@ -75,7 +75,7 @@ void ObjectCutBars::Update() {
 }
 
 void ObjectCutBars::Draw() {
-	if (state == STATE_INACTIVE)
+	if (_state == STATE_INACTIVE)
 		return;
 
 	int screen_height = WINDOW->Height();
@@ -83,44 +83,44 @@ void ObjectCutBars::Draw() {
 
 	// bottom bar
 	WINDOW->DrawRect(	0, 0,
-						screen_width, (int)real_pos,
-						al_map_rgb(0,0,0), true, box_alpha );
+						screen_width, (int)_real_pos,
+						al_map_rgb(0,0,0), true, _box_alpha );
 
 	// top bar
 	WINDOW->DrawRect(	0, screen_height,
-						screen_width, screen_height - (int)real_pos,
-						al_map_rgb(0,0,0), true, box_alpha );
+						screen_width, screen_height - (int)_real_pos,
+						al_map_rgb(0,0,0), true, _box_alpha );
 
 	// text
-	if (state == STATE_ACTIVE)
-		WINDOW->DrawText(30, screen_height - max_size + 2, txt);
+	if (_state == STATE_ACTIVE)
+		WINDOW->DrawText(30, screen_height - _max_size + 2, _txt);
 }
 
 void ObjectCutBars::Stop() {
-	state = STATE_INACTIVE;
+	_state = STATE_INACTIVE;
 	is_dead = true;
 }
 
 void ObjectCutBars::Start() {
-	state = STATE_ROLL_IN;
-	real_pos = 0;
+	_state = STATE_ROLL_IN;
+	_real_pos = 0;
 }
 
 void ObjectCutBars::Clear() {
 	Object::Clear();
 
-	txt = "PLACEHOLDER";
-	real_pos = 0.0f;
-	time_active = 0;
+	_txt = "PLACEHOLDER";
+	_real_pos = 0.0f;
+	_time_active = 0;
 
-	CutBarState state = STATE_INACTIVE;
+	_state = STATE_INACTIVE;
 
-	rate = 1.0f;
-	max_size = 0;
-	time_to_show = 0;
-	time_active = 0;
+	_rate = 1.0f;
+	_max_size = 0;
+	_time_to_show = 0;
+	_time_active = 0;
 
-	box_alpha = 255;
+	_box_alpha = 255;
 }
 
 ObjectCutBars::ObjectCutBars() {

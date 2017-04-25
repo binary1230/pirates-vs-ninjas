@@ -1492,6 +1492,11 @@ public class CollisionDirection : global::System.IDisposable {
 
 }
 
+public enum VolatileStateLevel {
+  LEVEL_ITEMS,
+  LEVEL_PLAYERS
+}
+
 public class ObjectProperties : global::System.IDisposable {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
@@ -2049,6 +2054,10 @@ public class Object : global::System.IDisposable {
     return ret;
   }
 
+  public virtual void ResetVolatileState(VolatileStateLevel level) {
+    enginePINVOKE.Object_ResetVolatileState(swigCPtr, (int)level);
+  }
+
   public static Object AddPrototype(string type, Object obj) {
     global::System.IntPtr cPtr = enginePINVOKE.Object_AddPrototype(type, Object.getCPtr(obj));
     Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
@@ -2133,6 +2142,10 @@ public class ObjectPlayer : Object {
 
   public override void OnCollide(Object obj, SWIGTYPE_p_b2WorldManifold pkbWorldManifold) {
     enginePINVOKE.ObjectPlayer_OnCollide(swigCPtr, Object.getCPtr(obj), SWIGTYPE_p_b2WorldManifold.getCPtr(pkbWorldManifold));
+  }
+
+  public override void ResetVolatileState(VolatileStateLevel level) {
+    enginePINVOKE.ObjectPlayer_ResetVolatileState(swigCPtr, (int)level);
   }
 
   public override void OnAnimationLooped() {
@@ -2363,6 +2376,10 @@ public class Editor : global::System.IDisposable {
 
   public void NoModeUpdate() {
     enginePINVOKE.Editor_NoModeUpdate(swigCPtr);
+  }
+
+  public void ResetVolatileLevelState(VolatileStateLevel level) {
+    enginePINVOKE.Editor_ResetVolatileLevelState(swigCPtr, (int)level);
   }
 
   public void UpdateMove() {
@@ -3521,6 +3538,9 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ContainsPoint")]
   public static extern bool Object_ContainsPoint(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ResetVolatileState")]
+  public static extern void Object_ResetVolatileState(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_AddPrototype")]
   public static extern global::System.IntPtr Object_AddPrototype(string jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
@@ -3544,6 +3564,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_OnCollide")]
   public static extern void ObjectPlayer_OnCollide(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_ResetVolatileState")]
+  public static extern void ObjectPlayer_ResetVolatileState(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_OnAnimationLooped")]
   public static extern void ObjectPlayer_OnAnimationLooped(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -3655,6 +3678,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_NoModeUpdate")]
   public static extern void Editor_NoModeUpdate(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_ResetVolatileLevelState")]
+  public static extern void Editor_ResetVolatileLevelState(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_UpdateMove")]
   public static extern void Editor_UpdateMove(global::System.Runtime.InteropServices.HandleRef jarg1);

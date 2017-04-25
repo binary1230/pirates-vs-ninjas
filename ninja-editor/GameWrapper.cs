@@ -29,7 +29,11 @@ namespace MapEditor
             GameOptions options = GameOptions.GetInstance();
 
             options.SetMapEditorEnabled(true);
-            options.SetFirstMode("level_1.xml");
+            
+            // TODO: load from a file selector, don't just hardcode this here. woof.
+            // options.SetFirstMode("level_1.xml");
+            options.SetFirstMode("level_0.xml");
+
 
             if (!game.Init(0, null))
                 return false;

@@ -19,20 +19,19 @@ class ObjectCutBars : public Object {
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
-		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
 	}
 		protected:
-			std::string txt;				// the text to show
-			CutBarState state;
-			float real_pos;			// the real position of the object
+			std::string _txt;				// the text to show
+			CutBarState _state;
+			float _real_pos;				// the real position of the object
 
-			float rate;					// the rate at which it moves
-			int max_size;				// the maximum size of the bar in px
+			float _rate;					// the _rate at which it moves
+			int _max_size;					// the maximum size of the bar in px
 			
-			int time_to_show;		// amount of time to show this before fading
-			int time_active;		// amount of time this has been active
+			int _time_to_show;				// amount of time to show this before fading
+			int _time_active;				// amount of time this has been active
 
-			int box_alpha;					// alpha for boxes
+			int _box_alpha;					// alpha for boxes
 			
 		public:
 			IMPLEMENT_CLONE(ObjectCutBars)
@@ -48,7 +47,7 @@ class ObjectCutBars : public Object {
 			void Start();
 			void Stop();
 
-			inline void SetText(const std::string &text) {txt = text;}
+			inline void SetText(const std::string &text) {_txt = text;}
 
 			void Update();
 			void Draw();
