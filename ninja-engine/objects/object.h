@@ -257,6 +257,7 @@ class Object {
 
 		//! Whether to draw the bounding box or not
 		bool m_bDrawBoundingBox;
+		ALLEGRO_COLOR _bounding_box_color;
 
 		b2Body* m_pkPhysicsBody;
 
@@ -290,16 +291,17 @@ class Object {
 		// as defined by the order we found them in the XML file.  Very prone to errors. HACKY
 		virtual void PlayAnimation(uint uiIndex);
 
-		void SetDrawBounds(bool bDrawBounds) {m_bDrawBoundingBox = bDrawBounds;}
+		void SetDrawBounds(bool bDrawBounds, ALLEGRO_COLOR color = al_map_rgb(255, 0, 255)) {
+			m_bDrawBoundingBox = bDrawBounds;
+			_bounding_box_color = color;
+		}
 		
 		//! Fade this object out over a given time (in frames)
 		void FadeOut(int time);
 
 		virtual void Draw();
 
-		void Transform(	int &x, int &y, 
-										const int &offset_x = 0, const int &offset_y = 0);
-
+		void Transform(	int &x, int &y, const int &offset_x = 0, const int &offset_y = 0);
 		void TransformRect(_Rect &r);
 
 		inline void SetDisplayTime(int time) {
@@ -417,6 +419,10 @@ class Object {
 		bool FinishLoading();
 		
 		virtual ~Object();
+
+		//! True if the point 'p' is contained in the layer-space coordinates for this object
+		//! (layer-space = object's bounding box adjusted for layer scroll speeds)
+		bool ContainsPoint(const b2Vec2& p) const;
 
 		static Object* AddPrototype(std::string type, Object* obj);
 		static Object* CreateObject(std::string type);

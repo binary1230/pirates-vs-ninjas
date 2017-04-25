@@ -269,7 +269,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 
 		// draw current bounding rectangle, pink
 		TransformRect(bbox_t);
-		WINDOW->DrawRect(bbox_t, al_map_rgb(255,0,255));
+		WINDOW->DrawRect(bbox_t, _bounding_box_color);
 	}
 }
 
@@ -535,6 +535,14 @@ Object::Object() {
 	Clear();
 }
 Object::~Object() {}
+
+bool Object::ContainsPoint(const b2Vec2 & p) const
+{
+	// point p must be in layer-space (i.e. already adjusted for layer scroll speed)
+
+	return  p.x >= pos.x && p.x <= pos.x + GetWidth() &&
+			p.y >= pos.y && p.y <= pos.y + GetHeight();
+}
 
 Object* Object::AddPrototype(string type, Object * obj)
 {

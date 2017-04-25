@@ -1026,6 +1026,15 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_SetUseNewLoadingSystem(swigCPtr, val);
   }
 
+  public bool GetAllowExiting() {
+    bool ret = enginePINVOKE.GameWorld_GetAllowExiting(swigCPtr);
+    return ret;
+  }
+
+  public void SetAllowExiting(bool val) {
+    enginePINVOKE.GameWorld_SetAllowExiting(swigCPtr, val);
+  }
+
   public ObjectVector GetObjects() {
     ObjectVector ret = new ObjectVector(enginePINVOKE.GameWorld_GetObjects(swigCPtr), true);
     return ret;
@@ -1802,8 +1811,13 @@ public class Object : global::System.IDisposable {
     enginePINVOKE.Object_PlayAnimation(swigCPtr, uiIndex);
   }
 
+  public void SetDrawBounds(bool bDrawBounds, SWIGTYPE_p_ALLEGRO_COLOR color) {
+    enginePINVOKE.Object_SetDrawBounds__SWIG_0(swigCPtr, bDrawBounds, SWIGTYPE_p_ALLEGRO_COLOR.getCPtr(color));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public void SetDrawBounds(bool bDrawBounds) {
-    enginePINVOKE.Object_SetDrawBounds(swigCPtr, bDrawBounds);
+    enginePINVOKE.Object_SetDrawBounds__SWIG_1(swigCPtr, bDrawBounds);
   }
 
   public void FadeOut(int time) {
@@ -2029,6 +2043,12 @@ public class Object : global::System.IDisposable {
 
   public bool FinishLoading() {
     bool ret = enginePINVOKE.Object_FinishLoading(swigCPtr);
+    return ret;
+  }
+
+  public bool ContainsPoint(SWIGTYPE_p_b2Vec2 p) {
+    bool ret = enginePINVOKE.Object_ContainsPoint(swigCPtr, SWIGTYPE_p_b2Vec2.getCPtr(p));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
@@ -2265,6 +2285,12 @@ public class ObjectFactory : global::System.IDisposable {
 
 }
 
+public enum EditorMode {
+  EDITOR_NONE,
+  EDITOR_MOVE,
+  EDITOR_SELECT
+}
+
 public class Editor : global::System.IDisposable {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
@@ -2308,20 +2334,60 @@ public class Editor : global::System.IDisposable {
     enginePINVOKE.Editor_CreateAndSelectObject(swigCPtr, objDefName, layerName);
   }
 
+  public void CreateAndSelect_UsePreviousLayerAndObject() {
+    enginePINVOKE.Editor_CreateAndSelect_UsePreviousLayerAndObject(swigCPtr);
+  }
+
+  public void MouseToLayerCoords(SWIGTYPE_p_b2Vec2 layer_coord_out, ObjectLayer layer) {
+    enginePINVOKE.Editor_MouseToLayerCoords(swigCPtr, SWIGTYPE_p_b2Vec2.getCPtr(layer_coord_out), ObjectLayer.getCPtr(layer));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void SnapToGrid(SWIGTYPE_p_b2Vec2 pos) {
+    enginePINVOKE.Editor_SnapToGrid(swigCPtr, SWIGTYPE_p_b2Vec2.getCPtr(pos));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public void UpdateSelectedObjectPosition() {
     enginePINVOKE.Editor_UpdateSelectedObjectPosition(swigCPtr);
   }
 
-  public void UnselectCurrentlySelectedObject() {
-    enginePINVOKE.Editor_UnselectCurrentlySelectedObject(swigCPtr);
+  public void SelectObject(Object obj) {
+    enginePINVOKE.Editor_SelectObject(swigCPtr, Object.getCPtr(obj));
   }
 
   public void Draw() {
     enginePINVOKE.Editor_Draw(swigCPtr);
   }
 
+  public void CommonUpdate() {
+    enginePINVOKE.Editor_CommonUpdate(swigCPtr);
+  }
+
+  public void NoModeUpdate() {
+    enginePINVOKE.Editor_NoModeUpdate(swigCPtr);
+  }
+
+  public void UpdateMove() {
+    enginePINVOKE.Editor_UpdateMove(swigCPtr);
+  }
+
+  public Object GetObjectUnderCursor() {
+    global::System.IntPtr cPtr = enginePINVOKE.Editor_GetObjectUnderCursor(swigCPtr);
+    Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
+    return ret;
+  }
+
+  public void SetDrawBoundingBoxes_AllObjects(bool should_draw) {
+    enginePINVOKE.Editor_SetDrawBoundingBoxes_AllObjects(swigCPtr, should_draw);
+  }
+
   public void Update() {
     enginePINVOKE.Editor_Update(swigCPtr);
+  }
+
+  public void DeleteCurrentSelection() {
+    enginePINVOKE.Editor_DeleteCurrentSelection(swigCPtr);
   }
 
   public bool GetSnapToGrid() {
@@ -2879,6 +2945,12 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SetUseNewLoadingSystem")]
   public static extern void GameWorld_SetUseNewLoadingSystem(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetAllowExiting")]
+  public static extern bool GameWorld_GetAllowExiting(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SetAllowExiting")]
+  public static extern void GameWorld_SetAllowExiting(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetObjects")]
   public static extern global::System.IntPtr GameWorld_GetObjects(global::System.Runtime.InteropServices.HandleRef jarg1);
 
@@ -3293,8 +3365,11 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_PlayAnimation")]
   public static extern void Object_PlayAnimation(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetDrawBounds")]
-  public static extern void Object_SetDrawBounds(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetDrawBounds__SWIG_0")]
+  public static extern void Object_SetDrawBounds__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetDrawBounds__SWIG_1")]
+  public static extern void Object_SetDrawBounds__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_FadeOut")]
   public static extern void Object_FadeOut(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -3449,6 +3524,9 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_Object")]
   public static extern void delete_Object(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ContainsPoint")]
+  public static extern bool Object_ContainsPoint(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_AddPrototype")]
   public static extern global::System.IntPtr Object_AddPrototype(string jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
@@ -3560,17 +3638,44 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_CreateAndSelectObject")]
   public static extern void Editor_CreateAndSelectObject(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2, string jarg3);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_CreateAndSelect_UsePreviousLayerAndObject")]
+  public static extern void Editor_CreateAndSelect_UsePreviousLayerAndObject(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_MouseToLayerCoords")]
+  public static extern void Editor_MouseToLayerCoords(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_SnapToGrid")]
+  public static extern void Editor_SnapToGrid(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_UpdateSelectedObjectPosition")]
   public static extern void Editor_UpdateSelectedObjectPosition(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_UnselectCurrentlySelectedObject")]
-  public static extern void Editor_UnselectCurrentlySelectedObject(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_SelectObject")]
+  public static extern void Editor_SelectObject(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_Draw")]
   public static extern void Editor_Draw(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_CommonUpdate")]
+  public static extern void Editor_CommonUpdate(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_NoModeUpdate")]
+  public static extern void Editor_NoModeUpdate(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_UpdateMove")]
+  public static extern void Editor_UpdateMove(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_GetObjectUnderCursor")]
+  public static extern global::System.IntPtr Editor_GetObjectUnderCursor(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_SetDrawBoundingBoxes_AllObjects")]
+  public static extern void Editor_SetDrawBoundingBoxes_AllObjects(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_Update")]
   public static extern void Editor_Update(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_DeleteCurrentSelection")]
+  public static extern void Editor_DeleteCurrentSelection(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_GetSnapToGrid")]
   public static extern bool Editor_GetSnapToGrid(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -3731,6 +3836,22 @@ public class SWIGTYPE_p_int {
   }
 
   internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_int obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+}
+
+public class SWIGTYPE_p_ALLEGRO_COLOR {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal SWIGTYPE_p_ALLEGRO_COLOR(global::System.IntPtr cPtr, bool futureUse) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  protected SWIGTYPE_p_ALLEGRO_COLOR() {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_ALLEGRO_COLOR obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 }

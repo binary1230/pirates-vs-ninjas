@@ -22,6 +22,8 @@ namespace MapEditor
         {
             GameState.CreateInstance();
             GameState game = GameState.GetInstance();
+            if (game == null)
+                return false;
 
             GameOptions.CreateInstance();
             GameOptions options = GameOptions.GetInstance();

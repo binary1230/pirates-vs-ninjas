@@ -18,7 +18,7 @@ namespace MapEditor
         bool wasPaused = false;
 
         string lastLayerName = "foreground";
-        string lastObjectDefName = "block3";
+        string lastObjectDefName = "greenblock";
 
         public Main()
         {

@@ -61,6 +61,7 @@ void GameWorld::ShowText(	const char* txt,
 void GameWorld::Clear() {
 	is_loading = false;
 	map_editor = NULL;
+	_AllowExiting = true;
 	
 	m_objects.clear();
 	m_kLayers.clear();
@@ -376,7 +377,7 @@ void GameWorld::UpdateObjects()
 }
 
 void GameWorld::Update() {
-	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
+	if (_AllowExiting && INPUT->KeyOnce(GAMEKEY_EXIT)) {
 		GAMESTATE->SignalGameExit();
 		return;
 	}

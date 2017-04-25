@@ -4,13 +4,13 @@
 <this class_id="0" tracking_level="1" version="1" object_id="_0">
 	<GameMode class_id="1" tracking_level="0" version="0"></GameMode>
 	<objects class_id="2" tracking_level="0" version="0">
-		<count>566</count>
+		<count>551</count>
 		<item_version>0</item_version>
 		<item class_id="3" class_name="ObjectStatic" tracking_level="1" version="0" object_id="_1">
 			<Object class_id="4" tracking_level="0" version="0">
 				<pos class_id="5" tracking_level="0" version="0">
-					<x>1.745000000e+03</x>
-					<y>9.400000763e+01</y>
+					<x>2.240000000e+03</x>
+					<y>3.500000000e+02</y>
 				</pos>
 				<objectDefName>block3</objectDefName>
 				<controller_num>0</controller_num>
@@ -3855,8 +3855,8 @@
 						<item class_id="9" class_name="ObjectPlayer" tracking_level="1" version="0" object_id="_122">
 							<Object>
 								<pos>
-									<x>25.800000610e+02</x>
-									<y>0.050000000e+03</y>
+									<x>2.326112793e+03</x>
+									<y>2.067498779e+01</y>
 								</pos>
 								<objectDefName>amaya</objectDefName>
 								<controller_num>1</controller_num>
@@ -6500,7 +6500,7 @@
 				</properties>
 				<m_pkLayer class_id_reference="7" object_id="_200">
 					<objects>
-						<count>350</count>
+						<count>335</count>
 						<item_version>0</item_version>
 						<item class_id_reference="3" object_id_reference="_199"></item>
 						<item class_id="10" class_name="ObjectDoor" tracking_level="1" version="0" object_id="_201">
@@ -9328,166 +9328,6 @@
 						<item class_id_reference="12" object_id="_289">
 							<Object>
 								<pos>
-									<x>2.217999756e+03</x>
-									<y>6.590000000e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_290">
-							<Object>
-								<pos>
-									<x>2.217000000e+03</x>
-									<y>5.920000000e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_291">
-							<Object>
-								<pos>
-									<x>2.217000000e+03</x>
-									<y>5.220000610e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_292">
-							<Object>
-								<pos>
-									<x>1.409000000e+03</x>
-									<y>3.411999756e+03</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_293">
-							<Object>
-								<pos>
-									<x>1.380000000e+03</x>
-									<y>3.411999756e+03</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_294">
-							<Object>
-								<pos>
 									<x>1.254000000e+03</x>
 									<y>3.413000000e+03</y>
 								</pos>
@@ -9517,7 +9357,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_295">
+						<item class_id_reference="12" object_id="_290">
 							<Object>
 								<pos>
 									<x>1.222000000e+03</x>
@@ -9549,7 +9389,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_296">
+						<item class_id_reference="3" object_id="_291">
 							<Object>
 								<pos>
 									<x>7.710000000e+02</x>
@@ -9581,7 +9421,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_297">
+						<item class_id_reference="3" object_id="_292">
 							<Object>
 								<pos>
 									<x>7.210000000e+02</x>
@@ -9613,7 +9453,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_298">
+						<item class_id_reference="3" object_id="_293">
 							<Object>
 								<pos>
 									<x>6.810000000e+02</x>
@@ -9645,7 +9485,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_299">
+						<item class_id_reference="3" object_id="_294">
 							<Object>
 								<pos>
 									<x>7.290000000e+02</x>
@@ -9677,7 +9517,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_300">
+						<item class_id_reference="3" object_id="_295">
 							<Object>
 								<pos>
 									<x>9.289998779e+02</x>
@@ -9709,7 +9549,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_301">
+						<item class_id_reference="3" object_id="_296">
 							<Object>
 								<pos>
 									<x>1.158000000e+03</x>
@@ -9741,7 +9581,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_302">
+						<item class_id_reference="3" object_id="_297">
 							<Object>
 								<pos>
 									<x>1.129000000e+03</x>
@@ -9773,7 +9613,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_303">
+						<item class_id_reference="3" object_id="_298">
 							<Object>
 								<pos>
 									<x>1.050000000e+03</x>
@@ -9805,7 +9645,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_304">
+						<item class_id_reference="3" object_id="_299">
 							<Object>
 								<pos>
 									<x>1.050000000e+03</x>
@@ -9837,7 +9677,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_305">
+						<item class_id_reference="3" object_id="_300">
 							<Object>
 								<pos>
 									<x>1.049000000e+03</x>
@@ -9869,7 +9709,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_306">
+						<item class_id_reference="3" object_id="_301">
 							<Object>
 								<pos>
 									<x>1.050000000e+03</x>
@@ -9901,7 +9741,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_307">
+						<item class_id_reference="3" object_id="_302">
 							<Object>
 								<pos>
 									<x>1.079000000e+03</x>
@@ -9933,7 +9773,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_308">
+						<item class_id_reference="3" object_id="_303">
 							<Object>
 								<pos>
 									<x>1.218000122e+03</x>
@@ -9965,7 +9805,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_309">
+						<item class_id_reference="3" object_id="_304">
 							<Object>
 								<pos>
 									<x>1.248000000e+03</x>
@@ -9997,7 +9837,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_310">
+						<item class_id_reference="3" object_id="_305">
 							<Object>
 								<pos>
 									<x>1.373000000e+03</x>
@@ -10029,7 +9869,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_311">
+						<item class_id_reference="3" object_id="_306">
 							<Object>
 								<pos>
 									<x>1.403000000e+03</x>
@@ -10061,7 +9901,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_312">
+						<item class_id_reference="3" object_id="_307">
 							<Object>
 								<pos>
 									<x>1.518000000e+03</x>
@@ -10093,7 +9933,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_313">
+						<item class_id_reference="3" object_id="_308">
 							<Object>
 								<pos>
 									<x>5.000000000e+02</x>
@@ -10125,7 +9965,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_314">
+						<item class_id_reference="3" object_id="_309">
 							<Object>
 								<pos>
 									<x>2.400000000e+03</x>
@@ -10157,7 +9997,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_315">
+						<item class_id_reference="3" object_id="_310">
 							<Object>
 								<pos>
 									<x>1.600000000e+03</x>
@@ -10189,7 +10029,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_316">
+						<item class_id_reference="3" object_id="_311">
 							<Object>
 								<pos>
 									<x>1.840000000e+03</x>
@@ -10221,7 +10061,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_317">
+						<item class_id_reference="3" object_id="_312">
 							<Object>
 								<pos>
 									<x>1.700000122e+03</x>
@@ -10253,7 +10093,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_318">
+						<item class_id_reference="3" object_id="_313">
 							<Object>
 								<pos>
 									<x>1.725000000e+03</x>
@@ -10285,7 +10125,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_319">
+						<item class_id_reference="3" object_id="_314">
 							<Object>
 								<pos>
 									<x>1.675000000e+03</x>
@@ -10317,7 +10157,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_320">
+						<item class_id_reference="3" object_id="_315">
 							<Object>
 								<pos>
 									<x>1.750000244e+03</x>
@@ -10349,7 +10189,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_321">
+						<item class_id_reference="3" object_id="_316">
 							<Object>
 								<pos>
 									<x>1.700000122e+03</x>
@@ -10381,7 +10221,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_322">
+						<item class_id_reference="3" object_id="_317">
 							<Object>
 								<pos>
 									<x>1.650000122e+03</x>
@@ -10413,7 +10253,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_323">
+						<item class_id_reference="3" object_id="_318">
 							<Object>
 								<pos>
 									<x>1.875000122e+03</x>
@@ -10445,7 +10285,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_324">
+						<item class_id_reference="3" object_id="_319">
 							<Object>
 								<pos>
 									<x>1.825000122e+03</x>
@@ -10477,7 +10317,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_325">
+						<item class_id_reference="3" object_id="_320">
 							<Object>
 								<pos>
 									<x>1.775000000e+03</x>
@@ -10509,7 +10349,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_326">
+						<item class_id_reference="3" object_id="_321">
 							<Object>
 								<pos>
 									<x>1.725000000e+03</x>
@@ -10541,7 +10381,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_327">
+						<item class_id_reference="3" object_id="_322">
 							<Object>
 								<pos>
 									<x>1.675000000e+03</x>
@@ -10573,7 +10413,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_328">
+						<item class_id_reference="3" object_id="_323">
 							<Object>
 								<pos>
 									<x>1.625000000e+03</x>
@@ -10605,7 +10445,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_329">
+						<item class_id_reference="3" object_id="_324">
 							<Object>
 								<pos>
 									<x>1.575000244e+03</x>
@@ -10637,7 +10477,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_330">
+						<item class_id_reference="3" object_id="_325">
 							<Object>
 								<pos>
 									<x>1.900000000e+03</x>
@@ -10669,7 +10509,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_331">
+						<item class_id_reference="3" object_id="_326">
 							<Object>
 								<pos>
 									<x>1.850000000e+03</x>
@@ -10701,7 +10541,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_332">
+						<item class_id_reference="3" object_id="_327">
 							<Object>
 								<pos>
 									<x>1.800000244e+03</x>
@@ -10733,7 +10573,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_333">
+						<item class_id_reference="3" object_id="_328">
 							<Object>
 								<pos>
 									<x>1.750000244e+03</x>
@@ -10765,7 +10605,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_334">
+						<item class_id_reference="3" object_id="_329">
 							<Object>
 								<pos>
 									<x>1.700000122e+03</x>
@@ -10797,7 +10637,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_335">
+						<item class_id_reference="3" object_id="_330">
 							<Object>
 								<pos>
 									<x>1.650000122e+03</x>
@@ -10829,7 +10669,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_336">
+						<item class_id_reference="3" object_id="_331">
 							<Object>
 								<pos>
 									<x>1.600000122e+03</x>
@@ -10861,7 +10701,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_337">
+						<item class_id_reference="3" object_id="_332">
 							<Object>
 								<pos>
 									<x>1.550000000e+03</x>
@@ -10893,7 +10733,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_338">
+						<item class_id_reference="3" object_id="_333">
 							<Object>
 								<pos>
 									<x>1.800000000e+03</x>
@@ -10925,7 +10765,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_339">
+						<item class_id_reference="3" object_id="_334">
 							<Object>
 								<pos>
 									<x>1.610000000e+03</x>
@@ -10957,7 +10797,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_340">
+						<item class_id_reference="8" object_id="_335">
 							<Object>
 								<pos>
 									<x>2.550000244e+03</x>
@@ -10993,7 +10833,7 @@
 								<y>0.000000000e+00</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_341">
+						<item class_id_reference="8" object_id="_336">
 							<Object>
 								<pos>
 									<x>2.450000000e+03</x>
@@ -11029,7 +10869,7 @@
 								<y>-2.000000000e+01</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_342">
+						<item class_id_reference="8" object_id="_337">
 							<Object>
 								<pos>
 									<x>1.700000122e+03</x>
@@ -11065,7 +10905,7 @@
 								<y>0.000000000e+00</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_343">
+						<item class_id_reference="8" object_id="_338">
 							<Object>
 								<pos>
 									<x>1.720000000e+03</x>
@@ -11101,7 +10941,7 @@
 								<y>4.000000000e+01</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="3" object_id="_344">
+						<item class_id_reference="3" object_id="_339">
 							<Object>
 								<pos>
 									<x>1.850000000e+03</x>
@@ -11133,7 +10973,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_345">
+						<item class_id_reference="3" object_id="_340">
 							<Object>
 								<pos>
 									<x>1.550000000e+03</x>
@@ -11165,7 +11005,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_346">
+						<item class_id_reference="3" object_id="_341">
 							<Object>
 								<pos>
 									<x>1.540000000e+03</x>
@@ -11197,7 +11037,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_347">
+						<item class_id_reference="3" object_id="_342">
 							<Object>
 								<pos>
 									<x>1.840000000e+03</x>
@@ -11229,7 +11069,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_348">
+						<item class_id_reference="12" object_id="_343">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11261,7 +11101,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_349">
+						<item class_id_reference="12" object_id="_344">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11293,7 +11133,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_350">
+						<item class_id_reference="12" object_id="_345">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11325,7 +11165,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_351">
+						<item class_id_reference="12" object_id="_346">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11357,7 +11197,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_352">
+						<item class_id_reference="12" object_id="_347">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11389,7 +11229,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_353">
+						<item class_id_reference="12" object_id="_348">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11421,7 +11261,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_354">
+						<item class_id_reference="12" object_id="_349">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11453,7 +11293,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_355">
+						<item class_id_reference="12" object_id="_350">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11485,7 +11325,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_356">
+						<item class_id_reference="12" object_id="_351">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11517,7 +11357,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_357">
+						<item class_id_reference="12" object_id="_352">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11549,7 +11389,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_358">
+						<item class_id_reference="12" object_id="_353">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11581,7 +11421,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_359">
+						<item class_id_reference="12" object_id="_354">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11613,7 +11453,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_360">
+						<item class_id_reference="12" object_id="_355">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11645,7 +11485,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_361">
+						<item class_id_reference="12" object_id="_356">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11677,7 +11517,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_362">
+						<item class_id_reference="12" object_id="_357">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11709,7 +11549,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_363">
+						<item class_id_reference="12" object_id="_358">
 							<Object>
 								<pos>
 									<x>1.719999878e+03</x>
@@ -11741,7 +11581,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_364">
+						<item class_id_reference="8" object_id="_359">
 							<Object>
 								<pos>
 									<x>1.700000122e+03</x>
@@ -11777,7 +11617,7 @@
 								<y>3.000000000e+01</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="3" object_id="_365">
+						<item class_id_reference="3" object_id="_360">
 							<Object>
 								<pos>
 									<x>1.700000122e+03</x>
@@ -11809,7 +11649,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_366">
+						<item class_id_reference="3" object_id="_361">
 							<Object>
 								<pos>
 									<x>1.600000122e+03</x>
@@ -11841,7 +11681,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_367">
+						<item class_id_reference="3" object_id="_362">
 							<Object>
 								<pos>
 									<x>1.650000122e+03</x>
@@ -11873,7 +11713,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_368">
+						<item class_id_reference="3" object_id="_363">
 							<Object>
 								<pos>
 									<x>1.700000122e+03</x>
@@ -11905,7 +11745,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_369">
+						<item class_id_reference="3" object_id="_364">
 							<Object>
 								<pos>
 									<x>1.750000244e+03</x>
@@ -11937,7 +11777,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_370">
+						<item class_id_reference="3" object_id="_365">
 							<Object>
 								<pos>
 									<x>1.800000244e+03</x>
@@ -11969,7 +11809,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_371">
+						<item class_id_reference="3" object_id="_366">
 							<Object>
 								<pos>
 									<x>2.200000000e+03</x>
@@ -12001,7 +11841,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_372">
+						<item class_id_reference="3" object_id="_367">
 							<Object>
 								<pos>
 									<x>2.100000000e+03</x>
@@ -12033,7 +11873,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_373">
+						<item class_id_reference="3" object_id="_368">
 							<Object>
 								<pos>
 									<x>1.899999878e+03</x>
@@ -12065,7 +11905,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_374">
+						<item class_id_reference="3" object_id="_369">
 							<Object>
 								<pos>
 									<x>1.700000000e+03</x>
@@ -12097,7 +11937,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_375">
+						<item class_id_reference="3" object_id="_370">
 							<Object>
 								<pos>
 									<x>1.499999878e+03</x>
@@ -12129,7 +11969,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_376">
+						<item class_id_reference="3" object_id="_371">
 							<Object>
 								<pos>
 									<x>1.500000000e+03</x>
@@ -12161,7 +12001,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_377">
+						<item class_id_reference="12" object_id="_372">
 							<Object>
 								<pos>
 									<x>2.530000000e+03</x>
@@ -12193,7 +12033,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_378">
+						<item class_id_reference="12" object_id="_373">
 							<Object>
 								<pos>
 									<x>2.530000000e+03</x>
@@ -12225,7 +12065,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_379">
+						<item class_id_reference="12" object_id="_374">
 							<Object>
 								<pos>
 									<x>2.530000000e+03</x>
@@ -12257,7 +12097,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_380">
+						<item class_id_reference="12" object_id="_375">
 							<Object>
 								<pos>
 									<x>2.530000000e+03</x>
@@ -12289,71 +12129,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_381">
-							<Object>
-								<pos>
-									<x>2.530000000e+03</x>
-									<y>1.300000000e+03</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_382">
-							<Object>
-								<pos>
-									<x>2.530000000e+03</x>
-									<y>1.000000000e+03</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="3" object_id="_383">
+						<item class_id_reference="3" object_id="_376">
 							<Object>
 								<pos>
 									<x>2.300000000e+03</x>
@@ -12385,7 +12161,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_384">
+						<item class_id_reference="3" object_id="_377">
 							<Object>
 								<pos>
 									<x>2.500000244e+03</x>
@@ -12417,7 +12193,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_385">
+						<item class_id_reference="3" object_id="_378">
 							<Object>
 								<pos>
 									<x>2.250000000e+03</x>
@@ -12449,7 +12225,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_386">
+						<item class_id_reference="3" object_id="_379">
 							<Object>
 								<pos>
 									<x>2.300000000e+03</x>
@@ -12481,7 +12257,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_387">
+						<item class_id_reference="8" object_id="_380">
 							<Object>
 								<pos>
 									<x>2.500000244e+03</x>
@@ -12517,7 +12293,7 @@
 								<y>6.000000000e+01</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_388">
+						<item class_id_reference="8" object_id="_381">
 							<Object>
 								<pos>
 									<x>2.200000000e+03</x>
@@ -12553,7 +12329,7 @@
 								<y>2.000000000e+01</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="3" object_id="_389">
+						<item class_id_reference="3" object_id="_382">
 							<Object>
 								<pos>
 									<x>2.190000244e+03</x>
@@ -12585,7 +12361,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_390">
+						<item class_id_reference="3" object_id="_383">
 							<Object>
 								<pos>
 									<x>1.990000000e+03</x>
@@ -12617,7 +12393,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_391">
+						<item class_id_reference="3" object_id="_384">
 							<Object>
 								<pos>
 									<x>1.710000000e+03</x>
@@ -12649,7 +12425,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_392">
+						<item class_id_reference="3" object_id="_385">
 							<Object>
 								<pos>
 									<x>1.650000000e+03</x>
@@ -12681,7 +12457,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_393">
+						<item class_id_reference="3" object_id="_386">
 							<Object>
 								<pos>
 									<x>1.600000122e+03</x>
@@ -12713,7 +12489,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_394">
+						<item class_id_reference="3" object_id="_387">
 							<Object>
 								<pos>
 									<x>1.710000000e+03</x>
@@ -12745,7 +12521,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_395">
+						<item class_id_reference="3" object_id="_388">
 							<Object>
 								<pos>
 									<x>1.690000000e+03</x>
@@ -12777,263 +12553,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="12" object_id="_396">
-							<Object>
-								<pos>
-									<x>1.849999756e+03</x>
-									<y>4.000000305e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_397">
-							<Object>
-								<pos>
-									<x>1.799999756e+03</x>
-									<y>4.000000305e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_398">
-							<Object>
-								<pos>
-									<x>1.750000000e+03</x>
-									<y>4.000000305e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_399">
-							<Object>
-								<pos>
-									<x>1.400000000e+03</x>
-									<y>4.500000610e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_400">
-							<Object>
-								<pos>
-									<x>1.350000000e+03</x>
-									<y>4.750000000e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_401">
-							<Object>
-								<pos>
-									<x>1.300000000e+03</x>
-									<y>5.000000000e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_402">
-							<Object>
-								<pos>
-									<x>1.250000000e+03</x>
-									<y>4.750000000e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="12" object_id="_403">
-							<Object>
-								<pos>
-									<x>1.200000000e+03</x>
-									<y>4.500000610e+02</y>
-								</pos>
-								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
-								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>1</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-									<p.is_player>0</p.is_player>
-									<p.is_spring>0</p.is_spring>
-									<p.is_collectable>1</p.is_collectable>
-									<p.is_fan>0</p.is_fan>
-									<p.is_door>0</p.is_door>
-									<p.is_ring>1</p.is_ring>
-									<p.is_ball>0</p.is_ball>
-									<p.is_badguy>0</p.is_badguy>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
-							</Object>
-						</item>
-						<item class_id_reference="3" object_id="_404">
+						<item class_id_reference="3" object_id="_389">
 							<Object>
 								<pos>
 									<x>1.000000000e+03</x>
@@ -13065,7 +12585,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_405">
+						<item class_id_reference="3" object_id="_390">
 							<Object>
 								<pos>
 									<x>1.000000000e+03</x>
@@ -13097,7 +12617,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_406">
+						<item class_id_reference="3" object_id="_391">
 							<Object>
 								<pos>
 									<x>1.050000000e+03</x>
@@ -13129,7 +12649,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_407">
+						<item class_id_reference="3" object_id="_392">
 							<Object>
 								<pos>
 									<x>1.100000000e+03</x>
@@ -13161,7 +12681,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_408">
+						<item class_id_reference="3" object_id="_393">
 							<Object>
 								<pos>
 									<x>1.100000000e+03</x>
@@ -13193,7 +12713,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_409">
+						<item class_id_reference="3" object_id="_394">
 							<Object>
 								<pos>
 									<x>1.200000000e+03</x>
@@ -13225,7 +12745,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_410">
+						<item class_id_reference="3" object_id="_395">
 							<Object>
 								<pos>
 									<x>1.150000000e+03</x>
@@ -13257,7 +12777,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_411">
+						<item class_id_reference="3" object_id="_396">
 							<Object>
 								<pos>
 									<x>1.200000000e+03</x>
@@ -13289,7 +12809,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_412">
+						<item class_id_reference="3" object_id="_397">
 							<Object>
 								<pos>
 									<x>9.000000000e+02</x>
@@ -13321,7 +12841,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_413">
+						<item class_id_reference="3" object_id="_398">
 							<Object>
 								<pos>
 									<x>8.500000000e+02</x>
@@ -13353,7 +12873,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_414">
+						<item class_id_reference="3" object_id="_399">
 							<Object>
 								<pos>
 									<x>8.000000000e+02</x>
@@ -13385,7 +12905,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_415">
+						<item class_id_reference="3" object_id="_400">
 							<Object>
 								<pos>
 									<x>7.499999390e+02</x>
@@ -13417,7 +12937,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_416">
+						<item class_id_reference="3" object_id="_401">
 							<Object>
 								<pos>
 									<x>5.500000000e+02</x>
@@ -13449,7 +12969,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_417">
+						<item class_id_reference="3" object_id="_402">
 							<Object>
 								<pos>
 									<x>5.800000000e+02</x>
@@ -13481,7 +13001,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_418">
+						<item class_id_reference="3" object_id="_403">
 							<Object>
 								<pos>
 									<x>3.500000000e+02</x>
@@ -13513,7 +13033,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_419">
+						<item class_id_reference="3" object_id="_404">
 							<Object>
 								<pos>
 									<x>3.749999695e+02</x>
@@ -13545,7 +13065,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_420">
+						<item class_id_reference="3" object_id="_405">
 							<Object>
 								<pos>
 									<x>3.250000000e+02</x>
@@ -13577,7 +13097,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_421">
+						<item class_id_reference="3" object_id="_406">
 							<Object>
 								<pos>
 									<x>4.000000000e+02</x>
@@ -13609,7 +13129,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_422">
+						<item class_id_reference="3" object_id="_407">
 							<Object>
 								<pos>
 									<x>3.500000000e+02</x>
@@ -13641,7 +13161,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_423">
+						<item class_id_reference="3" object_id="_408">
 							<Object>
 								<pos>
 									<x>3.000000000e+02</x>
@@ -13673,7 +13193,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_424">
+						<item class_id_reference="3" object_id="_409">
 							<Object>
 								<pos>
 									<x>2.000000153e+02</x>
@@ -13705,7 +13225,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_425">
+						<item class_id_reference="3" object_id="_410">
 							<Object>
 								<pos>
 									<x>1.300000000e+02</x>
@@ -13737,7 +13257,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_426">
+						<item class_id_reference="3" object_id="_411">
 							<Object>
 								<pos>
 									<x>1.000000000e+02</x>
@@ -13769,7 +13289,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_427">
+						<item class_id_reference="3" object_id="_412">
 							<Object>
 								<pos>
 									<x>7.000000000e+01</x>
@@ -13801,7 +13321,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_428">
+						<item class_id_reference="3" object_id="_413">
 							<Object>
 								<pos>
 									<x>4.000000000e+01</x>
@@ -13833,7 +13353,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_429">
+						<item class_id_reference="3" object_id="_414">
 							<Object>
 								<pos>
 									<x>1.000000191e+01</x>
@@ -13865,7 +13385,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_430">
+						<item class_id_reference="3" object_id="_415">
 							<Object>
 								<pos>
 									<x>2.544000000e+03</x>
@@ -13897,7 +13417,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_431">
+						<item class_id_reference="3" object_id="_416">
 							<Object>
 								<pos>
 									<x>2.544000000e+03</x>
@@ -13929,7 +13449,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_432">
+						<item class_id_reference="3" object_id="_417">
 							<Object>
 								<pos>
 									<x>1.200000000e+03</x>
@@ -13961,7 +13481,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_433">
+						<item class_id_reference="3" object_id="_418">
 							<Object>
 								<pos>
 									<x>1.100000000e+03</x>
@@ -13993,7 +13513,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_434">
+						<item class_id_reference="3" object_id="_419">
 							<Object>
 								<pos>
 									<x>1.000000000e+03</x>
@@ -14025,7 +13545,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_435">
+						<item class_id_reference="3" object_id="_420">
 							<Object>
 								<pos>
 									<x>6.000000000e+02</x>
@@ -14057,7 +13577,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_436">
+						<item class_id_reference="3" object_id="_421">
 							<Object>
 								<pos>
 									<x>3.000000000e+01</x>
@@ -14089,7 +13609,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_437">
+						<item class_id_reference="3" object_id="_422">
 							<Object>
 								<pos>
 									<x>1.608000000e+03</x>
@@ -14121,7 +13641,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_438">
+						<item class_id_reference="3" object_id="_423">
 							<Object>
 								<pos>
 									<x>1.639000000e+03</x>
@@ -14153,7 +13673,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_439">
+						<item class_id_reference="3" object_id="_424">
 							<Object>
 								<pos>
 									<x>1.703000000e+03</x>
@@ -14185,7 +13705,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_440">
+						<item class_id_reference="3" object_id="_425">
 							<Object>
 								<pos>
 									<x>1.734000000e+03</x>
@@ -14217,7 +13737,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_441">
+						<item class_id_reference="3" object_id="_426">
 							<Object>
 								<pos>
 									<x>1.606000000e+03</x>
@@ -14249,7 +13769,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_442">
+						<item class_id_reference="3" object_id="_427">
 							<Object>
 								<pos>
 									<x>1.771000000e+03</x>
@@ -14281,7 +13801,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_443">
+						<item class_id_reference="3" object_id="_428">
 							<Object>
 								<pos>
 									<x>1.609000000e+03</x>
@@ -14313,7 +13833,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_444">
+						<item class_id_reference="3" object_id="_429">
 							<Object>
 								<pos>
 									<x>1.679000000e+03</x>
@@ -14345,7 +13865,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_445">
+						<item class_id_reference="3" object_id="_430">
 							<Object>
 								<pos>
 									<x>1.756000000e+03</x>
@@ -14377,7 +13897,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_446">
+						<item class_id_reference="3" object_id="_431">
 							<Object>
 								<pos>
 									<x>1.735000000e+03</x>
@@ -14409,7 +13929,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_447">
+						<item class_id_reference="11" object_id="_432">
 							<Object>
 								<pos>
 									<x>1.897999878e+03</x>
@@ -14441,7 +13961,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_448">
+						<item class_id_reference="11" object_id="_433">
 							<Object>
 								<pos>
 									<x>1.890000000e+03</x>
@@ -14473,7 +13993,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_449">
+						<item class_id_reference="11" object_id="_434">
 							<Object>
 								<pos>
 									<x>1.900000000e+03</x>
@@ -14505,7 +14025,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_450">
+						<item class_id_reference="11" object_id="_435">
 							<Object>
 								<pos>
 									<x>2.124000000e+03</x>
@@ -14537,7 +14057,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_451">
+						<item class_id_reference="11" object_id="_436">
 							<Object>
 								<pos>
 									<x>1.947000000e+03</x>
@@ -14569,7 +14089,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_452">
+						<item class_id_reference="11" object_id="_437">
 							<Object>
 								<pos>
 									<x>1.928999878e+03</x>
@@ -14601,7 +14121,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_453">
+						<item class_id_reference="11" object_id="_438">
 							<Object>
 								<pos>
 									<x>1.935999878e+03</x>
@@ -14633,7 +14153,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_454">
+						<item class_id_reference="8" object_id="_439">
 							<Object>
 								<pos>
 									<x>1.550000000e+03</x>
@@ -14669,7 +14189,7 @@
 								<y>8.000000000e+00</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_455">
+						<item class_id_reference="8" object_id="_440">
 							<Object>
 								<pos>
 									<x>1.500000000e+03</x>
@@ -14705,7 +14225,7 @@
 								<y>8.000000000e+00</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_456">
+						<item class_id_reference="8" object_id="_441">
 							<Object>
 								<pos>
 									<x>1.450000000e+03</x>
@@ -14741,7 +14261,7 @@
 								<y>8.000000000e+00</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_457">
+						<item class_id_reference="8" object_id="_442">
 							<Object>
 								<pos>
 									<x>1.400000000e+03</x>
@@ -14777,7 +14297,7 @@
 								<y>8.000000000e+00</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_458">
+						<item class_id_reference="8" object_id="_443">
 							<Object>
 								<pos>
 									<x>1.350000000e+03</x>
@@ -14813,7 +14333,7 @@
 								<y>8.000000000e+00</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_459">
+						<item class_id_reference="8" object_id="_444">
 							<Object>
 								<pos>
 									<x>1.300000000e+03</x>
@@ -14849,7 +14369,7 @@
 								<y>8.000000000e+00</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="8" object_id="_460">
+						<item class_id_reference="8" object_id="_445">
 							<Object>
 								<pos>
 									<x>1.250000000e+03</x>
@@ -14885,7 +14405,7 @@
 								<y>8.000000000e+00</y>
 							</springDirection>
 						</item>
-						<item class_id_reference="3" object_id="_461">
+						<item class_id_reference="3" object_id="_446">
 							<Object>
 								<pos>
 									<x>2.600000000e+03</x>
@@ -14917,7 +14437,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_462">
+						<item class_id_reference="3" object_id="_447">
 							<Object>
 								<pos>
 									<x>2.400000000e+03</x>
@@ -14949,7 +14469,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_463">
+						<item class_id_reference="3" object_id="_448">
 							<Object>
 								<pos>
 									<x>2.200000000e+03</x>
@@ -14981,7 +14501,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_464">
+						<item class_id_reference="3" object_id="_449">
 							<Object>
 								<pos>
 									<x>2.000000000e+03</x>
@@ -15013,7 +14533,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_465">
+						<item class_id_reference="3" object_id="_450">
 							<Object>
 								<pos>
 									<x>1.800000000e+03</x>
@@ -15045,7 +14565,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_466">
+						<item class_id_reference="3" object_id="_451">
 							<Object>
 								<pos>
 									<x>1.600000000e+03</x>
@@ -15077,7 +14597,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_467">
+						<item class_id_reference="3" object_id="_452">
 							<Object>
 								<pos>
 									<x>1.400000000e+03</x>
@@ -15109,7 +14629,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_468">
+						<item class_id_reference="3" object_id="_453">
 							<Object>
 								<pos>
 									<x>1.200000000e+03</x>
@@ -15141,7 +14661,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_469">
+						<item class_id_reference="3" object_id="_454">
 							<Object>
 								<pos>
 									<x>9.999998779e+02</x>
@@ -15173,7 +14693,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_470">
+						<item class_id_reference="3" object_id="_455">
 							<Object>
 								<pos>
 									<x>8.000000000e+02</x>
@@ -15205,7 +14725,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_471">
+						<item class_id_reference="3" object_id="_456">
 							<Object>
 								<pos>
 									<x>6.000000000e+02</x>
@@ -15237,7 +14757,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_472">
+						<item class_id_reference="3" object_id="_457">
 							<Object>
 								<pos>
 									<x>4.000000305e+02</x>
@@ -15269,7 +14789,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_473">
+						<item class_id_reference="3" object_id="_458">
 							<Object>
 								<pos>
 									<x>2.000000000e+02</x>
@@ -15301,7 +14821,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_474">
+						<item class_id_reference="3" object_id="_459">
 							<Object>
 								<pos>
 									<x>1.525878906e-05</x>
@@ -15333,7 +14853,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_475">
+						<item class_id_reference="11" object_id="_460">
 							<Object>
 								<pos>
 									<x>1.262000000e+03</x>
@@ -15365,7 +14885,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_476">
+						<item class_id_reference="11" object_id="_461">
 							<Object>
 								<pos>
 									<x>5.540000000e+02</x>
@@ -15397,7 +14917,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_477">
+						<item class_id_reference="11" object_id="_462">
 							<Object>
 								<pos>
 									<x>9.380000000e+02</x>
@@ -15429,7 +14949,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_478">
+						<item class_id_reference="11" object_id="_463">
 							<Object>
 								<pos>
 									<x>8.089998779e+02</x>
@@ -15461,7 +14981,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_479">
+						<item class_id_reference="11" object_id="_464">
 							<Object>
 								<pos>
 									<x>1.840000000e+03</x>
@@ -15493,7 +15013,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_480">
+						<item class_id_reference="11" object_id="_465">
 							<Object>
 								<pos>
 									<x>9.130000000e+02</x>
@@ -15525,7 +15045,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_481">
+						<item class_id_reference="11" object_id="_466">
 							<Object>
 								<pos>
 									<x>3.460000000e+02</x>
@@ -15557,7 +15077,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_482">
+						<item class_id_reference="11" object_id="_467">
 							<Object>
 								<pos>
 									<x>2.269000000e+03</x>
@@ -15589,7 +15109,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_483">
+						<item class_id_reference="11" object_id="_468">
 							<Object>
 								<pos>
 									<x>3.520000000e+02</x>
@@ -15621,7 +15141,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_484">
+						<item class_id_reference="11" object_id="_469">
 							<Object>
 								<pos>
 									<x>2.500000000e+03</x>
@@ -15653,7 +15173,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_485">
+						<item class_id_reference="11" object_id="_470">
 							<Object>
 								<pos>
 									<x>6.170000000e+02</x>
@@ -15685,7 +15205,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_486">
+						<item class_id_reference="11" object_id="_471">
 							<Object>
 								<pos>
 									<x>1.612000000e+03</x>
@@ -15717,7 +15237,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_487">
+						<item class_id_reference="11" object_id="_472">
 							<Object>
 								<pos>
 									<x>9.470000000e+02</x>
@@ -15749,7 +15269,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_488">
+						<item class_id_reference="11" object_id="_473">
 							<Object>
 								<pos>
 									<x>2.481000000e+03</x>
@@ -15781,7 +15301,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_489">
+						<item class_id_reference="11" object_id="_474">
 							<Object>
 								<pos>
 									<x>1.767999878e+03</x>
@@ -15813,7 +15333,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_490">
+						<item class_id_reference="11" object_id="_475">
 							<Object>
 								<pos>
 									<x>6.370000000e+02</x>
@@ -15845,7 +15365,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_491">
+						<item class_id_reference="11" object_id="_476">
 							<Object>
 								<pos>
 									<x>1.292000000e+03</x>
@@ -15877,7 +15397,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_492">
+						<item class_id_reference="11" object_id="_477">
 							<Object>
 								<pos>
 									<x>1.577000000e+03</x>
@@ -15909,7 +15429,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_493">
+						<item class_id_reference="11" object_id="_478">
 							<Object>
 								<pos>
 									<x>1.600000000e+03</x>
@@ -15941,7 +15461,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_494">
+						<item class_id_reference="11" object_id="_479">
 							<Object>
 								<pos>
 									<x>2.426000000e+03</x>
@@ -15973,7 +15493,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_495">
+						<item class_id_reference="11" object_id="_480">
 							<Object>
 								<pos>
 									<x>3.270000000e+02</x>
@@ -16005,7 +15525,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_496">
+						<item class_id_reference="11" object_id="_481">
 							<Object>
 								<pos>
 									<x>7.990000000e+02</x>
@@ -16037,7 +15557,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_497">
+						<item class_id_reference="11" object_id="_482">
 							<Object>
 								<pos>
 									<x>7.530000000e+02</x>
@@ -16069,7 +15589,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_498">
+						<item class_id_reference="11" object_id="_483">
 							<Object>
 								<pos>
 									<x>2.260000000e+02</x>
@@ -16101,7 +15621,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="11" object_id="_499">
+						<item class_id_reference="11" object_id="_484">
 							<Object>
 								<pos>
 									<x>1.320000000e+03</x>
@@ -16133,7 +15653,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_500">
+						<item class_id_reference="3" object_id="_485">
 							<Object>
 								<pos>
 									<x>1.771000000e+03</x>
@@ -16165,7 +15685,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_501">
+						<item class_id_reference="3" object_id="_486">
 							<Object>
 								<pos>
 									<x>1.282000000e+03</x>
@@ -16197,7 +15717,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_502">
+						<item class_id_reference="3" object_id="_487">
 							<Object>
 								<pos>
 									<x>1.720000000e+03</x>
@@ -16229,7 +15749,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_503">
+						<item class_id_reference="3" object_id="_488">
 							<Object>
 								<pos>
 									<x>2.036000000e+03</x>
@@ -16261,7 +15781,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_504">
+						<item class_id_reference="3" object_id="_489">
 							<Object>
 								<pos>
 									<x>8.460000000e+02</x>
@@ -16293,7 +15813,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_505">
+						<item class_id_reference="3" object_id="_490">
 							<Object>
 								<pos>
 									<x>2.392000000e+03</x>
@@ -16325,7 +15845,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_506">
+						<item class_id_reference="3" object_id="_491">
 							<Object>
 								<pos>
 									<x>5.800000000e+02</x>
@@ -16357,7 +15877,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_507">
+						<item class_id_reference="3" object_id="_492">
 							<Object>
 								<pos>
 									<x>1.753000000e+03</x>
@@ -16389,7 +15909,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_508">
+						<item class_id_reference="3" object_id="_493">
 							<Object>
 								<pos>
 									<x>1.620000000e+02</x>
@@ -16421,7 +15941,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_509">
+						<item class_id_reference="3" object_id="_494">
 							<Object>
 								<pos>
 									<x>2.251000000e+03</x>
@@ -16453,7 +15973,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_510">
+						<item class_id_reference="3" object_id="_495">
 							<Object>
 								<pos>
 									<x>2.141000000e+03</x>
@@ -16485,7 +16005,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_511">
+						<item class_id_reference="3" object_id="_496">
 							<Object>
 								<pos>
 									<x>1.099000000e+03</x>
@@ -16517,7 +16037,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_512">
+						<item class_id_reference="3" object_id="_497">
 							<Object>
 								<pos>
 									<x>2.196000000e+03</x>
@@ -16549,7 +16069,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_513">
+						<item class_id_reference="3" object_id="_498">
 							<Object>
 								<pos>
 									<x>1.619000000e+03</x>
@@ -16581,7 +16101,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_514">
+						<item class_id_reference="3" object_id="_499">
 							<Object>
 								<pos>
 									<x>1.850000000e+02</x>
@@ -16613,7 +16133,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_515">
+						<item class_id_reference="3" object_id="_500">
 							<Object>
 								<pos>
 									<x>1.200000000e+01</x>
@@ -16645,7 +16165,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_516">
+						<item class_id_reference="3" object_id="_501">
 							<Object>
 								<pos>
 									<x>1.964000000e+03</x>
@@ -16677,7 +16197,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_517">
+						<item class_id_reference="3" object_id="_502">
 							<Object>
 								<pos>
 									<x>1.599000000e+03</x>
@@ -16709,7 +16229,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_518">
+						<item class_id_reference="3" object_id="_503">
 							<Object>
 								<pos>
 									<x>2.029000000e+03</x>
@@ -16741,7 +16261,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_519">
+						<item class_id_reference="3" object_id="_504">
 							<Object>
 								<pos>
 									<x>1.275000000e+03</x>
@@ -16773,7 +16293,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_520">
+						<item class_id_reference="3" object_id="_505">
 							<Object>
 								<pos>
 									<x>2.063000000e+03</x>
@@ -16805,7 +16325,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_521">
+						<item class_id_reference="3" object_id="_506">
 							<Object>
 								<pos>
 									<x>2.236000000e+03</x>
@@ -16837,7 +16357,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_522">
+						<item class_id_reference="3" object_id="_507">
 							<Object>
 								<pos>
 									<x>4.850000000e+02</x>
@@ -16869,7 +16389,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_523">
+						<item class_id_reference="3" object_id="_508">
 							<Object>
 								<pos>
 									<x>1.403000000e+03</x>
@@ -16901,7 +16421,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_524">
+						<item class_id_reference="3" object_id="_509">
 							<Object>
 								<pos>
 									<x>1.530000000e+03</x>
@@ -16933,7 +16453,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_525">
+						<item class_id_reference="3" object_id="_510">
 							<Object>
 								<pos>
 									<x>1.426000000e+03</x>
@@ -16965,7 +16485,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_526">
+						<item class_id_reference="3" object_id="_511">
 							<Object>
 								<pos>
 									<x>1.680000000e+03</x>
@@ -16997,7 +16517,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_527">
+						<item class_id_reference="3" object_id="_512">
 							<Object>
 								<pos>
 									<x>1.359000000e+03</x>
@@ -17029,7 +16549,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_528">
+						<item class_id_reference="3" object_id="_513">
 							<Object>
 								<pos>
 									<x>2.333000000e+03</x>
@@ -17061,7 +16581,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_529">
+						<item class_id_reference="3" object_id="_514">
 							<Object>
 								<pos>
 									<x>2.459000000e+03</x>
@@ -17093,7 +16613,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_530">
+						<item class_id_reference="3" object_id="_515">
 							<Object>
 								<pos>
 									<x>6.640000000e+02</x>
@@ -17125,7 +16645,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_531">
+						<item class_id_reference="3" object_id="_516">
 							<Object>
 								<pos>
 									<x>1.645000000e+03</x>
@@ -17157,7 +16677,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_532">
+						<item class_id_reference="3" object_id="_517">
 							<Object>
 								<pos>
 									<x>4.030000000e+02</x>
@@ -17189,7 +16709,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_533">
+						<item class_id_reference="3" object_id="_518">
 							<Object>
 								<pos>
 									<x>1.377000000e+03</x>
@@ -17221,7 +16741,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_534">
+						<item class_id_reference="3" object_id="_519">
 							<Object>
 								<pos>
 									<x>1.700000000e+02</x>
@@ -17253,7 +16773,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_535">
+						<item class_id_reference="3" object_id="_520">
 							<Object>
 								<pos>
 									<x>9.440000000e+02</x>
@@ -17285,7 +16805,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_536">
+						<item class_id_reference="3" object_id="_521">
 							<Object>
 								<pos>
 									<x>1.334000000e+03</x>
@@ -17317,7 +16837,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_537">
+						<item class_id_reference="3" object_id="_522">
 							<Object>
 								<pos>
 									<x>1.687000000e+03</x>
@@ -17349,7 +16869,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_538">
+						<item class_id_reference="3" object_id="_523">
 							<Object>
 								<pos>
 									<x>2.175000000e+03</x>
@@ -17381,7 +16901,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_539">
+						<item class_id_reference="3" object_id="_524">
 							<Object>
 								<pos>
 									<x>1.404000000e+03</x>
@@ -17413,7 +16933,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_540">
+						<item class_id_reference="3" object_id="_525">
 							<Object>
 								<pos>
 									<x>1.846000000e+03</x>
@@ -17445,7 +16965,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_541">
+						<item class_id_reference="3" object_id="_526">
 							<Object>
 								<pos>
 									<x>1.180000000e+03</x>
@@ -17477,7 +16997,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_542">
+						<item class_id_reference="3" object_id="_527">
 							<Object>
 								<pos>
 									<x>2.336000000e+03</x>
@@ -17509,7 +17029,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_543">
+						<item class_id_reference="3" object_id="_528">
 							<Object>
 								<pos>
 									<x>9.660000000e+02</x>
@@ -17541,7 +17061,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_544">
+						<item class_id_reference="3" object_id="_529">
 							<Object>
 								<pos>
 									<x>2.397000000e+03</x>
@@ -17573,7 +17093,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_545">
+						<item class_id_reference="3" object_id="_530">
 							<Object>
 								<pos>
 									<x>8.030000000e+02</x>
@@ -17605,7 +17125,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_546">
+						<item class_id_reference="3" object_id="_531">
 							<Object>
 								<pos>
 									<x>5.130000000e+02</x>
@@ -17637,7 +17157,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_547">
+						<item class_id_reference="3" object_id="_532">
 							<Object>
 								<pos>
 									<x>1.077000000e+03</x>
@@ -17669,7 +17189,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_548">
+						<item class_id_reference="3" object_id="_533">
 							<Object>
 								<pos>
 									<x>3.620000000e+02</x>
@@ -17701,7 +17221,7 @@
 								<m_pkLayer class_id_reference="7" object_id_reference="_200"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_549">
+						<item class_id_reference="3" object_id="_534">
 							<Object>
 								<pos>
 									<x>1.750000000e+02</x>
@@ -17830,11 +17350,11 @@
 		<item class_id_reference="12" object_id_reference="_288"></item>
 		<item class_id_reference="12" object_id_reference="_289"></item>
 		<item class_id_reference="12" object_id_reference="_290"></item>
-		<item class_id_reference="12" object_id_reference="_291"></item>
-		<item class_id_reference="12" object_id_reference="_292"></item>
-		<item class_id_reference="12" object_id_reference="_293"></item>
-		<item class_id_reference="12" object_id_reference="_294"></item>
-		<item class_id_reference="12" object_id_reference="_295"></item>
+		<item class_id_reference="3" object_id_reference="_291"></item>
+		<item class_id_reference="3" object_id_reference="_292"></item>
+		<item class_id_reference="3" object_id_reference="_293"></item>
+		<item class_id_reference="3" object_id_reference="_294"></item>
+		<item class_id_reference="3" object_id_reference="_295"></item>
 		<item class_id_reference="3" object_id_reference="_296"></item>
 		<item class_id_reference="3" object_id_reference="_297"></item>
 		<item class_id_reference="3" object_id_reference="_298"></item>
@@ -17874,19 +17394,19 @@
 		<item class_id_reference="3" object_id_reference="_332"></item>
 		<item class_id_reference="3" object_id_reference="_333"></item>
 		<item class_id_reference="3" object_id_reference="_334"></item>
-		<item class_id_reference="3" object_id_reference="_335"></item>
-		<item class_id_reference="3" object_id_reference="_336"></item>
-		<item class_id_reference="3" object_id_reference="_337"></item>
-		<item class_id_reference="3" object_id_reference="_338"></item>
+		<item class_id_reference="8" object_id_reference="_335"></item>
+		<item class_id_reference="8" object_id_reference="_336"></item>
+		<item class_id_reference="8" object_id_reference="_337"></item>
+		<item class_id_reference="8" object_id_reference="_338"></item>
 		<item class_id_reference="3" object_id_reference="_339"></item>
-		<item class_id_reference="8" object_id_reference="_340"></item>
-		<item class_id_reference="8" object_id_reference="_341"></item>
-		<item class_id_reference="8" object_id_reference="_342"></item>
-		<item class_id_reference="8" object_id_reference="_343"></item>
-		<item class_id_reference="3" object_id_reference="_344"></item>
-		<item class_id_reference="3" object_id_reference="_345"></item>
-		<item class_id_reference="3" object_id_reference="_346"></item>
-		<item class_id_reference="3" object_id_reference="_347"></item>
+		<item class_id_reference="3" object_id_reference="_340"></item>
+		<item class_id_reference="3" object_id_reference="_341"></item>
+		<item class_id_reference="3" object_id_reference="_342"></item>
+		<item class_id_reference="12" object_id_reference="_343"></item>
+		<item class_id_reference="12" object_id_reference="_344"></item>
+		<item class_id_reference="12" object_id_reference="_345"></item>
+		<item class_id_reference="12" object_id_reference="_346"></item>
+		<item class_id_reference="12" object_id_reference="_347"></item>
 		<item class_id_reference="12" object_id_reference="_348"></item>
 		<item class_id_reference="12" object_id_reference="_349"></item>
 		<item class_id_reference="12" object_id_reference="_350"></item>
@@ -17898,12 +17418,12 @@
 		<item class_id_reference="12" object_id_reference="_356"></item>
 		<item class_id_reference="12" object_id_reference="_357"></item>
 		<item class_id_reference="12" object_id_reference="_358"></item>
-		<item class_id_reference="12" object_id_reference="_359"></item>
-		<item class_id_reference="12" object_id_reference="_360"></item>
-		<item class_id_reference="12" object_id_reference="_361"></item>
-		<item class_id_reference="12" object_id_reference="_362"></item>
-		<item class_id_reference="12" object_id_reference="_363"></item>
-		<item class_id_reference="8" object_id_reference="_364"></item>
+		<item class_id_reference="8" object_id_reference="_359"></item>
+		<item class_id_reference="3" object_id_reference="_360"></item>
+		<item class_id_reference="3" object_id_reference="_361"></item>
+		<item class_id_reference="3" object_id_reference="_362"></item>
+		<item class_id_reference="3" object_id_reference="_363"></item>
+		<item class_id_reference="3" object_id_reference="_364"></item>
 		<item class_id_reference="3" object_id_reference="_365"></item>
 		<item class_id_reference="3" object_id_reference="_366"></item>
 		<item class_id_reference="3" object_id_reference="_367"></item>
@@ -17911,23 +17431,23 @@
 		<item class_id_reference="3" object_id_reference="_369"></item>
 		<item class_id_reference="3" object_id_reference="_370"></item>
 		<item class_id_reference="3" object_id_reference="_371"></item>
-		<item class_id_reference="3" object_id_reference="_372"></item>
-		<item class_id_reference="3" object_id_reference="_373"></item>
-		<item class_id_reference="3" object_id_reference="_374"></item>
-		<item class_id_reference="3" object_id_reference="_375"></item>
+		<item class_id_reference="12" object_id_reference="_372"></item>
+		<item class_id_reference="12" object_id_reference="_373"></item>
+		<item class_id_reference="12" object_id_reference="_374"></item>
+		<item class_id_reference="12" object_id_reference="_375"></item>
 		<item class_id_reference="3" object_id_reference="_376"></item>
-		<item class_id_reference="12" object_id_reference="_377"></item>
-		<item class_id_reference="12" object_id_reference="_378"></item>
-		<item class_id_reference="12" object_id_reference="_379"></item>
-		<item class_id_reference="12" object_id_reference="_380"></item>
-		<item class_id_reference="12" object_id_reference="_381"></item>
-		<item class_id_reference="12" object_id_reference="_382"></item>
+		<item class_id_reference="3" object_id_reference="_377"></item>
+		<item class_id_reference="3" object_id_reference="_378"></item>
+		<item class_id_reference="3" object_id_reference="_379"></item>
+		<item class_id_reference="8" object_id_reference="_380"></item>
+		<item class_id_reference="8" object_id_reference="_381"></item>
+		<item class_id_reference="3" object_id_reference="_382"></item>
 		<item class_id_reference="3" object_id_reference="_383"></item>
 		<item class_id_reference="3" object_id_reference="_384"></item>
 		<item class_id_reference="3" object_id_reference="_385"></item>
 		<item class_id_reference="3" object_id_reference="_386"></item>
-		<item class_id_reference="8" object_id_reference="_387"></item>
-		<item class_id_reference="8" object_id_reference="_388"></item>
+		<item class_id_reference="3" object_id_reference="_387"></item>
+		<item class_id_reference="3" object_id_reference="_388"></item>
 		<item class_id_reference="3" object_id_reference="_389"></item>
 		<item class_id_reference="3" object_id_reference="_390"></item>
 		<item class_id_reference="3" object_id_reference="_391"></item>
@@ -17935,14 +17455,14 @@
 		<item class_id_reference="3" object_id_reference="_393"></item>
 		<item class_id_reference="3" object_id_reference="_394"></item>
 		<item class_id_reference="3" object_id_reference="_395"></item>
-		<item class_id_reference="12" object_id_reference="_396"></item>
-		<item class_id_reference="12" object_id_reference="_397"></item>
-		<item class_id_reference="12" object_id_reference="_398"></item>
-		<item class_id_reference="12" object_id_reference="_399"></item>
-		<item class_id_reference="12" object_id_reference="_400"></item>
-		<item class_id_reference="12" object_id_reference="_401"></item>
-		<item class_id_reference="12" object_id_reference="_402"></item>
-		<item class_id_reference="12" object_id_reference="_403"></item>
+		<item class_id_reference="3" object_id_reference="_396"></item>
+		<item class_id_reference="3" object_id_reference="_397"></item>
+		<item class_id_reference="3" object_id_reference="_398"></item>
+		<item class_id_reference="3" object_id_reference="_399"></item>
+		<item class_id_reference="3" object_id_reference="_400"></item>
+		<item class_id_reference="3" object_id_reference="_401"></item>
+		<item class_id_reference="3" object_id_reference="_402"></item>
+		<item class_id_reference="3" object_id_reference="_403"></item>
 		<item class_id_reference="3" object_id_reference="_404"></item>
 		<item class_id_reference="3" object_id_reference="_405"></item>
 		<item class_id_reference="3" object_id_reference="_406"></item>
@@ -17971,49 +17491,49 @@
 		<item class_id_reference="3" object_id_reference="_429"></item>
 		<item class_id_reference="3" object_id_reference="_430"></item>
 		<item class_id_reference="3" object_id_reference="_431"></item>
-		<item class_id_reference="3" object_id_reference="_432"></item>
-		<item class_id_reference="3" object_id_reference="_433"></item>
-		<item class_id_reference="3" object_id_reference="_434"></item>
-		<item class_id_reference="3" object_id_reference="_435"></item>
-		<item class_id_reference="3" object_id_reference="_436"></item>
-		<item class_id_reference="3" object_id_reference="_437"></item>
-		<item class_id_reference="3" object_id_reference="_438"></item>
-		<item class_id_reference="3" object_id_reference="_439"></item>
-		<item class_id_reference="3" object_id_reference="_440"></item>
-		<item class_id_reference="3" object_id_reference="_441"></item>
-		<item class_id_reference="3" object_id_reference="_442"></item>
-		<item class_id_reference="3" object_id_reference="_443"></item>
-		<item class_id_reference="3" object_id_reference="_444"></item>
-		<item class_id_reference="3" object_id_reference="_445"></item>
+		<item class_id_reference="11" object_id_reference="_432"></item>
+		<item class_id_reference="11" object_id_reference="_433"></item>
+		<item class_id_reference="11" object_id_reference="_434"></item>
+		<item class_id_reference="11" object_id_reference="_435"></item>
+		<item class_id_reference="11" object_id_reference="_436"></item>
+		<item class_id_reference="11" object_id_reference="_437"></item>
+		<item class_id_reference="11" object_id_reference="_438"></item>
+		<item class_id_reference="8" object_id_reference="_439"></item>
+		<item class_id_reference="8" object_id_reference="_440"></item>
+		<item class_id_reference="8" object_id_reference="_441"></item>
+		<item class_id_reference="8" object_id_reference="_442"></item>
+		<item class_id_reference="8" object_id_reference="_443"></item>
+		<item class_id_reference="8" object_id_reference="_444"></item>
+		<item class_id_reference="8" object_id_reference="_445"></item>
 		<item class_id_reference="3" object_id_reference="_446"></item>
-		<item class_id_reference="11" object_id_reference="_447"></item>
-		<item class_id_reference="11" object_id_reference="_448"></item>
-		<item class_id_reference="11" object_id_reference="_449"></item>
-		<item class_id_reference="11" object_id_reference="_450"></item>
-		<item class_id_reference="11" object_id_reference="_451"></item>
-		<item class_id_reference="11" object_id_reference="_452"></item>
-		<item class_id_reference="11" object_id_reference="_453"></item>
-		<item class_id_reference="8" object_id_reference="_454"></item>
-		<item class_id_reference="8" object_id_reference="_455"></item>
-		<item class_id_reference="8" object_id_reference="_456"></item>
-		<item class_id_reference="8" object_id_reference="_457"></item>
-		<item class_id_reference="8" object_id_reference="_458"></item>
-		<item class_id_reference="8" object_id_reference="_459"></item>
-		<item class_id_reference="8" object_id_reference="_460"></item>
-		<item class_id_reference="3" object_id_reference="_461"></item>
-		<item class_id_reference="3" object_id_reference="_462"></item>
-		<item class_id_reference="3" object_id_reference="_463"></item>
-		<item class_id_reference="3" object_id_reference="_464"></item>
-		<item class_id_reference="3" object_id_reference="_465"></item>
-		<item class_id_reference="3" object_id_reference="_466"></item>
-		<item class_id_reference="3" object_id_reference="_467"></item>
-		<item class_id_reference="3" object_id_reference="_468"></item>
-		<item class_id_reference="3" object_id_reference="_469"></item>
-		<item class_id_reference="3" object_id_reference="_470"></item>
-		<item class_id_reference="3" object_id_reference="_471"></item>
-		<item class_id_reference="3" object_id_reference="_472"></item>
-		<item class_id_reference="3" object_id_reference="_473"></item>
-		<item class_id_reference="3" object_id_reference="_474"></item>
+		<item class_id_reference="3" object_id_reference="_447"></item>
+		<item class_id_reference="3" object_id_reference="_448"></item>
+		<item class_id_reference="3" object_id_reference="_449"></item>
+		<item class_id_reference="3" object_id_reference="_450"></item>
+		<item class_id_reference="3" object_id_reference="_451"></item>
+		<item class_id_reference="3" object_id_reference="_452"></item>
+		<item class_id_reference="3" object_id_reference="_453"></item>
+		<item class_id_reference="3" object_id_reference="_454"></item>
+		<item class_id_reference="3" object_id_reference="_455"></item>
+		<item class_id_reference="3" object_id_reference="_456"></item>
+		<item class_id_reference="3" object_id_reference="_457"></item>
+		<item class_id_reference="3" object_id_reference="_458"></item>
+		<item class_id_reference="3" object_id_reference="_459"></item>
+		<item class_id_reference="11" object_id_reference="_460"></item>
+		<item class_id_reference="11" object_id_reference="_461"></item>
+		<item class_id_reference="11" object_id_reference="_462"></item>
+		<item class_id_reference="11" object_id_reference="_463"></item>
+		<item class_id_reference="11" object_id_reference="_464"></item>
+		<item class_id_reference="11" object_id_reference="_465"></item>
+		<item class_id_reference="11" object_id_reference="_466"></item>
+		<item class_id_reference="11" object_id_reference="_467"></item>
+		<item class_id_reference="11" object_id_reference="_468"></item>
+		<item class_id_reference="11" object_id_reference="_469"></item>
+		<item class_id_reference="11" object_id_reference="_470"></item>
+		<item class_id_reference="11" object_id_reference="_471"></item>
+		<item class_id_reference="11" object_id_reference="_472"></item>
+		<item class_id_reference="11" object_id_reference="_473"></item>
+		<item class_id_reference="11" object_id_reference="_474"></item>
 		<item class_id_reference="11" object_id_reference="_475"></item>
 		<item class_id_reference="11" object_id_reference="_476"></item>
 		<item class_id_reference="11" object_id_reference="_477"></item>
@@ -18024,21 +17544,21 @@
 		<item class_id_reference="11" object_id_reference="_482"></item>
 		<item class_id_reference="11" object_id_reference="_483"></item>
 		<item class_id_reference="11" object_id_reference="_484"></item>
-		<item class_id_reference="11" object_id_reference="_485"></item>
-		<item class_id_reference="11" object_id_reference="_486"></item>
-		<item class_id_reference="11" object_id_reference="_487"></item>
-		<item class_id_reference="11" object_id_reference="_488"></item>
-		<item class_id_reference="11" object_id_reference="_489"></item>
-		<item class_id_reference="11" object_id_reference="_490"></item>
-		<item class_id_reference="11" object_id_reference="_491"></item>
-		<item class_id_reference="11" object_id_reference="_492"></item>
-		<item class_id_reference="11" object_id_reference="_493"></item>
-		<item class_id_reference="11" object_id_reference="_494"></item>
-		<item class_id_reference="11" object_id_reference="_495"></item>
-		<item class_id_reference="11" object_id_reference="_496"></item>
-		<item class_id_reference="11" object_id_reference="_497"></item>
-		<item class_id_reference="11" object_id_reference="_498"></item>
-		<item class_id_reference="11" object_id_reference="_499"></item>
+		<item class_id_reference="3" object_id_reference="_485"></item>
+		<item class_id_reference="3" object_id_reference="_486"></item>
+		<item class_id_reference="3" object_id_reference="_487"></item>
+		<item class_id_reference="3" object_id_reference="_488"></item>
+		<item class_id_reference="3" object_id_reference="_489"></item>
+		<item class_id_reference="3" object_id_reference="_490"></item>
+		<item class_id_reference="3" object_id_reference="_491"></item>
+		<item class_id_reference="3" object_id_reference="_492"></item>
+		<item class_id_reference="3" object_id_reference="_493"></item>
+		<item class_id_reference="3" object_id_reference="_494"></item>
+		<item class_id_reference="3" object_id_reference="_495"></item>
+		<item class_id_reference="3" object_id_reference="_496"></item>
+		<item class_id_reference="3" object_id_reference="_497"></item>
+		<item class_id_reference="3" object_id_reference="_498"></item>
+		<item class_id_reference="3" object_id_reference="_499"></item>
 		<item class_id_reference="3" object_id_reference="_500"></item>
 		<item class_id_reference="3" object_id_reference="_501"></item>
 		<item class_id_reference="3" object_id_reference="_502"></item>
@@ -18074,22 +17594,7 @@
 		<item class_id_reference="3" object_id_reference="_532"></item>
 		<item class_id_reference="3" object_id_reference="_533"></item>
 		<item class_id_reference="3" object_id_reference="_534"></item>
-		<item class_id_reference="3" object_id_reference="_535"></item>
-		<item class_id_reference="3" object_id_reference="_536"></item>
-		<item class_id_reference="3" object_id_reference="_537"></item>
-		<item class_id_reference="3" object_id_reference="_538"></item>
-		<item class_id_reference="3" object_id_reference="_539"></item>
-		<item class_id_reference="3" object_id_reference="_540"></item>
-		<item class_id_reference="3" object_id_reference="_541"></item>
-		<item class_id_reference="3" object_id_reference="_542"></item>
-		<item class_id_reference="3" object_id_reference="_543"></item>
-		<item class_id_reference="3" object_id_reference="_544"></item>
-		<item class_id_reference="3" object_id_reference="_545"></item>
-		<item class_id_reference="3" object_id_reference="_546"></item>
-		<item class_id_reference="3" object_id_reference="_547"></item>
-		<item class_id_reference="3" object_id_reference="_548"></item>
-		<item class_id_reference="3" object_id_reference="_549"></item>
-		<item class_id="13" class_name="ObjectBackground" tracking_level="1" version="0" object_id="_550">
+		<item class_id="13" class_name="ObjectBackground" tracking_level="1" version="0" object_id="_535">
 			<Object>
 				<pos>
 					<x>0.000000000e+00</x>
@@ -18118,12 +17623,12 @@
 					<p.is_ball>0</p.is_ball>
 					<p.is_badguy>0</p.is_badguy>
 				</properties>
-				<m_pkLayer class_id_reference="7" object_id="_551">
+				<m_pkLayer class_id_reference="7" object_id="_536">
 					<objects>
 						<count>21</count>
 						<item_version>0</item_version>
-						<item class_id_reference="13" object_id_reference="_550"></item>
-						<item class_id_reference="3" object_id="_552">
+						<item class_id_reference="13" object_id_reference="_535"></item>
+						<item class_id_reference="3" object_id="_537">
 							<Object>
 								<pos>
 									<x>1.443300000e+04</x>
@@ -18152,10 +17657,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_553">
+						<item class_id_reference="3" object_id="_538">
 							<Object>
 								<pos>
 									<x>1.764000000e+04</x>
@@ -18184,10 +17689,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_554">
+						<item class_id_reference="3" object_id="_539">
 							<Object>
 								<pos>
 									<x>1.269300000e+04</x>
@@ -18216,10 +17721,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_555">
+						<item class_id_reference="3" object_id="_540">
 							<Object>
 								<pos>
 									<x>1.252600000e+04</x>
@@ -18248,10 +17753,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_556">
+						<item class_id_reference="3" object_id="_541">
 							<Object>
 								<pos>
 									<x>1.146000000e+03</x>
@@ -18280,10 +17785,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_557">
+						<item class_id_reference="3" object_id="_542">
 							<Object>
 								<pos>
 									<x>2.960000000e+03</x>
@@ -18312,10 +17817,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_558">
+						<item class_id_reference="3" object_id="_543">
 							<Object>
 								<pos>
 									<x>2.226000000e+03</x>
@@ -18344,10 +17849,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_559">
+						<item class_id_reference="3" object_id="_544">
 							<Object>
 								<pos>
 									<x>1.246000000e+03</x>
@@ -18376,10 +17881,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_560">
+						<item class_id_reference="3" object_id="_545">
 							<Object>
 								<pos>
 									<x>1.784600000e+04</x>
@@ -18408,10 +17913,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_561">
+						<item class_id_reference="3" object_id="_546">
 							<Object>
 								<pos>
 									<x>1.936600000e+04</x>
@@ -18440,10 +17945,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_562">
+						<item class_id_reference="3" object_id="_547">
 							<Object>
 								<pos>
 									<x>1.564600000e+04</x>
@@ -18472,10 +17977,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_563">
+						<item class_id_reference="3" object_id="_548">
 							<Object>
 								<pos>
 									<x>1.206000000e+03</x>
@@ -18504,10 +18009,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_564">
+						<item class_id_reference="3" object_id="_549">
 							<Object>
 								<pos>
 									<x>1.557300000e+04</x>
@@ -18536,10 +18041,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_565">
+						<item class_id_reference="3" object_id="_550">
 							<Object>
 								<pos>
 									<x>9.780000000e+03</x>
@@ -18568,10 +18073,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_566">
+						<item class_id_reference="3" object_id="_551">
 							<Object>
 								<pos>
 									<x>1.599300000e+04</x>
@@ -18600,10 +18105,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_567">
+						<item class_id_reference="3" object_id="_552">
 							<Object>
 								<pos>
 									<x>5.360000000e+03</x>
@@ -18632,10 +18137,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_568">
+						<item class_id_reference="3" object_id="_553">
 							<Object>
 								<pos>
 									<x>1.342600000e+04</x>
@@ -18664,10 +18169,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_569">
+						<item class_id_reference="3" object_id="_554">
 							<Object>
 								<pos>
 									<x>7.186000000e+03</x>
@@ -18696,10 +18201,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_570">
+						<item class_id_reference="3" object_id="_555">
 							<Object>
 								<pos>
 									<x>1.909300000e+04</x>
@@ -18728,10 +18233,10 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
-						<item class_id_reference="3" object_id="_571">
+						<item class_id_reference="3" object_id="_556">
 							<Object>
 								<pos>
 									<x>1.166000000e+03</x>
@@ -18760,7 +18265,7 @@
 									<p.is_ball>0</p.is_ball>
 									<p.is_badguy>0</p.is_badguy>
 								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_551"></m_pkLayer>
+								<m_pkLayer class_id_reference="7" object_id_reference="_536"></m_pkLayer>
 							</Object>
 						</item>
 					</objects>
@@ -18770,31 +18275,31 @@
 				</m_pkLayer>
 			</Object>
 		</item>
+		<item class_id_reference="3" object_id_reference="_537"></item>
+		<item class_id_reference="3" object_id_reference="_538"></item>
+		<item class_id_reference="3" object_id_reference="_539"></item>
+		<item class_id_reference="3" object_id_reference="_540"></item>
+		<item class_id_reference="3" object_id_reference="_541"></item>
+		<item class_id_reference="3" object_id_reference="_542"></item>
+		<item class_id_reference="3" object_id_reference="_543"></item>
+		<item class_id_reference="3" object_id_reference="_544"></item>
+		<item class_id_reference="3" object_id_reference="_545"></item>
+		<item class_id_reference="3" object_id_reference="_546"></item>
+		<item class_id_reference="3" object_id_reference="_547"></item>
+		<item class_id_reference="3" object_id_reference="_548"></item>
+		<item class_id_reference="3" object_id_reference="_549"></item>
+		<item class_id_reference="3" object_id_reference="_550"></item>
+		<item class_id_reference="3" object_id_reference="_551"></item>
 		<item class_id_reference="3" object_id_reference="_552"></item>
 		<item class_id_reference="3" object_id_reference="_553"></item>
 		<item class_id_reference="3" object_id_reference="_554"></item>
 		<item class_id_reference="3" object_id_reference="_555"></item>
 		<item class_id_reference="3" object_id_reference="_556"></item>
-		<item class_id_reference="3" object_id_reference="_557"></item>
-		<item class_id_reference="3" object_id_reference="_558"></item>
-		<item class_id_reference="3" object_id_reference="_559"></item>
-		<item class_id_reference="3" object_id_reference="_560"></item>
-		<item class_id_reference="3" object_id_reference="_561"></item>
-		<item class_id_reference="3" object_id_reference="_562"></item>
-		<item class_id_reference="3" object_id_reference="_563"></item>
-		<item class_id_reference="3" object_id_reference="_564"></item>
-		<item class_id_reference="3" object_id_reference="_565"></item>
-		<item class_id_reference="3" object_id_reference="_566"></item>
-		<item class_id_reference="3" object_id_reference="_567"></item>
-		<item class_id_reference="3" object_id_reference="_568"></item>
-		<item class_id_reference="3" object_id_reference="_569"></item>
-		<item class_id_reference="3" object_id_reference="_570"></item>
-		<item class_id_reference="3" object_id_reference="_571"></item>
 	</objects>
 	<layers class_id="14" tracking_level="0" version="0">
 		<count>5</count>
 		<item_version>0</item_version>
-		<item class_id_reference="7" object_id_reference="_551"></item>
+		<item class_id_reference="7" object_id_reference="_536"></item>
 		<item class_id_reference="7" object_id_reference="_200"></item>
 		<item class_id_reference="7" object_id_reference="_2"></item>
 		<item class_id_reference="7" object_id_reference="_124"></item>

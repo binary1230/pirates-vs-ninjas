@@ -2695,41 +2695,42 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_CollisionDirection swig_types[0]
-#define SWIGTYPE_p_Editor swig_types[1]
-#define SWIGTYPE_p_GameMode swig_types[2]
-#define SWIGTYPE_p_GameModeExitInfo swig_types[3]
-#define SWIGTYPE_p_GameOptions swig_types[4]
-#define SWIGTYPE_p_GameState swig_types[5]
-#define SWIGTYPE_p_GameWorld swig_types[6]
-#define SWIGTYPE_p_Object swig_types[7]
-#define SWIGTYPE_p_ObjectFactory swig_types[8]
-#define SWIGTYPE_p_ObjectLayer swig_types[9]
-#define SWIGTYPE_p_ObjectPlayer swig_types[10]
-#define SWIGTYPE_p_ObjectProperties swig_types[11]
-#define SWIGTYPE_p_Sprite swig_types[12]
-#define SWIGTYPE_p_XMLNode swig_types[13]
-#define SWIGTYPE_p__Rect swig_types[14]
-#define SWIGTYPE_p_b2Vec2 swig_types[15]
-#define SWIGTYPE_p_b2WorldManifold swig_types[16]
-#define SWIGTYPE_p_int swig_types[17]
-#define SWIGTYPE_p_listT_Object_p_t swig_types[18]
-#define SWIGTYPE_p_listT_Object_p_t__const_iterator swig_types[19]
-#define SWIGTYPE_p_listT_Object_p_t__const_reverse_iterator swig_types[20]
-#define SWIGTYPE_p_listT_Object_p_t__iterator swig_types[21]
-#define SWIGTYPE_p_listT_Object_p_t__reverse_iterator swig_types[22]
-#define SWIGTYPE_p_p_char swig_types[23]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[24]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[25]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[26]
-#define SWIGTYPE_p_std__string swig_types[27]
-#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[28]
-#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[29]
-#define SWIGTYPE_p_std__vectorT_Object_p_t__iterator swig_types[30]
-#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[31]
-#define SWIGTYPE_p_unsigned_int swig_types[32]
-static swig_type_info *swig_types[34];
-static swig_module_info swig_module = {swig_types, 33, 0, 0, 0, 0};
+#define SWIGTYPE_p_ALLEGRO_COLOR swig_types[0]
+#define SWIGTYPE_p_CollisionDirection swig_types[1]
+#define SWIGTYPE_p_Editor swig_types[2]
+#define SWIGTYPE_p_GameMode swig_types[3]
+#define SWIGTYPE_p_GameModeExitInfo swig_types[4]
+#define SWIGTYPE_p_GameOptions swig_types[5]
+#define SWIGTYPE_p_GameState swig_types[6]
+#define SWIGTYPE_p_GameWorld swig_types[7]
+#define SWIGTYPE_p_Object swig_types[8]
+#define SWIGTYPE_p_ObjectFactory swig_types[9]
+#define SWIGTYPE_p_ObjectLayer swig_types[10]
+#define SWIGTYPE_p_ObjectPlayer swig_types[11]
+#define SWIGTYPE_p_ObjectProperties swig_types[12]
+#define SWIGTYPE_p_Sprite swig_types[13]
+#define SWIGTYPE_p_XMLNode swig_types[14]
+#define SWIGTYPE_p__Rect swig_types[15]
+#define SWIGTYPE_p_b2Vec2 swig_types[16]
+#define SWIGTYPE_p_b2WorldManifold swig_types[17]
+#define SWIGTYPE_p_int swig_types[18]
+#define SWIGTYPE_p_listT_Object_p_t swig_types[19]
+#define SWIGTYPE_p_listT_Object_p_t__const_iterator swig_types[20]
+#define SWIGTYPE_p_listT_Object_p_t__const_reverse_iterator swig_types[21]
+#define SWIGTYPE_p_listT_Object_p_t__iterator swig_types[22]
+#define SWIGTYPE_p_listT_Object_p_t__reverse_iterator swig_types[23]
+#define SWIGTYPE_p_p_char swig_types[24]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[25]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[26]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[27]
+#define SWIGTYPE_p_std__string swig_types[28]
+#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[29]
+#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[30]
+#define SWIGTYPE_p_std__vectorT_Object_p_t__iterator swig_types[31]
+#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[32]
+#define SWIGTYPE_p_unsigned_int swig_types[33]
+static swig_type_info *swig_types[35];
+static swig_module_info swig_module = {swig_types, 34, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -5516,6 +5517,56 @@ fail:
 }
 
 
+static int _wrap_GameWorld_GetAllowExiting(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("GameWorld::GetAllowExiting",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::GetAllowExiting",1,"GameWorld *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_GetAllowExiting",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  result = (bool)(arg1)->GetAllowExiting();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_SetAllowExiting(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("GameWorld::SetAllowExiting",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::SetAllowExiting",1,"GameWorld *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameWorld::SetAllowExiting",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_SetAllowExiting",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetAllowExiting(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_GameWorld_GetObjects(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -6825,6 +6876,8 @@ static swig_lua_attribute swig_GameWorld_attributes[] = {
 static swig_lua_method swig_GameWorld_methods[]= {
     { "GetUseNewLoadingSystem", _wrap_GameWorld_GetUseNewLoadingSystem},
     { "SetUseNewLoadingSystem", _wrap_GameWorld_SetUseNewLoadingSystem},
+    { "GetAllowExiting", _wrap_GameWorld_GetAllowExiting},
+    { "SetAllowExiting", _wrap_GameWorld_SetAllowExiting},
     { "GetObjects", _wrap_GameWorld_GetObjects},
     { "Init", _wrap_GameWorld_Init},
     { "Shutdown", _wrap_GameWorld_Shutdown},
@@ -9417,7 +9470,42 @@ fail:
 }
 
 
-static int _wrap_Object_SetDrawBounds(lua_State* L) {
+static int _wrap_Object_SetDrawBounds__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  ALLEGRO_COLOR arg3 ;
+  ALLEGRO_COLOR *argp3 ;
+  
+  SWIG_check_num_args("Object::SetDrawBounds",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::SetDrawBounds",1,"Object *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Object::SetDrawBounds",2,"bool");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Object::SetDrawBounds",3,"ALLEGRO_COLOR");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_SetDrawBounds",1,SWIGTYPE_p_Object);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_ALLEGRO_COLOR,0))){
+    SWIG_fail_ptr("Object_SetDrawBounds",3,SWIGTYPE_p_ALLEGRO_COLOR);
+  }
+  arg3 = *argp3;
+  
+  (arg1)->SetDrawBounds(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Object_SetDrawBounds__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
   bool arg2 ;
@@ -9440,6 +9528,70 @@ static int _wrap_Object_SetDrawBounds(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_Object_SetDrawBounds(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Object, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isboolean(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_Object_SetDrawBounds__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Object, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isboolean(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_ALLEGRO_COLOR, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_Object_SetDrawBounds__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Object_SetDrawBounds'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Object::SetDrawBounds(bool,ALLEGRO_COLOR)\n"
+    "    Object::SetDrawBounds(bool)\n");
+  lua_error(L);return 0;
 }
 
 
@@ -11214,6 +11366,37 @@ fail:
 }
 
 
+static int _wrap_Object_ContainsPoint(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  b2Vec2 *arg2 = 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Object::ContainsPoint",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::ContainsPoint",1,"Object const *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Object::ContainsPoint",2,"b2Vec2 const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_ContainsPoint",1,SWIGTYPE_p_Object);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_b2Vec2,0))){
+    SWIG_fail_ptr("Object_ContainsPoint",2,SWIGTYPE_p_b2Vec2);
+  }
+  
+  result = (bool)((Object const *)arg1)->ContainsPoint((b2Vec2 const &)*arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Object_AddPrototype(lua_State* L) {
   int SWIG_arg = 0;
   std::string arg1 ;
@@ -11321,6 +11504,7 @@ static swig_lua_method swig_Object_methods[]= {
     { "GetObjectDefName", _wrap_Object_GetObjectDefName},
     { "ApplyImpulse", _wrap_Object_ApplyImpulse},
     { "FinishLoading", _wrap_Object_FinishLoading},
+    { "ContainsPoint", _wrap_Object_ContainsPoint},
     {0,0}
 };
 static swig_lua_method swig_Object_meta[] = {
@@ -12215,8 +12399,8 @@ static int _wrap_Editor_CreateObject(lua_State* L) {
   
   SWIG_check_num_args("Editor::CreateObject",3,3)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::CreateObject",1,"Editor *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Editor::CreateObject",2,"char *");
-  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Editor::CreateObject",3,"char *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Editor::CreateObject",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Editor::CreateObject",3,"char const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
     SWIG_fail_ptr("Editor_CreateObject",1,SWIGTYPE_p_Editor);
@@ -12224,7 +12408,7 @@ static int _wrap_Editor_CreateObject(lua_State* L) {
   
   arg2 = (char *)lua_tostring(L, 2);
   arg3 = (char *)lua_tostring(L, 3);
-  result = (Object *)(arg1)->CreateObject(arg2,arg3);
+  result = (Object *)(arg1)->CreateObject((char const *)arg2,(char const *)arg3);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_Object,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -12244,8 +12428,8 @@ static int _wrap_Editor_CreateAndSelectObject(lua_State* L) {
   
   SWIG_check_num_args("Editor::CreateAndSelectObject",3,3)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::CreateAndSelectObject",1,"Editor *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Editor::CreateAndSelectObject",2,"char *");
-  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Editor::CreateAndSelectObject",3,"char *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Editor::CreateAndSelectObject",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Editor::CreateAndSelectObject",3,"char const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
     SWIG_fail_ptr("Editor_CreateAndSelectObject",1,SWIGTYPE_p_Editor);
@@ -12253,7 +12437,97 @@ static int _wrap_Editor_CreateAndSelectObject(lua_State* L) {
   
   arg2 = (char *)lua_tostring(L, 2);
   arg3 = (char *)lua_tostring(L, 3);
-  (arg1)->CreateAndSelectObject(arg2,arg3);
+  (arg1)->CreateAndSelectObject((char const *)arg2,(char const *)arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_CreateAndSelect_UsePreviousLayerAndObject(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  
+  SWIG_check_num_args("Editor::CreateAndSelect_UsePreviousLayerAndObject",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::CreateAndSelect_UsePreviousLayerAndObject",1,"Editor *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_CreateAndSelect_UsePreviousLayerAndObject",1,SWIGTYPE_p_Editor);
+  }
+  
+  (arg1)->CreateAndSelect_UsePreviousLayerAndObject();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_MouseToLayerCoords(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  b2Vec2 *arg2 = 0 ;
+  ObjectLayer *arg3 = (ObjectLayer *) 0 ;
+  
+  SWIG_check_num_args("Editor::MouseToLayerCoords",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::MouseToLayerCoords",1,"Editor *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Editor::MouseToLayerCoords",2,"b2Vec2 &");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("Editor::MouseToLayerCoords",3,"ObjectLayer *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_MouseToLayerCoords",1,SWIGTYPE_p_Editor);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_b2Vec2,0))){
+    SWIG_fail_ptr("Editor_MouseToLayerCoords",2,SWIGTYPE_p_b2Vec2);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_ObjectLayer,0))){
+    SWIG_fail_ptr("Editor_MouseToLayerCoords",3,SWIGTYPE_p_ObjectLayer);
+  }
+  
+  (arg1)->MouseToLayerCoords(*arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_SnapToGrid(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  b2Vec2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("Editor::SnapToGrid",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::SnapToGrid",1,"Editor *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Editor::SnapToGrid",2,"b2Vec2 &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_SnapToGrid",1,SWIGTYPE_p_Editor);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_b2Vec2,0))){
+    SWIG_fail_ptr("Editor_SnapToGrid",2,SWIGTYPE_p_b2Vec2);
+  }
+  
+  (arg1)->SnapToGrid(*arg2);
   
   return SWIG_arg;
   
@@ -12288,18 +12562,25 @@ fail:
 }
 
 
-static int _wrap_Editor_UnselectCurrentlySelectedObject(lua_State* L) {
+static int _wrap_Editor_SelectObject(lua_State* L) {
   int SWIG_arg = 0;
   Editor *arg1 = (Editor *) 0 ;
+  Object *arg2 = (Object *) 0 ;
   
-  SWIG_check_num_args("Editor::UnselectCurrentlySelectedObject",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::UnselectCurrentlySelectedObject",1,"Editor *");
+  SWIG_check_num_args("Editor::SelectObject",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::SelectObject",1,"Editor *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Editor::SelectObject",2,"Object *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
-    SWIG_fail_ptr("Editor_UnselectCurrentlySelectedObject",1,SWIGTYPE_p_Editor);
+    SWIG_fail_ptr("Editor_SelectObject",1,SWIGTYPE_p_Editor);
   }
   
-  (arg1)->UnselectCurrentlySelectedObject();
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Editor_SelectObject",2,SWIGTYPE_p_Object);
+  }
+  
+  (arg1)->SelectObject(arg2);
   
   return SWIG_arg;
   
@@ -12334,6 +12615,125 @@ fail:
 }
 
 
+static int _wrap_Editor_CommonUpdate(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  
+  SWIG_check_num_args("Editor::CommonUpdate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::CommonUpdate",1,"Editor *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_CommonUpdate",1,SWIGTYPE_p_Editor);
+  }
+  
+  (arg1)->CommonUpdate();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_NoModeUpdate(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  
+  SWIG_check_num_args("Editor::NoModeUpdate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::NoModeUpdate",1,"Editor *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_NoModeUpdate",1,SWIGTYPE_p_Editor);
+  }
+  
+  (arg1)->NoModeUpdate();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_UpdateMove(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  
+  SWIG_check_num_args("Editor::UpdateMove",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::UpdateMove",1,"Editor *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_UpdateMove",1,SWIGTYPE_p_Editor);
+  }
+  
+  (arg1)->UpdateMove();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_GetObjectUnderCursor(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  Object *result = 0 ;
+  
+  SWIG_check_num_args("Editor::GetObjectUnderCursor",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::GetObjectUnderCursor",1,"Editor *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_GetObjectUnderCursor",1,SWIGTYPE_p_Editor);
+  }
+  
+  result = (Object *)(arg1)->GetObjectUnderCursor();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Object,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_SetDrawBoundingBoxes_AllObjects(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("Editor::SetDrawBoundingBoxes_AllObjects",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::SetDrawBoundingBoxes_AllObjects",1,"Editor *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Editor::SetDrawBoundingBoxes_AllObjects",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_SetDrawBoundingBoxes_AllObjects",1,SWIGTYPE_p_Editor);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetDrawBoundingBoxes_AllObjects(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Editor_Update(lua_State* L) {
   int SWIG_arg = 0;
   Editor *arg1 = (Editor *) 0 ;
@@ -12346,6 +12746,29 @@ static int _wrap_Editor_Update(lua_State* L) {
   }
   
   (arg1)->Update();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_DeleteCurrentSelection(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  
+  SWIG_check_num_args("Editor::DeleteCurrentSelection",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::DeleteCurrentSelection",1,"Editor *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_DeleteCurrentSelection",1,SWIGTYPE_p_Editor);
+  }
+  
+  (arg1)->DeleteCurrentSelection();
   
   return SWIG_arg;
   
@@ -12425,10 +12848,19 @@ static swig_lua_attribute swig_Editor_attributes[] = {
 static swig_lua_method swig_Editor_methods[]= {
     { "CreateObject", _wrap_Editor_CreateObject},
     { "CreateAndSelectObject", _wrap_Editor_CreateAndSelectObject},
+    { "CreateAndSelect_UsePreviousLayerAndObject", _wrap_Editor_CreateAndSelect_UsePreviousLayerAndObject},
+    { "MouseToLayerCoords", _wrap_Editor_MouseToLayerCoords},
+    { "SnapToGrid", _wrap_Editor_SnapToGrid},
     { "UpdateSelectedObjectPosition", _wrap_Editor_UpdateSelectedObjectPosition},
-    { "UnselectCurrentlySelectedObject", _wrap_Editor_UnselectCurrentlySelectedObject},
+    { "SelectObject", _wrap_Editor_SelectObject},
     { "Draw", _wrap_Editor_Draw},
+    { "CommonUpdate", _wrap_Editor_CommonUpdate},
+    { "NoModeUpdate", _wrap_Editor_NoModeUpdate},
+    { "UpdateMove", _wrap_Editor_UpdateMove},
+    { "GetObjectUnderCursor", _wrap_Editor_GetObjectUnderCursor},
+    { "SetDrawBoundingBoxes_AllObjects", _wrap_Editor_SetDrawBoundingBoxes_AllObjects},
     { "Update", _wrap_Editor_Update},
+    { "DeleteCurrentSelection", _wrap_Editor_DeleteCurrentSelection},
     { "GetSnapToGrid", _wrap_Editor_GetSnapToGrid},
     { "SetSnapToGrid", _wrap_Editor_SetSnapToGrid},
     {0,0}
@@ -12492,6 +12924,9 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {SWIG_LUA_CONSTTAB_INT("INPUT_RIGHT", INPUT_RIGHT)},
     {SWIG_LUA_CONSTTAB_INT("INPUT_UP", INPUT_UP)},
     {SWIG_LUA_CONSTTAB_INT("INPUT_DOWN", INPUT_DOWN)},
+    {SWIG_LUA_CONSTTAB_INT("EDITOR_NONE", EDITOR_NONE)},
+    {SWIG_LUA_CONSTTAB_INT("EDITOR_MOVE", EDITOR_MOVE)},
+    {SWIG_LUA_CONSTTAB_INT("EDITOR_SELECT", EDITOR_SELECT)},
     {0,0,0,0,0,0}
 };
 static swig_lua_method swig_SwigModule_methods[]= {
@@ -12563,6 +12998,7 @@ static void *_p_GameWorldTo_p_GameMode(void *x, int *SWIGUNUSEDPARM(newmemory)) 
 static void *_p_ObjectPlayerTo_p_Object(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((Object *)  ((ObjectPlayer *) x));
 }
+static swig_type_info _swigt__p_ALLEGRO_COLOR = {"_p_ALLEGRO_COLOR", "ALLEGRO_COLOR *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_CollisionDirection = {"_p_CollisionDirection", "CollisionDirection *", 0, 0, (void*)&_wrap_class_CollisionDirection, 0};
 static swig_type_info _swigt__p_Editor = {"_p_Editor", "Editor *", 0, 0, (void*)&_wrap_class_Editor, 0};
 static swig_type_info _swigt__p_GameMode = {"_p_GameMode", "GameMode *", 0, 0, (void*)&_wrap_class_GameMode, 0};
@@ -12598,6 +13034,7 @@ static swig_type_info _swigt__p_std__vectorT_std__string_t = {"_p_std__vectorT_s
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int *|uint *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
+  &_swigt__p_ALLEGRO_COLOR,
   &_swigt__p_CollisionDirection,
   &_swigt__p_Editor,
   &_swigt__p_GameMode,
@@ -12633,6 +13070,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_unsigned_int,
 };
 
+static swig_cast_info _swigc__p_ALLEGRO_COLOR[] = {  {&_swigt__p_ALLEGRO_COLOR, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_CollisionDirection[] = {  {&_swigt__p_CollisionDirection, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Editor[] = {  {&_swigt__p_Editor, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameMode[] = {  {&_swigt__p_GameWorld, _p_GameWorldTo_p_GameMode, 0, 0},  {&_swigt__p_GameMode, 0, 0, 0},{0, 0, 0, 0}};
@@ -12668,6 +13106,7 @@ static swig_cast_info _swigc__p_std__vectorT_std__string_t[] = {  {&_swigt__p_st
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
+  _swigc__p_ALLEGRO_COLOR,
   _swigc__p_CollisionDirection,
   _swigc__p_Editor,
   _swigc__p_GameMode,

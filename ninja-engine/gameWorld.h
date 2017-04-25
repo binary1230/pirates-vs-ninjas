@@ -147,6 +147,7 @@ class GameWorld : public GameMode {
 			void Clear();
 
 			CREATE_PROPERTY(bool, UseNewLoadingSystem)
+			CREATE_PROPERTY(bool, AllowExiting)
 
 		public:
 			// not a very effecient method.  call with map editor only

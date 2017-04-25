@@ -2200,6 +2200,28 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetUseNewLoadingSystem(void * jarg1
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_GetAllowExiting(void * jarg1) {
+  unsigned int jresult ;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  bool result;
+  
+  arg1 = (GameWorld *)jarg1; 
+  result = (bool)(arg1)->GetAllowExiting();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetAllowExiting(void * jarg1, unsigned int jarg2) {
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetAllowExiting(arg2);
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetObjects(void * jarg1) {
   void * jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -3672,7 +3694,25 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_PlayAnimation(void * jarg1, unsigned i
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetDrawBounds(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetDrawBounds__SWIG_0(void * jarg1, unsigned int jarg2, void * jarg3) {
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  ALLEGRO_COLOR arg3 ;
+  ALLEGRO_COLOR *argp3 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  argp3 = (ALLEGRO_COLOR *)jarg3; 
+  if (!argp3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Attempt to dereference null ALLEGRO_COLOR", 0);
+    return ;
+  }
+  arg3 = *argp3; 
+  (arg1)->SetDrawBounds(arg2,arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetDrawBounds__SWIG_1(void * jarg1, unsigned int jarg2) {
   Object *arg1 = (Object *) 0 ;
   bool arg2 ;
   
@@ -4296,6 +4336,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_Object(void * jarg1) {
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_ContainsPoint(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  b2Vec2 *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (b2Vec2 *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "b2Vec2 const & type is null", 0);
+    return 0;
+  } 
+  result = (bool)((Object const *)arg1)->ContainsPoint((b2Vec2 const &)*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_Object_AddPrototype(char * jarg1, void * jarg2) {
   void * jresult ;
   std::string arg1 ;
@@ -4729,7 +4787,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Editor_CreateObject(void * jarg1, char * ja
   arg1 = (Editor *)jarg1; 
   arg2 = (char *)jarg2; 
   arg3 = (char *)jarg3; 
-  result = (Object *)(arg1)->CreateObject(arg2,arg3);
+  result = (Object *)(arg1)->CreateObject((char const *)arg2,(char const *)arg3);
   jresult = (void *)result; 
   return jresult;
 }
@@ -4743,7 +4801,45 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_CreateAndSelectObject(void * jarg1, ch
   arg1 = (Editor *)jarg1; 
   arg2 = (char *)jarg2; 
   arg3 = (char *)jarg3; 
-  (arg1)->CreateAndSelectObject(arg2,arg3);
+  (arg1)->CreateAndSelectObject((char const *)arg2,(char const *)arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_CreateAndSelect_UsePreviousLayerAndObject(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->CreateAndSelect_UsePreviousLayerAndObject();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_MouseToLayerCoords(void * jarg1, void * jarg2, void * jarg3) {
+  Editor *arg1 = (Editor *) 0 ;
+  b2Vec2 *arg2 = 0 ;
+  ObjectLayer *arg3 = (ObjectLayer *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = (b2Vec2 *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "b2Vec2 & type is null", 0);
+    return ;
+  } 
+  arg3 = (ObjectLayer *)jarg3; 
+  (arg1)->MouseToLayerCoords(*arg2,arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SnapToGrid(void * jarg1, void * jarg2) {
+  Editor *arg1 = (Editor *) 0 ;
+  b2Vec2 *arg2 = 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = (b2Vec2 *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "b2Vec2 & type is null", 0);
+    return ;
+  } 
+  (arg1)->SnapToGrid(*arg2);
 }
 
 
@@ -4755,11 +4851,13 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_UpdateSelectedObjectPosition(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Editor_UnselectCurrentlySelectedObject(void * jarg1) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SelectObject(void * jarg1, void * jarg2) {
   Editor *arg1 = (Editor *) 0 ;
+  Object *arg2 = (Object *) 0 ;
   
   arg1 = (Editor *)jarg1; 
-  (arg1)->UnselectCurrentlySelectedObject();
+  arg2 = (Object *)jarg2; 
+  (arg1)->SelectObject(arg2);
 }
 
 
@@ -4771,11 +4869,65 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_Draw(void * jarg1) {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_CommonUpdate(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->CommonUpdate();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_NoModeUpdate(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->NoModeUpdate();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_UpdateMove(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->UpdateMove();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Editor_GetObjectUnderCursor(void * jarg1) {
+  void * jresult ;
+  Editor *arg1 = (Editor *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  result = (Object *)(arg1)->GetObjectUnderCursor();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetDrawBoundingBoxes_AllObjects(void * jarg1, unsigned int jarg2) {
+  Editor *arg1 = (Editor *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetDrawBoundingBoxes_AllObjects(arg2);
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_Editor_Update(void * jarg1) {
   Editor *arg1 = (Editor *) 0 ;
   
   arg1 = (Editor *)jarg1; 
   (arg1)->Update();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_DeleteCurrentSelection(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->DeleteCurrentSelection();
 }
 
 
