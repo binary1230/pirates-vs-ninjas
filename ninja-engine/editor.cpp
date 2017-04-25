@@ -51,8 +51,22 @@ void Editor::MouseToLayerCoords(b2Vec2& layer_coord_out, ObjectLayer* layer) {
 }
 
 void Editor::SnapToGrid(b2Vec2& pos) {
-	pos.x -= int(pos.x) % _grid_resolution;
-	pos.y -= int(pos.y) % _grid_resolution;
+	uint grid_resolution_x = _grid_resolution;
+	uint grid_resolution_y = _grid_resolution;
+
+	if (_selection) {
+		grid_resolution_x = _selection->GetWidth();
+		grid_resolution_y = _selection->GetHeight();
+
+		if (grid_resolution_x < 1)
+			grid_resolution_x = _grid_resolution;
+
+		if (grid_resolution_y < 1)
+			grid_resolution_y = _grid_resolution;
+	}
+
+	pos.x -= int(pos.x) % grid_resolution_x;
+	pos.y -= int(pos.y) % grid_resolution_y;
 }
 
 void Editor::UpdateSelectedObjectPosition() {
