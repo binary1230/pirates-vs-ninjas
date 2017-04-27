@@ -6,6 +6,7 @@
 #include "input.h"
 #include "window.h"
 #include "gameState.h"
+#include "camera.h"
 
 Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
 	XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
@@ -46,8 +47,12 @@ void Editor::CreateAndSelect_UsePreviousLayerAndObject() {
 // transform mouse input to compensate for scroll speeds on layers
 void Editor::MouseToLayerCoords(b2Vec2& layer_coord_out, ObjectLayer* layer) {
 	assert(layer);
-	layer_coord_out.x = (INPUT->MouseX() / layer->GetScrollSpeed()) + WORLD->_iCameraX;
-	layer_coord_out.y = ((WINDOW->Height() - INPUT->MouseY()) / layer->GetScrollSpeed()) + WORLD->m_iCameraY;
+
+	b2Vec2 cameraXY;
+	WORLD->GetCamera()->GetXY(cameraXY);
+
+	layer_coord_out.x = (INPUT->MouseX() / layer->GetScrollSpeed()) + cameraXY.x;
+	layer_coord_out.y = ((WINDOW->Height() - INPUT->MouseY()) / layer->GetScrollSpeed()) + cameraXY.y;
 }
 
 void Editor::SnapToGrid(b2Vec2& pos) {

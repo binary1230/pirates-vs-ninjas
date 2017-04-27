@@ -1026,6 +1026,28 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_SetAllowExiting(swigCPtr, val);
   }
 
+  public SWIGTYPE_p_Camera _camera {
+    set {
+      enginePINVOKE.GameWorld__camera_set(swigCPtr, SWIGTYPE_p_Camera.getCPtr(value));
+    } 
+    get {
+      global::System.IntPtr cPtr = enginePINVOKE.GameWorld__camera_get(swigCPtr);
+      SWIGTYPE_p_Camera ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_Camera(cPtr, false);
+      return ret;
+    } 
+  }
+
+  public Object m_pkCameraLookatTarget {
+    set {
+      enginePINVOKE.GameWorld_m_pkCameraLookatTarget_set(swigCPtr, Object.getCPtr(value));
+    } 
+    get {
+      global::System.IntPtr cPtr = enginePINVOKE.GameWorld_m_pkCameraLookatTarget_get(swigCPtr);
+      Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
+      return ret;
+    } 
+  }
+
   public ObjectVector GetObjects() {
     ObjectVector ret = new ObjectVector(enginePINVOKE.GameWorld_GetObjects(swigCPtr), true);
     return ret;
@@ -1044,11 +1066,6 @@ public class GameWorld : GameMode {
   public Editor GetEditor() {
     global::System.IntPtr cPtr = enginePINVOKE.GameWorld_GetEditor(swigCPtr);
     Editor ret = (cPtr == global::System.IntPtr.Zero) ? null : new Editor(cPtr, false);
-    return ret;
-  }
-
-  public bool UseScrollSpeed() {
-    bool ret = enginePINVOKE.GameWorld_UseScrollSpeed(swigCPtr);
     return ret;
   }
 
@@ -1129,24 +1146,6 @@ public class GameWorld : GameMode {
     return ret;
   }
 
-  public void ComputeNewCamera() {
-    enginePINVOKE.GameWorld_ComputeNewCamera(swigCPtr);
-  }
-
-  public void SetCameraScrollSpeed(float s) {
-    enginePINVOKE.GameWorld_SetCameraScrollSpeed(swigCPtr, s);
-  }
-
-  public int GetCameraX() {
-    int ret = enginePINVOKE.GameWorld_GetCameraX(swigCPtr);
-    return ret;
-  }
-
-  public int GetCameraY() {
-    int ret = enginePINVOKE.GameWorld_GetCameraY(swigCPtr);
-    return ret;
-  }
-
   public void SetCameraShake(bool state, int fade_out_time) {
     enginePINVOKE.GameWorld_SetCameraShake__SWIG_0(swigCPtr, state, fade_out_time);
   }
@@ -1155,14 +1154,20 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_SetCameraShake__SWIG_1(swigCPtr, state);
   }
 
-  public void TransformWorldToView(SWIGTYPE_p_int x, SWIGTYPE_p_int y) {
-    enginePINVOKE.GameWorld_TransformWorldToView(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y));
+  public void TransformWorldToView(SWIGTYPE_p_int x, SWIGTYPE_p_int y, float scroll_speed_multiplier) {
+    enginePINVOKE.GameWorld_TransformWorldToView(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y), scroll_speed_multiplier);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void TransformViewToScreen(SWIGTYPE_p_int x, SWIGTYPE_p_int y) {
     enginePINVOKE.GameWorld_TransformViewToScreen(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public SWIGTYPE_p_CameraFollow GetPlayerCamera() {
+    global::System.IntPtr cPtr = enginePINVOKE.GameWorld_GetPlayerCamera(swigCPtr);
+    SWIGTYPE_p_CameraFollow ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_CameraFollow(cPtr, false);
+    return ret;
   }
 
   public void ShowText(string txt, string avatar_filename, bool modal_active) {
@@ -1177,8 +1182,10 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_ShowText__SWIG_2(swigCPtr, txt);
   }
 
-  public void SnapCamera() {
-    enginePINVOKE.GameWorld_SnapCamera(swigCPtr);
+  public SWIGTYPE_p_Camera GetCamera() {
+    global::System.IntPtr cPtr = enginePINVOKE.GameWorld_GetCamera(swigCPtr);
+    SWIGTYPE_p_Camera ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_Camera(cPtr, false);
+    return ret;
   }
 
   public void AllowPlayerOffscreen(bool state) {
@@ -2875,6 +2882,18 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SetAllowExiting")]
   public static extern void GameWorld_SetAllowExiting(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld__camera_set")]
+  public static extern void GameWorld__camera_set(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld__camera_get")]
+  public static extern global::System.IntPtr GameWorld__camera_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_m_pkCameraLookatTarget_set")]
+  public static extern void GameWorld_m_pkCameraLookatTarget_set(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_m_pkCameraLookatTarget_get")]
+  public static extern global::System.IntPtr GameWorld_m_pkCameraLookatTarget_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetObjects")]
   public static extern global::System.IntPtr GameWorld_GetObjects(global::System.Runtime.InteropServices.HandleRef jarg1);
 
@@ -2886,9 +2905,6 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetEditor")]
   public static extern global::System.IntPtr GameWorld_GetEditor(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_UseScrollSpeed")]
-  public static extern bool GameWorld_UseScrollSpeed(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_IsLoading")]
   public static extern bool GameWorld_IsLoading(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -2938,18 +2954,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetHeight")]
   public static extern int GameWorld_GetHeight(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_ComputeNewCamera")]
-  public static extern void GameWorld_ComputeNewCamera(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SetCameraScrollSpeed")]
-  public static extern void GameWorld_SetCameraScrollSpeed(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetCameraX")]
-  public static extern int GameWorld_GetCameraX(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetCameraY")]
-  public static extern int GameWorld_GetCameraY(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SetCameraShake__SWIG_0")]
   public static extern void GameWorld_SetCameraShake__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2, int jarg3);
 
@@ -2957,10 +2961,13 @@ class enginePINVOKE {
   public static extern void GameWorld_SetCameraShake__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_TransformWorldToView")]
-  public static extern void GameWorld_TransformWorldToView(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void GameWorld_TransformWorldToView(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, float jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_TransformViewToScreen")]
   public static extern void GameWorld_TransformViewToScreen(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetPlayerCamera")]
+  public static extern global::System.IntPtr GameWorld_GetPlayerCamera(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_ShowText__SWIG_0")]
   public static extern void GameWorld_ShowText__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2, string jarg3, bool jarg4);
@@ -2971,8 +2978,8 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_ShowText__SWIG_2")]
   public static extern void GameWorld_ShowText__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SnapCamera")]
-  public static extern void GameWorld_SnapCamera(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetCamera")]
+  public static extern global::System.IntPtr GameWorld_GetCamera(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_AllowPlayerOffscreen")]
   public static extern void GameWorld_AllowPlayerOffscreen(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -3605,6 +3612,22 @@ public class engine {
   public static readonly string REDIRECT_STDERR_FILENAME = enginePINVOKE.REDIRECT_STDERR_FILENAME_get();
 }
 
+public class SWIGTYPE_p_CameraFollow {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal SWIGTYPE_p_CameraFollow(global::System.IntPtr cPtr, bool futureUse) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  protected SWIGTYPE_p_CameraFollow() {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_CameraFollow obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+}
+
 public class SWIGTYPE_p_b2Vec2 {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
@@ -3713,6 +3736,22 @@ public class SWIGTYPE_p_int {
   }
 
   internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_int obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+}
+
+public class SWIGTYPE_p_Camera {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal SWIGTYPE_p_Camera(global::System.IntPtr cPtr, bool futureUse) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  protected SWIGTYPE_p_Camera() {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_Camera obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 }

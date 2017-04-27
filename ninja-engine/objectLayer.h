@@ -11,12 +11,12 @@ class Object;
 class ObjectLayer {
 	friend class boost::serialization::access;
 	template<class Archive>
-	void serialize(Archive & ar, const unsigned int /* file_version */)
+	void serialize(Archive & ar, const unsigned int version)
 	{
-		ar	& BOOST_SERIALIZATION_NVP(objects)
-			& BOOST_SERIALIZATION_NVP(scroll_speed)
-			& BOOST_SERIALIZATION_NVP(name)
-			& BOOST_SERIALIZATION_NVP(visible);
+		ar & BOOST_SERIALIZATION_NVP(objects);
+		ar & BOOST_SERIALIZATION_NVP(scroll_speed);
+		ar & BOOST_SERIALIZATION_NVP(name);
+		ar & BOOST_SERIALIZATION_NVP(visible);
 	}
 
 	protected:
@@ -40,7 +40,7 @@ class ObjectLayer {
 		bool IsVisible() { return visible; };
 		void SetVisible(bool _visible) { visible = _visible; };
 
-		//! Draw this layer with camera scroll take into effect
+		//! Draw all objects on this layer
 		void Draw();
 		
 		//! Put an object onto this layer

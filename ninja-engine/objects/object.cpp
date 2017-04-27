@@ -203,7 +203,7 @@ void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y)
 
 	// take into account the camera now.
 	if (!properties.is_overlay)
-		WORLD->TransformWorldToView(x, y);
+		WORLD->TransformWorldToView(x, y, m_pkLayer->GetScrollSpeed());
 	
 	// compute absolute x,y coordinates on the screen
 	y = y + GetHeight();
@@ -226,8 +226,8 @@ void Object::TransformRect(_Rect &r) {
 
 	// take into account the camera now.
 	if (!properties.is_overlay) {
-		WORLD->TransformWorldToView(x1, y1);
-		WORLD->TransformWorldToView(x2, y2);
+		WORLD->TransformWorldToView(x1, y1, m_pkLayer->GetScrollSpeed());
+		WORLD->TransformWorldToView(x2, y2, m_pkLayer->GetScrollSpeed());
 	}
 	
 	// compute absolute x,y coordinates on the screen

@@ -11,10 +11,6 @@ void ObjectLayer::Draw() {
 	ObjectListReverseIter rev_iter;
 	Object* obj;
 
-	// set scroll speed for this layer
-	if (WORLD->UseScrollSpeed())
-		WORLD->SetCameraScrollSpeed(scroll_speed);
-	
 	// ORDER IS IMPORTANT
 	// we draw starting at the end, going to the beginning
 	// things at the end were put there FIRST to be drawn FIRST.

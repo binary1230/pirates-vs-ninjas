@@ -11,6 +11,8 @@ class ObjectFactory;
 class ObjectLayer;
 class ObjectPlayer;
 class Editor;
+class Camera;
+class CameraFollow;
 			
 // note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
@@ -40,7 +42,16 @@ class GameWorld : public GameMode {
 			ar & boost::serialization::make_nvp("width", _levelWidth);
 			ar & boost::serialization::make_nvp("height", _levelHeight);
 			ar & boost::serialization::make_nvp("lua_script", _luaScript);
-			ar & BOOST_SERIALIZATION_NVP(m_pkCameraLookatTarget);
+
+			if (version <= 1) {
+				Object* obsolete = nullptr;
+				ar & boost::serialization::make_nvp("m_pkCameraLookatTarget", obsolete);
+			}
+
+			if (version >= 2) {
+				ar & BOOST_SERIALIZATION_NVP(_camera);
+			}
+
 			ar & BOOST_SERIALIZATION_NVP(m_included_effect_xml_files);
 			ar & BOOST_SERIALIZATION_NVP(m_included_objectdef_xml_files);
 		}
@@ -71,36 +82,8 @@ class GameWorld : public GameMode {
 			//! (usually much bigger than screen width/height)
 			int _levelWidth, _levelHeight;
 
-			//! Current camera XY position
-			int _iCameraX, m_iCameraY;
-
-			//! Whether the camera is currently shaking or not
-			bool m_bIsCameraShaking;
-
-			int m_iCameraTotalShakeTime;
-			int m_iCameraShakeTime;
-
-			//! Which object the camera should follow
-			Object* m_pkCameraLookatTarget;
-
-			//! Camera threshold - how far it should slide before snapping
-			// you can use this to make sure we're, say, 60 units from the sides
-			// at all times.
-			int m_iCameraSideMargins;
-
-			//! Camera snap rate - how fast the camera should "snap" to new targets
-			float m_fCameraSnapRate;
-
-			//! How much to scale the X coordinate of the camera.
-			//! MOSTLY used for scrolling backgrounds at different speeds
-			//! on different layers
-			float m_fCameraScrollSpeed;
-
 			bool is_loading;
 			bool use_scroll_speed;
-
-			int camera_shake_x;
-			int camera_shake_y;
 
 			bool allow_player_offscreen;
 
@@ -142,6 +125,9 @@ class GameWorld : public GameMode {
 
 			CREATE_PROPERTY(bool, AllowExiting)
 
+			Camera* _camera;
+			Object* m_pkCameraLookatTarget; // temp, will go away once we're doing serializing correctly.
+
 		public:
 			// not a very effecient method.  call with map editor only
 			inline vector<Object*> GetObjects() {
@@ -154,8 +140,6 @@ class GameWorld : public GameMode {
 			inline Editor* GetEditor() {
 				return map_editor;
 			}
-
-			bool UseScrollSpeed() {return use_scroll_speed;}
 
 			//! True if we are in the middle of the initial load
 			inline bool IsLoading() {return is_loading;}
@@ -201,25 +185,18 @@ class GameWorld : public GameMode {
 			int GetWidth() {return _levelWidth;};
 			int GetHeight() {return _levelHeight;};
 
-			void ComputeNewCamera();
-			void SetCameraScrollSpeed(float s) {m_fCameraScrollSpeed = s;};
-
-			int GetCameraX(); 
-			int GetCameraY();
-
 			void SetCameraShake(bool state, int fade_out_time = -1);
 			
-			void TransformWorldToView(int &x, int &y);
+			void TransformWorldToView(int &x, int &y, float scroll_speed_multiplier);
 			void TransformViewToScreen(int &x, int &y);
+
+			CameraFollow* GetPlayerCamera();
 
 			void ShowText(	const char* txt, 
 							const char* avatar_filename = 0, 
 							bool modal_active = false );
 
-			//! Make the camera snap IMMEDIATELY to its
-			//! target's position rather than doing the nice
-			//! floaty thing
-			void SnapCamera();
+			inline Camera* GetCamera() { return _camera; }
 
 			//! Allows the player to remain offscreen
 			//! Only use for cinematics.

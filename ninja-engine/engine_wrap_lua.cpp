@@ -2696,41 +2696,43 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_p_ALLEGRO_COLOR swig_types[0]
-#define SWIGTYPE_p_CollisionDirection swig_types[1]
-#define SWIGTYPE_p_Editor swig_types[2]
-#define SWIGTYPE_p_GameMode swig_types[3]
-#define SWIGTYPE_p_GameModeExitInfo swig_types[4]
-#define SWIGTYPE_p_GameOptions swig_types[5]
-#define SWIGTYPE_p_GameState swig_types[6]
-#define SWIGTYPE_p_GameWorld swig_types[7]
-#define SWIGTYPE_p_Object swig_types[8]
-#define SWIGTYPE_p_ObjectFactory swig_types[9]
-#define SWIGTYPE_p_ObjectLayer swig_types[10]
-#define SWIGTYPE_p_ObjectPlayer swig_types[11]
-#define SWIGTYPE_p_ObjectProperties swig_types[12]
-#define SWIGTYPE_p_Sprite swig_types[13]
-#define SWIGTYPE_p_XMLNode swig_types[14]
-#define SWIGTYPE_p__Rect swig_types[15]
-#define SWIGTYPE_p_b2Vec2 swig_types[16]
-#define SWIGTYPE_p_b2WorldManifold swig_types[17]
-#define SWIGTYPE_p_int swig_types[18]
-#define SWIGTYPE_p_listT_Object_p_t swig_types[19]
-#define SWIGTYPE_p_listT_Object_p_t__const_iterator swig_types[20]
-#define SWIGTYPE_p_listT_Object_p_t__const_reverse_iterator swig_types[21]
-#define SWIGTYPE_p_listT_Object_p_t__iterator swig_types[22]
-#define SWIGTYPE_p_listT_Object_p_t__reverse_iterator swig_types[23]
-#define SWIGTYPE_p_p_char swig_types[24]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[25]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[26]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[27]
-#define SWIGTYPE_p_std__string swig_types[28]
-#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[29]
-#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[30]
-#define SWIGTYPE_p_std__vectorT_Object_p_t__iterator swig_types[31]
-#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[32]
-#define SWIGTYPE_p_unsigned_int swig_types[33]
-static swig_type_info *swig_types[35];
-static swig_module_info swig_module = {swig_types, 34, 0, 0, 0, 0};
+#define SWIGTYPE_p_Camera swig_types[1]
+#define SWIGTYPE_p_CameraFollow swig_types[2]
+#define SWIGTYPE_p_CollisionDirection swig_types[3]
+#define SWIGTYPE_p_Editor swig_types[4]
+#define SWIGTYPE_p_GameMode swig_types[5]
+#define SWIGTYPE_p_GameModeExitInfo swig_types[6]
+#define SWIGTYPE_p_GameOptions swig_types[7]
+#define SWIGTYPE_p_GameState swig_types[8]
+#define SWIGTYPE_p_GameWorld swig_types[9]
+#define SWIGTYPE_p_Object swig_types[10]
+#define SWIGTYPE_p_ObjectFactory swig_types[11]
+#define SWIGTYPE_p_ObjectLayer swig_types[12]
+#define SWIGTYPE_p_ObjectPlayer swig_types[13]
+#define SWIGTYPE_p_ObjectProperties swig_types[14]
+#define SWIGTYPE_p_Sprite swig_types[15]
+#define SWIGTYPE_p_XMLNode swig_types[16]
+#define SWIGTYPE_p__Rect swig_types[17]
+#define SWIGTYPE_p_b2Vec2 swig_types[18]
+#define SWIGTYPE_p_b2WorldManifold swig_types[19]
+#define SWIGTYPE_p_int swig_types[20]
+#define SWIGTYPE_p_listT_Object_p_t swig_types[21]
+#define SWIGTYPE_p_listT_Object_p_t__const_iterator swig_types[22]
+#define SWIGTYPE_p_listT_Object_p_t__const_reverse_iterator swig_types[23]
+#define SWIGTYPE_p_listT_Object_p_t__iterator swig_types[24]
+#define SWIGTYPE_p_listT_Object_p_t__reverse_iterator swig_types[25]
+#define SWIGTYPE_p_p_char swig_types[26]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[27]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[28]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[29]
+#define SWIGTYPE_p_std__string swig_types[30]
+#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[31]
+#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[32]
+#define SWIGTYPE_p_std__vectorT_Object_p_t__iterator swig_types[33]
+#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[34]
+#define SWIGTYPE_p_unsigned_int swig_types[35]
+static swig_type_info *swig_types[37];
+static swig_module_info swig_module = {swig_types, 36, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -5517,6 +5519,114 @@ fail:
 }
 
 
+static int _wrap_GameWorld__camera_set(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Camera *arg2 = (Camera *) 0 ;
+  
+  SWIG_check_num_args("GameWorld::_camera",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::_camera",1,"GameWorld *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("GameWorld::_camera",2,"Camera *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld__camera_set",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Camera,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("GameWorld__camera_set",2,SWIGTYPE_p_Camera);
+  }
+  
+  if (arg1) (arg1)->_camera = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld__camera_get(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Camera *result = 0 ;
+  
+  SWIG_check_num_args("GameWorld::_camera",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::_camera",1,"GameWorld *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld__camera_get",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  result = (Camera *) ((arg1)->_camera);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Camera,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_m_pkCameraLookatTarget_set(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  
+  SWIG_check_num_args("GameWorld::m_pkCameraLookatTarget",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::m_pkCameraLookatTarget",1,"GameWorld *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("GameWorld::m_pkCameraLookatTarget",2,"Object *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_m_pkCameraLookatTarget_set",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Object,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("GameWorld_m_pkCameraLookatTarget_set",2,SWIGTYPE_p_Object);
+  }
+  
+  if (arg1) (arg1)->m_pkCameraLookatTarget = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_m_pkCameraLookatTarget_get(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Object *result = 0 ;
+  
+  SWIG_check_num_args("GameWorld::m_pkCameraLookatTarget",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::m_pkCameraLookatTarget",1,"GameWorld *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_m_pkCameraLookatTarget_get",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  result = (Object *) ((arg1)->m_pkCameraLookatTarget);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Object,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_GameWorld_GetObjects(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -5614,30 +5724,6 @@ static int _wrap_GameWorld_GetEditor(lua_State* L) {
   
   result = (Editor *)(arg1)->GetEditor();
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_Editor,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_GameWorld_UseScrollSpeed(lua_State* L) {
-  int SWIG_arg = 0;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("GameWorld::UseScrollSpeed",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::UseScrollSpeed",1,"GameWorld *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_UseScrollSpeed",1,SWIGTYPE_p_GameWorld);
-  }
-  
-  result = (bool)(arg1)->UseScrollSpeed();
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6124,103 +6210,6 @@ fail:
 }
 
 
-static int _wrap_GameWorld_ComputeNewCamera(lua_State* L) {
-  int SWIG_arg = 0;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  
-  SWIG_check_num_args("GameWorld::ComputeNewCamera",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::ComputeNewCamera",1,"GameWorld *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_ComputeNewCamera",1,SWIGTYPE_p_GameWorld);
-  }
-  
-  (arg1)->ComputeNewCamera();
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_GameWorld_SetCameraScrollSpeed(lua_State* L) {
-  int SWIG_arg = 0;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  float arg2 ;
-  
-  SWIG_check_num_args("GameWorld::SetCameraScrollSpeed",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::SetCameraScrollSpeed",1,"GameWorld *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("GameWorld::SetCameraScrollSpeed",2,"float");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_SetCameraScrollSpeed",1,SWIGTYPE_p_GameWorld);
-  }
-  
-  arg2 = (float)lua_tonumber(L, 2);
-  (arg1)->SetCameraScrollSpeed(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_GameWorld_GetCameraX(lua_State* L) {
-  int SWIG_arg = 0;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  int result;
-  
-  SWIG_check_num_args("GameWorld::GetCameraX",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::GetCameraX",1,"GameWorld *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_GetCameraX",1,SWIGTYPE_p_GameWorld);
-  }
-  
-  result = (int)(arg1)->GetCameraX();
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_GameWorld_GetCameraY(lua_State* L) {
-  int SWIG_arg = 0;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  int result;
-  
-  SWIG_check_num_args("GameWorld::GetCameraY",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::GetCameraY",1,"GameWorld *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_GetCameraY",1,SWIGTYPE_p_GameWorld);
-  }
-  
-  result = (int)(arg1)->GetCameraY();
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_GameWorld_SetCameraShake__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -6340,11 +6329,13 @@ static int _wrap_GameWorld_TransformWorldToView(lua_State* L) {
   GameWorld *arg1 = (GameWorld *) 0 ;
   int *arg2 = 0 ;
   int *arg3 = 0 ;
+  float arg4 ;
   
-  SWIG_check_num_args("GameWorld::TransformWorldToView",3,3)
+  SWIG_check_num_args("GameWorld::TransformWorldToView",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::TransformWorldToView",1,"GameWorld *");
   if(!lua_isuserdata(L,2)) SWIG_fail_arg("GameWorld::TransformWorldToView",2,"int &");
   if(!lua_isuserdata(L,3)) SWIG_fail_arg("GameWorld::TransformWorldToView",3,"int &");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("GameWorld::TransformWorldToView",4,"float");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
     SWIG_fail_ptr("GameWorld_TransformWorldToView",1,SWIGTYPE_p_GameWorld);
@@ -6360,7 +6351,8 @@ static int _wrap_GameWorld_TransformWorldToView(lua_State* L) {
     SWIG_fail_ptr("GameWorld_TransformWorldToView",3,SWIGTYPE_p_int);
   }
   
-  (arg1)->TransformWorldToView(*arg2,*arg3);
+  arg4 = (float)lua_tonumber(L, 4);
+  (arg1)->TransformWorldToView(*arg2,*arg3,arg4);
   
   return SWIG_arg;
   
@@ -6399,6 +6391,30 @@ static int _wrap_GameWorld_TransformViewToScreen(lua_State* L) {
   
   (arg1)->TransformViewToScreen(*arg2,*arg3);
   
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_GetPlayerCamera(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  CameraFollow *result = 0 ;
+  
+  SWIG_check_num_args("GameWorld::GetPlayerCamera",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::GetPlayerCamera",1,"GameWorld *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_GetPlayerCamera",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  result = (CameraFollow *)(arg1)->GetPlayerCamera();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_CameraFollow,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6585,19 +6601,20 @@ static int _wrap_GameWorld_ShowText(lua_State* L) {
 }
 
 
-static int _wrap_GameWorld_SnapCamera(lua_State* L) {
+static int _wrap_GameWorld_GetCamera(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
+  Camera *result = 0 ;
   
-  SWIG_check_num_args("GameWorld::SnapCamera",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::SnapCamera",1,"GameWorld *");
+  SWIG_check_num_args("GameWorld::GetCamera",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::GetCamera",1,"GameWorld *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_SnapCamera",1,SWIGTYPE_p_GameWorld);
+    SWIG_fail_ptr("GameWorld_GetCamera",1,SWIGTYPE_p_GameWorld);
   }
   
-  (arg1)->SnapCamera();
-  
+  result = (Camera *)(arg1)->GetCamera();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Camera,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6761,6 +6778,8 @@ GameWorld *arg1 = (GameWorld *) obj;
 delete arg1;
 }
 static swig_lua_attribute swig_GameWorld_attributes[] = {
+    { "_camera", _wrap_GameWorld__camera_get, _wrap_GameWorld__camera_set },
+    { "m_pkCameraLookatTarget", _wrap_GameWorld_m_pkCameraLookatTarget_get, _wrap_GameWorld_m_pkCameraLookatTarget_set },
     {0,0,0}
 };
 static swig_lua_method swig_GameWorld_methods[]= {
@@ -6770,7 +6789,6 @@ static swig_lua_method swig_GameWorld_methods[]= {
     { "Init", _wrap_GameWorld_Init},
     { "Shutdown", _wrap_GameWorld_Shutdown},
     { "GetEditor", _wrap_GameWorld_GetEditor},
-    { "UseScrollSpeed", _wrap_GameWorld_UseScrollSpeed},
     { "IsLoading", _wrap_GameWorld_IsLoading},
     { "JumpedBackFromADoor", _wrap_GameWorld_JumpedBackFromADoor},
     { "SetModalObject", _wrap_GameWorld_SetModalObject},
@@ -6785,15 +6803,12 @@ static swig_lua_method swig_GameWorld_methods[]= {
     { "SaveWorldOverCurrentFile", _wrap_GameWorld_SaveWorldOverCurrentFile},
     { "GetWidth", _wrap_GameWorld_GetWidth},
     { "GetHeight", _wrap_GameWorld_GetHeight},
-    { "ComputeNewCamera", _wrap_GameWorld_ComputeNewCamera},
-    { "SetCameraScrollSpeed", _wrap_GameWorld_SetCameraScrollSpeed},
-    { "GetCameraX", _wrap_GameWorld_GetCameraX},
-    { "GetCameraY", _wrap_GameWorld_GetCameraY},
     { "SetCameraShake", _wrap_GameWorld_SetCameraShake},
     { "TransformWorldToView", _wrap_GameWorld_TransformWorldToView},
     { "TransformViewToScreen", _wrap_GameWorld_TransformViewToScreen},
+    { "GetPlayerCamera", _wrap_GameWorld_GetPlayerCamera},
     { "ShowText", _wrap_GameWorld_ShowText},
-    { "SnapCamera", _wrap_GameWorld_SnapCamera},
+    { "GetCamera", _wrap_GameWorld_GetCamera},
     { "AllowPlayerOffscreen", _wrap_GameWorld_AllowPlayerOffscreen},
     { "PlayerAllowedOffscreen", _wrap_GameWorld_PlayerAllowedOffscreen},
     { "SaveWorld", _wrap_GameWorld_SaveWorld},
@@ -12564,6 +12579,8 @@ static void *_p_ObjectPlayerTo_p_Object(void *x, int *SWIGUNUSEDPARM(newmemory))
     return (void *)((Object *)  ((ObjectPlayer *) x));
 }
 static swig_type_info _swigt__p_ALLEGRO_COLOR = {"_p_ALLEGRO_COLOR", "ALLEGRO_COLOR *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Camera = {"_p_Camera", "Camera *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_CameraFollow = {"_p_CameraFollow", "CameraFollow *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_CollisionDirection = {"_p_CollisionDirection", "CollisionDirection *", 0, 0, (void*)&_wrap_class_CollisionDirection, 0};
 static swig_type_info _swigt__p_Editor = {"_p_Editor", "Editor *", 0, 0, (void*)&_wrap_class_Editor, 0};
 static swig_type_info _swigt__p_GameMode = {"_p_GameMode", "GameMode *", 0, 0, (void*)&_wrap_class_GameMode, 0};
@@ -12600,6 +12617,8 @@ static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_ALLEGRO_COLOR,
+  &_swigt__p_Camera,
+  &_swigt__p_CameraFollow,
   &_swigt__p_CollisionDirection,
   &_swigt__p_Editor,
   &_swigt__p_GameMode,
@@ -12636,6 +12655,8 @@ static swig_type_info *swig_type_initial[] = {
 };
 
 static swig_cast_info _swigc__p_ALLEGRO_COLOR[] = {  {&_swigt__p_ALLEGRO_COLOR, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Camera[] = {  {&_swigt__p_Camera, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_CameraFollow[] = {  {&_swigt__p_CameraFollow, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_CollisionDirection[] = {  {&_swigt__p_CollisionDirection, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Editor[] = {  {&_swigt__p_Editor, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameMode[] = {  {&_swigt__p_GameWorld, _p_GameWorldTo_p_GameMode, 0, 0},  {&_swigt__p_GameMode, 0, 0, 0},{0, 0, 0, 0}};
@@ -12672,6 +12693,8 @@ static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0,
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_ALLEGRO_COLOR,
+  _swigc__p_Camera,
+  _swigc__p_CameraFollow,
   _swigc__p_CollisionDirection,
   _swigc__p_Editor,
   _swigc__p_GameMode,

@@ -2200,6 +2200,50 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetAllowExiting(void * jarg1, unsig
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld__camera_set(void * jarg1, void * jarg2) {
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Camera *arg2 = (Camera *) 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  arg2 = (Camera *)jarg2; 
+  if (arg1) (arg1)->_camera = arg2;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld__camera_get(void * jarg1) {
+  void * jresult ;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Camera *result = 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  result = (Camera *) ((arg1)->_camera);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_m_pkCameraLookatTarget_set(void * jarg1, void * jarg2) {
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  if (arg1) (arg1)->m_pkCameraLookatTarget = arg2;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_m_pkCameraLookatTarget_get(void * jarg1) {
+  void * jresult ;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  result = (Object *) ((arg1)->m_pkCameraLookatTarget);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetObjects(void * jarg1) {
   void * jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -2248,18 +2292,6 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetEditor(void * jarg1) {
   arg1 = (GameWorld *)jarg1; 
   result = (Editor *)(arg1)->GetEditor();
   jresult = (void *)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_UseScrollSpeed(void * jarg1) {
-  unsigned int jresult ;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  bool result;
-  
-  arg1 = (GameWorld *)jarg1; 
-  result = (bool)(arg1)->UseScrollSpeed();
-  jresult = result; 
   return jresult;
 }
 
@@ -2444,48 +2476,6 @@ SWIGEXPORT int SWIGSTDCALL CSharp_GameWorld_GetHeight(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_ComputeNewCamera(void * jarg1) {
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  
-  arg1 = (GameWorld *)jarg1; 
-  (arg1)->ComputeNewCamera();
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetCameraScrollSpeed(void * jarg1, float jarg2) {
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  float arg2 ;
-  
-  arg1 = (GameWorld *)jarg1; 
-  arg2 = (float)jarg2; 
-  (arg1)->SetCameraScrollSpeed(arg2);
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_GameWorld_GetCameraX(void * jarg1) {
-  int jresult ;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  int result;
-  
-  arg1 = (GameWorld *)jarg1; 
-  result = (int)(arg1)->GetCameraX();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_GameWorld_GetCameraY(void * jarg1) {
-  int jresult ;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  int result;
-  
-  arg1 = (GameWorld *)jarg1; 
-  result = (int)(arg1)->GetCameraY();
-  jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetCameraShake__SWIG_0(void * jarg1, unsigned int jarg2, int jarg3) {
   GameWorld *arg1 = (GameWorld *) 0 ;
   bool arg2 ;
@@ -2508,10 +2498,11 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetCameraShake__SWIG_1(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_TransformWorldToView(void * jarg1, void * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_TransformWorldToView(void * jarg1, void * jarg2, void * jarg3, float jarg4) {
   GameWorld *arg1 = (GameWorld *) 0 ;
   int *arg2 = 0 ;
   int *arg3 = 0 ;
+  float arg4 ;
   
   arg1 = (GameWorld *)jarg1; 
   arg2 = (int *)jarg2;
@@ -2524,7 +2515,8 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_TransformWorldToView(void * jarg1, 
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
     return ;
   } 
-  (arg1)->TransformWorldToView(*arg2,*arg3);
+  arg4 = (float)jarg4; 
+  (arg1)->TransformWorldToView(*arg2,*arg3,arg4);
 }
 
 
@@ -2545,6 +2537,18 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_TransformViewToScreen(void * jarg1,
     return ;
   } 
   (arg1)->TransformViewToScreen(*arg2,*arg3);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetPlayerCamera(void * jarg1) {
+  void * jresult ;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  CameraFollow *result = 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  result = (CameraFollow *)(arg1)->GetPlayerCamera();
+  jresult = (void *)result; 
+  return jresult;
 }
 
 
@@ -2584,11 +2588,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_ShowText__SWIG_2(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SnapCamera(void * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetCamera(void * jarg1) {
+  void * jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
+  Camera *result = 0 ;
   
   arg1 = (GameWorld *)jarg1; 
-  (arg1)->SnapCamera();
+  result = (Camera *)(arg1)->GetCamera();
+  jresult = (void *)result; 
+  return jresult;
 }
 
 

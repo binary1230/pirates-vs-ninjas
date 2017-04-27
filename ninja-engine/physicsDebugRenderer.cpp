@@ -3,6 +3,7 @@
 #include "physics.h"
 #include "gameWorld.h"
 #include "window.h"
+#include "camera.h"
 
 void PhysicsDebugRenderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
@@ -17,9 +18,12 @@ void PhysicsDebugRenderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount
 
 void PhysicsDebugRenderer::Transform(float &x, float &y)
 {
+	b2Vec2 cameraXY;
+	WORLD->GetCamera()->GetXY(cameraXY);
+
 	const float fCameraScrollSpeed = 1.0f; // TODO: Get from correct layer
-	x = (x - WORLD->GetCameraX()) * fCameraScrollSpeed;
-	y = (y - WORLD->GetCameraY()) * fCameraScrollSpeed;
+	x = (x - cameraXY.x) * fCameraScrollSpeed;
+	y = (y - cameraXY.y) * fCameraScrollSpeed;
 
 	y = WINDOW->Height() - y;
 }
