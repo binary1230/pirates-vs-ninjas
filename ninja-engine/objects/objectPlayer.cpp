@@ -266,19 +266,16 @@ void ObjectPlayer::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 	}
 
 
-	if (obj->GetProperties().is_door) {
-		door_in_front_of_us = (ObjectDoor*)obj;
+	if (ObjectDoor* door = dynamic_cast<ObjectDoor*>(obj)) {
+		door_in_front_of_us = door;
 	}
 
-	if (obj->GetProperties().is_spring)
-	{
-		ObjectSpring* sObj = (ObjectSpring*)obj;
-
-		// this should go into the spring class, not here
-		if (sObj->IsSpringActive())
+	if (ObjectSpring* spring = dynamic_cast<ObjectSpring*>(obj)) {
+		// this should go into the spring class, not here, probably.
+		if (spring->IsSpringActive())
 		{
-			SetVelX(sObj->GetSpringVector().x);
-			SetVelY(sObj->GetSpringVector().y);
+			SetVelX(spring->GetSpringVector().x);
+			SetVelY(spring->GetSpringVector().y);
 		}
 	}
 }
@@ -385,7 +382,6 @@ bool ObjectPlayer::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	properties.is_player = 1;
 	properties.uses_physics_engine = 1;
 	properties.ignores_physics_rotation = 1;
 	properties.use_angled_corners_collision_box = 1;

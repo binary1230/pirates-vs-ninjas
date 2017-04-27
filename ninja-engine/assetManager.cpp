@@ -34,8 +34,7 @@ string AssetManager::GetCurrentExeFullPath() {
 
 // XXX should make these templated...
 void AssetManager::FreeSamples() {
-	SampleListIter i;
-	for (i = samples.begin(); i != samples.end(); i++) {
+	for (auto i = samples.begin(); i != samples.end(); i++) {
 		if (i->second)
 			al_destroy_sample(i->second);
 	}
@@ -117,7 +116,7 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 	Sprite* sprite = NULL;
 	
 	// 1) See if this bitmap is already loaded
-	SpriteListIter i = sprites.find(filename);
+	auto i = sprites.find(filename);
 
 	if (i != sprites.end()) {
 		return i->second;		// return the already loaded bitmap
@@ -170,7 +169,7 @@ ALLEGRO_SAMPLE* AssetManager::LoadSound(const char* filename) {
 	ALLEGRO_SAMPLE *spl = NULL;
 
 	// 1) See if this sample is already loaded
-	SampleListIter i = samples.find(filename);
+	auto i = samples.find(filename);
 
 	if (i != samples.end()) {
 		return i->second;		// return the already loaded sample

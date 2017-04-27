@@ -6,6 +6,7 @@
 #include "gameState.h"
 #include "gameSound.h"
 #include "physics.h"
+#include "objectPlayer.h"
 
 #define DEFAULT_SPRING_RESET_TIME 6
 
@@ -67,7 +68,6 @@ bool ObjectSpring::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	properties.is_spring = 1;
 	properties.uses_physics_engine = 1;
 	properties.is_static = 1;
 	properties.is_sensor = 1;
@@ -101,9 +101,7 @@ ObjectSpring::ObjectSpring() { Clear(); }
 ObjectSpring::~ObjectSpring() {}
 
 void ObjectSpring::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
-	if (obj->GetProperties().is_player) {
-
-		// Spring it!
+	if (ObjectPlayer* player = dynamic_cast<ObjectPlayer*>(obj)) {
 		if (spring_reset_time == 0) {
 			currentAnimation->Unfreeze();
 			spring_reset_time = DEFAULT_SPRING_RESET_TIME;

@@ -5,6 +5,7 @@
 #include "animation.h"
 #include "gameState.h"
 #include "gameSound.h"
+#include "objectPlayer.h"
 
 void ObjectCollectable::Shutdown() {
 	BaseShutdown();
@@ -19,8 +20,6 @@ bool ObjectCollectable::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	properties.is_collectable = 1;
-	properties.is_ring = 1;
 	properties.uses_physics_engine = 1;
 	properties.is_static = 1;
 	properties.is_sensor = 1;
@@ -49,7 +48,7 @@ void ObjectCollectable::OnCollide(Object* obj, const b2WorldManifold* pkbWorldMa
 	if (_Consumed)
 		return;
 
-	if (obj->GetProperties().is_player) {
+	if (ObjectPlayer* player = dynamic_cast<ObjectPlayer*>(obj)) {
 		SOUND->PlaySound("ring");
 		_Consumed = true;
 		_dont_draw = true;

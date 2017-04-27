@@ -31,7 +31,7 @@ DECLARE_SINGLETON(GameWorld)
 #define CAMERA_SHAKE_Y_MAGNITUDE 15
 
 int GameWorld::GetCameraX() {
-	return m_iCameraX + camera_shake_x;
+	return _iCameraX + camera_shake_x;
 }
 
 int GameWorld::GetCameraY() {
@@ -42,7 +42,7 @@ void GameWorld::ShowText(	const char* txt,
 							const char* avatar_filename, 
 							bool modal_active) {
 	
-	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT); // broken?
+	ObjectText* obj = (ObjectText*)OBJECT_FACTORY->CreateObject(OBJECT_TEXT);
 
 	if (!obj) {
 		TRACE("ERROR: Failed to create Txt object in ShowText()\n");
@@ -63,23 +63,23 @@ void GameWorld::Clear() {
 	map_editor = NULL;
 	_AllowExiting = true;
 	
-	m_objects.clear();
-	m_kLayers.clear();
+	_objects.clear();
+	_layers.clear();
 	m_included_effect_xml_files.clear();
 	m_included_objectdef_xml_files.clear();
 
 	m_bIsCameraShaking = CAMERA_SHAKE;
-	m_bgColorTop = m_bgColor = al_map_rgb_f(0.0f, 0.0f, 0.0f);
+	_bgColorTop = _bgColor = al_map_rgb_f(0.0f, 0.0f, 0.0f);
 	allow_player_offscreen = false;
 	use_scroll_speed = true;
 	m_iCameraTotalShakeTime = -1;
 	modal_active = NULL;
-	m_iLevelWidth = m_iLevelHeight = 0;
-	m_iCameraX = m_iCameraY = 0;
+	_levelWidth = _levelHeight = 0;
+	_iCameraX = m_iCameraY = 0;
 	m_pkCameraLookatTarget = NULL;
 	m_fCameraScrollSpeed = 1.0f;
 	m_bJumpedBackFromADoor = false;
-	m_kObjectsToAdd.clear();
+	_objectsToAdd.clear();
 	m_iCameraShakeTime = 0;
 	m_iCameraSideMargins = 40;
 	m_fCameraSnapRate = 3.0f;
@@ -160,7 +160,7 @@ void GameWorld::SnapCamera() {
 	assert(m_pkCameraLookatTarget);
 
 	// center the camera on this object
-	m_iCameraX = 	int(
+	_iCameraX = 	int(
 							(
 								 float(m_pkCameraLookatTarget->GetX()) + 
 								(float(m_pkCameraLookatTarget->GetWidth()) / 2.0f)
@@ -203,14 +203,14 @@ void GameWorld::ComputeNewCamera() {
 	int sh = WINDOW->Height();
 	
 	// compute the next interpolated position
-	m_iCameraX = CAM_MOVE_TO_CENTER(m_iCameraX, ox, ow, sw);
+	_iCameraX = CAM_MOVE_TO_CENTER(_iCameraX, ox, ow, sw);
 	m_iCameraY = CAM_MOVE_TO_CENTER(m_iCameraY, oy, oh, sh);
 	
 	// keep it within a certain margin of the sides
-	if (ox - m_iCameraX < m_iCameraSideMargins)
-		m_iCameraX = ox - m_iCameraSideMargins;
-	else if ( (m_iCameraX + sw) - (ox + ow) < m_iCameraSideMargins )
-		m_iCameraX = ox + ow + m_iCameraSideMargins - sw;
+	if (ox - _iCameraX < m_iCameraSideMargins)
+		_iCameraX = ox - m_iCameraSideMargins;
+	else if ( (_iCameraX + sw) - (ox + ow) < m_iCameraSideMargins )
+		_iCameraX = ox + ow + m_iCameraSideMargins - sw;
 								
 	if (oy - m_iCameraY < m_iCameraSideMargins)
 		m_iCameraY = oy - m_iCameraSideMargins;
@@ -218,10 +218,10 @@ void GameWorld::ComputeNewCamera() {
 		m_iCameraY  = oy + oh + m_iCameraSideMargins - sh;
 	
 	// keep it from getting off screen
-	if (m_iCameraX < 0) m_iCameraX = 0;
-	if (m_iCameraX > m_iLevelWidth - sw) m_iCameraX = m_iLevelWidth - sw;
+	if (_iCameraX < 0) _iCameraX = 0;
+	if (_iCameraX > _levelWidth - sw) _iCameraX = _levelWidth - sw;
 	if (m_iCameraY < 0) m_iCameraY = 0;
-	if (m_iCameraY > m_iLevelHeight - sh) m_iCameraY = m_iLevelHeight - sh;
+	if (m_iCameraY > _levelHeight - sh) m_iCameraY = _levelHeight - sh;
 
 	// do the camera shake
 	if (!m_bIsCameraShaking) {
@@ -247,8 +247,6 @@ void GameWorld::ComputeNewCamera() {
 
 void GameWorld::Shutdown() 
 {
-	ObjectListIter iter;
-
 	if (EVENTS) 
 	{
 		if (!map_editor)
@@ -265,22 +263,20 @@ void GameWorld::Shutdown()
 	}
 
 	// delete all the objects
-	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) 
+	for (Object*& obj : _objects)
 	{
-		(*iter)->Shutdown();
-		delete (*iter);
-		(*iter) = NULL;
+		obj->Shutdown();
+		delete obj;
+		obj = NULL;
 	}
-	m_objects.clear();
-	
-	// delete all the objects
-	for (iter = m_kObjectsToAdd.begin(); iter != m_kObjectsToAdd.end(); iter++) 
+	_objects.clear();
+	for (Object*& obj : _objectsToAdd)
 	{
-		(*iter)->Shutdown();
-		delete (*iter);
-		(*iter) = NULL;
+		obj->Shutdown();
+		delete obj;
+		obj = NULL;
 	}
-	m_kObjectsToAdd.clear();
+	_objectsToAdd.clear();
 			
 	// delete the object factory
 	if (OBJECT_FACTORY) 
@@ -307,18 +303,18 @@ void GameWorld::Shutdown()
 void GameWorld::Draw() 
 {
 	// Draw the background gradient first, if we're using it
-	if (m_bgColorTop.r != -1.0f) 
+	if (_bgColorTop.r != -1.0f) 
 	{
-		WINDOW->DrawBackgroundGradient(	m_bgColor, m_bgColorTop, 
+		WINDOW->DrawBackgroundGradient(	_bgColor, _bgColorTop, 
 										m_iCameraY, 
 										m_iCameraY + WINDOW->Height(), 
-										m_iLevelHeight);
+										_levelHeight);
 	}
 
-	int i, max = m_kLayers.size();
+	int i, max = _layers.size();
 
 	for (i = 0; i < max; i++) {
-		m_kLayers[i]->Draw();
+		_layers[i]->Draw();
 	}
 
 	PHYSICS->Draw();
@@ -330,10 +326,9 @@ void GameWorld::Draw()
 void GameWorld::RemoveDeadObjectsIfNeeded() {
 	Object* obj;
 	
-	ObjectListIter iter, erased;
-	iter = find_if(m_objects.begin(), m_objects.end(), ObjectIsDead);
+	auto iter = find_if(_objects.begin(), _objects.end(), [](const Object* obj) { return obj->IsDead(); });
 	
-	while (iter != m_objects.end()) {
+	while (iter != _objects.end()) {
 		obj = *iter;
 		assert(obj != NULL);
 
@@ -349,11 +344,11 @@ void GameWorld::RemoveDeadObjectsIfNeeded() {
 		delete obj;
 		*iter = NULL;
 
-		erased = iter;
+		auto erased = iter;
 		++iter;
-		m_objects.erase(erased);
+		_objects.erase(erased);
 	
-		iter = find_if(iter, m_objects.end(), ObjectIsDead);
+		iter = find_if(iter, _objects.end(), [](const Object* obj) { return obj->IsDead(); });
 	}
 }
 
@@ -362,9 +357,7 @@ void GameWorld::UpdateObjects()
 	AddNewObjectsIfNeeded();
 	RemoveDeadObjectsIfNeeded();
 	
-	for (ObjectListIter iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
-		
-		Object* obj = *iter;
+	for (Object*& obj : _objects) {		
 		assert(obj != NULL);
 
 		// If there is a 'modal' object, then don't update anything
@@ -391,9 +384,7 @@ void GameWorld::Update() {
 }
 
 void GameWorld::DoMainGameUpdate() {
-	for (ObjectListIter iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
-
-		Object* obj = *iter;
+	for (Object*& obj : _objects) {
 		assert(obj != NULL);
 
 		// If there is a 'modal' object, then don't update anything
@@ -452,14 +443,14 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	is_loading = true;
 	m_bJumpedBackFromADoor = false;
-	m_kObjectsToAdd.clear();
+	_objectsToAdd.clear();
 
 	if (!_UseNewLoadingSystem) {
 		if (LoadHeaderFromXML(xMode) == -1)
 			return -1;
 	}
 
-	WINDOW->SetClearColor(m_bgColor.r, m_bgColor.g, m_bgColor.b);
+	WINDOW->SetClearColor(_bgColor.r, _bgColor.g, _bgColor.b);
 
 	if (!PHYSICS->OnWorldInit())
 	{
@@ -495,11 +486,11 @@ int GameWorld::Load(XMLNode &xMode) {
 		}
 
 		if (xMode.nChildNode("music") == 1) {
-			m_szMusicFile = xMode.getChildNode("music").getText();
+			_musicFile = xMode.getChildNode("music").getText();
 		}
 
 		if (xMode.nChildNode("luaScript") == 1) {
-			m_szLuaScript = xMode.getChildNode("luaScript").getText();
+			_luaScript = xMode.getChildNode("luaScript").getText();
 		}
 	} else {
 		if (!FinishLoadingObjects())
@@ -517,8 +508,8 @@ int GameWorld::Load(XMLNode &xMode) {
 	GLOBALS->Value("camera_side_margins", m_iCameraSideMargins);
 	GLOBALS->Value("camera_snap_rate", m_fCameraSnapRate);
 
-	if (m_szMusicFile.length() > 0) {
-		LoadMusic(m_szMusicFile.c_str());
+	if (_musicFile.length() > 0) {
+		LoadMusic(_musicFile.c_str());
 	}
 
 	if (!InitJumpBackFromDoor()) {
@@ -531,8 +522,8 @@ int GameWorld::Load(XMLNode &xMode) {
 
 	// Load the LUA file if there is one
 	// Don't do this for the map editor, since it needs lua stuff too.
-	if (!map_editor && m_szLuaScript.length() > 0) {
-		LUA->LoadLuaScript(m_szLuaScript.c_str());
+	if (!map_editor && _luaScript.length() > 0) {
+		LUA->LoadLuaScript(_luaScript.c_str());
 	}
 
 	is_loading = false;
@@ -550,10 +541,7 @@ int GameWorld::Load(XMLNode &xMode) {
 bool GameWorld::FinishLoadingObjects()
 {
 	if (_UseNewLoadingSystem) {
-		ObjectListIter iter;
-		for (iter = m_objects.begin(); iter != m_objects.end(); iter++)
-		{
-			Object* obj = (*iter);
+		for (Object*& obj : _objects) {
 			if (!obj->FinishLoading())
 				return false;
 		}
@@ -569,17 +557,17 @@ bool GameWorld::InitJumpBackFromDoor()
 	// special case: if we're coming back from a portal, find it and put the players
 	// at that portal's position on the map
 	if (lastExitInfo.useExitInfo && lastExitInfo.useLastPortalName) {
-		ObjectListIter iter;
 		b2Vec2 portal_pos;
-		Object* player;
 		bool found = false;
 
 		// find the portal with the specified name 
-		for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
-			if ((*iter)->GetProperties().is_door && ((ObjectDoor*)(*iter))->GetName() == lastExitInfo.lastPortalName) {
-				found = true;
-				portal_pos = (*iter)->GetXY();
-				break;
+		for (Object*& obj : _objects) {
+			if (ObjectDoor* door = dynamic_cast<ObjectDoor*>(obj)) {
+				if (door->GetName() == lastExitInfo.lastPortalName) {
+					found = true;
+					portal_pos = obj->GetXY();
+					break;
+				}
 			}
 		}
 
@@ -591,9 +579,8 @@ bool GameWorld::InitJumpBackFromDoor()
 		m_bJumpedBackFromADoor = true;
 
 		// find the player obejcts, set their XY to the portal's XY
-		for (iter = m_objects.begin(); iter != m_objects.end(); iter++) {
-			if ((*iter)->GetProperties().is_player) {
-				player = *iter;
+		for (Object*& obj : _objects) {
+			if (ObjectPlayer* player = dynamic_cast<ObjectPlayer*>(obj)) {
 				player->SetXY(portal_pos);
 			}
 		}
@@ -601,19 +588,14 @@ bool GameWorld::InitJumpBackFromDoor()
 	return true;
 }
 
-void GameWorld::CachePlayerObjects()
-{
-	ObjectListIter iter;
+void GameWorld::CachePlayerObjects() {
+	for (Object*& obj : _objects) {
+		assert(obj != NULL);
 
-	for (iter = m_objects.begin(); iter != m_objects.end(); iter++) 
-	{
-		assert(*iter != NULL);
-		if ((*iter)->GetProperties().is_player ) 
-		{
-			ObjectPlayer* player = (ObjectPlayer*)(*iter);
+		if (ObjectPlayer* player = dynamic_cast<ObjectPlayer*>(obj)) {
 			m_kCachedPlayers.push_back(player);
 		}
-	} 
+	}
 }
 
 // Loads the header info from the Mode XML file
@@ -628,16 +610,16 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 	XMLNode xProps = xMode.getChildNode("properties");
 	XMLNode xColor;
 	// get width/height/camera xy
-	if (!xProps.getChildNode("width").getInt(m_iLevelWidth)) {
+	if (!xProps.getChildNode("width").getInt(_levelWidth)) {
 		TRACE("-- Invalid width!\n");
 		return -1;
 	}
-	if (!xProps.getChildNode("height").getInt(m_iLevelHeight)) {
+	if (!xProps.getChildNode("height").getInt(_levelHeight)) {
 		TRACE("-- Invalid height!\n");
 		return -1;
 	}
 
-	m_bgColor = al_map_rgb_f(0.0f, 0.0f, 0.0f);
+	_bgColor = al_map_rgb_f(0.0f, 0.0f, 0.0f);
 
 	if (xProps.nChildNode("bgcolor") == 1) {
 		xColor = xProps.getChildNode("bgcolor");
@@ -651,10 +633,10 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 			return -1;
 		}
 
-		m_bgColor = al_map_rgb(r,g,b);
+		_bgColor = al_map_rgb(r,g,b);
 	}
 
-	m_bgColorTop = al_map_rgb_f(-1.0f, -1.0f, -1.0f);
+	_bgColorTop = al_map_rgb_f(-1.0f, -1.0f, -1.0f);
 
 	if (xProps.nChildNode("bgcolor_top") == 1) {
 		xColor = xProps.getChildNode("bgcolor_top");
@@ -667,7 +649,7 @@ int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
 			TRACE("-- Invalid bgcolor_top specified!\n");
 			return -1;
 		}
-		m_bgColorTop = al_map_rgb(r, g, b);
+		_bgColorTop = al_map_rgb(r, g, b);
 	}
 
 	return 0;
@@ -721,7 +703,7 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 		XMLNode xMap, xLayer;
 		int i, max, iterator = 0;
 
-		m_objects.clear();
+		_objects.clear();
 		m_pkCameraLookatTarget = NULL;
 		xMap = xMode.getChildNode("map");
 
@@ -736,7 +718,7 @@ int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {
 			assert(layer != NULL);
 
 			layer->Init();
-			m_kLayers.push_back(layer);
+			_layers.push_back(layer);
 
 			if (LoadLayerFromXML(xLayer, layer) == -1) {
 				return -1;
@@ -1062,9 +1044,9 @@ int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
 }
 
 ObjectLayer* GameWorld::FindLayer(const char* name) {
-	for (uint i = 0; i < m_kLayers.size(); ++i) {
-		if (stricmp(m_kLayers[i]->GetName(),name) == 0)
-			return m_kLayers[i];
+	for (uint i = 0; i < _layers.size(); ++i) {
+		if (stricmp(_layers[i]->GetName(),name) == 0)
+			return _layers[i];
 	}
 
 	return NULL;
@@ -1075,11 +1057,11 @@ void GameWorld::AddObject(Object* obj, bool addImmediately) {
 	assert(obj->GetLayer() != NULL);
 
 	if (addImmediately) {
-		m_objects.push_front(obj);
+		_objects.push_front(obj);
 		obj->InitPhysics();
 		obj->GetLayer()->AddObject(obj);
 	} else {
-		m_kObjectsToAdd.push_back(obj);
+		_objectsToAdd.push_back(obj);
 	}
 }
 
@@ -1092,13 +1074,12 @@ GameWorld::~GameWorld() {}
 void GameWorld::AddNewObjectsIfNeeded()
 {
 	// Add any New Objects
-	for (ObjectListIter iter = m_kObjectsToAdd.begin(); iter != m_kObjectsToAdd.end(); ++iter) {
-		Object* obj = *iter;
+	for (Object*& obj : _objectsToAdd) {
 		assert(obj != NULL);
 		AddObject(obj, true);
 	}
 
-	m_kObjectsToAdd.clear();
+	_objectsToAdd.clear();
 }
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(GameWorld)

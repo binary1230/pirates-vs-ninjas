@@ -64,17 +64,6 @@ struct ObjectProperties
 	//! like our status bar or health or something.
 	//! Overlays ignore camera information
 	bool is_overlay;
-
-	//! Object "types" (really should use RTTI or something.)
-	bool is_player;
-	bool is_spring;
-	bool is_collectable;
-	bool is_fan;
-	bool is_door;
-	bool is_ring;
-	bool is_ball;
-
-	bool is_badguy;
 };
 
 namespace boost {
@@ -85,6 +74,8 @@ namespace boost {
 		template<class Archive>
 		void serialize(Archive & ar, ObjectProperties& p, const unsigned int version)
 		{
+			int obsolete;
+
 			ar & BOOST_SERIALIZATION_NVP(p.feels_gravity);
 			ar & BOOST_SERIALIZATION_NVP(p.feels_user_input);
 			ar & BOOST_SERIALIZATION_NVP(p.feels_friction);
@@ -97,15 +88,19 @@ namespace boost {
 			ar & BOOST_SERIALIZATION_NVP(p.use_angled_corners_collision_box);
 			ar & BOOST_SERIALIZATION_NVP(p.is_overlay);
 
-			ar & BOOST_SERIALIZATION_NVP(p.is_player);
-			ar & BOOST_SERIALIZATION_NVP(p.is_spring);
-			ar & BOOST_SERIALIZATION_NVP(p.is_collectable);
-			ar & BOOST_SERIALIZATION_NVP(p.is_fan);
-			ar & BOOST_SERIALIZATION_NVP(p.is_door);
-			ar & BOOST_SERIALIZATION_NVP(p.is_ring);
-			ar & BOOST_SERIALIZATION_NVP(p.is_ball);
+			if (version <= 2) {
+				ar & boost::serialization::make_nvp("p.is_player", obsolete);
+			}
 
-			ar & BOOST_SERIALIZATION_NVP(p.is_badguy);
+			if (version <= 3) {
+				ar & boost::serialization::make_nvp("p.is_spring", obsolete);
+				ar & boost::serialization::make_nvp("p.is_collectable", obsolete);
+				ar & boost::serialization::make_nvp("p.is_fan", obsolete);
+				ar & boost::serialization::make_nvp("p.is_door", obsolete);
+				ar & boost::serialization::make_nvp("p.is_ring", obsolete);
+				ar & boost::serialization::make_nvp("p.is_ball", obsolete);
+				ar & boost::serialization::make_nvp("p.is_badguy", obsolete);
+			}
 		}
 	}
 }
@@ -118,15 +113,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_overlay = 0;
 	p.uses_physics_engine = 0;
 	p.use_angled_corners_collision_box = 0;
-	p.is_player = 0;
-	p.is_spring = 0;
-	p.is_collectable = 0;
-	p.is_fan = 0;
-	p.is_door = 0;
-	p.is_ring = 0;
-	p.is_ball = 0;
 	p.spawns_enemies = 0;
-	p.is_badguy = 0;
 	p.is_static = 0;
 	p.is_sensor = 0;
 	p.ignores_physics_rotation = 0;
@@ -445,12 +432,10 @@ class Object {
 		friend class Editor;
 };
 
-// Used for find()
-bool ObjectIsDead(Object* obj);
-
 #if !defined(SWIG) 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
-BOOST_CLASS_VERSION(Object, 2)
+BOOST_CLASS_VERSION(Object, 3)
+BOOST_CLASS_VERSION(ObjectProperties, 4)
 #endif // SWIG
 
 #endif // __OBJECT_H

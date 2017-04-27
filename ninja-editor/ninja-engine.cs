@@ -1637,86 +1637,6 @@ public class ObjectProperties : global::System.IDisposable {
     } 
   }
 
-  public bool is_player {
-    set {
-      enginePINVOKE.ObjectProperties_is_player_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_player_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_spring {
-    set {
-      enginePINVOKE.ObjectProperties_is_spring_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_spring_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_collectable {
-    set {
-      enginePINVOKE.ObjectProperties_is_collectable_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_collectable_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_fan {
-    set {
-      enginePINVOKE.ObjectProperties_is_fan_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_fan_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_door {
-    set {
-      enginePINVOKE.ObjectProperties_is_door_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_door_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_ring {
-    set {
-      enginePINVOKE.ObjectProperties_is_ring_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_ring_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_ball {
-    set {
-      enginePINVOKE.ObjectProperties_is_ball_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_ball_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_badguy {
-    set {
-      enginePINVOKE.ObjectProperties_is_badguy_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_badguy_get(swigCPtr);
-      return ret;
-    } 
-  }
-
   public ObjectProperties() : this(enginePINVOKE.new_ObjectProperties(), true) {
   }
 
@@ -3280,54 +3200,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_overlay_get")]
   public static extern bool ObjectProperties_is_overlay_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_player_set")]
-  public static extern void ObjectProperties_is_player_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_player_get")]
-  public static extern bool ObjectProperties_is_player_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_spring_set")]
-  public static extern void ObjectProperties_is_spring_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_spring_get")]
-  public static extern bool ObjectProperties_is_spring_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_collectable_set")]
-  public static extern void ObjectProperties_is_collectable_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_collectable_get")]
-  public static extern bool ObjectProperties_is_collectable_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_fan_set")]
-  public static extern void ObjectProperties_is_fan_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_fan_get")]
-  public static extern bool ObjectProperties_is_fan_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_door_set")]
-  public static extern void ObjectProperties_is_door_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_door_get")]
-  public static extern bool ObjectProperties_is_door_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_ring_set")]
-  public static extern void ObjectProperties_is_ring_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_ring_get")]
-  public static extern bool ObjectProperties_is_ring_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_ball_set")]
-  public static extern void ObjectProperties_is_ball_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_ball_get")]
-  public static extern bool ObjectProperties_is_ball_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_badguy_set")]
-  public static extern void ObjectProperties_is_badguy_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_badguy_get")]
-  public static extern bool ObjectProperties_is_badguy_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_ObjectProperties")]
   public static extern global::System.IntPtr new_ObjectProperties();
 
@@ -3547,9 +3419,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_CreateObject")]
   public static extern global::System.IntPtr Object_CreateObject(string jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectIsDead")]
-  public static extern bool ObjectIsDead(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_Clone")]
   public static extern global::System.IntPtr ObjectPlayer_Clone(global::System.Runtime.InteropServices.HandleRef jarg1);
 
@@ -3723,11 +3592,6 @@ public class engine {
   public static void ClearProperties(ObjectProperties p) {
     enginePINVOKE.ClearProperties(ObjectProperties.getCPtr(p));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public static bool ObjectIsDead(Object obj) {
-    bool ret = enginePINVOKE.ObjectIsDead(Object.getCPtr(obj));
-    return ret;
   }
 
   public static void RegisterObjectPrototypes() {

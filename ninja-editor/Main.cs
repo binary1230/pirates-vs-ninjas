@@ -180,5 +180,10 @@ namespace MapEditor
         {
             GameWorld.GetInstance().GetEditor().SetSnapToGrid(chkSnapToGrid.Checked);
         }
+
+        private void treeObjects_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            
+        }
     }
 }

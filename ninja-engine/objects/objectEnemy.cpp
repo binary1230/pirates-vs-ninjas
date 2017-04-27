@@ -29,8 +29,6 @@ bool ObjectEnemy::Init()
 	m_pkTargetPlayer = WORLD->GetPlayer(0); 
 	assert(m_pkTargetPlayer);
 
-	properties.is_badguy = true;
-
 	return true;
 }
 
@@ -54,24 +52,12 @@ void ObjectEnemy::Update()
 
 void ObjectEnemy::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
-	if (obj->GetProperties().is_player) 
+	if (ObjectPlayer* player = dynamic_cast<ObjectPlayer*>(obj))
 	{
 		SOUND->PlaySound("pop2");
 		is_dead = true;
 		return;
 	}
-
-	/*if (obj->GetProperties().is_badguy)
-	{
-		if (bCollidedLastFrame == false && iTimeToWaitBeforeCollisionsAllowedAgain == 0)
-		{
-			//SOUND->PlaySound("ring");
-			m_kCollisionDirection = obj->GetVelXY();
-			iTimeToWaitBeforeCollisionsAllowedAgain = 60;
-		}
-
-		bCollidedLastFrame = true;
-	}*/
 }
 
 BOOST_CLASS_EXPORT_GUID(ObjectEnemy, "ObjectEnemy")

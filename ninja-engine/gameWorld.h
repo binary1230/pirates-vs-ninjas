@@ -32,14 +32,14 @@ class GameWorld : public GameMode {
 		void serialize(Archive &ar, const unsigned int version)
 		{
 			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(GameMode);
-			ar & boost::serialization::make_nvp("objects", m_objects);
-			ar & boost::serialization::make_nvp("layers", m_kLayers);
-			ar & boost::serialization::make_nvp("bgcolor", m_bgColor);
-			ar & boost::serialization::make_nvp("bgcolor_top", m_bgColorTop);
-			ar & boost::serialization::make_nvp("music", m_szMusicFile);
-			ar & boost::serialization::make_nvp("width", m_iLevelWidth);
-			ar & boost::serialization::make_nvp("height", m_iLevelHeight);
-			ar & boost::serialization::make_nvp("lua_script", m_szLuaScript);
+			ar & boost::serialization::make_nvp("objects", _objects);
+			ar & boost::serialization::make_nvp("layers", _layers);
+			ar & boost::serialization::make_nvp("bgcolor", _bgColor);
+			ar & boost::serialization::make_nvp("bgcolor_top", _bgColorTop);
+			ar & boost::serialization::make_nvp("music", _musicFile);
+			ar & boost::serialization::make_nvp("width", _levelWidth);
+			ar & boost::serialization::make_nvp("height", _levelHeight);
+			ar & boost::serialization::make_nvp("lua_script", _luaScript);
 			ar & BOOST_SERIALIZATION_NVP(m_pkCameraLookatTarget);
 			ar & BOOST_SERIALIZATION_NVP(m_included_effect_xml_files);
 			ar & BOOST_SERIALIZATION_NVP(m_included_objectdef_xml_files);
@@ -49,30 +49,30 @@ class GameWorld : public GameMode {
 			Editor* map_editor;
 
 			//! Filename of music, or NULL if none
-			std::string m_szMusicFile;
+			std::string _musicFile;
 
 			//! Background color (use al_map_rgb())
-			ALLEGRO_COLOR m_bgColor;
-			ALLEGRO_COLOR m_bgColorTop; // if present, use both for a gradient, else -1
+			ALLEGRO_COLOR _bgColor;
+			ALLEGRO_COLOR _bgColorTop; // if present, use both for a gradient, else -1
 
 			//! ALL objects in the scene
-			ObjectList m_objects;
+			ObjectList _objects;
 
 			//! Layers, which hold pointers to objects.
-			vector<ObjectLayer*> m_kLayers;
+			vector<ObjectLayer*> _layers;
 
 			vector<std::string> m_included_effect_xml_files;
 			vector<std::string> m_included_objectdef_xml_files;
 		
 			//! List of objects to add on next Update()
-			ObjectList m_kObjectsToAdd;
+			ObjectList _objectsToAdd;
 
 			//! Width and height of the entire level
 			//! (usually much bigger than screen width/height)
-			int m_iLevelWidth, m_iLevelHeight;
+			int _levelWidth, _levelHeight;
 
 			//! Current camera XY position
-			int m_iCameraX, m_iCameraY;
+			int _iCameraX, m_iCameraY;
 
 			//! Whether the camera is currently shaking or not
 			bool m_bIsCameraShaking;
@@ -106,7 +106,7 @@ class GameWorld : public GameMode {
 
 			bool m_bJumpedBackFromADoor;
 
-			std::string m_szLuaScript;
+			std::string _luaScript;
 
 			//! Game update functions
 			void UpdateObjects();
@@ -152,7 +152,7 @@ class GameWorld : public GameMode {
 		public:
 			// not a very effecient method.  call with map editor only
 			inline vector<Object*> GetObjects() {
-				return vector<Object*>{ std::begin(m_objects), std::end(m_objects) };
+				return vector<Object*>{ std::begin(_objects), std::end(_objects) };
 			}
 
 			virtual int Init(XMLNode);
@@ -182,7 +182,7 @@ class GameWorld : public GameMode {
 			ObjectLayer* FindLayer(const char* name);
 
 			inline vector<ObjectLayer*> GetLayers() {
-				return m_kLayers;
+				return _layers;
 			}
 
 			ObjectPlayer* GetPlayer(uint iIndex)
@@ -205,8 +205,8 @@ class GameWorld : public GameMode {
 
 			static GameWorld* CreateWorld(string mode_filename);
 
-			int GetWidth() {return m_iLevelWidth;};
-			int GetHeight() {return m_iLevelHeight;};
+			int GetWidth() {return _levelWidth;};
+			int GetHeight() {return _levelHeight;};
 
 			void ComputeNewCamera();
 			void SetCameraScrollSpeed(float s) {m_fCameraScrollSpeed = s;};

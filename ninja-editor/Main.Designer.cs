@@ -42,6 +42,7 @@
             this.chkDrawPhysicsDebug = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lstLayers = new System.Windows.Forms.ListBox();
+            this.objectProperties = new System.Windows.Forms.PropertyGrid();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +57,7 @@
             this.treeObjects.Name = "treeObjects";
             this.treeObjects.Size = new System.Drawing.Size(187, 264);
             this.treeObjects.TabIndex = 0;
+            this.treeObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeObjects_AfterSelect);
             // 
             // btn_GetObjects
             // 
@@ -162,11 +164,19 @@
             this.lstLayers.Size = new System.Drawing.Size(147, 264);
             this.lstLayers.TabIndex = 8;
             // 
+            // objectProperties
+            // 
+            this.objectProperties.Location = new System.Drawing.Point(523, 116);
+            this.objectProperties.Name = "objectProperties";
+            this.objectProperties.Size = new System.Drawing.Size(168, 202);
+            this.objectProperties.TabIndex = 10;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(703, 328);
+            this.Controls.Add(this.objectProperties);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lstLayers);
             this.Controls.Add(this.groupBox1);
@@ -203,6 +213,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox lstLayers;
         private System.Windows.Forms.CheckBox chkSnapToGrid;
+        private System.Windows.Forms.PropertyGrid objectProperties;
     }
 }
 

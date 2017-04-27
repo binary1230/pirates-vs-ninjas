@@ -8,7 +8,7 @@
 DECLARE_SINGLETON(GameSound)
 
 ALLEGRO_SAMPLE* GameSound::FindCachedSoundByName(const char* name) {
-	s_iter s = soundMap.find(name);
+	auto s = soundMap.find(name);
 	if (s == soundMap.end())
 		return NULL;
 

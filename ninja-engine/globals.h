@@ -102,6 +102,12 @@ namespace boost {
 		inline type Get##var() { return _##var; }			\
 		inline void Set##var(type val)	{ _##var = val;	}
 
+#define EXPOSE_PROPERTY(type, var)			\
+	CREATE_PROPERTY(type, var)				\
+	
+
+		
+
 // #define REDIRECT_STDERR 1
 #define REDIRECT_STDERR_FILENAME "/Users/dcerquetti/game.log"
 

@@ -19,7 +19,7 @@ bool EffectsManager::Init() {
 }
 
 Effect* EffectsManager::FindEffectDefinition(const std::string &effectName) {
-	EffectDefMappingIter iter = effects.find(effectName);
+	auto iter = effects.find(effectName);
 
 	if (iter == effects.end())
 		return NULL;

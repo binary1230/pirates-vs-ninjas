@@ -25,12 +25,6 @@ std::string Object::GetObjectDefName() {
 	return objectDefName;
 }
 
-// Used as criteria for STL find()
-bool ObjectIsDead(Object* obj) {
-	assert(obj != NULL);
-	return obj->IsDead();
-}
-
 // Objects can call this if they use
 // simple animations.
 void Object::UpdateSimpleAnimations() {
@@ -100,8 +94,6 @@ void Object::InitPhysics()
 
 	// TODO: remove hardcoded junk here
 	float fDensity = 0.1f;
-	if (properties.is_player)
-		fDensity = 0.1f;
 
 	if (properties.is_static)
 		_physics_body = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, GetWidth(), GetHeight(), properties.is_sensor);

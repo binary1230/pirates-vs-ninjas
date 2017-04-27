@@ -46,7 +46,7 @@ void Editor::CreateAndSelect_UsePreviousLayerAndObject() {
 // transform mouse input to compensate for scroll speeds on layers
 void Editor::MouseToLayerCoords(b2Vec2& layer_coord_out, ObjectLayer* layer) {
 	assert(layer);
-	layer_coord_out.x = (INPUT->MouseX() / layer->GetScrollSpeed()) + WORLD->m_iCameraX;
+	layer_coord_out.x = (INPUT->MouseX() / layer->GetScrollSpeed()) + WORLD->_iCameraX;
 	layer_coord_out.y = ((WINDOW->Height() - INPUT->MouseY()) / layer->GetScrollSpeed()) + WORLD->m_iCameraY;
 }
 
@@ -147,9 +147,7 @@ void Editor::NoModeUpdate() {
 
 // reset anything "volatile" that shouldn't get saved, like whether we picked up coins, player initial position, etc
 void Editor::ResetVolatileLevelState(VolatileStateLevel level) {
-	for (ObjectListIter iter = WORLD->m_objects.begin(); iter != WORLD->m_objects.end(); ++iter) {
-		Object* obj = *iter;
-
+	for (Object*& obj : WORLD->_objects) {
 		obj->ResetVolatileState(level);
 	}
 }
@@ -181,9 +179,7 @@ void Editor::UpdateMove() {
 Object* Editor::GetObjectUnderCursor() {
 	b2Vec2 layer_coords;
 
-	for (ObjectListIter iter = WORLD->m_objects.begin(); iter != WORLD->m_objects.end(); ++iter) {
-		Object* obj = *iter;
-
+	for (Object*& obj : WORLD->_objects) {
 		MouseToLayerCoords(layer_coords, obj->GetLayer());
 
 		if (obj->ContainsPoint(layer_coords))
@@ -194,31 +190,11 @@ Object* Editor::GetObjectUnderCursor() {
 }
 
 void Editor::SetDrawBoundingBoxes_AllObjects(bool should_draw) {
-	for (ObjectListIter iter = WORLD->m_objects.begin(); iter != WORLD->m_objects.end(); ++iter) {
-		Object* obj = *iter;
+	for (Object*& obj : WORLD->_objects) {
 		if (obj != _selection)
 			obj->SetDrawBounds(false);
 	}
 }
-
-/*void Editor::SelectModeUpdate() {
-	SelectObject(NULL);
-	SetDrawBoundingBoxes_AllObjects(false);
-
-	if (!GAMESTATE->IsPaused())
-		return;
-
-	Object* obj_under_mouse = GetObjectAtCursor();
-	if (!obj_under_mouse)
-		return;
-	
-	obj_under_mouse->SetDrawBounds(true);
-	
-	if (INPUT->MouseButtonOnce(MOUSE_LEFT_BTN)) {
-		SelectObject(obj_under_mouse);
-		_mode = EDITOR_NONE;
-	}
-}*/
 
 void Editor::Update() {
 	CommonUpdate();

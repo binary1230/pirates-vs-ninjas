@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "animation.h"
 #include "gameState.h"
+#include "objectPlayer.h"
 
 // all of this class is slightly hackish for the moment.
 #define FAN_DECAY_RATE 0.96f
@@ -24,7 +25,7 @@ void ObjectFan::Update() {
 }
 
 void ObjectFan::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
-	if (obj->GetProperties().is_player) {
+	if (ObjectPlayer* player = dynamic_cast<ObjectPlayer*>(obj)) {
 
 		// if the player is going slowly, slow down the new fan speed
 		float player_factor = std::min(	MAX_PLAYER_SPEED, (float)fabs(obj->GetVelX()) ); 
@@ -44,7 +45,6 @@ bool ObjectFan::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	properties.is_fan = 1;
 	properties.uses_physics_engine = 1;
 	properties.is_static = 1;
 	properties.is_sensor = 1;
