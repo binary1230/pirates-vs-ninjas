@@ -110,6 +110,7 @@ void CameraFollow::Init() {
 	GLOBALS->Value("camera_snap_rate", m_fCameraSnapRate);
 
 	SnapCamera();
+	Update();
 }
 
 
@@ -135,8 +136,6 @@ void CameraFollow::SnapCamera() {
 			) - (
 			(float(WINDOW->Width()) / 2.0f)
 				));
-
-	// Update(); // prob not needed.
 }
 
 CameraFollow::CameraFollow(Object* follow_target)

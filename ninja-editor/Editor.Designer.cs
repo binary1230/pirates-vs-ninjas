@@ -48,7 +48,7 @@
             // 
             // FastTimer
             // 
-            this.FastTimer.Interval = 5;
+            this.FastTimer.Interval = 1;
             this.FastTimer.Tick += new System.EventHandler(this.OnTick);
             // 
             // treeObjects
@@ -171,7 +171,7 @@
             this.objectProperties.Size = new System.Drawing.Size(168, 202);
             this.objectProperties.TabIndex = 10;
             // 
-            // Main
+            // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -187,7 +187,7 @@
             this.Controls.Add(this.btn_Create);
             this.Controls.Add(this.btn_GetObjects);
             this.Controls.Add(this.treeObjects);
-            this.Name = "Main";
+            this.Name = "Editor";
             this.Text = "Ninja-Editor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
             this.Load += new System.EventHandler(this.Main_Load);

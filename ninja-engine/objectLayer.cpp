@@ -32,7 +32,7 @@ void ObjectLayer::AddObject(Object* obj) {
 // This is a bit silly... layers need rethinking.
 void ObjectLayer::RemoveObject(Object* obj) {
 	assert(obj != NULL);
-	ObjectListIter iter = find(objects.begin(), objects.end(), obj);
+	auto iter = find(objects.begin(), objects.end(), obj);
 
 	if (iter != objects.end()) {
 		*iter = NULL;

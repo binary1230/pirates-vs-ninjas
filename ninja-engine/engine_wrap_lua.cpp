@@ -2719,20 +2719,19 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_listT_Object_p_t swig_types[21]
 #define SWIGTYPE_p_listT_Object_p_t__const_iterator swig_types[22]
 #define SWIGTYPE_p_listT_Object_p_t__const_reverse_iterator swig_types[23]
-#define SWIGTYPE_p_listT_Object_p_t__iterator swig_types[24]
-#define SWIGTYPE_p_listT_Object_p_t__reverse_iterator swig_types[25]
-#define SWIGTYPE_p_p_char swig_types[26]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[27]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[28]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[29]
-#define SWIGTYPE_p_std__string swig_types[30]
-#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[31]
-#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[32]
-#define SWIGTYPE_p_std__vectorT_Object_p_t__iterator swig_types[33]
-#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[34]
-#define SWIGTYPE_p_unsigned_int swig_types[35]
-static swig_type_info *swig_types[37];
-static swig_module_info swig_module = {swig_types, 36, 0, 0, 0, 0};
+#define SWIGTYPE_p_listT_Object_p_t__reverse_iterator swig_types[24]
+#define SWIGTYPE_p_p_char swig_types[25]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[26]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[27]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[28]
+#define SWIGTYPE_p_std__string swig_types[29]
+#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[30]
+#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[31]
+#define SWIGTYPE_p_std__vectorT_Object_p_t__iterator swig_types[32]
+#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[33]
+#define SWIGTYPE_p_unsigned_int swig_types[34]
+static swig_type_info *swig_types[36];
+static swig_module_info swig_module = {swig_types, 35, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -12602,7 +12601,6 @@ static swig_type_info _swigt__p_int = {"_p_int", "int *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_listT_Object_p_t = {"_p_listT_Object_p_t", "ObjectList *|list< Object * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_listT_Object_p_t__const_iterator = {"_p_listT_Object_p_t__const_iterator", "ObjectConstListIter *|list< Object * >::const_iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_listT_Object_p_t__const_reverse_iterator = {"_p_listT_Object_p_t__const_reverse_iterator", "ObjectListConstReverseIter *|list< Object * >::const_reverse_iterator *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_listT_Object_p_t__iterator = {"_p_listT_Object_p_t__iterator", "ObjectListIter *|list< Object * >::iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_listT_Object_p_t__reverse_iterator = {"_p_listT_Object_p_t__reverse_iterator", "ObjectListReverseIter *|list< Object * >::reverse_iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_std__string_const_XMLNode_t = {"_p_std__mapT_std__string_const_XMLNode_t", "ObjectDefMapping *|std::map< std::string const,XMLNode > *", 0, 0, (void*)0, 0};
@@ -12640,7 +12638,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_listT_Object_p_t,
   &_swigt__p_listT_Object_p_t__const_iterator,
   &_swigt__p_listT_Object_p_t__const_reverse_iterator,
-  &_swigt__p_listT_Object_p_t__iterator,
   &_swigt__p_listT_Object_p_t__reverse_iterator,
   &_swigt__p_p_char,
   &_swigt__p_std__mapT_std__string_const_XMLNode_t,
@@ -12678,7 +12675,6 @@ static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0
 static swig_cast_info _swigc__p_listT_Object_p_t[] = {  {&_swigt__p_listT_Object_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_listT_Object_p_t__const_iterator[] = {  {&_swigt__p_listT_Object_p_t__const_iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_listT_Object_p_t__const_reverse_iterator[] = {  {&_swigt__p_listT_Object_p_t__const_reverse_iterator, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_listT_Object_p_t__iterator[] = {  {&_swigt__p_listT_Object_p_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_listT_Object_p_t__reverse_iterator[] = {  {&_swigt__p_listT_Object_p_t__reverse_iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_std__string_const_XMLNode_t[] = {  {&_swigt__p_std__mapT_std__string_const_XMLNode_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -12716,7 +12712,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_listT_Object_p_t,
   _swigc__p_listT_Object_p_t__const_iterator,
   _swigc__p_listT_Object_p_t__const_reverse_iterator,
-  _swigc__p_listT_Object_p_t__iterator,
   _swigc__p_listT_Object_p_t__reverse_iterator,
   _swigc__p_p_char,
   _swigc__p_std__mapT_std__string_const_XMLNode_t,

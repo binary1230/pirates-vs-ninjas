@@ -16,7 +16,6 @@ class CameraFollow;
 			
 // note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
-typedef list<Object*>::iterator ObjectListIter;
 typedef list<Object*>::const_iterator ObjectConstListIter;
 typedef list<Object*>::reverse_iterator ObjectListReverseIter;
 typedef list<Object*>::const_reverse_iterator ObjectListConstReverseIter;
@@ -42,16 +41,7 @@ class GameWorld : public GameMode {
 			ar & boost::serialization::make_nvp("width", _levelWidth);
 			ar & boost::serialization::make_nvp("height", _levelHeight);
 			ar & boost::serialization::make_nvp("lua_script", _luaScript);
-
-			if (version <= 1) {
-				Object* obsolete = nullptr;
-				ar & boost::serialization::make_nvp("m_pkCameraLookatTarget", obsolete);
-			}
-
-			if (version >= 2) {
-				ar & BOOST_SERIALIZATION_NVP(_camera);
-			}
-
+			ar & BOOST_SERIALIZATION_NVP(_camera);
 			ar & BOOST_SERIALIZATION_NVP(m_included_effect_xml_files);
 			ar & BOOST_SERIALIZATION_NVP(m_included_objectdef_xml_files);
 		}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <!DOCTYPE boost_serialization>
 <boost_serialization signature="serialization::archive" version="14">
-<this class_id="0" tracking_level="1" version="1" object_id="_0">
+<this class_id="0" tracking_level="1" version="2" object_id="_0">
 	<GameMode class_id="1" tracking_level="0" version="0"></GameMode>
 	<objects class_id="2" tracking_level="0" version="0">
 		<count>551</count>
@@ -15015,8 +15015,11 @@
 	<width>2560</width>
 	<height>8000</height>
 	<lua_script>scripts/level1.lua</lua_script>
-	<m_pkCameraLookatTarget class_id_reference="9" object_id_reference="_122"></m_pkCameraLookatTarget>
-	<m_included_effect_xml_files class_id="16" tracking_level="0" version="0">
+	<_camera class_id="17" class_name="CameraFollow" tracking_level="1" version="1" object_id="_557">
+		<Camera class_id="16" tracking_level="1" version="1" object_id="_558"></Camera>
+		<follow_object class_id_reference="9" object_id_reference="_122"></follow_object>
+	</_camera>
+	<m_included_effect_xml_files class_id="18" tracking_level="0" version="0">
 		<count>1</count>
 		<item_version>0</item_version>
 		<item>common-effects.xml</item>
