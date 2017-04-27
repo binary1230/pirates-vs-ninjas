@@ -47,12 +47,13 @@ namespace MapEditor
             txtFilename.Text = lstGameFiles.SelectedItem.ToString();
         }
 
-        bool PopulateMapData(string file)
+        bool PopulateMapData(string path)
         {
-            if (!File.Exists(file))
+            string default_xml = path + "default.xml";
+            if (!File.Exists(default_xml))
                 return false;
 
-            XDocument doc = XDocument.Load(file);
+            XDocument doc = XDocument.Load(default_xml);
 
             string[] excluded = new string[] { "menu.xml", "credits.xml" };
             
@@ -62,6 +63,17 @@ namespace MapEditor
 
                 if (Array.IndexOf(excluded, xmlfile) == -1) {
                     lstGameFiles.Items.Add(xmlfile);
+                }
+            }
+
+            
+            foreach (string file in Directory.GetFiles(path)) {
+                if (file.Contains("level_"))
+                {
+                    string name_only = Path.GetFileName(file);
+
+                    if (!lstGameFiles.Items.Contains(name_only))
+                        lstGameFiles.Items.Add(name_only);
                 }
             }
 
@@ -77,9 +89,9 @@ namespace MapEditor
                 "../../data/",
             };
 
-            foreach (string s in paths)
+            foreach (string path in paths)
             {
-                loaded = PopulateMapData(s + "default.xml");
+                loaded = PopulateMapData(path);
             }
 
             if (!loaded)

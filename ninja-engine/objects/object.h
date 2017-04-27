@@ -74,8 +74,6 @@ namespace boost {
 		template<class Archive>
 		void serialize(Archive & ar, ObjectProperties& p, const unsigned int version)
 		{
-			int obsolete;
-
 			ar & BOOST_SERIALIZATION_NVP(p.feels_gravity);
 			ar & BOOST_SERIALIZATION_NVP(p.feels_user_input);
 			ar & BOOST_SERIALIZATION_NVP(p.feels_friction);
@@ -87,20 +85,6 @@ namespace boost {
 			ar & BOOST_SERIALIZATION_NVP(p.do_our_own_rotation);
 			ar & BOOST_SERIALIZATION_NVP(p.use_angled_corners_collision_box);
 			ar & BOOST_SERIALIZATION_NVP(p.is_overlay);
-
-			if (version <= 2) {
-				ar & boost::serialization::make_nvp("p.is_player", obsolete);
-			}
-
-			if (version <= 3) {
-				ar & boost::serialization::make_nvp("p.is_spring", obsolete);
-				ar & boost::serialization::make_nvp("p.is_collectable", obsolete);
-				ar & boost::serialization::make_nvp("p.is_fan", obsolete);
-				ar & boost::serialization::make_nvp("p.is_door", obsolete);
-				ar & boost::serialization::make_nvp("p.is_ring", obsolete);
-				ar & boost::serialization::make_nvp("p.is_ball", obsolete);
-				ar & boost::serialization::make_nvp("p.is_badguy", obsolete);
-			}
 		}
 	}
 }

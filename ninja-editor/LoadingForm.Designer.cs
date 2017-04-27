@@ -81,7 +81,7 @@
             this.Controls.Add(this.btnLoad);
             this.MaximizeBox = false;
             this.Name = "LoadingForm";
-            this.Text = "LoadingForm";
+            this.Text = "Pirates VS Ninjas - Map Editor";
             this.Load += new System.EventHandler(this.LoadingForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
