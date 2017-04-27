@@ -432,7 +432,7 @@ GameWorld* GameWorld::CreateWorld(string mode_filename = "") {
 }
 
 void GameWorld::LoadMusic(const char* music_file) {
-	if (music_file) {
+	if (music_file && !map_editor) {
 		SOUND->PlayMusic(music_file);
 	}
 }

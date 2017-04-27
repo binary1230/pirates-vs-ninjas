@@ -1,6 +1,6 @@
 ﻿namespace MapEditor
 {
-    partial class Main
+    partial class Editor
     {
         /// <summary>
         /// Required designer variable.

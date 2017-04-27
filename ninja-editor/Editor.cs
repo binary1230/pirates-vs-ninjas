@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 
 namespace MapEditor
 {
-    public partial class Main : Form
+    public partial class Editor : Form
     {
         GameWrapper gameWrapper = new GameWrapper();
         bool wasPaused = false;
@@ -20,7 +20,7 @@ namespace MapEditor
         string lastLayerName = "foreground";
         string lastObjectDefName = "greenblock";
 
-        public Main()
+        public Editor()
         {
             InitializeComponent();
         }
@@ -52,11 +52,22 @@ namespace MapEditor
             gameWrapper.Shutdown();
         }
 
+        private string _map_to_load = "";
+
+        public void SetMapName(string name)
+        {
+            _map_to_load = name;
+        }
+
         private void Main_Load(object sender, EventArgs e)
         {
+            Init(_map_to_load);
+        }
+
+        public void Init(string mapname) { 
             Console.WriteLine(Directory.GetCurrentDirectory());
 
-            if (!gameWrapper.Init()) {
+            if (!gameWrapper.Init(mapname)) {
                 MessageBox.Show("Failed to init game, see log for details");
                 Close();
                 return;
@@ -133,7 +144,7 @@ namespace MapEditor
             string currentLayer = lstLayers.SelectedItem.ToString();
             string currentObjDef = lstObjectDefs.SelectedItem.ToString();
 
-            Editor editor = GameWorld.GetInstance().GetEditor();
+            global::Editor editor = GameWorld.GetInstance().GetEditor();
             editor.CreateAndSelectObject(currentObjDef, currentLayer);
             editor.FlashText("creating objects");
         }

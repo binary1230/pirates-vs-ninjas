@@ -18,13 +18,12 @@
 	<mode_file>level2.xml</mode_file>
 	-->
 
-	<mode_file type="menu">menu.xml</mode_file>
-	
+	<mode_file>menu.xml</mode_file>
 	<mode_file>level_0.xml</mode_file>
 	<mode_file>level_1.xml</mode_file>
 	<mode_file>level_2.xml</mode_file> 
 	<mode_file>level_3.xml</mode_file>
-	<mode_file type="credits">credits.xml</mode_file>
+	<mode_file>credits.xml</mode_file>
 	
 	<!--
 	<mode_file>jouten-shop.xml</mode_file>

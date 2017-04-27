@@ -18,7 +18,7 @@ namespace MapEditor
             set { GameState.GetInstance().SetPaused(value); }
         }
 
-        public bool Init()
+        public bool Init(string mapname)
         {
             GameState.CreateInstance();
             GameState game = GameState.GetInstance();
@@ -29,10 +29,7 @@ namespace MapEditor
             GameOptions options = GameOptions.GetInstance();
 
             options.SetMapEditorEnabled(true);
-            
-            // TODO: load from a file selector, don't just hardcode this here. woof.
-            // options.SetFirstMode("level_1.xml");
-            options.SetFirstMode("level_0.xml");
+            options.SetFirstMode(mapname);
 
             if (!game.Init(0, null))
                 return false;
