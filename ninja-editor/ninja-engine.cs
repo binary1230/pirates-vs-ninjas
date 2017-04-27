@@ -1017,15 +1017,6 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_FreeInstance();
   }
 
-  public bool GetUseNewLoadingSystem() {
-    bool ret = enginePINVOKE.GameWorld_GetUseNewLoadingSystem(swigCPtr);
-    return ret;
-  }
-
-  public void SetUseNewLoadingSystem(bool val) {
-    enginePINVOKE.GameWorld_SetUseNewLoadingSystem(swigCPtr, val);
-  }
-
   public bool GetAllowExiting() {
     bool ret = enginePINVOKE.GameWorld_GetAllowExiting(swigCPtr);
     return ret;
@@ -1040,8 +1031,8 @@ public class GameWorld : GameMode {
     return ret;
   }
 
-  public override int Init(SWIGTYPE_p_XMLNode arg0) {
-    int ret = enginePINVOKE.GameWorld_Init(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(arg0));
+  public override int Init(SWIGTYPE_p_XMLNode xMode) {
+    int ret = enginePINVOKE.GameWorld_Init(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(xMode));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -2877,12 +2868,6 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_FreeInstance")]
   public static extern void GameWorld_FreeInstance();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetUseNewLoadingSystem")]
-  public static extern bool GameWorld_GetUseNewLoadingSystem(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SetUseNewLoadingSystem")]
-  public static extern void GameWorld_SetUseNewLoadingSystem(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetAllowExiting")]
   public static extern bool GameWorld_GetAllowExiting(global::System.Runtime.InteropServices.HandleRef jarg1);

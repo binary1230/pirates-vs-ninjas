@@ -5467,56 +5467,6 @@ fail:
 }
 
 
-static int _wrap_GameWorld_GetUseNewLoadingSystem(lua_State* L) {
-  int SWIG_arg = 0;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("GameWorld::GetUseNewLoadingSystem",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::GetUseNewLoadingSystem",1,"GameWorld *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_GetUseNewLoadingSystem",1,SWIGTYPE_p_GameWorld);
-  }
-  
-  result = (bool)(arg1)->GetUseNewLoadingSystem();
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_GameWorld_SetUseNewLoadingSystem(lua_State* L) {
-  int SWIG_arg = 0;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("GameWorld::SetUseNewLoadingSystem",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::SetUseNewLoadingSystem",1,"GameWorld *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameWorld::SetUseNewLoadingSystem",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
-    SWIG_fail_ptr("GameWorld_SetUseNewLoadingSystem",1,SWIGTYPE_p_GameWorld);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetUseNewLoadingSystem(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_GameWorld_GetAllowExiting(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -6814,8 +6764,6 @@ static swig_lua_attribute swig_GameWorld_attributes[] = {
     {0,0,0}
 };
 static swig_lua_method swig_GameWorld_methods[]= {
-    { "GetUseNewLoadingSystem", _wrap_GameWorld_GetUseNewLoadingSystem},
-    { "SetUseNewLoadingSystem", _wrap_GameWorld_SetUseNewLoadingSystem},
     { "GetAllowExiting", _wrap_GameWorld_GetAllowExiting},
     { "SetAllowExiting", _wrap_GameWorld_SetAllowExiting},
     { "GetObjects", _wrap_GameWorld_GetObjects},

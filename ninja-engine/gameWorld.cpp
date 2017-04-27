@@ -87,7 +87,7 @@ void GameWorld::Clear() {
 	camera_shake_y = 0;
 }
 
-int GameWorld::Init(XMLNode xMode) {
+int GameWorld::Init(XMLNode /*unused*/) {
 	if (OPTIONS->GetMapEditorEnabled())
 		map_editor = new Editor();
 
@@ -119,7 +119,7 @@ int GameWorld::Init(XMLNode xMode) {
 		return -1;
 	}
 
-	int iReturn = Load(xMode);
+	int iReturn = Load();
 
 	if (iReturn != 0)
 		return iReturn;
@@ -414,21 +414,14 @@ void GameWorld::SaveWorld(string filename)
 }
 
 GameWorld* GameWorld::CreateWorld(string mode_filename = "") {
-	bool use_new_loading_system = mode_filename.find("-oldformat") == mode_filename.npos;
+	GameWorld* unserialized_world = NULL;
+	std::ifstream ifs(mode_filename);
+	boost::archive::xml_iarchive ia(ifs);
+	ia >> BOOST_SERIALIZATION_NVP(unserialized_world);
 
-	if (!use_new_loading_system) {
-		WORLD->CreateInstance();
-	} else {
-		GameWorld* unserialized_world = NULL;
-		std::ifstream ifs(mode_filename);
-		boost::archive::xml_iarchive ia(ifs);
-		ia >> BOOST_SERIALIZATION_NVP(unserialized_world);
+	WORLD->SetInstance(unserialized_world);
 
-		WORLD->SetInstance(unserialized_world);
-	}
-
-	WORLD->SetUseNewLoadingSystem(use_new_loading_system);
-	return WORLD;
+	return unserialized_world;
 }
 
 void GameWorld::LoadMusic(const char* music_file) {
@@ -437,18 +430,10 @@ void GameWorld::LoadMusic(const char* music_file) {
 	}
 }
 
-//! MASTER LOAD FUNCTION:
-//! Load the simulation from data in an XML file
-int GameWorld::Load(XMLNode &xMode) {
-
+int GameWorld::Load() {
 	is_loading = true;
 	m_bJumpedBackFromADoor = false;
 	_objectsToAdd.clear();
-
-	if (!_UseNewLoadingSystem) {
-		if (LoadHeaderFromXML(xMode) == -1)
-			return -1;
-	}
 
 	WINDOW->SetClearColor(_bgColor.r, _bgColor.g, _bgColor.b);
 
@@ -458,44 +443,11 @@ int GameWorld::Load(XMLNode &xMode) {
 		return -1;
 	}
 
-	XMLNode* p_xObjDefs = NULL;
-
-	if (!_UseNewLoadingSystem) {
-		XMLNode xObjectDefs = xMode.getChildNode("objectDefinitions");
-		p_xObjDefs = &xObjectDefs;
-	}
-
-	if (!LoadObjectDefsFromXML(p_xObjDefs))
+	if (!LoadObjectDefsFromXML())
 		return -1;
 
-	if (!_UseNewLoadingSystem) {
-		if (LoadObjectsFromXML(xMode) == -1)
-		{
-			TRACE("ERROR: Failed loading objects from XML\n");
-			return -1;
-		}
-
-		if (xMode.nChildNode("effects") == 1) {
-			XMLNode xEffects = xMode.getChildNode("effects");
-			int max = xEffects.nChildNode("include_xml_file");
-			int i, iterator;
-			for (i = iterator = 0; i < max; ++i) {
-				std::string effects_include_file = xEffects.getChildNode("include_xml_file", &iterator).getText();
-				m_included_effect_xml_files.push_back(effects_include_file);
-			}
-		}
-
-		if (xMode.nChildNode("music") == 1) {
-			_musicFile = xMode.getChildNode("music").getText();
-		}
-
-		if (xMode.nChildNode("luaScript") == 1) {
-			_luaScript = xMode.getChildNode("luaScript").getText();
-		}
-	} else {
-		if (!FinishLoadingObjects())
-			return -1;
-	}
+	if (!FinishLoadingObjects())
+		return -1;
 
 	for (int i = 0; i < m_included_effect_xml_files.size(); ++i)
 	{
@@ -513,6 +465,11 @@ int GameWorld::Load(XMLNode &xMode) {
 	}
 
 	if (!InitJumpBackFromDoor()) {
+		return -1;
+	}
+
+	if (!m_pkCameraLookatTarget) {
+		TRACE("ERROR: No <cameraFollow> found, cannot proceed.\n");
 		return -1;
 	}
 
@@ -540,12 +497,10 @@ int GameWorld::Load(XMLNode &xMode) {
 
 bool GameWorld::FinishLoadingObjects()
 {
-	if (_UseNewLoadingSystem) {
-		for (Object*& obj : _objects) {
-			if (!obj->FinishLoading())
-				return false;
-		}
-	}
+	for (Object*& obj : _objects) {
+		if (!obj->FinishLoading())
+			return false;
+	}	
 
 	return true;
 }
@@ -598,449 +553,15 @@ void GameWorld::CachePlayerObjects() {
 	}
 }
 
-// Loads the header info from the Mode XML file
-// OLD LOADING SYSTEM ONLY.  new serialization system doesn't use this
-int GameWorld::LoadHeaderFromXML(XMLNode &xMode) {
-	assert(!_UseNewLoadingSystem);
 
-	XMLNode xInfo = xMode.getChildNode("info");
-
-	TRACE(" Loading Level: '%s'\n", xInfo.getChildNode("description").getText() );
-
-	XMLNode xProps = xMode.getChildNode("properties");
-	XMLNode xColor;
-	// get width/height/camera xy
-	if (!xProps.getChildNode("width").getInt(_levelWidth)) {
-		TRACE("-- Invalid width!\n");
-		return -1;
-	}
-	if (!xProps.getChildNode("height").getInt(_levelHeight)) {
-		TRACE("-- Invalid height!\n");
-		return -1;
-	}
-
-	_bgColor = al_map_rgb_f(0.0f, 0.0f, 0.0f);
-
-	if (xProps.nChildNode("bgcolor") == 1) {
-		xColor = xProps.getChildNode("bgcolor");
-		int r,g,b;
-	
-		if (!xColor.getChildNode("r").getInt(r) ||
-			!xColor.getChildNode("g").getInt(g) ||
-			!xColor.getChildNode("b").getInt(b) ||
-			r < 0 || g < 0 || b < 0 || r > 255 || b > 255 || g > 255) {
-			TRACE("-- Invalid bgcolor specified!\n");
-			return -1;
-		}
-
-		_bgColor = al_map_rgb(r,g,b);
-	}
-
-	_bgColorTop = al_map_rgb_f(-1.0f, -1.0f, -1.0f);
-
-	if (xProps.nChildNode("bgcolor_top") == 1) {
-		xColor = xProps.getChildNode("bgcolor_top");
-		int r,g,b;
-	
-		if (!xColor.getChildNode("r").getInt(r) ||
-			!xColor.getChildNode("g").getInt(g) ||
-			!xColor.getChildNode("b").getInt(b) ||
-			r < 0 || g < 0 || b < 0 || r > 255 || b > 255 || g > 255) {
-			TRACE("-- Invalid bgcolor_top specified!\n");
-			return -1;
-		}
-		_bgColorTop = al_map_rgb(r, g, b);
-	}
-
-	return 0;
-}
-
-/* example of how structure of our XML looks:
- * 
- * <mode>
- *
- * 	<objectDefinitions> .. .. .. </objectDefinitions>
- * 
- *	<map>
- * 		<layer>
- * 			<object type="player"> .. .. .. </object>
- * 			<object type="enemy2"> .. .. .. </object>
- * 		</layer>
- * 		<layer> ... </layer>
- * 	</map>
- * 	
- * </mode>
- */
-
-bool GameWorld::LoadObjectDefsFromXML(XMLNode *xObjDefs) {
-	int i;
-
-	if (!_UseNewLoadingSystem) {
-		if (xObjDefs) {
-			int iterator, max;
-			max = xObjDefs->nChildNode("include_xml_file");
-			for (i = iterator = 0; i < max; i++) {
-				std::string file = xObjDefs->getChildNode("include_xml_file", &iterator).getText();
-				m_included_objectdef_xml_files.push_back(file);
-			}
-		}
-	}
-
-	for (i = 0; i < m_included_objectdef_xml_files.size(); ++i) {
-		if (!OBJECT_FACTORY->LoadObjectDefsFromIncludeXML(m_included_objectdef_xml_files[i])) {
+bool GameWorld::LoadObjectDefsFromXML() {
+	for (string& objectDefXmlFile : m_included_objectdef_xml_files) {
+		if (!OBJECT_FACTORY->LoadObjectDefsFromIncludeXML(objectDefXmlFile)) {
 			return false;
 		}
 	}
 
 	return true;
-}
-
-//! Master XML parsing routine
-//! Calls other helpers to deal with different parts of the XML.
-int GameWorld::LoadObjectsFromXML(XMLNode &xMode) {	
-	if (!_UseNewLoadingSystem) {
-		// load all the <object>s found in each <layer> in <map>
-		XMLNode xMap, xLayer;
-		int i, max, iterator = 0;
-
-		_objects.clear();
-		m_pkCameraLookatTarget = NULL;
-		xMap = xMode.getChildNode("map");
-
-		max = xMap.nChildNode("layer");
-
-		// Parse each layer
-		iterator = 0;
-		for (i = 0; i < max; i++) {
-			xLayer = xMap.getChildNode("layer", &iterator);
-
-			ObjectLayer* layer = new ObjectLayer();
-			assert(layer != NULL);
-
-			layer->Init();
-			_layers.push_back(layer);
-
-			if (LoadLayerFromXML(xLayer, layer) == -1) {
-				return -1;
-			}
-		}
-	}
-
-	// Finished loading objects, do a few sanity checks
-	if (!m_pkCameraLookatTarget) {
-		TRACE("ERROR: No <cameraFollow> found, cannot proceed.\n");
-		return -1;
-	}
-
-	return 0;
-}
-
-// Creates an instance of an object on the specified layer 
-int GameWorld::CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const layer) {
-
-	std::string objDefName = xObject.getAttribute("objectDef");
-	XMLNode* xObjectDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
-
-	if (!xObjectDef) {
-		TRACE("ERROR: Unable to find object definition of type '%s'\n", objDefName);
-		return -1;
-	}
-
-	if (LoadObjectFromXML(*xObjectDef, xObject, layer) == -1) {
-		TRACE("ERROR: Failed trying to load object of type '%s'\n", objDefName);
-		return -1;
-	}
-
-	return 0;
-}
-
-//! Parse XML info from a <layer> block
-//! NOTE: Old loading system only, new serialization system doesn't use this.
-int GameWorld::LoadLayerFromXML(XMLNode &xLayer, ObjectLayer* const layer) {
-	assert(!_UseNewLoadingSystem);
-
-	int i, iterator, max;
-	XMLNode xObject;
-	std::string objDefName;
-
-	// 1) How much do we scroll this layer by?
-	float scroll_speed;
-	if ( !xLayer.getAttributeFloat("scroll_speed", scroll_speed) ) {
-		TRACE(" -- no scroll_speed specified.\n");
-		return -1;
-	}
-
-	layer->SetScrollSpeed(scroll_speed);
-	layer->SetName(xLayer.getAttribute("name"));
-	
-	// 2) NEW: special case.  Because I, Dom, am LAZY as HELL, I have
-	// added a <REPEAT> tag which allows us to create, say, 50
-	// objects while only having to declare just one (combine this
-	// with random positions, and you have an interesting formula for
-	// random level generation!)
-	//
-	// Note: this whole "repeat" thing is almost a hack and won't 
-	// be needed once we have an actual map editor in place.
-	int times_to_repeat, j;
-	XMLNode xRepeater;
-	max = xLayer.nChildNode("repeat");
-
-	for (i=iterator=0; i < max; i++) {
-
-		xRepeater = xLayer.getChildNode("repeat", &iterator);
-
-		if (!xRepeater.getAttributeInt("times", times_to_repeat)) {
-			TRACE("-- Invalid # repeat times!\n");
-			return -1;
-		}
-
-		repeater_current_x = 0;
-		repeater_current_y = 0;
-
-		if (xRepeater.nChildNode("starting_x") == 1) {
-			if (!xRepeater.getChildNode("starting_x").getInt(repeater_current_x)) {
-				TRACE("ERROR: Invalid starting_x specified in <repeat>\n");
-				return -1;
-			}
-		} 
-		
-		if (xRepeater.nChildNode("starting_y") == 1) {
-			if (!xRepeater.getChildNode("starting_y").getInt(repeater_current_y)) {
-				TRACE("ERROR: Invalid starting_y specified in <repeat>\n");
-				return -1;
-			}
-		}
-
-		xObject = xRepeater.getChildNode("object");
-
-		// Repeat the creation of this object the specified # of times.
-		for (j=0; j < times_to_repeat; j++) {
-			if (CreateObjectFromXML(xObject, layer) == -1)
-				return -1;
-		}	
-	}
-
-	max = xLayer.nChildNode("object");
-
-	for (i=iterator=0; i < max; i++) {
-		xObject = xLayer.getChildNode("object", &iterator);
-
-		if (CreateObjectFromXML(xObject, layer) == -1)
-			return -1;
-	}
-
-	return 0;
-}
-
-// Do the REAL work of loading an object from XML
-// Old loading system only, new system doesn't use this.
-int GameWorld::LoadObjectFromXML(XMLNode &xObjectDef,
-								 XMLNode &xObject,
-								 ObjectLayer* const layer) {
-
-	assert(!_UseNewLoadingSystem);
-
-	int x,y;
-
-	// Really create the instance of this object, it is BORN here:
-	Object* obj = OBJECT_FACTORY->CreateObjectFromXML(xObjectDef, &xObject);
-
-	if (!obj)
-		return -1;
-
-	obj->SetLayer(layer);
-
-	// if we have a <cameraFollow>, then we follow this object
-	if (xObject.nChildNode("cameraFollow") == 1) {
-		if (!m_pkCameraLookatTarget) {
-			m_pkCameraLookatTarget = obj;
-		} else {
-			TRACE("ERROR: multiple camera targets in map\n");
-			return -1;
-		}
-	}
-
-	// SPECIAL debug flag.  IF it is set, the object MAY print debug message
-	if (xObject.nChildNode("debug") == 1) {
-		TRACE("-- Enabling debug mode.\n");
-		obj->SetDebugFlag(true);
-	}
-
-	if (xObject.nChildNode("position") == 1) {
-		XMLNode xPos = xObject.getChildNode("position");
-		std::string type = xPos.getAttribute("type");
-		// Figure out the position type.
-		// Currently 3 types exist:
-		// 1) "fixed" - regular XY position, nothing fancy
-		//
-		// 2) "random" - pick random numbers in a range for the XY position
-		// 							 (This would be useful for e.g. making 50 randomly
-		// 							 placed flowers in a level)
-		//
-		// 3) "offset" - specify the distance from which to place this object
-		//               from the last one
-		//               (This would be useful for e.g. making 20 fenceposts 
-		//               exactly 10 pixels from each other)
-		//               
-		// Note that 2) and 3) are only really useful inside an XML <repeat>
-		// tag.  You can use them to position tons of objects with only one 
-		// line of XML.  2) and 3) won't ever be used unless someone is
-		// hand-coding the XML.  Once the map editor is done, only 1) will
-		// be useful.
-
-		if (type == std::string("fixed")) {
-
-			if (!xPos.getChildNode("x").getInt(x)) {
-				TRACE("-- Invalid X coordinate specified (or did you want <x> instead of <x_offset> ?\n");
-				return -1;	
-			}
-
-			if (!xPos.getChildNode("y").getInt(y)) {
-				TRACE("-- Invalid Y coordinate specified (or did you want <y> instead of <y_offset> ?\n");
-				return -1;
-			}
-				
-		} else if (type == std::string("random")) {
-
-			int xmin, ymin, xmax, ymax;
-
-			if (!xPos.getChildNode("xmin").getInt(xmin)) {
-				TRACE("-- Invalid xmin!\n");
-				return -1;
-			}
-
-			if (!xPos.getChildNode("ymin").getInt(ymin)) {
-				TRACE("-- Invalid ymin!\n");
-				return -1;
-			}
-
-			if (!xPos.getChildNode("xmax").getInt(xmax)) {
-				TRACE("-- Invalid xmax!\n");
-				return -1;
-			}
-
-			if (!xPos.getChildNode("ymax").getInt(ymax)) {
-				TRACE("-- Invalid ymax!\n");
-				return -1;
-			}
-
-			x = Rand(xmin, xmax);
-			y = Rand(ymin, ymax);	
-
-		} else if (type == std::string("offset")) {
-
-			int _offset_x, _offset_y;
-			if (!xPos.getChildNode("x_offset").getInt(_offset_x)) {
-				TRACE("-- Invalid X!\n");
-				return -1;	
-			}
-			if (!xPos.getChildNode("y_offset").getInt(_offset_y)) {
-				TRACE("-- Invalid Y!\n");
-				return -1;
-			}
-
-			x = repeater_current_x;
-			y = repeater_current_y;
-
-			repeater_current_x += _offset_x;
-			repeater_current_y += _offset_y;
-				
-		} else {
-			TRACE("Unknown object position type: %s\n", type);
-			return -1;
-		}
-				
-		// if <alignTop> is present, we align this sprite with ITs 
-		// bottom coordinates. (e.g. saying 0 puts the player on the floor)
-		if (xPos.nChildNode("alignTop")>0) {
-			y -= obj->GetHeight();
-		}
-			
-		// if <alignRight> is present, we take the X coordinate from the
-		// right side instead of the left.
-		if (xPos.nChildNode("alignRight")>0) {
-			x -= obj->GetWidth();
-		}
-
-		// if <alignScreenRight> is present, we align this sprite
-		// to the SCREEN's right (useful only for overlays)
-		if (xPos.nChildNode("alignScreenRight")>0) {
-			x = WINDOW->Width() - obj->GetWidth() - x;
-		}
-
-		// if <alignScreenBottom> is present, we align this sprite
-		// to the SCREEN's bottom (useful only for overlays)
-		if (xPos.nChildNode("alignScreenBottom")>0) {
-			y = WINDOW->Height() - obj->GetHeight() - y;
-		}
-
-		// One last position calculation:
-		// We need to undo the offset of the background here
-		// So users don't have to compensate in their data files
-		if (layer->GetScrollSpeed() > 0.01f) {
-			x = int( float(x) / layer->GetScrollSpeed() );
-			y = int( float(y) / layer->GetScrollSpeed() );
-		}
-
-		// flipping
-		if (xPos.nChildNode("flipx")>0) {
-			obj->SetFlipX(true);
-		}
-
-		if (xPos.nChildNode("flipy")>0) {
-			obj->SetFlipY(true);
-		}
-		
-		// this can freak out physics
-		assert(obj->GetX() <= WORLD->GetWidth() + 10);
-		assert(obj->GetY() <= WORLD->GetHeight() + 10);
-
-		obj->SetXY(x,y);
-
-		if (xPos.nChildNode("vel_rotate")>0) {
-			float vel_rotate;
-			if (!xPos.getChildNode("vel_rotate").getFloat(vel_rotate)) {
-				TRACE("-- Invalid vel_rotate!\n");
-				return -1;
-			}
-			obj->SetUseRotation(true);
-			obj->SetVelRotate(vel_rotate);
-		}
-
-	}	// end of <position> stuff
-			
-	if (xObject.nChildNode("inputController") == 1) {
-		int controller_num;
-		if (!xObject.getChildNode("inputController").getInt(controller_num)) {
-			TRACE("-- Invalid controller number!\n");
-			return -1;
-		}
-		obj->SetControllerNum(controller_num);
-	}
-
-	if (xObject.nChildNode("alpha") == 1) {
-		int alpha;
-		if (!xObject.getChildNode("alpha").getInt(alpha) || alpha > 255) {
-			TRACE("-- Invalid alpha!\n");
-			return -1;
-		}
-		obj->SetAlpha(alpha);
-	}
-
-	if (xObject.nChildNode("fadeout") == 1) {
-		int fadeout_time;
-		if (!xObject.getChildNode("fadeout").getInt(fadeout_time)) {
-			TRACE("-- Invalid fadeout time!\n");
-			return -1;
-		}
-
-		if (fadeout_time > 0)
-			obj->FadeOut(fadeout_time);
-	}
-
-	// Everything loaded OK, now we add it to the simulation
-	AddObject(obj, true);
-	return 0;
 }
 
 ObjectLayer* GameWorld::FindLayer(const char* name) {

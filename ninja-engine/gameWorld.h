@@ -115,20 +115,14 @@ class GameWorld : public GameMode {
 
 			//! Sets up simulation from an XML file
 			//XXX should be moved into a friend factory class, or something.
-			int Load(XMLNode&);
+			int Load();
 			bool FinishLoadingObjects();
-			int LoadHeaderFromXML(XMLNode&);
-			int LoadObjectsFromXML(XMLNode&);
-			int LoadObjectFromXML(XMLNode&,	XMLNode&, ObjectLayer* const);
-			int LoadLayerFromXML(XMLNode&, ObjectLayer* const);
-			
+		
 			// these virtuals might be overridden by the map editor
 			virtual void LoadMusic(const char* filename);
-			virtual bool LoadObjectDefsFromXML(XMLNode * xObjDefs);
+			virtual bool LoadObjectDefsFromXML();
 
 			bool InitJumpBackFromDoor();
-
-			int CreateObjectFromXML(XMLNode &xObject, ObjectLayer* const);
 
 			void CachePlayerObjects();
 
@@ -146,7 +140,6 @@ class GameWorld : public GameMode {
 
 			void Clear();
 
-			CREATE_PROPERTY(bool, UseNewLoadingSystem)
 			CREATE_PROPERTY(bool, AllowExiting)
 
 		public:
@@ -155,7 +148,7 @@ class GameWorld : public GameMode {
 				return vector<Object*>{ std::begin(_objects), std::end(_objects) };
 			}
 
-			virtual int Init(XMLNode);
+			virtual int Init(XMLNode xMode);
 			virtual void Shutdown();
 
 			inline Editor* GetEditor() {

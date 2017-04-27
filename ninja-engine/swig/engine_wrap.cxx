@@ -2178,28 +2178,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_FreeInstance() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_GetUseNewLoadingSystem(void * jarg1) {
-  unsigned int jresult ;
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  bool result;
-  
-  arg1 = (GameWorld *)jarg1; 
-  result = (bool)(arg1)->GetUseNewLoadingSystem();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetUseNewLoadingSystem(void * jarg1, unsigned int jarg2) {
-  GameWorld *arg1 = (GameWorld *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (GameWorld *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  (arg1)->SetUseNewLoadingSystem(arg2);
-}
-
-
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_GetAllowExiting(void * jarg1) {
   unsigned int jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;

@@ -176,11 +176,9 @@ bool ObjectText::Init() {
 
 	// slight hack. if the previous mode requested no initial text
 	// and we are initial text then die now.
-	if (	noError && 
-				WORLD->IsLoading() && 
-				WORLD->GetOldExitInfo().useExitInfo && 
-				!WORLD->GetOldExitInfo().showInitialText) {
-
+	if ( noError && WORLD->IsLoading() && 
+		WORLD->GetOldExitInfo().useExitInfo && !WORLD->GetOldExitInfo().showInitialText) 
+	{
 		SetModalActive(false);
 		is_dead = true;
 
