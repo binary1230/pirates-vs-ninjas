@@ -4699,6 +4699,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_CommonUpdate(void * jarg1) {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_FlashText(void * jarg1, char * jarg2) {
+  Editor *arg1 = (Editor *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = (Editor *)jarg1; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  (&arg2)->assign(jarg2); 
+  (arg1)->FlashText(arg2);
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_Editor_NoModeUpdate(void * jarg1) {
   Editor *arg1 = (Editor *) 0 ;
   

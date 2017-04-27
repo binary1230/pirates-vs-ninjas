@@ -95,10 +95,19 @@ void Editor::SelectObject(Object* obj) {
 	}
 }
 
-void Editor::Draw() {}
+void Editor::Draw() {
+	if (_text_time_remaining > 0)
+		WINDOW->DrawText(5, 5, _tooltip_text);
+}
 
 void Editor::CommonUpdate() {
 	_pausedChanged = _wasPaused != GAMESTATE->IsPaused();
+	if (_pausedChanged) {
+		FlashText(!_wasPaused ? "paused" : "unpaused");
+	}
+
+	if (_text_time_remaining > 0)
+		_text_time_remaining--;
 	
 	SetDrawBoundingBoxes_AllObjects(false);
 
@@ -106,6 +115,7 @@ void Editor::CommonUpdate() {
 
 	if (INPUT->RealKeyOnce(ALLEGRO_KEY_G)) {
 		_SnapToGrid = !_SnapToGrid;
+		FlashText(_SnapToGrid ? "grid snap on" : "grid snap off");
 	}
 
 	if (INPUT->RealKeyOnce(ALLEGRO_KEY_R)) {
@@ -115,6 +125,11 @@ void Editor::CommonUpdate() {
 	if (INPUT->RealKeyOnce(ALLEGRO_KEY_P)) {
 		ResetVolatileLevelState(LEVEL_PLAYERS);
 	}
+}
+
+void Editor::FlashText(string text) {
+	_text_time_remaining = 200;
+	_tooltip_text = text;
 }
 
 void Editor::NoModeUpdate() {
@@ -133,6 +148,7 @@ void Editor::NoModeUpdate() {
 	if (INPUT->RealKeyOnce(ALLEGRO_KEY_C)) {
 		if (_last_layer_name.length() > 0 && _last_object_def_name.length() > 0) {
 			CreateAndSelect_UsePreviousLayerAndObject();
+			FlashText("creating objects");
 		}
 	}
 
@@ -142,6 +158,12 @@ void Editor::NoModeUpdate() {
 
 	if (_selection && INPUT->RealKeyOnce(ALLEGRO_KEY_M)) {
 		_mode = EDITOR_MOVE;
+		FlashText("move mode");
+	}
+
+	if (INPUT->RealKeyOnce(ALLEGRO_KEY_F5)) {
+		WORLD->SaveWorldOverCurrentFile();
+		FlashText("saved level!");
 	}
 }
 
@@ -150,6 +172,8 @@ void Editor::ResetVolatileLevelState(VolatileStateLevel level) {
 	for (Object*& obj : WORLD->_objects) {
 		obj->ResetVolatileState(level);
 	}
+
+	FlashText("reset'd volatile state");
 }
 
 void Editor::UpdateMove() {
@@ -235,6 +259,9 @@ Editor::Editor() {
 	_obj_under_mouse = NULL;
 
 	_should_create_another_copy_after_move = false;
+
+	_text_time_remaining = 0;
+	_tooltip_text = "";
 }
 
 Editor::~Editor() {}

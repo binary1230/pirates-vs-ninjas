@@ -34,7 +34,6 @@ namespace MapEditor
             // options.SetFirstMode("level_1.xml");
             options.SetFirstMode("level_0.xml");
 
-
             if (!game.Init(0, null))
                 return false;
 

@@ -12200,6 +12200,32 @@ fail:
 }
 
 
+static int _wrap_Editor_FlashText(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  std::string arg2 ;
+  
+  SWIG_check_num_args("Editor::FlashText",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::FlashText",1,"Editor *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Editor::FlashText",2,"std::string");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_FlashText",1,SWIGTYPE_p_Editor);
+  }
+  
+  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  (arg1)->FlashText(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Editor_NoModeUpdate(lua_State* L) {
   int SWIG_arg = 0;
   Editor *arg1 = (Editor *) 0 ;
@@ -12443,6 +12469,7 @@ static swig_lua_method swig_Editor_methods[]= {
     { "SelectObject", _wrap_Editor_SelectObject},
     { "Draw", _wrap_Editor_Draw},
     { "CommonUpdate", _wrap_Editor_CommonUpdate},
+    { "FlashText", _wrap_Editor_FlashText},
     { "NoModeUpdate", _wrap_Editor_NoModeUpdate},
     { "ResetVolatileLevelState", _wrap_Editor_ResetVolatileLevelState},
     { "UpdateMove", _wrap_Editor_UpdateMove},

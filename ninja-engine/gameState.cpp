@@ -328,9 +328,6 @@ void GameState::UpdateGlobalInput()
 
 	if (INPUT->KeyOnce(GAMEKEY_TOGGLE_PHYSICS_DISPLAY))
 		SetPhysicsDebugDraw(!GetPhysicsDebugDraw());
-
-	if (INPUT->KeyOnce(GAMEKEY_SAVE_MAP))
-		WORLD->SaveWorldOverCurrentFile();
 }
 
 //! Update all game status

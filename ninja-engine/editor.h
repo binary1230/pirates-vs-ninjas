@@ -24,6 +24,9 @@ class Editor {
 
 		EditorMode _mode;
 
+		uint _text_time_remaining;
+		string _tooltip_text;
+
 		bool _wasPaused;
 		bool _pausedChanged;
 
@@ -51,6 +54,7 @@ class Editor {
 
 		void Draw();
 		void CommonUpdate();
+		void FlashText(string text);
 		void NoModeUpdate();
 		void ResetVolatileLevelState(VolatileStateLevel level);
 		void UpdateMove();

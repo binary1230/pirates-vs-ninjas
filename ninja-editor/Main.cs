@@ -133,7 +133,9 @@ namespace MapEditor
             string currentLayer = lstLayers.SelectedItem.ToString();
             string currentObjDef = lstObjectDefs.SelectedItem.ToString();
 
-            GameWorld.GetInstance().GetEditor().CreateAndSelectObject(currentObjDef, currentLayer);
+            Editor editor = GameWorld.GetInstance().GetEditor();
+            editor.CreateAndSelectObject(currentObjDef, currentLayer);
+            editor.FlashText("creating objects");
         }
 
         private void btnPaused_Click(object sender, EventArgs e)
