@@ -12532,6 +12532,56 @@ fail:
 }
 
 
+static int _wrap_Editor_GetPropSelectedObjectChanged(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Editor::GetPropSelectedObjectChanged",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::GetPropSelectedObjectChanged",1,"Editor *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_GetPropSelectedObjectChanged",1,SWIGTYPE_p_Editor);
+  }
+  
+  result = (bool)(arg1)->GetPropSelectedObjectChanged();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_SetPropSelectedObjectChanged(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("Editor::SetPropSelectedObjectChanged",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::SetPropSelectedObjectChanged",1,"Editor *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Editor::SetPropSelectedObjectChanged",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_SetPropSelectedObjectChanged",1,SWIGTYPE_p_Editor);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetPropSelectedObjectChanged(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_Editor(void *obj) {
 Editor *arg1 = (Editor *) obj;
 delete arg1;
@@ -12571,6 +12621,8 @@ static swig_lua_method swig_Editor_methods[]= {
     { "SetPropSelection", _wrap_Editor_SetPropSelection},
     { "GetPropObjectsChanged", _wrap_Editor_GetPropObjectsChanged},
     { "SetPropObjectsChanged", _wrap_Editor_SetPropObjectsChanged},
+    { "GetPropSelectedObjectChanged", _wrap_Editor_GetPropSelectedObjectChanged},
+    { "SetPropSelectedObjectChanged", _wrap_Editor_SetPropSelectedObjectChanged},
     {0,0}
 };
 static swig_lua_method swig_Editor_meta[] = {

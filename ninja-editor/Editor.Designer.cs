@@ -169,6 +169,7 @@
             this.lstObjects.Name = "lstObjects";
             this.lstObjects.Size = new System.Drawing.Size(370, 264);
             this.lstObjects.TabIndex = 11;
+            this.lstObjects.SelectedIndexChanged += new System.EventHandler(this.lstObjects_SelectedIndexChanged);
             // 
             // Editor
             // 

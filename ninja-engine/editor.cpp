@@ -91,7 +91,7 @@ void Editor::UpdateSelectedObjectPosition() {
 }
 
 void Editor::SelectObject(Object* obj) {
-	_ObjectsChanged = true;
+	_SelectedObjectChanged = true;
 
 	if (_Selection) {
 		_Selection->SetDrawBounds(false);
@@ -111,6 +111,7 @@ void Editor::Draw() {
 
 void Editor::CommonUpdate() {
 	_ObjectsChanged = false;
+	_SelectedObjectChanged = false;
 
 	_pausedChanged = _wasPaused != GAMESTATE->IsPaused();
 	if (_pausedChanged) {
@@ -275,6 +276,9 @@ Editor::Editor() {
 
 	_text_time_remaining = 0;
 	_tooltip_text = "";
+
+	_ObjectsChanged = false;
+	_SelectedObjectChanged = false;
 }
 
 Editor::~Editor() {}

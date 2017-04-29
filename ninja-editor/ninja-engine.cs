@@ -2356,6 +2356,15 @@ public class Editor : global::System.IDisposable {
     enginePINVOKE.Editor_SetPropObjectsChanged(swigCPtr, val);
   }
 
+  public bool GetPropSelectedObjectChanged() {
+    bool ret = enginePINVOKE.Editor_GetPropSelectedObjectChanged(swigCPtr);
+    return ret;
+  }
+
+  public void SetPropSelectedObjectChanged(bool val) {
+    enginePINVOKE.Editor_SetPropSelectedObjectChanged(swigCPtr, val);
+  }
+
 }
 
 class enginePINVOKE {
@@ -3603,6 +3612,12 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_SetPropObjectsChanged")]
   public static extern void Editor_SetPropObjectsChanged(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_GetPropSelectedObjectChanged")]
+  public static extern bool Editor_GetPropSelectedObjectChanged(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_SetPropSelectedObjectChanged")]
+  public static extern void Editor_SetPropSelectedObjectChanged(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SWIGUpcast")]
   public static extern global::System.IntPtr GameWorld_SWIGUpcast(global::System.IntPtr jarg1);

@@ -68,6 +68,7 @@ class Editor {
 
 		// helpers for UI *only*
 		CREATE_PROPERTY(bool, ObjectsChanged)
+		CREATE_PROPERTY(bool, SelectedObjectChanged)
 };
 
 #endif // MAP_EDITOR_H

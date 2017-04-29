@@ -4848,6 +4848,28 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropObjectsChanged(void * jarg1, un
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Editor_GetPropSelectedObjectChanged(void * jarg1) {
+  unsigned int jresult ;
+  Editor *arg1 = (Editor *) 0 ;
+  bool result;
+  
+  arg1 = (Editor *)jarg1; 
+  result = (bool)(arg1)->GetPropSelectedObjectChanged();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropSelectedObjectChanged(void * jarg1, unsigned int jarg2) {
+  Editor *arg1 = (Editor *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetPropSelectedObjectChanged(arg2);
+}
+
+
 SWIGEXPORT GameMode * SWIGSTDCALL CSharp_GameWorld_SWIGUpcast(GameWorld *jarg1) {
     return (GameMode *)jarg1;
 }

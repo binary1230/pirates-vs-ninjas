@@ -76,10 +76,32 @@ namespace MapEditor
         
         private void UpdateIfPaused()
         {
-            if (GameWorld.GetInstance().GetEditor().GetPropObjectsChanged())
+            global::Editor editor = GameWorld.GetInstance().GetEditor();
+            bool objectsChanged = editor.GetPropObjectsChanged();
+            bool selectionChanged = editor.GetPropSelectedObjectChanged();
+
+            if (objectsChanged)
             {
-                RebindData();
                 SyncObjectListWithGame();
+                RebindData();
+            }
+
+            if (selectionChanged)
+            {
+                UpdateSelectedObjectFromGame();
+            }
+        }
+
+        private void UpdateSelectedObjectFromGame()
+        {
+            Object selection = GetSelectedObject();
+            if (selection != null)
+            {
+                // 3) update object list with currently selected object
+                lstObjects.SelectedValue = selection.GetID();
+
+                // 4) update layer list with layer this object is currently on
+                lstLayers.SelectedIndex = lstLayers.FindString(selection.GetLayer().GetName());
             }
         }
 
@@ -186,16 +208,6 @@ namespace MapEditor
             }
 
             lstObjects.EndUpdate();
-
-            Object selection = GetSelectedObject();
-            if (selection != null)
-            {
-                // 3) update object list with currently selected object
-                lstObjects.SelectedValue = selection.GetID();
-
-                // 4) update layer list with layer this object is currently on
-                lstLayers.SelectedIndex = lstLayers.FindString(selection.GetLayer().GetName());
-            }
         }
 
         private void btn_GetObjects_Click(object sender, EventArgs e)
@@ -259,37 +271,30 @@ namespace MapEditor
             GameWorld.GetInstance().GetEditor().SetPropSnapToGrid(chkSnapToGrid.Checked);
         }
 
-        private void treeObjects_AfterSelect(object sender, TreeViewEventArgs e)
+        private void lstObjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // TreeNode selected = treeObjects.SelectedNode;
             Object obj = null;
             try
             {
-                KeyValuePair<uint,string> kvp = (KeyValuePair < uint, string > )lstObjects.SelectedValue;
-                obj = GameWorld.GetInstance().FindObjectByID(kvp.Key);
+                uint object_id = (uint)lstObjects.SelectedValue;
+                obj = GameWorld.GetInstance().FindObjectByID(object_id);
             }
             catch (System.FormatException) { }
 
-            UpdatePropertiesUIFromObject(obj);
+            if (obj != null)
+            {
+                GameWorld.GetInstance().GetEditor().SelectObject(obj);
+                PostSelectionChanged();
+            }
         }
 
-        private void UpdatePropertiesUIFromObject(Object obj)
+        private void PostSelectionChanged()
         {
-            if (obj == null)
-            {
-                return;
-            }
+            // handled after anything (game or editor) has changed the selection
 
-            objectProperties.SelectedObject = obj;
+            Object selection = GetSelectedObject();
 
-            System.Type objectType = obj.GetType();
-            foreach (MethodInfo methodInfo in objectType.GetMethods(BindingFlags.Public | BindingFlags.Instance))
-            {
-                if (methodInfo.Name.StartsWith("GetProp"))
-                {
-                    
-                }
-            }
+            objectProperties.SelectedObject = selection;
         }
     }
 }
