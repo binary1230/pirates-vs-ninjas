@@ -22,9 +22,26 @@ namespace MapEditor
         string lastLayerName = "foreground";
         string lastObjectDefName = "greenblock";
 
+        // Dictionary<uint, string> objectList = new Dictionary<uint, string>();
+        BindingList<KeyValuePair<uint, string>> objectList = new BindingList<KeyValuePair<uint, string>>();
+        BindingSource objectListDataSource = null;
+
         public Editor()
         {
             InitializeComponent();
+
+            lstObjects.DisplayMember = "Value";
+            lstObjects.ValueMember = "Key";
+
+            objectListDataSource = new BindingSource(objectList, null);
+
+            RebindData();
+        }
+
+        public void RebindData()
+        {
+            lstObjects.DataSource = null;
+            lstObjects.DataSource = objectListDataSource;
         }
 
         private void OnTick(object sender, EventArgs e)
@@ -56,31 +73,13 @@ namespace MapEditor
         {
             return GameWorld.GetInstance().GetEditor().GetPropSelection();
         }
-
-        private TreeNode GetObjectNodeOfSelectedObject()
-        {
-            Object selection = GetSelectedObject();
-            if (selection == null)
-                return null;
-            
-            TreeNode[] nodes = treeObjects.Nodes.Find(selection.GetID().ToString(), true);
-            Debug.Assert(nodes.Length <= 1);
-            if (nodes.Length != 1)
-                return null;
-            
-            return nodes[0];
-        }
-
-        private void UpdateObjectList()
-        {
-            SyncObjectListWithGame();
-        }
-
+        
         private void UpdateIfPaused()
         {
             if (GameWorld.GetInstance().GetEditor().GetPropObjectsChanged())
             {
-                UpdateObjectList();
+                RebindData();
+                SyncObjectListWithGame();
             }
         }
 
@@ -138,15 +137,18 @@ namespace MapEditor
             GameWorld world = GameWorld.GetInstance();
             ObjectVector objects = world.GetObjects();
 
-            treeObjects.BeginUpdate();
+            lstObjects.BeginUpdate();
+
+            List<KeyValuePair<uint, string>> keysToRemove = new List<KeyValuePair<uint, string>>();
 
             // 1) remove anything that's no longer present
-            foreach (TreeNode node in treeObjects.Nodes) {
-                bool found = true;
+            foreach (KeyValuePair<uint, string> kvp in objectList)
+            {
+                bool found = false;
 
                 foreach (Object obj in objects)
                 {
-                    if (node.Name == obj.GetID().ToString())
+                    if (kvp.Key == obj.GetID())
                     {
                         found = true;
                         break;
@@ -156,30 +158,42 @@ namespace MapEditor
                 if (found)
                     continue;
 
-                treeObjects.Nodes.Remove(node);
+                keysToRemove.Add(kvp);
+            }
+
+            foreach (KeyValuePair<uint, string> key in keysToRemove)
+            {
+                objectList.Remove(key);
             }
 
             // 2) add anything that needs to be added
             foreach (Object obj in objects)
             {
-                string id = obj.GetID().ToString();
+                bool found = false;
+                foreach (KeyValuePair<uint,string> kvp in objectList)
+                {
+                    if (kvp.Key == obj.GetID())
+                    {
+                        found = true;
+                        break;
+                    }
+                }
 
-                TreeNode[] nodes = treeObjects.Nodes.Find(id, true);
-                Debug.Assert(nodes.Length <= 1);
-                if (nodes.Length == 1)
+                if (found)
                     continue;
 
-                treeObjects.Nodes.Add(id, obj.GetObjectDefName());
+                objectList.Add(new KeyValuePair < uint, string > (obj.GetID(), obj.GetObjectDefName()));
             }
 
-            treeObjects.EndUpdate();
+            lstObjects.EndUpdate();
 
-            // 3) update object list with currently selected object
-            treeObjects.SelectedNode = GetObjectNodeOfSelectedObject();
-
-            // 4) update layer list with layer this object is currently on
             Object selection = GetSelectedObject();
-            if (selection != null) {
+            if (selection != null)
+            {
+                // 3) update object list with currently selected object
+                lstObjects.SelectedValue = selection.GetID();
+
+                // 4) update layer list with layer this object is currently on
                 lstLayers.SelectedIndex = lstLayers.FindString(selection.GetLayer().GetName());
             }
         }
@@ -215,7 +229,7 @@ namespace MapEditor
 
             lstLayers.Enabled = paused;
             lstObjectDefs.Enabled = paused;
-            treeObjects.Enabled = paused;
+            lstObjects.Enabled = paused;
 
             if (paused)
             {
@@ -247,11 +261,12 @@ namespace MapEditor
 
         private void treeObjects_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            TreeNode selected = treeObjects.SelectedNode;
+            // TreeNode selected = treeObjects.SelectedNode;
             Object obj = null;
             try
             {
-                obj = GameWorld.GetInstance().FindObjectByID(uint.Parse(selected.Name));
+                KeyValuePair<uint,string> kvp = (KeyValuePair < uint, string > )lstObjects.SelectedValue;
+                obj = GameWorld.GetInstance().FindObjectByID(kvp.Key);
             }
             catch (System.FormatException) { }
 
