@@ -327,7 +327,7 @@ void GameState::UpdateGlobalInput()
 		WINDOW->Screenshot();
 
 	if (INPUT->KeyOnce(GAMEKEY_TOGGLE_PHYSICS_DISPLAY))
-		SetPhysicsDebugDraw(!GetPhysicsDebugDraw());
+		SetPropPhysicsDebugDraw(!GetPropPhysicsDebugDraw());
 }
 
 //! Update all game status

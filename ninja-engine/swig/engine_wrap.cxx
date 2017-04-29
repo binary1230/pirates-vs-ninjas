@@ -327,6 +327,9 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_engine(SWIG_CSharpStringH
 
 #include <string>
 
+
+#include <stdio.h>
+
 SWIGINTERN std::vector< Object * > *new_std_vector_Sl_Object_Sm__Sg___SWIG_2(int capacity){
         std::vector< Object * >* pv = 0;
         if (capacity >= 0) {
@@ -559,6 +562,14 @@ SWIGINTERN bool std_vector_Sl_ObjectLayer_Sm__Sg__Remove(std::vector< ObjectLaye
         }
         return false;
       }
+
+#define Object_X_get(self_) self_->GetPropX()
+#define Object_X_set(self_, val_) self_->SetPropX(val_)
+  
+
+#define Object_Y_get(self_) self_->GetPropY()
+#define Object_Y_set(self_, val_) self_->SetPropY(val_)
+  
 
 #ifdef __cplusplus
 extern "C" {
@@ -1617,41 +1628,41 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_FreeInstance() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_GetMapEditorEnabled(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameOptions_GetPropMapEditorEnabled(void * jarg1) {
   unsigned int jresult ;
   GameOptions *arg1 = (GameOptions *) 0 ;
   bool result;
   
   arg1 = (GameOptions *)jarg1; 
-  result = (bool)(arg1)->GetMapEditorEnabled();
+  result = (bool)(arg1)->GetPropMapEditorEnabled();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_SetMapEditorEnabled(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_SetPropMapEditorEnabled(void * jarg1, unsigned int jarg2) {
   GameOptions *arg1 = (GameOptions *) 0 ;
   bool arg2 ;
   
   arg1 = (GameOptions *)jarg1; 
   arg2 = jarg2 ? true : false; 
-  (arg1)->SetMapEditorEnabled(arg2);
+  (arg1)->SetPropMapEditorEnabled(arg2);
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_GameOptions_GetFirstMode(void * jarg1) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_GameOptions_GetPropFirstMode(void * jarg1) {
   char * jresult ;
   GameOptions *arg1 = (GameOptions *) 0 ;
   std::string result;
   
   arg1 = (GameOptions *)jarg1; 
-  result = (arg1)->GetFirstMode();
+  result = (arg1)->GetPropFirstMode();
   jresult = SWIG_csharp_string_callback((&result)->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_SetFirstMode(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_SetPropFirstMode(void * jarg1, char * jarg2) {
   GameOptions *arg1 = (GameOptions *) 0 ;
   std::string arg2 ;
   
@@ -1661,7 +1672,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameOptions_SetFirstMode(void * jarg1, char *
     return ;
   }
   (&arg2)->assign(jarg2); 
-  (arg1)->SetFirstMode(arg2);
+  (arg1)->SetPropFirstMode(arg2);
 }
 
 
@@ -2178,25 +2189,25 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_FreeInstance() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_GetAllowExiting(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_GetPropAllowExiting(void * jarg1) {
   unsigned int jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
   bool result;
   
   arg1 = (GameWorld *)jarg1; 
-  result = (bool)(arg1)->GetAllowExiting();
+  result = (bool)(arg1)->GetPropAllowExiting();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetAllowExiting(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetPropAllowExiting(void * jarg1, unsigned int jarg2) {
   GameWorld *arg1 = (GameWorld *) 0 ;
   bool arg2 ;
   
   arg1 = (GameWorld *)jarg1; 
   arg2 = jarg2 ? true : false; 
-  (arg1)->SetAllowExiting(arg2);
+  (arg1)->SetPropAllowExiting(arg2);
 }
 
 
@@ -2588,6 +2599,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_ShowText__SWIG_2(void * jarg1, char
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_FindObjectByID(void * jarg1, unsigned long jarg2) {
+  void * jresult ;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  unsigned long arg2 ;
+  Object *result = 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  arg2 = (unsigned long)jarg2; 
+  result = (Object *)(arg1)->FindObjectByID(arg2);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetCamera(void * jarg1) {
   void * jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -2836,25 +2861,25 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_GameState(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameState_GetPhysicsDebugDraw(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameState_GetPropPhysicsDebugDraw(void * jarg1) {
   unsigned int jresult ;
   GameState *arg1 = (GameState *) 0 ;
   bool result;
   
   arg1 = (GameState *)jarg1; 
-  result = (bool)(arg1)->GetPhysicsDebugDraw();
+  result = (bool)(arg1)->GetPropPhysicsDebugDraw();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SetPhysicsDebugDraw(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SetPropPhysicsDebugDraw(void * jarg1, unsigned int jarg2) {
   GameState *arg1 = (GameState *) 0 ;
   bool arg2 ;
   
   arg1 = (GameState *)jarg1; 
   arg2 = jarg2 ? true : false; 
-  (arg1)->SetPhysicsDebugDraw(arg2);
+  (arg1)->SetPropPhysicsDebugDraw(arg2);
 }
 
 
@@ -3368,28 +3393,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ClearProperties(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_tmp_debug_flag_set(void * jarg1, int jarg2) {
-  Object *arg1 = (Object *) 0 ;
-  int arg2 ;
-  
-  arg1 = (Object *)jarg1; 
-  arg2 = (int)jarg2; 
-  if (arg1) (arg1)->tmp_debug_flag = arg2;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_Object_tmp_debug_flag_get(void * jarg1) {
-  int jresult ;
-  Object *arg1 = (Object *) 0 ;
-  int result;
-  
-  arg1 = (Object *)jarg1; 
-  result = (int) ((arg1)->tmp_debug_flag);
-  jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_debug_draw_bounding_boxes_set(unsigned int jarg1) {
   bool arg1 ;
   
@@ -3408,41 +3411,13 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_debug_draw_bounding_boxes_get(
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_debug_object_id_set(unsigned long jarg1) {
-  unsigned long arg1 ;
-  
-  arg1 = (unsigned long)jarg1; 
-  Object::debug_object_id = arg1;
-}
-
-
-SWIGEXPORT unsigned long SWIGSTDCALL CSharp_Object_debug_object_id_get() {
-  unsigned long jresult ;
-  unsigned long result;
-  
-  result = (unsigned long)Object::debug_object_id;
-  jresult = (unsigned long)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_unique_id_set(void * jarg1, unsigned long jarg2) {
-  Object *arg1 = (Object *) 0 ;
-  unsigned long arg2 ;
-  
-  arg1 = (Object *)jarg1; 
-  arg2 = (unsigned long)jarg2; 
-  if (arg1) (arg1)->unique_id = arg2;
-}
-
-
-SWIGEXPORT unsigned long SWIGSTDCALL CSharp_Object_unique_id_get(void * jarg1) {
+SWIGEXPORT unsigned long SWIGSTDCALL CSharp_Object_GetID(void * jarg1) {
   unsigned long jresult ;
   Object *arg1 = (Object *) 0 ;
   unsigned long result;
   
   arg1 = (Object *)jarg1; 
-  result = (unsigned long) ((arg1)->unique_id);
+  result = (unsigned long)((Object const *)arg1)->GetID();
   jresult = (unsigned long)result; 
   return jresult;
 }
@@ -3674,25 +3649,25 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_DrawAtOffset__SWIG_1(void * jarg1, int
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetX(void * jarg1) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetPropX(void * jarg1) {
   int jresult ;
   Object *arg1 = (Object *) 0 ;
   int result;
   
   arg1 = (Object *)jarg1; 
-  result = (int)((Object const *)arg1)->GetX();
+  result = (int)((Object const *)arg1)->GetPropX();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetY(void * jarg1) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetPropY(void * jarg1) {
   int jresult ;
   Object *arg1 = (Object *) 0 ;
   int result;
   
   arg1 = (Object *)jarg1; 
-  result = (int)((Object const *)arg1)->GetY();
+  result = (int)((Object const *)arg1)->GetPropY();
   jresult = result; 
   return jresult;
 }
@@ -3710,23 +3685,23 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_GetXY(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetX(void * jarg1, int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetPropX(void * jarg1, int jarg2) {
   Object *arg1 = (Object *) 0 ;
   int arg2 ;
   
   arg1 = (Object *)jarg1; 
   arg2 = (int)jarg2; 
-  (arg1)->SetX(arg2);
+  (arg1)->SetPropX(arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetY(void * jarg1, int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetPropY(void * jarg1, int jarg2) {
   Object *arg1 = (Object *) 0 ;
   int arg2 ;
   
   arg1 = (Object *)jarg1; 
   arg2 = (int)jarg2; 
-  (arg1)->SetY(arg2);
+  (arg1)->SetPropY(arg2);
 }
 
 
@@ -4194,6 +4169,50 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_CreateObject(char * jarg1) {
   (&arg1)->assign(jarg1); 
   result = (Object *)Object::CreateObject(arg1);
   jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_X_set(void * jarg1, int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  Object_X_set(arg1,arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_X_get(void * jarg1) {
+  int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  int result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (int)Object_X_get(arg1);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_Y_set(void * jarg1, int jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  int arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (int)jarg2; 
+  Object_Y_set(arg1,arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_Y_get(void * jarg1) {
+  int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  int result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (int)Object_Y_get(arg1);
+  jresult = result; 
   return jresult;
 }
 
@@ -4763,25 +4782,69 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_DeleteCurrentSelection(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Editor_GetSnapToGrid(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Editor_GetPropSnapToGrid(void * jarg1) {
   unsigned int jresult ;
   Editor *arg1 = (Editor *) 0 ;
   bool result;
   
   arg1 = (Editor *)jarg1; 
-  result = (bool)(arg1)->GetSnapToGrid();
+  result = (bool)(arg1)->GetPropSnapToGrid();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetSnapToGrid(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropSnapToGrid(void * jarg1, unsigned int jarg2) {
   Editor *arg1 = (Editor *) 0 ;
   bool arg2 ;
   
   arg1 = (Editor *)jarg1; 
   arg2 = jarg2 ? true : false; 
-  (arg1)->SetSnapToGrid(arg2);
+  (arg1)->SetPropSnapToGrid(arg2);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Editor_GetPropSelection(void * jarg1) {
+  void * jresult ;
+  Editor *arg1 = (Editor *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  result = (Object *)(arg1)->GetPropSelection();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropSelection(void * jarg1, void * jarg2) {
+  Editor *arg1 = (Editor *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  (arg1)->SetPropSelection(arg2);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Editor_GetPropObjectsChanged(void * jarg1) {
+  unsigned int jresult ;
+  Editor *arg1 = (Editor *) 0 ;
+  bool result;
+  
+  arg1 = (Editor *)jarg1; 
+  result = (bool)(arg1)->GetPropObjectsChanged();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropObjectsChanged(void * jarg1, unsigned int jarg2) {
+  Editor *arg1 = (Editor *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetPropObjectsChanged(arg2);
 }
 
 

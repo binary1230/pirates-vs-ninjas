@@ -8,13 +8,12 @@ void ObjectLayer::Draw() {
 	if (!IsVisible())
 		return;
 
-	ObjectListReverseIter rev_iter;
 	Object* obj;
 
 	// ORDER IS IMPORTANT
 	// we draw starting at the end, going to the beginning
 	// things at the end were put there FIRST to be drawn FIRST.
-	for (rev_iter = objects.rbegin(); rev_iter != objects.rend(); ++rev_iter) {
+	for (auto rev_iter = objects.rbegin(); rev_iter != objects.rend(); ++rev_iter) {
 		obj = *rev_iter;
 
 		assert(obj != NULL);

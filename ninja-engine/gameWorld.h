@@ -14,14 +14,8 @@ class Editor;
 class Camera;
 class CameraFollow;
 			
-// note: list is STL's doubly linked list
 typedef list<Object*> ObjectList;
-typedef list<Object*>::const_iterator ObjectConstListIter;
-typedef list<Object*>::reverse_iterator ObjectListReverseIter;
-typedef list<Object*>::const_reverse_iterator ObjectListConstReverseIter;
-
 typedef vector<Object*> ObjectArray;
-typedef vector<Object*>::iterator ObjectArrayIter;
 
 //! Represents a physical simulation (the main game levels)
 class GameWorld : public GameMode {
@@ -185,6 +179,8 @@ class GameWorld : public GameMode {
 			void ShowText(	const char* txt, 
 							const char* avatar_filename = 0, 
 							bool modal_active = false );
+
+			Object * FindObjectByID(unsigned long id);
 
 			inline Camera* GetCamera() { return _camera; }
 

@@ -33,6 +33,7 @@
 %include <std_map.i>
 %include <std_vector.i>
 %include <std_string.i>
+%include <attribute.i>
 
 using namespace std;
 %template(ObjectVector) std::vector<Object*>;
@@ -49,3 +50,7 @@ using namespace std;
 %include "objects/objectPlayer.h"
 %include "objectFactory.h"
 %include "editor.h"
+
+
+%attribute(Object, int, X, GetPropX, SetPropX);
+%attribute(Object, int, Y, GetPropY, SetPropY);

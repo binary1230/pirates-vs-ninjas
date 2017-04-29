@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace MapEditor
 {
@@ -35,13 +37,50 @@ namespace MapEditor
             }
             wasPaused = gameWrapper.Paused;
 
-            chkSnapToGrid.Checked = GameWorld.GetInstance().GetEditor().GetSnapToGrid();
-            chkDrawPhysicsDebug.Checked = GameState.GetInstance().GetPhysicsDebugDraw();
+            chkSnapToGrid.Checked = GameWorld.GetInstance().GetEditor().GetPropSnapToGrid();
+            chkDrawPhysicsDebug.Checked = GameState.GetInstance().GetPropPhysicsDebugDraw();
+
+            if (gameWrapper.Paused)
+            {
+                UpdateIfPaused();
+            }
 
             if (gameWrapper.ShouldExit)
             {
                 FastTimer.Enabled = false;
                 Close();
+            }
+        }
+
+        private Object GetSelectedObject()
+        {
+            return GameWorld.GetInstance().GetEditor().GetPropSelection();
+        }
+
+        private TreeNode GetObjectNodeOfSelectedObject()
+        {
+            Object selection = GetSelectedObject();
+            if (selection == null)
+                return null;
+            
+            TreeNode[] nodes = treeObjects.Nodes.Find(selection.GetID().ToString(), true);
+            Debug.Assert(nodes.Length <= 1);
+            if (nodes.Length != 1)
+                return null;
+            
+            return nodes[0];
+        }
+
+        private void UpdateObjectList()
+        {
+            SyncObjectListWithGame();
+        }
+
+        private void UpdateIfPaused()
+        {
+            if (GameWorld.GetInstance().GetEditor().GetPropObjectsChanged())
+            {
+                UpdateObjectList();
             }
         }
 
@@ -77,18 +116,13 @@ namespace MapEditor
             wasPaused = gameWrapper.Paused;
 
             FastTimer.Enabled = true;
-
-            // hack: force editor window to the front
-            this.WindowState = FormWindowState.Minimized;
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
         }
 
-        private void LoadGameLists()
+        private void LoadStaticGameLists()
         {
             lstObjectDefs.Items.Clear();
-            foreach(string objectDefName in gameWrapper.GetObjectDefNames())
-            {       
+            foreach (string objectDefName in gameWrapper.GetObjectDefNames())
+            {
                 lstObjectDefs.Items.Add(objectDefName);
             }
 
@@ -97,46 +131,62 @@ namespace MapEditor
             {
                 lstLayers.Items.Add(layer);
             }
-
-            LoadObjectsList();
         }
 
-        private void LoadObjectsList()
+        private void SyncObjectListWithGame()
         {
-            treeObjects.Nodes.Clear();
-
             GameWorld world = GameWorld.GetInstance();
             ObjectVector objects = world.GetObjects();
 
             treeObjects.BeginUpdate();
 
-            foreach (Object o in objects)
-            {
-                string def = o.GetObjectDefName();
-                string layername = o.GetLayer().GetName();
+            // 1) remove anything that's no longer present
+            foreach (TreeNode node in treeObjects.Nodes) {
+                bool found = true;
 
-                TreeNode layerNode = null;
-                foreach (TreeNode n in treeObjects.Nodes)
+                foreach (Object obj in objects)
                 {
-                    if (n.Text == layername)
+                    if (node.Name == obj.GetID().ToString())
                     {
-                        layerNode = n;
+                        found = true;
                         break;
                     }
                 }
 
-                if (layerNode == null)
-                    layerNode = treeObjects.Nodes.Add(layername);
+                if (found)
+                    continue;
 
-                layerNode.Nodes.Add(def);
+                treeObjects.Nodes.Remove(node);
+            }
+
+            // 2) add anything that needs to be added
+            foreach (Object obj in objects)
+            {
+                string id = obj.GetID().ToString();
+
+                TreeNode[] nodes = treeObjects.Nodes.Find(id, true);
+                Debug.Assert(nodes.Length <= 1);
+                if (nodes.Length == 1)
+                    continue;
+
+                treeObjects.Nodes.Add(id, obj.GetObjectDefName());
             }
 
             treeObjects.EndUpdate();
+
+            // 3) update object list with currently selected object
+            treeObjects.SelectedNode = GetObjectNodeOfSelectedObject();
+
+            // 4) update layer list with layer this object is currently on
+            Object selection = GetSelectedObject();
+            if (selection != null) {
+                lstLayers.SelectedIndex = lstLayers.FindString(selection.GetLayer().GetName());
+            }
         }
 
         private void btn_GetObjects_Click(object sender, EventArgs e)
         {
-            LoadObjectsList();
+            SyncObjectListWithGame();
         }
 
         private void btn_Create_Click(object sender, EventArgs e)
@@ -169,7 +219,8 @@ namespace MapEditor
 
             if (paused)
             {
-                LoadGameLists();
+                LoadStaticGameLists();
+                SyncObjectListWithGame();
 
                 lstLayers.SelectedIndex = lstLayers.FindString(lastLayerName);
                 lstObjectDefs.SelectedIndex = lstObjectDefs.FindString(lastObjectDefName);
@@ -186,17 +237,44 @@ namespace MapEditor
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            GameState.GetInstance().SetPhysicsDebugDraw(chkDrawPhysicsDebug.Checked);
+            GameState.GetInstance().SetPropPhysicsDebugDraw(chkDrawPhysicsDebug.Checked);
         }
 
         private void chkSnapToGrid_CheckedChanged(object sender, EventArgs e)
         {
-            GameWorld.GetInstance().GetEditor().SetSnapToGrid(chkSnapToGrid.Checked);
+            GameWorld.GetInstance().GetEditor().SetPropSnapToGrid(chkSnapToGrid.Checked);
         }
 
         private void treeObjects_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            
+            TreeNode selected = treeObjects.SelectedNode;
+            Object obj = null;
+            try
+            {
+                obj = GameWorld.GetInstance().FindObjectByID(uint.Parse(selected.Name));
+            }
+            catch (System.FormatException) { }
+
+            UpdatePropertiesUIFromObject(obj);
+        }
+
+        private void UpdatePropertiesUIFromObject(Object obj)
+        {
+            if (obj == null)
+            {
+                return;
+            }
+
+            objectProperties.SelectedObject = obj;
+
+            System.Type objectType = obj.GetType();
+            foreach (MethodInfo methodInfo in objectType.GetMethods(BindingFlags.Public | BindingFlags.Instance))
+            {
+                if (methodInfo.Name.StartsWith("GetProp"))
+                {
+                    
+                }
+            }
         }
     }
 }

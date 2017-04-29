@@ -127,7 +127,6 @@ void Object::Clear() {
 	_dont_draw = false;
 	m_animationMapping.clear();
 	m_bDrawBoundingBox = false;
-	tmp_debug_flag = 0;
 	ClearProperties(properties);
 	is_dead = false;
 	fade_out_time_total = fade_out_time_remaining = 0;
@@ -156,7 +155,7 @@ void Object::Clear() {
 	_physics_body = NULL;
 	debug_flag = false;
 
-	unique_id = Object::debug_object_id++;
+	unique_id = Object::next_object_id++;
 }
 
 bool Object::BaseInit() {
@@ -167,9 +166,6 @@ void Object::ResetVolatileState(VolatileStateLevel level) {}
 
 void Object::Draw() {
 	assert(WORLD != NULL);
-
-	if (tmp_debug_flag)
-		TRACE("DEBUG FLAG!!\n");
 
 	if (_dont_draw)
 		return;
@@ -330,7 +326,7 @@ void Object::BaseShutdown() {
 		PHYSICS->RemoveFromWorld(_physics_body);
 }
 
-unsigned long Object::debug_object_id = 0;
+unsigned long Object::next_object_id = 0;
 
 void Object::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {

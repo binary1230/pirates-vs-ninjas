@@ -26,8 +26,9 @@ void ObjectBackground::Draw() {
 	
 	h = GetHeight();
 	w = GetWidth();
-	x = GetX();
-	y = GetY();
+
+	x = pos.x;
+	y = pos.y;
 	screen_w = (int)WINDOW->Width();
 	screen_h = (int)WINDOW->Height();
 

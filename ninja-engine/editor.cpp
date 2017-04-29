@@ -27,6 +27,8 @@ Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
 	_last_object_def_name = objDefName;
 	_last_layer_name = layerName;
 
+	_ObjectsChanged = true;
+
 	return obj;
 }
 
@@ -59,9 +61,9 @@ void Editor::SnapToGrid(b2Vec2& pos) {
 	uint grid_resolution_x = _grid_resolution;
 	uint grid_resolution_y = _grid_resolution;
 
-	if (_selection) {
-		grid_resolution_x = _selection->GetWidth();
-		grid_resolution_y = _selection->GetHeight();
+	if (_Selection) {
+		grid_resolution_x = _Selection->GetWidth();
+		grid_resolution_y = _Selection->GetHeight();
 
 		if (grid_resolution_x < 1)
 			grid_resolution_x = _grid_resolution;
@@ -75,28 +77,30 @@ void Editor::SnapToGrid(b2Vec2& pos) {
 }
 
 void Editor::UpdateSelectedObjectPosition() {
-	if (!_selection)
+	if (!_Selection)
 		return;
 
 	b2Vec2 layer_pos;
-	MouseToLayerCoords(layer_pos, _selection->GetLayer());
+	MouseToLayerCoords(layer_pos, _Selection->GetLayer());
 
 	if (_SnapToGrid) {
 		SnapToGrid(layer_pos);
 	}
 
-	_selection->SetXY(layer_pos);
+	_Selection->SetXY(layer_pos);
 }
 
 void Editor::SelectObject(Object* obj) {
-	if (_selection) {
-		_selection->SetDrawBounds(false);
+	_ObjectsChanged = true;
+
+	if (_Selection) {
+		_Selection->SetDrawBounds(false);
 	}
 
-	_selection = obj;
+	_Selection = obj;
 
-	if (_selection) {
-		_selection->SetDrawBounds(true, al_map_rgb(255, 255, 0));
+	if (_Selection) {
+		_Selection->SetDrawBounds(true, al_map_rgb(255, 255, 0));
 	}
 }
 
@@ -106,6 +110,8 @@ void Editor::Draw() {
 }
 
 void Editor::CommonUpdate() {
+	_ObjectsChanged = false;
+
 	_pausedChanged = _wasPaused != GAMESTATE->IsPaused();
 	if (_pausedChanged) {
 		FlashText(!_wasPaused ? "paused" : "unpaused");
@@ -143,7 +149,7 @@ void Editor::NoModeUpdate() {
 		return;
 	}
 
-	if (_obj_under_mouse && _obj_under_mouse != _selection)
+	if (_obj_under_mouse && _obj_under_mouse != _Selection)
 		_obj_under_mouse->SetDrawBounds(true);
 
 	if (INPUT->MouseButtonOnce(MOUSE_LEFT_BTN)) {
@@ -157,11 +163,11 @@ void Editor::NoModeUpdate() {
 		}
 	}
 
-	if (_selection && INPUT->RealKeyOnce(ALLEGRO_KEY_DELETE)) {
+	if (_Selection && INPUT->RealKeyOnce(ALLEGRO_KEY_DELETE)) {
 		DeleteCurrentSelection();
 	}
 
-	if (_selection && INPUT->RealKeyOnce(ALLEGRO_KEY_M)) {
+	if (_Selection && INPUT->RealKeyOnce(ALLEGRO_KEY_M)) {
 		_mode = EDITOR_MOVE;
 		FlashText("move mode");
 	}
@@ -183,7 +189,7 @@ void Editor::ResetVolatileLevelState(VolatileStateLevel level) {
 
 void Editor::UpdateMove() {
 	assert(_mode == EDITOR_MOVE);
-	assert(_selection);
+	assert(_Selection);
 
 	UpdateSelectedObjectPosition();
 
@@ -220,7 +226,7 @@ Object* Editor::GetObjectUnderCursor() {
 
 void Editor::SetDrawBoundingBoxes_AllObjects(bool should_draw) {
 	for (Object*& obj : WORLD->_objects) {
-		if (obj != _selection)
+		if (obj != _Selection)
 			obj->SetDrawBounds(false);
 	}
 }
@@ -244,20 +250,22 @@ void Editor::Update() {
 }
 
 void Editor::DeleteCurrentSelection() {
-	if (!_selection)
+	if (!_Selection)
 		return;
 
-	_selection->SetIsDead(true);
+	_ObjectsChanged = true;
+
+	_Selection->SetIsDead(true);
 	SelectObject(NULL);
 
 	WORLD->RemoveDeadObjectsIfNeeded();
 }
 
 Editor::Editor() {
-	_selection = NULL;
+	_Selection = NULL;
 	_grid_resolution = 30;
 	_SnapToGrid = false;
-	WORLD->SetAllowExiting(false);
+	WORLD->SetPropAllowExiting(false);
 	_mode = EDITOR_NONE;
 	_wasPaused = GAMESTATE->IsPaused();
 	_pausedChanged = false;

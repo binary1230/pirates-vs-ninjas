@@ -16,7 +16,6 @@ enum EditorMode {
 //! A helper component for working in map editor mode
 class Editor {
 	protected:
-		Object* _selection;
 		uint _grid_resolution;
 
 		string _last_object_def_name;
@@ -65,6 +64,10 @@ class Editor {
 		void DeleteCurrentSelection();
 		
 		CREATE_PROPERTY(bool, SnapToGrid)
+		CREATE_PROPERTY(Object*, Selection)
+
+		// helpers for UI *only*
+		CREATE_PROPERTY(bool, ObjectsChanged)
 };
 
 #endif // MAP_EDITOR_H

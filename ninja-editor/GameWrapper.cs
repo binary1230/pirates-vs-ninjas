@@ -28,8 +28,8 @@ namespace MapEditor
             GameOptions.CreateInstance();
             GameOptions options = GameOptions.GetInstance();
 
-            options.SetMapEditorEnabled(true);
-            options.SetFirstMode(mapname);
+            options.SetPropMapEditorEnabled(true);
+            options.SetPropFirstMode(mapname);
 
             if (!game.Init(0, null))
                 return false;

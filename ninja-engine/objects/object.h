@@ -187,7 +187,6 @@ class Object {
 		//! When set to -1, this value is ignored
 		int display_time;
 
-		// XML Props, rarely ever used.
 		std::string objectDefName;
 
 		// -- UNUSUED BELOW --
@@ -246,22 +245,20 @@ class Object {
 
 		// loading-only paramaters
 		AnimationMapping m_animationMapping;
+
+		// A unqiue ID that is incremented every time an object is created.  
+		static unsigned long next_object_id;
+		unsigned long unique_id;
 	
 	public:
 		// WRONG Protected constructor, this means we can't directly
 		// instantiate Object's, we need to use a friend or derived class.
 		Object();
 
-		int tmp_debug_flag;
-
 		// Whether to draw ALL the different rectangles or not (DEBUG)
 		static bool debug_draw_bounding_boxes;
-		
-		// DEBUG ONLY: A unqiue ID that is incremented every time an object
-		// is created.  The amount of created objects should match the amount
-		// of free'd objects.
-		static unsigned long debug_object_id;
-		unsigned long unique_id;
+
+		inline unsigned long GetID() const { return unique_id; }
 
 		virtual bool Init() = 0;
 		virtual void Shutdown() = 0;
@@ -300,12 +297,12 @@ class Object {
 		void DrawAtOffset(int x, int y, Sprite* = NULL);	
 		
 		//! Functions to get/set position
-		inline int GetX() const				{ return (int)pos.x; }
-		inline int GetY() const				{ return (int)pos.y; }
+		inline int GetPropX() const				{ return (int)pos.x; }
+		inline int GetPropY() const				{ return (int)pos.y; }
 		inline b2Vec2 GetXY() const { return pos; }; 
 
-		inline void SetX(const int _x) { SetXY(b2Vec2(_x, pos.y)); }
-		inline void SetY(const int _y) { SetXY(b2Vec2(pos.x, _y)); }
+		inline void SetPropX(const int _x) { SetXY(b2Vec2(_x, pos.y)); }
+		inline void SetPropY(const int _y) { SetXY(b2Vec2(pos.x, _y)); }
 		inline void SetXY(const int _x, const int _y) {
 			SetXY(b2Vec2(_x, _y));
 		}

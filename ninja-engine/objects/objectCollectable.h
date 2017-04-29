@@ -2,6 +2,7 @@
 #define COLLECTABLE_OBJECT_H
 
 #include "object.h"
+#include "globals.h"
 
 class GameState;
 class ObjectFactory;

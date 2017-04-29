@@ -43,11 +43,13 @@ void CameraFollow::SetCameraShake(bool state, int fadeout_time) {
 void CameraFollow::ComputeNewPosition() {
 	assert(m_pkCameraLookatTarget != NULL);
 
-	int ox = m_pkCameraLookatTarget->GetX();
+	b2Vec2 object_pos = m_pkCameraLookatTarget->GetXY();
+
+	int ox = object_pos.x;
 	int ow = m_pkCameraLookatTarget->GetWidth();
 	int sw = WINDOW->Width();
 
-	int oy = m_pkCameraLookatTarget->GetY();
+	int oy = object_pos.y;
 	int oh = m_pkCameraLookatTarget->GetHeight();
 	int sh = WINDOW->Height();
 
@@ -120,22 +122,24 @@ void CameraFollow::SnapCamera() {
 
 	assert(m_pkCameraLookatTarget);
 
+	b2Vec2 object_pos = m_pkCameraLookatTarget->GetXY();
+
 	// center the camera on this object
 	pos.x = int(
 		(
-			float(m_pkCameraLookatTarget->GetX()) +
+			float(object_pos.x) +
 			(float(m_pkCameraLookatTarget->GetWidth()) / 2.0f)
 			) - (
 			(float(WINDOW->Height()) / 2.0f)
-				));
+		));
 
 	pos.y = int(
 		(
-			float(m_pkCameraLookatTarget->GetY()) +
+			float(object_pos.y) +
 			(float(m_pkCameraLookatTarget->GetHeight()) / 2.0f)
 			) - (
 			(float(WINDOW->Width()) / 2.0f)
-				));
+		));
 }
 
 CameraFollow::CameraFollow(Object* follow_target)

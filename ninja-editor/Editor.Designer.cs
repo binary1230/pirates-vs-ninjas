@@ -119,7 +119,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.chkSnapToGrid);
             this.groupBox1.Controls.Add(this.chkDrawPhysicsDebug);
-            this.groupBox1.Location = new System.Drawing.Point(522, 9);
+            this.groupBox1.Location = new System.Drawing.Point(518, 9);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(169, 100);
             this.groupBox1.TabIndex = 7;
@@ -175,7 +175,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(703, 328);
+            this.ClientSize = new System.Drawing.Size(699, 328);
             this.Controls.Add(this.objectProperties);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lstLayers);

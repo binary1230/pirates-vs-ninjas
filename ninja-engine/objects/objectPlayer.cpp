@@ -305,17 +305,20 @@ void ObjectPlayer::DropBombsIfNeeded()
 	float sign = flip_x ? -1 : 1;
 	float strength = 0.8f;
 
+	b2Vec2 ball_pos = objBall->GetXY();
+
 	if (GetInput(PLAYERKEY_UP, controller_num)) {
-		objBall->SetY(objBall->GetY() + 40);
+		ball_pos.y += 40;
 		objBall->ApplyImpulse(0.0f, strength*0.2f);
-	}
-	else if (GetInput(PLAYERKEY_DOWN, controller_num) && !m_kCurrentCollision.down) {
-		objBall->SetY(objBall->GetY() - 40);
+	} else if (GetInput(PLAYERKEY_DOWN, controller_num) && !m_kCurrentCollision.down) {
+		ball_pos.y -= 40;
 		objBall->ApplyImpulse(0.0f, -strength*0.2f);
 	} else {
-		objBall->SetX(objBall->GetX() + (20 * sign));
+		ball_pos.x += (20 * sign);
 		objBall->ApplyImpulse(GetVelX()*0.01f + sign * strength * 0.3f, 0.0f);
 	}
+
+	objBall->SetXY(ball_pos);
 }
 
 void ObjectPlayer::ScreenBoundsConstraint() {

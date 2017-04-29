@@ -130,13 +130,15 @@ Object* EffectsManager::TriggerEffect(const Object* triggeringObject, std::strin
 	if (!obj)
 		return false;
 
+	b2Vec2 object_pos = triggeringObject->GetXY();
+
 	if (effect->center_x_on_target)
-		obj->SetX(int(triggeringObject->GetX() +
+		obj->SetPropX(int(object_pos.x +
 		(float(triggeringObject->GetWidth()) / 2.0f) -
 			(float(obj->GetWidth()) / 2.0f)));
 
 	if (effect->center_y_on_target)
-		obj->SetY(int(triggeringObject->GetY() +
+		obj->SetPropY(int(object_pos.y +
 		(float(triggeringObject->GetHeight()) / 2.0f) -
 			(float(obj->GetHeight()) / 2.0f)));
 

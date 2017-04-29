@@ -48,6 +48,11 @@ void GameWorld::ShowText(	const char* txt,
 	AddObject(obj);
 }
 
+Object* GameWorld::FindObjectByID(unsigned long id) {
+	auto it = find_if(_objects.begin(), _objects.end(), [id](Object* obj) { return obj->GetID() == id; });
+	return it == _objects.end() ? nullptr : *it;
+}
+
 void GameWorld::Clear() {
 	is_loading = false;
 	map_editor = NULL;
@@ -71,7 +76,7 @@ void GameWorld::Clear() {
 }
 
 int GameWorld::Init(XMLNode /*unused*/) {
-	if (OPTIONS->GetMapEditorEnabled())
+	if (OPTIONS->GetPropMapEditorEnabled())
 		map_editor = new Editor();
 
 	OBJECT_FACTORY->CreateInstance();

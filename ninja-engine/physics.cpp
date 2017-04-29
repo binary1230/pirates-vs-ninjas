@@ -69,7 +69,7 @@ void PhysicsManager::Shutdown()
 
 void PhysicsManager::Draw()
 {
-	if (GAMESTATE->GetPhysicsDebugDraw())
+	if (GAMESTATE->GetPropPhysicsDebugDraw())
 		m_pkPhysicsWorld->DrawDebugData();
 }
 
