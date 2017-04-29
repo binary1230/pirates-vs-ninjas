@@ -35,6 +35,7 @@ Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
 void Editor::CreateAndSelectObject(const char* objDefName, const char* layerName) {
 	_mode = EDITOR_MOVE;
 	_should_create_another_copy_after_move = true;
+	_should_delete_selection_after_move_done = true;
 
 	Object* obj = CreateObject(objDefName, layerName);
 
@@ -83,11 +84,33 @@ void Editor::UpdateSelectedObjectPosition() {
 	b2Vec2 layer_pos;
 	MouseToLayerCoords(layer_pos, _Selection->GetLayer());
 
+	float speed = 1.0f;
+
+	if (INPUT->RealKey(ALLEGRO_KEY_LSHIFT)) {
+		speed = 10.0f;
+	}
+
+	if (INPUT->RealKey(ALLEGRO_KEY_UP)) {
+		offset_change.y += speed;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_DOWN)) {
+		offset_change.y -= speed;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_RIGHT)) {
+		offset_change.x += speed;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_LEFT)) {
+		offset_change.x -= speed;
+	}
+	if (INPUT->RealKeyOnce(ALLEGRO_KEY_SPACE)) {
+		offset_change = b2Vec2(0, 0);
+	}
+
 	if (_SnapToGrid) {
 		SnapToGrid(layer_pos);
 	}
 
-	_Selection->SetXY(layer_pos);
+	_Selection->SetXY(layer_pos + offset_change);
 }
 
 void Editor::SelectObject(Object* obj) {
@@ -170,6 +193,7 @@ void Editor::NoModeUpdate() {
 
 	if (_Selection && INPUT->RealKeyOnce(ALLEGRO_KEY_M)) {
 		_mode = EDITOR_MOVE;
+		_should_delete_selection_after_move_done = false;
 		FlashText("move mode");
 	}
 
@@ -194,21 +218,27 @@ void Editor::UpdateMove() {
 
 	UpdateSelectedObjectPosition();
 
-	if (GAMESTATE->IsPaused() && INPUT->MouseButtonOnce(MOUSE_LEFT_BTN)) {
-		_mode = EDITOR_NONE;
+	if (GAMESTATE->IsPaused()) {
+		if (INPUT->MouseButtonOnce(MOUSE_LEFT_BTN) || INPUT->RealKeyOnce(ALLEGRO_KEY_ENTER)) {
+			_mode = EDITOR_NONE;
 
-		if (_should_create_another_copy_after_move)
-			CreateAndSelect_UsePreviousLayerAndObject();
+			if (_should_create_another_copy_after_move)
+				CreateAndSelect_UsePreviousLayerAndObject();
+		}
 	}
 
-	bool endMode =	INPUT->RealKeyOnce(ALLEGRO_KEY_ESCAPE) || 
+	bool endMode =	INPUT->RealKeyOnce(ALLEGRO_KEY_ESCAPE)	|| 
 					INPUT->MouseButtonOnce(MOUSE_RIGHT_BTN) ||
 					(_pausedChanged && !GAMESTATE->IsPaused());
 
 	if (endMode) {
-		DeleteCurrentSelection();
+		if (_should_delete_selection_after_move_done) {
+			DeleteCurrentSelection();
+		}
+		SelectObject(nullptr);
 		_mode = EDITOR_NONE;
 		_should_create_another_copy_after_move = false;
+		_should_delete_selection_after_move_done = true;
 	}
 }
 
@@ -272,6 +302,8 @@ Editor::Editor() {
 	_pausedChanged = false;
 	_obj_under_mouse = NULL;
 
+	offset_change = b2Vec2(0.0f, 0.0f);
+
 	_should_create_another_copy_after_move = false;
 
 	_text_time_remaining = 0;
@@ -279,6 +311,8 @@ Editor::Editor() {
 
 	_ObjectsChanged = false;
 	_SelectedObjectChanged = false;
+
+	_should_delete_selection_after_move_done = false;
 }
 
 Editor::~Editor() {}

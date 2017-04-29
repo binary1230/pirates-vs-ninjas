@@ -30,8 +30,11 @@ class Editor {
 		bool _pausedChanged;
 
 		bool _should_create_another_copy_after_move;
+		bool _should_delete_selection_after_move_done;
 
 		Object* _obj_under_mouse;
+
+		b2Vec2 offset_change; // offset in move mode when using keys
 
 	public:
 		Editor();

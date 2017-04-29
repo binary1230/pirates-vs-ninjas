@@ -190,6 +190,12 @@ void Input::UpdateKeyReleases() {
 // Only use this for map editor/etc.  It WON'T be tracked for demos
 // ------------------------------------------------
 
+bool Input::RealKey(uint iKeyNum) const {
+	ALLEGRO_KEYBOARD_STATE key_state;
+	al_get_keyboard_state(&key_state);
+	return al_key_down(&key_state, iKeyNum);
+}
+
 bool Input::CheckRealKeyOnce(uint iKeyNum) const {
 	ALLEGRO_KEYBOARD_STATE key_state;
 	al_get_keyboard_state(&key_state);

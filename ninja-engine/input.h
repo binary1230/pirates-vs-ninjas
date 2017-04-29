@@ -271,6 +271,7 @@ class Input {
 		bool CheckRealKeyOnce(uint iKeyNum) const;
 		void HandleRealKeyOnce(uint iKeyNum);
 		bool RealKeyOnce(uint iKeyNum);
+		bool RealKey(uint iKeyNum) const;
 		
 		bool MouseButtonOnce(MouseClickType t);
 		void HandleMouseButtonOnce(MouseClickType t);
