@@ -115,18 +115,21 @@ void Editor::UpdateSelectedObjectPosition() {
 }
 
 void Editor::SelectObject(Object* obj) {
+	if (obj == _Selection)
+		return;
+
 	if (_Selection) {
 		_Selection->SetDrawBounds(false);
 	}
-
-	if (_ui)
-		_ui->OnSelectionChanged(obj);
 
 	_Selection = obj;
 
 	if (_Selection) {
 		_Selection->SetDrawBounds(true, al_map_rgb(255, 255, 0));
 	}
+
+	if (_ui)
+		_ui->OnSelectionChanged(_Selection);
 }
 
 void Editor::Draw() {

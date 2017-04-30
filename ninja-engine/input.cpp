@@ -738,7 +738,7 @@ void Input::BeginPlayback()	{
 	if (!demofile) {
 		TRACE(	"InputPlayback: ERROR InitPlayback() not called yet!\n");
 		return;
-	}	
+	}
 
 	frame_counter = 0;
 }
