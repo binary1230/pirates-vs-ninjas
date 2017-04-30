@@ -114,6 +114,9 @@ void Editor::UpdateSelectedObjectPosition() {
 }
 
 void Editor::SelectObject(Object* obj) {
+	if (obj == _Selection)
+		return;
+
 	_SelectedObjectChanged = true;
 
 	if (_Selection) {

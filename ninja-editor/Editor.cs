@@ -22,7 +22,6 @@ namespace MapEditor
         string lastLayerName = "foreground";
         string lastObjectDefName = "greenblock";
 
-        // Dictionary<uint, string> objectList = new Dictionary<uint, string>();
         BindingList<KeyValuePair<uint, string>> objectList = new BindingList<KeyValuePair<uint, string>>();
         BindingSource objectListDataSource = null;
 
@@ -273,18 +272,16 @@ namespace MapEditor
 
         private void lstObjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Object obj = null;
-            try
+            if (lstObjects.SelectedValue != null)
             {
                 uint object_id = (uint)lstObjects.SelectedValue;
-                obj = GameWorld.GetInstance().FindObjectByID(object_id);
-            }
-            catch (System.FormatException) { }
+                Object obj = GameWorld.GetInstance().FindObjectByID(object_id);
 
-            if (obj != null)
-            {
-                GameWorld.GetInstance().GetEditor().SelectObject(obj);
-                PostSelectionChanged();
+                if (obj != null)
+                {
+                    GameWorld.GetInstance().GetEditor().SelectObject(obj);
+                    PostSelectionChanged();
+                }
             }
         }
 
