@@ -2220,6 +2220,80 @@ public enum EditorMode {
   EDITOR_SELECT
 }
 
+public class EditorBaseUI : global::System.IDisposable {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+  protected bool swigCMemOwn;
+
+  internal EditorBaseUI(global::System.IntPtr cPtr, bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(EditorBaseUI obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+
+  ~EditorBaseUI() {
+    Dispose();
+  }
+
+  public virtual void Dispose() {
+    lock(this) {
+      if (swigCPtr.Handle != global::System.IntPtr.Zero) {
+        if (swigCMemOwn) {
+          swigCMemOwn = false;
+          enginePINVOKE.delete_EditorBaseUI(swigCPtr);
+        }
+        swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+      }
+      global::System.GC.SuppressFinalize(this);
+    }
+  }
+
+  public virtual void OnObjectsChanged() {
+    if (SwigDerivedClassHasMethod("OnObjectsChanged", swigMethodTypes0)) enginePINVOKE.EditorBaseUI_OnObjectsChangedSwigExplicitEditorBaseUI(swigCPtr); else enginePINVOKE.EditorBaseUI_OnObjectsChanged(swigCPtr);
+  }
+
+  public virtual void OnSelectionChanged(Object selected_object) {
+    if (SwigDerivedClassHasMethod("OnSelectionChanged", swigMethodTypes1)) enginePINVOKE.EditorBaseUI_OnSelectionChangedSwigExplicitEditorBaseUI(swigCPtr, Object.getCPtr(selected_object)); else enginePINVOKE.EditorBaseUI_OnSelectionChanged(swigCPtr, Object.getCPtr(selected_object));
+  }
+
+  public EditorBaseUI() : this(enginePINVOKE.new_EditorBaseUI(), true) {
+    SwigDirectorConnect();
+  }
+
+  private void SwigDirectorConnect() {
+    if (SwigDerivedClassHasMethod("OnObjectsChanged", swigMethodTypes0))
+      swigDelegate0 = new SwigDelegateEditorBaseUI_0(SwigDirectorOnObjectsChanged);
+    if (SwigDerivedClassHasMethod("OnSelectionChanged", swigMethodTypes1))
+      swigDelegate1 = new SwigDelegateEditorBaseUI_1(SwigDirectorOnSelectionChanged);
+    enginePINVOKE.EditorBaseUI_director_connect(swigCPtr, swigDelegate0, swigDelegate1);
+  }
+
+  private bool SwigDerivedClassHasMethod(string methodName, global::System.Type[] methodTypes) {
+    global::System.Reflection.MethodInfo methodInfo = this.GetType().GetMethod(methodName, global::System.Reflection.BindingFlags.Public | global::System.Reflection.BindingFlags.NonPublic | global::System.Reflection.BindingFlags.Instance, null, methodTypes, null);
+    bool hasDerivedMethod = methodInfo.DeclaringType.IsSubclassOf(typeof(EditorBaseUI));
+    return hasDerivedMethod;
+  }
+
+  private void SwigDirectorOnObjectsChanged() {
+    OnObjectsChanged();
+  }
+
+  private void SwigDirectorOnSelectionChanged(global::System.IntPtr selected_object) {
+    OnSelectionChanged((selected_object == global::System.IntPtr.Zero) ? null : new Object(selected_object, false));
+  }
+
+  public delegate void SwigDelegateEditorBaseUI_0();
+  public delegate void SwigDelegateEditorBaseUI_1(global::System.IntPtr selected_object);
+
+  private SwigDelegateEditorBaseUI_0 swigDelegate0;
+  private SwigDelegateEditorBaseUI_1 swigDelegate1;
+
+  private static global::System.Type[] swigMethodTypes0 = new global::System.Type[] {  };
+  private static global::System.Type[] swigMethodTypes1 = new global::System.Type[] { typeof(Object) };
+}
+
 public class Editor : global::System.IDisposable {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
@@ -2345,24 +2419,6 @@ public class Editor : global::System.IDisposable {
 
   public void SetPropSelection(Object val) {
     enginePINVOKE.Editor_SetPropSelection(swigCPtr, Object.getCPtr(val));
-  }
-
-  public bool GetPropObjectsChanged() {
-    bool ret = enginePINVOKE.Editor_GetPropObjectsChanged(swigCPtr);
-    return ret;
-  }
-
-  public void SetPropObjectsChanged(bool val) {
-    enginePINVOKE.Editor_SetPropObjectsChanged(swigCPtr, val);
-  }
-
-  public bool GetPropSelectedObjectChanged() {
-    bool ret = enginePINVOKE.Editor_GetPropSelectedObjectChanged(swigCPtr);
-    return ret;
-  }
-
-  public void SetPropSelectedObjectChanged(bool val) {
-    enginePINVOKE.Editor_SetPropSelectedObjectChanged(swigCPtr, val);
   }
 
 }
@@ -3538,6 +3594,27 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_RegisterObjectPrototypes")]
   public static extern void RegisterObjectPrototypes();
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_EditorBaseUI_OnObjectsChanged")]
+  public static extern void EditorBaseUI_OnObjectsChanged(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_EditorBaseUI_OnObjectsChangedSwigExplicitEditorBaseUI")]
+  public static extern void EditorBaseUI_OnObjectsChangedSwigExplicitEditorBaseUI(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_EditorBaseUI_OnSelectionChanged")]
+  public static extern void EditorBaseUI_OnSelectionChanged(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_EditorBaseUI_OnSelectionChangedSwigExplicitEditorBaseUI")]
+  public static extern void EditorBaseUI_OnSelectionChangedSwigExplicitEditorBaseUI(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_EditorBaseUI")]
+  public static extern void delete_EditorBaseUI(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_EditorBaseUI")]
+  public static extern global::System.IntPtr new_EditorBaseUI();
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_EditorBaseUI_director_connect")]
+  public static extern void EditorBaseUI_director_connect(global::System.Runtime.InteropServices.HandleRef jarg1, EditorBaseUI.SwigDelegateEditorBaseUI_0 delegate0, EditorBaseUI.SwigDelegateEditorBaseUI_1 delegate1);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_Editor")]
   public static extern global::System.IntPtr new_Editor();
 
@@ -3606,18 +3683,6 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_SetPropSelection")]
   public static extern void Editor_SetPropSelection(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_GetPropObjectsChanged")]
-  public static extern bool Editor_GetPropObjectsChanged(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_SetPropObjectsChanged")]
-  public static extern void Editor_SetPropObjectsChanged(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_GetPropSelectedObjectChanged")]
-  public static extern bool Editor_GetPropSelectedObjectChanged(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_SetPropSelectedObjectChanged")]
-  public static extern void Editor_SetPropSelectedObjectChanged(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SWIGUpcast")]
   public static extern global::System.IntPtr GameWorld_SWIGUpcast(global::System.IntPtr jarg1);

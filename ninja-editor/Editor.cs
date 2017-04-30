@@ -14,6 +14,19 @@ using System.Diagnostics;
 
 namespace MapEditor
 {
+    public class EditorUI : EditorBaseUI
+    {
+        public override void OnObjectsChanged()
+        {
+            Console.WriteLine("test");
+        }
+
+        public override void OnSelectionChanged(Object new_selection)
+        {
+
+        }
+    }
+
     public partial class Editor : Form
     {
         GameWrapper gameWrapper = new GameWrapper();
@@ -25,6 +38,8 @@ namespace MapEditor
         // Dictionary<uint, string> objectList = new Dictionary<uint, string>();
         BindingList<KeyValuePair<uint, string>> objectList = new BindingList<KeyValuePair<uint, string>>();
         BindingSource objectListDataSource = null;
+
+        public delegate void OnSelected(Object obj);
 
         public Editor()
         {

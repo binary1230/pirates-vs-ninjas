@@ -25,9 +25,14 @@
 #include "gameState.h"
 #include "objects/objectPlayer.h"
 #include "objectFactory.h"
+%}
+
+%module(directors="1") editor
+%{
 #include "editor.h"
 %}
 
+%feature("director") EditorBaseUI;
 
 
 %include <std_map.i>

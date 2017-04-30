@@ -16,6 +16,7 @@
 #define SWIGCSHARP
 #endif
 
+#define SWIG_DIRECTORS
 
 
 #ifdef __cplusplus
@@ -301,6 +302,67 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_engine(SWIG_CSharpStringH
 
 #define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, msg, ""); return nullreturn; } else
 
+/* -----------------------------------------------------------------------------
+ * director_common.swg
+ *
+ * This file contains support for director classes which is common between
+ * languages.
+ * ----------------------------------------------------------------------------- */
+
+/*
+  Use -DSWIG_DIRECTOR_STATIC if you prefer to avoid the use of the
+  'Swig' namespace. This could be useful for multi-modules projects.
+*/
+#ifdef SWIG_DIRECTOR_STATIC
+/* Force anonymous (static) namespace */
+#define Swig
+#endif
+/* -----------------------------------------------------------------------------
+ * director.swg
+ *
+ * This file contains support for director classes so that C# proxy
+ * methods can be called from C++.
+ * ----------------------------------------------------------------------------- */
+
+#if defined(DEBUG_DIRECTOR_OWNED)
+#include <iostream>
+#endif
+#include <string>
+#include <exception>
+
+namespace Swig {
+  /* Director base class - not currently used in C# directors */
+  class Director {
+  };
+
+  /* Base class for director exceptions */
+  class DirectorException : public std::exception {
+  protected:
+    std::string swig_msg;
+
+  public:
+    DirectorException(const char *msg) : swig_msg(msg) {
+    }
+
+    DirectorException(const std::string &msg) : swig_msg(msg) {
+    }
+
+    virtual ~DirectorException() throw() {
+    }
+
+    const char *what() const throw() {
+      return swig_msg.c_str();
+    }
+  };
+
+  /* Pure virtual method exception */
+  class DirectorPureVirtualException : public DirectorException {
+  public:
+    DirectorPureVirtualException(const char *msg) : DirectorException(std::string("Attempt to invoke pure virtual method ") + msg) {
+    }
+  };
+}
+
 
 #include "globals.h"
 #include "gameOptions.h"
@@ -309,6 +371,8 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_engine(SWIG_CSharpStringH
 #include "gameState.h"
 #include "objects/objectPlayer.h"
 #include "objectFactory.h"
+
+
 #include "editor.h"
 
 
@@ -570,6 +634,54 @@ SWIGINTERN bool std_vector_Sl_ObjectLayer_Sm__Sg__Remove(std::vector< ObjectLaye
 #define Object_Y_get(self_) self_->GetPropY()
 #define Object_Y_set(self_, val_) self_->SetPropY(val_)
   
+
+
+/* ---------------------------------------------------
+ * C++ director class methods
+ * --------------------------------------------------- */
+
+#include "engine_wrap.h"
+
+SwigDirector_EditorBaseUI::SwigDirector_EditorBaseUI() : EditorBaseUI(), Swig::Director() {
+  swig_init_callbacks();
+}
+
+void SwigDirector_EditorBaseUI::OnObjectsChanged() {
+  if (!swig_callbackOnObjectsChanged) {
+    EditorBaseUI::OnObjectsChanged();
+    return;
+  } else {
+    swig_callbackOnObjectsChanged();
+  }
+}
+
+void SwigDirector_EditorBaseUI::OnSelectionChanged(Object *selected_object) {
+  void * jselected_object = 0 ;
+  
+  if (!swig_callbackOnSelectionChanged) {
+    EditorBaseUI::OnSelectionChanged(selected_object);
+    return;
+  } else {
+    jselected_object = (void *) selected_object; 
+    swig_callbackOnSelectionChanged(jselected_object);
+  }
+}
+
+SwigDirector_EditorBaseUI::~SwigDirector_EditorBaseUI() {
+  
+}
+
+
+void SwigDirector_EditorBaseUI::swig_connect_director(SWIG_Callback0_t callbackOnObjectsChanged, SWIG_Callback1_t callbackOnSelectionChanged) {
+  swig_callbackOnObjectsChanged = callbackOnObjectsChanged;
+  swig_callbackOnSelectionChanged = callbackOnSelectionChanged;
+}
+
+void SwigDirector_EditorBaseUI::swig_init_callbacks() {
+  swig_callbackOnObjectsChanged = 0;
+  swig_callbackOnSelectionChanged = 0;
+}
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -4586,6 +4698,69 @@ SWIGEXPORT void SWIGSTDCALL CSharp_RegisterObjectPrototypes() {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_OnObjectsChanged(void * jarg1) {
+  EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
+  
+  arg1 = (EditorBaseUI *)jarg1; 
+  (arg1)->OnObjectsChanged();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_OnObjectsChangedSwigExplicitEditorBaseUI(void * jarg1) {
+  EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
+  
+  arg1 = (EditorBaseUI *)jarg1; 
+  (arg1)->EditorBaseUI::OnObjectsChanged();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_OnSelectionChanged(void * jarg1, void * jarg2) {
+  EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  
+  arg1 = (EditorBaseUI *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  (arg1)->OnSelectionChanged(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_OnSelectionChangedSwigExplicitEditorBaseUI(void * jarg1, void * jarg2) {
+  EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  
+  arg1 = (EditorBaseUI *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  (arg1)->EditorBaseUI::OnSelectionChanged(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_EditorBaseUI(void * jarg1) {
+  EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
+  
+  arg1 = (EditorBaseUI *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_EditorBaseUI() {
+  void * jresult ;
+  EditorBaseUI *result = 0 ;
+  
+  result = (EditorBaseUI *)new SwigDirector_EditorBaseUI();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_director_connect(void *objarg, SwigDirector_EditorBaseUI::SWIG_Callback0_t callback0, SwigDirector_EditorBaseUI::SWIG_Callback1_t callback1) {
+  EditorBaseUI *obj = (EditorBaseUI *)objarg;
+  SwigDirector_EditorBaseUI *director = dynamic_cast<SwigDirector_EditorBaseUI *>(obj);
+  if (director) {
+    director->swig_connect_director(callback0, callback1);
+  }
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_new_Editor() {
   void * jresult ;
   Editor *result = 0 ;
@@ -4823,50 +4998,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropSelection(void * jarg1, void * 
   arg1 = (Editor *)jarg1; 
   arg2 = (Object *)jarg2; 
   (arg1)->SetPropSelection(arg2);
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Editor_GetPropObjectsChanged(void * jarg1) {
-  unsigned int jresult ;
-  Editor *arg1 = (Editor *) 0 ;
-  bool result;
-  
-  arg1 = (Editor *)jarg1; 
-  result = (bool)(arg1)->GetPropObjectsChanged();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropObjectsChanged(void * jarg1, unsigned int jarg2) {
-  Editor *arg1 = (Editor *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (Editor *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  (arg1)->SetPropObjectsChanged(arg2);
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Editor_GetPropSelectedObjectChanged(void * jarg1) {
-  unsigned int jresult ;
-  Editor *arg1 = (Editor *) 0 ;
-  bool result;
-  
-  arg1 = (Editor *)jarg1; 
-  result = (bool)(arg1)->GetPropSelectedObjectChanged();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropSelectedObjectChanged(void * jarg1, unsigned int jarg2) {
-  Editor *arg1 = (Editor *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (Editor *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  (arg1)->SetPropSelectedObjectChanged(arg2);
 }
 
 

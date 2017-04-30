@@ -2700,34 +2700,35 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_CameraFollow swig_types[2]
 #define SWIGTYPE_p_CollisionDirection swig_types[3]
 #define SWIGTYPE_p_Editor swig_types[4]
-#define SWIGTYPE_p_GameMode swig_types[5]
-#define SWIGTYPE_p_GameModeExitInfo swig_types[6]
-#define SWIGTYPE_p_GameOptions swig_types[7]
-#define SWIGTYPE_p_GameState swig_types[8]
-#define SWIGTYPE_p_GameWorld swig_types[9]
-#define SWIGTYPE_p_Object swig_types[10]
-#define SWIGTYPE_p_ObjectFactory swig_types[11]
-#define SWIGTYPE_p_ObjectLayer swig_types[12]
-#define SWIGTYPE_p_ObjectPlayer swig_types[13]
-#define SWIGTYPE_p_ObjectProperties swig_types[14]
-#define SWIGTYPE_p_Sprite swig_types[15]
-#define SWIGTYPE_p_XMLNode swig_types[16]
-#define SWIGTYPE_p__Rect swig_types[17]
-#define SWIGTYPE_p_b2Vec2 swig_types[18]
-#define SWIGTYPE_p_b2WorldManifold swig_types[19]
-#define SWIGTYPE_p_int swig_types[20]
-#define SWIGTYPE_p_listT_Object_p_t swig_types[21]
-#define SWIGTYPE_p_p_char swig_types[22]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[23]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[24]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[25]
-#define SWIGTYPE_p_std__string swig_types[26]
-#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[27]
-#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[28]
-#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[29]
-#define SWIGTYPE_p_unsigned_int swig_types[30]
-static swig_type_info *swig_types[32];
-static swig_module_info swig_module = {swig_types, 31, 0, 0, 0, 0};
+#define SWIGTYPE_p_EditorBaseUI swig_types[5]
+#define SWIGTYPE_p_GameMode swig_types[6]
+#define SWIGTYPE_p_GameModeExitInfo swig_types[7]
+#define SWIGTYPE_p_GameOptions swig_types[8]
+#define SWIGTYPE_p_GameState swig_types[9]
+#define SWIGTYPE_p_GameWorld swig_types[10]
+#define SWIGTYPE_p_Object swig_types[11]
+#define SWIGTYPE_p_ObjectFactory swig_types[12]
+#define SWIGTYPE_p_ObjectLayer swig_types[13]
+#define SWIGTYPE_p_ObjectPlayer swig_types[14]
+#define SWIGTYPE_p_ObjectProperties swig_types[15]
+#define SWIGTYPE_p_Sprite swig_types[16]
+#define SWIGTYPE_p_XMLNode swig_types[17]
+#define SWIGTYPE_p__Rect swig_types[18]
+#define SWIGTYPE_p_b2Vec2 swig_types[19]
+#define SWIGTYPE_p_b2WorldManifold swig_types[20]
+#define SWIGTYPE_p_int swig_types[21]
+#define SWIGTYPE_p_listT_Object_p_t swig_types[22]
+#define SWIGTYPE_p_p_char swig_types[23]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[24]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[25]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[26]
+#define SWIGTYPE_p_std__string swig_types[27]
+#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[28]
+#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[29]
+#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[30]
+#define SWIGTYPE_p_unsigned_int swig_types[31]
+static swig_type_info *swig_types[33];
+static swig_module_info swig_module = {swig_types, 32, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2751,6 +2752,8 @@ typedef struct{} LANGUAGE_OBJ;
 #include "gameState.h"
 #include "objects/objectPlayer.h"
 #include "objectFactory.h"
+
+
 #include "editor.h"
 
 
@@ -11919,6 +11922,125 @@ fail:
 }
 
 
+static int _wrap_EditorBaseUI_OnObjectsChanged(lua_State* L) {
+  int SWIG_arg = 0;
+  EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
+  
+  SWIG_check_num_args("EditorBaseUI::OnObjectsChanged",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("EditorBaseUI::OnObjectsChanged",1,"EditorBaseUI *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_EditorBaseUI,0))){
+    SWIG_fail_ptr("EditorBaseUI_OnObjectsChanged",1,SWIGTYPE_p_EditorBaseUI);
+  }
+  
+  (arg1)->OnObjectsChanged();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_EditorBaseUI_OnSelectionChanged(lua_State* L) {
+  int SWIG_arg = 0;
+  EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  
+  SWIG_check_num_args("EditorBaseUI::OnSelectionChanged",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("EditorBaseUI::OnSelectionChanged",1,"EditorBaseUI *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("EditorBaseUI::OnSelectionChanged",2,"Object *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_EditorBaseUI,0))){
+    SWIG_fail_ptr("EditorBaseUI_OnSelectionChanged",1,SWIGTYPE_p_EditorBaseUI);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("EditorBaseUI_OnSelectionChanged",2,SWIGTYPE_p_Object);
+  }
+  
+  (arg1)->OnSelectionChanged(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_EditorBaseUI(lua_State* L) {
+  int SWIG_arg = 0;
+  EditorBaseUI *result = 0 ;
+  
+  SWIG_check_num_args("EditorBaseUI::EditorBaseUI",0,0)
+  result = (EditorBaseUI *)new EditorBaseUI();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_EditorBaseUI,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_EditorBaseUI(void *obj) {
+EditorBaseUI *arg1 = (EditorBaseUI *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_EditorBaseUI(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_EditorBaseUI);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_EditorBaseUI_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_method swig_EditorBaseUI_methods[]= {
+    { "OnObjectsChanged", _wrap_EditorBaseUI_OnObjectsChanged},
+    { "OnSelectionChanged", _wrap_EditorBaseUI_OnSelectionChanged},
+    {0,0}
+};
+static swig_lua_method swig_EditorBaseUI_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_EditorBaseUI_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_EditorBaseUI_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_EditorBaseUI_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_EditorBaseUI_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_EditorBaseUI_Sf_SwigStatic = {
+    "EditorBaseUI",
+    swig_EditorBaseUI_Sf_SwigStatic_methods,
+    swig_EditorBaseUI_Sf_SwigStatic_attributes,
+    swig_EditorBaseUI_Sf_SwigStatic_constants,
+    swig_EditorBaseUI_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_EditorBaseUI_bases[] = {0};
+static const char *swig_EditorBaseUI_base_names[] = {0};
+static swig_lua_class _wrap_class_EditorBaseUI = { "EditorBaseUI", "EditorBaseUI", &SWIGTYPE_p_EditorBaseUI,_proxy__wrap_new_EditorBaseUI, swig_delete_EditorBaseUI, swig_EditorBaseUI_methods, swig_EditorBaseUI_attributes, &swig_EditorBaseUI_Sf_SwigStatic, swig_EditorBaseUI_meta, swig_EditorBaseUI_bases, swig_EditorBaseUI_base_names };
+
 static int _wrap_new_Editor(lua_State* L) {
   int SWIG_arg = 0;
   Editor *result = 0 ;
@@ -12482,106 +12604,6 @@ fail:
 }
 
 
-static int _wrap_Editor_GetPropObjectsChanged(lua_State* L) {
-  int SWIG_arg = 0;
-  Editor *arg1 = (Editor *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("Editor::GetPropObjectsChanged",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::GetPropObjectsChanged",1,"Editor *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
-    SWIG_fail_ptr("Editor_GetPropObjectsChanged",1,SWIGTYPE_p_Editor);
-  }
-  
-  result = (bool)(arg1)->GetPropObjectsChanged();
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Editor_SetPropObjectsChanged(lua_State* L) {
-  int SWIG_arg = 0;
-  Editor *arg1 = (Editor *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("Editor::SetPropObjectsChanged",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::SetPropObjectsChanged",1,"Editor *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("Editor::SetPropObjectsChanged",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
-    SWIG_fail_ptr("Editor_SetPropObjectsChanged",1,SWIGTYPE_p_Editor);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetPropObjectsChanged(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Editor_GetPropSelectedObjectChanged(lua_State* L) {
-  int SWIG_arg = 0;
-  Editor *arg1 = (Editor *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("Editor::GetPropSelectedObjectChanged",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::GetPropSelectedObjectChanged",1,"Editor *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
-    SWIG_fail_ptr("Editor_GetPropSelectedObjectChanged",1,SWIGTYPE_p_Editor);
-  }
-  
-  result = (bool)(arg1)->GetPropSelectedObjectChanged();
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Editor_SetPropSelectedObjectChanged(lua_State* L) {
-  int SWIG_arg = 0;
-  Editor *arg1 = (Editor *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("Editor::SetPropSelectedObjectChanged",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::SetPropSelectedObjectChanged",1,"Editor *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("Editor::SetPropSelectedObjectChanged",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
-    SWIG_fail_ptr("Editor_SetPropSelectedObjectChanged",1,SWIGTYPE_p_Editor);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetPropSelectedObjectChanged(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static void swig_delete_Editor(void *obj) {
 Editor *arg1 = (Editor *) obj;
 delete arg1;
@@ -12619,10 +12641,6 @@ static swig_lua_method swig_Editor_methods[]= {
     { "SetPropSnapToGrid", _wrap_Editor_SetPropSnapToGrid},
     { "GetPropSelection", _wrap_Editor_GetPropSelection},
     { "SetPropSelection", _wrap_Editor_SetPropSelection},
-    { "GetPropObjectsChanged", _wrap_Editor_GetPropObjectsChanged},
-    { "SetPropObjectsChanged", _wrap_Editor_SetPropObjectsChanged},
-    { "GetPropSelectedObjectChanged", _wrap_Editor_GetPropSelectedObjectChanged},
-    { "SetPropSelectedObjectChanged", _wrap_Editor_SetPropSelectedObjectChanged},
     {0,0}
 };
 static swig_lua_method swig_Editor_meta[] = {
@@ -12731,6 +12749,7 @@ static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_Object,
 &_wrap_class_ObjectPlayer,
 &_wrap_class_ObjectFactory,
+&_wrap_class_EditorBaseUI,
 &_wrap_class_Editor,
     0
 };
@@ -12763,6 +12782,7 @@ static swig_type_info _swigt__p_Camera = {"_p_Camera", "Camera *", 0, 0, (void*)
 static swig_type_info _swigt__p_CameraFollow = {"_p_CameraFollow", "CameraFollow *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_CollisionDirection = {"_p_CollisionDirection", "CollisionDirection *", 0, 0, (void*)&_wrap_class_CollisionDirection, 0};
 static swig_type_info _swigt__p_Editor = {"_p_Editor", "Editor *", 0, 0, (void*)&_wrap_class_Editor, 0};
+static swig_type_info _swigt__p_EditorBaseUI = {"_p_EditorBaseUI", "EditorBaseUI *", 0, 0, (void*)&_wrap_class_EditorBaseUI, 0};
 static swig_type_info _swigt__p_GameMode = {"_p_GameMode", "GameMode *", 0, 0, (void*)&_wrap_class_GameMode, 0};
 static swig_type_info _swigt__p_GameModeExitInfo = {"_p_GameModeExitInfo", "GameModeExitInfo *", 0, 0, (void*)&_wrap_class_GameModeExitInfo, 0};
 static swig_type_info _swigt__p_GameOptions = {"_p_GameOptions", "GameOptions *", 0, 0, (void*)&_wrap_class_GameOptions, 0};
@@ -12796,6 +12816,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_CameraFollow,
   &_swigt__p_CollisionDirection,
   &_swigt__p_Editor,
+  &_swigt__p_EditorBaseUI,
   &_swigt__p_GameMode,
   &_swigt__p_GameModeExitInfo,
   &_swigt__p_GameOptions,
@@ -12829,6 +12850,7 @@ static swig_cast_info _swigc__p_Camera[] = {  {&_swigt__p_Camera, 0, 0, 0},{0, 0
 static swig_cast_info _swigc__p_CameraFollow[] = {  {&_swigt__p_CameraFollow, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_CollisionDirection[] = {  {&_swigt__p_CollisionDirection, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Editor[] = {  {&_swigt__p_Editor, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_EditorBaseUI[] = {  {&_swigt__p_EditorBaseUI, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameMode[] = {  {&_swigt__p_GameWorld, _p_GameWorldTo_p_GameMode, 0, 0},  {&_swigt__p_GameMode, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameModeExitInfo[] = {  {&_swigt__p_GameModeExitInfo, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameOptions[] = {  {&_swigt__p_GameOptions, 0, 0, 0},{0, 0, 0, 0}};
@@ -12862,6 +12884,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_CameraFollow,
   _swigc__p_CollisionDirection,
   _swigc__p_Editor,
+  _swigc__p_EditorBaseUI,
   _swigc__p_GameMode,
   _swigc__p_GameModeExitInfo,
   _swigc__p_GameOptions,

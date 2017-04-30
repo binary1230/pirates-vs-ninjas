@@ -27,7 +27,8 @@ Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
 	_last_object_def_name = objDefName;
 	_last_layer_name = layerName;
 
-	_ObjectsChanged = true;
+	if (_ui) 
+		_ui->OnObjectsChanged();
 
 	return obj;
 }
@@ -114,11 +115,12 @@ void Editor::UpdateSelectedObjectPosition() {
 }
 
 void Editor::SelectObject(Object* obj) {
-	_SelectedObjectChanged = true;
-
 	if (_Selection) {
 		_Selection->SetDrawBounds(false);
 	}
+
+	if (_ui)
+		_ui->OnSelectionChanged(obj);
 
 	_Selection = obj;
 
@@ -293,6 +295,7 @@ void Editor::DeleteCurrentSelection() {
 }
 
 Editor::Editor() {
+	_ui = NULL;
 	_Selection = NULL;
 	_grid_resolution = 30;
 	_SnapToGrid = false;
@@ -316,3 +319,15 @@ Editor::Editor() {
 }
 
 Editor::~Editor() {}
+
+void EditorBaseUI::OnObjectsChanged()
+{
+}
+
+void EditorBaseUI::OnSelectionChanged(Object * selected_object)
+{
+}
+
+EditorBaseUI::~EditorBaseUI()
+{
+}
