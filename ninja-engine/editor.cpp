@@ -27,8 +27,8 @@ Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
 	_last_object_def_name = objDefName;
 	_last_layer_name = layerName;
 
-	if (_ui) 
-		_ui->OnObjectsChanged();
+	if (_EditorUI) 
+		_EditorUI->OnObjectsChanged();
 
 	return obj;
 }
@@ -128,8 +128,8 @@ void Editor::SelectObject(Object* obj) {
 		_Selection->SetDrawBounds(true, al_map_rgb(255, 255, 0));
 	}
 
-	if (_ui)
-		_ui->OnSelectionChanged(_Selection);
+	if (_EditorUI)
+		_EditorUI->OnSelectionChanged();
 }
 
 void Editor::Draw() {
@@ -138,9 +138,6 @@ void Editor::Draw() {
 }
 
 void Editor::CommonUpdate() {
-	_ObjectsChanged = false;
-	_SelectedObjectChanged = false;
-
 	_pausedChanged = _wasPaused != GAMESTATE->IsPaused();
 	if (_pausedChanged) {
 		FlashText(!_wasPaused ? "paused" : "unpaused");
@@ -289,7 +286,8 @@ void Editor::DeleteCurrentSelection() {
 	if (!_Selection)
 		return;
 
-	_ObjectsChanged = true;
+	if (_EditorUI)
+		_EditorUI->OnObjectsChanged();
 
 	_Selection->SetIsDead(true);
 	SelectObject(NULL);
@@ -298,7 +296,7 @@ void Editor::DeleteCurrentSelection() {
 }
 
 Editor::Editor() {
-	_ui = NULL;
+	_EditorUI = NULL;
 	_Selection = NULL;
 	_grid_resolution = 30;
 	_SnapToGrid = false;
@@ -315,22 +313,18 @@ Editor::Editor() {
 	_text_time_remaining = 0;
 	_tooltip_text = "";
 
-	_ObjectsChanged = false;
-	_SelectedObjectChanged = false;
-
 	_should_delete_selection_after_move_done = false;
 }
 
 Editor::~Editor() {}
 
-void EditorBaseUI::OnObjectsChanged()
-{
+void EditorBaseUI::OnObjectsChanged() {
+	assert(0); // should be an abstract class, but for C# reasons, can't be
 }
 
-void EditorBaseUI::OnSelectionChanged(Object * selected_object)
-{
+void EditorBaseUI::OnSelectionChanged() {
+	assert(0); // should be an abstract class, but for C# reasons, can't be
 }
 
-EditorBaseUI::~EditorBaseUI()
-{
+EditorBaseUI::~EditorBaseUI() {
 }

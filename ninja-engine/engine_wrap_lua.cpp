@@ -11948,22 +11948,15 @@ fail:
 static int _wrap_EditorBaseUI_OnSelectionChanged(lua_State* L) {
   int SWIG_arg = 0;
   EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
-  Object *arg2 = (Object *) 0 ;
   
-  SWIG_check_num_args("EditorBaseUI::OnSelectionChanged",2,2)
+  SWIG_check_num_args("EditorBaseUI::OnSelectionChanged",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("EditorBaseUI::OnSelectionChanged",1,"EditorBaseUI *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("EditorBaseUI::OnSelectionChanged",2,"Object *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_EditorBaseUI,0))){
     SWIG_fail_ptr("EditorBaseUI_OnSelectionChanged",1,SWIGTYPE_p_EditorBaseUI);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("EditorBaseUI_OnSelectionChanged",2,SWIGTYPE_p_Object);
-  }
-  
-  (arg1)->OnSelectionChanged(arg2);
+  (arg1)->OnSelectionChanged();
   
   return SWIG_arg;
   
@@ -12604,6 +12597,60 @@ fail:
 }
 
 
+static int _wrap_Editor_GetPropEditorUI(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  EditorBaseUI *result = 0 ;
+  
+  SWIG_check_num_args("Editor::GetPropEditorUI",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::GetPropEditorUI",1,"Editor *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_GetPropEditorUI",1,SWIGTYPE_p_Editor);
+  }
+  
+  result = (EditorBaseUI *)(arg1)->GetPropEditorUI();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_EditorBaseUI,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Editor_SetPropEditorUI(lua_State* L) {
+  int SWIG_arg = 0;
+  Editor *arg1 = (Editor *) 0 ;
+  EditorBaseUI *arg2 = (EditorBaseUI *) 0 ;
+  
+  SWIG_check_num_args("Editor::SetPropEditorUI",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Editor::SetPropEditorUI",1,"Editor *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Editor::SetPropEditorUI",2,"EditorBaseUI *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Editor,0))){
+    SWIG_fail_ptr("Editor_SetPropEditorUI",1,SWIGTYPE_p_Editor);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_EditorBaseUI,0))){
+    SWIG_fail_ptr("Editor_SetPropEditorUI",2,SWIGTYPE_p_EditorBaseUI);
+  }
+  
+  (arg1)->SetPropEditorUI(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_Editor(void *obj) {
 Editor *arg1 = (Editor *) obj;
 delete arg1;
@@ -12641,6 +12688,8 @@ static swig_lua_method swig_Editor_methods[]= {
     { "SetPropSnapToGrid", _wrap_Editor_SetPropSnapToGrid},
     { "GetPropSelection", _wrap_Editor_GetPropSelection},
     { "SetPropSelection", _wrap_Editor_SetPropSelection},
+    { "GetPropEditorUI", _wrap_Editor_GetPropEditorUI},
+    { "SetPropEditorUI", _wrap_Editor_SetPropEditorUI},
     {0,0}
 };
 static swig_lua_method swig_Editor_meta[] = {

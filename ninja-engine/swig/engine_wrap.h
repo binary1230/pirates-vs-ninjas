@@ -16,11 +16,11 @@ class SwigDirector_EditorBaseUI : public EditorBaseUI, public Swig::Director {
 public:
     SwigDirector_EditorBaseUI();
     virtual void OnObjectsChanged();
-    virtual void OnSelectionChanged(Object *selected_object);
+    virtual void OnSelectionChanged();
     virtual ~SwigDirector_EditorBaseUI();
 
     typedef void (SWIGSTDCALL* SWIG_Callback0_t)();
-    typedef void (SWIGSTDCALL* SWIG_Callback1_t)(void *);
+    typedef void (SWIGSTDCALL* SWIG_Callback1_t)();
     void swig_connect_director(SWIG_Callback0_t callbackOnObjectsChanged, SWIG_Callback1_t callbackOnSelectionChanged);
 
 private:

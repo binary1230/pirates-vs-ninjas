@@ -16,7 +16,7 @@ enum EditorMode {
 class EditorBaseUI {
 	public:
 		virtual void OnObjectsChanged();
-		virtual void OnSelectionChanged(Object* selected_object);
+		virtual void OnSelectionChanged();
 
 		virtual ~EditorBaseUI();
 };
@@ -42,8 +42,6 @@ class Editor {
 		bool _should_delete_selection_after_move_done;
 
 		Object* _obj_under_mouse;
-
-		EditorBaseUI* _ui;
 
 		b2Vec2 offset_change; // offset in move mode when using keys
 
@@ -79,6 +77,8 @@ class Editor {
 		
 		CREATE_PROPERTY(bool, SnapToGrid)
 		CREATE_PROPERTY(Object*, Selection)
+
+		CREATE_PROPERTY(EditorBaseUI*, EditorUI)
 };
 
 #endif // MAP_EDITOR_H

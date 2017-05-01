@@ -14,16 +14,22 @@ using System.Diagnostics;
 
 namespace MapEditor
 {
+    public delegate void OnObjectsChangedDelegate();
+    public delegate void OnSelectionChangedDelegate();
+
     public class EditorUI : EditorBaseUI
     {
+        public OnObjectsChangedDelegate _onObjectsChangedDelegate;
+        public OnSelectionChangedDelegate _onSelectionChangedDelegate;
+
         public override void OnObjectsChanged()
         {
-            Console.WriteLine("test");
+            _onObjectsChangedDelegate();
         }
 
-        public override void OnSelectionChanged(Object new_selection)
+        public override void OnSelectionChanged()
         {
-
+            _onSelectionChangedDelegate();
         }
     }
 
@@ -38,6 +44,8 @@ namespace MapEditor
         BindingList<KeyValuePair<uint, string>> objectList = new BindingList<KeyValuePair<uint, string>>();
         BindingSource objectListDataSource = null;
 
+        EditorUI editorUI = new EditorUI();
+
         public delegate void OnSelected(Object obj);
 
         public Editor()
@@ -50,6 +58,10 @@ namespace MapEditor
             objectListDataSource = new BindingSource(objectList, null);
 
             RebindData();
+
+            editorUI = new EditorUI();
+            editorUI._onObjectsChangedDelegate = new OnObjectsChangedDelegate(OnObjectsChanged);
+            editorUI._onSelectionChangedDelegate = new OnSelectionChangedDelegate(OnSelectionChanged);
         }
 
         public void RebindData()
@@ -87,23 +99,21 @@ namespace MapEditor
         {
             return GameWorld.GetInstance().GetEditor().GetPropSelection();
         }
-        
+
+        public void OnObjectsChanged()
+        {
+            SyncObjectListWithGame();
+            RebindData();
+        }
+
+        public void OnSelectionChanged()
+        {
+            UpdateSelectedObjectFromGame();
+        }
+
         private void UpdateIfPaused()
         {
-            global::Editor editor = GameWorld.GetInstance().GetEditor();
-            bool objectsChanged = editor.GetPropObjectsChanged();
-            bool selectionChanged = editor.GetPropSelectedObjectChanged();
-
-            if (objectsChanged)
-            {
-                SyncObjectListWithGame();
-                RebindData();
-            }
-
-            if (selectionChanged)
-            {
-                UpdateSelectedObjectFromGame();
-            }
+            // global::Editor editor = GameWorld.GetInstance().GetEditor();
         }
 
         private void UpdateSelectedObjectFromGame()
@@ -146,7 +156,9 @@ namespace MapEditor
                 Close();
                 return;
             }
-            
+
+            GameWorld.GetInstance().GetEditor().SetPropEditorUI(editorUI);
+
             OnPauseStatusChanged();
             wasPaused = gameWrapper.Paused;
 

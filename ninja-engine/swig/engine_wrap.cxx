@@ -655,15 +655,12 @@ void SwigDirector_EditorBaseUI::OnObjectsChanged() {
   }
 }
 
-void SwigDirector_EditorBaseUI::OnSelectionChanged(Object *selected_object) {
-  void * jselected_object = 0 ;
-  
+void SwigDirector_EditorBaseUI::OnSelectionChanged() {
   if (!swig_callbackOnSelectionChanged) {
-    EditorBaseUI::OnSelectionChanged(selected_object);
+    EditorBaseUI::OnSelectionChanged();
     return;
   } else {
-    jselected_object = (void *) selected_object; 
-    swig_callbackOnSelectionChanged(jselected_object);
+    swig_callbackOnSelectionChanged();
   }
 }
 
@@ -4714,23 +4711,19 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_OnObjectsChangedSwigExplicitEdit
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_OnSelectionChanged(void * jarg1, void * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_OnSelectionChanged(void * jarg1) {
   EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
-  Object *arg2 = (Object *) 0 ;
   
   arg1 = (EditorBaseUI *)jarg1; 
-  arg2 = (Object *)jarg2; 
-  (arg1)->OnSelectionChanged(arg2);
+  (arg1)->OnSelectionChanged();
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_OnSelectionChangedSwigExplicitEditorBaseUI(void * jarg1, void * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorBaseUI_OnSelectionChangedSwigExplicitEditorBaseUI(void * jarg1) {
   EditorBaseUI *arg1 = (EditorBaseUI *) 0 ;
-  Object *arg2 = (Object *) 0 ;
   
   arg1 = (EditorBaseUI *)jarg1; 
-  arg2 = (Object *)jarg2; 
-  (arg1)->EditorBaseUI::OnSelectionChanged(arg2);
+  (arg1)->EditorBaseUI::OnSelectionChanged();
 }
 
 
@@ -4998,6 +4991,28 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropSelection(void * jarg1, void * 
   arg1 = (Editor *)jarg1; 
   arg2 = (Object *)jarg2; 
   (arg1)->SetPropSelection(arg2);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Editor_GetPropEditorUI(void * jarg1) {
+  void * jresult ;
+  Editor *arg1 = (Editor *) 0 ;
+  EditorBaseUI *result = 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  result = (EditorBaseUI *)(arg1)->GetPropEditorUI();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_SetPropEditorUI(void * jarg1, void * jarg2) {
+  Editor *arg1 = (Editor *) 0 ;
+  EditorBaseUI *arg2 = (EditorBaseUI *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  arg2 = (EditorBaseUI *)jarg2; 
+  (arg1)->SetPropEditorUI(arg2);
 }
 
 
