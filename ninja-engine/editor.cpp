@@ -9,17 +9,12 @@
 #include "camera.h"
 
 Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
-	XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
-	assert(xDef);
-
-	string className = OBJECT_FACTORY->GetClassNameFromXML(*xDef);
-	Object* obj = Object::CreateObject(className);
-
+	Object* obj = OBJECT_FACTORY->CreateObject(objDefName);
+	
 	ObjectLayer* layer = WORLD->FindLayer(layerName);
 	assert(layer);
 	obj->SetLayer(layer);
 
-	obj->SetObjectDefName(objDefName);
 	obj->FinishLoading();
 
 	WORLD->AddObject(obj, true);

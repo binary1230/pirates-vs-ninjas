@@ -153,9 +153,8 @@ void Object::Clear() {
 	b_box_offset_x = b_box_offset_y = 0;
 	m_bDrawBoundingBox = false;
 	_physics_body = NULL;
-	debug_flag = false;
-
 	unique_id = Object::next_object_id++;
+	debug_flag = false;
 }
 
 bool Object::BaseInit() {

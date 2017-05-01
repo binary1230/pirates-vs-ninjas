@@ -105,7 +105,7 @@ inline void ClearProperties(struct ObjectProperties& p) {
 }
 
 #define IMPLEMENT_CLONE(TYPE) \
-   Object* Clone() const { return new TYPE(*this); }
+   Object* Clone() const { return new TYPE(/* *this */); }
 
 #define MAKE_PROTOTYPE(TYPE) \
    Object* TYPE ## _myProtoype1 = Object::AddPrototype(#TYPE, new TYPE());
