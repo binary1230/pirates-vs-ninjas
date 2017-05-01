@@ -3,9 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+
+[TypeConverter(typeof(ExpandableObjectConverter))]
+public partial class b2Vec2
+{
+
+}
+
+public partial class Object
+{
+
+}
+
+
+public partial class ObjectSpring
+{
+    public float TestFloat { get; set; }
+}
 
 namespace MapEditor
 {
+    public delegate void OnObjectsChangedDelegate();
+    public delegate void OnSelectionChangedDelegate();
+    public delegate void OnSelectedObjectMovedDelegate();
+
+    public class EditorUI : EditorBaseUI
+    {
+        public OnObjectsChangedDelegate _onObjectsChangedDelegate;
+        public OnSelectionChangedDelegate _onSelectionChangedDelegate;
+        public OnSelectedObjectMovedDelegate _onSelectedObjectMovedDelegate;
+
+        public override void OnObjectsChanged()
+        {
+            _onObjectsChangedDelegate();
+        }
+
+        public override void OnSelectionChanged()
+        {
+            _onSelectionChangedDelegate();
+        }
+
+        public override void OnSelectedObjectMoved()
+        {
+            _onSelectedObjectMovedDelegate();
+        }
+    }
+
     class GameWrapper
     {
         private bool _should_exit = false;

@@ -71,7 +71,6 @@ class ObjectText : public Object {
 		bool SetAvatarFilename(std::string file);
 		void SetModalActive(bool state);
 
-		virtual bool LoadXMLInstanceProperties(XMLNode & xObj);
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 
 		void SetText(std::string txt);

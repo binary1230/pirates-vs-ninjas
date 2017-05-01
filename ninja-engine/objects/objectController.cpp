@@ -22,8 +22,8 @@ void ObjectController::Draw() {
 		return;
 	}
 				
-	int x = (int)pos.x;
-	int y = (int)pos.y;
+	int x = (int)_Pos.x;
+	int y = (int)_Pos.y;
 
 	int bx, by;
 
@@ -102,8 +102,8 @@ bool ObjectController::LoadObjectProperties(XMLNode &xDef) {
 		TRACE("Invalid controller base Y!\n");
 		return NULL;
 	}
-	pos.x = x1;
-	pos.y = y1;
+	_Pos.x = x1;
+	_Pos.y = y1;
 
 	Button* b;
 

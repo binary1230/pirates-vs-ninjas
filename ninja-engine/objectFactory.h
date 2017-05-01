@@ -34,7 +34,7 @@ class ObjectFactory {
 		std::string GetClassNameFromXML(XMLNode &xObjectDef);
 		
 		// Create an object from an XML node
-		Object* CreateObjectFromXML(XMLNode &xObjectDef, XMLNode *xObject);
+		Object* CreateObjectFromXML(XMLNode &xObjectDef);
 
 		// Create an object from a string
 		Object* CreateObject(std::string objDefName);

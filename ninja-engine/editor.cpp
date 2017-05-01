@@ -77,6 +77,8 @@ void Editor::UpdateSelectedObjectPosition() {
 	if (!_Selection)
 		return;
 
+	b2Vec2 old_pos = _Selection->GetXY();
+
 	b2Vec2 layer_pos;
 	MouseToLayerCoords(layer_pos, _Selection->GetLayer());
 
@@ -106,7 +108,13 @@ void Editor::UpdateSelectedObjectPosition() {
 		SnapToGrid(layer_pos);
 	}
 
-	_Selection->SetXY(layer_pos + offset_change);
+	b2Vec2 new_pos = layer_pos + offset_change;
+	_Selection->SetXY(new_pos);
+
+	if (old_pos != new_pos) {
+		if (_EditorUI)
+			_EditorUI->OnSelectedObjectMoved();
+	}
 }
 
 void Editor::SelectObject(Object* obj) {
@@ -281,13 +289,13 @@ void Editor::DeleteCurrentSelection() {
 	if (!_Selection)
 		return;
 
-	if (_EditorUI)
-		_EditorUI->OnObjectsChanged();
-
 	_Selection->SetIsDead(true);
 	SelectObject(NULL);
 
 	WORLD->RemoveDeadObjectsIfNeeded();
+
+	if (_EditorUI)
+		_EditorUI->OnObjectsChanged();
 }
 
 Editor::Editor() {
@@ -318,6 +326,10 @@ void EditorBaseUI::OnObjectsChanged() {
 }
 
 void EditorBaseUI::OnSelectionChanged() {
+	assert(0); // should be an abstract class, but for C# reasons, can't be
+}
+
+void EditorBaseUI::OnSelectedObjectMoved() {
 	assert(0); // should be an abstract class, but for C# reasons, can't be
 }
 

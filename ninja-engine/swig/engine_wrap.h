@@ -17,15 +17,18 @@ public:
     SwigDirector_EditorBaseUI();
     virtual void OnObjectsChanged();
     virtual void OnSelectionChanged();
+    virtual void OnSelectedObjectMoved();
     virtual ~SwigDirector_EditorBaseUI();
 
     typedef void (SWIGSTDCALL* SWIG_Callback0_t)();
     typedef void (SWIGSTDCALL* SWIG_Callback1_t)();
-    void swig_connect_director(SWIG_Callback0_t callbackOnObjectsChanged, SWIG_Callback1_t callbackOnSelectionChanged);
+    typedef void (SWIGSTDCALL* SWIG_Callback2_t)();
+    void swig_connect_director(SWIG_Callback0_t callbackOnObjectsChanged, SWIG_Callback1_t callbackOnSelectionChanged, SWIG_Callback2_t callbackOnSelectedObjectMoved);
 
 private:
     SWIG_Callback0_t swig_callbackOnObjectsChanged;
     SWIG_Callback1_t swig_callbackOnSelectionChanged;
+    SWIG_Callback2_t swig_callbackOnSelectedObjectMoved;
     void swig_init_callbacks();
 };
 

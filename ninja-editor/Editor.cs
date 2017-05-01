@@ -13,47 +13,23 @@ using System.Reflection;
 using System.Diagnostics;
 
 namespace MapEditor
-{
-    public delegate void OnObjectsChangedDelegate();
-    public delegate void OnSelectionChangedDelegate();
-
-    public class EditorUI : EditorBaseUI
-    {
-        public OnObjectsChangedDelegate _onObjectsChangedDelegate;
-        public OnSelectionChangedDelegate _onSelectionChangedDelegate;
-
-        public override void OnObjectsChanged()
-        {
-            _onObjectsChangedDelegate();
-        }
-
-        public override void OnSelectionChanged()
-        {
-            _onSelectionChangedDelegate();
-        }
-    }
-
+{ 
     public partial class Editor : Form
     {
         GameWrapper gameWrapper = new GameWrapper();
         bool wasPaused = false;
 
         string lastLayerName = "foreground";
-        string lastObjectDefName = "greenblock";
+        string lastObjectDefName = "large-block";
 
         BindingList<KeyValuePair<uint, string>> objectList = new BindingList<KeyValuePair<uint, string>>();
         BindingSource objectListDataSource = null;
 
         EditorUI editorUI = new EditorUI();
 
-        public delegate void OnSelected(Object obj);
-
         public Editor()
         {
             InitializeComponent();
-
-            lstObjects.DisplayMember = "Value";
-            lstObjects.ValueMember = "Key";
 
             objectListDataSource = new BindingSource(objectList, null);
 
@@ -62,11 +38,15 @@ namespace MapEditor
             editorUI = new EditorUI();
             editorUI._onObjectsChangedDelegate = new OnObjectsChangedDelegate(OnObjectsChanged);
             editorUI._onSelectionChangedDelegate = new OnSelectionChangedDelegate(OnSelectionChanged);
+            editorUI._onSelectedObjectMovedDelegate = new OnSelectedObjectMovedDelegate(OnSelectedObjectMoved);
         }
 
         public void RebindData()
         {
             lstObjects.DataSource = null;
+
+            lstObjects.DisplayMember = "Value";
+            lstObjects.ValueMember = "Key";
             lstObjects.DataSource = objectListDataSource;
         }
 
@@ -111,6 +91,11 @@ namespace MapEditor
             UpdateSelectedObjectFromGame();
         }
 
+        public void OnSelectedObjectMoved()
+        {
+            PostSelectionChanged(); // just enough to get our propertygrid to refresh
+        }
+
         private void UpdateIfPaused()
         {
             // global::Editor editor = GameWorld.GetInstance().GetEditor();
@@ -119,8 +104,9 @@ namespace MapEditor
         private void UpdateSelectedObjectFromGame()
         {
             Object selection = GetSelectedObject();
-            if (selection != null)
-            {
+            if (selection == null) {
+                lstObjects.SelectedIndex = -1;
+            } else { 
                 // 3) update object list with currently selected object
                 lstObjects.SelectedValue = selection.GetID();
 
@@ -230,7 +216,10 @@ namespace MapEditor
                 if (found)
                     continue;
 
-                objectList.Add(new KeyValuePair < uint, string > (obj.GetID(), obj.GetObjectDefName()));
+                KeyValuePair<uint, string> objectListItemToAdd = new KeyValuePair<uint, string>(
+                    obj.GetID(), obj.GetObjectDefName()
+                );
+                objectList.Add(objectListItemToAdd);
             }
 
             lstObjects.EndUpdate();
@@ -307,9 +296,10 @@ namespace MapEditor
                 if (obj != null)
                 {
                     GameWorld.GetInstance().GetEditor().SelectObject(obj);
-                    PostSelectionChanged();
                 }
             }
+
+            PostSelectionChanged();
         }
 
         private void PostSelectionChanged()
@@ -319,6 +309,7 @@ namespace MapEditor
             Object selection = GetSelectedObject();
 
             objectProperties.SelectedObject = selection;
+            objectProperties.ExpandAllGridItems();
         }
     }
 }

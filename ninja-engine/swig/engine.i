@@ -24,6 +24,7 @@
 #include "gameWorld.h"
 #include "gameState.h"
 #include "objects/objectPlayer.h"
+#include "objects/objectSpring.h"
 #include "objectFactory.h"
 %}
 
@@ -51,11 +52,24 @@ using namespace std;
 %include "gameWorld.h"
 %include "gameState.h"
 %include "objectLayer.h"
+
+%typemap(csclassmodifiers) Object "public partial class"
 %include "objects/object.h"
+
 %include "objects/objectPlayer.h"
+
+%typemap(csclassmodifiers) ObjectSpring "public partial class"
+%include "objects/objectSpring.h"
+
 %include "objectFactory.h"
 %include "editor.h"
 
+%typemap(csclassmodifiers) b2Vec2 "public partial class"
+struct b2Vec2
+{
+	float x, y;
+};
+%attribute(b2Vec2, float, x, x_get, x_set);
+%attribute(b2Vec2, float, y, y_get, y_set);
 
-%attribute(Object, int, X, GetPropX, SetPropX);
-%attribute(Object, int, Y, GetPropY, SetPropY);
+// TODO: implement factory or typemap to create derived types on the C# side

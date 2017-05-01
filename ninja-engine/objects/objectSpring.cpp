@@ -38,32 +38,6 @@ void ObjectSpring::Update() {
 		spring_reset_time = DEFAULT_SPRING_RESET_TIME;*/
 }
 
-bool ObjectSpring::LoadSpringVectorFromXML(XMLNode &xSpringDirection)
-{
-	if (xSpringDirection.nChildNode("x") != 1 || !xSpringDirection.getChildNode("x").getFloat(spring_vector.x)) {
-		TRACE(" -- invalid spring strength (x)!\n");
-		return false;
-	}
-
-	if (xSpringDirection.nChildNode("y") != 1 || !xSpringDirection.getChildNode("y").getFloat(spring_vector.y)) {
-		TRACE(" -- invalid spring strength (y)!\n");
-		return false;
-	}
-
-	return true;
-}
-
-bool ObjectSpring::LoadXMLInstanceProperties(XMLNode & xObj)
-{
-	if (xObj.nChildNode("springDirection") == 1) {
-		if (!LoadSpringVectorFromXML(xObj.getChildNode("springDirection"))) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
 bool ObjectSpring::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
@@ -71,16 +45,6 @@ bool ObjectSpring::LoadObjectProperties(XMLNode &xDef) {
 	properties.uses_physics_engine = 1;
 	properties.is_static = 1;
 	properties.is_sensor = 1;
-
-	/*#if USE_OLD_LOADING_SYSTEM
-	// we should be able to re-enable this later, there's some bugginess with load ordering and defaults when using
-	// the serialized data.
-	if (xDef.nChildNode("springDirection") == 1) {
-		if (!LoadSpringVectorFromXML(xDef.getChildNode("springDirection"))) {
-			return false;
-		}
-	}
-	#endif*/
 
 	return true;
 }
@@ -93,8 +57,8 @@ bool ObjectSpring::Init() {
 }
 
 void ObjectSpring::Clear() {
-	spring_vector.x = DEFAULT_SPRING_STRENGTH_X;
-	spring_vector.y = DEFAULT_SPRING_STRENGTH_Y;
+	_Direction.x = DEFAULT_SPRING_STRENGTH_X;
+	_Direction.y = DEFAULT_SPRING_STRENGTH_Y;
 }
 
 ObjectSpring::ObjectSpring() { Clear(); }

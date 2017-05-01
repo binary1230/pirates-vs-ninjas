@@ -17,6 +17,7 @@ class EditorBaseUI {
 	public:
 		virtual void OnObjectsChanged();
 		virtual void OnSelectionChanged();
+		virtual void OnSelectedObjectMoved();
 
 		virtual ~EditorBaseUI();
 };

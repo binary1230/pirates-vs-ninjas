@@ -160,6 +160,7 @@
             // 
             this.objectProperties.Location = new System.Drawing.Point(705, 115);
             this.objectProperties.Name = "objectProperties";
+            this.objectProperties.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
             this.objectProperties.Size = new System.Drawing.Size(168, 202);
             this.objectProperties.TabIndex = 10;
             // 

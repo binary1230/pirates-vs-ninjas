@@ -4,17 +4,6 @@
 #include "rect.h"
 #include "globalDefines.h"
 
-
-bool ObjectCutBars::LoadXMLInstanceProperties(XMLNode & xObj)
-{
-	if (xObj.nChildNode("text"))
-		SetText(xObj.getChildNode("text").getText());
-
-	Start();
-
-	return true;
-}
-
 bool ObjectCutBars::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
