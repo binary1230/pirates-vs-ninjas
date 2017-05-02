@@ -1611,16 +1611,6 @@ public class ObjectProperties : global::System.IDisposable {
     } 
   }
 
-  public bool do_our_own_rotation {
-    set {
-      enginePINVOKE.ObjectProperties_do_our_own_rotation_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_do_our_own_rotation_get(swigCPtr);
-      return ret;
-    } 
-  }
-
   public bool use_angled_corners_collision_box {
     set {
       enginePINVOKE.ObjectProperties_use_angled_corners_collision_box_set(swigCPtr, value);
@@ -1917,15 +1907,6 @@ public partial class Object : global::System.IDisposable {
     enginePINVOKE.Object_SetLayer(swigCPtr, ObjectLayer.getCPtr(l));
   }
 
-  public void SetObjectDefName(string arg0) {
-    enginePINVOKE.Object_SetObjectDefName(swigCPtr, arg0);
-  }
-
-  public string GetObjectDefName() {
-    string ret = enginePINVOKE.Object_GetObjectDefName(swigCPtr);
-    return ret;
-  }
-
   public void ApplyImpulse(float x, float y) {
     enginePINVOKE.Object_ApplyImpulse__SWIG_0(swigCPtr, x, y);
   }
@@ -1970,6 +1951,25 @@ public partial class Object : global::System.IDisposable {
     return ret;
   }
 
+  public float GetPropRotateVelocity() {
+    float ret = enginePINVOKE.Object_GetPropRotateVelocity(swigCPtr);
+    return ret;
+  }
+
+  public void SetPropRotateVelocity(float val) {
+    enginePINVOKE.Object_SetPropRotateVelocity(swigCPtr, val);
+  }
+
+  public string GetPropObjectDefName() {
+    string ret = enginePINVOKE.Object_GetPropObjectDefName(swigCPtr);
+    return ret;
+  }
+
+  public void SetPropObjectDefName(string val) {
+    enginePINVOKE.Object_SetPropObjectDefName(swigCPtr, val);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public b2Vec2 Position {
     set {
       enginePINVOKE.Object_Position_set(swigCPtr, b2Vec2.getCPtr(value));
@@ -1977,6 +1977,28 @@ public partial class Object : global::System.IDisposable {
     get {
       global::System.IntPtr cPtr = enginePINVOKE.Object_Position_get(swigCPtr);
       b2Vec2 ret = (cPtr == global::System.IntPtr.Zero) ? null : new b2Vec2(cPtr, false);
+      return ret;
+    } 
+  }
+
+  public float RotateVelocity {
+    set {
+      enginePINVOKE.Object_RotateVelocity_set(swigCPtr, value);
+    } 
+    get {
+      float ret = enginePINVOKE.Object_RotateVelocity_get(swigCPtr);
+      return ret;
+    } 
+  }
+
+  public string ObjectDefName {
+    set {
+      enginePINVOKE.Object_ObjectDefName_set(swigCPtr, value);
+      if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    } 
+    get {
+      string ret = enginePINVOKE.Object_ObjectDefName_get(swigCPtr);
+      if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
@@ -4283,12 +4305,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_ignores_physics_rotation_get")]
   public static extern bool ObjectProperties_ignores_physics_rotation_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_do_our_own_rotation_set")]
-  public static extern void ObjectProperties_do_our_own_rotation_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_do_our_own_rotation_get")]
-  public static extern bool ObjectProperties_do_our_own_rotation_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_use_angled_corners_collision_box_set")]
   public static extern void ObjectProperties_use_angled_corners_collision_box_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
@@ -4469,12 +4485,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetLayer")]
   public static extern void Object_SetLayer(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetObjectDefName")]
-  public static extern void Object_SetObjectDefName(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetObjectDefName")]
-  public static extern string Object_GetObjectDefName(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ApplyImpulse__SWIG_0")]
   public static extern void Object_ApplyImpulse__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2, float jarg3);
 
@@ -4502,11 +4512,35 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_CreateObject")]
   public static extern global::System.IntPtr Object_CreateObject(string jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetPropRotateVelocity")]
+  public static extern float Object_GetPropRotateVelocity(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetPropRotateVelocity")]
+  public static extern void Object_SetPropRotateVelocity(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetPropObjectDefName")]
+  public static extern string Object_GetPropObjectDefName(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetPropObjectDefName")]
+  public static extern void Object_SetPropObjectDefName(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Position_set")]
   public static extern void Object_Position_set(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Position_get")]
   public static extern global::System.IntPtr Object_Position_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_RotateVelocity_set")]
+  public static extern void Object_RotateVelocity_set(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_RotateVelocity_get")]
+  public static extern float Object_RotateVelocity_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ObjectDefName_set")]
+  public static extern void Object_ObjectDefName_set(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ObjectDefName_get")]
+  public static extern string Object_ObjectDefName_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectBackground_Clone")]
   public static extern global::System.IntPtr ObjectBackground_Clone(global::System.Runtime.InteropServices.HandleRef jarg1);

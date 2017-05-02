@@ -222,7 +222,7 @@ void GameWindow::DrawText(int x, int y, std::string text) {
 // Holy sweetness. Remember that '^' is XOR, and XOR rocks.
 void GameWindow::DrawSprite(Sprite* sprite, int x, int y, 
 							bool flip_x, bool flip_y, 
-							bool use_rotation, float rotate_angle,
+							float rotate_angle,
 							GLuint alpha, bool bDrawBoundingBoxOnly) 
 {
 	// texture coords
@@ -273,11 +273,11 @@ void GameWindow::DrawSprite(Sprite* sprite, int x, int y,
 
 	glTranslatef(rx, ry, 0.0f);
 
-	if (use_rotation) {
+	//if (use_rotation) {
 		glTranslatef(sprite->width/2.0f, sprite->height/2.0f, 0.0f);
 		glRotatef(rotate_angle, 0.0f, 0.0f, 1.0f);
 		glTranslatef(-sprite->width/2.0f, -sprite->height/2.0f, 0.0f);
-	}
+	//}
 
 	glScalef(sprite->width, sprite->height, 1.0f);
 

@@ -17,14 +17,6 @@
 bool Object::debug_draw_bounding_boxes = 0;
 map<std::string, Object*> Object::objectProtoTable;
 
-void Object::SetObjectDefName(const char* _name) {
-	objectDefName = _name;
-}
-
-std::string Object::GetObjectDefName() {
-	return objectDefName;
-}
-
 // Objects can call this if they use
 // simple animations.
 void Object::UpdateSimpleAnimations() {
@@ -39,25 +31,17 @@ void Object::UpdateSimpleAnimations() {
 void Object::BaseUpdate() {
 	UpdateDisplayTime();
 	UpdateFade();
+	UpdatePositionFromPhysicsLocation();
+	UpdateRotation();
+}
 
-	if (_physics_body)
-	{
-		UpdatePositionFromPhysicsLocation();
+void Object::UpdateRotation() {
+	float physics_angle = _physics_body ? _physics_body->GetAngle() : 0.0f;
 
-		if (!properties.do_our_own_rotation)
-		{
-			_use_rotation = true;
-			rotate_angle = RAD_TO_DEG(-_physics_body->GetAngle());
-		}
-	}
-
-	if (_use_rotation)
-	{
-		if (properties.do_our_own_rotation)
-		{
-			// ignore physics for rotation, use our own
-			rotate_angle += _rotate_velocity;
-		}
+	if (physics_angle != 0.0f) {
+		drawing_rotation_angle = RAD_TO_DEG(-physics_angle);
+	} else {
+		drawing_rotation_angle += _RotateVelocity;
 	}
 }
 
@@ -89,16 +73,16 @@ void Object::InitPhysics()
 		return;
 	}
 
-	if (!properties.uses_physics_engine)
+	if (!_Properties.uses_physics_engine)
 		return;
 
 	// TODO: remove hardcoded junk here
 	float fDensity = 0.1f;
 
-	if (properties.is_static)
-		_physics_body = PHYSICS->CreateStaticPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), properties.is_sensor);
+	if (_Properties.is_static)
+		_physics_body = PHYSICS->CreateStaticPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), _Properties.is_sensor);
 	else
-		_physics_body = PHYSICS->CreateDynamicPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), properties.ignores_physics_rotation, fDensity, properties.use_angled_corners_collision_box);
+		_physics_body = PHYSICS->CreateDynamicPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), _Properties.ignores_physics_rotation, fDensity, _Properties.use_angled_corners_collision_box);
 
 	_physics_body->SetUserData(this);
 }
@@ -127,17 +111,16 @@ void Object::Clear() {
 	_dont_draw = false;
 	m_animationMapping.clear();
 	m_bDrawBoundingBox = false;
-	ClearProperties(properties);
+	ClearProperties(_Properties);
 	is_dead = false;
 	fade_out_time_total = fade_out_time_remaining = 0;
 	is_fading = false;
 	alpha = 255;
 	display_time = -1;
-	rotate_angle = _rotate_velocity = 0.0f;
-	_use_rotation = false;
+	drawing_rotation_angle = _RotateVelocity = 0.0f;
 	b_box_offset_x = b_box_offset_y = 0;
 	b_box_width = b_box_height = 0;
-	m_pkLayer = NULL;
+	_Layer = NULL;
 	_Pos.x = _Pos.y = 0.0f;
 	m_kCurrentCollision.down = 0;
 	m_kCurrentCollision.up = 0;
@@ -147,7 +130,7 @@ void Object::Clear() {
 	animations.clear();
 	currentSprite = NULL;	
 	flip_x = flip_y = false;
-	objectDefName = "";
+	_ObjectDefName = "";
 	alpha = 255;
 	b_box_offset_x = b_box_offset_y = 0;
 	m_bDrawBoundingBox = false;
@@ -196,8 +179,8 @@ void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y)
 	y = (int)_Pos.y + offset_y;
 
 	// take into account the camera now.
-	if (!properties.is_overlay)
-		WORLD->TransformWorldToView(x, y, m_pkLayer->GetScrollSpeed());
+	if (!_Properties.is_overlay)
+		WORLD->TransformWorldToView(x, y, _Layer->GetScrollSpeed());
 	
 	// compute absolute x,y coordinates on the screen
 	y = y + GetHeight();
@@ -209,8 +192,6 @@ void Object::TransformRect(_Rect &r) {
 
 	int x1, x2, y1, y2, w, h;
 	
-	// r.Fix();
-	
 	x1 = (int)r.getx1();	
 	y1 = (int)r.gety1();	
 	x2 = (int)r.getx2();
@@ -219,9 +200,16 @@ void Object::TransformRect(_Rect &r) {
 	h = y2 - y1;
 
 	// take into account the camera now.
-	if (!properties.is_overlay) {
-		WORLD->TransformWorldToView(x1, y1, m_pkLayer->GetScrollSpeed());
-		WORLD->TransformWorldToView(x2, y2, m_pkLayer->GetScrollSpeed());
+	if (!_Properties.is_overlay) {
+		WORLD->TransformWorldToView(x1, y1, _Layer->GetScrollSpeed());
+		
+		// old way: this would result in bounding boxes for objects on layers with different scroll speeds
+		// having the wrong width/height.  still, might be useful in certain situations later, re-enabl if needed.
+		// WORLD->TransformWorldToView(x2, y2, _Layer->GetScrollSpeed());
+
+		// new way: ignore scroll speed and just use width and height directly. don't modify width/height
+		x2 = x1 + w;
+		y2 = y1 + h;
 	}
 	
 	// compute absolute x,y coordinates on the screen
@@ -242,13 +230,13 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 		sprite_to_draw = currentSprite;
 
 	if (sprite_to_draw)
-		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, _use_rotation, rotate_angle, alpha);
+		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, drawing_rotation_angle, alpha);
 
 	#if DEBUG_DRAW_SPRITE
 	if (sprite_to_draw && (b_box_offset_x || b_box_offset_y))
 	{
 		const bool bOnlyDrawBoundingBox = true;
-		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, _use_rotation, rotate_angle, alpha, bOnlyDrawBoundingBox);
+		WINDOW->DrawSprite(sprite_to_draw, x, y, flip_x, flip_y, drawing_rotation_angle, alpha, bOnlyDrawBoundingBox);
 	}
 	#endif
 
@@ -303,8 +291,8 @@ void Object::ResetForNextFrame()
 }
 
 void Object::BaseShutdown() {
-	assert(m_pkLayer);
-	m_pkLayer->RemoveObject(this);
+	assert(_Layer);
+	_Layer->RemoveObject(this);
 
 	int i, max = animations.size();
 	for (i = 0; i < max; i++) {
@@ -316,7 +304,7 @@ void Object::BaseShutdown() {
 	
 	currentAnimation = NULL;
 	currentSprite = NULL;
-	m_pkLayer = NULL;
+	_Layer = NULL;
 	is_dead = true;
 	display_time = -1;
 
@@ -367,13 +355,16 @@ void Object::ApplyImpulse(const b2Vec2& v)
 
 void Object::UpdatePositionFromPhysicsLocation()
 {
+	if (!_physics_body)
+		return;
+
 	_Pos.x = METERS_TO_PIXELS(_physics_body->GetPosition().x) - float(GetWidth()) / 2;
 	_Pos.y = METERS_TO_PIXELS(_physics_body->GetPosition().y) - float(GetHeight()) / 2;
 }
 
 bool Object::FinishLoading()
 {
-	string objectDefName = GetObjectDefName();
+	string objectDefName = GetPropObjectDefName();
 	XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(objectDefName);
 	if (!xDef) {
 		TRACE("Can't find object def named: %s", objectDefName.c_str());
@@ -384,7 +375,7 @@ bool Object::FinishLoading()
 }
 
 bool Object::LoadFromObjectDef(XMLNode& xDef) {
-	SetObjectDefName(xDef.getAttribute("name"));
+	SetPropObjectDefName(xDef.getAttribute("name"));
 
 	if (!Init())
 		return false;
@@ -418,20 +409,19 @@ bool Object::LoadObjectProperties(XMLNode &xDef) {
 
 	// TODO: these are overriding things set in Init()
 
-	properties.feels_gravity = xProps.nChildNode("affectedByGravity") != 0;
-	properties.feels_user_input = xProps.nChildNode("affectedByInput1") != 0;
-	properties.feels_friction = xProps.nChildNode("affectedByFriction") != 0;
+	_Properties.feels_gravity = xProps.nChildNode("affectedByGravity") != 0;
+	_Properties.feels_user_input = xProps.nChildNode("affectedByInput1") != 0;
+	_Properties.feels_friction = xProps.nChildNode("affectedByFriction") != 0;
 
-	properties.uses_physics_engine = xProps.nChildNode("solidObject") != 0;
-	properties.is_static = xProps.nChildNode("solidObject") != 0;
+	_Properties.uses_physics_engine = xProps.nChildNode("solidObject") != 0;
+	_Properties.is_static = xProps.nChildNode("solidObject") != 0;
 
-	properties.do_our_own_rotation = xProps.nChildNode("noPhysicsRotate") != 0;
-	properties.is_sensor = xProps.nChildNode("sensorOnly") != 0;
+	_Properties.is_sensor = xProps.nChildNode("sensorOnly") != 0;
 
-	properties.spawns_enemies = xProps.nChildNode("spawnsEnemies") != 0;
+	_Properties.spawns_enemies = xProps.nChildNode("spawnsEnemies") != 0;
 
 	if (xProps.nChildNode("isOverlay")) {
-		properties.is_overlay = 1;
+		_Properties.is_overlay = 1;
 	}
 
 	if (xProps.nChildNode("boundingBox") != 0)
@@ -531,8 +521,12 @@ bool Object::ContainsPoint(const b2Vec2 & p) const
 {
 	// point p must be in layer-space (i.e. already adjusted for layer scroll speed)
 
-	return  p.x >= _Pos.x && p.x <= _Pos.x + GetWidth() &&
-			p.y >= _Pos.y && p.y <= _Pos.y + GetHeight();
+	// undo effects of scroll speed on width/height [effectively, makes the width/height way bigger]
+	float adjustedWidth  = GetWidth()  / GetLayer()->GetScrollSpeed();
+	float adjustedHeight = GetHeight() / GetLayer()->GetScrollSpeed();
+
+	return  p.x >= _Pos.x && p.x <= _Pos.x + adjustedWidth &&
+			p.y >= _Pos.y && p.y <= _Pos.y + adjustedHeight;
 }
 
 Object* Object::AddPrototype(string type, Object * obj)

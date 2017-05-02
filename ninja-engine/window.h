@@ -75,7 +75,7 @@ class GameWindow {
 
 		void DrawSprite(	Sprite* sprite, int x, int y, 
 											bool flip_x=0, bool flip_y=0, 
-											bool use_rotation=false, float rotate_angle=0.0f,
+											float rotate_angle=0.0f,
 											uint alpha=255, bool bDrawBoundingBoxOnly=false);
 	
 		//! Draw text at specified XY

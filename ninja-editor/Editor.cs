@@ -217,7 +217,7 @@ namespace MapEditor
                     continue;
 
                 KeyValuePair<uint, string> objectListItemToAdd = new KeyValuePair<uint, string>(
-                    obj.GetID(), obj.GetObjectDefName()
+                    obj.GetID(), obj.GetPropObjectDefName()
                 );
                 objectList.Add(objectListItemToAdd);
             }

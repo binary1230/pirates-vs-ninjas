@@ -35,10 +35,7 @@ void CreditsMode::Shutdown() {
 }
 
 void CreditsMode::Draw() {
-	// XXX Should use window->Blit()...
-	WINDOW->DrawSprite(	credits_sprite, 
-											WINDOW->Width()/2 - credits_sprite->width/2, 
-											scroll_offset );
+	WINDOW->DrawSprite(credits_sprite, WINDOW->Width()/2 - credits_sprite->width/2, scroll_offset);
 }
 
 void CreditsMode::Update() {

@@ -8,7 +8,6 @@
 #include "objectLayer.h"
 #include "physics.h"
 
-// class Object;
 class Animation;
 class Sprite;
 class b2Body;
@@ -26,7 +25,7 @@ enum VolatileStateLevel {
 	LEVEL_PLAYERS,
 };
 
-//! Various properties of an Object
+//! Various _Properties of an Object
 struct ObjectProperties 
 {
 	// NOTE: If you add anything here, update ClearProperties()
@@ -44,15 +43,12 @@ struct ObjectProperties
 	//! Only matters if uses_physics_engine is on
 	bool is_static; 
 
-	//! If set, this object will not get a callback if being collided with
-	//! Note, however, that it will still deal out collision
+	//! Don't allow collisions with this object to affect other physical objects
+	//! However, collision events are still called.
 	bool is_sensor;
 
 	//! Don't rotate if physical. e.g. if we want to tip over, don't let us
 	bool ignores_physics_rotation;
-
-	//! Don't let physics touch our rotation, we'll do it ourselves
-	bool do_our_own_rotation;
 
 	//! Tell the physics engine to create angled corners for our bounding box 
 	//! (useful to keep some objects from sticking on seams, like the player)
@@ -81,7 +77,10 @@ namespace boost {
 			ar & BOOST_SERIALIZATION_NVP(p.is_static);
 			ar & BOOST_SERIALIZATION_NVP(p.is_sensor);
 			ar & BOOST_SERIALIZATION_NVP(p.ignores_physics_rotation);
-			ar & BOOST_SERIALIZATION_NVP(p.do_our_own_rotation);
+			if (version < 5) {
+				bool obsolete;
+				ar & boost::serialization::make_nvp("p.do_our_own_rotation", obsolete);
+			}
 			ar & BOOST_SERIALIZATION_NVP(p.use_angled_corners_collision_box);
 			ar & BOOST_SERIALIZATION_NVP(p.is_overlay);
 		}
@@ -100,7 +99,6 @@ inline void ClearProperties(struct ObjectProperties& p) {
 	p.is_static = 0;
 	p.is_sensor = 0;
 	p.ignores_physics_rotation = 0;
-	p.do_our_own_rotation = 0;
 }
 
 #define IMPLEMENT_CLONE(TYPE) \
@@ -115,19 +113,22 @@ inline void ClearProperties(struct ObjectProperties& p) {
 
 //! A drawable entity in the world
 
-//! Objects have physical properties associated with them, but do
+//! Objects have physical _Properties associated with them, but do
 //! not always have to take part in the world
 class Object {
 	friend class boost::serialization::access;
 	template<class Archive>
-	void serialize(Archive & ar, const unsigned int file_version)
+	void serialize(Archive & ar, const unsigned int version)
 	{
 		ar & boost::serialization::make_nvp("pos", _Pos);
-		ar & BOOST_SERIALIZATION_NVP(objectDefName);
-		ar & BOOST_SERIALIZATION_NVP(properties);
-		ar & BOOST_SERIALIZATION_NVP(m_pkLayer);
-		ar & BOOST_SERIALIZATION_NVP(_use_rotation);
-		ar & BOOST_SERIALIZATION_NVP(_rotate_velocity);
+		ar & boost::serialization::make_nvp("objectDefName", _ObjectDefName);
+		ar & boost::serialization::make_nvp("properties", _Properties);
+		ar & boost::serialization::make_nvp("m_pkLayer", _Layer);
+		if (version < 5) {
+			bool obsolete;
+			ar & boost::serialization::make_nvp("_use_rotation", obsolete);
+		}
+		ar & boost::serialization::make_nvp("_rotate_velocity", _RotateVelocity);
 	}
 
 	// implement "prototype pattern" for object creation
@@ -137,13 +138,13 @@ class Object {
 	protected:
 
 		//! A pointer to the layer this object is on
-		ObjectLayer* m_pkLayer;
+		ObjectLayer* _Layer;
 		
 		//! The directions of current collisions (up,down,right,left)
 		CollisionDirection m_kCurrentCollision;
 		
-		//! Object properties
-		struct ObjectProperties properties;
+		//! Object _Properties
+		struct ObjectProperties _Properties;
 		
 		//! Points to the current animation
 		Animation* currentAnimation;
@@ -176,8 +177,6 @@ class Object {
 		//! When set to -1, this value is ignored
 		int display_time;
 
-		std::string objectDefName;
-
 		// -- UNUSUED BELOW --
 
 		//! Current fade-out time
@@ -194,6 +193,8 @@ class Object {
 
 		//! Do common object updates
 		void BaseUpdate();
+
+		void UpdateRotation();
 
 		void UpdatePositionFromPhysicsLocation();
 
@@ -220,8 +221,7 @@ class Object {
 		int b_box_width, b_box_height;
 
 		//! Rotational parameters
-		float rotate_angle, _rotate_velocity;
-		bool _use_rotation;
+		float drawing_rotation_angle;
 
 		//! Whether to draw the bounding box or not
 		bool m_bDrawBoundingBox;
@@ -346,8 +346,8 @@ class Object {
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();
 		
-		struct ObjectProperties GetProperties() const { return properties; };
-		inline void SetProperties(struct ObjectProperties p) { properties = p;}
+		struct ObjectProperties GetProperties() const { return _Properties; };
+		inline void SetProperties(struct ObjectProperties p) { _Properties = p;}
 		
 		void SetDebugFlag(bool d) {debug_flag = d;};
 		bool GetDebugFlag() const {return debug_flag;};
@@ -361,12 +361,8 @@ class Object {
 		inline bool IsDead() const {return is_dead;};
 		inline void SetIsDead(bool bVal) {is_dead = bVal;}
 
-		ObjectLayer* const GetLayer() const {return m_pkLayer;};
-		void SetLayer(ObjectLayer* const l) {m_pkLayer = l;};
-
-		void SetObjectDefName(const char*);
-
-		std::string GetObjectDefName();
+		ObjectLayer* const GetLayer() const {return _Layer;};
+		void SetLayer(ObjectLayer* const l) {_Layer = l;};
 
 		void ApplyImpulse(float x, float y);
 		void ApplyImpulse(const b2Vec2& v);
@@ -385,17 +381,23 @@ class Object {
 		static Object* AddPrototype(std::string type, Object* obj);
 		static Object* CreateObject(std::string type);
 
+		CREATE_PROPERTY(float, RotateVelocity)
+		CREATE_PROPERTY(string, ObjectDefName)
+
 		friend class Editor;
 };
 
 #if !defined(SWIG) 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
-BOOST_CLASS_VERSION(Object, 4)
-BOOST_CLASS_VERSION(ObjectProperties, 4)
+BOOST_CLASS_VERSION(Object, 5)
+BOOST_CLASS_VERSION(ObjectProperties, 5)
 #endif // SWIG
 
 #ifdef SWIG
 %attribute(Object, b2Vec2, Position, GetPos, SetPos)   // mostly same as EXPOSE_MAPEDITOR_PROPERTY(Object, b2Vec2, _Pos);
 #endif // SWIG
+
+EXPOSE_MAPEDITOR_PROPERTY(Object, float, RotateVelocity);
+EXPOSE_MAPEDITOR_PROPERTY(Object, string, ObjectDefName);
 
 #endif // __OBJECT_H

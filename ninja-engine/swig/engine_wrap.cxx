@@ -644,6 +644,14 @@ SWIGINTERN bool std_vector_Sl_ObjectLayer_Sm__Sg__Remove(std::vector< ObjectLaye
 #define Object_Position_set(self_, val_) self_->SetPos(val_)
   
 
+#define Object_RotateVelocity_get(self_) self_->GetPropRotateVelocity()
+#define Object_RotateVelocity_set(self_, val_) self_->SetPropRotateVelocity(val_)
+  
+
+#define Object_ObjectDefName_get(self_) self_->GetPropObjectDefName()
+#define Object_ObjectDefName_set(self_, val_) self_->SetPropObjectDefName(val_)
+  
+
 #define ObjectSpring_Direction_get(self_) self_->GetPropDirection()
 #define ObjectSpring_Direction_set(self_, val_) self_->SetPropDirection(val_)
   
@@ -3438,28 +3446,6 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_ignores_physics_rota
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_do_our_own_rotation_set(void * jarg1, unsigned int jarg2) {
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  if (arg1) (arg1)->do_our_own_rotation = arg2;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_do_our_own_rotation_get(void * jarg1) {
-  unsigned int jresult ;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  result = (bool) ((arg1)->do_our_own_rotation);
-  jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_use_angled_corners_collision_box_set(void * jarg1, unsigned int jarg2) {
   ObjectProperties *arg1 = (ObjectProperties *) 0 ;
   bool arg2 ;
@@ -4164,28 +4150,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetLayer(void * jarg1, void * jarg2) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetObjectDefName(void * jarg1, char * jarg2) {
-  Object *arg1 = (Object *) 0 ;
-  char *arg2 = (char *) 0 ;
-  
-  arg1 = (Object *)jarg1; 
-  arg2 = (char *)jarg2; 
-  (arg1)->SetObjectDefName((char const *)arg2);
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_Object_GetObjectDefName(void * jarg1) {
-  char * jresult ;
-  Object *arg1 = (Object *) 0 ;
-  std::string result;
-  
-  arg1 = (Object *)jarg1; 
-  result = (arg1)->GetObjectDefName();
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_ApplyImpulse__SWIG_0(void * jarg1, float jarg2, float jarg3) {
   Object *arg1 = (Object *) 0 ;
   float arg2 ;
@@ -4312,6 +4276,54 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_CreateObject(char * jarg1) {
 }
 
 
+SWIGEXPORT float SWIGSTDCALL CSharp_Object_GetPropRotateVelocity(void * jarg1) {
+  float jresult ;
+  Object *arg1 = (Object *) 0 ;
+  float result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (float)(arg1)->GetPropRotateVelocity();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetPropRotateVelocity(void * jarg1, float jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  float arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (float)jarg2; 
+  (arg1)->SetPropRotateVelocity(arg2);
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_Object_GetPropObjectDefName(void * jarg1) {
+  char * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  std::string result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (arg1)->GetPropObjectDefName();
+  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetPropObjectDefName(void * jarg1, char * jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  (&arg2)->assign(jarg2); 
+  (arg1)->SetPropObjectDefName(arg2);
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_Position_set(void * jarg1, void * jarg2) {
   Object *arg1 = (Object *) 0 ;
   b2Vec2 *arg2 = (b2Vec2 *) 0 ;
@@ -4330,6 +4342,55 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_Position_get(void * jarg1) {
   arg1 = (Object *)jarg1; 
   result = (b2Vec2 *)Object_Position_get(arg1);
   jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_RotateVelocity_set(void * jarg1, float jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  float arg2 ;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (float)jarg2; 
+  Object_RotateVelocity_set(arg1,arg2);
+}
+
+
+SWIGEXPORT float SWIGSTDCALL CSharp_Object_RotateVelocity_get(void * jarg1) {
+  float jresult ;
+  Object *arg1 = (Object *) 0 ;
+  float result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (float)Object_RotateVelocity_get(arg1);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_ObjectDefName_set(void * jarg1, char * jarg2) {
+  Object *arg1 = (Object *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  std::string arg2_str(jarg2);
+  arg2 = &arg2_str; 
+  Object_ObjectDefName_set(arg1,(std::string const &)*arg2);
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_Object_ObjectDefName_get(void * jarg1) {
+  char * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  std::string *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (std::string *) &Object_ObjectDefName_get(arg1);
+  jresult = SWIG_csharp_string_callback(result->c_str()); 
   return jresult;
 }
 

@@ -17,8 +17,7 @@ void ObjectFan::Shutdown() {
 }
 
 void ObjectFan::Update() {
-	_use_rotation = true;
-	_rotate_velocity *= FAN_DECAY_RATE;
+	_RotateVelocity *= FAN_DECAY_RATE;
 	
 	BaseUpdate();
 	UpdateSimpleAnimations();
@@ -37,7 +36,7 @@ void ObjectFan::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) 
 			direction = 1.0f;
 
 		// calc the new rotational velocity
-		_rotate_velocity = direction * std::max(DEFAULT_FAN_VELOCITY*player_factor, (float)fabs(_rotate_velocity));
+		_RotateVelocity = direction * std::max(DEFAULT_FAN_VELOCITY*player_factor, (float)fabs(_RotateVelocity));
 	}
 }
 
@@ -45,10 +44,9 @@ bool ObjectFan::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	properties.uses_physics_engine = 1;
-	properties.is_static = 1;
-	properties.is_sensor = 1;
-	properties.do_our_own_rotation = 1;
+	_Properties.uses_physics_engine = 1;
+	_Properties.is_static = 1;
+	_Properties.is_sensor = 1;
 
 	return true;
 }

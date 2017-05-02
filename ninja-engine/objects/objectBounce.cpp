@@ -31,7 +31,7 @@ bool ObjectBounce::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	properties.uses_physics_engine = 1;
+	_Properties.uses_physics_engine = 1;
 	
 	return true;
 }

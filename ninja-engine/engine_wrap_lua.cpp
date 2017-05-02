@@ -2838,6 +2838,14 @@ SWIGINTERN void std_vector_Sl_ObjectLayer_Sm__Sg____setitem__(std::vector< Objec
 #define Object_Position_set(self_, val_) self_->SetPos(val_)
   
 
+#define Object_RotateVelocity_get(self_) self_->GetPropRotateVelocity()
+#define Object_RotateVelocity_set(self_, val_) self_->SetPropRotateVelocity(val_)
+  
+
+#define Object_ObjectDefName_get(self_) self_->GetPropObjectDefName()
+#define Object_ObjectDefName_set(self_, val_) self_->SetPropObjectDefName(val_)
+  
+
 #define ObjectSpring_Direction_get(self_) self_->GetPropDirection()
 #define ObjectSpring_Direction_set(self_, val_) self_->SetPropDirection(val_)
   
@@ -8494,56 +8502,6 @@ fail:
 }
 
 
-static int _wrap_ObjectProperties_do_our_own_rotation_set(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("ObjectProperties::do_our_own_rotation",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::do_our_own_rotation",1,"ObjectProperties *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("ObjectProperties::do_our_own_rotation",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_do_our_own_rotation_set",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  if (arg1) (arg1)->do_our_own_rotation = arg2;
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_do_our_own_rotation_get(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("ObjectProperties::do_our_own_rotation",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::do_our_own_rotation",1,"ObjectProperties *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_do_our_own_rotation_get",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  result = (bool) ((arg1)->do_our_own_rotation);
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_ObjectProperties_use_angled_corners_collision_box_set(lua_State* L) {
   int SWIG_arg = 0;
   ObjectProperties *arg1 = (ObjectProperties *) 0 ;
@@ -8682,7 +8640,6 @@ static swig_lua_attribute swig_ObjectProperties_attributes[] = {
     { "is_static", _wrap_ObjectProperties_is_static_get, _wrap_ObjectProperties_is_static_set },
     { "is_sensor", _wrap_ObjectProperties_is_sensor_get, _wrap_ObjectProperties_is_sensor_set },
     { "ignores_physics_rotation", _wrap_ObjectProperties_ignores_physics_rotation_get, _wrap_ObjectProperties_ignores_physics_rotation_set },
-    { "do_our_own_rotation", _wrap_ObjectProperties_do_our_own_rotation_get, _wrap_ObjectProperties_do_our_own_rotation_set },
     { "use_angled_corners_collision_box", _wrap_ObjectProperties_use_angled_corners_collision_box_get, _wrap_ObjectProperties_use_angled_corners_collision_box_set },
     { "is_overlay", _wrap_ObjectProperties_is_overlay_get, _wrap_ObjectProperties_is_overlay_set },
     {0,0,0}
@@ -10572,56 +10529,6 @@ fail:
 }
 
 
-static int _wrap_Object_SetObjectDefName(lua_State* L) {
-  int SWIG_arg = 0;
-  Object *arg1 = (Object *) 0 ;
-  char *arg2 = (char *) 0 ;
-  
-  SWIG_check_num_args("Object::SetObjectDefName",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::SetObjectDefName",1,"Object *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Object::SetObjectDefName",2,"char const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("Object_SetObjectDefName",1,SWIGTYPE_p_Object);
-  }
-  
-  arg2 = (char *)lua_tostring(L, 2);
-  (arg1)->SetObjectDefName((char const *)arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Object_GetObjectDefName(lua_State* L) {
-  int SWIG_arg = 0;
-  Object *arg1 = (Object *) 0 ;
-  std::string result;
-  
-  SWIG_check_num_args("Object::GetObjectDefName",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::GetObjectDefName",1,"Object *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("Object_GetObjectDefName",1,SWIGTYPE_p_Object);
-  }
-  
-  result = (arg1)->GetObjectDefName();
-  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_Object_ApplyImpulse__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
@@ -10904,6 +10811,106 @@ fail:
 }
 
 
+static int _wrap_Object_GetPropRotateVelocity(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  float result;
+  
+  SWIG_check_num_args("Object::GetPropRotateVelocity",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::GetPropRotateVelocity",1,"Object *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_GetPropRotateVelocity",1,SWIGTYPE_p_Object);
+  }
+  
+  result = (float)(arg1)->GetPropRotateVelocity();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Object_SetPropRotateVelocity(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  float arg2 ;
+  
+  SWIG_check_num_args("Object::SetPropRotateVelocity",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::SetPropRotateVelocity",1,"Object *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Object::SetPropRotateVelocity",2,"float");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_SetPropRotateVelocity",1,SWIGTYPE_p_Object);
+  }
+  
+  arg2 = (float)lua_tonumber(L, 2);
+  (arg1)->SetPropRotateVelocity(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Object_GetPropObjectDefName(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  std::string result;
+  
+  SWIG_check_num_args("Object::GetPropObjectDefName",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::GetPropObjectDefName",1,"Object *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_GetPropObjectDefName",1,SWIGTYPE_p_Object);
+  }
+  
+  result = (arg1)->GetPropObjectDefName();
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Object_SetPropObjectDefName(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  std::string arg2 ;
+  
+  SWIG_check_num_args("Object::SetPropObjectDefName",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::SetPropObjectDefName",1,"Object *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Object::SetPropObjectDefName",2,"std::string");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_SetPropObjectDefName",1,SWIGTYPE_p_Object);
+  }
+  
+  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  (arg1)->SetPropObjectDefName(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Object_Position_set(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
@@ -10958,12 +10965,115 @@ fail:
 }
 
 
+static int _wrap_Object_RotateVelocity_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  float arg2 ;
+  
+  SWIG_check_num_args("Object::RotateVelocity",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::RotateVelocity",1,"Object *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Object::RotateVelocity",2,"float");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_RotateVelocity_set",1,SWIGTYPE_p_Object);
+  }
+  
+  arg2 = (float)lua_tonumber(L, 2);
+  Object_RotateVelocity_set(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Object_RotateVelocity_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  float result;
+  
+  SWIG_check_num_args("Object::RotateVelocity",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::RotateVelocity",1,"Object *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_RotateVelocity_get",1,SWIGTYPE_p_Object);
+  }
+  
+  result = (float)Object_RotateVelocity_get(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Object_ObjectDefName_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  std::string *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("Object::ObjectDefName",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::ObjectDefName",1,"Object *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Object::ObjectDefName",2,"std::string const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_ObjectDefName_set",1,SWIGTYPE_p_Object);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2;
+  Object_ObjectDefName_set(arg1,(std::string const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Object_ObjectDefName_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  std::string *result = 0 ;
+  
+  SWIG_check_num_args("Object::ObjectDefName",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::ObjectDefName",1,"Object *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_ObjectDefName_get",1,SWIGTYPE_p_Object);
+  }
+  
+  result = (std::string *) &Object_ObjectDefName_get(arg1);
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_Object(void *obj) {
 Object *arg1 = (Object *) obj;
 delete arg1;
 }
 static swig_lua_attribute swig_Object_attributes[] = {
     { "Position", _wrap_Object_Position_get, _wrap_Object_Position_set },
+    { "RotateVelocity", _wrap_Object_RotateVelocity_get, _wrap_Object_RotateVelocity_set },
+    { "ObjectDefName", _wrap_Object_ObjectDefName_get, _wrap_Object_ObjectDefName_set },
     {0,0,0}
 };
 static swig_lua_method swig_Object_methods[]= {
@@ -11012,13 +11122,15 @@ static swig_lua_method swig_Object_methods[]= {
     { "SetIsDead", _wrap_Object_SetIsDead},
     { "GetLayer", _wrap_Object_GetLayer},
     { "SetLayer", _wrap_Object_SetLayer},
-    { "SetObjectDefName", _wrap_Object_SetObjectDefName},
-    { "GetObjectDefName", _wrap_Object_GetObjectDefName},
     { "ApplyImpulse", _wrap_Object_ApplyImpulse},
     { "LoadFromObjectDef", _wrap_Object_LoadFromObjectDef},
     { "FinishLoading", _wrap_Object_FinishLoading},
     { "ContainsPoint", _wrap_Object_ContainsPoint},
     { "ResetVolatileState", _wrap_Object_ResetVolatileState},
+    { "GetPropRotateVelocity", _wrap_Object_GetPropRotateVelocity},
+    { "SetPropRotateVelocity", _wrap_Object_SetPropRotateVelocity},
+    { "GetPropObjectDefName", _wrap_Object_GetPropObjectDefName},
+    { "SetPropObjectDefName", _wrap_Object_SetPropObjectDefName},
     {0,0}
 };
 static swig_lua_method swig_Object_meta[] = {

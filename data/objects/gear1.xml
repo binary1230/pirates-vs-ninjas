@@ -12,11 +12,6 @@
 			<repeat />
 		</animation>
 	</animations>
-	<properties>
-		<noPhysicsRotate/>
-		<solidObject/>
-		<sensorOnly/>
-	</properties>
 </objectDef>
 
 </objectDefinitions>

@@ -8,7 +8,7 @@ bool ObjectCutBars::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	properties.is_overlay = true;
+	_Properties.is_overlay = true;
 
 	return true;
 }

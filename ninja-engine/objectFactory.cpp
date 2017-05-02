@@ -178,7 +178,7 @@ Object* ObjectFactory::CreateObject(std::string objDefName) {
 	if (!pkObject)
 		return false;
 
-	pkObject->SetObjectDefName(objDefName.c_str());
+	pkObject->SetPropObjectDefName(objDefName.c_str());
 	return pkObject;
 }
 

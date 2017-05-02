@@ -69,7 +69,7 @@ bool ObjectController::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	properties.is_overlay = 1;
+	_Properties.is_overlay = 1;
 
 	// XXX READ which controller we monitor from XML file
 	// but not in this method

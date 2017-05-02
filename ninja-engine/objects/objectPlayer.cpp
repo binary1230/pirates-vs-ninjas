@@ -385,9 +385,9 @@ bool ObjectPlayer::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	properties.uses_physics_engine = 1;
-	properties.ignores_physics_rotation = 1;
-	properties.use_angled_corners_collision_box = 1;
+	_Properties.uses_physics_engine = 1;
+	_Properties.ignores_physics_rotation = 1;
+	_Properties.use_angled_corners_collision_box = 1;
 
 	XMLNode xProps = xDef.getChildNode("properties");
 
