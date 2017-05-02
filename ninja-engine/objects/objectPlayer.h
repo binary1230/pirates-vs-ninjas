@@ -1,14 +1,13 @@
 #ifndef PLAYEROBJECT_H
 #define PLAYEROBJECT_H
 
+#include "globals.h"
 #include "object.h"
 
-class ObjectPlayer;
 class Animation;
 class BaseInput;
 class Animation;
 class BaseInput;
-class ObjectFactory;
 class ObjectDoor;
 
 enum PlayerState {
@@ -37,12 +36,19 @@ class ObjectPlayer : public Object {
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
+		if (version >= 1) {
+			ar & BOOST_SERIALIZATION_NVP(controller_num);
+		}
 	}
 
 	protected:
 		float jump_velocity;
 		float min_velocity;
 		float drag;
+
+		//! Which controller (e.g. which joystick) use, if we are getting
+		//! input for this object
+		int controller_num;
 
 		// How long until we are allowed to draw another "skid" object
 		int next_skid_time;
@@ -94,8 +100,10 @@ class ObjectPlayer : public Object {
 		bool WantsToSlideOnRightSide();
 
 		bool WantsToSlideOnAnySide();
-
-		friend class ObjectFactory;
 };
+
+#if !defined(SWIG) 
+BOOST_CLASS_VERSION(ObjectPlayer, 1)
+#endif // SWIG
 
 #endif // PLAYER_OBJECT_H

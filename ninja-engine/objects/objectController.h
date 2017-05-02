@@ -4,7 +4,6 @@
 #include "object.h"
 
 class Sprite;
-class ObjectFactory;
 
 //! A button on the Controller and its associated sprite
 struct Button {
@@ -19,7 +18,9 @@ class ObjectController : public Object {
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
-		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
+		if (version >= 1) {
+			ar & BOOST_SERIALIZATION_NVP(controller_num);
+		}
 	}
 
 	protected:
@@ -27,6 +28,8 @@ class ObjectController : public Object {
 		vector<struct Button> buttons;
 
 		bool only_show_during_demo;
+
+		int controller_num;
 
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 		
@@ -46,8 +49,10 @@ class ObjectController : public Object {
 
 		ObjectController();
 		~ObjectController();
-
-		friend class ObjectFactory;
 };
+
+#if !defined(SWIG) 
+BOOST_CLASS_VERSION(ObjectController, 1)
+#endif // SWIG
 
 #endif // OBJ_CONTROLLER_H

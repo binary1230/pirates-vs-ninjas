@@ -6,7 +6,6 @@
 #include "globals.h"
 #include "objectFactory.h"
 #include "object.h"
-#include "objectIDs.h"
 #include "objectText.h"
 #include "input.h"
 #include "gameState.h"

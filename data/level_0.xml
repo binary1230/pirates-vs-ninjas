@@ -7,13 +7,12 @@
 		<count>553</count>
 		<item_version>0</item_version>
 		<item class_id="3" class_name="ObjectStatic" tracking_level="1" version="0" object_id="_1">
-			<Object class_id="4" tracking_level="0" version="3">
+			<Object class_id="4" tracking_level="0" version="4">
 				<pos class_id="5" tracking_level="0" version="0">
 					<x>9.660000000e+03</x>
 					<y>1.200000000e+02</y>
 				</pos>
 				<objectDefName>block-large</objectDefName>
-				<controller_num>0</controller_num>
 				<properties class_id="6" tracking_level="0" version="4">
 					<p.feels_gravity>0</p.feels_gravity>
 					<p.feels_user_input>0</p.feels_user_input>
@@ -39,7 +38,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large-evil</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -65,7 +63,6 @@
 									<y>1.400000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -91,7 +88,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -117,7 +113,6 @@
 									<y>4.780000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -143,7 +138,6 @@
 									<y>4.180000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -169,7 +163,6 @@
 									<y>4.180000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -195,7 +188,6 @@
 									<y>1.200000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -221,7 +213,6 @@
 									<y>1.180000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -247,7 +238,6 @@
 									<y>5.800000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -273,7 +263,6 @@
 									<y>1.300000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -299,7 +288,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -325,7 +313,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -351,7 +338,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -377,7 +363,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -403,7 +388,6 @@
 									<y>4.199999695e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -429,7 +413,6 @@
 									<y>3.300000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -455,7 +438,6 @@
 									<y>4.199999695e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -481,7 +463,6 @@
 									<y>2.400000153e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -507,7 +488,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -533,7 +513,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -559,7 +538,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -585,7 +563,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -611,7 +588,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -637,7 +613,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -663,7 +638,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -689,7 +663,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -715,7 +688,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -741,7 +713,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -767,7 +738,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -793,7 +763,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -819,7 +788,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -845,7 +813,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -871,7 +838,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -897,7 +863,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -923,7 +888,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -949,7 +913,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -975,7 +938,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1001,7 +963,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1027,7 +988,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1053,7 +1013,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1079,7 +1038,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1105,7 +1063,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1131,7 +1088,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1157,7 +1113,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1183,7 +1138,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1209,7 +1163,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1235,7 +1188,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1261,7 +1213,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1287,7 +1238,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1313,7 +1263,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1339,7 +1288,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1365,7 +1313,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1391,7 +1338,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1417,7 +1363,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1443,7 +1388,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1469,7 +1413,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1495,7 +1438,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1521,7 +1463,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1547,7 +1488,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1573,7 +1513,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1599,7 +1538,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1625,7 +1563,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1651,7 +1588,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1677,7 +1613,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1703,7 +1638,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1729,7 +1663,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1755,7 +1688,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1781,7 +1713,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1807,7 +1738,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1833,7 +1763,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1859,7 +1788,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1885,7 +1813,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1911,7 +1838,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1937,7 +1863,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1963,7 +1888,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -1989,7 +1913,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2015,7 +1938,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2041,7 +1963,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2067,7 +1988,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2093,7 +2013,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2119,7 +2038,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2145,7 +2063,6 @@
 									<y>1.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2171,7 +2088,6 @@
 									<y>3.000000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2197,7 +2113,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2223,7 +2138,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2249,7 +2163,6 @@
 									<y>6.300000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2275,7 +2188,6 @@
 									<y>6.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2301,7 +2213,6 @@
 									<y>5.700000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2327,7 +2238,6 @@
 									<y>5.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2353,7 +2263,6 @@
 									<y>5.100000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2379,7 +2288,6 @@
 									<y>4.800000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2405,7 +2313,6 @@
 									<y>4.500000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2431,7 +2338,6 @@
 									<y>4.199999695e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2457,7 +2363,6 @@
 									<y>3.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2483,7 +2388,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2509,7 +2413,6 @@
 									<y>1.050000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2535,7 +2438,6 @@
 									<y>1.080000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2561,7 +2463,6 @@
 									<y>1.110000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2587,7 +2488,6 @@
 									<y>1.140000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2613,7 +2513,6 @@
 									<y>1.140000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2639,7 +2538,6 @@
 									<y>1.170000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2665,7 +2563,6 @@
 									<y>1.200000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2691,7 +2588,6 @@
 									<y>1.230000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2717,7 +2613,6 @@
 									<y>1.260000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2743,7 +2638,6 @@
 									<y>1.080000000e+03</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2769,7 +2663,6 @@
 									<y>1.160000000e+03</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2795,7 +2688,6 @@
 									<y>1.240000000e+03</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2821,7 +2713,6 @@
 									<y>1.320000000e+03</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2847,7 +2738,6 @@
 									<y>1.240000000e+03</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2873,7 +2763,6 @@
 									<y>1.160000000e+03</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2899,7 +2788,6 @@
 									<y>1.290000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2925,7 +2813,6 @@
 									<y>1.320000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2951,7 +2838,6 @@
 									<y>1.350000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -2977,7 +2863,6 @@
 									<y>1.380000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3003,7 +2888,6 @@
 									<y>1.410000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3029,7 +2913,6 @@
 									<y>1.440000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3055,7 +2938,6 @@
 									<y>1.470000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3081,7 +2963,6 @@
 									<y>1.470000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3107,7 +2988,6 @@
 									<y>1.470000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3133,7 +3013,6 @@
 									<y>1.230000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3159,7 +3038,6 @@
 									<y>1.170000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3185,7 +3063,6 @@
 									<y>1.110000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3211,7 +3088,6 @@
 									<y>1.020000000e+03</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3237,7 +3113,6 @@
 									<y>1.290000000e+03</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3263,7 +3138,6 @@
 									<y>1.470000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3289,7 +3163,6 @@
 									<y>1.470000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3315,7 +3188,6 @@
 									<y>1.470000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3341,7 +3213,6 @@
 									<y>1.440000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3367,7 +3238,6 @@
 									<y>1.410000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3393,7 +3263,6 @@
 									<y>1.380000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3419,7 +3288,6 @@
 									<y>1.350000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3445,7 +3313,6 @@
 									<y>1.320000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3471,7 +3338,6 @@
 									<y>1.290000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3497,7 +3363,6 @@
 									<y>1.260000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3523,7 +3388,6 @@
 									<y>1.230000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3549,7 +3413,6 @@
 									<y>1.200000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3575,7 +3438,6 @@
 									<y>1.170000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3601,7 +3463,6 @@
 									<y>1.140000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3627,7 +3488,6 @@
 									<y>1.110000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3653,7 +3513,6 @@
 									<y>1.080000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3679,7 +3538,6 @@
 									<y>1.050000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3705,7 +3563,6 @@
 									<y>1.050000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3731,7 +3588,6 @@
 									<y>1.050000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3757,7 +3613,6 @@
 									<y>1.020000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3783,7 +3638,6 @@
 									<y>1.050000000e+03</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3809,7 +3663,6 @@
 									<y>9.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3835,7 +3688,6 @@
 									<y>9.600000610e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3861,7 +3713,6 @@
 									<y>9.300000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3887,7 +3738,6 @@
 									<y>9.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3913,7 +3763,6 @@
 									<y>8.700000610e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3939,7 +3788,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3965,7 +3813,6 @@
 									<y>8.100000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -3991,7 +3838,6 @@
 									<y>8.100000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4017,7 +3863,6 @@
 									<y>3.300000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4043,7 +3888,6 @@
 									<y>3.300000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4069,7 +3913,6 @@
 									<y>3.300000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4095,7 +3938,6 @@
 									<y>3.300000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4121,7 +3963,6 @@
 									<y>2.700000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4147,7 +3988,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4173,7 +4013,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4199,7 +4038,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4225,7 +4063,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4251,7 +4088,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4277,7 +4113,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4303,7 +4138,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4329,7 +4163,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4355,7 +4188,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4381,7 +4213,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large-evil</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4407,7 +4238,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4433,7 +4263,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4459,7 +4288,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4485,7 +4313,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4511,7 +4338,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4537,7 +4363,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4563,7 +4388,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4589,7 +4413,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4615,7 +4438,6 @@
 									<y>8.100000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4641,7 +4463,6 @@
 									<y>8.100000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4667,7 +4488,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4693,7 +4513,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4719,7 +4538,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4745,7 +4563,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4771,7 +4588,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4797,7 +4613,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4823,7 +4638,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4849,7 +4663,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4875,7 +4688,6 @@
 									<y>7.500000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4901,7 +4713,6 @@
 									<y>7.800000610e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4927,7 +4738,6 @@
 									<y>8.400000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4953,7 +4763,6 @@
 									<y>8.399999390e+02</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -4979,7 +4788,6 @@
 									<y>7.650000000e+02</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5005,7 +4813,6 @@
 									<y>7.650000000e+02</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5031,7 +4838,6 @@
 									<y>4.800000305e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5057,7 +4863,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5083,7 +4888,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5109,7 +4913,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5135,7 +4938,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5161,7 +4963,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5187,7 +4988,6 @@
 									<y>1.190000000e+02</y>
 								</pos>
 								<objectDefName>spring-up</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5217,7 +5017,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5243,7 +5042,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5269,7 +5067,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5295,7 +5092,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5321,7 +5117,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5347,7 +5142,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5373,7 +5167,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5399,7 +5192,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5425,7 +5217,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5451,7 +5242,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5477,7 +5267,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5503,7 +5292,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5529,7 +5317,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5555,7 +5342,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5581,7 +5367,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5607,7 +5392,6 @@
 									<y>4.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5633,7 +5417,6 @@
 									<y>7.650000000e+02</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5659,7 +5442,6 @@
 									<y>7.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5685,7 +5467,6 @@
 									<y>7.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5711,7 +5492,6 @@
 									<y>6.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5737,7 +5517,6 @@
 									<y>6.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5763,7 +5542,6 @@
 									<y>5.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5789,7 +5567,6 @@
 									<y>4.800000305e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5815,7 +5592,6 @@
 									<y>3.300000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5841,7 +5617,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5867,7 +5642,6 @@
 									<y>2.700000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5893,7 +5667,6 @@
 									<y>2.400000153e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5919,7 +5692,6 @@
 									<y>2.100000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5945,7 +5717,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5971,7 +5742,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -5997,7 +5767,6 @@
 									<y>6.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6023,7 +5792,6 @@
 									<y>5.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6049,7 +5817,6 @@
 									<y>4.800000305e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6075,7 +5842,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6101,7 +5867,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6127,7 +5892,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6153,7 +5917,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6179,7 +5942,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6205,7 +5967,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6231,7 +5992,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6257,7 +6017,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6283,7 +6042,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6309,7 +6067,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6335,7 +6092,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6361,7 +6117,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6387,7 +6142,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6413,7 +6167,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6439,7 +6192,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6465,7 +6217,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6491,7 +6242,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6517,7 +6267,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6543,7 +6292,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6569,7 +6317,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6595,7 +6342,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6621,7 +6367,6 @@
 									<y>4.199999695e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6647,7 +6392,6 @@
 									<y>4.500000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6673,7 +6417,6 @@
 									<y>3.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6699,7 +6442,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6725,7 +6467,6 @@
 									<y>3.300000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6751,7 +6492,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6777,7 +6517,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6803,7 +6542,6 @@
 									<y>2.700000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6829,7 +6567,6 @@
 									<y>2.400000153e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6855,7 +6592,6 @@
 									<y>2.100000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6881,7 +6617,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6907,7 +6642,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6933,7 +6667,6 @@
 									<y>1.500000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6959,7 +6692,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -6985,7 +6717,6 @@
 									<y>9.000000000e+01</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7011,7 +6742,6 @@
 									<y>9.000000000e+01</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7037,7 +6767,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7063,7 +6792,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7089,7 +6817,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7115,7 +6842,6 @@
 									<y>3.000000000e+01</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7141,7 +6867,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7167,7 +6892,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7193,7 +6917,6 @@
 									<y>3.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7219,7 +6942,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7245,7 +6967,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7271,7 +6992,6 @@
 									<y>4.000000305e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7297,7 +7017,6 @@
 									<y>3.200000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7323,7 +7042,6 @@
 									<y>2.400000305e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7349,7 +7067,6 @@
 									<y>1.600000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7375,7 +7092,6 @@
 									<y>8.000000763e+01</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7401,7 +7117,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7427,7 +7142,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7453,7 +7167,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7479,7 +7192,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7505,7 +7217,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7531,7 +7242,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7557,7 +7267,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7583,7 +7292,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7609,7 +7317,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7635,7 +7342,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7661,7 +7367,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7687,7 +7392,6 @@
 									<y>9.100000000e+01</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7713,7 +7417,6 @@
 									<y>1.980000305e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7739,7 +7442,6 @@
 									<y>3.010000305e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7765,7 +7467,6 @@
 									<y>3.760000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7791,7 +7492,6 @@
 									<y>4.250000305e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7817,7 +7517,6 @@
 									<y>4.460000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7843,7 +7542,6 @@
 									<y>4.500000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7869,7 +7567,6 @@
 									<y>3.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7895,7 +7592,6 @@
 									<y>3.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7921,7 +7617,6 @@
 									<y>3.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7947,7 +7642,6 @@
 									<y>3.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7973,7 +7667,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -7999,7 +7692,6 @@
 									<y>3.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8025,7 +7717,6 @@
 									<y>3.900000000e+02</y>
 								</pos>
 								<objectDefName>block-small</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8051,7 +7742,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8077,7 +7767,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8103,7 +7792,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8129,7 +7817,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8155,7 +7842,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8181,7 +7867,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8207,7 +7892,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8233,7 +7917,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8259,7 +7942,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8285,7 +7967,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8311,7 +7992,6 @@
 									<y>4.800000305e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8337,7 +8017,6 @@
 									<y>4.800000305e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8363,7 +8042,6 @@
 									<y>4.800000305e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8389,7 +8067,6 @@
 									<y>2.800000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8415,7 +8092,6 @@
 									<y>2.800000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8441,7 +8117,6 @@
 									<y>4.000000000e+01</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8467,7 +8142,6 @@
 									<y>4.000000000e+01</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8493,7 +8167,6 @@
 									<y>4.000000000e+01</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8519,7 +8192,6 @@
 									<y>4.000000000e+01</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8545,7 +8217,6 @@
 									<y>4.000000000e+01</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8571,7 +8242,6 @@
 									<y>4.000000000e+01</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8597,7 +8267,6 @@
 									<y>2.800000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8623,7 +8292,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8649,7 +8317,6 @@
 									<y>7.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8675,7 +8342,6 @@
 									<y>7.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8701,7 +8367,6 @@
 									<y>7.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8727,7 +8392,6 @@
 									<y>7.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8753,7 +8417,6 @@
 									<y>6.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8779,7 +8442,6 @@
 									<y>1.799999847e+02</y>
 								</pos>
 								<objectDefName>spring-up</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8809,7 +8471,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8835,7 +8496,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8861,7 +8521,6 @@
 									<y>6.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8887,7 +8546,6 @@
 									<y>6.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8913,7 +8571,6 @@
 									<y>6.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8939,7 +8596,6 @@
 									<y>6.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8965,7 +8621,6 @@
 									<y>5.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -8991,7 +8646,6 @@
 									<y>4.800000305e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9017,7 +8671,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9043,7 +8696,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9069,7 +8721,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9095,7 +8746,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9121,7 +8771,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9147,7 +8796,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9173,7 +8821,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9199,7 +8846,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9225,7 +8871,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9251,7 +8896,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9277,7 +8921,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9303,7 +8946,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9329,7 +8971,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9355,7 +8996,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9381,7 +9021,6 @@
 									<y>4.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9407,7 +9046,6 @@
 									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9433,7 +9071,6 @@
 									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9459,7 +9096,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9485,7 +9121,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9511,7 +9146,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9537,7 +9171,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9563,7 +9196,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9589,7 +9221,6 @@
 									<y>2.900000381e+01</y>
 								</pos>
 								<objectDefName>spring-up</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9619,7 +9250,6 @@
 									<y>1.500000000e+01</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9645,7 +9275,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9671,7 +9300,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9697,7 +9325,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9723,7 +9350,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9749,7 +9375,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9775,7 +9400,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9801,7 +9425,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9827,7 +9450,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9853,7 +9475,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9879,7 +9500,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9905,7 +9525,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9931,7 +9550,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9957,7 +9575,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -9983,7 +9600,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10009,7 +9625,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10035,7 +9650,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10061,7 +9675,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10087,7 +9700,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10113,7 +9725,6 @@
 									<y>2.250000000e+02</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10139,7 +9750,6 @@
 									<y>2.250000000e+02</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10165,7 +9775,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10191,7 +9800,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10217,7 +9825,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10243,7 +9850,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10269,7 +9875,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10295,7 +9900,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10321,7 +9925,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10347,7 +9950,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10373,7 +9975,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10399,7 +10000,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10425,7 +10025,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10451,7 +10050,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10477,7 +10075,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10503,7 +10100,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10529,7 +10125,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10555,7 +10150,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10581,7 +10175,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10607,7 +10200,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10633,7 +10225,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10659,7 +10250,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10685,7 +10275,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10711,7 +10300,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10737,7 +10325,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10763,7 +10350,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10789,7 +10375,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10815,7 +10400,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10841,7 +10425,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10867,7 +10450,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10893,7 +10475,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-long</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -10912,14 +10493,13 @@
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id="10" class_name="ObjectPlayer" tracking_level="1" version="0" object_id="_421">
+						<item class_id="10" class_name="ObjectPlayer" tracking_level="1" version="1" object_id="_421">
 							<Object>
 								<pos>
-									<x>2.074651337e+01</x>
-									<y>1.575262451e+01</y>
+									<x>3.536054230e+01</x>
+									<y>1.575262070e+01</y>
 								</pos>
 								<objectDefName>amaya</objectDefName>
-								<controller_num>1</controller_num>
 								<properties>
 									<p.feels_gravity>1</p.feels_gravity>
 									<p.feels_user_input>1</p.feels_user_input>
@@ -10937,6 +10517,7 @@
 								<_use_rotation>1</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
+							<controller_num>1</controller_num>
 						</item>
 					</objects>
 					<scroll_speed>1.000000000e+00</scroll_speed>
@@ -10959,7 +10540,6 @@
 					<y>2.666666746e+00</y>
 				</pos>
 				<objectDefName>s_palm_tall</objectDefName>
-				<controller_num>0</controller_num>
 				<properties>
 					<p.feels_gravity>0</p.feels_gravity>
 					<p.feels_user_input>0</p.feels_user_input>
@@ -10985,7 +10565,6 @@
 									<y>1.333333373e+00</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11011,7 +10590,6 @@
 									<y>6.666666865e-01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11033,11 +10611,10 @@
 						<item class_id_reference="3" object_id="_426">
 							<Object>
 								<pos>
-									<x>8.371000000e+03</x>
-									<y>6.666666865e-01</y>
+									<x>8.287666992e+03</x>
+									<y>-4.433333206e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11063,7 +10640,6 @@
 									<y>6.666666865e-01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11085,11 +10661,10 @@
 						<item class_id_reference="3" object_id="_428">
 							<Object>
 								<pos>
-									<x>8.785000000e+03</x>
-									<y>1.333333373e+00</y>
+									<x>8.929333008e+03</x>
+									<y>-1.766666794e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11111,11 +10686,10 @@
 						<item class_id_reference="3" object_id="_429">
 							<Object>
 								<pos>
-									<x>8.792333008e+03</x>
-									<y>1.333333373e+00</y>
+									<x>8.814000000e+03</x>
+									<y>-9.666664124e+00</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11137,11 +10711,10 @@
 						<item class_id_reference="3" object_id="_430">
 							<Object>
 								<pos>
-									<x>8.569666992e+03</x>
-									<y>2.666666746e+00</y>
+									<x>8.608000000e+03</x>
+									<y>-2.833333588e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11167,7 +10740,6 @@
 									<y>1.021000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11193,7 +10765,6 @@
 									<y>1.065666626e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11219,7 +10790,6 @@
 									<y>1.319000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11245,7 +10815,6 @@
 									<y>1.273000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11271,7 +10840,6 @@
 									<y>6.706666870e+02</y>
 								</pos>
 								<objectDefName>cloud2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11297,7 +10865,6 @@
 									<y>8.800000000e+02</y>
 								</pos>
 								<objectDefName>cloud2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11323,7 +10890,6 @@
 									<y>6.733333130e+02</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11349,7 +10915,6 @@
 									<y>5.766666870e+02</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11375,7 +10940,6 @@
 									<y>7.393333130e+02</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11401,7 +10965,6 @@
 									<y>5.206666870e+02</y>
 								</pos>
 								<objectDefName>cloud2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11427,7 +10990,6 @@
 									<y>8.373333740e+02</y>
 								</pos>
 								<objectDefName>cloud2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11453,7 +11015,6 @@
 									<y>7.226666870e+02</y>
 								</pos>
 								<objectDefName>cloud2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11479,7 +11040,6 @@
 									<y>8.173333740e+02</y>
 								</pos>
 								<objectDefName>cloud2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11505,7 +11065,6 @@
 									<y>1.333333373e+00</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11531,7 +11090,6 @@
 									<y>6.666666865e-01</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11557,7 +11115,6 @@
 									<y>1.333333373e+00</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11583,7 +11140,6 @@
 									<y>6.666666865e-01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11609,7 +11165,6 @@
 									<y>6.666666865e-01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11635,7 +11190,6 @@
 									<y>1.333333373e+00</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11661,7 +11215,6 @@
 									<y>6.666666865e-01</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11687,7 +11240,6 @@
 									<y>6.666666865e-01</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11713,7 +11265,6 @@
 									<y>6.666666865e-01</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11751,11 +11302,10 @@
 		<item class_id_reference="3" object_id="_453">
 			<Object>
 				<pos>
-					<x>8.939000000e+03</x>
-					<y>1.100000000e+01</y>
+					<x>8.903000000e+03</x>
+					<y>-2.400000000e+01</y>
 				</pos>
 				<objectDefName>s_palm_tall</objectDefName>
-				<controller_num>0</controller_num>
 				<properties>
 					<p.feels_gravity>0</p.feels_gravity>
 					<p.feels_user_input>0</p.feels_user_input>
@@ -11781,7 +11331,6 @@
 									<y>9.000000000e+00</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11803,11 +11352,10 @@
 						<item class_id_reference="3" object_id="_456">
 							<Object>
 								<pos>
-									<x>8.643000000e+03</x>
-									<y>2.800000000e+01</y>
+									<x>8.619000000e+03</x>
+									<y>-6.600000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11833,7 +11381,6 @@
 									<y>2.390000000e+02</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11859,7 +11406,6 @@
 									<y>4.700000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11881,11 +11427,10 @@
 						<item class_id_reference="3" object_id="_459">
 							<Object>
 								<pos>
-									<x>8.117000000e+03</x>
-									<y>1.200000000e+02</y>
+									<x>7.829000000e+03</x>
+									<y>-8.800000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11911,7 +11456,6 @@
 									<y>2.390000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11937,7 +11481,6 @@
 									<y>2.370000000e+02</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11963,7 +11506,6 @@
 									<y>1.167000000e+03</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -11989,7 +11531,6 @@
 									<y>1.495000000e+03</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12015,7 +11556,6 @@
 									<y>1.074000000e+03</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12041,7 +11581,6 @@
 									<y>8.670000000e+02</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12067,7 +11606,6 @@
 									<y>7.920001221e+02</y>
 								</pos>
 								<objectDefName>fan</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12093,7 +11631,6 @@
 									<y>7.740000000e+02</y>
 								</pos>
 								<objectDefName>s_totem1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12115,11 +11652,10 @@
 						<item class_id_reference="3" object_id="_468">
 							<Object>
 								<pos>
-									<x>7.433000000e+03</x>
-									<y>5.300000000e+01</y>
+									<x>7.316000000e+03</x>
+									<y>-2.400000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12141,11 +11677,10 @@
 						<item class_id_reference="3" object_id="_469">
 							<Object>
 								<pos>
-									<x>7.092000000e+03</x>
-									<y>5.500000000e+01</y>
+									<x>7.098000000e+03</x>
+									<y>-4.000000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12171,7 +11706,6 @@
 									<y>5.400000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12197,7 +11731,6 @@
 									<y>5.100000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12223,7 +11756,6 @@
 									<y>1.030000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12249,7 +11781,6 @@
 									<y>5.800000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12275,7 +11806,6 @@
 									<y>4.900000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12301,7 +11831,6 @@
 									<y>5.300000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12327,7 +11856,6 @@
 									<y>5.400000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12353,7 +11881,6 @@
 									<y>5.000000000e+00</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12379,7 +11906,6 @@
 									<y>6.000000000e+00</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12405,7 +11931,6 @@
 									<y>4.000000000e+01</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12431,7 +11956,6 @@
 									<y>2.200000000e+01</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12457,7 +11981,6 @@
 									<y>1.070000000e+02</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12483,7 +12006,6 @@
 									<y>1.120000000e+02</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12509,7 +12031,6 @@
 									<y>4.770000000e+02</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12535,7 +12056,6 @@
 									<y>6.260000000e+02</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12561,7 +12081,6 @@
 									<y>4.640000000e+02</y>
 								</pos>
 								<objectDefName>s_flower1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12587,7 +12106,6 @@
 									<y>1.140000000e+02</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12613,7 +12131,6 @@
 									<y>1.750000000e+02</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12639,7 +12156,6 @@
 									<y>4.680000000e+02</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12665,7 +12181,6 @@
 									<y>4.760000000e+02</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12691,7 +12206,6 @@
 									<y>4.650000000e+02</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12717,7 +12231,6 @@
 									<y>1.700000000e+01</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12743,7 +12256,6 @@
 									<y>1.300000000e+01</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12769,7 +12281,6 @@
 									<y>2.900000000e+01</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12795,7 +12306,6 @@
 									<y>4.200000000e+01</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12821,7 +12331,6 @@
 									<y>2.400000000e+01</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12847,7 +12356,6 @@
 									<y>2.960000000e+02</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12873,7 +12381,6 @@
 									<y>1.440000000e+02</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12899,7 +12406,6 @@
 									<y>8.000000000e+00</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12925,7 +12431,6 @@
 									<y>2.000000000e+00</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12951,7 +12456,6 @@
 									<y>1.000000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -12977,7 +12481,6 @@
 									<y>3.500000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13003,7 +12506,6 @@
 									<y>4.200000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13029,7 +12531,6 @@
 									<y>6.200000000e+01</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13055,7 +12556,6 @@
 									<y>1.240000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13081,7 +12581,6 @@
 									<y>1.760000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13107,7 +12606,6 @@
 									<y>1.390000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13133,7 +12631,6 @@
 									<y>1.580000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13159,7 +12656,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>s_totem1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13185,7 +12681,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>s_totem1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13211,7 +12706,6 @@
 									<y>7.000000000e+00</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13237,7 +12731,6 @@
 									<y>8.000000000e+00</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13263,7 +12756,6 @@
 									<y>1.200000000e+01</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13289,7 +12781,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13315,7 +12806,6 @@
 									<y>7.000000000e+00</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13341,7 +12831,6 @@
 									<y>9.000000000e+00</y>
 								</pos>
 								<objectDefName>s_flower2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13367,7 +12856,6 @@
 									<y>8.000000610e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13393,7 +12881,6 @@
 									<y>8.000000610e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13419,7 +12906,6 @@
 									<y>8.000000610e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13445,7 +12931,6 @@
 									<y>8.000000610e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13471,7 +12956,6 @@
 									<y>8.000000610e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13497,7 +12981,6 @@
 									<y>8.000000610e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13523,7 +13006,6 @@
 									<y>2.800000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13549,7 +13031,6 @@
 									<y>2.800000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13575,7 +13056,6 @@
 									<y>2.800000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13601,7 +13081,6 @@
 									<y>1.600000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13627,7 +13106,6 @@
 									<y>1.600000000e+02</y>
 								</pos>
 								<objectDefName>ring</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13653,7 +13131,6 @@
 									<y>5.400000000e+01</y>
 								</pos>
 								<objectDefName>sign_up</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13679,7 +13156,6 @@
 									<y>5.900000000e+01</y>
 								</pos>
 								<objectDefName>door</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13708,7 +13184,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13734,7 +13209,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13760,7 +13234,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13786,7 +13259,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13812,7 +13284,6 @@
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13838,7 +13309,6 @@
 									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13864,7 +13334,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13890,7 +13359,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13916,7 +13384,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13942,7 +13409,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13968,7 +13434,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -13994,7 +13459,6 @@
 									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14020,7 +13484,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14046,7 +13509,6 @@
 									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>block-large</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14072,7 +13534,6 @@
 									<y>3.290000000e+02</y>
 								</pos>
 								<objectDefName>s_sign_arrow</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14098,7 +13559,6 @@
 									<y>3.590000000e+02</y>
 								</pos>
 								<objectDefName>s_sign_arrow</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14124,7 +13584,6 @@
 									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>s_sign_arrow_up</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14150,7 +13609,6 @@
 									<y>4.190000000e+02</y>
 								</pos>
 								<objectDefName>s_totem1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14176,7 +13634,6 @@
 									<y>1.300000000e+01</y>
 								</pos>
 								<objectDefName>s_sign_arrow_up</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14202,7 +13659,6 @@
 									<y>2.800000000e+01</y>
 								</pos>
 								<objectDefName>s_sign_arrow_up</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14228,7 +13684,6 @@
 									<y>8.000000000e+00</y>
 								</pos>
 								<objectDefName>sign_jump</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14254,7 +13709,6 @@
 									<y>7.000000000e+00</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14280,7 +13734,6 @@
 									<y>7.000000000e+00</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14306,7 +13759,6 @@
 									<y>7.000000000e+00</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14332,7 +13784,6 @@
 									<y>4.000000000e+00</y>
 								</pos>
 								<objectDefName>sign_left_right</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14358,7 +13809,6 @@
 									<y>1.200000000e+01</y>
 								</pos>
 								<objectDefName>s_sign_arrow</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14384,7 +13834,6 @@
 									<y>1.000000000e+01</y>
 								</pos>
 								<objectDefName>s_sign_arrow</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -14951,7 +14400,6 @@
 					<y>1.333333302e+01</y>
 				</pos>
 				<objectDefName>background</objectDefName>
-				<controller_num>0</controller_num>
 				<properties>
 					<p.feels_gravity>0</p.feels_gravity>
 					<p.feels_user_input>0</p.feels_user_input>

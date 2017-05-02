@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "objectIDs.h"
 #include "animations.h"
 
 // y'know - this file is probably stupid.

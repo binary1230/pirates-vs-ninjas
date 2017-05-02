@@ -2,11 +2,9 @@
 #define OBJECT_FACTORY_H
 
 class Object;
-class ObjectFactory;
 class AssetManager;
 
 #include "animation.h"
-#include "objectIDs.h"
 
 //! Maps an object definition name to an XMLNode 
 //! (e.g. maps "bad_guy_1" to its corresponding XML data)

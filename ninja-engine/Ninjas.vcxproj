@@ -284,7 +284,6 @@
     <ClInclude Include="luaApi.h" />
     <ClInclude Include="luaManager.h" />
     <ClInclude Include="objectFactory.h" />
-    <ClInclude Include="objectIDs.h" />
     <ClInclude Include="objectLayer.h" />
     <ClInclude Include="objects\object.h" />
     <ClInclude Include="objects\objectBackground.h" />

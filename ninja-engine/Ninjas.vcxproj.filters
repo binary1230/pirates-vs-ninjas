@@ -93,9 +93,6 @@
     <ClInclude Include="objectFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="objectIDs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="objectLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>

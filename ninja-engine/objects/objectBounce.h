@@ -3,8 +3,6 @@
 
 #include "object.h"
 
-class ObjectFactory;
-
 class ObjectBounce : public Object {
 	friend class boost::serialization::access;
 	template<class Archive>
@@ -33,7 +31,7 @@ class ObjectBounce : public Object {
 		~ObjectBounce();
 			
 		//! Factory method to create a new radius block object
-		friend class ObjectFactory;
+		
 };
 
 #endif // ObjectBounce_H   

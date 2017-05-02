@@ -10358,57 +10358,6 @@ fail:
 }
 
 
-static int _wrap_Object_SetControllerNum(lua_State* L) {
-  int SWIG_arg = 0;
-  Object *arg1 = (Object *) 0 ;
-  uint arg2 ;
-  
-  SWIG_check_num_args("Object::SetControllerNum",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::SetControllerNum",1,"Object *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Object::SetControllerNum",2,"uint");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("Object_SetControllerNum",1,SWIGTYPE_p_Object);
-  }
-  
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (uint)lua_tonumber(L, 2);
-  (arg1)->SetControllerNum(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Object_GetControllerNum(lua_State* L) {
-  int SWIG_arg = 0;
-  Object *arg1 = (Object *) 0 ;
-  uint result;
-  
-  SWIG_check_num_args("Object::GetControllerNum",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::GetControllerNum",1,"Object const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("Object_GetControllerNum",1,SWIGTYPE_p_Object);
-  }
-  
-  result = (uint)((Object const *)arg1)->GetControllerNum();
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_Object_SetDebugFlag(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
@@ -10796,6 +10745,37 @@ static int _wrap_Object_ApplyImpulse(lua_State* L) {
 }
 
 
+static int _wrap_Object_LoadFromObjectDef(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Object::LoadFromObjectDef",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::LoadFromObjectDef",1,"Object *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Object::LoadFromObjectDef",2,"XMLNode &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_LoadFromObjectDef",1,SWIGTYPE_p_Object);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_XMLNode,0))){
+    SWIG_fail_ptr("Object_LoadFromObjectDef",2,SWIGTYPE_p_XMLNode);
+  }
+  
+  result = (bool)(arg1)->LoadFromObjectDef(*arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Object_FinishLoading(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
@@ -11024,8 +11004,6 @@ static swig_lua_method swig_Object_methods[]= {
     { "ResetForNextFrame", _wrap_Object_ResetForNextFrame},
     { "GetProperties", _wrap_Object_GetProperties},
     { "SetProperties", _wrap_Object_SetProperties},
-    { "SetControllerNum", _wrap_Object_SetControllerNum},
-    { "GetControllerNum", _wrap_Object_GetControllerNum},
     { "SetDebugFlag", _wrap_Object_SetDebugFlag},
     { "GetDebugFlag", _wrap_Object_GetDebugFlag},
     { "OnCollide", _wrap_Object_OnCollide},
@@ -11037,6 +11015,7 @@ static swig_lua_method swig_Object_methods[]= {
     { "SetObjectDefName", _wrap_Object_SetObjectDefName},
     { "GetObjectDefName", _wrap_Object_GetObjectDefName},
     { "ApplyImpulse", _wrap_Object_ApplyImpulse},
+    { "LoadFromObjectDef", _wrap_Object_LoadFromObjectDef},
     { "FinishLoading", _wrap_Object_FinishLoading},
     { "ContainsPoint", _wrap_Object_ContainsPoint},
     { "ResetVolatileState", _wrap_Object_ResetVolatileState},

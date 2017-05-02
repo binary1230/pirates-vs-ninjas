@@ -3,8 +3,6 @@
 
 #include "object.h"
 
-class ObjectFactory;
-
 enum DoorType {
 	INVALID_TYPE = -1,
 
@@ -58,7 +56,7 @@ class ObjectDoor : public Object {
 
 		inline const std::string& GetName() {return door_name;}
 			
-		friend class ObjectFactory;
+		
 		friend class MapSaver;
 };
 

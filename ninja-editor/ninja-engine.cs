@@ -1881,15 +1881,6 @@ public partial class Object : global::System.IDisposable {
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void SetControllerNum(uint _c) {
-    enginePINVOKE.Object_SetControllerNum(swigCPtr, _c);
-  }
-
-  public uint GetControllerNum() {
-    uint ret = enginePINVOKE.Object_GetControllerNum(swigCPtr);
-    return ret;
-  }
-
   public void SetDebugFlag(bool d) {
     enginePINVOKE.Object_SetDebugFlag(swigCPtr, d);
   }
@@ -1942,6 +1933,12 @@ public partial class Object : global::System.IDisposable {
   public void ApplyImpulse(b2Vec2 v) {
     enginePINVOKE.Object_ApplyImpulse__SWIG_1(swigCPtr, b2Vec2.getCPtr(v));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public virtual bool LoadFromObjectDef(SWIGTYPE_p_XMLNode xDef) {
+    bool ret = enginePINVOKE.Object_LoadFromObjectDef(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(xDef));
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
   }
 
   public bool FinishLoading() {
@@ -4444,12 +4441,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetProperties")]
   public static extern void Object_SetProperties(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetControllerNum")]
-  public static extern void Object_SetControllerNum(global::System.Runtime.InteropServices.HandleRef jarg1, uint jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetControllerNum")]
-  public static extern uint Object_GetControllerNum(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetDebugFlag")]
   public static extern void Object_SetDebugFlag(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
@@ -4485,6 +4476,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ApplyImpulse__SWIG_1")]
   public static extern void Object_ApplyImpulse__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_LoadFromObjectDef")]
+  public static extern bool Object_LoadFromObjectDef(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_FinishLoading")]
   public static extern bool Object_FinishLoading(global::System.Runtime.InteropServices.HandleRef jarg1);

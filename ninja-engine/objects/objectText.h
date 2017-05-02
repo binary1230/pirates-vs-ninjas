@@ -5,7 +5,6 @@
 #include "object.h"
 
 class Sprite;
-class ObjectFactory;
 
 //! A text box that can show an avatar
 //! It can be "modal" which means that nothing can happen in the game
@@ -81,7 +80,7 @@ class ObjectText : public Object {
 		ObjectText();
 		~ObjectText();
 
-		friend class ObjectFactory;
+		
 };
 
 #endif // OBJ_TXTOVERLAY_H

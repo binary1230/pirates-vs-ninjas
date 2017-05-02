@@ -5,7 +5,6 @@
 #include "globals.h"
 
 class GameState;
-class ObjectFactory;
 
 class ObjectCollectable : public Object {
 	friend class boost::serialization::access;
@@ -35,7 +34,7 @@ class ObjectCollectable : public Object {
 
 		CREATE_PROPERTY(bool, Consumed);
 	
-		friend class ObjectFactory;
+		
 };
 
 #endif // CollectableObject_H   

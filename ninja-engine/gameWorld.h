@@ -7,7 +7,6 @@
 #include "globals.h"
 
 class Object;
-class ObjectFactory;
 class ObjectLayer;
 class ObjectPlayer;
 class Editor;

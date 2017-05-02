@@ -42,7 +42,7 @@ class ObjectSpring : public Object {
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		bool IsSpringActive() {return spring_is_active;};
 
-		friend class ObjectFactory;
+		
 		friend class MapSaver;
 };
 

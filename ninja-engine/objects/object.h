@@ -11,7 +11,6 @@
 // class Object;
 class Animation;
 class Sprite;
-class ObjectFactory;
 class b2Body;
 class Editor;
 
@@ -126,7 +125,12 @@ class Object {
 		ar & boost::serialization::make_nvp("pos", _Pos);
 
 		ar & BOOST_SERIALIZATION_NVP(objectDefName);
-		ar & BOOST_SERIALIZATION_NVP(controller_num);
+
+		if (file_version < 4) {
+			int controller_num; // obsolete
+			ar & BOOST_SERIALIZATION_NVP(controller_num);
+		}
+		
 		ar & BOOST_SERIALIZATION_NVP(properties);
 		ar & BOOST_SERIALIZATION_NVP(m_pkLayer);
 
@@ -144,10 +148,6 @@ class Object {
 
 		//! A pointer to the layer this object is on
 		ObjectLayer* m_pkLayer;
-
-		//! Which controller (e.g. which joystick) use, if we are getting
-		//! input for this object
-		int controller_num;
 		
 		//! The directions of current collisions (up,down,right,left)
 		CollisionDirection m_kCurrentCollision;
@@ -207,7 +207,6 @@ class Object {
 
 		void UpdatePositionFromPhysicsLocation();
 
-		virtual bool LoadFromObjectDef(XMLNode & xDef);
 		bool LoadObjectSounds(XMLNode& xDef);
 		virtual bool LoadObjectProperties(XMLNode& xDef);
 		bool LoadObjectAnimations(XMLNode& xDef);
@@ -359,12 +358,6 @@ class Object {
 		
 		struct ObjectProperties GetProperties() const { return properties; };
 		inline void SetProperties(struct ObjectProperties p) { properties = p;}
-
-		//! Set which controller we monitor
-		void SetControllerNum(uint _c) {controller_num = _c;};
-		
-		//! Return which controller we monitor
-		uint GetControllerNum() const {return controller_num;};
 		
 		void SetDebugFlag(bool d) {debug_flag = d;};
 		bool GetDebugFlag() const {return debug_flag;};
@@ -388,6 +381,7 @@ class Object {
 		void ApplyImpulse(float x, float y);
 		void ApplyImpulse(const b2Vec2& v);
 
+		virtual bool LoadFromObjectDef(XMLNode & xDef);
 		bool FinishLoading();
 		
 		virtual ~Object();
@@ -401,13 +395,12 @@ class Object {
 		static Object* AddPrototype(std::string type, Object* obj);
 		static Object* CreateObject(std::string type);
 
-		friend class ObjectFactory;
 		friend class Editor;
 };
 
 #if !defined(SWIG) 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
-BOOST_CLASS_VERSION(Object, 3)
+BOOST_CLASS_VERSION(Object, 4)
 BOOST_CLASS_VERSION(ObjectProperties, 4)
 #endif // SWIG
 

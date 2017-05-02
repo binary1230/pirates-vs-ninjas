@@ -3,9 +3,7 @@
 
 #include "object.h"
 
-class ObjectBackground;
 class GameState;
-class ObjectFactory;
 
 //! An Object which repeats itself, usually used for backgrounds
 class ObjectBackground : public Object {
@@ -29,7 +27,7 @@ class ObjectBackground : public Object {
 		ObjectBackground();
 		~ObjectBackground();
 
-		friend class ObjectFactory;
+		
 };
 
 #endif // BackgroundObject_H   

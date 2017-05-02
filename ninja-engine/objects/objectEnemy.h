@@ -3,7 +3,6 @@
 
 #include "object.h"
 
-class ObjectFactory;
 class ObjectPlayer;
 
 //! An enemy object that interacts with the player
@@ -39,7 +38,7 @@ class ObjectEnemy : public Object {
 
 		static int iSpawnedObjectCount;
 
-		friend class ObjectFactory;
+		
 };
 
 #endif // EnemyObject_H   

@@ -145,8 +145,6 @@ bool ObjectController::LoadObjectProperties(XMLNode &xDef) {
 bool ObjectController::Init() {
 	buttons.clear();
 	controller_sprite = NULL;
-	controller_num = 1; // we'll set this later
-
 	only_show_during_demo = false;
 	
 	return BaseInit();
@@ -162,6 +160,7 @@ void ObjectController::Shutdown() {
 
 void ObjectController::Clear() {
 	controller_sprite = NULL;
+	controller_num = 1;
 }
 
 ObjectController::ObjectController() {

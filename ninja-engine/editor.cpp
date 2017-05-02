@@ -202,7 +202,8 @@ void Editor::NoModeUpdate() {
 		FlashText("move mode");
 	}
 
-	if (INPUT->RealKeyOnce(ALLEGRO_KEY_F5)) {
+	if (INPUT->RealKeyOnce(ALLEGRO_KEY_S)) {
+		FlashText("saving level....");
 		WORLD->SaveWorldOverCurrentFile();
 		FlashText("saved level!");
 	}

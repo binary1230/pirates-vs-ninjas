@@ -32,7 +32,7 @@ class ObjectFan : public Object {
 		ObjectFan();
 		~ObjectFan();
 			
-		friend class ObjectFactory;
+		
 };
 
 #endif // FanObject_H   

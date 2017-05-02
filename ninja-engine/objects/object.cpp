@@ -133,7 +133,6 @@ void Object::Clear() {
 	is_fading = false;
 	alpha = 255;
 	display_time = -1;
-	controller_num = 0;
 	rotate_angle = _rotate_velocity = 0.0f;
 	_use_rotation = false;
 	b_box_offset_x = b_box_offset_y = 0;

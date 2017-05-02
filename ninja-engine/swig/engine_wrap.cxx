@@ -4078,28 +4078,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetProperties(void * jarg1, void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetControllerNum(void * jarg1, unsigned int jarg2) {
-  Object *arg1 = (Object *) 0 ;
-  uint arg2 ;
-  
-  arg1 = (Object *)jarg1; 
-  arg2 = (uint)jarg2; 
-  (arg1)->SetControllerNum(arg2);
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_GetControllerNum(void * jarg1) {
-  unsigned int jresult ;
-  Object *arg1 = (Object *) 0 ;
-  uint result;
-  
-  arg1 = (Object *)jarg1; 
-  result = (uint)((Object const *)arg1)->GetControllerNum();
-  jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetDebugFlag(void * jarg1, unsigned int jarg2) {
   Object *arg1 = (Object *) 0 ;
   bool arg2 ;
@@ -4231,6 +4209,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_ApplyImpulse__SWIG_1(void * jarg1, voi
     return ;
   } 
   (arg1)->ApplyImpulse((b2Vec2 const &)*arg2);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_LoadFromObjectDef(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (Object *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->LoadFromObjectDef(*arg2);
+  jresult = result; 
+  return jresult;
 }
 
 

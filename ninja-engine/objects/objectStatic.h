@@ -31,7 +31,7 @@ class ObjectStatic : public Object {
 
 		void UpdateSpawns();
 
-		friend class ObjectFactory;
+		
 };
 
 #endif // StaticObject_H   
