@@ -43,9 +43,6 @@
 	</sounds>
 	
 	<properties>
-		<affectedByGravity />
-		<affectedByInput1 />
-		<affectedByFriction />
  		<jumpVelocity>	18.0f	</jumpVelocity>
 		<drag>					0.92f	</drag>
 		<minVelocity>		4.0f	</minVelocity>

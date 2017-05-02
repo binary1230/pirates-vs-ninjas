@@ -65,9 +65,6 @@
 			<height>63</height>
 		</boundingBox>
 
-		<affectedByGravity />
-		<affectedByInput1 />
-		<affectedByFriction />
  		<jumpVelocity>30.0f</jumpVelocity>
 		<drag>0.92f</drag>
 		<minVelocity>4.0f</minVelocity>

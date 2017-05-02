@@ -45,9 +45,6 @@
 		</animation>
 	</animations>
 	<properties>
-		<affectedByGravity />
-		<affectedByInput1 />
-		<affectedByFriction />
  		<jumpVelocity>	8.0f	</jumpVelocity>
 		<drag>					0.97f	</drag>
 		<minVelocity>		1.0f	</minVelocity>
