@@ -7,22 +7,17 @@
 		<count>35</count>
 		<item_version>0</item_version>
 		<item class_id="3" class_name="ObjectController" tracking_level="1" version="1" object_id="_1">
-			<Object class_id="4" tracking_level="0" version="4">
+			<Object class_id="4" tracking_level="0" version="6">
 				<pos class_id="5" tracking_level="0" version="0">
 					<x>0.000000000e+00</x>
 					<y>0.000000000e+00</y>
 				</pos>
 				<objectDefName>controller</objectDefName>
-				<properties class_id="6" tracking_level="0" version="4">
-					<p.feels_gravity>0</p.feels_gravity>
-					<p.feels_user_input>0</p.feels_user_input>
-					<p.feels_friction>0</p.feels_friction>
-					<p.spawns_enemies>0</p.spawns_enemies>
+				<properties class_id="6" tracking_level="0" version="6">
 					<p.uses_physics_engine>0</p.uses_physics_engine>
 					<p.is_static>0</p.is_static>
 					<p.is_sensor>0</p.is_sensor>
 					<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-					<p.do_our_own_rotation>0</p.do_our_own_rotation>
 					<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 					<p.is_overlay>1</p.is_overlay>
 				</properties>
@@ -36,7 +31,6 @@
 					<name>overlays</name>
 					<visible>1</visible>
 				</m_pkLayer>
-				<_use_rotation>0</_use_rotation>
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
 			<controller_num>1</controller_num>
@@ -49,15 +43,10 @@
 				</pos>
 				<objectDefName>cloud</objectDefName>
 				<properties>
-					<p.feels_gravity>0</p.feels_gravity>
-					<p.feels_user_input>0</p.feels_user_input>
-					<p.feels_friction>0</p.feels_friction>
-					<p.spawns_enemies>0</p.spawns_enemies>
 					<p.uses_physics_engine>0</p.uses_physics_engine>
 					<p.is_static>1</p.is_static>
 					<p.is_sensor>0</p.is_sensor>
 					<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-					<p.do_our_own_rotation>0</p.do_our_own_rotation>
 					<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 					<p.is_overlay>0</p.is_overlay>
 				</properties>
@@ -74,20 +63,14 @@
 								</pos>
 								<objectDefName>cloud</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -99,20 +82,14 @@
 								</pos>
 								<objectDefName>cloud</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -124,20 +101,14 @@
 								</pos>
 								<objectDefName>cloud</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -149,20 +120,14 @@
 								</pos>
 								<objectDefName>cloud</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -174,20 +139,14 @@
 								</pos>
 								<objectDefName>cloud</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -199,20 +158,14 @@
 								</pos>
 								<objectDefName>cloud</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -224,20 +177,14 @@
 								</pos>
 								<objectDefName>cloud</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -249,20 +196,14 @@
 								</pos>
 								<objectDefName>cloud</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -274,20 +215,14 @@
 								</pos>
 								<objectDefName>cloud</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -296,7 +231,6 @@
 					<name>foreground-fast</name>
 					<visible>1</visible>
 				</m_pkLayer>
-				<_use_rotation>0</_use_rotation>
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
 		</item>
@@ -317,15 +251,10 @@
 				</pos>
 				<objectDefName>amaya</objectDefName>
 				<properties>
-					<p.feels_gravity>1</p.feels_gravity>
-					<p.feels_user_input>1</p.feels_user_input>
-					<p.feels_friction>1</p.feels_friction>
-					<p.spawns_enemies>0</p.spawns_enemies>
 					<p.uses_physics_engine>1</p.uses_physics_engine>
 					<p.is_static>0</p.is_static>
 					<p.is_sensor>0</p.is_sensor>
 					<p.ignores_physics_rotation>1</p.ignores_physics_rotation>
-					<p.do_our_own_rotation>0</p.do_our_own_rotation>
 					<p.use_angled_corners_collision_box>1</p.use_angled_corners_collision_box>
 					<p.is_overlay>0</p.is_overlay>
 				</properties>
@@ -339,7 +268,6 @@
 					<name>foreground</name>
 					<visible>1</visible>
 				</m_pkLayer>
-				<_use_rotation>0</_use_rotation>
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
 			<controller_num>1</controller_num>
@@ -352,15 +280,10 @@
 				</pos>
 				<objectDefName>door-slide</objectDefName>
 				<properties>
-					<p.feels_gravity>0</p.feels_gravity>
-					<p.feels_user_input>0</p.feels_user_input>
-					<p.feels_friction>0</p.feels_friction>
-					<p.spawns_enemies>0</p.spawns_enemies>
 					<p.uses_physics_engine>1</p.uses_physics_engine>
 					<p.is_static>1</p.is_static>
 					<p.is_sensor>1</p.is_sensor>
 					<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-					<p.do_our_own_rotation>0</p.do_our_own_rotation>
 					<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 					<p.is_overlay>0</p.is_overlay>
 				</properties>
@@ -377,20 +300,14 @@
 								</pos>
 								<objectDefName>s_totem1</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -402,20 +319,14 @@
 								</pos>
 								<objectDefName>s_siren</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -427,20 +338,14 @@
 								</pos>
 								<objectDefName>s_sign_arrow</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -452,20 +357,14 @@
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>0</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -477,20 +376,14 @@
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -502,20 +395,14 @@
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -527,20 +414,14 @@
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -552,20 +433,14 @@
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -577,20 +452,14 @@
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -602,20 +471,14 @@
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -627,20 +490,14 @@
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -652,20 +509,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -677,20 +528,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -702,20 +547,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -727,20 +566,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -752,20 +585,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -777,20 +604,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -802,20 +623,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -827,20 +642,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -852,20 +661,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -877,20 +680,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -902,20 +699,14 @@
 								</pos>
 								<objectDefName>floor2</objectDefName>
 								<properties>
-									<p.feels_gravity>0</p.feels_gravity>
-									<p.feels_user_input>0</p.feels_user_input>
-									<p.feels_friction>0</p.feels_friction>
-									<p.spawns_enemies>0</p.spawns_enemies>
 									<p.uses_physics_engine>1</p.uses_physics_engine>
 									<p.is_static>1</p.is_static>
 									<p.is_sensor>0</p.is_sensor>
 									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.do_our_own_rotation>0</p.do_our_own_rotation>
 									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
 									<p.is_overlay>0</p.is_overlay>
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
-								<_use_rotation>0</_use_rotation>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -924,7 +715,6 @@
 					<name>bg_objects</name>
 					<visible>1</visible>
 				</m_pkLayer>
-				<_use_rotation>0</_use_rotation>
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
 			<door_type>1</door_type>

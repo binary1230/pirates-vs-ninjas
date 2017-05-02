@@ -35,10 +35,10 @@ void ObjectStatic::Update() {
 
 void ObjectStatic::UpdateSpawns() 
 {
+#if BLOCKS_SPAWN_ENEMIES
 	if (!_Properties.spawns_enemies)
 		return;
 
-#if BLOCKS_SPAWN_ENEMIES
 	// experimental
 	static int iSpawnWaitTime = 0;
 

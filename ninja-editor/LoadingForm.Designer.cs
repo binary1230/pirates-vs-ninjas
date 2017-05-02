@@ -32,6 +32,7 @@
             this.txtFilename = new System.Windows.Forms.TextBox();
             this.lstGameFiles = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnResaveAll = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -40,7 +41,7 @@
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
             this.btnLoad.TabIndex = 0;
-            this.btnLoad.Text = "Load";
+            this.btnLoad.Text = "Edit Map";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
@@ -70,11 +71,22 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Maps in game";
             // 
+            // btnResaveAll
+            // 
+            this.btnResaveAll.Location = new System.Drawing.Point(15, 192);
+            this.btnResaveAll.Name = "btnResaveAll";
+            this.btnResaveAll.Size = new System.Drawing.Size(124, 23);
+            this.btnResaveAll.TabIndex = 4;
+            this.btnResaveAll.Text = "Resave All Maps";
+            this.btnResaveAll.UseVisualStyleBackColor = true;
+            this.btnResaveAll.Click += new System.EventHandler(this.btnResaveAll_Click);
+            // 
             // LoadingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(485, 261);
+            this.Controls.Add(this.btnResaveAll);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lstGameFiles);
             this.Controls.Add(this.txtFilename);
@@ -94,5 +106,6 @@
         private System.Windows.Forms.TextBox txtFilename;
         private System.Windows.Forms.ListBox lstGameFiles;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnResaveAll;
     }
 }

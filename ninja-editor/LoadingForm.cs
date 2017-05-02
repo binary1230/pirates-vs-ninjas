@@ -19,17 +19,20 @@ namespace MapEditor
         public LoadingForm()
         {
             InitializeComponent();
-
-
         }
 
         public void LoadLevel(string mapname)
+        {
+            LoadLevel(mapname, false);
+        }
+
+        public void LoadLevel(string mapname, bool resave_and_exit)
         {
             editorFrm = new Editor();
 
             Hide();
 
-            editorFrm.SetMapName(mapname);
+            editorFrm.SetMapName(mapname, resave_and_exit);
             editorFrm.ShowDialog();
 
             Show();
@@ -103,6 +106,21 @@ namespace MapEditor
         private void LoadingForm_Load(object sender, EventArgs e)
         {
             PopulateAllMapData();
+        }
+
+        private void btnResaveAll_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(
+                    "this will resave all maps in list, proceed?", "Confirm", MessageBoxButtons.OKCancel
+                ) != DialogResult.OK)
+            {
+                return;
+            }
+
+            foreach (string mapname in lstGameFiles.Items)
+            {
+                LoadLevel(mapname, true);
+            }
         }
     }
 }

@@ -123,10 +123,12 @@ namespace MapEditor
         }
 
         private string _map_to_load = "";
+        private bool _resave_and_exit = false;
 
-        public void SetMapName(string name)
+        public void SetMapName(string name, bool resave_and_exit)
         {
             _map_to_load = name;
+            _resave_and_exit = resave_and_exit;
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -148,7 +150,17 @@ namespace MapEditor
             OnPauseStatusChanged();
             wasPaused = gameWrapper.Paused;
 
-            FastTimer.Enabled = true;
+            if (!_resave_and_exit) {
+                FastTimer.Enabled = true;
+            } else {
+                SaveMap();
+                Close();
+            }   
+        }
+
+        public void SaveMap()
+        {
+            GameWorld.GetInstance().SaveWorldOverCurrentFile();
         }
 
         private void LoadStaticGameLists()

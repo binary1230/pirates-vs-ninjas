@@ -12,7 +12,7 @@
 #include "objectLayer.h"
 #include "sprite.h"
 #include "physics.h"
-#include "..\objectFactory.h"
+#include "objectFactory.h"
 
 bool Object::debug_draw_bounding_boxes = 0;
 map<std::string, Object*> Object::objectProtoTable;
@@ -407,18 +407,12 @@ bool Object::LoadObjectSounds(XMLNode &xDef) {
 bool Object::LoadObjectProperties(XMLNode &xDef) {
 	XMLNode xProps = xDef.getChildNode("properties");
 
-	// TODO: these are overriding things set in Init()
-
-	_Properties.feels_gravity = xProps.nChildNode("affectedByGravity") != 0;
-	_Properties.feels_user_input = xProps.nChildNode("affectedByInput1") != 0;
-	_Properties.feels_friction = xProps.nChildNode("affectedByFriction") != 0;
+	// NOTE: these are overriding things previously set in Init()
 
 	_Properties.uses_physics_engine = xProps.nChildNode("solidObject") != 0;
 	_Properties.is_static = xProps.nChildNode("solidObject") != 0;
 
 	_Properties.is_sensor = xProps.nChildNode("sensorOnly") != 0;
-
-	_Properties.spawns_enemies = xProps.nChildNode("spawnsEnemies") != 0;
 
 	if (xProps.nChildNode("isOverlay")) {
 		_Properties.is_overlay = 1;

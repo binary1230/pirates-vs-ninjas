@@ -1531,46 +1531,6 @@ public class ObjectProperties : global::System.IDisposable {
     }
   }
 
-  public bool feels_gravity {
-    set {
-      enginePINVOKE.ObjectProperties_feels_gravity_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_feels_gravity_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool feels_user_input {
-    set {
-      enginePINVOKE.ObjectProperties_feels_user_input_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_feels_user_input_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool feels_friction {
-    set {
-      enginePINVOKE.ObjectProperties_feels_friction_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_feels_friction_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool spawns_enemies {
-    set {
-      enginePINVOKE.ObjectProperties_spawns_enemies_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_spawns_enemies_get(swigCPtr);
-      return ret;
-    } 
-  }
-
   public bool uses_physics_engine {
     set {
       enginePINVOKE.ObjectProperties_uses_physics_engine_set(swigCPtr, value);
@@ -4256,30 +4216,6 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_CollisionDirection")]
   public static extern void delete_CollisionDirection(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_gravity_set")]
-  public static extern void ObjectProperties_feels_gravity_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_gravity_get")]
-  public static extern bool ObjectProperties_feels_gravity_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_user_input_set")]
-  public static extern void ObjectProperties_feels_user_input_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_user_input_get")]
-  public static extern bool ObjectProperties_feels_user_input_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_friction_set")]
-  public static extern void ObjectProperties_feels_friction_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_feels_friction_get")]
-  public static extern bool ObjectProperties_feels_friction_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_spawns_enemies_set")]
-  public static extern void ObjectProperties_spawns_enemies_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_spawns_enemies_get")]
-  public static extern bool ObjectProperties_spawns_enemies_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_uses_physics_engine_set")]
   public static extern void ObjectProperties_uses_physics_engine_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);

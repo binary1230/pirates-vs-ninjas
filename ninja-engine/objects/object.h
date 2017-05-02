@@ -29,13 +29,7 @@ enum VolatileStateLevel {
 struct ObjectProperties 
 {
 	// NOTE: If you add anything here, update ClearProperties()
-	bool feels_gravity;	
-	bool feels_user_input;
-	bool feels_friction;
-
-	// TEMP HACK - this object spawns enemies
-	bool spawns_enemies;
-
+	
 	//! Whether we should register with the physics engine or not
 	bool uses_physics_engine;
 
@@ -69,18 +63,10 @@ namespace boost {
 		template<class Archive>
 		void serialize(Archive & ar, ObjectProperties& p, const unsigned int version)
 		{
-			ar & BOOST_SERIALIZATION_NVP(p.feels_gravity);
-			ar & BOOST_SERIALIZATION_NVP(p.feels_user_input);
-			ar & BOOST_SERIALIZATION_NVP(p.feels_friction);
-			ar & BOOST_SERIALIZATION_NVP(p.spawns_enemies);
 			ar & BOOST_SERIALIZATION_NVP(p.uses_physics_engine);
 			ar & BOOST_SERIALIZATION_NVP(p.is_static);
 			ar & BOOST_SERIALIZATION_NVP(p.is_sensor);
 			ar & BOOST_SERIALIZATION_NVP(p.ignores_physics_rotation);
-			if (version < 5) {
-				bool obsolete;
-				ar & boost::serialization::make_nvp("p.do_our_own_rotation", obsolete);
-			}
 			ar & BOOST_SERIALIZATION_NVP(p.use_angled_corners_collision_box);
 			ar & BOOST_SERIALIZATION_NVP(p.is_overlay);
 		}
@@ -89,13 +75,9 @@ namespace boost {
 
 //! Clears property masks
 inline void ClearProperties(struct ObjectProperties& p) {
-	p.feels_gravity = 0;
-	p.feels_user_input = 0;
-	p.feels_friction = 0;
 	p.is_overlay = 0;
 	p.uses_physics_engine = 0;
 	p.use_angled_corners_collision_box = 0;
-	p.spawns_enemies = 0;
 	p.is_static = 0;
 	p.is_sensor = 0;
 	p.ignores_physics_rotation = 0;
@@ -124,10 +106,6 @@ class Object {
 		ar & boost::serialization::make_nvp("objectDefName", _ObjectDefName);
 		ar & boost::serialization::make_nvp("properties", _Properties);
 		ar & boost::serialization::make_nvp("m_pkLayer", _Layer);
-		if (version < 5) {
-			bool obsolete;
-			ar & boost::serialization::make_nvp("_use_rotation", obsolete);
-		}
 		ar & boost::serialization::make_nvp("_rotate_velocity", _RotateVelocity);
 	}
 
@@ -389,8 +367,8 @@ class Object {
 
 #if !defined(SWIG) 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
-BOOST_CLASS_VERSION(Object, 5)
-BOOST_CLASS_VERSION(ObjectProperties, 5)
+BOOST_CLASS_VERSION(Object, 6)
+BOOST_CLASS_VERSION(ObjectProperties, 6)
 #endif // SWIG
 
 #ifdef SWIG
