@@ -306,8 +306,7 @@ namespace MapEditor
         {
             // handled after anything (game or editor) has changed the selection
 
-            Object selection = GetSelectedObject();
-
+            Object selection = DownCast.From(GetSelectedObject());
             objectProperties.SelectedObject = selection;
             objectProperties.ExpandAllGridItems();
         }

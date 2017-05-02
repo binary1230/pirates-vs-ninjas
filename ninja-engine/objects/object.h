@@ -105,13 +105,14 @@ inline void ClearProperties(struct ObjectProperties& p) {
 }
 
 #define IMPLEMENT_CLONE(TYPE) \
-   Object* Clone() const { return new TYPE(/* *this */); }
+	Object* Clone() const { return new TYPE(); }  /* for the protyping system */ \
+	static TYPE* DynamicCastFrom(Object* obj) {	return dynamic_cast<TYPE*>(obj); } /* for SWIG */
 
 #define MAKE_PROTOTYPE(TYPE) \
-   Object* TYPE ## _myProtoype1 = Object::AddPrototype(#TYPE, new TYPE());
+	Object* TYPE ## _myProtoype1 = Object::AddPrototype(#TYPE, new TYPE());
 
 #define MAKE_PROTOTYPE_ALIAS(TYPE, NAME) \
-   Object* TYPE ## _myProtoype2 = Object::AddPrototype(NAME, new TYPE());
+	Object* TYPE ## _myProtoype2 = Object::AddPrototype(NAME, new TYPE());
 
 //! A drawable entity in the world
 
@@ -350,8 +351,8 @@ class Object {
 		}
 
 		//! Get width/height of this object
-		int GetWidth() const;
-		int GetHeight() const;
+		virtual int GetWidth() const;
+		virtual int GetHeight() const;
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();

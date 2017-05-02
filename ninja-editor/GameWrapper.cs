@@ -6,23 +6,10 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-
 [TypeConverter(typeof(ExpandableObjectConverter))]
-public partial class b2Vec2
-{
+public partial class b2Vec2 {}
 
-}
-
-public partial class Object
-{
-
-}
-
-
-public partial class ObjectSpring
-{
-    public float TestFloat { get; set; }
-}
+public partial class Object {}
 
 namespace MapEditor
 {
@@ -134,6 +121,24 @@ namespace MapEditor
             }
 
             return layerNames;
+        }
+    }
+
+    public class DownCast
+    {
+        public static Object From(Object obj)
+        {
+            Object downcast = null;
+
+            // This is weird, but needed.  Our C++ -> C# bindings need to call a function which returns the correct
+            // derived type.  We cast it explicitly to the derived type, but also once we've done that, we can keep it as an Object and
+            // C# will have the info needed.  This is useful for a bunch of reasons including the property editor can edit Derived class
+            // property.
+            downcast = ObjectSpring.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectPlayer.DynamicCastFrom(obj); if (downcast != null) return downcast;
+
+            // if can't figure out anything else, return the original
+            return obj;
         }
     }
 }

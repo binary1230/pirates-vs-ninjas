@@ -369,8 +369,18 @@ namespace Swig {
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
+#include "objects/objectBackground.h"
+#include "objects/objectBounce.h"
+#include "objects/objectCollectable.h"
+#include "objects/objectController.h"
+#include "objects/objectCutBars.h"
+#include "objects/objectDoor.h"
+#include "objects/objectEnemy.h"
+#include "objects/objectFan.h"
 #include "objects/objectPlayer.h"
 #include "objects/objectSpring.h"
+#include "objects/objectStatic.h"
+#include "objects/objectTxtOverlay.h"
 #include "objectFactory.h"
 
 
@@ -4326,6 +4336,947 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_Position_get(void * jarg1) {
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectBackground_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectBackground *arg1 = (ObjectBackground *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectBackground *)jarg1; 
+  result = (Object *)((ObjectBackground const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectBackground_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectBackground *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectBackground *)ObjectBackground::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectBackground_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectBackground *arg1 = (ObjectBackground *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectBackground *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBackground_Shutdown(void * jarg1) {
+  ObjectBackground *arg1 = (ObjectBackground *) 0 ;
+  
+  arg1 = (ObjectBackground *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBackground_Update(void * jarg1) {
+  ObjectBackground *arg1 = (ObjectBackground *) 0 ;
+  
+  arg1 = (ObjectBackground *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBackground_Draw(void * jarg1) {
+  ObjectBackground *arg1 = (ObjectBackground *) 0 ;
+  
+  arg1 = (ObjectBackground *)jarg1; 
+  (arg1)->Draw();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectBackground() {
+  void * jresult ;
+  ObjectBackground *result = 0 ;
+  
+  result = (ObjectBackground *)new ObjectBackground();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectBackground(void * jarg1) {
+  ObjectBackground *arg1 = (ObjectBackground *) 0 ;
+  
+  arg1 = (ObjectBackground *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectBounce_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectBounce *)jarg1; 
+  result = (Object *)((ObjectBounce const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectBounce_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectBounce *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectBounce *)ObjectBounce::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectBounce_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectBounce *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBounce_Shutdown(void * jarg1) {
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  
+  arg1 = (ObjectBounce *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBounce_Update(void * jarg1) {
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  
+  arg1 = (ObjectBounce *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectBounce_LoadObjectProperties(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (ObjectBounce *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->LoadObjectProperties(*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBounce_OnCollide(void * jarg1, void * jarg2, void * jarg3) {
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  b2WorldManifold *arg3 = (b2WorldManifold *) 0 ;
+  
+  arg1 = (ObjectBounce *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  arg3 = (b2WorldManifold *)jarg3; 
+  (arg1)->OnCollide(arg2,(b2WorldManifold const *)arg3);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectBounce() {
+  void * jresult ;
+  ObjectBounce *result = 0 ;
+  
+  result = (ObjectBounce *)new ObjectBounce();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectBounce(void * jarg1) {
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  
+  arg1 = (ObjectBounce *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectCollectable_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  result = (Object *)((ObjectCollectable const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectCollectable_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectCollectable *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectCollectable *)ObjectCollectable::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectCollectable_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCollectable_ResetVolatileState(void * jarg1, int jarg2) {
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  VolatileStateLevel arg2 ;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  arg2 = (VolatileStateLevel)jarg2; 
+  (arg1)->ResetVolatileState(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCollectable_Shutdown(void * jarg1) {
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCollectable_Update(void * jarg1) {
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectCollectable_LoadObjectProperties(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->LoadObjectProperties(*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectCollectable() {
+  void * jresult ;
+  ObjectCollectable *result = 0 ;
+  
+  result = (ObjectCollectable *)new ObjectCollectable();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectCollectable(void * jarg1) {
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCollectable_OnCollide(void * jarg1, void * jarg2, void * jarg3) {
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  b2WorldManifold *arg3 = (b2WorldManifold *) 0 ;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  arg3 = (b2WorldManifold *)jarg3; 
+  (arg1)->OnCollide(arg2,(b2WorldManifold const *)arg3);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectCollectable_GetPropConsumed(void * jarg1) {
+  unsigned int jresult ;
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  result = (bool)(arg1)->GetPropConsumed();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCollectable_SetPropConsumed(void * jarg1, unsigned int jarg2) {
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetPropConsumed(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Button_active_set(void * jarg1, unsigned int jarg2) {
+  Button *arg1 = (Button *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (Button *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->active = arg2;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Button_active_get(void * jarg1) {
+  unsigned int jresult ;
+  Button *arg1 = (Button *) 0 ;
+  bool result;
+  
+  arg1 = (Button *)jarg1; 
+  result = (bool) ((arg1)->active);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Button_sprite_set(void * jarg1, void * jarg2) {
+  Button *arg1 = (Button *) 0 ;
+  Sprite *arg2 = (Sprite *) 0 ;
+  
+  arg1 = (Button *)jarg1; 
+  arg2 = (Sprite *)jarg2; 
+  if (arg1) (arg1)->sprite = arg2;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Button_sprite_get(void * jarg1) {
+  void * jresult ;
+  Button *arg1 = (Button *) 0 ;
+  Sprite *result = 0 ;
+  
+  arg1 = (Button *)jarg1; 
+  result = (Sprite *) ((arg1)->sprite);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_Button() {
+  void * jresult ;
+  Button *result = 0 ;
+  
+  result = (Button *)new Button();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_Button(void * jarg1) {
+  Button *arg1 = (Button *) 0 ;
+  
+  arg1 = (Button *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectController_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectController *arg1 = (ObjectController *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectController *)jarg1; 
+  result = (Object *)((ObjectController const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectController_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectController *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectController *)ObjectController::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectController_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectController *arg1 = (ObjectController *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectController *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectController_Shutdown(void * jarg1) {
+  ObjectController *arg1 = (ObjectController *) 0 ;
+  
+  arg1 = (ObjectController *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectController_Clear(void * jarg1) {
+  ObjectController *arg1 = (ObjectController *) 0 ;
+  
+  arg1 = (ObjectController *)jarg1; 
+  (arg1)->Clear();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectController_Update(void * jarg1) {
+  ObjectController *arg1 = (ObjectController *) 0 ;
+  
+  arg1 = (ObjectController *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectController_Draw(void * jarg1) {
+  ObjectController *arg1 = (ObjectController *) 0 ;
+  
+  arg1 = (ObjectController *)jarg1; 
+  (arg1)->Draw();
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ObjectController_GetWidth(void * jarg1) {
+  int jresult ;
+  ObjectController *arg1 = (ObjectController *) 0 ;
+  int result;
+  
+  arg1 = (ObjectController *)jarg1; 
+  result = (int)(arg1)->GetWidth();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ObjectController_GetHeight(void * jarg1) {
+  int jresult ;
+  ObjectController *arg1 = (ObjectController *) 0 ;
+  int result;
+  
+  arg1 = (ObjectController *)jarg1; 
+  result = (int)(arg1)->GetHeight();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectController() {
+  void * jresult ;
+  ObjectController *result = 0 ;
+  
+  result = (ObjectController *)new ObjectController();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectController(void * jarg1) {
+  ObjectController *arg1 = (ObjectController *) 0 ;
+  
+  arg1 = (ObjectController *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectCutBars_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  result = (Object *)((ObjectCutBars const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectCutBars_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectCutBars *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectCutBars *)ObjectCutBars::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCutBars_Clear(void * jarg1) {
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  (arg1)->Clear();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectCutBars_LoadObjectProperties(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->LoadObjectProperties(*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectCutBars_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCutBars_Shutdown(void * jarg1) {
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCutBars_Start(void * jarg1) {
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  (arg1)->Start();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCutBars_Stop(void * jarg1) {
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  (arg1)->Stop();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCutBars_SetText(void * jarg1, char * jarg2) {
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  std::string arg2_str(jarg2);
+  arg2 = &arg2_str; 
+  (arg1)->SetText((std::string const &)*arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCutBars_Update(void * jarg1) {
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCutBars_Draw(void * jarg1) {
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  (arg1)->Draw();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectCutBars() {
+  void * jresult ;
+  ObjectCutBars *result = 0 ;
+  
+  result = (ObjectCutBars *)new ObjectCutBars();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectCutBars(void * jarg1) {
+  ObjectCutBars *arg1 = (ObjectCutBars *) 0 ;
+  
+  arg1 = (ObjectCutBars *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectDoor_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectDoor *arg1 = (ObjectDoor *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectDoor *)jarg1; 
+  result = (Object *)((ObjectDoor const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectDoor_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectDoor *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectDoor *)ObjectDoor::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectDoor_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectDoor *arg1 = (ObjectDoor *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectDoor *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectDoor_Clear(void * jarg1) {
+  ObjectDoor *arg1 = (ObjectDoor *) 0 ;
+  
+  arg1 = (ObjectDoor *)jarg1; 
+  (arg1)->Clear();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectDoor_Shutdown(void * jarg1) {
+  ObjectDoor *arg1 = (ObjectDoor *) 0 ;
+  
+  arg1 = (ObjectDoor *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectDoor_Update(void * jarg1) {
+  ObjectDoor *arg1 = (ObjectDoor *) 0 ;
+  
+  arg1 = (ObjectDoor *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectDoor_LoadObjectProperties(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  ObjectDoor *arg1 = (ObjectDoor *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (ObjectDoor *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->LoadObjectProperties(*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectDoor_Activate(void * jarg1) {
+  ObjectDoor *arg1 = (ObjectDoor *) 0 ;
+  
+  arg1 = (ObjectDoor *)jarg1; 
+  (arg1)->Activate();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectDoor() {
+  void * jresult ;
+  ObjectDoor *result = 0 ;
+  
+  result = (ObjectDoor *)new ObjectDoor();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectDoor(void * jarg1) {
+  ObjectDoor *arg1 = (ObjectDoor *) 0 ;
+  
+  arg1 = (ObjectDoor *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_ObjectDoor_GetName(void * jarg1) {
+  char * jresult ;
+  ObjectDoor *arg1 = (ObjectDoor *) 0 ;
+  std::string *result = 0 ;
+  
+  arg1 = (ObjectDoor *)jarg1; 
+  result = (std::string *) &(arg1)->GetName();
+  jresult = SWIG_csharp_string_callback(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectEnemy_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectEnemy *arg1 = (ObjectEnemy *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectEnemy *)jarg1; 
+  result = (Object *)((ObjectEnemy const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectEnemy_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectEnemy *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectEnemy *)ObjectEnemy::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectEnemy_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectEnemy *arg1 = (ObjectEnemy *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectEnemy *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectEnemy_Shutdown(void * jarg1) {
+  ObjectEnemy *arg1 = (ObjectEnemy *) 0 ;
+  
+  arg1 = (ObjectEnemy *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectEnemy_Update(void * jarg1) {
+  ObjectEnemy *arg1 = (ObjectEnemy *) 0 ;
+  
+  arg1 = (ObjectEnemy *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectEnemy() {
+  void * jresult ;
+  ObjectEnemy *result = 0 ;
+  
+  result = (ObjectEnemy *)new ObjectEnemy();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectEnemy(void * jarg1) {
+  ObjectEnemy *arg1 = (ObjectEnemy *) 0 ;
+  
+  arg1 = (ObjectEnemy *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectEnemy_OnCollide(void * jarg1, void * jarg2, void * jarg3) {
+  ObjectEnemy *arg1 = (ObjectEnemy *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  b2WorldManifold *arg3 = (b2WorldManifold *) 0 ;
+  
+  arg1 = (ObjectEnemy *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  arg3 = (b2WorldManifold *)jarg3; 
+  (arg1)->OnCollide(arg2,(b2WorldManifold const *)arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectEnemy_iSpawnedObjectCount_set(int jarg1) {
+  int arg1 ;
+  
+  arg1 = (int)jarg1; 
+  ObjectEnemy::iSpawnedObjectCount = arg1;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ObjectEnemy_iSpawnedObjectCount_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)ObjectEnemy::iSpawnedObjectCount;
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectFan_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectFan *arg1 = (ObjectFan *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectFan *)jarg1; 
+  result = (Object *)((ObjectFan const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectFan_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectFan *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectFan *)ObjectFan::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectFan_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectFan *arg1 = (ObjectFan *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectFan *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectFan_Clear(void * jarg1) {
+  ObjectFan *arg1 = (ObjectFan *) 0 ;
+  
+  arg1 = (ObjectFan *)jarg1; 
+  (arg1)->Clear();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectFan_Shutdown(void * jarg1) {
+  ObjectFan *arg1 = (ObjectFan *) 0 ;
+  
+  arg1 = (ObjectFan *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectFan_Update(void * jarg1) {
+  ObjectFan *arg1 = (ObjectFan *) 0 ;
+  
+  arg1 = (ObjectFan *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectFan_OnCollide(void * jarg1, void * jarg2, void * jarg3) {
+  ObjectFan *arg1 = (ObjectFan *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  b2WorldManifold *arg3 = (b2WorldManifold *) 0 ;
+  
+  arg1 = (ObjectFan *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  arg3 = (b2WorldManifold *)jarg3; 
+  (arg1)->OnCollide(arg2,(b2WorldManifold const *)arg3);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectFan_LoadObjectProperties(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  ObjectFan *arg1 = (ObjectFan *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (ObjectFan *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->LoadObjectProperties(*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectFan() {
+  void * jresult ;
+  ObjectFan *result = 0 ;
+  
+  result = (ObjectFan *)new ObjectFan();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectFan(void * jarg1) {
+  ObjectFan *arg1 = (ObjectFan *) 0 ;
+  
+  arg1 = (ObjectFan *)jarg1; 
+  delete arg1;
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectPlayer_Clone(void * jarg1) {
   void * jresult ;
   ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
@@ -4333,6 +5284,18 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectPlayer_Clone(void * jarg1) {
   
   arg1 = (ObjectPlayer *)jarg1; 
   result = (Object *)((ObjectPlayer const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectPlayer_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectPlayer *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectPlayer *)ObjectPlayer::DynamicCastFrom(arg1);
   jresult = (void *)result; 
   return jresult;
 }
@@ -4526,6 +5489,18 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectSpring_Clone(void * jarg1) {
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectSpring_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectSpring *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectSpring *)ObjectSpring::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectSpring_Init(void * jarg1) {
   unsigned int jresult ;
   ObjectSpring *arg1 = (ObjectSpring *) 0 ;
@@ -4641,6 +5616,272 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectSpring_Direction_get(void * jarg1) {
   result = (b2Vec2 *)ObjectSpring_Direction_get(arg1);
   jresult = (void *)result; 
   return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectStatic_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectStatic *arg1 = (ObjectStatic *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectStatic *)jarg1; 
+  result = (Object *)((ObjectStatic const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectStatic_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectStatic *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectStatic *)ObjectStatic::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectStatic_LoadObjectProperties(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  ObjectStatic *arg1 = (ObjectStatic *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (ObjectStatic *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->LoadObjectProperties(*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectStatic_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectStatic *arg1 = (ObjectStatic *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectStatic *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectStatic_Shutdown(void * jarg1) {
+  ObjectStatic *arg1 = (ObjectStatic *) 0 ;
+  
+  arg1 = (ObjectStatic *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectStatic_Update(void * jarg1) {
+  ObjectStatic *arg1 = (ObjectStatic *) 0 ;
+  
+  arg1 = (ObjectStatic *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectStatic() {
+  void * jresult ;
+  ObjectStatic *result = 0 ;
+  
+  result = (ObjectStatic *)new ObjectStatic();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectStatic(void * jarg1) {
+  ObjectStatic *arg1 = (ObjectStatic *) 0 ;
+  
+  arg1 = (ObjectStatic *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectStatic_UpdateSpawns(void * jarg1) {
+  ObjectStatic *arg1 = (ObjectStatic *) 0 ;
+  
+  arg1 = (ObjectStatic *)jarg1; 
+  (arg1)->UpdateSpawns();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectText_Clone(void * jarg1) {
+  void * jresult ;
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (ObjectText *)jarg1; 
+  result = (Object *)((ObjectText const *)arg1)->Clone();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectText_DynamicCastFrom(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  ObjectText *result = 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  result = (ObjectText *)ObjectText::DynamicCastFrom(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectText_Init(void * jarg1) {
+  unsigned int jresult ;
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  bool result;
+  
+  arg1 = (ObjectText *)jarg1; 
+  result = (bool)(arg1)->Init();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectText_Shutdown(void * jarg1) {
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  
+  arg1 = (ObjectText *)jarg1; 
+  (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectText_Clear(void * jarg1) {
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  
+  arg1 = (ObjectText *)jarg1; 
+  (arg1)->Clear();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectText_Update(void * jarg1) {
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  
+  arg1 = (ObjectText *)jarg1; 
+  (arg1)->Update();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectText_Draw(void * jarg1) {
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  
+  arg1 = (ObjectText *)jarg1; 
+  (arg1)->Draw();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectText_SetAvatarFilename(void * jarg1, char * jarg2) {
+  unsigned int jresult ;
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  std::string arg2 ;
+  bool result;
+  
+  arg1 = (ObjectText *)jarg1; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  (&arg2)->assign(jarg2); 
+  result = (bool)(arg1)->SetAvatarFilename(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectText_SetModalActive(void * jarg1, unsigned int jarg2) {
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (ObjectText *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetModalActive(arg2);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectText_LoadObjectProperties(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  XMLNode *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (ObjectText *)jarg1; 
+  arg2 = (XMLNode *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "XMLNode & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->LoadObjectProperties(*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectText_SetText(void * jarg1, char * jarg2) {
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = (ObjectText *)jarg1; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  (&arg2)->assign(jarg2); 
+  (arg1)->SetText(arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ObjectText_GetWidth(void * jarg1) {
+  int jresult ;
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  int result;
+  
+  arg1 = (ObjectText *)jarg1; 
+  result = (int)(arg1)->GetWidth();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ObjectText_GetHeight(void * jarg1) {
+  int jresult ;
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  int result;
+  
+  arg1 = (ObjectText *)jarg1; 
+  result = (int)(arg1)->GetHeight();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectText() {
+  void * jresult ;
+  ObjectText *result = 0 ;
+  
+  result = (ObjectText *)new ObjectText();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectText(void * jarg1) {
+  ObjectText *arg1 = (ObjectText *) 0 ;
+  
+  arg1 = (ObjectText *)jarg1; 
+  delete arg1;
 }
 
 
@@ -5268,11 +6509,51 @@ SWIGEXPORT GameMode * SWIGSTDCALL CSharp_GameWorld_SWIGUpcast(GameWorld *jarg1) 
     return (GameMode *)jarg1;
 }
 
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectBackground_SWIGUpcast(ObjectBackground *jarg1) {
+    return (Object *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectBounce_SWIGUpcast(ObjectBounce *jarg1) {
+    return (Object *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectCollectable_SWIGUpcast(ObjectCollectable *jarg1) {
+    return (Object *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectController_SWIGUpcast(ObjectController *jarg1) {
+    return (Object *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectCutBars_SWIGUpcast(ObjectCutBars *jarg1) {
+    return (Object *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectDoor_SWIGUpcast(ObjectDoor *jarg1) {
+    return (Object *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectEnemy_SWIGUpcast(ObjectEnemy *jarg1) {
+    return (Object *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectFan_SWIGUpcast(ObjectFan *jarg1) {
+    return (Object *)jarg1;
+}
+
 SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectPlayer_SWIGUpcast(ObjectPlayer *jarg1) {
     return (Object *)jarg1;
 }
 
 SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectSpring_SWIGUpcast(ObjectSpring *jarg1) {
+    return (Object *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectStatic_SWIGUpcast(ObjectStatic *jarg1) {
+    return (Object *)jarg1;
+}
+
+SWIGEXPORT Object * SWIGSTDCALL CSharp_ObjectText_SWIGUpcast(ObjectText *jarg1) {
     return (Object *)jarg1;
 }
 
