@@ -23,11 +23,27 @@
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
+#include "objects/objectBackground.h"
+#include "objects/objectBounce.h"
+#include "objects/objectCollectable.h"
+#include "objects/objectController.h"
+#include "objects/objectCutBars.h"
+#include "objects/objectDoor.h"
+#include "objects/objectEnemy.h"
+#include "objects/objectFan.h"
 #include "objects/objectPlayer.h"
+#include "objects/objectSpring.h"
+#include "objects/objectStatic.h"
+#include "objects/objectTxtOverlay.h"
 #include "objectFactory.h"
+%}
+
+%module(directors="1") editor
+%{
 #include "editor.h"
 %}
 
+%feature("director") EditorBaseUI;
 
 
 %include <std_map.i>
@@ -46,11 +62,32 @@ using namespace std;
 %include "gameWorld.h"
 %include "gameState.h"
 %include "objectLayer.h"
+
+%typemap(csclassmodifiers) Object "public partial class"
 %include "objects/object.h"
+
+%include "objects/objectBackground.h"
+%include "objects/objectBounce.h"
+%include "objects/objectCollectable.h"
+%include "objects/objectController.h"
+%include "objects/objectCutBars.h"
+%include "objects/objectDoor.h"
+%include "objects/objectEnemy.h"
+%include "objects/objectFan.h"
 %include "objects/objectPlayer.h"
+%include "objects/objectSpring.h"
+%include "objects/objectStatic.h"
+%include "objects/objectTxtOverlay.h"
+
 %include "objectFactory.h"
 %include "editor.h"
 
+%typemap(csclassmodifiers) b2Vec2 "public partial class"
+struct b2Vec2
+{
+	float x, y;
+};
+%attribute(b2Vec2, float, x, x_get, x_set);
+%attribute(b2Vec2, float, y, y_get, y_set);
 
-%attribute(Object, int, X, GetPropX, SetPropX);
-%attribute(Object, int, Y, GetPropY, SetPropY);
+// TODO: implement factory or typemap to create derived types on the C# side

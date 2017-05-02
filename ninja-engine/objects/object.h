@@ -105,13 +105,14 @@ inline void ClearProperties(struct ObjectProperties& p) {
 }
 
 #define IMPLEMENT_CLONE(TYPE) \
-   Object* Clone() const { return new TYPE(*this); }
+	Object* Clone() const { return new TYPE(); }  /* for the protyping system */ \
+	static TYPE* DynamicCastFrom(Object* obj) {	return dynamic_cast<TYPE*>(obj); } /* for SWIG */
 
 #define MAKE_PROTOTYPE(TYPE) \
-   Object* TYPE ## _myProtoype1 = Object::AddPrototype(#TYPE, new TYPE());
+	Object* TYPE ## _myProtoype1 = Object::AddPrototype(#TYPE, new TYPE());
 
 #define MAKE_PROTOTYPE_ALIAS(TYPE, NAME) \
-   Object* TYPE ## _myProtoype2 = Object::AddPrototype(NAME, new TYPE());
+	Object* TYPE ## _myProtoype2 = Object::AddPrototype(NAME, new TYPE());
 
 //! A drawable entity in the world
 
@@ -122,7 +123,8 @@ class Object {
 	template<class Archive>
 	void serialize(Archive & ar, const unsigned int file_version)
 	{
-		ar & BOOST_SERIALIZATION_NVP(pos);
+		ar & boost::serialization::make_nvp("pos", _Pos);
+
 		ar & BOOST_SERIALIZATION_NVP(objectDefName);
 		ar & BOOST_SERIALIZATION_NVP(controller_num);
 		ar & BOOST_SERIALIZATION_NVP(properties);
@@ -146,9 +148,6 @@ class Object {
 		//! Which controller (e.g. which joystick) use, if we are getting
 		//! input for this object
 		int controller_num;
-		
-		//! Current position
-		b2Vec2 pos;
 		
 		//! The directions of current collisions (up,down,right,left)
 		CollisionDirection m_kCurrentCollision;
@@ -211,7 +210,6 @@ class Object {
 		virtual bool LoadFromObjectDef(XMLNode & xDef);
 		bool LoadObjectSounds(XMLNode& xDef);
 		virtual bool LoadObjectProperties(XMLNode& xDef);
-		virtual bool LoadXMLInstanceProperties(XMLNode& xObj);
 		bool LoadObjectAnimations(XMLNode& xDef);
 
 		//! Update display times
@@ -224,9 +222,8 @@ class Object {
 		//! Update the fading stuff
 		void UpdateFade();
 
-		//! optimization: cache Width and Height of the object
-		// (we may need to rethink where these come from)
-		// int width, height;
+		//! Current position
+		b2Vec2 _Pos;
 
 		//! Bounding box offsets from the bottom left of the first sprite
 		// (maye need to play with these)
@@ -251,8 +248,7 @@ class Object {
 		unsigned long unique_id;
 	
 	public:
-		// WRONG Protected constructor, this means we can't directly
-		// instantiate Object's, we need to use a friend or derived class.
+
 		Object();
 
 		// Whether to draw ALL the different rectangles or not (DEBUG)
@@ -297,19 +293,23 @@ class Object {
 		void DrawAtOffset(int x, int y, Sprite* = NULL);	
 		
 		//! Functions to get/set position
-		inline int GetPropX() const				{ return (int)pos.x; }
-		inline int GetPropY() const				{ return (int)pos.y; }
-		inline b2Vec2 GetXY() const { return pos; }; 
+		inline int GetPropX() const				{ return (int)_Pos.x; }
+		inline int GetPropY() const				{ return (int)_Pos.y; }
+		inline b2Vec2 GetXY() const { return _Pos; }; 
+		inline const b2Vec2* GetPos() const { return &_Pos; };
 
-		inline void SetPropX(const int _x) { SetXY(b2Vec2(_x, pos.y)); }
-		inline void SetPropY(const int _y) { SetXY(b2Vec2(pos.x, _y)); }
+		inline void SetPropX(const int _x) { SetXY(b2Vec2(_x, _Pos.y)); }
+		inline void SetPropY(const int _y) { SetXY(b2Vec2(_Pos.x, _y)); }
 		inline void SetXY(const int _x, const int _y) {
 			SetXY(b2Vec2(_x, _y));
 		}
+		inline void SetPos(b2Vec2 *_pos) {
+			SetXY(*_pos);
+		}
 		inline void SetXY(const b2Vec2 &_pos) {
-			pos = _pos;
+			_Pos = _pos;
 			if (_physics_body)
-				PHYSICS->UpdatePhysicsBodyPosition(_physics_body, pos.x, pos.y, GetWidth(), GetHeight());
+				PHYSICS->UpdatePhysicsBodyPosition(_physics_body, _Pos.x, _Pos.y, GetWidth(), GetHeight());
 		}
 
 		inline int GetAlpha() { return alpha; };
@@ -349,18 +349,10 @@ class Object {
 			if (_physics_body)
 				_physics_body->SetLinearVelocity(v); 
 		}
-		
-		inline void SetVelRotate(const float vel) {
-			_rotate_velocity = vel;
-		}
-
-		inline void SetUseRotation(const bool state) {
-			_use_rotation = state;
-		}
 
 		//! Get width/height of this object
-		int GetWidth() const;
-		int GetHeight() const;
+		virtual int GetWidth() const;
+		virtual int GetHeight() const;
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();
@@ -417,6 +409,10 @@ class Object {
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
 BOOST_CLASS_VERSION(Object, 3)
 BOOST_CLASS_VERSION(ObjectProperties, 4)
+#endif // SWIG
+
+#ifdef SWIG
+%attribute(Object, b2Vec2, Position, GetPos, SetPos)   // mostly same as EXPOSE_MAPEDITOR_PROPERTY(Object, b2Vec2, _Pos);
 #endif // SWIG
 
 #endif // __OBJECT_H

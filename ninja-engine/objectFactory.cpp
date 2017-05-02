@@ -177,7 +177,7 @@ Object* ObjectFactory::CreateObject(std::string objDefName) {
 		return NULL;
 	}
 
-	Object* pkObject = CreateObjectFromXML(*xObjectDef, NULL);
+	Object* pkObject = CreateObjectFromXML(*xObjectDef);
 	if (!pkObject)
 		return false;
 
@@ -189,7 +189,7 @@ Object* ObjectFactory::CreateObject(std::string objDefName) {
 // in: xObjectDef - XML representation of an object's definition
 // in: xObject - optional: XML representation of additional object paramaters.
 // returns: newly create Object*, or NULL if it failed
-Object* ObjectFactory::CreateObjectFromXML(XMLNode &xDef, XMLNode* xObj)
+Object* ObjectFactory::CreateObjectFromXML(XMLNode &xDef)
 {
 	assert(WORLD != NULL);
 
@@ -199,9 +199,6 @@ Object* ObjectFactory::CreateObjectFromXML(XMLNode &xDef, XMLNode* xObj)
 	obj = Object::CreateObject(className);
 
 	if (!obj->LoadFromObjectDef(xDef))
-		return NULL;
-
-	if (xObj && !obj->LoadXMLInstanceProperties(*xObj))
 		return NULL;
 
 	return obj;

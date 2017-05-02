@@ -41,8 +41,8 @@ class ObjectController : public Object {
 		void Update();
 		void Draw();
 
-		int GetWidth();		// need to override, default ones grab the animation
-		int GetHeight();
+		virtual int GetWidth();
+		virtual int GetHeight();
 
 		ObjectController();
 		~ObjectController();

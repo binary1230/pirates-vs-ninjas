@@ -47,8 +47,6 @@ class ObjectDoor : public Object {
 		
 		void Update();
 
-		virtual bool LoadXMLInstanceProperties(XMLNode & xObj);
-
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 
 		// Activate this door.  when it is finished its animation,

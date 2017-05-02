@@ -98,47 +98,16 @@ void ObjectDoor::Update() {
 		DoDoorAction();
 }
 
-#define DEFAULT_DOOR_TYPE "exit"
-
-bool ObjectDoor::LoadXMLInstanceProperties(XMLNode & xObj)
-{
-	// doors have 3 attributes they can use:
-	//
-	// type - the type of this door (level exit, warp, return to last mode, etc)
-	// 
-	// the following are used for the appropriate types:
-	//
-	// name - name of this door, used when jumping back to it from another mode 
-	//        (like jumping back to a door outside after exiting a house)
-	//
-	// modeToTrigger - the name of the mode to trigger when this door activates
-
-	std::string door_description = "";
-	if (xObj.getAttribute("type"))
-		door_description = xObj.getAttribute("type");
-
-	if (door_description.length() == 0)
-		door_description = DEFAULT_DOOR_TYPE;
-
-	if (door_description == "exit")
-		door_type = LEVEL_EXIT;
-	else if (door_description == "warp")
-		door_type = WARP_TO_ANOTHER_PORTAL;
-	else if (door_description == "switchToNewMode")
-		door_type = SWITCH_TO_ANOTHER_MODE;
-	else if (door_description == "return")
-		door_type = RETURN_TO_LAST_MODE;
-	else
-		door_type = INVALID_TYPE;
-
-	if (xObj.getAttribute("name"))
-		door_name = xObj.getAttribute("name");
-
-	if (xObj.getAttribute("modeToTrigger"))
-		mode_to_jump_to_on_activate = xObj.getAttribute("modeToTrigger");
-
-	return true;
-}
+// doors have 3 attributes they can use:
+//
+// type - the type of this door (level exit, warp, return to last mode, etc)
+// 
+// the following are used for the appropriate types:
+//
+// name - name of this door, used when jumping back to it from another mode 
+//        (like jumping back to a door outside after exiting a house)
+//
+// modeToTrigger - the name of the mode to trigger when this door activates
 
 bool ObjectDoor::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))

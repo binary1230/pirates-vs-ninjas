@@ -9,17 +9,12 @@
 #include "camera.h"
 
 Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
-	XMLNode* xDef = OBJECT_FACTORY->FindObjectDefinition(objDefName);
-	assert(xDef);
-
-	string className = OBJECT_FACTORY->GetClassNameFromXML(*xDef);
-	Object* obj = Object::CreateObject(className);
-
+	Object* obj = OBJECT_FACTORY->CreateObject(objDefName);
+	
 	ObjectLayer* layer = WORLD->FindLayer(layerName);
 	assert(layer);
 	obj->SetLayer(layer);
 
-	obj->SetObjectDefName(objDefName);
 	obj->FinishLoading();
 
 	WORLD->AddObject(obj, true);
@@ -27,7 +22,8 @@ Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
 	_last_object_def_name = objDefName;
 	_last_layer_name = layerName;
 
-	_ObjectsChanged = true;
+	if (_EditorUI) 
+		_EditorUI->OnObjectsChanged();
 
 	return obj;
 }
@@ -35,6 +31,7 @@ Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
 void Editor::CreateAndSelectObject(const char* objDefName, const char* layerName) {
 	_mode = EDITOR_MOVE;
 	_should_create_another_copy_after_move = true;
+	_should_delete_selection_after_move_done = true;
 
 	Object* obj = CreateObject(objDefName, layerName);
 
@@ -80,18 +77,49 @@ void Editor::UpdateSelectedObjectPosition() {
 	if (!_Selection)
 		return;
 
+	b2Vec2 old_pos = _Selection->GetXY();
+
 	b2Vec2 layer_pos;
 	MouseToLayerCoords(layer_pos, _Selection->GetLayer());
+
+	float speed = 1.0f;
+
+	if (INPUT->RealKey(ALLEGRO_KEY_LSHIFT)) {
+		speed = 10.0f;
+	}
+
+	if (INPUT->RealKey(ALLEGRO_KEY_UP)) {
+		offset_change.y += speed;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_DOWN)) {
+		offset_change.y -= speed;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_RIGHT)) {
+		offset_change.x += speed;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_LEFT)) {
+		offset_change.x -= speed;
+	}
+	if (INPUT->RealKeyOnce(ALLEGRO_KEY_SPACE)) {
+		offset_change = b2Vec2(0, 0);
+	}
 
 	if (_SnapToGrid) {
 		SnapToGrid(layer_pos);
 	}
 
-	_Selection->SetXY(layer_pos);
+	b2Vec2 new_pos = layer_pos + offset_change;
+	_Selection->SetXY(new_pos);
+
+	if (old_pos != new_pos) {
+		if (_EditorUI)
+			_EditorUI->OnSelectedObjectMoved();
+	}
 }
 
 void Editor::SelectObject(Object* obj) {
-	_ObjectsChanged = true;
+	if (obj == _Selection)
+		return;
 
 	if (_Selection) {
 		_Selection->SetDrawBounds(false);
@@ -102,6 +130,9 @@ void Editor::SelectObject(Object* obj) {
 	if (_Selection) {
 		_Selection->SetDrawBounds(true, al_map_rgb(255, 255, 0));
 	}
+
+	if (_EditorUI)
+		_EditorUI->OnSelectionChanged();
 }
 
 void Editor::Draw() {
@@ -110,8 +141,6 @@ void Editor::Draw() {
 }
 
 void Editor::CommonUpdate() {
-	_ObjectsChanged = false;
-
 	_pausedChanged = _wasPaused != GAMESTATE->IsPaused();
 	if (_pausedChanged) {
 		FlashText(!_wasPaused ? "paused" : "unpaused");
@@ -169,6 +198,7 @@ void Editor::NoModeUpdate() {
 
 	if (_Selection && INPUT->RealKeyOnce(ALLEGRO_KEY_M)) {
 		_mode = EDITOR_MOVE;
+		_should_delete_selection_after_move_done = false;
 		FlashText("move mode");
 	}
 
@@ -193,21 +223,27 @@ void Editor::UpdateMove() {
 
 	UpdateSelectedObjectPosition();
 
-	if (GAMESTATE->IsPaused() && INPUT->MouseButtonOnce(MOUSE_LEFT_BTN)) {
-		_mode = EDITOR_NONE;
+	if (GAMESTATE->IsPaused()) {
+		if (INPUT->MouseButtonOnce(MOUSE_LEFT_BTN) || INPUT->RealKeyOnce(ALLEGRO_KEY_ENTER)) {
+			_mode = EDITOR_NONE;
 
-		if (_should_create_another_copy_after_move)
-			CreateAndSelect_UsePreviousLayerAndObject();
+			if (_should_create_another_copy_after_move)
+				CreateAndSelect_UsePreviousLayerAndObject();
+		}
 	}
 
-	bool endMode =	INPUT->RealKeyOnce(ALLEGRO_KEY_ESCAPE) || 
+	bool endMode =	INPUT->RealKeyOnce(ALLEGRO_KEY_ESCAPE)	|| 
 					INPUT->MouseButtonOnce(MOUSE_RIGHT_BTN) ||
 					(_pausedChanged && !GAMESTATE->IsPaused());
 
 	if (endMode) {
-		DeleteCurrentSelection();
+		if (_should_delete_selection_after_move_done) {
+			DeleteCurrentSelection();
+		}
+		SelectObject(nullptr);
 		_mode = EDITOR_NONE;
 		_should_create_another_copy_after_move = false;
+		_should_delete_selection_after_move_done = true;
 	}
 }
 
@@ -253,15 +289,17 @@ void Editor::DeleteCurrentSelection() {
 	if (!_Selection)
 		return;
 
-	_ObjectsChanged = true;
-
 	_Selection->SetIsDead(true);
 	SelectObject(NULL);
 
 	WORLD->RemoveDeadObjectsIfNeeded();
+
+	if (_EditorUI)
+		_EditorUI->OnObjectsChanged();
 }
 
 Editor::Editor() {
+	_EditorUI = NULL;
 	_Selection = NULL;
 	_grid_resolution = 30;
 	_SnapToGrid = false;
@@ -271,10 +309,29 @@ Editor::Editor() {
 	_pausedChanged = false;
 	_obj_under_mouse = NULL;
 
+	offset_change = b2Vec2(0.0f, 0.0f);
+
 	_should_create_another_copy_after_move = false;
 
 	_text_time_remaining = 0;
 	_tooltip_text = "";
+
+	_should_delete_selection_after_move_done = false;
 }
 
 Editor::~Editor() {}
+
+void EditorBaseUI::OnObjectsChanged() {
+	assert(0); // should be an abstract class, but for C# reasons, can't be
+}
+
+void EditorBaseUI::OnSelectionChanged() {
+	assert(0); // should be an abstract class, but for C# reasons, can't be
+}
+
+void EditorBaseUI::OnSelectedObjectMoved() {
+	assert(0); // should be an abstract class, but for C# reasons, can't be
+}
+
+EditorBaseUI::~EditorBaseUI() {
+}

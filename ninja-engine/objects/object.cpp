@@ -96,9 +96,9 @@ void Object::InitPhysics()
 	float fDensity = 0.1f;
 
 	if (properties.is_static)
-		_physics_body = PHYSICS->CreateStaticPhysicsBox(pos.x, pos.y, GetWidth(), GetHeight(), properties.is_sensor);
+		_physics_body = PHYSICS->CreateStaticPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), properties.is_sensor);
 	else
-		_physics_body = PHYSICS->CreateDynamicPhysicsBox(pos.x, pos.y, GetWidth(), GetHeight(), properties.ignores_physics_rotation, fDensity, properties.use_angled_corners_collision_box);
+		_physics_body = PHYSICS->CreateDynamicPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), properties.ignores_physics_rotation, fDensity, properties.use_angled_corners_collision_box);
 
 	_physics_body->SetUserData(this);
 }
@@ -139,7 +139,7 @@ void Object::Clear() {
 	b_box_offset_x = b_box_offset_y = 0;
 	b_box_width = b_box_height = 0;
 	m_pkLayer = NULL;
-	pos.x = pos.y = 0.0f;
+	_Pos.x = _Pos.y = 0.0f;
 	m_kCurrentCollision.down = 0;
 	m_kCurrentCollision.up = 0;
 	m_kCurrentCollision.left = 0;
@@ -153,9 +153,8 @@ void Object::Clear() {
 	b_box_offset_x = b_box_offset_y = 0;
 	m_bDrawBoundingBox = false;
 	_physics_body = NULL;
-	debug_flag = false;
-
 	unique_id = Object::next_object_id++;
+	debug_flag = false;
 }
 
 bool Object::BaseInit() {
@@ -194,8 +193,8 @@ void Object::Draw() {
 //! This function populates x,y (reference params) with the 
 //! correctly transformed coordinates.
 void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y) {
-	x = (int)pos.x + offset_x;
-	y = (int)pos.y + offset_y;
+	x = (int)_Pos.x + offset_x;
+	y = (int)_Pos.y + offset_y;
 
 	// take into account the camera now.
 	if (!properties.is_overlay)
@@ -259,7 +258,7 @@ void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw)
 		_Rect bbox_t;
 
 		// get current bounding box
-		bbox_t.set(	pos.x, pos.y, pos.x + GetWidth(), pos.y + GetHeight());
+		bbox_t.set(	_Pos.x, _Pos.y, _Pos.x + GetWidth(), _Pos.y + GetHeight());
 
 		// draw current bounding rectangle, pink
 		TransformRect(bbox_t);
@@ -299,8 +298,8 @@ void Object::ResetForNextFrame()
 	if (_physics_body)
 	{
 		const b2Vec2& kPos = _physics_body->GetPosition();
-		pos.x = kPos.x;
-		pos.y = kPos.y;
+		_Pos.x = kPos.x;
+		_Pos.y = kPos.y;
 	}
 }
 
@@ -369,8 +368,8 @@ void Object::ApplyImpulse(const b2Vec2& v)
 
 void Object::UpdatePositionFromPhysicsLocation()
 {
-	pos.x = METERS_TO_PIXELS(_physics_body->GetPosition().x) - float(GetWidth()) / 2;
-	pos.y = METERS_TO_PIXELS(_physics_body->GetPosition().y) - float(GetHeight()) / 2;
+	_Pos.x = METERS_TO_PIXELS(_physics_body->GetPosition().x) - float(GetWidth()) / 2;
+	_Pos.y = METERS_TO_PIXELS(_physics_body->GetPosition().y) - float(GetHeight()) / 2;
 }
 
 bool Object::FinishLoading()
@@ -458,11 +457,6 @@ bool Object::LoadObjectProperties(XMLNode &xDef) {
 	return true;
 }
 
-bool Object::LoadXMLInstanceProperties(XMLNode & xObj)
-{
-	return true;
-}
-
 // A helper function to load animations
 bool Object::LoadObjectAnimations(XMLNode &xDef) {
 	uint i;
@@ -538,8 +532,8 @@ bool Object::ContainsPoint(const b2Vec2 & p) const
 {
 	// point p must be in layer-space (i.e. already adjusted for layer scroll speed)
 
-	return  p.x >= pos.x && p.x <= pos.x + GetWidth() &&
-			p.y >= pos.y && p.y <= pos.y + GetHeight();
+	return  p.x >= _Pos.x && p.x <= _Pos.x + GetWidth() &&
+			p.y >= _Pos.y && p.y <= _Pos.y + GetHeight();
 }
 
 Object* Object::AddPrototype(string type, Object * obj)

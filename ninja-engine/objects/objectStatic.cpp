@@ -59,7 +59,7 @@ void ObjectStatic::UpdateSpawns()
 		return;
 
 	badyguy->SetLayer( GetLayer() );
-	badyguy->SetXY(pos);
+	badyguy->SetXY(_Pos);
 	badyguy->PlayAnimation(1);
 
 	WORLD->AddObject(badyguy);

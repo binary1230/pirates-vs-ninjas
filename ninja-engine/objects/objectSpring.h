@@ -15,7 +15,7 @@ class ObjectSpring : public Object {
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
-		ar & boost::serialization::make_nvp("springDirection", spring_vector);
+		ar & boost::serialization::make_nvp("springDirection", _Direction);
 	}
 
 	protected:
@@ -24,7 +24,7 @@ class ObjectSpring : public Object {
 
 		// When an object hits the spring, it's 
 		// velocity will be set to this value
-		b2Vec2 spring_vector;
+		CREATE_PROPERTY_STRUCT(b2Vec2, Direction)
 				
 	public:
 		IMPLEMENT_CLONE(ObjectSpring)
@@ -34,10 +34,6 @@ class ObjectSpring : public Object {
 		void Shutdown();
 		void Update();
 
-		bool LoadSpringVectorFromXML(XMLNode & xSpringDirection);
-
-		virtual bool LoadXMLInstanceProperties(XMLNode & xObj);
-
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 
 		ObjectSpring();
@@ -46,10 +42,10 @@ class ObjectSpring : public Object {
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		bool IsSpringActive() {return spring_is_active;};
 
-		const b2Vec2& GetSpringVector() const {return spring_vector;};
-
 		friend class ObjectFactory;
 		friend class MapSaver;
 };
+
+EXPOSE_MAPEDITOR_PROPERTY(ObjectSpring, b2Vec2, Direction)
 
 #endif // SpringObject_H   

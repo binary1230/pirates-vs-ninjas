@@ -133,17 +133,6 @@ void ObjectText::SetModalActive(bool state) {
 		WORLD->SetModalObject(NULL);
 }
 
-bool ObjectText::LoadXMLInstanceProperties(XMLNode & xObj)
-{
-	if (xObj.nChildNode("text"))
-		SetText(xObj.getChildNode("text").getText());
-
-	if (xObj.nChildNode("avatar"))
-		SetAvatarFilename(xObj.getChildNode("avatar").getText());
-
-	return true;
-}
-
 bool ObjectText::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;

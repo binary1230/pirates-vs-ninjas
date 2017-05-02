@@ -101,7 +101,24 @@ namespace boost {
 	public:															\
 		inline type GetProp##var() { return _##var; }				\
 		inline void SetProp##var(type val)	{ _##var = val;	}
-		
+
+// mostly use these only when wanting to cheat for C# mapeditor support
+#define CREATE_PROPERTY_STRUCT(type,  var)							\
+	protected:														\
+		type _##var;												\
+	public:															\
+		inline const type* GetProp##var() const { return &_##var; }	\
+		inline void SetProp##var(type* val)	{ _##var = *val; }
+
+
+
+#ifdef SWIG
+#define EXPOSE_MAPEDITOR_PROPERTY(class_type, property_type, property_name) \
+		%attribute(class_type, property_type, property_name, GetProp##property_name, SetProp##property_name)
+#else
+#define EXPOSE_MAPEDITOR_PROPERTY(class_type, property_type, property_name) // noop //
+#endif // SWIG
+
 
 // #define REDIRECT_STDERR 1
 #define REDIRECT_STDERR_FILENAME "/Users/dcerquetti/game.log"

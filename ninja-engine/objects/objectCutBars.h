@@ -38,7 +38,6 @@ class ObjectCutBars : public Object {
 
 			void Clear();
 
-			virtual bool LoadXMLInstanceProperties(XMLNode & xObj);
 			virtual bool LoadObjectProperties(XMLNode & xDef);
 
 			virtual bool Init();

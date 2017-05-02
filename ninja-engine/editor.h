@@ -12,6 +12,16 @@ enum EditorMode {
 	EDITOR_SELECT,
 };
 
+// A helper class that will be used as a base class for C# events
+class EditorBaseUI {
+	public:
+		virtual void OnObjectsChanged();
+		virtual void OnSelectionChanged();
+		virtual void OnSelectedObjectMoved();
+
+		virtual ~EditorBaseUI();
+};
+
 
 //! A helper component for working in map editor mode
 class Editor {
@@ -30,8 +40,11 @@ class Editor {
 		bool _pausedChanged;
 
 		bool _should_create_another_copy_after_move;
+		bool _should_delete_selection_after_move_done;
 
 		Object* _obj_under_mouse;
+
+		b2Vec2 offset_change; // offset in move mode when using keys
 
 	public:
 		Editor();
@@ -66,8 +79,7 @@ class Editor {
 		CREATE_PROPERTY(bool, SnapToGrid)
 		CREATE_PROPERTY(Object*, Selection)
 
-		// helpers for UI *only*
-		CREATE_PROPERTY(bool, ObjectsChanged)
+		CREATE_PROPERTY(EditorBaseUI*, EditorUI)
 };
 
 #endif // MAP_EDITOR_H

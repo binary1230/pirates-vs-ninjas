@@ -13,18 +13,41 @@ using System.Reflection;
 using System.Diagnostics;
 
 namespace MapEditor
-{
+{ 
     public partial class Editor : Form
     {
         GameWrapper gameWrapper = new GameWrapper();
         bool wasPaused = false;
 
         string lastLayerName = "foreground";
-        string lastObjectDefName = "greenblock";
+        string lastObjectDefName = "large-block";
+
+        BindingList<KeyValuePair<uint, string>> objectList = new BindingList<KeyValuePair<uint, string>>();
+        BindingSource objectListDataSource = null;
+
+        EditorUI editorUI = new EditorUI();
 
         public Editor()
         {
             InitializeComponent();
+
+            objectListDataSource = new BindingSource(objectList, null);
+
+            RebindData();
+
+            editorUI = new EditorUI();
+            editorUI._onObjectsChangedDelegate = new OnObjectsChangedDelegate(OnObjectsChanged);
+            editorUI._onSelectionChangedDelegate = new OnSelectionChangedDelegate(OnSelectionChanged);
+            editorUI._onSelectedObjectMovedDelegate = new OnSelectedObjectMovedDelegate(OnSelectedObjectMoved);
+        }
+
+        public void RebindData()
+        {
+            lstObjects.DataSource = null;
+
+            lstObjects.DisplayMember = "Value";
+            lstObjects.ValueMember = "Key";
+            lstObjects.DataSource = objectListDataSource;
         }
 
         private void OnTick(object sender, EventArgs e)
@@ -57,30 +80,38 @@ namespace MapEditor
             return GameWorld.GetInstance().GetEditor().GetPropSelection();
         }
 
-        private TreeNode GetObjectNodeOfSelectedObject()
-        {
-            Object selection = GetSelectedObject();
-            if (selection == null)
-                return null;
-            
-            TreeNode[] nodes = treeObjects.Nodes.Find(selection.GetID().ToString(), true);
-            Debug.Assert(nodes.Length <= 1);
-            if (nodes.Length != 1)
-                return null;
-            
-            return nodes[0];
-        }
-
-        private void UpdateObjectList()
+        public void OnObjectsChanged()
         {
             SyncObjectListWithGame();
+            RebindData();
+        }
+
+        public void OnSelectionChanged()
+        {
+            UpdateSelectedObjectFromGame();
+        }
+
+        public void OnSelectedObjectMoved()
+        {
+            PostSelectionChanged(); // just enough to get our propertygrid to refresh
         }
 
         private void UpdateIfPaused()
         {
-            if (GameWorld.GetInstance().GetEditor().GetPropObjectsChanged())
-            {
-                UpdateObjectList();
+            // global::Editor editor = GameWorld.GetInstance().GetEditor();
+        }
+
+        private void UpdateSelectedObjectFromGame()
+        {
+            Object selection = GetSelectedObject();
+            if (selection == null) {
+                lstObjects.SelectedIndex = -1;
+            } else { 
+                // 3) update object list with currently selected object
+                lstObjects.SelectedValue = selection.GetID();
+
+                // 4) update layer list with layer this object is currently on
+                lstLayers.SelectedIndex = lstLayers.FindString(selection.GetLayer().GetName());
             }
         }
 
@@ -111,7 +142,9 @@ namespace MapEditor
                 Close();
                 return;
             }
-            
+
+            GameWorld.GetInstance().GetEditor().SetPropEditorUI(editorUI);
+
             OnPauseStatusChanged();
             wasPaused = gameWrapper.Paused;
 
@@ -138,15 +171,18 @@ namespace MapEditor
             GameWorld world = GameWorld.GetInstance();
             ObjectVector objects = world.GetObjects();
 
-            treeObjects.BeginUpdate();
+            lstObjects.BeginUpdate();
+
+            List<KeyValuePair<uint, string>> keysToRemove = new List<KeyValuePair<uint, string>>();
 
             // 1) remove anything that's no longer present
-            foreach (TreeNode node in treeObjects.Nodes) {
-                bool found = true;
+            foreach (KeyValuePair<uint, string> kvp in objectList)
+            {
+                bool found = false;
 
                 foreach (Object obj in objects)
                 {
-                    if (node.Name == obj.GetID().ToString())
+                    if (kvp.Key == obj.GetID())
                     {
                         found = true;
                         break;
@@ -156,32 +192,37 @@ namespace MapEditor
                 if (found)
                     continue;
 
-                treeObjects.Nodes.Remove(node);
+                keysToRemove.Add(kvp);
+            }
+
+            foreach (KeyValuePair<uint, string> key in keysToRemove)
+            {
+                objectList.Remove(key);
             }
 
             // 2) add anything that needs to be added
             foreach (Object obj in objects)
             {
-                string id = obj.GetID().ToString();
+                bool found = false;
+                foreach (KeyValuePair<uint,string> kvp in objectList)
+                {
+                    if (kvp.Key == obj.GetID())
+                    {
+                        found = true;
+                        break;
+                    }
+                }
 
-                TreeNode[] nodes = treeObjects.Nodes.Find(id, true);
-                Debug.Assert(nodes.Length <= 1);
-                if (nodes.Length == 1)
+                if (found)
                     continue;
 
-                treeObjects.Nodes.Add(id, obj.GetObjectDefName());
+                KeyValuePair<uint, string> objectListItemToAdd = new KeyValuePair<uint, string>(
+                    obj.GetID(), obj.GetObjectDefName()
+                );
+                objectList.Add(objectListItemToAdd);
             }
 
-            treeObjects.EndUpdate();
-
-            // 3) update object list with currently selected object
-            treeObjects.SelectedNode = GetObjectNodeOfSelectedObject();
-
-            // 4) update layer list with layer this object is currently on
-            Object selection = GetSelectedObject();
-            if (selection != null) {
-                lstLayers.SelectedIndex = lstLayers.FindString(selection.GetLayer().GetName());
-            }
+            lstObjects.EndUpdate();
         }
 
         private void btn_GetObjects_Click(object sender, EventArgs e)
@@ -215,7 +256,7 @@ namespace MapEditor
 
             lstLayers.Enabled = paused;
             lstObjectDefs.Enabled = paused;
-            treeObjects.Enabled = paused;
+            lstObjects.Enabled = paused;
 
             if (paused)
             {
@@ -245,36 +286,29 @@ namespace MapEditor
             GameWorld.GetInstance().GetEditor().SetPropSnapToGrid(chkSnapToGrid.Checked);
         }
 
-        private void treeObjects_AfterSelect(object sender, TreeViewEventArgs e)
+        private void lstObjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TreeNode selected = treeObjects.SelectedNode;
-            Object obj = null;
-            try
+            if (lstObjects.SelectedValue != null)
             {
-                obj = GameWorld.GetInstance().FindObjectByID(uint.Parse(selected.Name));
-            }
-            catch (System.FormatException) { }
+                uint object_id = (uint)lstObjects.SelectedValue;
+                Object obj = GameWorld.GetInstance().FindObjectByID(object_id);
 
-            UpdatePropertiesUIFromObject(obj);
-        }
-
-        private void UpdatePropertiesUIFromObject(Object obj)
-        {
-            if (obj == null)
-            {
-                return;
-            }
-
-            objectProperties.SelectedObject = obj;
-
-            System.Type objectType = obj.GetType();
-            foreach (MethodInfo methodInfo in objectType.GetMethods(BindingFlags.Public | BindingFlags.Instance))
-            {
-                if (methodInfo.Name.StartsWith("GetProp"))
+                if (obj != null)
                 {
-                    
+                    GameWorld.GetInstance().GetEditor().SelectObject(obj);
                 }
             }
+
+            PostSelectionChanged();
+        }
+
+        private void PostSelectionChanged()
+        {
+            // handled after anything (game or editor) has changed the selection
+
+            Object selection = DownCast.From(GetSelectedObject());
+            objectProperties.SelectedObject = selection;
+            objectProperties.ExpandAllGridItems();
         }
     }
 }

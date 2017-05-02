@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.FastTimer = new System.Windows.Forms.Timer(this.components);
-            this.treeObjects = new System.Windows.Forms.TreeView();
             this.btn_GetObjects = new System.Windows.Forms.Button();
             this.btn_Create = new System.Windows.Forms.Button();
             this.lstObjectDefs = new System.Windows.Forms.ListBox();
@@ -43,6 +42,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lstLayers = new System.Windows.Forms.ListBox();
             this.objectProperties = new System.Windows.Forms.PropertyGrid();
+            this.lstObjects = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,14 +50,6 @@
             // 
             this.FastTimer.Interval = 1;
             this.FastTimer.Tick += new System.EventHandler(this.OnTick);
-            // 
-            // treeObjects
-            // 
-            this.treeObjects.Location = new System.Drawing.Point(12, 25);
-            this.treeObjects.Name = "treeObjects";
-            this.treeObjects.Size = new System.Drawing.Size(187, 264);
-            this.treeObjects.TabIndex = 0;
-            this.treeObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeObjects_AfterSelect);
             // 
             // btn_GetObjects
             // 
@@ -71,9 +63,9 @@
             // 
             // btn_Create
             // 
-            this.btn_Create.Location = new System.Drawing.Point(369, 293);
+            this.btn_Create.Location = new System.Drawing.Point(546, 293);
             this.btn_Create.Name = "btn_Create";
-            this.btn_Create.Size = new System.Drawing.Size(147, 23);
+            this.btn_Create.Size = new System.Drawing.Size(149, 23);
             this.btn_Create.TabIndex = 2;
             this.btn_Create.Text = "Create New Object";
             this.btn_Create.UseVisualStyleBackColor = true;
@@ -81,9 +73,9 @@
             // 
             // lstObjectDefs
             // 
-            this.lstObjectDefs.Location = new System.Drawing.Point(369, 25);
+            this.lstObjectDefs.Location = new System.Drawing.Point(546, 25);
             this.lstObjectDefs.Name = "lstObjectDefs";
-            this.lstObjectDefs.Size = new System.Drawing.Size(147, 264);
+            this.lstObjectDefs.Size = new System.Drawing.Size(149, 264);
             this.lstObjectDefs.TabIndex = 3;
             // 
             // label1
@@ -98,7 +90,7 @@
             // lblLayers
             // 
             this.lblLayers.AutoSize = true;
-            this.lblLayers.Location = new System.Drawing.Point(211, 9);
+            this.lblLayers.Location = new System.Drawing.Point(390, 9);
             this.lblLayers.Name = "lblLayers";
             this.lblLayers.Size = new System.Drawing.Size(38, 13);
             this.lblLayers.TabIndex = 5;
@@ -119,7 +111,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.chkSnapToGrid);
             this.groupBox1.Controls.Add(this.chkDrawPhysicsDebug);
-            this.groupBox1.Location = new System.Drawing.Point(518, 9);
+            this.groupBox1.Location = new System.Drawing.Point(704, 9);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(169, 100);
             this.groupBox1.TabIndex = 7;
@@ -151,7 +143,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(366, 9);
+            this.label3.Location = new System.Drawing.Point(545, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(90, 13);
             this.label3.TabIndex = 9;
@@ -159,23 +151,33 @@
             // 
             // lstLayers
             // 
-            this.lstLayers.Location = new System.Drawing.Point(214, 25);
+            this.lstLayers.Location = new System.Drawing.Point(391, 25);
             this.lstLayers.Name = "lstLayers";
-            this.lstLayers.Size = new System.Drawing.Size(147, 264);
+            this.lstLayers.Size = new System.Drawing.Size(149, 264);
             this.lstLayers.TabIndex = 8;
             // 
             // objectProperties
             // 
-            this.objectProperties.Location = new System.Drawing.Point(523, 116);
+            this.objectProperties.Location = new System.Drawing.Point(705, 115);
             this.objectProperties.Name = "objectProperties";
+            this.objectProperties.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
             this.objectProperties.Size = new System.Drawing.Size(168, 202);
             this.objectProperties.TabIndex = 10;
+            // 
+            // lstObjects
+            // 
+            this.lstObjects.Location = new System.Drawing.Point(15, 25);
+            this.lstObjects.Name = "lstObjects";
+            this.lstObjects.Size = new System.Drawing.Size(370, 264);
+            this.lstObjects.TabIndex = 11;
+            this.lstObjects.SelectedIndexChanged += new System.EventHandler(this.lstObjects_SelectedIndexChanged);
             // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 328);
+            this.ClientSize = new System.Drawing.Size(885, 328);
+            this.Controls.Add(this.lstObjects);
             this.Controls.Add(this.objectProperties);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lstLayers);
@@ -186,7 +188,6 @@
             this.Controls.Add(this.lstObjectDefs);
             this.Controls.Add(this.btn_Create);
             this.Controls.Add(this.btn_GetObjects);
-            this.Controls.Add(this.treeObjects);
             this.Name = "Editor";
             this.Text = "Ninja-Editor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
@@ -201,7 +202,6 @@
         #endregion
 
         private System.Windows.Forms.Timer FastTimer;
-        private System.Windows.Forms.TreeView treeObjects;
         private System.Windows.Forms.Button btn_GetObjects;
         private System.Windows.Forms.Button btn_Create;
         private System.Windows.Forms.ListBox lstObjectDefs;
@@ -214,6 +214,7 @@
         private System.Windows.Forms.ListBox lstLayers;
         private System.Windows.Forms.CheckBox chkSnapToGrid;
         private System.Windows.Forms.PropertyGrid objectProperties;
+        private System.Windows.Forms.ListBox lstObjects;
     }
 }
 

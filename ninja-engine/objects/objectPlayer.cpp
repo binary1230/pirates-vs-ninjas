@@ -274,8 +274,8 @@ void ObjectPlayer::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 		// this should go into the spring class, not here, probably.
 		if (spring->IsSpringActive())
 		{
-			SetVelX(spring->GetSpringVector().x);
-			SetVelY(spring->GetSpringVector().y);
+			SetVelX(spring->GetPropDirection()->x);
+			SetVelY(spring->GetPropDirection()->y);
 		}
 	}
 }
@@ -326,14 +326,14 @@ void ObjectPlayer::ScreenBoundsConstraint() {
 		// TODO: clean this up some.
 		// BUG: freaks out on right side of screen
 
-		if (pos.x < 0) {
+		if (_Pos.x < 0) {
 			SetVelX(0.0f);
 			int newPosX = 20;
 			_physics_body->SetTransform(b2Vec2(PIXELS_TO_METERS(newPosX), _physics_body->GetWorldCenter().y), _physics_body->GetAngle());
-			pos.x = newPosX;
+			_Pos.x = newPosX;
 			UpdatePositionFromPhysicsLocation();
 		}
-		else if (pos.x >(WORLD->GetWidth() - GetWidth())) {
+		else if (_Pos.x >(WORLD->GetWidth() - GetWidth())) {
 			SetVelX(0.0f);
 			float newPosX = WORLD->GetWidth() - GetWidth();
 			_physics_body->SetTransform(
@@ -391,7 +391,7 @@ bool ObjectPlayer::LoadObjectProperties(XMLNode &xDef) {
 
 	XMLNode xProps = xDef.getChildNode("properties");
 
-	_pos_at_load = pos;
+	_pos_at_load = _Pos;
 
 	return	xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
 			xProps.getChildNode("minVelocity").getFloat(min_velocity) &&
