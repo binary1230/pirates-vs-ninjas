@@ -84,10 +84,6 @@ class GameOptions {
 		//! True if the user wants to playback a demo
 		inline bool PlaybackDemo() {return playback_demo;}
 		
-		//! Requested graphics mode (double buffering, pageflipping, nothing, etc)
-		//! (used for the Window class)
-		inline int GraphicsMode() {return graphics_mode;}
-
 		//! Get the user-overridden mode XML filename, or "" if none
 		inline const char* GetFirstModeOverride() {
 			if (_FirstMode.length() > 0)

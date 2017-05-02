@@ -2846,6 +2846,10 @@ SWIGINTERN void std_vector_Sl_ObjectLayer_Sm__Sg____setitem__(std::vector< Objec
 #define Object_ObjectDefName_set(self_, val_) self_->SetPropObjectDefName(val_)
   
 
+#define Object_DebugFlag_get(self_) self_->GetPropDebugFlag()
+#define Object_DebugFlag_set(self_, val_) self_->SetPropDebugFlag(val_)
+  
+
 #define ObjectSpring_Direction_get(self_) self_->GetPropDirection()
 #define ObjectSpring_Direction_set(self_, val_) self_->SetPropDirection(val_)
   
@@ -4535,30 +4539,6 @@ fail:
 }
 
 
-static int _wrap_GameOptions_GraphicsMode(lua_State* L) {
-  int SWIG_arg = 0;
-  GameOptions *arg1 = (GameOptions *) 0 ;
-  int result;
-  
-  SWIG_check_num_args("GameOptions::GraphicsMode",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameOptions::GraphicsMode",1,"GameOptions *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameOptions,0))){
-    SWIG_fail_ptr("GameOptions_GraphicsMode",1,SWIGTYPE_p_GameOptions);
-  }
-  
-  result = (int)(arg1)->GraphicsMode();
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_GameOptions_GetFirstModeOverride(lua_State* L) {
   int SWIG_arg = 0;
   GameOptions *arg1 = (GameOptions *) 0 ;
@@ -4724,7 +4704,6 @@ static swig_lua_method swig_GameOptions_methods[]= {
     { "GetDemoFilename", _wrap_GameOptions_GetDemoFilename},
     { "RecordDemo", _wrap_GameOptions_RecordDemo},
     { "PlaybackDemo", _wrap_GameOptions_PlaybackDemo},
-    { "GraphicsMode", _wrap_GameOptions_GraphicsMode},
     { "GetFirstModeOverride", _wrap_GameOptions_GetFirstModeOverride},
     { "SoundEnabled", _wrap_GameOptions_SoundEnabled},
     { "GetDebugStartPaused", _wrap_GameOptions_GetDebugStartPaused},
@@ -10111,56 +10090,6 @@ fail:
 }
 
 
-static int _wrap_Object_SetDebugFlag(lua_State* L) {
-  int SWIG_arg = 0;
-  Object *arg1 = (Object *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("Object::SetDebugFlag",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::SetDebugFlag",1,"Object *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("Object::SetDebugFlag",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("Object_SetDebugFlag",1,SWIGTYPE_p_Object);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetDebugFlag(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Object_GetDebugFlag(lua_State* L) {
-  int SWIG_arg = 0;
-  Object *arg1 = (Object *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("Object::GetDebugFlag",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::GetDebugFlag",1,"Object const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("Object_GetDebugFlag",1,SWIGTYPE_p_Object);
-  }
-  
-  result = (bool)((Object const *)arg1)->GetDebugFlag();
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_Object_OnCollide(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
@@ -10707,6 +10636,56 @@ fail:
 }
 
 
+static int _wrap_Object_GetPropDebugFlag(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Object::GetPropDebugFlag",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::GetPropDebugFlag",1,"Object *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_GetPropDebugFlag",1,SWIGTYPE_p_Object);
+  }
+  
+  result = (bool)(arg1)->GetPropDebugFlag();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Object_SetPropDebugFlag(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("Object::SetPropDebugFlag",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::SetPropDebugFlag",1,"Object *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Object::SetPropDebugFlag",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_SetPropDebugFlag",1,SWIGTYPE_p_Object);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetPropDebugFlag(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Object_Position_set(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
@@ -10862,6 +10841,56 @@ fail:
 }
 
 
+static int _wrap_Object_DebugFlag_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("Object::DebugFlag",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::DebugFlag",1,"Object *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Object::DebugFlag",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_DebugFlag_set",1,SWIGTYPE_p_Object);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  Object_DebugFlag_set(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Object_DebugFlag_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Object::DebugFlag",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::DebugFlag",1,"Object *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_DebugFlag_get",1,SWIGTYPE_p_Object);
+  }
+  
+  result = (bool)Object_DebugFlag_get(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_Object(void *obj) {
 Object *arg1 = (Object *) obj;
 delete arg1;
@@ -10870,6 +10899,7 @@ static swig_lua_attribute swig_Object_attributes[] = {
     { "Position", _wrap_Object_Position_get, _wrap_Object_Position_set },
     { "RotateVelocity", _wrap_Object_RotateVelocity_get, _wrap_Object_RotateVelocity_set },
     { "ObjectDefName", _wrap_Object_ObjectDefName_get, _wrap_Object_ObjectDefName_set },
+    { "DebugFlag", _wrap_Object_DebugFlag_get, _wrap_Object_DebugFlag_set },
     {0,0,0}
 };
 static swig_lua_method swig_Object_methods[]= {
@@ -10910,8 +10940,6 @@ static swig_lua_method swig_Object_methods[]= {
     { "ResetForNextFrame", _wrap_Object_ResetForNextFrame},
     { "GetProperties", _wrap_Object_GetProperties},
     { "SetProperties", _wrap_Object_SetProperties},
-    { "SetDebugFlag", _wrap_Object_SetDebugFlag},
-    { "GetDebugFlag", _wrap_Object_GetDebugFlag},
     { "OnCollide", _wrap_Object_OnCollide},
     { "OnAnimationLooped", _wrap_Object_OnAnimationLooped},
     { "IsDead", _wrap_Object_IsDead},
@@ -10927,6 +10955,8 @@ static swig_lua_method swig_Object_methods[]= {
     { "SetPropRotateVelocity", _wrap_Object_SetPropRotateVelocity},
     { "GetPropObjectDefName", _wrap_Object_GetPropObjectDefName},
     { "SetPropObjectDefName", _wrap_Object_SetPropObjectDefName},
+    { "GetPropDebugFlag", _wrap_Object_GetPropDebugFlag},
+    { "SetPropDebugFlag", _wrap_Object_SetPropDebugFlag},
     {0,0}
 };
 static swig_lua_method swig_Object_meta[] = {

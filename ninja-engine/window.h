@@ -8,22 +8,10 @@
 class GameState;
 class Sprite;
 
-// Modes for creating the display
-// Listed in order from fastest, but nastier, to slowest, but nicest
-
-// NO buffering (fastest, looks bad) NOT RECOMMENDED
-#define MODE_NOBUFFERING			0
-
-// Double buffering (reduces tearing) recommended default
-#define MODE_DOUBLEBUFFERING	1
-
-// Page flipping, (really reduces tearing)
-#define MODE_PAGEFLIPPING			2
-
-// Tripe buffering, (slowest, looks nicest) 
-// ONLY use this on really fast machines where you can still
-// see flickering or tearing.
-#define MODE_TRIPLEBUFFERING	3
+// HAXXXXXXXX.  these are the old names from old allegro.  
+// TODO: remove and replace these macros with something like WINDOW->GetScreenWidth()/etc
+#define SCREEN_W al_get_bitmap_width(al_get_target_bitmap())
+#define SCREEN_H al_get_bitmap_height(al_get_target_bitmap())
 
 extern int screen_size_x;
 extern int screen_size_y;
@@ -61,8 +49,7 @@ class GameWindow {
 		void UpdateFade();
 
 	public:
-		int Init(	uint _width, uint _height, bool _fullscreen = 0,
-							int _mode = MODE_DOUBLEBUFFERING);
+		int Init(	uint _width, uint _height, bool _fullscreen = 0);
 
 		void SetTitle( const char* szTitle );
 		void Shutdown();

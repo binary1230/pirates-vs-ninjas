@@ -132,8 +132,7 @@ int GameState::InitSystems() {
 
 	TRACE("[init: window]\n");
 	WINDOW->CreateInstance();
-	if ( !WINDOW ||	WINDOW->Init(
-		screen_size_x, screen_size_y, OPTIONS->IsFullscreen(), OPTIONS->GraphicsMode()) < 0 ) {
+	if ( !WINDOW ||	WINDOW->Init(screen_size_x, screen_size_y, OPTIONS->IsFullscreen()) < 0 ) {
 		TRACE("ERROR: InitSystems: failed to init window!\n");
 		return -1;
 	}

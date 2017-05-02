@@ -752,11 +752,6 @@ public class GameOptions : global::System.IDisposable {
     return ret;
   }
 
-  public int GraphicsMode() {
-    int ret = enginePINVOKE.GameOptions_GraphicsMode(swigCPtr);
-    return ret;
-  }
-
   public string GetFirstModeOverride() {
     string ret = enginePINVOKE.GameOptions_GetFirstModeOverride(swigCPtr);
     return ret;
@@ -1831,15 +1826,6 @@ public partial class Object : global::System.IDisposable {
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void SetDebugFlag(bool d) {
-    enginePINVOKE.Object_SetDebugFlag(swigCPtr, d);
-  }
-
-  public bool GetDebugFlag() {
-    bool ret = enginePINVOKE.Object_GetDebugFlag(swigCPtr);
-    return ret;
-  }
-
   public virtual void OnCollide(Object obj, SWIGTYPE_p_b2WorldManifold pkbWorldManifold) {
     enginePINVOKE.Object_OnCollide(swigCPtr, Object.getCPtr(obj), SWIGTYPE_p_b2WorldManifold.getCPtr(pkbWorldManifold));
   }
@@ -1930,6 +1916,15 @@ public partial class Object : global::System.IDisposable {
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
+  public bool GetPropDebugFlag() {
+    bool ret = enginePINVOKE.Object_GetPropDebugFlag(swigCPtr);
+    return ret;
+  }
+
+  public void SetPropDebugFlag(bool val) {
+    enginePINVOKE.Object_SetPropDebugFlag(swigCPtr, val);
+  }
+
   public b2Vec2 Position {
     set {
       enginePINVOKE.Object_Position_set(swigCPtr, b2Vec2.getCPtr(value));
@@ -1959,6 +1954,16 @@ public partial class Object : global::System.IDisposable {
     get {
       string ret = enginePINVOKE.Object_ObjectDefName_get(swigCPtr);
       if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
+      return ret;
+    } 
+  }
+
+  public bool DebugFlag {
+    set {
+      enginePINVOKE.Object_DebugFlag_set(swigCPtr, value);
+    } 
+    get {
+      bool ret = enginePINVOKE.Object_DebugFlag_get(swigCPtr);
       return ret;
     } 
   }
@@ -3848,9 +3853,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameOptions_PlaybackDemo")]
   public static extern bool GameOptions_PlaybackDemo(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameOptions_GraphicsMode")]
-  public static extern int GameOptions_GraphicsMode(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameOptions_GetFirstModeOverride")]
   public static extern string GameOptions_GetFirstModeOverride(global::System.Runtime.InteropServices.HandleRef jarg1);
 
@@ -4397,12 +4399,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetProperties")]
   public static extern void Object_SetProperties(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetDebugFlag")]
-  public static extern void Object_SetDebugFlag(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetDebugFlag")]
-  public static extern bool Object_GetDebugFlag(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_OnCollide")]
   public static extern void Object_OnCollide(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
@@ -4460,6 +4456,12 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetPropObjectDefName")]
   public static extern void Object_SetPropObjectDefName(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetPropDebugFlag")]
+  public static extern bool Object_GetPropDebugFlag(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetPropDebugFlag")]
+  public static extern void Object_SetPropDebugFlag(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Position_set")]
   public static extern void Object_Position_set(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
@@ -4477,6 +4479,12 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ObjectDefName_get")]
   public static extern string Object_ObjectDefName_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_DebugFlag_set")]
+  public static extern void Object_DebugFlag_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_DebugFlag_get")]
+  public static extern bool Object_DebugFlag_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectBackground_Clone")]
   public static extern global::System.IntPtr ObjectBackground_Clone(global::System.Runtime.InteropServices.HandleRef jarg1);

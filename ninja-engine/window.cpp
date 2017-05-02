@@ -7,10 +7,6 @@
 #include "sprite.h"
 #include "gameOptions.h"
 
-// HAXXXXXXXX.  these are the old names from old allegro.  remove and replace these macros
-#define SCREEN_W al_get_bitmap_width(al_get_target_bitmap())
-#define SCREEN_H al_get_bitmap_height(al_get_target_bitmap())
-
 // DOES NOT USE THE DEPTH BUFFER
 // relies on Drawing order (we are 2d after all.)
 
@@ -311,7 +307,7 @@ void GameWindow::SetClearColor(float r, float g, float b) {
 	glClearColor(r, g, b, 1.0f);
 }
 
-int GameWindow::Init( uint _width, uint _height, bool _fullscreen, int _mode) 
+int GameWindow::Init( uint _width, uint _height, bool _fullscreen) 
 {	
 	fade_rate = 0;
 	fade_alpha = 255;

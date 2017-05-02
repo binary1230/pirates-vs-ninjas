@@ -87,8 +87,6 @@ void GameOptions::Clear() {
 	debug_start_paused = false;
 	debug_message_level = DEFAULT_DEBUG_MSG_LEVEL;
 
-	graphics_mode = MODE_DOUBLEBUFFERING;	
-
 	draw_graphics = true;
 	wait_for_updates = true;
 
@@ -170,7 +168,7 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[])
 	bool _fullscreen_option_set = false;
 	char c;
 
-	while ( (c = getopt(argc,new_argv,"fzwg:m:r:d:X23vsc:p:h89ea")) != -1) {
+	while ( (c = getopt(argc,new_argv,"fzwm:r:d:X23vsc:p:h89ea")) != -1) {
 		switch (c) {
 
 			case 'm':
@@ -224,14 +222,6 @@ bool GameOptions::ParseArguments(const int argc, const char* argv[])
 				}
 				break;
 
-			case 'g':
-				graphics_mode = strtoul(optarg, NULL, 10);
-				if (graphics_mode >= 4 || graphics_mode < 0) {
-					TRACE("ERROR: Graphics mode is out of range.\n");
-					show_help = true;
-					return (is_valid = false);
-				}
-				break;
 
 			// debug: hack - '2x size'
 			case '2':

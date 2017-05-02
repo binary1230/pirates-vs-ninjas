@@ -136,7 +136,7 @@ void Object::Clear() {
 	m_bDrawBoundingBox = false;
 	_physics_body = NULL;
 	unique_id = Object::next_object_id++;
-	debug_flag = false;
+	_DebugFlag = false;
 }
 
 bool Object::BaseInit() {

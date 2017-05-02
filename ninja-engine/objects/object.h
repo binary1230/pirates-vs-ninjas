@@ -146,9 +146,6 @@ class Object {
 		//! True if this object is no longer in play and needs to be cleaned up
 		bool is_dead;
 
-		//! If true, this object can print debug info out if it wants to.
-		bool debug_flag;
-
 		//! How long, in frames, do we display this object.
 		//! This value is decremented each frame.  When it reaches
 		//! 0, the object is deleted.
@@ -326,10 +323,7 @@ class Object {
 		
 		struct ObjectProperties GetProperties() const { return _Properties; };
 		inline void SetProperties(struct ObjectProperties p) { _Properties = p;}
-		
-		void SetDebugFlag(bool d) {debug_flag = d;};
-		bool GetDebugFlag() const {return debug_flag;};
-		
+				
 		//! Handle collisions with another object
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		
@@ -361,6 +355,7 @@ class Object {
 
 		CREATE_PROPERTY(float, RotateVelocity)
 		CREATE_PROPERTY(string, ObjectDefName)
+		CREATE_PROPERTY(bool, DebugFlag)
 
 		friend class Editor;
 };
@@ -377,5 +372,6 @@ BOOST_CLASS_VERSION(ObjectProperties, 6)
 
 EXPOSE_MAPEDITOR_PROPERTY(Object, float, RotateVelocity);
 EXPOSE_MAPEDITOR_PROPERTY(Object, string, ObjectDefName);
+EXPOSE_MAPEDITOR_PROPERTY(Object, bool, DebugFlag);
 
 #endif // __OBJECT_H
