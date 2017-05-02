@@ -3314,6 +3314,10 @@ public class Editor : global::System.IDisposable {
     enginePINVOKE.Editor_CommonUpdate(swigCPtr);
   }
 
+  public void CommonAfterUpdate() {
+    enginePINVOKE.Editor_CommonAfterUpdate(swigCPtr);
+  }
+
   public void FlashText(string text) {
     enginePINVOKE.Editor_FlashText(swigCPtr, text);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
@@ -5052,6 +5056,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_CommonUpdate")]
   public static extern void Editor_CommonUpdate(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_CommonAfterUpdate")]
+  public static extern void Editor_CommonAfterUpdate(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Editor_FlashText")]
   public static extern void Editor_FlashText(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);

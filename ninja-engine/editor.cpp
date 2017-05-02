@@ -88,27 +88,27 @@ void Editor::UpdateSelectedObjectPosition() {
 		speed = 10.0f;
 	}
 
-	if (INPUT->RealKey(ALLEGRO_KEY_UP)) {
-		offset_change.y += speed;
+	if (INPUT->RealKey(ALLEGRO_KEY_W)) {
+		move_offset.y += speed;
 	}
-	if (INPUT->RealKey(ALLEGRO_KEY_DOWN)) {
-		offset_change.y -= speed;
+	if (INPUT->RealKey(ALLEGRO_KEY_S)) {
+		move_offset.y -= speed;
 	}
-	if (INPUT->RealKey(ALLEGRO_KEY_RIGHT)) {
-		offset_change.x += speed;
+	if (INPUT->RealKey(ALLEGRO_KEY_D)) {
+		move_offset.x += speed;
 	}
-	if (INPUT->RealKey(ALLEGRO_KEY_LEFT)) {
-		offset_change.x -= speed;
+	if (INPUT->RealKey(ALLEGRO_KEY_A)) {
+		move_offset.x -= speed;
 	}
 	if (INPUT->RealKeyOnce(ALLEGRO_KEY_SPACE)) {
-		offset_change = b2Vec2(0, 0);
+		move_offset = b2Vec2(0, 0);
 	}
 
 	if (_SnapToGrid) {
 		SnapToGrid(layer_pos);
 	}
 
-	b2Vec2 new_pos = layer_pos + offset_change;
+	b2Vec2 new_pos = layer_pos + move_offset;
 	_Selection->SetXY(new_pos);
 
 	if (old_pos != new_pos) {
@@ -165,6 +165,25 @@ void Editor::CommonUpdate() {
 	if (INPUT->RealKeyOnce(ALLEGRO_KEY_P)) {
 		ResetVolatileLevelState(LEVEL_PLAYERS);
 	}
+
+
+	float camera_speed = 10.0f;
+
+	if (INPUT->RealKey(ALLEGRO_KEY_LSHIFT)) {
+		camera_speed = 100.0f;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_UP)) {
+		camera_offset.y += camera_speed;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_DOWN)) {
+		camera_offset.y -= camera_speed;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_RIGHT)) {
+		camera_offset.x += camera_speed;
+	}
+	if (INPUT->RealKey(ALLEGRO_KEY_LEFT)) {
+		camera_offset.x -= camera_speed;
+	}
 }
 
 void Editor::FlashText(string text) {
@@ -202,7 +221,7 @@ void Editor::NoModeUpdate() {
 		FlashText("move mode");
 	}
 
-	if (INPUT->RealKeyOnce(ALLEGRO_KEY_S)) {
+	if (INPUT->RealKeyOnce(ALLEGRO_KEY_F5)) {
 		FlashText("saving level....");
 		WORLD->SaveWorldOverCurrentFile();
 		FlashText("saved level!");
@@ -283,7 +302,17 @@ void Editor::Update() {
 		break;
 	}
 
+	CommonAfterUpdate();
+
 	_wasPaused = GAMESTATE->IsPaused();
+}
+
+void Editor::CommonAfterUpdate() {
+	if (!GAMESTATE->IsPaused()) {
+		camera_offset = b2Vec2(0, 0);
+	}
+		
+	WORLD->GetCamera()->SetCameraOffset(camera_offset);
 }
 
 void Editor::DeleteCurrentSelection() {
@@ -310,7 +339,7 @@ Editor::Editor() {
 	_pausedChanged = false;
 	_obj_under_mouse = NULL;
 
-	offset_change = b2Vec2(0.0f, 0.0f);
+	camera_offset = move_offset = b2Vec2(0.0f, 0.0f);
 
 	_should_create_another_copy_after_move = false;
 

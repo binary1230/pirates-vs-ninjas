@@ -44,7 +44,8 @@ class Editor {
 
 		Object* _obj_under_mouse;
 
-		b2Vec2 offset_change; // offset in move mode when using keys
+		b2Vec2 move_offset;		// offset in move mode when using arrow keys
+		b2Vec2 camera_offset;   // offset in no mode when using arrow keys
 
 	public:
 		Editor();
@@ -66,6 +67,8 @@ class Editor {
 
 		void Draw();
 		void CommonUpdate();
+		void CommonAfterUpdate();
+
 		void FlashText(string text);
 		void NoModeUpdate();
 		void ResetVolatileLevelState(VolatileStateLevel level);

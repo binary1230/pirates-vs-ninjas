@@ -13,6 +13,7 @@ class Camera
 
 	protected:
 		b2Vec2 pos;
+		b2Vec2 camera_offset;
 
 	public:
 		virtual void Update();
@@ -27,6 +28,8 @@ class Camera
 		void ClampToLevelBounds();
 
 		virtual void TransformWorldToView(int& x, int &y);
+
+		virtual void SetCameraOffset(b2Vec2& offset);
 };
 
 #endif // CAMERA_H

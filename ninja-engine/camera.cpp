@@ -10,13 +10,12 @@ void Camera::Update()
 
 void Camera::Init()
 {
+	camera_offset = b2Vec2(0, 0);
 }
 
 void Camera::GetXY(b2Vec2& pos_out) {
-	// TODO make all this use vect not individual vars
-
-	pos_out.x = pos.x;
-	pos_out.y = pos.y;
+	pos_out.x = pos.x + camera_offset.x;
+	pos_out.y = pos.y + camera_offset.y;
 }
 
 void Camera::ClampToLevelBounds() {
@@ -42,13 +41,18 @@ void Camera::ClampToLevelBounds() {
 
 void Camera::TransformWorldToView(int & x, int & y)
 {
-	x -= pos.x;
-	y -= pos.y;
+	x -= pos.x + camera_offset.x;
+	y -= pos.y + camera_offset.y;
+}
+
+void Camera::SetCameraOffset(b2Vec2 & offset)
+{
+	camera_offset = offset;
 }
 
 Camera::Camera()
 {
-	pos.x = pos.y = 0.0f;
+	camera_offset = pos = b2Vec2(0, 0);
 }
 
 Camera::~Camera()

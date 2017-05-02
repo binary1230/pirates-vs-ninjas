@@ -38,7 +38,8 @@ class CameraFollow : public Camera
 		int camera_shake_y;
 
 	public:
-		void GetXY(b2Vec2 & pos_out);
+		virtual void GetXY(b2Vec2 & pos_out);
+		virtual void TransformWorldToView(int & x, int & y);
 		void SetCameraShake(bool state, int fadeout_time);
 		void ComputeNewPosition();
 		void ComputeNewShake();

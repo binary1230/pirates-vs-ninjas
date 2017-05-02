@@ -6297,6 +6297,14 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Editor_CommonUpdate(void * jarg1) {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_Editor_CommonAfterUpdate(void * jarg1) {
+  Editor *arg1 = (Editor *) 0 ;
+  
+  arg1 = (Editor *)jarg1; 
+  (arg1)->CommonAfterUpdate();
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_Editor_FlashText(void * jarg1, char * jarg2) {
   Editor *arg1 = (Editor *) 0 ;
   std::string arg2 ;

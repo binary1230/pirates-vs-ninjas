@@ -31,6 +31,14 @@ void CameraFollow::GetXY(b2Vec2& pos_out) {
 	pos_out.y += camera_shake_y;
 }
 
+void CameraFollow::TransformWorldToView(int & x, int & y)
+{
+	Camera::TransformWorldToView(x, y);
+
+	x += camera_shake_x;
+	y += camera_shake_y;
+}
+
 void CameraFollow::SetCameraShake(bool state, int fadeout_time) {
 	m_iCameraShakeTime = 0;
 	m_iCameraTotalShakeTime = fadeout_time;
