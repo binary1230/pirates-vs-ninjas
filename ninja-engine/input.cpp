@@ -3,6 +3,7 @@
 #include "gameState.h"
 #include "gameOptions.h"
 #include "eventManager.h"
+#include "assetManager.h"
 
 // Maximum numbers of players allowed (arbitrary so far)
 #define MAX_PLAYERS 	2
@@ -243,12 +244,12 @@ bool Input::InitPlayback(std::string filename, bool seed_engine) {
 		return false;
 	} 
 
-	demofile = fopen(filename.c_str(), "r");
+	string full_path = ASSETMANAGER->GetPathOf(filename.c_str());
+	demofile = fopen(full_path.c_str(), "r");
 	
 	if (!demofile) {
-			TRACE(	"InputPlayback: ERROR can't open demofile '%s'.\n",
-							filename);
-			return false;
+		TRACE("InputPlayback: ERROR can't open demofile '%s'.\n", filename.c_str());
+		return false;
 	}
 	
 	//TRACE("InputRecord: Playing back demo from file '%s'.\n", 

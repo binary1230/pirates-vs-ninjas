@@ -11,7 +11,7 @@ function UpdateIntroState()
 	if introState == 1 then
 
 		music_play("bassy1.ogg");
-		world_play_input_script("data/input/level1.1.input");
+		world_play_input_script("input/level1.1.input");
 
 	elseif introState == 2 then
 
