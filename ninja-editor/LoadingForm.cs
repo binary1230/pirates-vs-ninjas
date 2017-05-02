@@ -95,6 +95,8 @@ namespace MapEditor
             foreach (string path in paths)
             {
                 loaded = PopulateMapData(path);
+                if (loaded)
+                    break;
             }
 
             if (!loaded)
