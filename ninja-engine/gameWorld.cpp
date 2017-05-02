@@ -260,6 +260,8 @@ void GameWorld::RemoveDeadObjectsIfNeeded() {
 
 void GameWorld::UpdateObjects()  
 {
+	bool was_modal_active = modal_active != NULL;
+
 	AddNewObjectsIfNeeded();
 	RemoveDeadObjectsIfNeeded();
 	
@@ -268,7 +270,7 @@ void GameWorld::UpdateObjects()
 
 		// If there is a 'modal' object, then don't update anything
 		// EXCEPT for that object. (usually text boxes/etc) 
-		if (!modal_active || obj == modal_active)
+		if (!was_modal_active || obj == modal_active)
 		{
 			obj->Update();
 		}
@@ -290,16 +292,18 @@ void GameWorld::Update() {
 }
 
 void GameWorld::DoMainGameUpdate() {
+	bool was_modal_active = modal_active != NULL;
+
 	for (Object*& obj : _objects) {
 		assert(obj != NULL);
 
 		// If there is a 'modal' object, then don't update anything
 		// EXCEPT for that object. (usually text boxes/etc) 
-		if (!modal_active || obj == modal_active)
+		if (!was_modal_active || obj == modal_active)
 			obj->ResetForNextFrame();
 	}
 
-	if (!modal_active)
+	if (!was_modal_active)
 		PHYSICS->Update();
 
 	UpdateObjects();
