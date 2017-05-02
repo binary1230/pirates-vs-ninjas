@@ -41,8 +41,8 @@ class ObjectController : public Object {
 		void Update();
 		void Draw();
 
-		virtual int GetWidth();
-		virtual int GetHeight();
+		virtual int GetWidth() const;
+		virtual int GetHeight() const;
 
 		ObjectController();
 		~ObjectController();

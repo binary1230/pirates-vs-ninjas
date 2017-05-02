@@ -134,8 +134,20 @@ namespace MapEditor
             // derived type.  We cast it explicitly to the derived type, but also once we've done that, we can keep it as an Object and
             // C# will have the info needed.  This is useful for a bunch of reasons including the property editor can edit Derived class
             // property.
-            downcast = ObjectSpring.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            //
+            // Sucks that we have to hardcode this, but, whatever
+            downcast = ObjectBackground.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectBounce.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectCollectable.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectController.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectCutBars.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectDoor.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectEnemy.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectFan.DynamicCastFrom(obj); if (downcast != null) return downcast;
             downcast = ObjectPlayer.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectSpring.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectStatic.DynamicCastFrom(obj); if (downcast != null) return downcast;
+            downcast = ObjectText.DynamicCastFrom(obj); if (downcast != null) return downcast;
 
             // if can't figure out anything else, return the original
             return obj;

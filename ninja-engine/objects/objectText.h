@@ -1,6 +1,7 @@
 #ifndef OBJ_TXTOVERLAY_H
 #define OBJ_TXTOVERLAY_H
 
+#include "globals.h"
 #include "object.h"
 
 class Sprite;
@@ -48,7 +49,7 @@ class ObjectText : public Object {
 		bool blink;
 		
 		vector<std::string> page_texts;		// holds each "page" full of text
-		uint text_index;							// which "page" we're on
+		uint text_index;					// which "page" we're on
 
 		ALLEGRO_COLOR box_color; 
 		int box_margin; 
@@ -74,8 +75,8 @@ class ObjectText : public Object {
 
 		void SetText(std::string txt);
 
-		virtual int GetWidth();		// need to override, default ones grab the animation
-		virtual int GetHeight();
+		virtual int GetWidth() const;		// need to override, default ones grab the animation
+		virtual int GetHeight() const;
 
 		ObjectText();
 		~ObjectText();

@@ -23,6 +23,9 @@
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
+#include "objects/object.h"
+#include "objectFactory.h"
+
 #include "objects/objectBackground.h"
 #include "objects/objectBounce.h"
 #include "objects/objectCollectable.h"
@@ -34,8 +37,7 @@
 #include "objects/objectPlayer.h"
 #include "objects/objectSpring.h"
 #include "objects/objectStatic.h"
-#include "objects/objectTxtOverlay.h"
-#include "objectFactory.h"
+#include "objects/objectText.h"
 %}
 
 %module(directors="1") editor
@@ -77,7 +79,7 @@ using namespace std;
 %include "objects/objectPlayer.h"
 %include "objects/objectSpring.h"
 %include "objects/objectStatic.h"
-%include "objects/objectTxtOverlay.h"
+%include "objects/objectText.h"
 
 %include "objectFactory.h"
 %include "editor.h"

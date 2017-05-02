@@ -1857,12 +1857,12 @@ public partial class Object : global::System.IDisposable {
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public int GetWidth() {
+  public virtual int GetWidth() {
     int ret = enginePINVOKE.Object_GetWidth(swigCPtr);
     return ret;
   }
 
-  public int GetHeight() {
+  public virtual int GetHeight() {
     int ret = enginePINVOKE.Object_GetHeight(swigCPtr);
     return ret;
   }
@@ -2318,12 +2318,12 @@ public class ObjectController : Object {
     enginePINVOKE.ObjectController_Draw(swigCPtr);
   }
 
-  public int GetWidth() {
+  public override int GetWidth() {
     int ret = enginePINVOKE.ObjectController_GetWidth(swigCPtr);
     return ret;
   }
 
-  public int GetHeight() {
+  public override int GetHeight() {
     int ret = enginePINVOKE.ObjectController_GetHeight(swigCPtr);
     return ret;
   }
@@ -3022,12 +3022,12 @@ public class ObjectText : Object {
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public int GetWidth() {
+  public override int GetWidth() {
     int ret = enginePINVOKE.ObjectText_GetWidth(swigCPtr);
     return ret;
   }
 
-  public int GetHeight() {
+  public override int GetHeight() {
     int ret = enginePINVOKE.ObjectText_GetHeight(swigCPtr);
     return ret;
   }

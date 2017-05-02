@@ -369,6 +369,9 @@ namespace Swig {
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
+#include "objects/object.h"
+#include "objectFactory.h"
+
 #include "objects/objectBackground.h"
 #include "objects/objectBounce.h"
 #include "objects/objectCollectable.h"
@@ -380,8 +383,7 @@ namespace Swig {
 #include "objects/objectPlayer.h"
 #include "objects/objectSpring.h"
 #include "objects/objectStatic.h"
-#include "objects/objectTxtOverlay.h"
-#include "objectFactory.h"
+#include "objects/objectText.h"
 
 
 #include "editor.h"
@@ -4782,7 +4784,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ObjectController_GetWidth(void * jarg1) {
   int result;
   
   arg1 = (ObjectController *)jarg1; 
-  result = (int)(arg1)->GetWidth();
+  result = (int)((ObjectController const *)arg1)->GetWidth();
   jresult = result; 
   return jresult;
 }
@@ -4794,7 +4796,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ObjectController_GetHeight(void * jarg1) {
   int result;
   
   arg1 = (ObjectController *)jarg1; 
-  result = (int)(arg1)->GetHeight();
+  result = (int)((ObjectController const *)arg1)->GetHeight();
   jresult = result; 
   return jresult;
 }
@@ -5849,7 +5851,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ObjectText_GetWidth(void * jarg1) {
   int result;
   
   arg1 = (ObjectText *)jarg1; 
-  result = (int)(arg1)->GetWidth();
+  result = (int)((ObjectText const *)arg1)->GetWidth();
   jresult = result; 
   return jresult;
 }
@@ -5861,7 +5863,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ObjectText_GetHeight(void * jarg1) {
   int result;
   
   arg1 = (ObjectText *)jarg1; 
-  result = (int)(arg1)->GetHeight();
+  result = (int)((ObjectText const *)arg1)->GetHeight();
   jresult = result; 
   return jresult;
 }

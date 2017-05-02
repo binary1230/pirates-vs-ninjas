@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "objectTxtOverlay.h"
+#include "objectText.h"
 
 #include "assetManager.h"
 #include "window.h"
@@ -15,11 +15,11 @@
 
 #define BLINK_TIME 10
 
-int ObjectText::GetHeight() {
+int ObjectText::GetHeight() const {
 	return box_height;
 }
 
-int ObjectText::GetWidth() {
+int ObjectText::GetWidth() const {
 	return WINDOW->Width() - (box_margin * 2);
 }
 

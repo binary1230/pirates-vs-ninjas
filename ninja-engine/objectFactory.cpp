@@ -18,7 +18,7 @@
 #include "objectFan.h"
 #include "objectDoor.h"
 #include "objectEnemy.h"
-#include "objectTxtOverlay.h"
+#include "objectText.h"
 #include "objectCutBars.h"
 
 

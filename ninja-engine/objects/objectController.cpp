@@ -8,11 +8,11 @@
 #include "gameState.h"
 #include "gameWorld.h"
 
-int ObjectController::GetHeight() {
+int ObjectController::GetHeight() const {
 	return controller_sprite->height;
 }
 
-int ObjectController::GetWidth() {
+int ObjectController::GetWidth() const {
 	return controller_sprite->width;
 }
 

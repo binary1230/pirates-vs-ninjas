@@ -2762,6 +2762,9 @@ typedef struct{} LANGUAGE_OBJ;
 #include "gameMode.h"
 #include "gameWorld.h"
 #include "gameState.h"
+#include "objects/object.h"
+#include "objectFactory.h"
+
 #include "objects/objectBackground.h"
 #include "objects/objectBounce.h"
 #include "objects/objectCollectable.h"
@@ -2773,8 +2776,7 @@ typedef struct{} LANGUAGE_OBJ;
 #include "objects/objectPlayer.h"
 #include "objects/objectSpring.h"
 #include "objects/objectStatic.h"
-#include "objects/objectTxtOverlay.h"
-#include "objectFactory.h"
+#include "objects/objectText.h"
 
 
 #include "editor.h"
@@ -12216,13 +12218,13 @@ static int _wrap_ObjectController_GetWidth(lua_State* L) {
   int result;
   
   SWIG_check_num_args("ObjectController::GetWidth",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectController::GetWidth",1,"ObjectController *");
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectController::GetWidth",1,"ObjectController const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectController,0))){
     SWIG_fail_ptr("ObjectController_GetWidth",1,SWIGTYPE_p_ObjectController);
   }
   
-  result = (int)(arg1)->GetWidth();
+  result = (int)((ObjectController const *)arg1)->GetWidth();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -12240,13 +12242,13 @@ static int _wrap_ObjectController_GetHeight(lua_State* L) {
   int result;
   
   SWIG_check_num_args("ObjectController::GetHeight",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectController::GetHeight",1,"ObjectController *");
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectController::GetHeight",1,"ObjectController const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectController,0))){
     SWIG_fail_ptr("ObjectController_GetHeight",1,SWIGTYPE_p_ObjectController);
   }
   
-  result = (int)(arg1)->GetHeight();
+  result = (int)((ObjectController const *)arg1)->GetHeight();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -14853,13 +14855,13 @@ static int _wrap_ObjectText_GetWidth(lua_State* L) {
   int result;
   
   SWIG_check_num_args("ObjectText::GetWidth",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectText::GetWidth",1,"ObjectText *");
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectText::GetWidth",1,"ObjectText const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectText,0))){
     SWIG_fail_ptr("ObjectText_GetWidth",1,SWIGTYPE_p_ObjectText);
   }
   
-  result = (int)(arg1)->GetWidth();
+  result = (int)((ObjectText const *)arg1)->GetWidth();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -14877,13 +14879,13 @@ static int _wrap_ObjectText_GetHeight(lua_State* L) {
   int result;
   
   SWIG_check_num_args("ObjectText::GetHeight",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectText::GetHeight",1,"ObjectText *");
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectText::GetHeight",1,"ObjectText const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectText,0))){
     SWIG_fail_ptr("ObjectText_GetHeight",1,SWIGTYPE_p_ObjectText);
   }
   
-  result = (int)(arg1)->GetHeight();
+  result = (int)((ObjectText const *)arg1)->GetHeight();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   

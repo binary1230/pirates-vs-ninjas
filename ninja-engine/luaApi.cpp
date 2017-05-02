@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "luaApi.h"
 #include "gameWorld.h"
-#include "objectTxtOverlay.h"
+#include "objectText.h"
 #include "input.h"
 #include "objectFactory.h"
 #include "objectCutBars.h"

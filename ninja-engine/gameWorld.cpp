@@ -7,7 +7,7 @@
 #include "objectFactory.h"
 #include "object.h"
 #include "objectIDs.h"
-#include "objectTxtOverlay.h"
+#include "objectText.h"
 #include "input.h"
 #include "gameState.h"
 #include "objectLayer.h"
