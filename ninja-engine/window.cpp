@@ -80,15 +80,25 @@ void GameWindow::SetFadedOut() {
 	fading_state = FADED_OUT;
 }
 
-void GameWindow::FadeOut(int rate /*=1*/) {
-	fade_rate = rate;
-	fade_alpha = 0;
+void GameWindow::FadeOut(uint rate = 1 /*=1*/) {
+	if (fading_state != FADING_OUT) {
+		fade_rate = rate;
+		fade_alpha = 0;
+	} else {
+		fade_rate = std::min(fade_rate, rate);
+	}
+
 	fading_state = FADING_OUT;
 }
 
-void GameWindow::FadeIn(int rate /*=1*/) {
-	fade_rate = rate;
-	fade_alpha = 255;
+void GameWindow::FadeIn(uint rate = 1 /*=1*/) {
+	if (fading_state != FADING_IN) {
+		fade_rate = rate;
+		fade_alpha = 255;
+	} else {
+		fade_rate = std::min(fade_rate, rate);
+	}
+
 	fading_state = FADING_IN;
 }
 

@@ -97,10 +97,10 @@ class GameWindow {
 		void Screenshot(char* filename = NULL);
 
 		//! Start a fade out to black
-		void FadeOut(int rate = 1);
+		void FadeOut(uint rate);
 
 		//! Start a fade in from black
-		void FadeIn(int rate = 1);
+		void FadeIn(uint rate);
 
 		//! Set the screen to be faded in (e.g. no fade)
 		void SetFadedIn();

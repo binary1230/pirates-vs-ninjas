@@ -11,6 +11,7 @@
 #include "gameOptions.h"
 #include "luaManager.h"
 #include "animationeditor.h"
+#include "window.h"
 
 void GameModes::Update() {
 	if (signal_game_exit)
@@ -147,6 +148,8 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", modeType.c_str());
 		return -1;
 	}
+
+	WINDOW->FadeIn(30);
 		
 	return 0;
 }
@@ -159,6 +162,8 @@ void GameModes::DoGameExit() {
 
 void GameModes::SignalEndCurrentMode() {
 	signal_end_current_mode = true;
+
+	WINDOW->FadeOut(30);
 }
 
 void GameModes::SignalGameExit() {

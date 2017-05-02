@@ -7,6 +7,7 @@
 #include "gameWorld.h"
 #include "gameSound.h"
 #include "animations.h"
+#include "window.h"
 
 void ObjectDoor::Shutdown() {
 	BaseShutdown();
@@ -19,6 +20,8 @@ void ObjectDoor::Shutdown() {
 void ObjectDoor::Activate() {
 	door_open_time = 0;
 	WORLD->SetModalObject(this);
+
+	WINDOW->FadeOut(TIME_TO_WAIT_BEFORE_DOOR_ACTION);
 
 	PlayAnimation(DOOR_OPENING);
 }
