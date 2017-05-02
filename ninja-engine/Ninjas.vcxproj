@@ -126,7 +126,6 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);OpenGL32.Lib;lua.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
-      <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -150,7 +149,6 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);OpenGL32.Lib;lua.lib</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <AdditionalLibraryDirectories>..\packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
-      <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -186,7 +184,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);OpenGL32.Lib;lua.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
-      <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -214,7 +211,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);OpenGL32.Lib;lua.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\packages\lua.5.3.3\build\native\lib\v140\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
-      <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
       <Command>
