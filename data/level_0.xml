@@ -10496,7 +10496,7 @@
 						<item class_id="10" class_name="ObjectPlayer" tracking_level="1" version="1" object_id="_421">
 							<Object>
 								<pos>
-									<x>3.536054230e+01</x>
+									<x>2.871821213e+01</x>
 									<y>1.575262070e+01</y>
 								</pos>
 								<objectDefName>amaya</objectDefName>
@@ -11621,7 +11621,7 @@
 								</properties>
 								<m_pkLayer class_id_reference="7" object_id_reference="_454"></m_pkLayer>
 								<_use_rotation>1</_use_rotation>
-								<_rotate_velocity>-1.681558157e-44</_rotate_velocity>
+								<_rotate_velocity>-2.108780815e-12</_rotate_velocity>
 							</Object>
 						</item>
 						<item class_id_reference="3" object_id="_467">

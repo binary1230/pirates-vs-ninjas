@@ -6,14 +6,13 @@
 	<objects class_id="2" tracking_level="0" version="0">
 		<count>35</count>
 		<item_version>0</item_version>
-		<item class_id="3" class_name="ObjectController" tracking_level="1" version="0" object_id="_1">
-			<Object class_id="4" tracking_level="0" version="3">
+		<item class_id="3" class_name="ObjectController" tracking_level="1" version="1" object_id="_1">
+			<Object class_id="4" tracking_level="0" version="4">
 				<pos class_id="5" tracking_level="0" version="0">
 					<x>0.000000000e+00</x>
 					<y>0.000000000e+00</y>
 				</pos>
 				<objectDefName>controller</objectDefName>
-				<controller_num>1</controller_num>
 				<properties class_id="6" tracking_level="0" version="4">
 					<p.feels_gravity>0</p.feels_gravity>
 					<p.feels_user_input>0</p.feels_user_input>
@@ -40,6 +39,7 @@
 				<_use_rotation>0</_use_rotation>
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
+			<controller_num>1</controller_num>
 		</item>
 		<item class_id="8" class_name="ObjectStatic" tracking_level="1" version="0" object_id="_3">
 			<Object>
@@ -48,7 +48,6 @@
 					<y>1.820000000e+02</y>
 				</pos>
 				<objectDefName>cloud</objectDefName>
-				<controller_num>0</controller_num>
 				<properties>
 					<p.feels_gravity>0</p.feels_gravity>
 					<p.feels_user_input>0</p.feels_user_input>
@@ -74,7 +73,6 @@
 									<y>6.100000000e+01</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -100,7 +98,6 @@
 									<y>7.050000000e+02</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -126,7 +123,6 @@
 									<y>1.322000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -152,7 +148,6 @@
 									<y>1.971000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -178,7 +173,6 @@
 									<y>2.618000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -204,7 +198,6 @@
 									<y>3.011000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -230,7 +223,6 @@
 									<y>3.427000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -256,7 +248,6 @@
 									<y>3.962000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -282,7 +273,6 @@
 									<y>4.033000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -319,14 +309,13 @@
 		<item class_id_reference="8" object_id_reference="_11"></item>
 		<item class_id_reference="8" object_id_reference="_12"></item>
 		<item class_id_reference="8" object_id_reference="_13"></item>
-		<item class_id="9" class_name="ObjectPlayer" tracking_level="1" version="0" object_id="_14">
+		<item class_id="9" class_name="ObjectPlayer" tracking_level="1" version="1" object_id="_14">
 			<Object>
 				<pos>
 					<x>3.000000000e+02</x>
 					<y>6.500000000e+03</y>
 				</pos>
 				<objectDefName>amaya</objectDefName>
-				<controller_num>1</controller_num>
 				<properties>
 					<p.feels_gravity>1</p.feels_gravity>
 					<p.feels_user_input>1</p.feels_user_input>
@@ -353,6 +342,7 @@
 				<_use_rotation>0</_use_rotation>
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
+			<controller_num>1</controller_num>
 		</item>
 		<item class_id="10" class_name="ObjectDoor" tracking_level="1" version="0" object_id="_16">
 			<Object>
@@ -361,7 +351,6 @@
 					<y>1.050000000e+02</y>
 				</pos>
 				<objectDefName>door-slide</objectDefName>
-				<controller_num>0</controller_num>
 				<properties>
 					<p.feels_gravity>0</p.feels_gravity>
 					<p.feels_user_input>0</p.feels_user_input>
@@ -387,7 +376,6 @@
 									<y>3.860000000e+02</y>
 								</pos>
 								<objectDefName>s_totem1</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -413,7 +401,6 @@
 									<y>8.600000000e+01</y>
 								</pos>
 								<objectDefName>s_siren</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -439,7 +426,6 @@
 									<y>6.600000000e+01</y>
 								</pos>
 								<objectDefName>s_sign_arrow</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -465,7 +451,6 @@
 									<y>1.050000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -491,7 +476,6 @@
 									<y>8.500000000e+01</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -517,7 +501,6 @@
 									<y>6.500000000e+01</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -543,7 +526,6 @@
 									<y>3.660000000e+02</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -569,7 +551,6 @@
 									<y>3.660000000e+02</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -595,7 +576,6 @@
 									<y>3.660000000e+02</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -621,7 +601,6 @@
 									<y>3.660000000e+02</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -647,7 +626,6 @@
 									<y>6.500000000e+01</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -673,7 +651,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -699,7 +676,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -725,7 +701,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -751,7 +726,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -777,7 +751,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -803,7 +776,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -829,7 +801,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -855,7 +826,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -881,7 +851,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -907,7 +876,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
@@ -933,7 +901,6 @@
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<controller_num>0</controller_num>
 								<properties>
 									<p.feels_gravity>0</p.feels_gravity>
 									<p.feels_user_input>0</p.feels_user_input>
