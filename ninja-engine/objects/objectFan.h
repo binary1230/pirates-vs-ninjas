@@ -11,7 +11,6 @@ class ObjectFan : public Object {
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
-		// ar & BOOST_SERIALIZATION_NVP(a_var_you_want_to_serialize);
 	}
 
 	protected:

@@ -18,9 +18,7 @@ class ObjectController : public Object {
 	void serialize(Archive &ar, const unsigned int version)
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
-		if (version >= 1) {
-			ar & BOOST_SERIALIZATION_NVP(controller_num);
-		}
+		ar & BOOST_SERIALIZATION_NVP(controller_num);
 	}
 
 	protected:

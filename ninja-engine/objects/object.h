@@ -123,21 +123,11 @@ class Object {
 	void serialize(Archive & ar, const unsigned int file_version)
 	{
 		ar & boost::serialization::make_nvp("pos", _Pos);
-
 		ar & BOOST_SERIALIZATION_NVP(objectDefName);
-
-		if (file_version < 4) {
-			int controller_num; // obsolete
-			ar & BOOST_SERIALIZATION_NVP(controller_num);
-		}
-		
 		ar & BOOST_SERIALIZATION_NVP(properties);
 		ar & BOOST_SERIALIZATION_NVP(m_pkLayer);
-
-		if (file_version >= 2) {
-			ar & BOOST_SERIALIZATION_NVP(_use_rotation);
-			ar & BOOST_SERIALIZATION_NVP(_rotate_velocity);
-		}
+		ar & BOOST_SERIALIZATION_NVP(_use_rotation);
+		ar & BOOST_SERIALIZATION_NVP(_rotate_velocity);
 	}
 
 	// implement "prototype pattern" for object creation
