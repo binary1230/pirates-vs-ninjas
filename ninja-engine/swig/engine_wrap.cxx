@@ -3262,168 +3262,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_CollisionDirection(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_uses_physics_engine_set(void * jarg1, unsigned int jarg2) {
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  if (arg1) (arg1)->uses_physics_engine = arg2;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_uses_physics_engine_get(void * jarg1) {
-  unsigned int jresult ;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  result = (bool) ((arg1)->uses_physics_engine);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_static_set(void * jarg1, unsigned int jarg2) {
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  if (arg1) (arg1)->is_static = arg2;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_static_get(void * jarg1) {
-  unsigned int jresult ;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  result = (bool) ((arg1)->is_static);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_sensor_set(void * jarg1, unsigned int jarg2) {
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  if (arg1) (arg1)->is_sensor = arg2;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_sensor_get(void * jarg1) {
-  unsigned int jresult ;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  result = (bool) ((arg1)->is_sensor);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_ignores_physics_rotation_set(void * jarg1, unsigned int jarg2) {
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  if (arg1) (arg1)->ignores_physics_rotation = arg2;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_ignores_physics_rotation_get(void * jarg1) {
-  unsigned int jresult ;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  result = (bool) ((arg1)->ignores_physics_rotation);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_use_angled_corners_collision_box_set(void * jarg1, unsigned int jarg2) {
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  if (arg1) (arg1)->use_angled_corners_collision_box = arg2;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_use_angled_corners_collision_box_get(void * jarg1) {
-  unsigned int jresult ;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  result = (bool) ((arg1)->use_angled_corners_collision_box);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectProperties_is_overlay_set(void * jarg1, unsigned int jarg2) {
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  arg2 = jarg2 ? true : false; 
-  if (arg1) (arg1)->is_overlay = arg2;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectProperties_is_overlay_get(void * jarg1) {
-  unsigned int jresult ;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  result = (bool) ((arg1)->is_overlay);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_ObjectProperties() {
-  void * jresult ;
-  ObjectProperties *result = 0 ;
-  
-  result = (ObjectProperties *)new ObjectProperties();
-  jresult = (void *)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectProperties(void * jarg1) {
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  
-  arg1 = (ObjectProperties *)jarg1; 
-  delete arg1;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ClearProperties(void * jarg1) {
-  ObjectProperties *arg1 = 0 ;
-  
-  arg1 = (ObjectProperties *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "ObjectProperties & type is null", 0);
-    return ;
-  } 
-  ClearProperties(*arg1);
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_debug_draw_bounding_boxes_set(unsigned int jarg1) {
   bool arg1 ;
   
@@ -3952,34 +3790,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_ResetForNextFrame(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_GetProperties(void * jarg1) {
-  void * jresult ;
-  Object *arg1 = (Object *) 0 ;
-  ObjectProperties result;
-  
-  arg1 = (Object *)jarg1; 
-  result = ((Object const *)arg1)->GetProperties();
-  jresult = new ObjectProperties((const ObjectProperties &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetProperties(void * jarg1, void * jarg2) {
-  Object *arg1 = (Object *) 0 ;
-  ObjectProperties arg2 ;
-  ObjectProperties *argp2 ;
-  
-  arg1 = (Object *)jarg1; 
-  argp2 = (ObjectProperties *)jarg2; 
-  if (!argp2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Attempt to dereference null ObjectProperties", 0);
-    return ;
-  }
-  arg2 = *argp2; 
-  (arg1)->SetProperties(arg2);
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_OnCollide(void * jarg1, void * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -4237,6 +4047,18 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_SetPropDebugFlag(void * jarg1, unsigne
   arg1 = (Object *)jarg1; 
   arg2 = jarg2 ? true : false; 
   (arg1)->SetPropDebugFlag(arg2);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_IsSensor(void * jarg1) {
+  unsigned int jresult ;
+  Object *arg1 = (Object *) 0 ;
+  bool result;
+  
+  arg1 = (Object *)jarg1; 
+  result = (bool)((Object const *)arg1)->IsSensor();
+  jresult = result; 
+  return jresult;
 }
 
 

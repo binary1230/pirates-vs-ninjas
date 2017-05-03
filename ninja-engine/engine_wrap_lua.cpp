@@ -2719,28 +2719,27 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_ObjectFan swig_types[21]
 #define SWIGTYPE_p_ObjectLayer swig_types[22]
 #define SWIGTYPE_p_ObjectPlayer swig_types[23]
-#define SWIGTYPE_p_ObjectProperties swig_types[24]
-#define SWIGTYPE_p_ObjectSpring swig_types[25]
-#define SWIGTYPE_p_ObjectStatic swig_types[26]
-#define SWIGTYPE_p_ObjectText swig_types[27]
-#define SWIGTYPE_p_Sprite swig_types[28]
-#define SWIGTYPE_p_XMLNode swig_types[29]
-#define SWIGTYPE_p__Rect swig_types[30]
-#define SWIGTYPE_p_b2Vec2 swig_types[31]
-#define SWIGTYPE_p_b2WorldManifold swig_types[32]
-#define SWIGTYPE_p_int swig_types[33]
-#define SWIGTYPE_p_listT_Object_p_t swig_types[34]
-#define SWIGTYPE_p_p_char swig_types[35]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[36]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[37]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[38]
-#define SWIGTYPE_p_std__string swig_types[39]
-#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[40]
-#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[41]
-#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[42]
-#define SWIGTYPE_p_unsigned_int swig_types[43]
-static swig_type_info *swig_types[45];
-static swig_module_info swig_module = {swig_types, 44, 0, 0, 0, 0};
+#define SWIGTYPE_p_ObjectSpring swig_types[24]
+#define SWIGTYPE_p_ObjectStatic swig_types[25]
+#define SWIGTYPE_p_ObjectText swig_types[26]
+#define SWIGTYPE_p_Sprite swig_types[27]
+#define SWIGTYPE_p_XMLNode swig_types[28]
+#define SWIGTYPE_p__Rect swig_types[29]
+#define SWIGTYPE_p_b2Vec2 swig_types[30]
+#define SWIGTYPE_p_b2WorldManifold swig_types[31]
+#define SWIGTYPE_p_int swig_types[32]
+#define SWIGTYPE_p_listT_Object_p_t swig_types[33]
+#define SWIGTYPE_p_p_char swig_types[34]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[35]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[36]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[37]
+#define SWIGTYPE_p_std__string swig_types[38]
+#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[39]
+#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[40]
+#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[41]
+#define SWIGTYPE_p_unsigned_int swig_types[42]
+static swig_type_info *swig_types[44];
+static swig_module_info swig_module = {swig_types, 43, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -8081,399 +8080,6 @@ static swig_lua_class *swig_CollisionDirection_bases[] = {0};
 static const char *swig_CollisionDirection_base_names[] = {0};
 static swig_lua_class _wrap_class_CollisionDirection = { "CollisionDirection", "CollisionDirection", &SWIGTYPE_p_CollisionDirection,_proxy__wrap_new_CollisionDirection, swig_delete_CollisionDirection, swig_CollisionDirection_methods, swig_CollisionDirection_attributes, &swig_CollisionDirection_Sf_SwigStatic, swig_CollisionDirection_meta, swig_CollisionDirection_bases, swig_CollisionDirection_base_names };
 
-static int _wrap_ObjectProperties_uses_physics_engine_set(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("ObjectProperties::uses_physics_engine",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::uses_physics_engine",1,"ObjectProperties *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("ObjectProperties::uses_physics_engine",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_uses_physics_engine_set",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  if (arg1) (arg1)->uses_physics_engine = arg2;
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_uses_physics_engine_get(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("ObjectProperties::uses_physics_engine",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::uses_physics_engine",1,"ObjectProperties *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_uses_physics_engine_get",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  result = (bool) ((arg1)->uses_physics_engine);
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_is_static_set(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("ObjectProperties::is_static",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::is_static",1,"ObjectProperties *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("ObjectProperties::is_static",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_is_static_set",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  if (arg1) (arg1)->is_static = arg2;
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_is_static_get(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("ObjectProperties::is_static",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::is_static",1,"ObjectProperties *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_is_static_get",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  result = (bool) ((arg1)->is_static);
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_is_sensor_set(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("ObjectProperties::is_sensor",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::is_sensor",1,"ObjectProperties *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("ObjectProperties::is_sensor",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_is_sensor_set",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  if (arg1) (arg1)->is_sensor = arg2;
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_is_sensor_get(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("ObjectProperties::is_sensor",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::is_sensor",1,"ObjectProperties *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_is_sensor_get",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  result = (bool) ((arg1)->is_sensor);
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_ignores_physics_rotation_set(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("ObjectProperties::ignores_physics_rotation",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::ignores_physics_rotation",1,"ObjectProperties *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("ObjectProperties::ignores_physics_rotation",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_ignores_physics_rotation_set",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  if (arg1) (arg1)->ignores_physics_rotation = arg2;
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_ignores_physics_rotation_get(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("ObjectProperties::ignores_physics_rotation",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::ignores_physics_rotation",1,"ObjectProperties *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_ignores_physics_rotation_get",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  result = (bool) ((arg1)->ignores_physics_rotation);
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_use_angled_corners_collision_box_set(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("ObjectProperties::use_angled_corners_collision_box",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::use_angled_corners_collision_box",1,"ObjectProperties *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("ObjectProperties::use_angled_corners_collision_box",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_use_angled_corners_collision_box_set",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  if (arg1) (arg1)->use_angled_corners_collision_box = arg2;
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_use_angled_corners_collision_box_get(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("ObjectProperties::use_angled_corners_collision_box",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::use_angled_corners_collision_box",1,"ObjectProperties *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_use_angled_corners_collision_box_get",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  result = (bool) ((arg1)->use_angled_corners_collision_box);
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_is_overlay_set(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("ObjectProperties::is_overlay",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::is_overlay",1,"ObjectProperties *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("ObjectProperties::is_overlay",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_is_overlay_set",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  if (arg1) (arg1)->is_overlay = arg2;
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectProperties_is_overlay_get(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = (ObjectProperties *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("ObjectProperties::is_overlay",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectProperties::is_overlay",1,"ObjectProperties *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ObjectProperties_is_overlay_get",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  result = (bool) ((arg1)->is_overlay);
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_ObjectProperties(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *result = 0 ;
-  
-  SWIG_check_num_args("ObjectProperties::ObjectProperties",0,0)
-  result = (ObjectProperties *)new ObjectProperties();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_ObjectProperties,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static void swig_delete_ObjectProperties(void *obj) {
-ObjectProperties *arg1 = (ObjectProperties *) obj;
-delete arg1;
-}
-static int _proxy__wrap_new_ObjectProperties(lua_State *L) {
-    assert(lua_istable(L,1));
-    lua_pushcfunction(L,_wrap_new_ObjectProperties);
-    assert(!lua_isnil(L,-1));
-    lua_replace(L,1); /* replace our table with real constructor */
-    lua_call(L,lua_gettop(L)-1,1);
-    return 1;
-}
-static swig_lua_attribute swig_ObjectProperties_attributes[] = {
-    { "uses_physics_engine", _wrap_ObjectProperties_uses_physics_engine_get, _wrap_ObjectProperties_uses_physics_engine_set },
-    { "is_static", _wrap_ObjectProperties_is_static_get, _wrap_ObjectProperties_is_static_set },
-    { "is_sensor", _wrap_ObjectProperties_is_sensor_get, _wrap_ObjectProperties_is_sensor_set },
-    { "ignores_physics_rotation", _wrap_ObjectProperties_ignores_physics_rotation_get, _wrap_ObjectProperties_ignores_physics_rotation_set },
-    { "use_angled_corners_collision_box", _wrap_ObjectProperties_use_angled_corners_collision_box_get, _wrap_ObjectProperties_use_angled_corners_collision_box_set },
-    { "is_overlay", _wrap_ObjectProperties_is_overlay_get, _wrap_ObjectProperties_is_overlay_set },
-    {0,0,0}
-};
-static swig_lua_method swig_ObjectProperties_methods[]= {
-    {0,0}
-};
-static swig_lua_method swig_ObjectProperties_meta[] = {
-    {0,0}
-};
-
-static swig_lua_attribute swig_ObjectProperties_Sf_SwigStatic_attributes[] = {
-    {0,0,0}
-};
-static swig_lua_const_info swig_ObjectProperties_Sf_SwigStatic_constants[]= {
-    {0,0,0,0,0,0}
-};
-static swig_lua_method swig_ObjectProperties_Sf_SwigStatic_methods[]= {
-    {0,0}
-};
-static swig_lua_class* swig_ObjectProperties_Sf_SwigStatic_classes[]= {
-    0
-};
-
-static swig_lua_namespace swig_ObjectProperties_Sf_SwigStatic = {
-    "ObjectProperties",
-    swig_ObjectProperties_Sf_SwigStatic_methods,
-    swig_ObjectProperties_Sf_SwigStatic_attributes,
-    swig_ObjectProperties_Sf_SwigStatic_constants,
-    swig_ObjectProperties_Sf_SwigStatic_classes,
-    0
-};
-static swig_lua_class *swig_ObjectProperties_bases[] = {0};
-static const char *swig_ObjectProperties_base_names[] = {0};
-static swig_lua_class _wrap_class_ObjectProperties = { "ObjectProperties", "ObjectProperties", &SWIGTYPE_p_ObjectProperties,_proxy__wrap_new_ObjectProperties, swig_delete_ObjectProperties, swig_ObjectProperties_methods, swig_ObjectProperties_attributes, &swig_ObjectProperties_Sf_SwigStatic, swig_ObjectProperties_meta, swig_ObjectProperties_bases, swig_ObjectProperties_base_names };
-
-static int _wrap_ClearProperties(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectProperties *arg1 = 0 ;
-  
-  SWIG_check_num_args("ClearProperties",1,1)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("ClearProperties",1,"ObjectProperties &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("ClearProperties",1,SWIGTYPE_p_ObjectProperties);
-  }
-  
-  ClearProperties(*arg1);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_Object_debug_draw_bounding_boxes_set(lua_State* L) {
   int SWIG_arg = 0;
   bool arg1 ;
@@ -10058,65 +9664,6 @@ fail:
 }
 
 
-static int _wrap_Object_GetProperties(lua_State* L) {
-  int SWIG_arg = 0;
-  Object *arg1 = (Object *) 0 ;
-  ObjectProperties result;
-  
-  SWIG_check_num_args("Object::GetProperties",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::GetProperties",1,"Object const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("Object_GetProperties",1,SWIGTYPE_p_Object);
-  }
-  
-  result = ((Object const *)arg1)->GetProperties();
-  {
-    ObjectProperties * resultptr = new ObjectProperties((const ObjectProperties &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ObjectProperties,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Object_SetProperties(lua_State* L) {
-  int SWIG_arg = 0;
-  Object *arg1 = (Object *) 0 ;
-  ObjectProperties arg2 ;
-  ObjectProperties *argp2 ;
-  
-  SWIG_check_num_args("Object::SetProperties",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::SetProperties",1,"Object *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Object::SetProperties",2,"ObjectProperties");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("Object_SetProperties",1,SWIGTYPE_p_Object);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_ObjectProperties,0))){
-    SWIG_fail_ptr("Object_SetProperties",2,SWIGTYPE_p_ObjectProperties);
-  }
-  arg2 = *argp2;
-  
-  (arg1)->SetProperties(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_Object_OnCollide(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
@@ -10713,6 +10260,30 @@ fail:
 }
 
 
+static int _wrap_Object_IsSensor(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Object::IsSensor",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::IsSensor",1,"Object const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_IsSensor",1,SWIGTYPE_p_Object);
+  }
+  
+  result = (bool)((Object const *)arg1)->IsSensor();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Object_Position_set(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
@@ -10966,8 +10537,6 @@ static swig_lua_method swig_Object_methods[]= {
     { "GetHeight", _wrap_Object_GetHeight},
     { "GetCenter", _wrap_Object_GetCenter},
     { "ResetForNextFrame", _wrap_Object_ResetForNextFrame},
-    { "GetProperties", _wrap_Object_GetProperties},
-    { "SetProperties", _wrap_Object_SetProperties},
     { "OnCollide", _wrap_Object_OnCollide},
     { "OnAnimationLooped", _wrap_Object_OnAnimationLooped},
     { "IsDead", _wrap_Object_IsDead},
@@ -10985,6 +10554,7 @@ static swig_lua_method swig_Object_methods[]= {
     { "SetPropObjectDefName", _wrap_Object_SetPropObjectDefName},
     { "GetPropDebugFlag", _wrap_Object_GetPropDebugFlag},
     { "SetPropDebugFlag", _wrap_Object_SetPropDebugFlag},
+    { "IsSensor", _wrap_Object_IsSensor},
     {0,0}
 };
 static swig_lua_method swig_Object_meta[] = {
@@ -16446,7 +16016,6 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "GameState_SetInstance", _wrap_GameState_SetInstance},
     { "GameState_CreateInstance", _wrap_GameState_CreateInstance},
     { "GameState_FreeInstance", _wrap_GameState_FreeInstance},
-    { "ClearProperties", _wrap_ClearProperties},
     { "Object_AddPrototype", _wrap_Object_AddPrototype},
     { "Object_CreateObject", _wrap_Object_CreateObject},
     { "ObjectBackground_DynamicCastFrom", _wrap_ObjectBackground_DynamicCastFrom},
@@ -16479,7 +16048,6 @@ static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_GameState,
 &_wrap_class_ObjectLayer,
 &_wrap_class_CollisionDirection,
-&_wrap_class_ObjectProperties,
 &_wrap_class_Object,
 &_wrap_class_ObjectBackground,
 &_wrap_class_ObjectBounce,
@@ -16581,7 +16149,6 @@ static swig_type_info _swigt__p_ObjectFactory = {"_p_ObjectFactory", "ObjectFact
 static swig_type_info _swigt__p_ObjectFan = {"_p_ObjectFan", "ObjectFan *", 0, 0, (void*)&_wrap_class_ObjectFan, 0};
 static swig_type_info _swigt__p_ObjectLayer = {"_p_ObjectLayer", "ObjectLayer *", 0, 0, (void*)&_wrap_class_ObjectLayer, 0};
 static swig_type_info _swigt__p_ObjectPlayer = {"_p_ObjectPlayer", "ObjectPlayer *", 0, 0, (void*)&_wrap_class_ObjectPlayer, 0};
-static swig_type_info _swigt__p_ObjectProperties = {"_p_ObjectProperties", "ObjectProperties *", 0, 0, (void*)&_wrap_class_ObjectProperties, 0};
 static swig_type_info _swigt__p_ObjectSpring = {"_p_ObjectSpring", "ObjectSpring *", 0, 0, (void*)&_wrap_class_ObjectSpring, 0};
 static swig_type_info _swigt__p_ObjectStatic = {"_p_ObjectStatic", "ObjectStatic *", 0, 0, (void*)&_wrap_class_ObjectStatic, 0};
 static swig_type_info _swigt__p_ObjectText = {"_p_ObjectText", "ObjectText *", 0, 0, (void*)&_wrap_class_ObjectText, 0};
@@ -16627,7 +16194,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_ObjectFan,
   &_swigt__p_ObjectLayer,
   &_swigt__p_ObjectPlayer,
-  &_swigt__p_ObjectProperties,
   &_swigt__p_ObjectSpring,
   &_swigt__p_ObjectStatic,
   &_swigt__p_ObjectText,
@@ -16673,7 +16239,6 @@ static swig_cast_info _swigc__p_ObjectFactory[] = {  {&_swigt__p_ObjectFactory, 
 static swig_cast_info _swigc__p_ObjectFan[] = {  {&_swigt__p_ObjectFan, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ObjectLayer[] = {  {&_swigt__p_ObjectLayer, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ObjectPlayer[] = {  {&_swigt__p_ObjectPlayer, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_ObjectProperties[] = {  {&_swigt__p_ObjectProperties, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ObjectSpring[] = {  {&_swigt__p_ObjectSpring, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ObjectStatic[] = {  {&_swigt__p_ObjectStatic, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ObjectText[] = {  {&_swigt__p_ObjectText, 0, 0, 0},{0, 0, 0, 0}};
@@ -16719,7 +16284,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_ObjectFan,
   _swigc__p_ObjectLayer,
   _swigc__p_ObjectPlayer,
-  _swigc__p_ObjectProperties,
   _swigc__p_ObjectSpring,
   _swigc__p_ObjectStatic,
   _swigc__p_ObjectText,

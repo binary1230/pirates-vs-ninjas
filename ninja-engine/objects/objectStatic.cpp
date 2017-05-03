@@ -13,7 +13,7 @@ bool ObjectStatic::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	_Properties.is_static = 1;
+	is_static = 1;
 
 	return true;
 }
@@ -36,7 +36,7 @@ void ObjectStatic::Update() {
 void ObjectStatic::UpdateSpawns() 
 {
 #if BLOCKS_SPAWN_ENEMIES
-	if (!_Properties.spawns_enemies)
+	if (!spawns_enemies)
 		return;
 
 	// experimental

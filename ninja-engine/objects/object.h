@@ -25,64 +25,6 @@ enum VolatileStateLevel {
 	LEVEL_PLAYERS,
 };
 
-//! Various _Properties of an Object
-struct ObjectProperties 
-{
-	// NOTE: If you add anything here, update ClearProperties()
-	
-	//! Whether we should register with the physics engine or not
-	bool uses_physics_engine;
-
-	//! If static, this object WILL NOT MOVE, ever.
-	//! Only matters if uses_physics_engine is on
-	bool is_static; 
-
-	//! Don't allow collisions with this object to affect other physical objects
-	//! However, collision events are still called.
-	bool is_sensor;
-
-	//! Don't rotate if physical. e.g. if we want to tip over, don't let us
-	bool ignores_physics_rotation;
-
-	//! Tell the physics engine to create angled corners for our bounding box 
-	//! (useful to keep some objects from sticking on seams, like the player)
-	bool use_angled_corners_collision_box;
-
-	//! true if this object is an overlay
-	//! e.g. not IN the world, but on top it,
-	//! like our status bar or health or something.
-	//! Overlays ignore camera information
-	bool is_overlay;
-};
-
-namespace boost {
-	namespace serialization {
-
-		// custom serializable types for Boost
-
-		template<class Archive>
-		void serialize(Archive & ar, ObjectProperties& p, const unsigned int version)
-		{
-			ar & BOOST_SERIALIZATION_NVP(p.uses_physics_engine);
-			ar & BOOST_SERIALIZATION_NVP(p.is_static);
-			ar & BOOST_SERIALIZATION_NVP(p.is_sensor);
-			ar & BOOST_SERIALIZATION_NVP(p.ignores_physics_rotation);
-			ar & BOOST_SERIALIZATION_NVP(p.use_angled_corners_collision_box);
-			ar & BOOST_SERIALIZATION_NVP(p.is_overlay);
-		}
-	}
-}
-
-//! Clears property masks
-inline void ClearProperties(struct ObjectProperties& p) {
-	p.is_overlay = 0;
-	p.uses_physics_engine = 0;
-	p.use_angled_corners_collision_box = 0;
-	p.is_static = 0;
-	p.is_sensor = 0;
-	p.ignores_physics_rotation = 0;
-}
-
 #define IMPLEMENT_CLONE(TYPE) \
 	Object* Clone() const { return new TYPE(); }  /* for the protyping system */ \
 	static TYPE* DynamicCastFrom(Object* obj) {	return dynamic_cast<TYPE*>(obj); } /* for SWIG */
@@ -93,10 +35,8 @@ inline void ClearProperties(struct ObjectProperties& p) {
 #define MAKE_PROTOTYPE_ALIAS(TYPE, NAME) \
 	Object* TYPE ## _myProtoype2 = Object::AddPrototype(NAME, new TYPE());
 
-//! A drawable entity in the world
 
-//! Objects have physical _Properties associated with them, but do
-//! not always have to take part in the world
+//! An object in the world
 class Object {
 	friend class boost::serialization::access;
 	template<class Archive>
@@ -104,7 +44,6 @@ class Object {
 	{
 		ar & boost::serialization::make_nvp("pos", _Pos);
 		ar & boost::serialization::make_nvp("objectDefName", _ObjectDefName);
-		ar & boost::serialization::make_nvp("properties", _Properties);
 		ar & boost::serialization::make_nvp("m_pkLayer", _Layer);
 		ar & boost::serialization::make_nvp("_rotate_velocity", _RotateVelocity);
 	}
@@ -120,9 +59,30 @@ class Object {
 		
 		//! The directions of current collisions (up,down,right,left)
 		CollisionDirection m_kCurrentCollision;
-		
-		//! Object _Properties
-		struct ObjectProperties _Properties;
+
+		//! Whether we should register with the physics engine or not
+		bool uses_physics_engine;
+
+		//! If static, this object WILL NOT MOVE, ever.
+		//! Only matters if uses_physics_engine is on
+		bool is_static;
+
+		//! Don't allow collisions with this object to affect other physical objects
+		//! However, collision events are still called.
+		bool is_sensor;
+
+		//! Don't rotate if physical. e.g. if we want to tip over, don't let us
+		bool ignores_physics_rotation;
+
+		//! Tell the physics engine to create angled corners for our bounding box 
+		//! (useful to keep some objects from sticking on seams, like the player)
+		bool use_angled_corners_collision_box;
+
+		//! true if this object is an overlay
+		//! e.g. not IN the world, but on top it,
+		//! like our status bar or health or something.
+		//! Overlays ignore camera information
+		bool is_overlay;
 		
 		//! Points to the current animation
 		Animation* currentAnimation;
@@ -323,10 +283,7 @@ class Object {
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();
-		
-		struct ObjectProperties GetProperties() const { return _Properties; };
-		inline void SetProperties(struct ObjectProperties p) { _Properties = p;}
-				
+						
 		//! Handle collisions with another object
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 		
@@ -360,13 +317,14 @@ class Object {
 		CREATE_PROPERTY(string, ObjectDefName)
 		CREATE_PROPERTY(bool, DebugFlag)
 
+		inline bool IsSensor() const { return is_sensor; }
+
 		friend class Editor;
 };
 
 #if !defined(SWIG) 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(Object)
-BOOST_CLASS_VERSION(Object, 6)
-BOOST_CLASS_VERSION(ObjectProperties, 6)
+BOOST_CLASS_VERSION(Object, 7)
 #endif // SWIG
 
 #ifdef SWIG

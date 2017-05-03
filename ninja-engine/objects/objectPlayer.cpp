@@ -255,7 +255,7 @@ void ObjectPlayer::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 	if (!obj)
 		return;
 
-	if (!obj->GetProperties().is_sensor) {
+	if (!obj->IsSensor()) {
 		if (pkbWorldManifold->normal.y > 0 && CLOSE_TO(pkbWorldManifold->normal.x, 0.1f))
 			m_kCurrentCollision.down = 1;
 
@@ -388,9 +388,9 @@ bool ObjectPlayer::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	_Properties.uses_physics_engine = 1;
-	_Properties.ignores_physics_rotation = 1;
-	_Properties.use_angled_corners_collision_box = 1;
+	uses_physics_engine = 1;
+	ignores_physics_rotation = 1;
+	use_angled_corners_collision_box = 1;
 
 	XMLNode xProps = xDef.getChildNode("properties");
 

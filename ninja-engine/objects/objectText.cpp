@@ -137,8 +137,8 @@ bool ObjectText::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	_Properties.is_overlay = 1;
-	_Properties.uses_physics_engine = 0;
+	is_overlay = 1;
+	uses_physics_engine = 0;
 
 	return true;
 }

@@ -60,6 +60,10 @@ void Object::UpdateDisplayTime() {
 
 void Object::InitPhysics()
 {
+
+	if (!uses_physics_engine)
+		return;
+
 	if (_physics_body)
 	{
 		TRACE("WARNING: physics already initialized for this object, skipping.");
@@ -73,16 +77,13 @@ void Object::InitPhysics()
 		return;
 	}
 
-	if (!_Properties.uses_physics_engine)
-		return;
-
 	// TODO: remove hardcoded junk here
 	float fDensity = 0.1f;
 
-	if (_Properties.is_static)
-		_physics_body = PHYSICS->CreateStaticPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), _Properties.is_sensor);
+	if (is_static)
+		_physics_body = PHYSICS->CreateStaticPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), is_sensor);
 	else
-		_physics_body = PHYSICS->CreateDynamicPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), _Properties.ignores_physics_rotation, fDensity, _Properties.use_angled_corners_collision_box);
+		_physics_body = PHYSICS->CreateDynamicPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), ignores_physics_rotation, fDensity, use_angled_corners_collision_box);
 
 	_physics_body->SetUserData(this);
 }
@@ -111,7 +112,14 @@ void Object::Clear() {
 	_dont_draw = false;
 	m_animationMapping.clear();
 	m_bDrawBoundingBox = false;
-	ClearProperties(_Properties);
+
+	uses_physics_engine = false;
+	is_static = false;
+	is_sensor = false;
+	ignores_physics_rotation = false;
+	use_angled_corners_collision_box = false;
+	is_overlay = false;
+
 	is_dead = false;
 	fade_out_time_total = fade_out_time_remaining = 0;
 	is_fading = false;
@@ -179,7 +187,7 @@ void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y)
 	y = (int)_Pos.y + offset_y;
 
 	// take into account the camera now.
-	if (!_Properties.is_overlay)
+	if (!is_overlay)
 		WORLD->TransformWorldToView(x, y, _Layer->GetScrollSpeed());
 	
 	// compute absolute x,y coordinates on the screen
@@ -200,7 +208,7 @@ void Object::TransformRect(_Rect &r) {
 	h = y2 - y1;
 
 	// take into account the camera now.
-	if (!_Properties.is_overlay) {
+	if (!is_overlay) {
 		WORLD->TransformWorldToView(x1, y1, _Layer->GetScrollSpeed());
 		
 		// old way: this would result in bounding boxes for objects on layers with different scroll speeds
@@ -412,17 +420,15 @@ bool Object::LoadObjectSounds(XMLNode &xDef) {
 bool Object::LoadObjectProperties(XMLNode &xDef) {
 	XMLNode xProps = xDef.getChildNode("properties");
 
-	// NOTE: these are overriding things previously set in Init()
+	// NOTE: These properties override anything previously unserialized from savefile
 
-	_Properties.uses_physics_engine = xProps.nChildNode("solidObject") != 0;
-	_Properties.is_static = xProps.nChildNode("solidObject") != 0;
+	is_static = xProps.nChildNode("solidObject") != 0;
+	is_sensor = xProps.nChildNode("sensorOnly") != 0;
 
-	_Properties.is_sensor = xProps.nChildNode("sensorOnly") != 0;
+	uses_physics_engine = is_static || is_sensor;
 
-	if (xProps.nChildNode("isOverlay")) {
-		_Properties.is_overlay = 1;
-	}
-
+	is_overlay = xProps.nChildNode("isOverlay") != 0;
+	
 	if (xProps.nChildNode("boundingBox") != 0)
 	{
 		XMLNode xBoundingBox = xProps.getChildNode("boundingBox");

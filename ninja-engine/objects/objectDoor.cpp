@@ -116,9 +116,9 @@ bool ObjectDoor::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	_Properties.uses_physics_engine = 1;
-	_Properties.is_static = 1;
-	_Properties.is_sensor = 1;
+	uses_physics_engine = 1;
+	is_static = 1;
+	is_sensor = 1;
 
 	return true;
 }

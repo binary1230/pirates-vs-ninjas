@@ -1496,101 +1496,6 @@ public enum VolatileStateLevel {
   LEVEL_PLAYERS
 }
 
-public class ObjectProperties : global::System.IDisposable {
-  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
-  protected bool swigCMemOwn;
-
-  internal ObjectProperties(global::System.IntPtr cPtr, bool cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
-  }
-
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(ObjectProperties obj) {
-    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
-  }
-
-  ~ObjectProperties() {
-    Dispose();
-  }
-
-  public virtual void Dispose() {
-    lock(this) {
-      if (swigCPtr.Handle != global::System.IntPtr.Zero) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          enginePINVOKE.delete_ObjectProperties(swigCPtr);
-        }
-        swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-      }
-      global::System.GC.SuppressFinalize(this);
-    }
-  }
-
-  public bool uses_physics_engine {
-    set {
-      enginePINVOKE.ObjectProperties_uses_physics_engine_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_uses_physics_engine_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_static {
-    set {
-      enginePINVOKE.ObjectProperties_is_static_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_static_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_sensor {
-    set {
-      enginePINVOKE.ObjectProperties_is_sensor_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_sensor_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool ignores_physics_rotation {
-    set {
-      enginePINVOKE.ObjectProperties_ignores_physics_rotation_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_ignores_physics_rotation_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool use_angled_corners_collision_box {
-    set {
-      enginePINVOKE.ObjectProperties_use_angled_corners_collision_box_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_use_angled_corners_collision_box_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public bool is_overlay {
-    set {
-      enginePINVOKE.ObjectProperties_is_overlay_set(swigCPtr, value);
-    } 
-    get {
-      bool ret = enginePINVOKE.ObjectProperties_is_overlay_get(swigCPtr);
-      return ret;
-    } 
-  }
-
-  public ObjectProperties() : this(enginePINVOKE.new_ObjectProperties(), true) {
-  }
-
-}
-
 public partial class Object : global::System.IDisposable {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
@@ -1821,16 +1726,6 @@ public partial class Object : global::System.IDisposable {
     enginePINVOKE.Object_ResetForNextFrame(swigCPtr);
   }
 
-  public ObjectProperties GetProperties() {
-    ObjectProperties ret = new ObjectProperties(enginePINVOKE.Object_GetProperties(swigCPtr), true);
-    return ret;
-  }
-
-  public void SetProperties(ObjectProperties p) {
-    enginePINVOKE.Object_SetProperties(swigCPtr, ObjectProperties.getCPtr(p));
-    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
   public virtual void OnCollide(Object obj, SWIGTYPE_p_b2WorldManifold pkbWorldManifold) {
     enginePINVOKE.Object_OnCollide(swigCPtr, Object.getCPtr(obj), SWIGTYPE_p_b2WorldManifold.getCPtr(pkbWorldManifold));
   }
@@ -1928,6 +1823,11 @@ public partial class Object : global::System.IDisposable {
 
   public void SetPropDebugFlag(bool val) {
     enginePINVOKE.Object_SetPropDebugFlag(swigCPtr, val);
+  }
+
+  public bool IsSensor() {
+    bool ret = enginePINVOKE.Object_IsSensor(swigCPtr);
+    return ret;
   }
 
   public b2Vec2 Position {
@@ -4224,51 +4124,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_CollisionDirection")]
   public static extern void delete_CollisionDirection(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_uses_physics_engine_set")]
-  public static extern void ObjectProperties_uses_physics_engine_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_uses_physics_engine_get")]
-  public static extern bool ObjectProperties_uses_physics_engine_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_static_set")]
-  public static extern void ObjectProperties_is_static_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_static_get")]
-  public static extern bool ObjectProperties_is_static_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_sensor_set")]
-  public static extern void ObjectProperties_is_sensor_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_sensor_get")]
-  public static extern bool ObjectProperties_is_sensor_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_ignores_physics_rotation_set")]
-  public static extern void ObjectProperties_ignores_physics_rotation_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_ignores_physics_rotation_get")]
-  public static extern bool ObjectProperties_ignores_physics_rotation_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_use_angled_corners_collision_box_set")]
-  public static extern void ObjectProperties_use_angled_corners_collision_box_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_use_angled_corners_collision_box_get")]
-  public static extern bool ObjectProperties_use_angled_corners_collision_box_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_overlay_set")]
-  public static extern void ObjectProperties_is_overlay_set(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectProperties_is_overlay_get")]
-  public static extern bool ObjectProperties_is_overlay_get(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_ObjectProperties")]
-  public static extern global::System.IntPtr new_ObjectProperties();
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_ObjectProperties")]
-  public static extern void delete_ObjectProperties(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ClearProperties")]
-  public static extern void ClearProperties(global::System.Runtime.InteropServices.HandleRef jarg1);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_debug_draw_bounding_boxes_set")]
   public static extern void Object_debug_draw_bounding_boxes_set(bool jarg1);
 
@@ -4401,12 +4256,6 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ResetForNextFrame")]
   public static extern void Object_ResetForNextFrame(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetProperties")]
-  public static extern global::System.IntPtr Object_GetProperties(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetProperties")]
-  public static extern void Object_SetProperties(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
-
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_OnCollide")]
   public static extern void Object_OnCollide(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
@@ -4469,6 +4318,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_SetPropDebugFlag")]
   public static extern void Object_SetPropDebugFlag(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_IsSensor")]
+  public static extern bool Object_IsSensor(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_Position_set")]
   public static extern void Object_Position_set(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -5154,11 +5006,6 @@ public class engine {
 
   public static void DebugTrace(string format) {
     enginePINVOKE.DebugTrace(format);
-  }
-
-  public static void ClearProperties(ObjectProperties p) {
-    enginePINVOKE.ClearProperties(ObjectProperties.getCPtr(p));
-    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public static void RegisterObjectPrototypes() {

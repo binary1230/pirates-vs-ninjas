@@ -7,21 +7,13 @@
 		<count>35</count>
 		<item_version>0</item_version>
 		<item class_id="3" class_name="ObjectController" tracking_level="1" version="1" object_id="_1">
-			<Object class_id="4" tracking_level="0" version="6">
+			<Object class_id="4" tracking_level="0" version="7">
 				<pos class_id="5" tracking_level="0" version="0">
 					<x>0.000000000e+00</x>
 					<y>0.000000000e+00</y>
 				</pos>
 				<objectDefName>controller</objectDefName>
-				<properties class_id="6" tracking_level="0" version="6">
-					<p.uses_physics_engine>0</p.uses_physics_engine>
-					<p.is_static>0</p.is_static>
-					<p.is_sensor>0</p.is_sensor>
-					<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-					<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-					<p.is_overlay>1</p.is_overlay>
-				</properties>
-				<m_pkLayer class_id="7" tracking_level="1" version="0" object_id="_2">
+				<m_pkLayer class_id="6" tracking_level="1" version="0" object_id="_2">
 					<objects>
 						<count>1</count>
 						<item_version>0</item_version>
@@ -35,194 +27,114 @@
 			</Object>
 			<controller_num>1</controller_num>
 		</item>
-		<item class_id="8" class_name="ObjectStatic" tracking_level="1" version="0" object_id="_3">
+		<item class_id="7" class_name="ObjectStatic" tracking_level="1" version="0" object_id="_3">
 			<Object>
 				<pos>
 					<x>9.830000000e+02</x>
 					<y>1.820000000e+02</y>
 				</pos>
 				<objectDefName>cloud</objectDefName>
-				<properties>
-					<p.uses_physics_engine>0</p.uses_physics_engine>
-					<p.is_static>1</p.is_static>
-					<p.is_sensor>0</p.is_sensor>
-					<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-					<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-					<p.is_overlay>0</p.is_overlay>
-				</properties>
-				<m_pkLayer class_id_reference="7" object_id="_4">
+				<m_pkLayer class_id_reference="6" object_id="_4">
 					<objects>
 						<count>10</count>
 						<item_version>0</item_version>
-						<item class_id_reference="8" object_id_reference="_3"></item>
-						<item class_id_reference="8" object_id="_5">
+						<item class_id_reference="7" object_id_reference="_3"></item>
+						<item class_id_reference="7" object_id="_5">
 							<Object>
 								<pos>
 									<x>6.970000000e+02</x>
 									<y>6.100000000e+01</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_4"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_6">
+						<item class_id_reference="7" object_id="_6">
 							<Object>
 								<pos>
 									<x>2.700000000e+01</x>
 									<y>7.050000000e+02</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_4"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_7">
+						<item class_id_reference="7" object_id="_7">
 							<Object>
 								<pos>
 									<x>6.900000000e+01</x>
 									<y>1.322000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_4"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_8">
+						<item class_id_reference="7" object_id="_8">
 							<Object>
 								<pos>
 									<x>5.970000000e+02</x>
 									<y>1.971000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_4"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_9">
+						<item class_id_reference="7" object_id="_9">
 							<Object>
 								<pos>
 									<x>9.770000000e+02</x>
 									<y>2.618000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_4"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_10">
+						<item class_id_reference="7" object_id="_10">
 							<Object>
 								<pos>
 									<x>5.210000000e+02</x>
 									<y>3.011000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_4"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_11">
+						<item class_id_reference="7" object_id="_11">
 							<Object>
 								<pos>
 									<x>2.440000000e+02</x>
 									<y>3.427000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_4"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_12">
+						<item class_id_reference="7" object_id="_12">
 							<Object>
 								<pos>
 									<x>4.980000000e+02</x>
 									<y>3.962000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_4"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_13">
+						<item class_id_reference="7" object_id="_13">
 							<Object>
 								<pos>
 									<x>9.910000000e+02</x>
 									<y>4.033000000e+03</y>
 								</pos>
 								<objectDefName>cloud</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_4"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_4"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -234,35 +146,27 @@
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
 		</item>
-		<item class_id_reference="8" object_id_reference="_5"></item>
-		<item class_id_reference="8" object_id_reference="_6"></item>
-		<item class_id_reference="8" object_id_reference="_7"></item>
-		<item class_id_reference="8" object_id_reference="_8"></item>
-		<item class_id_reference="8" object_id_reference="_9"></item>
-		<item class_id_reference="8" object_id_reference="_10"></item>
-		<item class_id_reference="8" object_id_reference="_11"></item>
-		<item class_id_reference="8" object_id_reference="_12"></item>
-		<item class_id_reference="8" object_id_reference="_13"></item>
-		<item class_id="9" class_name="ObjectPlayer" tracking_level="1" version="1" object_id="_14">
+		<item class_id_reference="7" object_id_reference="_5"></item>
+		<item class_id_reference="7" object_id_reference="_6"></item>
+		<item class_id_reference="7" object_id_reference="_7"></item>
+		<item class_id_reference="7" object_id_reference="_8"></item>
+		<item class_id_reference="7" object_id_reference="_9"></item>
+		<item class_id_reference="7" object_id_reference="_10"></item>
+		<item class_id_reference="7" object_id_reference="_11"></item>
+		<item class_id_reference="7" object_id_reference="_12"></item>
+		<item class_id_reference="7" object_id_reference="_13"></item>
+		<item class_id="8" class_name="ObjectPlayer" tracking_level="1" version="1" object_id="_14">
 			<Object>
 				<pos>
 					<x>3.000000000e+02</x>
 					<y>6.500000000e+03</y>
 				</pos>
 				<objectDefName>amaya</objectDefName>
-				<properties>
-					<p.uses_physics_engine>1</p.uses_physics_engine>
-					<p.is_static>0</p.is_static>
-					<p.is_sensor>0</p.is_sensor>
-					<p.ignores_physics_rotation>1</p.ignores_physics_rotation>
-					<p.use_angled_corners_collision_box>1</p.use_angled_corners_collision_box>
-					<p.is_overlay>0</p.is_overlay>
-				</properties>
-				<m_pkLayer class_id_reference="7" object_id="_15">
+				<m_pkLayer class_id_reference="6" object_id="_15">
 					<objects>
 						<count>1</count>
 						<item_version>0</item_version>
-						<item class_id_reference="9" object_id_reference="_14"></item>
+						<item class_id_reference="8" object_id_reference="_14"></item>
 					</objects>
 					<scroll_speed>1.000000000e+00</scroll_speed>
 					<name>foreground</name>
@@ -272,441 +176,257 @@
 			</Object>
 			<controller_num>1</controller_num>
 		</item>
-		<item class_id="10" class_name="ObjectDoor" tracking_level="1" version="0" object_id="_16">
+		<item class_id="9" class_name="ObjectDoor" tracking_level="1" version="0" object_id="_16">
 			<Object>
 				<pos>
 					<x>1.088000000e+03</x>
 					<y>1.050000000e+02</y>
 				</pos>
 				<objectDefName>door-slide</objectDefName>
-				<properties>
-					<p.uses_physics_engine>1</p.uses_physics_engine>
-					<p.is_static>1</p.is_static>
-					<p.is_sensor>1</p.is_sensor>
-					<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-					<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-					<p.is_overlay>0</p.is_overlay>
-				</properties>
-				<m_pkLayer class_id_reference="7" object_id="_17">
+				<m_pkLayer class_id_reference="6" object_id="_17">
 					<objects>
 						<count>23</count>
 						<item_version>0</item_version>
-						<item class_id_reference="10" object_id_reference="_16"></item>
-						<item class_id_reference="8" object_id="_18">
+						<item class_id_reference="9" object_id_reference="_16"></item>
+						<item class_id_reference="7" object_id="_18">
 							<Object>
 								<pos>
 									<x>6.830000000e+02</x>
 									<y>3.860000000e+02</y>
 								</pos>
 								<objectDefName>s_totem1</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_19">
+						<item class_id_reference="7" object_id="_19">
 							<Object>
 								<pos>
 									<x>9.090000000e+02</x>
 									<y>8.600000000e+01</y>
 								</pos>
 								<objectDefName>s_siren</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_20">
+						<item class_id_reference="7" object_id="_20">
 							<Object>
 								<pos>
 									<x>4.300000000e+01</x>
 									<y>6.600000000e+01</y>
 								</pos>
 								<objectDefName>s_sign_arrow</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_21">
+						<item class_id_reference="7" object_id="_21">
 							<Object>
 								<pos>
 									<x>1.112000000e+03</x>
 									<y>1.050000000e+02</y>
 								</pos>
 								<objectDefName>s_palm_tall</objectDefName>
-								<properties>
-									<p.uses_physics_engine>0</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_22">
+						<item class_id_reference="7" object_id="_22">
 							<Object>
 								<pos>
 									<x>1.028000000e+03</x>
 									<y>8.500000000e+01</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_23">
+						<item class_id_reference="7" object_id="_23">
 							<Object>
 								<pos>
 									<x>9.090000000e+02</x>
 									<y>6.500000000e+01</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_24">
+						<item class_id_reference="7" object_id="_24">
 							<Object>
 								<pos>
 									<x>6.880000000e+02</x>
 									<y>3.660000000e+02</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_25">
+						<item class_id_reference="7" object_id="_25">
 							<Object>
 								<pos>
 									<x>8.160000000e+02</x>
 									<y>3.660000000e+02</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_26">
+						<item class_id_reference="7" object_id="_26">
 							<Object>
 								<pos>
 									<x>9.450000000e+02</x>
 									<y>3.660000000e+02</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_27">
+						<item class_id_reference="7" object_id="_27">
 							<Object>
 								<pos>
 									<x>1.074000000e+03</x>
 									<y>3.660000000e+02</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_28">
+						<item class_id_reference="7" object_id="_28">
 							<Object>
 								<pos>
 									<x>1.036000000e+03</x>
 									<y>6.500000000e+01</y>
 								</pos>
 								<objectDefName>floor3_a</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_29">
+						<item class_id_reference="7" object_id="_29">
 							<Object>
 								<pos>
 									<x>1.093000000e+03</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_30">
+						<item class_id_reference="7" object_id="_30">
 							<Object>
 								<pos>
 									<x>1.030000000e+03</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_31">
+						<item class_id_reference="7" object_id="_31">
 							<Object>
 								<pos>
 									<x>9.030000000e+02</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_32">
+						<item class_id_reference="7" object_id="_32">
 							<Object>
 								<pos>
 									<x>7.740000000e+02</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_33">
+						<item class_id_reference="7" object_id="_33">
 							<Object>
 								<pos>
 									<x>6.450000000e+02</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_34">
+						<item class_id_reference="7" object_id="_34">
 							<Object>
 								<pos>
 									<x>5.140000000e+02</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_35">
+						<item class_id_reference="7" object_id="_35">
 							<Object>
 								<pos>
 									<x>5.160000000e+02</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_36">
+						<item class_id_reference="7" object_id="_36">
 							<Object>
 								<pos>
 									<x>3.860000000e+02</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_37">
+						<item class_id_reference="7" object_id="_37">
 							<Object>
 								<pos>
 									<x>2.570000000e+02</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_38">
+						<item class_id_reference="7" object_id="_38">
 							<Object>
 								<pos>
 									<x>1.290000000e+02</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_39">
+						<item class_id_reference="7" object_id="_39">
 							<Object>
 								<pos>
 									<x>0.000000000e+00</x>
 									<y>1.000000000e+00</y>
 								</pos>
 								<objectDefName>floor2</objectDefName>
-								<properties>
-									<p.uses_physics_engine>1</p.uses_physics_engine>
-									<p.is_static>1</p.is_static>
-									<p.is_sensor>0</p.is_sensor>
-									<p.ignores_physics_rotation>0</p.ignores_physics_rotation>
-									<p.use_angled_corners_collision_box>0</p.use_angled_corners_collision_box>
-									<p.is_overlay>0</p.is_overlay>
-								</properties>
-								<m_pkLayer class_id_reference="7" object_id_reference="_17"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_17"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -721,33 +441,33 @@
 			<mode_to_jump_to_on_activate></mode_to_jump_to_on_activate>
 			<door_name></door_name>
 		</item>
-		<item class_id_reference="8" object_id_reference="_18"></item>
-		<item class_id_reference="8" object_id_reference="_19"></item>
-		<item class_id_reference="8" object_id_reference="_20"></item>
-		<item class_id_reference="8" object_id_reference="_21"></item>
-		<item class_id_reference="8" object_id_reference="_22"></item>
-		<item class_id_reference="8" object_id_reference="_23"></item>
-		<item class_id_reference="8" object_id_reference="_24"></item>
-		<item class_id_reference="8" object_id_reference="_25"></item>
-		<item class_id_reference="8" object_id_reference="_26"></item>
-		<item class_id_reference="8" object_id_reference="_27"></item>
-		<item class_id_reference="8" object_id_reference="_28"></item>
-		<item class_id_reference="8" object_id_reference="_29"></item>
-		<item class_id_reference="8" object_id_reference="_30"></item>
-		<item class_id_reference="8" object_id_reference="_31"></item>
-		<item class_id_reference="8" object_id_reference="_32"></item>
-		<item class_id_reference="8" object_id_reference="_33"></item>
-		<item class_id_reference="8" object_id_reference="_34"></item>
-		<item class_id_reference="8" object_id_reference="_35"></item>
-		<item class_id_reference="8" object_id_reference="_36"></item>
-		<item class_id_reference="8" object_id_reference="_37"></item>
-		<item class_id_reference="8" object_id_reference="_38"></item>
-		<item class_id_reference="8" object_id_reference="_39"></item>
+		<item class_id_reference="7" object_id_reference="_18"></item>
+		<item class_id_reference="7" object_id_reference="_19"></item>
+		<item class_id_reference="7" object_id_reference="_20"></item>
+		<item class_id_reference="7" object_id_reference="_21"></item>
+		<item class_id_reference="7" object_id_reference="_22"></item>
+		<item class_id_reference="7" object_id_reference="_23"></item>
+		<item class_id_reference="7" object_id_reference="_24"></item>
+		<item class_id_reference="7" object_id_reference="_25"></item>
+		<item class_id_reference="7" object_id_reference="_26"></item>
+		<item class_id_reference="7" object_id_reference="_27"></item>
+		<item class_id_reference="7" object_id_reference="_28"></item>
+		<item class_id_reference="7" object_id_reference="_29"></item>
+		<item class_id_reference="7" object_id_reference="_30"></item>
+		<item class_id_reference="7" object_id_reference="_31"></item>
+		<item class_id_reference="7" object_id_reference="_32"></item>
+		<item class_id_reference="7" object_id_reference="_33"></item>
+		<item class_id_reference="7" object_id_reference="_34"></item>
+		<item class_id_reference="7" object_id_reference="_35"></item>
+		<item class_id_reference="7" object_id_reference="_36"></item>
+		<item class_id_reference="7" object_id_reference="_37"></item>
+		<item class_id_reference="7" object_id_reference="_38"></item>
+		<item class_id_reference="7" object_id_reference="_39"></item>
 	</objects>
-	<layers class_id="11" tracking_level="0" version="0">
+	<layers class_id="10" tracking_level="0" version="0">
 		<count>5</count>
 		<item_version>0</item_version>
-		<item class_id_reference="7" object_id="_40">
+		<item class_id_reference="6" object_id="_40">
 			<objects>
 				<count>0</count>
 				<item_version>0</item_version>
@@ -756,12 +476,12 @@
 			<name>background-slow</name>
 			<visible>1</visible>
 		</item>
-		<item class_id_reference="7" object_id_reference="_17"></item>
-		<item class_id_reference="7" object_id_reference="_15"></item>
-		<item class_id_reference="7" object_id_reference="_4"></item>
-		<item class_id_reference="7" object_id_reference="_2"></item>
+		<item class_id_reference="6" object_id_reference="_17"></item>
+		<item class_id_reference="6" object_id_reference="_15"></item>
+		<item class_id_reference="6" object_id_reference="_4"></item>
+		<item class_id_reference="6" object_id_reference="_2"></item>
 	</layers>
-	<bgcolor class_id="12" tracking_level="0" version="0">
+	<bgcolor class_id="11" tracking_level="0" version="0">
 		<r>0.000000000e+00</r>
 		<g>0.000000000e+00</g>
 		<b>0.000000000e+00</b>
@@ -777,11 +497,11 @@
 	<width>1200</width>
 	<height>6500</height>
 	<lua_script></lua_script>
-	<_camera class_id="14" class_name="CameraFollow" tracking_level="1" version="1" object_id="_41">
-		<Camera class_id="13" tracking_level="1" version="1" object_id="_42"></Camera>
-		<follow_object class_id_reference="9" object_id_reference="_14"></follow_object>
+	<_camera class_id="13" class_name="CameraFollow" tracking_level="1" version="1" object_id="_41">
+		<Camera class_id="12" tracking_level="1" version="1" object_id="_42"></Camera>
+		<follow_object class_id_reference="8" object_id_reference="_14"></follow_object>
 	</_camera>
-	<m_included_effect_xml_files class_id="15" tracking_level="0" version="0">
+	<m_included_effect_xml_files class_id="14" tracking_level="0" version="0">
 		<count>1</count>
 		<item_version>0</item_version>
 		<item>common-effects.xml</item>
