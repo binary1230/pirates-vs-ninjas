@@ -248,23 +248,26 @@ void ObjectPlayer::Update()
 	ScreenBoundsConstraint();
 }
 
+#define CLOSE_TO(n, threshold) (fabs(n) < threshold)
+
 void ObjectPlayer::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold)
 {
-	if (obj->GetProperties().is_static && obj->GetProperties().uses_physics_engine && !obj->GetProperties().is_sensor)
-	{
-		if (pkbWorldManifold->normal.y > 0 && pkbWorldManifold->normal.x == 0.0f)
+	if (!obj)
+		return;
+
+	if (!obj->GetProperties().is_sensor) {
+		if (pkbWorldManifold->normal.y > 0 && CLOSE_TO(pkbWorldManifold->normal.x, 0.1f))
 			m_kCurrentCollision.down = 1;
 
-		if (pkbWorldManifold->normal.y < 0 && pkbWorldManifold->normal.x == 0.0f)
+		if (pkbWorldManifold->normal.y < 0 && CLOSE_TO(pkbWorldManifold->normal.x, 0.1f))
 			m_kCurrentCollision.up = 1;
 
-		if (pkbWorldManifold->normal.x > 0 && pkbWorldManifold->normal.y == 0.0f)
+		if (pkbWorldManifold->normal.x > 0 && CLOSE_TO(pkbWorldManifold->normal.y, 0.1f))
 			m_kCurrentCollision.left = 1;
 
-		if (pkbWorldManifold->normal.x < 0 && pkbWorldManifold->normal.y == 0.0f)
+		if (pkbWorldManifold->normal.x < 0 && CLOSE_TO(pkbWorldManifold->normal.y, 0.1f))
 			m_kCurrentCollision.right = 1;
 	}
-
 
 	if (ObjectDoor* door = dynamic_cast<ObjectDoor*>(obj)) {
 		door_in_front_of_us = door;

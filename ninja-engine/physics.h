@@ -32,6 +32,8 @@ class PhysicsContactInfo
 typedef map<const b2Contact*, PhysicsContactInfo> ContactMappings;
 typedef map<const b2Contact*, PhysicsContactInfo>::iterator contact_iter;
 
+#define MAX_BLAST_RAYS 128
+
 class PhysicsManager
 {
 	DECLARE_SINGLETON_CLASS(PhysicsManager)
@@ -49,7 +51,18 @@ class PhysicsManager
 		void ProcessCollisions();
 		void ProcessCollision(PhysicsContactInfo* pkb2Contact);
 
+		void UpdateExplosionParticles();
+
 		friend class PhysicsContactListener;
+
+		float m_blastRadius;
+		float m_blastPower;
+
+		b2Body* m_blastParticleBodies[MAX_BLAST_RAYS];
+
+		std::vector<b2Vec2*> m_previousParticlePositions;
+
+		void DebugDrawParticles();
 
 	public:
 		~PhysicsManager();
@@ -75,6 +88,8 @@ class PhysicsManager
 		void RemoveFromWorld(b2Body* pkBodyToRemove);
 	
 		void Shutdown();
+
+		void ExplodeParticle(b2Vec2 center);
 
 		void Update();
 		void Draw();

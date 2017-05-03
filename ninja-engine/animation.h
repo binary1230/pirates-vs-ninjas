@@ -16,6 +16,7 @@ enum AnimFrameType {
 	ANIMFRAME_SPRITE,   // this frame displays a sprite
 	ANIMFRAME_EFFECT,	// this frame triggers an effect (dust, smoke, etc)
 	ANIMFRAME_SOUND,	// this frame triggers a sound
+	ANIMFRAME_EXPLOSION, // this frame triggers a physics effect
 	ANIMFRAME_DESTROY,  // this frame destroyes the parent object
 	ANIMFRAME_JUMP,  // this frame destroyes the parent object
 
@@ -102,6 +103,8 @@ class Animation {
 		//! Pushes a sound frame onto it
 		bool CreateEffectFrame(	const std::string &effectData, 
 								const bool freeze_at_end	);
+
+		bool CreateExplosionFrame();
 
 		//! Used in constructing a new animation
 		//! Pushes an effect frame onto it

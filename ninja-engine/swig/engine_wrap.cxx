@@ -3932,6 +3932,18 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Object_GetHeight(void * jarg1) {
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_GetCenter(void * jarg1) {
+  void * jresult ;
+  Object *arg1 = (Object *) 0 ;
+  b2Vec2 result;
+  
+  arg1 = (Object *)jarg1; 
+  result = ((Object const *)arg1)->GetCenter();
+  jresult = new b2Vec2((const b2Vec2 &)result); 
+  return jresult;
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_ResetForNextFrame(void * jarg1) {
   Object *arg1 = (Object *) 0 ;
   

@@ -10008,6 +10008,33 @@ fail:
 }
 
 
+static int _wrap_Object_GetCenter(lua_State* L) {
+  int SWIG_arg = 0;
+  Object *arg1 = (Object *) 0 ;
+  b2Vec2 result;
+  
+  SWIG_check_num_args("Object::GetCenter",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::GetCenter",1,"Object const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("Object_GetCenter",1,SWIGTYPE_p_Object);
+  }
+  
+  result = ((Object const *)arg1)->GetCenter();
+  {
+    b2Vec2 * resultptr = new b2Vec2((const b2Vec2 &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_b2Vec2,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Object_ResetForNextFrame(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
@@ -10937,6 +10964,7 @@ static swig_lua_method swig_Object_methods[]= {
     { "SetVelXY", _wrap_Object_SetVelXY},
     { "GetWidth", _wrap_Object_GetWidth},
     { "GetHeight", _wrap_Object_GetHeight},
+    { "GetCenter", _wrap_Object_GetCenter},
     { "ResetForNextFrame", _wrap_Object_ResetForNextFrame},
     { "GetProperties", _wrap_Object_GetProperties},
     { "SetProperties", _wrap_Object_SetProperties},

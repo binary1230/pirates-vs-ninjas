@@ -317,6 +317,9 @@ class Object {
 		//! Get width/height of this object
 		virtual int GetWidth() const;
 		virtual int GetHeight() const;
+
+		//! Return a point at the center of this object
+		b2Vec2 GetCenter() const;
 	
 		//! Physics: reset this object's physics stuff for next frame
 		void ResetForNextFrame();

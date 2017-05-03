@@ -7,6 +7,7 @@
 		<animation name="default">
 			<frames>
 				<frame type="sound" data="explosion"/>
+				<frame type="explosion" />
 				<frame name="explosion1.png" duration="1" alpha_enabled="true" />
 				<frame name="explosion2.png" duration="1" alpha_enabled="true" />
 				<frame name="explosion3.png" duration="3" alpha_enabled="true" />

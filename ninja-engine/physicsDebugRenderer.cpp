@@ -41,15 +41,13 @@ void PhysicsDebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertex
 {
 	// This is correct for Pirates VS Ninjas engine.
 
-	if (vertexCount > 4)
-		int x = 3;
-
 	glLoadIdentity();
 	glDisable(GL_TEXTURE_2D);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glColor4f(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.75f);
+
 	glBegin(GL_TRIANGLE_FAN);
 
 	for (int i = 0; i < vertexCount; ++i)
@@ -89,11 +87,13 @@ void PhysicsDebugRenderer::DrawCircle(const b2Vec2& center, float32 radius, cons
 
 void PhysicsDebugRenderer::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 {
-	assert(0 && "TODO: Implement this for pirates vs ninjas.");
-
 	const float32 k_segments = 16.0f;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
+
+	glLoadIdentity();
+	glDisable(GL_TEXTURE_2D);
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glColor4f(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f);
@@ -123,6 +123,8 @@ void PhysicsDebugRenderer::DrawSolidCircle(const b2Vec2& center, float32 radius,
 	glVertex2f(center.x, center.y);
 	glVertex2f(p.x, p.y);
 	glEnd();
+
+	glEnable(GL_TEXTURE_2D);
 }
 
 void PhysicsDebugRenderer::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)

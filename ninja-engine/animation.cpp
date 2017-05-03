@@ -115,6 +115,10 @@ void Animation::SwitchToNextFrame()
 			SwitchToNextFrame();
 			break;
 
+		case ANIMFRAME_EXPLOSION:
+			PHYSICS->ExplodeParticle(attachedObject->GetCenter());
+			break;
+
 		case ANIMFRAME_JUMP:
 
 			// do NOTHING!
@@ -205,6 +209,20 @@ bool Animation::CreateEffectFrame(	const std::string &effectData,
 
 	return PushFrame(f);
 }
+
+
+bool Animation::CreateExplosionFrame()
+{
+	AnimFrame *f = new AnimFrame();
+	assert(f != NULL);
+
+	f->frame_type = ANIMFRAME_EXPLOSION;
+	f->duration = 0;
+	f->extraData = "";
+
+	return PushFrame(f);
+}
+
 
 bool Animation::CreateSoundFrame(	const std::string &soundData, 
 									const bool freeze_at_end	) 
@@ -392,6 +410,13 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 				return NULL;
 			}
 		}
+		else if (frame_type == "explosion") {
+			if (!anim->CreateExplosionFrame()) {
+				anim->Shutdown();
+				SAFE_DELETE(anim);
+				return NULL;
+			}
+		}
 		else if (frame_type == "destroy") 
 		{
 			if (!anim->CreateDestroyFrame()) {
@@ -418,9 +443,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 		}
 		else 
 		{
-
-			TRACE("ERROR: Invalid frame type specified: '%s'\n", 
-							frame_type);
+			TRACE("ERROR: Invalid frame type specified: '%s'\n", frame_type.c_str());
 			anim->Shutdown();
 			SAFE_DELETE(anim);
 			return NULL;

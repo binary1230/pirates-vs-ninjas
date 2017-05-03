@@ -100,8 +100,7 @@ Object* EffectsManager::TriggerObject(const Object* triggeringObject,
 	newObj = OBJECT_FACTORY->CreateObject(effectName);
 
 	if (!newObj) {
-		TRACE("ERROR: Unable to create effect object of type: '%s'\n",
-			effectName);
+		TRACE("ERROR: Unable to create effect object of type: '%s'\n", effectName.c_str());
 		return NULL;
 	}
 

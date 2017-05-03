@@ -278,6 +278,11 @@ int Object::GetHeight() const
 	return animations[0]->GetHeight();
 }
 
+b2Vec2 Object::GetCenter() const
+{
+	return b2Vec2(_Pos.x + GetWidth() / 2, _Pos.y + GetHeight() / 2);
+}
+
 void Object::ResetForNextFrame()
 {
 	m_kCurrentCollision.up = m_kCurrentCollision.down = m_kCurrentCollision.left = m_kCurrentCollision.right = 0;

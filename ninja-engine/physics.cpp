@@ -46,6 +46,11 @@ bool PhysicsManager::Init()
 	m_fPhysicsSimulatorTimeStep = 1.0f / FPS;
 	m_iPhysicsSimulatorIterations = 10;
 
+	m_blastRadius = 10;
+	m_blastPower = 1000;
+
+	memset(m_blastParticleBodies, 0, sizeof(m_blastParticleBodies));
+
 	return true;
 }
 
@@ -56,6 +61,8 @@ void PhysicsManager::Update()
 	// Instruct the world to perform a single step of simulation. It is
 	// generally best to keep the time step and iterations fixed.
 	m_pkPhysicsWorld->Step(m_fPhysicsSimulatorTimeStep, velocityIterations, m_iPhysicsSimulatorIterations);
+
+	UpdateExplosionParticles();
 
 	// dispatch collision events now.
 	ProcessCollisions();
@@ -69,8 +76,10 @@ void PhysicsManager::Shutdown()
 
 void PhysicsManager::Draw()
 {
-	if (GAMESTATE->GetPropPhysicsDebugDraw())
+	if (GAMESTATE->GetPropPhysicsDebugDraw()) {
 		m_pkPhysicsWorld->DrawDebugData();
+		DebugDrawParticles();
+	}
 }
 
 void PhysicsManager::CreatePolygonWithRoundedEdges(float hx, float hy, b2PolygonShape& shapeOut) {
@@ -201,9 +210,137 @@ void PhysicsManager::ProcessCollision(PhysicsContactInfo* pkb2Contact)
 
 	// TODO: should just pass in PhysicsContact to OnCollide().  I'm just being lazy. Why am I even working on this project. Ok bye. -Dom2017
 
-	pkb2Contact->objB->OnCollide(pkb2Contact->objA, &worldManifold);
+	if (pkb2Contact->objB)
+		pkb2Contact->objB->OnCollide(pkb2Contact->objA, &worldManifold);
+
 	worldManifold.normal = -worldManifold.normal;  // not sure if jank or OK.
-	pkb2Contact->objA->OnCollide(pkb2Contact->objB, &worldManifold);
+
+	if (pkb2Contact->objA)
+		pkb2Contact->objA->OnCollide(pkb2Contact->objB, &worldManifold);
+}
+
+// _explosionType g_explosionType = ET_PROXIMITY;
+int g_numRays = 32;
+bool g_pauseAfterBlast = false;
+
+
+/*
+* ExplodeParticle() based on code from:
+*
+* Author: Chris Campbell - www.iforce2d.net
+*
+* Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
+*
+* This software is provided 'as-is', without any express or implied
+* warranty.  In no event will the authors be held liable for any damages
+* arising from the use of this software.
+* Permission is granted to anyone to use this software for any purpose,
+* including commercial applications, and to alter it and redistribute it
+* freely, subject to the following restrictions:
+* 1. The origin of this software must not be misrepresented; you must not
+* claim that you wrote the original software. If you use this software
+* in a product, an acknowledgment in the product documentation would be
+* appreciated but is not required.
+* 2. Altered source versions must be plainly marked as such, and must not be
+* misrepresented as being the original software.
+* 3. This notice may not be removed or altered from any source distribution.
+*/
+void PhysicsManager::ExplodeParticle(b2Vec2 center)
+{
+	center.x = PIXELS_TO_METERS(center.x);
+	center.y = PIXELS_TO_METERS(center.y);
+
+	//clear old particles
+	for (int i = 0; i < MAX_BLAST_RAYS; i++) {
+		if (m_blastParticleBodies[i]) {
+			m_pkPhysicsWorld->DestroyBody(m_blastParticleBodies[i]);
+			m_blastParticleBodies[i] = NULL;
+		}
+	}
+
+	//clear previous positions
+	for (int k = 0; k < m_previousParticlePositions.size(); k++)
+		delete[] m_previousParticlePositions[k];
+
+	m_previousParticlePositions.clear();
+
+	for (int i = 0; i < g_numRays; i++) {
+		float angle = DEG_TO_RAD((i / (float)g_numRays) * 360);
+		b2Vec2 rayDir(sinf(angle), cosf(angle));
+
+		b2BodyDef bd;
+		bd.type = b2_dynamicBody;
+		bd.fixedRotation = true;
+		bd.bullet = true;
+		bd.linearDamping = 10;
+		bd.gravityScale = 0;
+		bd.position = center;
+		bd.linearVelocity = 0.125f * m_blastPower * rayDir;
+		b2Body* body = m_pkPhysicsWorld->CreateBody(&bd);
+
+		b2CircleShape circleShape;
+		circleShape.m_radius = 0.05;
+
+		b2FixtureDef fd;
+		fd.shape = &circleShape;
+		fd.density = 60 / (float)g_numRays;
+		fd.friction = 0;
+		fd.restitution = 0.99f;
+		fd.filter.groupIndex = -1;
+		body->CreateFixture(&fd);
+
+		m_blastParticleBodies[i] = body;
+	}
+}
+
+void PhysicsManager::DebugDrawParticles()
+{
+	//dashed lines to show where particles will go
+	//display_raycast(false);
+
+	glLoadIdentity();
+	glDisable(GL_TEXTURE_2D);
+
+	//particle previous position trail
+	glEnable(GL_BLEND);
+	if (!m_previousParticlePositions.empty()) {
+		for (int i = 0; i < MAX_BLAST_RAYS; i++) {
+			if (m_blastParticleBodies[i]) {
+				glBegin(GL_LINES);
+				for (int k = 1; k < m_previousParticlePositions.size(); k++) {
+					float alpha = (k - 1) / (float)m_previousParticlePositions.size();
+					glColor4f(1, 1, 0, alpha);
+					glVertex2fv((GLfloat*)&(m_previousParticlePositions[k - 1][i]));
+					alpha = k / (float)m_previousParticlePositions.size();
+					glColor4f(1, 1, 0, alpha);
+					glVertex2fv((GLfloat*)&(m_previousParticlePositions[k][i]));
+				}
+				int k = m_previousParticlePositions.size() - 1;
+				float alpha = k / (float)m_previousParticlePositions.size();
+				glColor4f(1, 1, 0, alpha);
+				glVertex2fv((GLfloat*)&(m_previousParticlePositions[k][i]));
+				glColor4f(1, 1, 0, 1);
+				b2Vec2 currentPos = m_blastParticleBodies[i]->GetPosition();
+				glVertex2fv((GLfloat*)&currentPos);
+				glEnd();
+			}
+		}
+	}
+
+	glEnable(GL_TEXTURE_2D);
+}
+
+//record positions of particles before stepping
+void PhysicsManager::UpdateExplosionParticles() {
+	if (m_previousParticlePositions.size() < 20) {
+		b2Vec2* prevPositions = new b2Vec2[MAX_BLAST_RAYS];
+		memset(prevPositions, 0, MAX_BLAST_RAYS * sizeof(b2Vec2));
+		for (int i = 0; i < MAX_BLAST_RAYS; i++) {
+			if (m_blastParticleBodies[i])
+				prevPositions[i] = m_blastParticleBodies[i]->GetPosition();
+		}
+		m_previousParticlePositions.push_back(prevPositions);
+	}
 }
 
 void CreateCollisionInfo(const b2Contact* pkb2Contact, PhysicsContactInfo* contact_out) {
