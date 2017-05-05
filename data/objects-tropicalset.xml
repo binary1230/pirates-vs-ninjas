@@ -3,7 +3,8 @@
 <!-- A list of objects that will be in common with tropical levels -->
 
 <objectDefinitions>
-	<include_xml_file>objects/obj_background_night.xml</include_xml_file>
+	<!--<include_xml_file>objects/obj_background_night.xml</include_xml_file>-->
+	<include_xml_file>objects/obj_background.xml</include_xml_file>
 	
 	<include_xml_file>objects/tropical/block-large.xml</include_xml_file>
 	<include_xml_file>objects/tropical/block-large-evil.xml</include_xml_file>

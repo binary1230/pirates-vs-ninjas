@@ -6709,9 +6709,9 @@
 		</item>
 	</layers>
 	<bgcolor class_id="14" tracking_level="0" version="0">
-		<r>1.058823541e-01</r>
-		<g>1.764705926e-01</g>
-		<b>5.294117928e-01</b>
+		<r>0.27</r>
+		<g>0.39</g>
+		<b>1.0</b>
 		<a>1.000000000e+00</a>
 	</bgcolor>
 	<bgcolor_top>
