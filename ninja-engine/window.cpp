@@ -394,10 +394,9 @@ void GameWindow::Clear() {
 }
 
 void GameWindow::BeginDrawing() {
-	glEnable(GL_ALPHA_TEST);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void GameWindow::EndDrawing() {
