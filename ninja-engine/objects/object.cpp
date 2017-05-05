@@ -182,9 +182,9 @@ void Object::Draw() {
 //
 //! This function populates x,y (reference params) with the 
 //! correctly transformed coordinates.
-void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y) {
-	x = (int)_Pos.x + offset_x;
-	y = (int)_Pos.y + offset_y;
+void Object::Transform(float &x, float &y, const int &offset_x, const int &offset_y) {
+	x = _Pos.x + offset_x;
+	y = _Pos.y + offset_y;
 
 	// take into account the camera now.
 	if (!is_overlay)
@@ -198,12 +198,13 @@ void Object::Transform(int &x, int &y, const int &offset_x, const int &offset_y)
 // Same as Transform(), just for rectangles only.
 void Object::TransformRect(_Rect &r) {
 
-	int x1, x2, y1, y2, w, h;
+	float x1, x2, y1, y2;
+	int w, h;
 	
-	x1 = (int)r.getx1();	
-	y1 = (int)r.gety1();	
-	x2 = (int)r.getx2();
-	y2 = (int)r.gety2();
+	x1 = r.getx1();	
+	y1 = r.gety1();	
+	x2 = r.getx2();
+	y2 = r.gety2();
 	w = x2 - x1;
 	h = y2 - y1;
 
@@ -230,7 +231,7 @@ void Object::TransformRect(_Rect &r) {
 //! This function does the real dirty work of drawing.
 void Object::DrawAtOffset(int offset_x, int offset_y, Sprite* sprite_to_draw) 
 {	
-	int x, y;
+	float x, y;
 	Transform(x, y, offset_x, offset_y);
 				
 	// draw for real

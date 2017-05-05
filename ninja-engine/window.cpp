@@ -226,7 +226,7 @@ void GameWindow::DrawText(int x, int y, std::string text) {
 // NOT flip it at all) 
 //
 // Holy sweetness. Remember that '^' is XOR, and XOR rocks.
-void GameWindow::DrawSprite(Sprite* sprite, int x, int y, 
+void GameWindow::DrawSprite(Sprite* sprite, float x, float y, 
 							bool flip_x, bool flip_y, 
 							float rotate_angle,
 							GLuint alpha, bool bDrawBoundingBoxOnly) 
@@ -238,7 +238,7 @@ void GameWindow::DrawSprite(Sprite* sprite, int x, int y,
 	float tx3 = 1.0f, ty3 = 1.0f;
 	float tx4 = 1.0f, ty4 = 0.0f;
 
-	int rx = x + sprite->x_offset;
+	float rx = x + sprite->x_offset;
 
 	// clip if needed
 	if (rx + sprite->width < 0 || rx > SCREEN_W)
@@ -250,7 +250,7 @@ void GameWindow::DrawSprite(Sprite* sprite, int x, int y,
 		tx3 = tx4 = 0.0f;
 	}
 
-	int ry = y + sprite->y_offset;
+	float ry = y + sprite->y_offset;
 
 	// clip if needed
 	if (ry + sprite->height < 0 || ry > SCREEN_H)

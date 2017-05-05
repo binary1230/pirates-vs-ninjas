@@ -34,7 +34,9 @@ void ObjectBackground::Draw() {
 
 	assert(h > 0 && w > 0 && "Invalid (non-positive) dimension for bg image!\n");
 
-	Transform(x,y);
+	float fx = x; float fy = y;
+	Transform(fx,fy);
+	x = fx; y = fy;
 
 	// For loop bodies
 	#define TILE_VERTICAL 	current_y = (y % h) - h; \

@@ -2727,7 +2727,7 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p__Rect swig_types[29]
 #define SWIGTYPE_p_b2Vec2 swig_types[30]
 #define SWIGTYPE_p_b2WorldManifold swig_types[31]
-#define SWIGTYPE_p_int swig_types[32]
+#define SWIGTYPE_p_float swig_types[32]
 #define SWIGTYPE_p_listT_Object_p_t swig_types[33]
 #define SWIGTYPE_p_p_char swig_types[34]
 #define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[35]
@@ -6355,14 +6355,14 @@ static int _wrap_GameWorld_SetCameraShake(lua_State* L) {
 static int _wrap_GameWorld_TransformWorldToView(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   float arg4 ;
   
   SWIG_check_num_args("GameWorld::TransformWorldToView",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::TransformWorldToView",1,"GameWorld *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("GameWorld::TransformWorldToView",2,"int &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("GameWorld::TransformWorldToView",3,"int &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("GameWorld::TransformWorldToView",2,"float &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("GameWorld::TransformWorldToView",3,"float &");
   if(!lua_isnumber(L,4)) SWIG_fail_arg("GameWorld::TransformWorldToView",4,"float");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
@@ -6370,13 +6370,13 @@ static int _wrap_GameWorld_TransformWorldToView(lua_State* L) {
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("GameWorld_TransformWorldToView",2,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("GameWorld_TransformWorldToView",2,SWIGTYPE_p_float);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("GameWorld_TransformWorldToView",3,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("GameWorld_TransformWorldToView",3,SWIGTYPE_p_float);
   }
   
   arg4 = (float)lua_tonumber(L, 4);
@@ -6395,26 +6395,26 @@ fail:
 static int _wrap_GameWorld_TransformViewToScreen(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   
   SWIG_check_num_args("GameWorld::TransformViewToScreen",3,3)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::TransformViewToScreen",1,"GameWorld *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("GameWorld::TransformViewToScreen",2,"int &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("GameWorld::TransformViewToScreen",3,"int &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("GameWorld::TransformViewToScreen",2,"float &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("GameWorld::TransformViewToScreen",3,"float &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
     SWIG_fail_ptr("GameWorld_TransformViewToScreen",1,SWIGTYPE_p_GameWorld);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("GameWorld_TransformViewToScreen",2,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("GameWorld_TransformViewToScreen",2,SWIGTYPE_p_float);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("GameWorld_TransformViewToScreen",3,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("GameWorld_TransformViewToScreen",3,SWIGTYPE_p_float);
   }
   
   (arg1)->TransformViewToScreen(*arg2,*arg3);
@@ -8437,8 +8437,8 @@ fail:
 static int _wrap_Object_Transform__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   int *arg4 = 0 ;
   int *arg5 = 0 ;
   int temp4 ;
@@ -8446,8 +8446,8 @@ static int _wrap_Object_Transform__SWIG_0(lua_State* L) {
   
   SWIG_check_num_args("Object::Transform",5,5)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::Transform",1,"Object *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Object::Transform",2,"int &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Object::Transform",3,"int &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Object::Transform",2,"float &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Object::Transform",3,"float &");
   if(!lua_isnumber(L,4)) SWIG_fail_arg("Object::Transform",4,"int const &");
   if(!lua_isnumber(L,5)) SWIG_fail_arg("Object::Transform",5,"int const &");
   
@@ -8456,13 +8456,13 @@ static int _wrap_Object_Transform__SWIG_0(lua_State* L) {
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("Object_Transform",2,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("Object_Transform",2,SWIGTYPE_p_float);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("Object_Transform",3,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("Object_Transform",3,SWIGTYPE_p_float);
   }
   
   temp4=(int)lua_tonumber(L,4); arg4=&temp4;
@@ -8482,15 +8482,15 @@ fail:
 static int _wrap_Object_Transform__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   int *arg4 = 0 ;
   int temp4 ;
   
   SWIG_check_num_args("Object::Transform",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::Transform",1,"Object *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Object::Transform",2,"int &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Object::Transform",3,"int &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Object::Transform",2,"float &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Object::Transform",3,"float &");
   if(!lua_isnumber(L,4)) SWIG_fail_arg("Object::Transform",4,"int const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
@@ -8498,13 +8498,13 @@ static int _wrap_Object_Transform__SWIG_1(lua_State* L) {
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("Object_Transform",2,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("Object_Transform",2,SWIGTYPE_p_float);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("Object_Transform",3,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("Object_Transform",3,SWIGTYPE_p_float);
   }
   
   temp4=(int)lua_tonumber(L,4); arg4=&temp4;
@@ -8523,26 +8523,26 @@ fail:
 static int _wrap_Object_Transform__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   Object *arg1 = (Object *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   
   SWIG_check_num_args("Object::Transform",3,3)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Object::Transform",1,"Object *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Object::Transform",2,"int &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Object::Transform",3,"int &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Object::Transform",2,"float &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Object::Transform",3,"float &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Object,0))){
     SWIG_fail_ptr("Object_Transform",1,SWIGTYPE_p_Object);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("Object_Transform",2,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("Object_Transform",2,SWIGTYPE_p_float);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("Object_Transform",3,SWIGTYPE_p_int);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("Object_Transform",3,SWIGTYPE_p_float);
   }
   
   (arg1)->Transform(*arg2,*arg3);
@@ -8577,7 +8577,7 @@ static int _wrap_Object_Transform(lua_State* L) {
     if (_v) {
       {
         void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_int, 0)) {
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_float, 0)) {
           _v = 0;
         } else {
           _v = 1;
@@ -8586,7 +8586,7 @@ static int _wrap_Object_Transform(lua_State* L) {
       if (_v) {
         {
           void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_int, 0)) {
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_float, 0)) {
             _v = 0;
           } else {
             _v = 1;
@@ -8611,7 +8611,7 @@ static int _wrap_Object_Transform(lua_State* L) {
     if (_v) {
       {
         void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_int, 0)) {
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_float, 0)) {
           _v = 0;
         } else {
           _v = 1;
@@ -8620,7 +8620,7 @@ static int _wrap_Object_Transform(lua_State* L) {
       if (_v) {
         {
           void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_int, 0)) {
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_float, 0)) {
             _v = 0;
           } else {
             _v = 1;
@@ -8650,7 +8650,7 @@ static int _wrap_Object_Transform(lua_State* L) {
     if (_v) {
       {
         void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_int, 0)) {
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_float, 0)) {
           _v = 0;
         } else {
           _v = 1;
@@ -8659,7 +8659,7 @@ static int _wrap_Object_Transform(lua_State* L) {
       if (_v) {
         {
           void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_int, 0)) {
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_float, 0)) {
             _v = 0;
           } else {
             _v = 1;
@@ -8684,9 +8684,9 @@ static int _wrap_Object_Transform(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Object_Transform'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    Object::Transform(int &,int &,int const &,int const &)\n"
-    "    Object::Transform(int &,int &,int const &)\n"
-    "    Object::Transform(int &,int &)\n");
+    "    Object::Transform(float &,float &,int const &,int const &)\n"
+    "    Object::Transform(float &,float &,int const &)\n"
+    "    Object::Transform(float &,float &)\n");
   lua_error(L);return 0;
 }
 
@@ -16157,7 +16157,7 @@ static swig_type_info _swigt__p_XMLNode = {"_p_XMLNode", "XMLNode *", 0, 0, (voi
 static swig_type_info _swigt__p__Rect = {"_p__Rect", "_Rect *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_b2Vec2 = {"_p_b2Vec2", "b2Vec2 *", 0, 0, (void*)&_wrap_class_b2Vec2, 0};
 static swig_type_info _swigt__p_b2WorldManifold = {"_p_b2WorldManifold", "b2WorldManifold *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_int = {"_p_int", "int *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_float = {"_p_float", "float *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_listT_Object_p_t = {"_p_listT_Object_p_t", "ObjectList *|list< Object * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_std__string_const_XMLNode_t = {"_p_std__mapT_std__string_const_XMLNode_t", "ObjectDefMapping *|std::map< std::string const,XMLNode > *", 0, 0, (void*)0, 0};
@@ -16202,7 +16202,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p__Rect,
   &_swigt__p_b2Vec2,
   &_swigt__p_b2WorldManifold,
-  &_swigt__p_int,
+  &_swigt__p_float,
   &_swigt__p_listT_Object_p_t,
   &_swigt__p_p_char,
   &_swigt__p_std__mapT_std__string_const_XMLNode_t,
@@ -16247,7 +16247,7 @@ static swig_cast_info _swigc__p_XMLNode[] = {  {&_swigt__p_XMLNode, 0, 0, 0},{0,
 static swig_cast_info _swigc__p__Rect[] = {  {&_swigt__p__Rect, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_b2Vec2[] = {  {&_swigt__p_b2Vec2, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_b2WorldManifold[] = {  {&_swigt__p_b2WorldManifold, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_listT_Object_p_t[] = {  {&_swigt__p_listT_Object_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_std__string_const_XMLNode_t[] = {  {&_swigt__p_std__mapT_std__string_const_XMLNode_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -16292,7 +16292,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p__Rect,
   _swigc__p_b2Vec2,
   _swigc__p_b2WorldManifold,
-  _swigc__p_int,
+  _swigc__p_float,
   _swigc__p_listT_Object_p_t,
   _swigc__p_p_char,
   _swigc__p_std__mapT_std__string_const_XMLNode_t,

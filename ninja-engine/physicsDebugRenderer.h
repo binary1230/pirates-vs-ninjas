@@ -7,10 +7,6 @@ public:
 	/// Draw a closed polygon provided in CCW order.
 	virtual void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
 
-	void Transform(float & x, float & y);
-
-	void SubmitVertex(float x, float y);
-
 	/// Draw a solid closed polygon provided in CCW order.
 	virtual void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
 
@@ -29,6 +25,9 @@ public:
 
 	/// Draw a point.
 	virtual void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color);
+
+	static void Transform(float & x, float & y);
+	static void SubmitVertex(float x, float y);
 };
 
 #endif // PHYSICSRENDER_H

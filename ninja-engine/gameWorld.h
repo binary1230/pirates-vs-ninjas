@@ -170,8 +170,8 @@ class GameWorld : public GameMode {
 
 			void SetCameraShake(bool state, int fade_out_time = -1);
 			
-			void TransformWorldToView(int &x, int &y, float scroll_speed_multiplier);
-			void TransformViewToScreen(int &x, int &y);
+			void TransformWorldToView(float & x, float & y, float scroll_speed_multiplier);
+			void TransformViewToScreen(float & x, float & y);
 
 			CameraFollow* GetPlayerCamera();
 

@@ -2652,19 +2652,19 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetCameraShake__SWIG_1(void * jarg1
 
 SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_TransformWorldToView(void * jarg1, void * jarg2, void * jarg3, float jarg4) {
   GameWorld *arg1 = (GameWorld *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   float arg4 ;
   
   arg1 = (GameWorld *)jarg1; 
-  arg2 = (int *)jarg2;
+  arg2 = (float *)jarg2;
   if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
-  arg3 = (int *)jarg3;
+  arg3 = (float *)jarg3;
   if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
   arg4 = (float)jarg4; 
@@ -2674,18 +2674,18 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_TransformWorldToView(void * jarg1, 
 
 SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_TransformViewToScreen(void * jarg1, void * jarg2, void * jarg3) {
   GameWorld *arg1 = (GameWorld *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   
   arg1 = (GameWorld *)jarg1; 
-  arg2 = (int *)jarg2;
+  arg2 = (float *)jarg2;
   if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
-  arg3 = (int *)jarg3;
+  arg3 = (float *)jarg3;
   if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
   (arg1)->TransformViewToScreen(*arg2,*arg3);
@@ -3386,22 +3386,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_Draw(void * jarg1) {
 
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_Transform__SWIG_0(void * jarg1, void * jarg2, void * jarg3, int jarg4, int jarg5) {
   Object *arg1 = (Object *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   int *arg4 = 0 ;
   int *arg5 = 0 ;
   int temp4 ;
   int temp5 ;
   
   arg1 = (Object *)jarg1; 
-  arg2 = (int *)jarg2;
+  arg2 = (float *)jarg2;
   if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
-  arg3 = (int *)jarg3;
+  arg3 = (float *)jarg3;
   if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
   temp4 = (int)jarg4; 
@@ -3414,20 +3414,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_Transform__SWIG_0(void * jarg1, void *
 
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_Transform__SWIG_1(void * jarg1, void * jarg2, void * jarg3, int jarg4) {
   Object *arg1 = (Object *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   int *arg4 = 0 ;
   int temp4 ;
   
   arg1 = (Object *)jarg1; 
-  arg2 = (int *)jarg2;
+  arg2 = (float *)jarg2;
   if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
-  arg3 = (int *)jarg3;
+  arg3 = (float *)jarg3;
   if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
   temp4 = (int)jarg4; 
@@ -3438,18 +3438,18 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_Transform__SWIG_1(void * jarg1, void *
 
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_Transform__SWIG_2(void * jarg1, void * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
+  float *arg2 = 0 ;
+  float *arg3 = 0 ;
   
   arg1 = (Object *)jarg1; 
-  arg2 = (int *)jarg2;
+  arg2 = (float *)jarg2;
   if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
-  arg3 = (int *)jarg3;
+  arg3 = (float *)jarg3;
   if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "int & type is null", 0);
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "float & type is null", 0);
     return ;
   } 
   (arg1)->Transform(*arg2,*arg3);

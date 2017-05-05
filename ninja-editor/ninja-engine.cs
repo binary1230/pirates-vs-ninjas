@@ -1149,13 +1149,13 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_SetCameraShake__SWIG_1(swigCPtr, state);
   }
 
-  public void TransformWorldToView(SWIGTYPE_p_int x, SWIGTYPE_p_int y, float scroll_speed_multiplier) {
-    enginePINVOKE.GameWorld_TransformWorldToView(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y), scroll_speed_multiplier);
+  public void TransformWorldToView(SWIGTYPE_p_float x, SWIGTYPE_p_float y, float scroll_speed_multiplier) {
+    enginePINVOKE.GameWorld_TransformWorldToView(swigCPtr, SWIGTYPE_p_float.getCPtr(x), SWIGTYPE_p_float.getCPtr(y), scroll_speed_multiplier);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void TransformViewToScreen(SWIGTYPE_p_int x, SWIGTYPE_p_int y) {
-    enginePINVOKE.GameWorld_TransformViewToScreen(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y));
+  public void TransformViewToScreen(SWIGTYPE_p_float x, SWIGTYPE_p_float y) {
+    enginePINVOKE.GameWorld_TransformViewToScreen(swigCPtr, SWIGTYPE_p_float.getCPtr(x), SWIGTYPE_p_float.getCPtr(y));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -1579,18 +1579,18 @@ public partial class Object : global::System.IDisposable {
     enginePINVOKE.Object_Draw(swigCPtr);
   }
 
-  public void Transform(SWIGTYPE_p_int x, SWIGTYPE_p_int y, int offset_x, int offset_y) {
-    enginePINVOKE.Object_Transform__SWIG_0(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y), offset_x, offset_y);
+  public void Transform(SWIGTYPE_p_float x, SWIGTYPE_p_float y, int offset_x, int offset_y) {
+    enginePINVOKE.Object_Transform__SWIG_0(swigCPtr, SWIGTYPE_p_float.getCPtr(x), SWIGTYPE_p_float.getCPtr(y), offset_x, offset_y);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void Transform(SWIGTYPE_p_int x, SWIGTYPE_p_int y, int offset_x) {
-    enginePINVOKE.Object_Transform__SWIG_1(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y), offset_x);
+  public void Transform(SWIGTYPE_p_float x, SWIGTYPE_p_float y, int offset_x) {
+    enginePINVOKE.Object_Transform__SWIG_1(swigCPtr, SWIGTYPE_p_float.getCPtr(x), SWIGTYPE_p_float.getCPtr(y), offset_x);
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void Transform(SWIGTYPE_p_int x, SWIGTYPE_p_int y) {
-    enginePINVOKE.Object_Transform__SWIG_2(swigCPtr, SWIGTYPE_p_int.getCPtr(x), SWIGTYPE_p_int.getCPtr(y));
+  public void Transform(SWIGTYPE_p_float x, SWIGTYPE_p_float y) {
+    enginePINVOKE.Object_Transform__SWIG_2(swigCPtr, SWIGTYPE_p_float.getCPtr(x), SWIGTYPE_p_float.getCPtr(y));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -5060,6 +5060,22 @@ public class SWIGTYPE_p_std__vectorT_std__string_t {
   }
 }
 
+public class SWIGTYPE_p_float {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal SWIGTYPE_p_float(global::System.IntPtr cPtr, bool futureUse) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  protected SWIGTYPE_p_float() {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_float obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+}
+
 public class SWIGTYPE_p_b2WorldManifold {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
@@ -5120,22 +5136,6 @@ public class SWIGTYPE_p_Sprite {
   }
 
   internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_Sprite obj) {
-    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
-  }
-}
-
-public class SWIGTYPE_p_int {
-  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
-
-  internal SWIGTYPE_p_int(global::System.IntPtr cPtr, bool futureUse) {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
-  }
-
-  protected SWIGTYPE_p_int() {
-    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-  }
-
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_int obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 }

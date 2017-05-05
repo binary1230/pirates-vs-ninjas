@@ -116,7 +116,7 @@ void Animation::SwitchToNextFrame()
 			break;
 
 		case ANIMFRAME_EXPLOSION:
-			PHYSICS->ExplodeParticle(attachedObject->GetCenter());
+			PHYSICS->CreateExplosionAt(attachedObject->GetCenter());
 			break;
 
 		case ANIMFRAME_JUMP:

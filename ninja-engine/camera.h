@@ -27,7 +27,7 @@ class Camera
 
 		void ClampToLevelBounds();
 
-		virtual void TransformWorldToView(int& x, int &y);
+		virtual void TransformWorldToView(float& x, float& y);
 
 		virtual void SetCameraOffset(b2Vec2& offset);
 };

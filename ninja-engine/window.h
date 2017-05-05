@@ -60,7 +60,7 @@ class GameWindow {
 		inline uint Width() {return width;};
 		inline uint Height() {return height;};
 
-		void DrawSprite(	Sprite* sprite, int x, int y, 
+		void DrawSprite(	Sprite* sprite, float x, float y, 
 											bool flip_x=0, bool flip_y=0, 
 											float rotate_angle=0.0f,
 											uint alpha=255, bool bDrawBoundingBoxOnly=false);

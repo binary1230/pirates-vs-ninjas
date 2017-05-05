@@ -39,7 +39,7 @@ void Camera::ClampToLevelBounds() {
 		pos.y = levelHeight - sh;
 }
 
-void Camera::TransformWorldToView(int & x, int & y)
+void Camera::TransformWorldToView(float & x, float & y)
 {
 	x -= pos.x + camera_offset.x;
 	y -= pos.y + camera_offset.y;

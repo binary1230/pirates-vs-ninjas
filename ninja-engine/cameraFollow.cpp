@@ -31,7 +31,7 @@ void CameraFollow::GetXY(b2Vec2& pos_out) {
 	pos_out.y += camera_shake_y;
 }
 
-void CameraFollow::TransformWorldToView(int & x, int & y)
+void CameraFollow::TransformWorldToView(float & x, float & y)
 {
 	Camera::TransformWorldToView(x, y);
 

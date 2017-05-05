@@ -116,17 +116,17 @@ int GameWorld::Init(XMLNode /*unused*/) {
 
 //! Transforms view coordinates into absolute screen coordinates
 //! e.g. flip the Y axis mostly.
-void GameWorld::TransformViewToScreen(	int &x, int &y ) {
+void GameWorld::TransformViewToScreen(float & x, float & y) {
 	y = WINDOW->Height() - y;
 }
 
 //! Transforms an object's coordinates from its world coordinates
 //! Into "view" coordinates (e.g. x < screen.width, y < screen.height)
-void GameWorld::TransformWorldToView(int &x, int &y, float scroll_speed_multiplier) {
+void GameWorld::TransformWorldToView(float & x, float & y, float scroll_speed_multiplier) {
 	_camera->TransformWorldToView(x, y);
 
-	x = int(x * scroll_speed_multiplier);
-	y = int(y * scroll_speed_multiplier);
+	x *= scroll_speed_multiplier;
+	y *= scroll_speed_multiplier;
 }
 
 CameraFollow* GameWorld::GetPlayerCamera() {

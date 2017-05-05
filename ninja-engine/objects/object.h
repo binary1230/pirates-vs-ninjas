@@ -201,7 +201,7 @@ class Object {
 
 		virtual void Draw();
 
-		void Transform(	int &x, int &y, const int &offset_x = 0, const int &offset_y = 0);
+		void Transform(float &x, float &y, const int &offset_x = 0, const int &offset_y = 0);
 		void TransformRect(_Rect &r);
 
 		inline void SetDisplayTime(int time) {
