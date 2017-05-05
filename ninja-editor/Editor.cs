@@ -244,6 +244,18 @@ namespace MapEditor
 
         private void btn_Create_Click(object sender, EventArgs e)
         {
+            if (lstLayers.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a layer first");
+                return;
+            }
+
+            if (lstObjectDefs.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an objectDef first");
+                return;
+            }
+
             string currentLayer = lstLayers.SelectedItem.ToString();
             string currentObjDef = lstObjectDefs.SelectedItem.ToString();
 
