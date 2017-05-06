@@ -231,8 +231,8 @@ void GameWindow::DrawSprite(Sprite* sprite, float x, float y,
 							float rotate_angle,
 							GLuint alpha, bool bDrawBoundingBoxOnly) 
 {
-	if (alpha == 0)
-		return;
+	//if (alpha == 0)
+	//	return;
 
 	// texture coords
 	// we mess with them if flipping
@@ -396,7 +396,7 @@ void GameWindow::Clear() {
 void GameWindow::BeginDrawing() {
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void GameWindow::EndDrawing() {

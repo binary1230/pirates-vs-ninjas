@@ -91,12 +91,13 @@ void Object::UpdateFade() {
 	if (!is_fading)
 		return;
 
-	if (!fade_out_time_remaining) {
+	--fade_out_time_remaining;
+
+	if (fade_out_time_remaining != 0) {
+		alpha = uint(((float)fade_out_time_remaining / (float)fade_out_time_total) * 255.0f);
+	} else {
 		is_fading = false;
 		alpha = 0;
-	} else {
-		--fade_out_time_remaining;
-		alpha = uint(((float)fade_out_time_remaining / (float)fade_out_time_total) * 255.0f);
 	}
 }
 

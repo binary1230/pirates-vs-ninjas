@@ -24,6 +24,10 @@ void ObjectBounce::Update() {
 		play_hit_sound = false;
 	}
 
+	//if (alpha == 0) {
+	//	is_dead = true;
+	//}
+
 	if (hit_with_explosion_last_frame) {
 		_physics_body->SetType(b2_dynamicBody);
 		

@@ -54,6 +54,12 @@ namespace MapEditor
         {
             gameWrapper.OnTick();
 
+            if (GameWorld.GetInstance() == null)
+            {
+                Close();
+                return;
+            }
+
             if (wasPaused != gameWrapper.Paused)
             {
                 OnPauseStatusChanged();

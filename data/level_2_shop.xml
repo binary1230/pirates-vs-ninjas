@@ -4,25 +4,25 @@
 <this class_id="0" tracking_level="1" version="2" object_id="_0">
 	<GameMode class_id="1" tracking_level="0" version="0"></GameMode>
 	<objects class_id="2" tracking_level="0" version="0">
-		<count>40</count>
+		<count>51</count>
 		<item_version>0</item_version>
 		<item class_id="3" class_name="ObjectBounce" tracking_level="1" version="0" object_id="_1">
 			<Object class_id="4" tracking_level="0" version="7">
 				<pos class_id="5" tracking_level="0" version="0">
-					<x>6.706384888e+02</x>
-					<y>2.966336670e+02</y>
+					<x>8.700000000e+02</x>
+					<y>3.600000000e+02</y>
 				</pos>
 				<objectDefName>dynamic_block</objectDefName>
 				<m_pkLayer class_id="6" tracking_level="1" version="0" object_id="_2">
 					<objects>
-						<count>31</count>
+						<count>43</count>
 						<item_version>0</item_version>
 						<item class_id_reference="3" object_id_reference="_1"></item>
 						<item class_id_reference="3" object_id="_3">
 							<Object>
 								<pos>
-									<x>6.694960327e+02</x>
-									<y>2.659699402e+02</y>
+									<x>8.400000000e+02</x>
+									<y>3.600000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -32,8 +32,8 @@
 						<item class_id_reference="3" object_id="_4">
 							<Object>
 								<pos>
-									<x>6.674134521e+02</x>
-									<y>2.353158112e+02</y>
+									<x>8.400000000e+02</x>
+									<y>3.300000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -43,8 +43,8 @@
 						<item class_id_reference="3" object_id="_5">
 							<Object>
 								<pos>
-									<x>6.654495239e+02</x>
-									<y>2.046632233e+02</y>
+									<x>8.700000000e+02</x>
+									<y>3.300000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -54,8 +54,8 @@
 						<item class_id_reference="3" object_id="_6">
 							<Object>
 								<pos>
-									<x>6.624468994e+02</x>
-									<y>1.740183105e+02</y>
+									<x>8.700000000e+02</x>
+									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -65,8 +65,8 @@
 						<item class_id_reference="3" object_id="_7">
 							<Object>
 								<pos>
-									<x>6.589543457e+02</x>
-									<y>1.433755341e+02</y>
+									<x>8.400000000e+02</x>
+									<y>3.000000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -76,8 +76,8 @@
 						<item class_id_reference="3" object_id="_8">
 							<Object>
 								<pos>
-									<x>7.254506836e+02</x>
-									<y>1.128374710e+02</y>
+									<x>8.400000000e+02</x>
+									<y>2.700000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -87,8 +87,8 @@
 						<item class_id_reference="3" object_id="_9">
 							<Object>
 								<pos>
-									<x>7.534329834e+02</x>
-									<y>8.213087463e+01</y>
+									<x>8.700000000e+02</x>
+									<y>2.700000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -98,8 +98,8 @@
 						<item class_id_reference="3" object_id="_10">
 							<Object>
 								<pos>
-									<x>7.844427490e+02</x>
-									<y>5.155293274e+01</y>
+									<x>8.700000000e+02</x>
+									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -109,8 +109,8 @@
 						<item class_id_reference="3" object_id="_11">
 							<Object>
 								<pos>
-									<x>8.128103027e+02</x>
-									<y>2.076228333e+01</y>
+									<x>8.400000000e+02</x>
+									<y>2.400000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -120,8 +120,8 @@
 						<item class_id_reference="3" object_id="_12">
 							<Object>
 								<pos>
-									<x>6.569635010e+02</x>
-									<y>1.126725159e+02</y>
+									<x>8.400000000e+02</x>
+									<y>2.100000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -131,8 +131,8 @@
 						<item class_id_reference="3" object_id="_13">
 							<Object>
 								<pos>
-									<x>6.882698364e+02</x>
-									<y>1.126971588e+02</y>
+									<x>8.400000000e+02</x>
+									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -142,8 +142,8 @@
 						<item class_id_reference="3" object_id="_14">
 							<Object>
 								<pos>
-									<x>7.225709839e+02</x>
-									<y>8.212245941e+01</y>
+									<x>8.400000000e+02</x>
+									<y>1.500000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -153,8 +153,8 @@
 						<item class_id_reference="3" object_id="_15">
 							<Object>
 								<pos>
-									<x>6.896118164e+02</x>
-									<y>8.202516937e+01</y>
+									<x>8.100000000e+02</x>
+									<y>1.200000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -164,8 +164,8 @@
 						<item class_id_reference="3" object_id="_16">
 							<Object>
 								<pos>
-									<x>6.573970337e+02</x>
-									<y>8.200494385e+01</y>
+									<x>7.800000000e+02</x>
+									<y>9.000000000e+01</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -175,8 +175,8 @@
 						<item class_id_reference="3" object_id="_17">
 							<Object>
 								<pos>
-									<x>6.258764038e+02</x>
-									<y>8.208573151e+01</y>
+									<x>7.500000000e+02</x>
+									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -186,8 +186,8 @@
 						<item class_id_reference="3" object_id="_18">
 							<Object>
 								<pos>
-									<x>6.279426880e+02</x>
-									<y>5.136079407e+01</y>
+									<x>7.200000000e+02</x>
+									<y>3.000000000e+01</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -197,8 +197,8 @@
 						<item class_id_reference="3" object_id="_19">
 							<Object>
 								<pos>
-									<x>5.949036255e+02</x>
-									<y>5.143158722e+01</y>
+									<x>6.900000000e+02</x>
+									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -208,8 +208,8 @@
 						<item class_id_reference="3" object_id="_20">
 							<Object>
 								<pos>
-									<x>6.589763794e+02</x>
-									<y>5.133702850e+01</y>
+									<x>7.200000000e+02</x>
+									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -219,8 +219,8 @@
 						<item class_id_reference="3" object_id="_21">
 							<Object>
 								<pos>
-									<x>6.900855713e+02</x>
-									<y>5.133662415e+01</y>
+									<x>8.700000000e+02</x>
+									<y>2.100000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -230,8 +230,8 @@
 						<item class_id_reference="3" object_id="_22">
 							<Object>
 								<pos>
-									<x>7.211651611e+02</x>
-									<y>5.144214630e+01</y>
+									<x>8.100000000e+02</x>
+									<y>9.000000000e+01</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -241,8 +241,8 @@
 						<item class_id_reference="3" object_id="_23">
 							<Object>
 								<pos>
-									<x>7.519382935e+02</x>
-									<y>5.138763428e+01</y>
+									<x>7.800000000e+02</x>
+									<y>6.000000000e+01</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -252,8 +252,8 @@
 						<item class_id_reference="3" object_id="_24">
 							<Object>
 								<pos>
-									<x>7.820989380e+02</x>
-									<y>2.076180649e+01</y>
+									<x>7.500000000e+02</x>
+									<y>3.000000000e+01</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -263,8 +263,8 @@
 						<item class_id_reference="3" object_id="_25">
 							<Object>
 								<pos>
-									<x>7.514187622e+02</x>
-									<y>2.070763779e+01</y>
+									<x>8.700000000e+02</x>
+									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -274,8 +274,8 @@
 						<item class_id_reference="3" object_id="_26">
 							<Object>
 								<pos>
-									<x>7.207409058e+02</x>
-									<y>2.070028687e+01</y>
+									<x>8.400000000e+02</x>
+									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -285,8 +285,8 @@
 						<item class_id_reference="3" object_id="_27">
 							<Object>
 								<pos>
-									<x>6.900433350e+02</x>
-									<y>2.067070770e+01</y>
+									<x>8.100000000e+02</x>
+									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -296,8 +296,8 @@
 						<item class_id_reference="3" object_id="_28">
 							<Object>
 								<pos>
-									<x>6.591641235e+02</x>
-									<y>2.066994476e+01</y>
+									<x>7.800000000e+02</x>
+									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -307,8 +307,8 @@
 						<item class_id_reference="3" object_id="_29">
 							<Object>
 								<pos>
-									<x>6.283875122e+02</x>
-									<y>2.067531586e+01</y>
+									<x>7.500000000e+02</x>
+									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -318,8 +318,8 @@
 						<item class_id_reference="3" object_id="_30">
 							<Object>
 								<pos>
-									<x>5.977017822e+02</x>
-									<y>2.069099045e+01</y>
+									<x>8.700000000e+02</x>
+									<y>1.800000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
@@ -329,28 +329,164 @@
 						<item class_id_reference="3" object_id="_31">
 							<Object>
 								<pos>
-									<x>5.670270386e+02</x>
-									<y>2.071702576e+01</y>
+									<x>8.700000000e+02</x>
+									<y>1.500000000e+02</y>
 								</pos>
 								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id="7" class_name="ObjectCutBars" tracking_level="1" version="0" object_id="_32">
+						<item class_id_reference="3" object_id="_32">
 							<Object>
 								<pos>
-									<x>0.000000000e+00</x>
-									<y>0.000000000e+00</y>
+									<x>8.400000000e+02</x>
+									<y>1.200000000e+02</y>
 								</pos>
-								<objectDefName>CutBars</objectDefName>
+								<objectDefName>dynamic_block</objectDefName>
 								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
+						<item class_id_reference="3" object_id="_33">
+							<Object>
+								<pos>
+									<x>8.400000000e+02</x>
+									<y>9.000000000e+01</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="3" object_id="_34">
+							<Object>
+								<pos>
+									<x>8.100000000e+02</x>
+									<y>6.000000000e+01</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="3" object_id="_35">
+							<Object>
+								<pos>
+									<x>8.700000000e+02</x>
+									<y>1.200000000e+02</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="3" object_id="_36">
+							<Object>
+								<pos>
+									<x>8.700000000e+02</x>
+									<y>9.000000000e+01</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="3" object_id="_37">
+							<Object>
+								<pos>
+									<x>8.400000000e+02</x>
+									<y>6.000000000e+01</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="3" object_id="_38">
+							<Object>
+								<pos>
+									<x>7.800000000e+02</x>
+									<y>3.000000000e+01</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="3" object_id="_39">
+							<Object>
+								<pos>
+									<x>8.100000000e+02</x>
+									<y>3.000000000e+01</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="3" object_id="_40">
+							<Object>
+								<pos>
+									<x>8.700000000e+02</x>
+									<y>6.000000000e+01</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="3" object_id="_41">
+							<Object>
+								<pos>
+									<x>8.700000000e+02</x>
+									<y>3.000000000e+01</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id_reference="3" object_id="_42">
+							<Object>
+								<pos>
+									<x>8.400000000e+02</x>
+									<y>3.000000000e+01</y>
+								</pos>
+								<objectDefName>dynamic_block</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+						</item>
+						<item class_id="7" class_name="ObjectPlayer" tracking_level="1" version="1" object_id="_43">
+							<Object>
+								<pos>
+									<x>6.095732880e+01</x>
+									<y>2.067498779e+01</y>
+								</pos>
+								<objectDefName>amaya</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+							<controller_num>1</controller_num>
+						</item>
+						<item class_id="8" class_name="ObjectDoor" tracking_level="1" version="0" object_id="_44">
+							<Object>
+								<pos>
+									<x>5.300000000e+01</x>
+									<y>1.999999619e+01</y>
+								</pos>
+								<objectDefName>door-bright</objectDefName>
+								<m_pkLayer class_id_reference="6" object_id_reference="_2"></m_pkLayer>
+								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
+							</Object>
+							<door_type>3</door_type>
+							<mode_to_jump_to_on_activate></mode_to_jump_to_on_activate>
+							<door_name>joutenShop</door_name>
+						</item>
 					</objects>
 					<scroll_speed>1.000000000e+00</scroll_speed>
-					<name>overlays</name>
+					<name>fg</name>
 					<visible>1</visible>
 				</m_pkLayer>
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
@@ -385,81 +521,92 @@
 		<item class_id_reference="3" object_id_reference="_29"></item>
 		<item class_id_reference="3" object_id_reference="_30"></item>
 		<item class_id_reference="3" object_id_reference="_31"></item>
-		<item class_id="8" class_name="ObjectStatic" tracking_level="1" version="0" object_id="_33">
+		<item class_id_reference="3" object_id_reference="_32"></item>
+		<item class_id_reference="3" object_id_reference="_33"></item>
+		<item class_id_reference="3" object_id_reference="_34"></item>
+		<item class_id_reference="3" object_id_reference="_35"></item>
+		<item class_id_reference="3" object_id_reference="_36"></item>
+		<item class_id_reference="3" object_id_reference="_37"></item>
+		<item class_id_reference="3" object_id_reference="_38"></item>
+		<item class_id_reference="3" object_id_reference="_39"></item>
+		<item class_id_reference="3" object_id_reference="_40"></item>
+		<item class_id_reference="3" object_id_reference="_41"></item>
+		<item class_id_reference="3" object_id_reference="_42"></item>
+		<item class_id="9" class_name="ObjectStatic" tracking_level="1" version="0" object_id="_45">
 			<Object>
 				<pos>
 					<x>9.999998779e+02</x>
 					<y>0.000000000e+00</y>
 				</pos>
 				<objectDefName>block3</objectDefName>
-				<m_pkLayer class_id_reference="6" object_id="_34">
+				<m_pkLayer class_id_reference="6" object_id="_46">
 					<objects>
 						<count>7</count>
 						<item_version>0</item_version>
-						<item class_id_reference="8" object_id_reference="_33"></item>
-						<item class_id_reference="8" object_id="_35">
+						<item class_id_reference="9" object_id_reference="_45"></item>
+						<item class_id_reference="9" object_id="_47">
 							<Object>
 								<pos>
 									<x>0.000000000e+00</x>
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>jouten-shop</objectDefName>
-								<m_pkLayer class_id_reference="6" object_id_reference="_34"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_46"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_36">
+						<item class_id_reference="9" object_id="_48">
 							<Object>
 								<pos>
 									<x>8.000000000e+02</x>
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block3</objectDefName>
-								<m_pkLayer class_id_reference="6" object_id_reference="_34"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_46"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_37">
+						<item class_id_reference="9" object_id="_49">
 							<Object>
 								<pos>
 									<x>6.000000000e+02</x>
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block3</objectDefName>
-								<m_pkLayer class_id_reference="6" object_id_reference="_34"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_46"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_38">
+						<item class_id_reference="9" object_id="_50">
 							<Object>
 								<pos>
 									<x>4.000000305e+02</x>
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block3</objectDefName>
-								<m_pkLayer class_id_reference="6" object_id_reference="_34"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_46"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_39">
+						<item class_id_reference="9" object_id="_51">
 							<Object>
 								<pos>
 									<x>2.000000000e+02</x>
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block3</objectDefName>
-								<m_pkLayer class_id_reference="6" object_id_reference="_34"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_46"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
-						<item class_id_reference="8" object_id="_40">
+						<item class_id_reference="9" object_id="_52">
 							<Object>
 								<pos>
 									<x>1.525878906e-05</x>
 									<y>0.000000000e+00</y>
 								</pos>
 								<objectDefName>block3</objectDefName>
-								<m_pkLayer class_id_reference="6" object_id_reference="_34"></m_pkLayer>
+								<m_pkLayer class_id_reference="6" object_id_reference="_46"></m_pkLayer>
 								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 							</Object>
 						</item>
@@ -471,56 +618,41 @@
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
 		</item>
-		<item class_id_reference="7" object_id_reference="_32"></item>
-		<item class_id="9" class_name="ObjectPlayer" tracking_level="1" version="1" object_id="_41">
+		<item class_id="10" class_name="ObjectCutBars" tracking_level="1" version="0" object_id="_53">
 			<Object>
 				<pos>
-					<x>6.095732880e+01</x>
-					<y>2.067498779e+01</y>
+					<x>0.000000000e+00</x>
+					<y>0.000000000e+00</y>
 				</pos>
-				<objectDefName>amaya</objectDefName>
-				<m_pkLayer class_id_reference="6" object_id="_42">
+				<objectDefName>CutBars</objectDefName>
+				<m_pkLayer class_id_reference="6" object_id="_54">
 					<objects>
-						<count>2</count>
+						<count>1</count>
 						<item_version>0</item_version>
-						<item class_id_reference="9" object_id_reference="_41"></item>
-						<item class_id="10" class_name="ObjectDoor" tracking_level="1" version="0" object_id="_43">
-							<Object>
-								<pos>
-									<x>5.300000000e+01</x>
-									<y>1.999999619e+01</y>
-								</pos>
-								<objectDefName>door-bright</objectDefName>
-								<m_pkLayer class_id_reference="6" object_id_reference="_42"></m_pkLayer>
-								<_rotate_velocity>0.000000000e+00</_rotate_velocity>
-							</Object>
-							<door_type>3</door_type>
-							<mode_to_jump_to_on_activate></mode_to_jump_to_on_activate>
-							<door_name>joutenShop</door_name>
-						</item>
+						<item class_id_reference="10" object_id_reference="_53"></item>
 					</objects>
 					<scroll_speed>1.000000000e+00</scroll_speed>
-					<name>fg</name>
+					<name>overlays</name>
 					<visible>1</visible>
 				</m_pkLayer>
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
-			<controller_num>1</controller_num>
 		</item>
-		<item class_id_reference="10" object_id_reference="_43"></item>
-		<item class_id_reference="8" object_id_reference="_35"></item>
-		<item class_id_reference="8" object_id_reference="_36"></item>
-		<item class_id_reference="8" object_id_reference="_37"></item>
-		<item class_id_reference="8" object_id_reference="_38"></item>
-		<item class_id_reference="8" object_id_reference="_39"></item>
-		<item class_id_reference="8" object_id_reference="_40"></item>
+		<item class_id_reference="7" object_id_reference="_43"></item>
+		<item class_id_reference="8" object_id_reference="_44"></item>
+		<item class_id_reference="9" object_id_reference="_47"></item>
+		<item class_id_reference="9" object_id_reference="_48"></item>
+		<item class_id_reference="9" object_id_reference="_49"></item>
+		<item class_id_reference="9" object_id_reference="_50"></item>
+		<item class_id_reference="9" object_id_reference="_51"></item>
+		<item class_id_reference="9" object_id_reference="_52"></item>
 	</objects>
 	<layers class_id="11" tracking_level="0" version="0">
 		<count>3</count>
 		<item_version>0</item_version>
-		<item class_id_reference="6" object_id_reference="_34"></item>
-		<item class_id_reference="6" object_id_reference="_42"></item>
+		<item class_id_reference="6" object_id_reference="_46"></item>
 		<item class_id_reference="6" object_id_reference="_2"></item>
+		<item class_id_reference="6" object_id_reference="_54"></item>
 	</layers>
 	<bgcolor class_id="12" tracking_level="0" version="0">
 		<r>0.000000000e+00</r>
@@ -538,9 +670,9 @@
 	<width>1024</width>
 	<height>650</height>
 	<lua_script></lua_script>
-	<_camera class_id="14" class_name="CameraFollow" tracking_level="1" version="1" object_id="_44">
-		<Camera class_id="13" tracking_level="1" version="1" object_id="_45"></Camera>
-		<follow_object class_id_reference="9" object_id_reference="_41"></follow_object>
+	<_camera class_id="14" class_name="CameraFollow" tracking_level="1" version="1" object_id="_55">
+		<Camera class_id="13" tracking_level="1" version="1" object_id="_56"></Camera>
+		<follow_object class_id_reference="7" object_id_reference="_43"></follow_object>
 	</_camera>
 	<m_included_effect_xml_files class_id="15" tracking_level="0" version="0">
 		<count>1</count>
