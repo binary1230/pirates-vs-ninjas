@@ -33,6 +33,11 @@ class PhysicsContactInfo
 typedef map<const b2Contact*, PhysicsContactInfo> ContactMappings;
 typedef map<const b2Contact*, PhysicsContactInfo>::iterator contact_iter;
 
+enum PhysicsCategory {
+	DEFAULT			= 0x0001,
+	PLAYER			= 0x0002,
+};
+
 class PhysicsManager
 {
 	DECLARE_SINGLETON_CLASS(PhysicsManager)
@@ -50,7 +55,7 @@ class PhysicsManager
 		std::vector<PhysicsExplosion*> _explosions;
 		
 		void ProcessCollisions();
-		void ProcessCollision(PhysicsContactInfo* pkb2Contact);
+		void ProcessCollision(const PhysicsContactInfo* pkb2Contact);
 
 		friend class PhysicsContactListener;
 
@@ -61,15 +66,15 @@ class PhysicsManager
 		bool OnWorldInit();
 
 		// helpers
-		b2Body* CreateStaticPhysicsBox( float x, float y, float width, float height, bool bSensorOnly = false );
+		b2Body* CreateStaticPhysicsBox( float x, float y, float width, float height, bool bSensorOnly = false, PhysicsCategory category = DEFAULT);
 		
 		b2Body* CreateDynamicPhysicsBox(	float x, float y, float width, float height, 
-											bool bDontAllowRotation = false, float fDensity = 0.1f, bool useRoundedBottom = false);
+											bool bDontAllowRotation = false, float fDensity = 0.1f, bool useRoundedBottom = false, PhysicsCategory category = DEFAULT);
 
 		b2Body* CreatePhysicsBox(	float x, float y, float width, float height, 
 									float density, float restitution, float friction, 
 									bool bDontAllowRotation = false, bool bSensorOnly = false, 
-									bool useRoundedBottom = false );
+									bool useRoundedBottom = false, PhysicsCategory category = DEFAULT );
 
 		void CreatePolygonWithRoundedEdges(float hx, float hy, b2PolygonShape & shapeOut);
 

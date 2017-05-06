@@ -1984,12 +1984,20 @@ public class ObjectBounce : Object {
     return ret;
   }
 
+  public virtual void Clear() {
+    enginePINVOKE.ObjectBounce_Clear(swigCPtr);
+  }
+
   public override void Shutdown() {
     enginePINVOKE.ObjectBounce_Shutdown(swigCPtr);
   }
 
   public override void Update() {
     enginePINVOKE.ObjectBounce_Update(swigCPtr);
+  }
+
+  public override void InitPhysics() {
+    enginePINVOKE.ObjectBounce_InitPhysics(swigCPtr);
   }
 
   public virtual bool LoadObjectProperties(SWIGTYPE_p_XMLNode xDef) {
@@ -4379,11 +4387,17 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectBounce_Init")]
   public static extern bool ObjectBounce_Init(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectBounce_Clear")]
+  public static extern void ObjectBounce_Clear(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectBounce_Shutdown")]
   public static extern void ObjectBounce_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectBounce_Update")]
   public static extern void ObjectBounce_Update(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectBounce_InitPhysics")]
+  public static extern void ObjectBounce_InitPhysics(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectBounce_LoadObjectProperties")]
   public static extern bool ObjectBounce_LoadObjectProperties(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);

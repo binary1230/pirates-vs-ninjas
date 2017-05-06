@@ -60,7 +60,6 @@ void Object::UpdateDisplayTime() {
 
 void Object::InitPhysics()
 {
-
 	if (!uses_physics_engine)
 		return;
 
@@ -81,9 +80,9 @@ void Object::InitPhysics()
 	float fDensity = 0.1f;
 
 	if (is_static)
-		_physics_body = PHYSICS->CreateStaticPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), is_sensor);
+		_physics_body = PHYSICS->CreateStaticPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), is_sensor, _physics_category);
 	else
-		_physics_body = PHYSICS->CreateDynamicPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), ignores_physics_rotation, fDensity, use_angled_corners_collision_box);
+		_physics_body = PHYSICS->CreateDynamicPhysicsBox(_Pos.x, _Pos.y, GetWidth(), GetHeight(), ignores_physics_rotation, fDensity, use_angled_corners_collision_box, _physics_category);
 
 	_physics_body->SetUserData(this);
 }
@@ -94,12 +93,11 @@ void Object::UpdateFade() {
 
 	if (!fade_out_time_remaining) {
 		is_fading = false;
+		alpha = 0;
 	} else {
 		--fade_out_time_remaining;
+		alpha = uint(((float)fade_out_time_remaining / (float)fade_out_time_total) * 255.0f);
 	}
-	
-	alpha = uint(	( (float)fade_out_time_remaining / (float)fade_out_time_total)
-								* 255.0f);
 }
 
 void Object::FadeOut(int time) {
@@ -145,6 +143,8 @@ void Object::Clear() {
 	_physics_body = NULL;
 	unique_id = Object::next_object_id++;
 	_DebugFlag = false;
+
+	_physics_category = DEFAULT;
 }
 
 bool Object::BaseInit() {

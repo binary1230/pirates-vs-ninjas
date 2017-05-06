@@ -399,6 +399,8 @@ bool ObjectPlayer::LoadObjectProperties(XMLNode &xDef) {
 	return	xProps.getChildNode("jumpVelocity").getFloat(jump_velocity) &&
 			xProps.getChildNode("minVelocity").getFloat(min_velocity) &&
 			xProps.getChildNode("drag").getFloat(drag);
+
+	_physics_category = PLAYER;
 }
 
 bool ObjectPlayer::Init()

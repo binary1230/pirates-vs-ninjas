@@ -4269,6 +4269,14 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectBounce_Init(void * jarg1) {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBounce_Clear(void * jarg1) {
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  
+  arg1 = (ObjectBounce *)jarg1; 
+  (arg1)->Clear();
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBounce_Shutdown(void * jarg1) {
   ObjectBounce *arg1 = (ObjectBounce *) 0 ;
   
@@ -4282,6 +4290,14 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBounce_Update(void * jarg1) {
   
   arg1 = (ObjectBounce *)jarg1; 
   (arg1)->Update();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectBounce_InitPhysics(void * jarg1) {
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  
+  arg1 = (ObjectBounce *)jarg1; 
+  (arg1)->InitPhysics();
 }
 
 

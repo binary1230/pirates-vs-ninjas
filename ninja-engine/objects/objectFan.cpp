@@ -56,7 +56,7 @@ bool ObjectFan::Init() {
 }
 
 void ObjectFan::Clear() {
-
+	Object::Clear();
 }
 
 ObjectFan::ObjectFan() { Clear(); }

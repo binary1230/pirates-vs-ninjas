@@ -23,8 +23,21 @@ void ObjectBounce::Update() {
 		// SOUND->PlaySound("ball_hit");
 		play_hit_sound = false;
 	}
+
+	if (hit_with_explosion_last_frame) {
+		_physics_body->SetType(b2_dynamicBody);
+		
+		for (b2Fixture* fixture = _physics_body->GetFixtureList(); fixture; fixture = fixture->GetNext())
+		{
+			b2Filter filter = fixture->GetFilterData();
+			filter.maskBits &= ~PLAYER; // don't collide with players anymore.
+			fixture->SetFilterData(filter);
+		}
+
+		FadeOut(60);
+	}
 	
-	collided_last_frame = m_kCurrentCollision.down;
+	hit_with_explosion_last_frame = false;
 }
 
 bool ObjectBounce::LoadObjectProperties(XMLNode &xDef) {
@@ -32,19 +45,37 @@ bool ObjectBounce::LoadObjectProperties(XMLNode &xDef) {
 		return false;
 
 	uses_physics_engine = 1;
+
+	XMLNode xProps = xDef.getChildNode("properties");
+	_static_until_heavy_impact = xProps.nChildNode("staticUntilHeavyImpact") != 0;
 	
 	return true;
 }
 
 bool ObjectBounce::Init() {
 	play_hit_sound = false;
-	collided_last_frame = false;
+	hit_with_explosion_last_frame = false;
 
 	return BaseInit();
 }
 
-void ObjectBounce::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
+void ObjectBounce::Clear() {
+	Object::Clear();
+	_static_until_heavy_impact = false;
+}
 
+void ObjectBounce::InitPhysics() {
+	Object::InitPhysics();
+
+	if (_static_until_heavy_impact)
+		_physics_body->SetType(b2_staticBody);
+}
+
+void ObjectBounce::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
+	bool isExplosion = !obj; // this... won't be true forever. fix this for real.
+
+	if (isExplosion)
+		hit_with_explosion_last_frame = true;
 }
 
 ObjectBounce::ObjectBounce() {}

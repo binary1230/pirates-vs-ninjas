@@ -13,14 +13,19 @@ class ObjectBounce : public Object {
 
 	protected:
 		bool play_hit_sound;
-		bool collided_last_frame;
+		bool hit_with_explosion_last_frame;
+
+		bool _static_until_heavy_impact;
 
 	public:
 		IMPLEMENT_CLONE(ObjectBounce)
 
-		bool Init();
-		void Shutdown();
-		void Update();
+		virtual bool Init();
+		virtual void Clear();
+		virtual void Shutdown();
+		virtual void Update();
+
+		virtual void InitPhysics();
 
 		virtual bool LoadObjectProperties(XMLNode & xDef);
 

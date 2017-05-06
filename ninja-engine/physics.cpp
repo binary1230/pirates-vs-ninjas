@@ -150,7 +150,7 @@ void PhysicsManager::UpdatePhysicsBodyPosition(b2Body* body, float x, float y, i
 	body->SetTransform(b2Vec2(PIXELS_TO_METERS(x) + halfWidth, PIXELS_TO_METERS(y) + halfHeight), body->GetAngle());
 }
 
-b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation /*= false */, bool bSensorOnly /*= false*/, bool useRoundedBottom )
+b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float height, float density, float restitution, float friction, bool bDontAllowRotation /*= false */, bool bSensorOnly /*= false*/, bool useRoundedBottom, PhysicsCategory category)
 {
 	b2BodyDef bodyDef;
 
@@ -184,6 +184,7 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 	fixtureDef.restitution = restitution;
 	fixtureDef.density = density;
 	fixtureDef.isSensor = bSensorOnly;
+	fixtureDef.filter.categoryBits = category;
 
 	pkBody->CreateFixture(&fixtureDef);
 
@@ -191,22 +192,22 @@ b2Body* PhysicsManager::CreatePhysicsBox( float x, float y, float width, float h
 }
 
 
-b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, float height, bool bSensorOnly )
+b2Body* PhysicsManager::CreateStaticPhysicsBox( float x, float y, float width, float height, bool bSensorOnly, PhysicsCategory category)
 {
 	float density = 0.0f;
 	float restitution = 0.0f;
 	float friction = 2.0f;
 
-	return CreatePhysicsBox(x,y,width,height, density, restitution, friction, false, bSensorOnly );
+	return CreatePhysicsBox(x,y,width,height, density, restitution, friction, false, bSensorOnly, false, category);
 }
 
-b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation, float fDensity, bool useRoundedBottom)
+b2Body* PhysicsManager::CreateDynamicPhysicsBox( float x, float y, float width, float height, bool bDontAllowRotation, float fDensity, bool useRoundedBottom, PhysicsCategory category)
 {
 	float density = 1.0f;  // HACK THIS IN HERE. override what's passed in
 	float restitution = 0.0f;
 	float friction = 0.2f;
 
-	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, density, restitution, friction, bDontAllowRotation, false, useRoundedBottom);
+	b2Body* pkBody = CreatePhysicsBox(x,y,width,height, density, restitution, friction, bDontAllowRotation, false, useRoundedBottom, category);
 	return pkBody;
 }
 
@@ -218,12 +219,12 @@ void PhysicsManager::RemoveFromWorld( b2Body* pkBodyToRemove )
 
 void PhysicsManager::ProcessCollisions()
 {
-	for (contact_iter c = m_currentContacts.begin(); c != m_currentContacts.end(); ++c) {
-		ProcessCollision(&c->second);
+	for (auto const& c : m_currentContacts) {
+		ProcessCollision(&c.second);
 	}
 }
 
-void PhysicsManager::ProcessCollision(PhysicsContactInfo* pkb2Contact)
+void PhysicsManager::ProcessCollision(const PhysicsContactInfo* pkb2Contact)
 {
 	b2WorldManifold worldManifold = pkb2Contact->worldManifold;
 

@@ -13,6 +13,7 @@
 		</animation>
 	</animations>
 	<properties>
+		<staticUntilHeavyImpact/>
 	</properties>
 	<sounds>
 	</sounds>

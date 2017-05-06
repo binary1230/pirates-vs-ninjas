@@ -93,6 +93,8 @@ class Object {
 		//! Points to the sprite we should draw on next Draw()
 		Sprite* currentSprite;
 
+		PhysicsCategory _physics_category;
+
 		//! Whether to flip the sprite when drawing
 		bool flip_x;
 		bool flip_y;

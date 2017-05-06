@@ -68,6 +68,7 @@ void PhysicsExplosion::ExplodeAt(b2Vec2 center)
 		bd.position = center;
 		bd.linearVelocity = 0.125f * _blastPower * rayDir;
 		b2Body* body = PHYSICS->GetPhysicsWorld()->CreateBody(&bd);
+		body->SetUserData(nullptr);
 
 		b2CircleShape circleShape;
 		circleShape.m_radius = 0.05;

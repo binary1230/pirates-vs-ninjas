@@ -10872,6 +10872,29 @@ fail:
 }
 
 
+static int _wrap_ObjectBounce_Clear(lua_State* L) {
+  int SWIG_arg = 0;
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  
+  SWIG_check_num_args("ObjectBounce::Clear",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectBounce::Clear",1,"ObjectBounce *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectBounce,0))){
+    SWIG_fail_ptr("ObjectBounce_Clear",1,SWIGTYPE_p_ObjectBounce);
+  }
+  
+  (arg1)->Clear();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_ObjectBounce_Shutdown(lua_State* L) {
   int SWIG_arg = 0;
   ObjectBounce *arg1 = (ObjectBounce *) 0 ;
@@ -10907,6 +10930,29 @@ static int _wrap_ObjectBounce_Update(lua_State* L) {
   }
   
   (arg1)->Update();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ObjectBounce_InitPhysics(lua_State* L) {
+  int SWIG_arg = 0;
+  ObjectBounce *arg1 = (ObjectBounce *) 0 ;
+  
+  SWIG_check_num_args("ObjectBounce::InitPhysics",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectBounce::InitPhysics",1,"ObjectBounce *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectBounce,0))){
+    SWIG_fail_ptr("ObjectBounce_InitPhysics",1,SWIGTYPE_p_ObjectBounce);
+  }
+  
+  (arg1)->InitPhysics();
   
   return SWIG_arg;
   
@@ -11021,8 +11067,10 @@ static swig_lua_attribute swig_ObjectBounce_attributes[] = {
 static swig_lua_method swig_ObjectBounce_methods[]= {
     { "Clone", _wrap_ObjectBounce_Clone},
     { "Init", _wrap_ObjectBounce_Init},
+    { "Clear", _wrap_ObjectBounce_Clear},
     { "Shutdown", _wrap_ObjectBounce_Shutdown},
     { "Update", _wrap_ObjectBounce_Update},
+    { "InitPhysics", _wrap_ObjectBounce_InitPhysics},
     { "LoadObjectProperties", _wrap_ObjectBounce_LoadObjectProperties},
     { "OnCollide", _wrap_ObjectBounce_OnCollide},
     {0,0}
