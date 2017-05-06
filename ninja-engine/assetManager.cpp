@@ -134,8 +134,10 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 		// backwards-comaptibility:
 		// old versions of allegro would use magenta as transparent
 		// these days, we can just use real alpha channels becuase it's not a 2006 DOS game.
-		// for now, just go ahead and still convert.
+		// re-enable this if you're using old assets
+		#ifdef OLD_ASSET_MAGENTA_MASK_SUPPORT
 		al_convert_mask_to_alpha(bmp, al_map_rgb(255, 0, 255));
+		#endif
 	
 		if (!bmp) {
 			TRACE("ERROR: Can't load bitmap file: '%s'\n", file);
