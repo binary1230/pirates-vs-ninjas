@@ -47,7 +47,7 @@ namespace MapEditor
 
         private void lstGameFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtFilename.Text = lstGameFiles.SelectedItem.ToString();
+            UpdateUiFromSelectedItem();
         }
 
         bool PopulateMapData(string path)
@@ -123,6 +123,26 @@ namespace MapEditor
             {
                 LoadLevel(mapname, true);
             }
+        }
+
+        private void lstGameFiles_DoubleClick(object sender, EventArgs e)
+        {
+            UpdateUiFromSelectedItem();
+            LoadLevel(txtFilename.Text);
+        }
+
+        private void UpdateUiFromSelectedItem()
+        {
+            if (lstGameFiles.SelectedItem == null)
+                txtFilename.Text = "";
+            else
+                txtFilename.Text = lstGameFiles.SelectedItem.ToString();
+        }
+
+        private void txtFilename_TextChanged(object sender, EventArgs e)
+        {
+            if (txtFilename.Text == "")
+                btnLoad.Enabled = false;
         }
     }
 }

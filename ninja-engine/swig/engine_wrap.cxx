@@ -1600,6 +1600,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_ObjectLayerVector(void * jarg1) {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_logging_fn_set(void * jarg1) {
+  void (*arg1)(char const *) = (void (*)(char const *)) 0 ;
+  
+  arg1 = (void (*)(char const *))jarg1; 
+  logging_fn = arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_logging_fn_get() {
+  void * jresult ;
+  void (*result)(char const *) = 0 ;
+  
+  result = (void (*)(char const *))logging_fn;
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_SCREEN_SIZE_X_get() {
   int jresult ;
   int result;

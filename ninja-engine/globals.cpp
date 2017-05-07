@@ -1,6 +1,17 @@
 #include "stdafx.h"
 #include "globals.h"
 
+void DefaultLogger(const char* message) {
+	#ifdef WIN32
+		OutputDebugString(message);
+		OutputDebugString("\n");
+	#else
+		fprintf(stderr, "%s", message);
+	#endif
+}
+
+void(*logging_fn)(const char*) = &DefaultLogger;
+
 void DebugTrace( const char * format, ... )
 {
 	va_list args;
@@ -10,12 +21,7 @@ void DebugTrace( const char * format, ... )
 	va_start( args, format );
 	vsnprintf( buffer, bufsize - 1, format, args );
 
-  #ifdef WIN32
-	OutputDebugString(buffer);
-	OutputDebugString("\n");
-  #else
-	fprintf(stderr, "%s", buffer);
-  #endif
+	logging_fn(buffer);
 }
 
 void StringSplit(std::string str, std::string delim, vector<std::string> &results) {

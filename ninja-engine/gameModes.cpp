@@ -94,6 +94,11 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 	TRACE(" Mode Info: filename '%s'\n", mode_filename.c_str() );
 	mode_filename = ASSETMANAGER->GetPathOf(mode_filename.c_str());
 
+	if (mode_filename.empty()) {
+		TRACE("ERROR: Can't load modefile named '%s'", mode_filename.c_str());
+		return -1;
+	}
+
 	string modeType;
 	XMLNode xMode;
 	

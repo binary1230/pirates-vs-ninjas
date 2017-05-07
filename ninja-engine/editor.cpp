@@ -8,6 +8,8 @@
 #include "gameState.h"
 #include "camera.h"
 
+extern GLenum sfactor, dfactor;
+
 Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
 	Object* obj = OBJECT_FACTORY->CreateObject(objDefName);
 	
@@ -140,6 +142,23 @@ void Editor::Draw() {
 		WINDOW->DrawText(5, 5, _tooltip_text);
 }
 
+GLenum factor_list[] = {
+	GL_ONE,
+	GL_SRC_COLOR,
+	GL_ONE_MINUS_SRC_COLOR,
+	GL_SRC_ALPHA,
+	GL_ONE_MINUS_SRC_ALPHA,
+	GL_DST_ALPHA,
+	GL_ONE_MINUS_DST_ALPHA,
+	GL_DST_COLOR,
+	GL_ONE_MINUS_DST_COLOR,
+	GL_SRC_ALPHA_SATURATE,
+	GL_ZERO,
+};
+
+int sfactorindex = 0;
+int dfactorindex = 0;
+
 void Editor::CommonUpdate() {
 	_pausedChanged = _wasPaused != GAMESTATE->IsPaused();
 	if (_pausedChanged) {
@@ -166,6 +185,27 @@ void Editor::CommonUpdate() {
 		ResetVolatileLevelState(LEVEL_PLAYERS);
 	}
 
+
+	if (INPUT->RealKeyOnce(ALLEGRO_KEY_9)) {
+		if (factor_list[dfactorindex] == GL_ZERO) {
+			dfactorindex = 0;
+		} else {
+			dfactorindex++;
+		}
+
+		dfactor = factor_list[dfactorindex];
+	}
+	
+	if (INPUT->RealKeyOnce(ALLEGRO_KEY_0)) {
+		if (factor_list[sfactorindex] == GL_ZERO) {
+			sfactorindex = 0;
+		}
+		else {
+			sfactorindex++;
+		}
+
+		sfactor = factor_list[sfactorindex];
+	}
 
 	float camera_speed = 10.0f;
 

@@ -23,6 +23,7 @@
     <ProjectGuid>{2481C1B4-1553-410B-A7EC-385E6FB11AA3}</ProjectGuid>
     <RootNamespace>gamebootstrapper</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <ProjectName>ninja-game</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

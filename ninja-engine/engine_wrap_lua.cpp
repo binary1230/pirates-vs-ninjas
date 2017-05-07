@@ -2727,19 +2727,20 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p__Rect swig_types[29]
 #define SWIGTYPE_p_b2Vec2 swig_types[30]
 #define SWIGTYPE_p_b2WorldManifold swig_types[31]
-#define SWIGTYPE_p_float swig_types[32]
-#define SWIGTYPE_p_listT_Object_p_t swig_types[33]
-#define SWIGTYPE_p_p_char swig_types[34]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[35]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[36]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[37]
-#define SWIGTYPE_p_std__string swig_types[38]
-#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[39]
-#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[40]
-#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[41]
-#define SWIGTYPE_p_unsigned_int swig_types[42]
-static swig_type_info *swig_types[44];
-static swig_module_info swig_module = {swig_types, 43, 0, 0, 0, 0};
+#define SWIGTYPE_p_f_p_q_const__char__void swig_types[32]
+#define SWIGTYPE_p_float swig_types[33]
+#define SWIGTYPE_p_listT_Object_p_t swig_types[34]
+#define SWIGTYPE_p_p_char swig_types[35]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[36]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[37]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[38]
+#define SWIGTYPE_p_std__string swig_types[39]
+#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[40]
+#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[41]
+#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[42]
+#define SWIGTYPE_p_unsigned_int swig_types[43]
+static swig_type_info *swig_types[45];
+static swig_module_info swig_module = {swig_types, 44, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -4090,6 +4091,46 @@ static swig_lua_namespace swig_ObjectLayerVector_Sf_SwigStatic = {
 static swig_lua_class *swig_ObjectLayerVector_bases[] = {0};
 static const char *swig_ObjectLayerVector_base_names[] = {0};
 static swig_lua_class _wrap_class_ObjectLayerVector = { "ObjectLayerVector", "ObjectLayerVector", &SWIGTYPE_p_std__vectorT_ObjectLayer_p_t,_proxy__wrap_new_ObjectLayerVector, swig_delete_ObjectLayerVector, swig_ObjectLayerVector_methods, swig_ObjectLayerVector_attributes, &swig_ObjectLayerVector_Sf_SwigStatic, swig_ObjectLayerVector_meta, swig_ObjectLayerVector_bases, swig_ObjectLayerVector_base_names };
+
+static int _wrap_logging_fn_set(lua_State* L) {
+  int SWIG_arg = 0;
+  void (*arg1)(char const *) = (void (*)(char const *)) 0 ;
+  
+  SWIG_check_num_args("logging_fn",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("logging_fn",1,"void (*)(char const *)");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_f_p_q_const__char__void,0))){
+    SWIG_fail_ptr("logging_fn_set",1,SWIGTYPE_p_f_p_q_const__char__void);
+  }
+  
+  logging_fn = arg1;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_logging_fn_get(lua_State* L) {
+  int SWIG_arg = 0;
+  void (*result)(char const *) = 0 ;
+  
+  SWIG_check_num_args("logging_fn",0,0)
+  result = (void (*)(char const *))logging_fn;
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_f_p_q_const__char__void,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
 
 static int _wrap_StringSplit(lua_State* L) {
   int SWIG_arg = 0;
@@ -16001,6 +16042,7 @@ static const char *swig_b2Vec2_base_names[] = {0};
 static swig_lua_class _wrap_class_b2Vec2 = { "b2Vec2", "b2Vec2", &SWIGTYPE_p_b2Vec2,_proxy__wrap_new_b2Vec2, swig_delete_b2Vec2, swig_b2Vec2_methods, swig_b2Vec2_attributes, &swig_b2Vec2_Sf_SwigStatic, swig_b2Vec2_meta, swig_b2Vec2_bases, swig_b2Vec2_base_names };
 
 static swig_lua_attribute swig_SwigModule_attributes[] = {
+    { "logging_fn", _wrap_logging_fn_get, _wrap_logging_fn_set },
     { "Object_debug_draw_bounding_boxes", _wrap_Object_debug_draw_bounding_boxes_get, _wrap_Object_debug_draw_bounding_boxes_set },
     { "ObjectEnemy_iSpawnedObjectCount", _wrap_ObjectEnemy_iSpawnedObjectCount_get, _wrap_ObjectEnemy_iSpawnedObjectCount_set },
     {0,0,0}
@@ -16205,6 +16247,7 @@ static swig_type_info _swigt__p_XMLNode = {"_p_XMLNode", "XMLNode *", 0, 0, (voi
 static swig_type_info _swigt__p__Rect = {"_p__Rect", "_Rect *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_b2Vec2 = {"_p_b2Vec2", "b2Vec2 *", 0, 0, (void*)&_wrap_class_b2Vec2, 0};
 static swig_type_info _swigt__p_b2WorldManifold = {"_p_b2WorldManifold", "b2WorldManifold *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_q_const__char__void = {"_p_f_p_q_const__char__void", "void (*)(char const *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_float = {"_p_float", "float *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_listT_Object_p_t = {"_p_listT_Object_p_t", "ObjectList *|list< Object * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
@@ -16250,6 +16293,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p__Rect,
   &_swigt__p_b2Vec2,
   &_swigt__p_b2WorldManifold,
+  &_swigt__p_f_p_q_const__char__void,
   &_swigt__p_float,
   &_swigt__p_listT_Object_p_t,
   &_swigt__p_p_char,
@@ -16295,6 +16339,7 @@ static swig_cast_info _swigc__p_XMLNode[] = {  {&_swigt__p_XMLNode, 0, 0, 0},{0,
 static swig_cast_info _swigc__p__Rect[] = {  {&_swigt__p__Rect, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_b2Vec2[] = {  {&_swigt__p_b2Vec2, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_b2WorldManifold[] = {  {&_swigt__p_b2WorldManifold, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_q_const__char__void[] = {  {&_swigt__p_f_p_q_const__char__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_listT_Object_p_t[] = {  {&_swigt__p_listT_Object_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
@@ -16340,6 +16385,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p__Rect,
   _swigc__p_b2Vec2,
   _swigc__p_b2WorldManifold,
+  _swigc__p_f_p_q_const__char__void,
   _swigc__p_float,
   _swigc__p_listT_Object_p_t,
   _swigc__p_p_char,

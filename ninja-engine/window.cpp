@@ -317,8 +317,12 @@ void GameWindow::SetClearColor(float r, float g, float b) {
 	glClearColor(r, g, b, 1.0f);
 }
 
+GLenum sfactor, dfactor;
+
 int GameWindow::Init( uint _width, uint _height, bool _fullscreen) 
 {	
+	sfactor = GL_ONE; dfactor = GL_ONE_MINUS_SRC_ALPHA;
+
 	fade_rate = 0;
 	fade_alpha = 255;
 	fading_state = FADED_NONE;
@@ -396,7 +400,9 @@ void GameWindow::Clear() {
 void GameWindow::BeginDrawing() {
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	// glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(sfactor, dfactor);
 }
 
 void GameWindow::EndDrawing() {

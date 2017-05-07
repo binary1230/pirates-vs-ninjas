@@ -3673,6 +3673,12 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_ObjectLayerVector")]
   public static extern void delete_ObjectLayerVector(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_logging_fn_set")]
+  public static extern void logging_fn_set(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_logging_fn_get")]
+  public static extern global::System.IntPtr logging_fn_get();
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_SCREEN_SIZE_X_get")]
   public static extern int DEFAULT_SCREEN_SIZE_X_get();
 
@@ -5013,6 +5019,17 @@ class enginePINVOKE {
 }
 
 public class engine {
+  public static SWIGTYPE_p_f_p_q_const__char__void logging_fn {
+    set {
+      enginePINVOKE.logging_fn_set(SWIGTYPE_p_f_p_q_const__char__void.getCPtr(value));
+    } 
+    get {
+      global::System.IntPtr cPtr = enginePINVOKE.logging_fn_get();
+      SWIGTYPE_p_f_p_q_const__char__void ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_f_p_q_const__char__void(cPtr, false);
+      return ret;
+    } 
+  }
+
   public static void StringSplit(string str, string delim, SWIGTYPE_p_std__vectorT_std__string_t results) {
     enginePINVOKE.StringSplit(str, delim, SWIGTYPE_p_std__vectorT_std__string_t.getCPtr(results));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
@@ -5040,6 +5057,22 @@ public class engine {
   public static readonly string REDIRECT_STDERR_FILENAME = enginePINVOKE.REDIRECT_STDERR_FILENAME_get();
   public static readonly double DEFAULT_SPRING_STRENGTH_X = enginePINVOKE.DEFAULT_SPRING_STRENGTH_X_get();
   public static readonly double DEFAULT_SPRING_STRENGTH_Y = enginePINVOKE.DEFAULT_SPRING_STRENGTH_Y_get();
+}
+
+public class SWIGTYPE_p_f_p_q_const__char__void {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal SWIGTYPE_p_f_p_q_const__char__void(global::System.IntPtr cPtr, bool futureUse) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  protected SWIGTYPE_p_f_p_q_const__char__void() {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_f_p_q_const__char__void obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
 }
 
 public class SWIGTYPE_p_CameraFollow {

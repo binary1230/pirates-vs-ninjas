@@ -52,6 +52,7 @@
             this.txtFilename.Size = new System.Drawing.Size(380, 20);
             this.txtFilename.TabIndex = 1;
             this.txtFilename.Text = "level_0.xml";
+            this.txtFilename.TextChanged += new System.EventHandler(this.txtFilename_TextChanged);
             // 
             // lstGameFiles
             // 
@@ -61,6 +62,7 @@
             this.lstGameFiles.Size = new System.Drawing.Size(460, 147);
             this.lstGameFiles.TabIndex = 2;
             this.lstGameFiles.SelectedIndexChanged += new System.EventHandler(this.lstGameFiles_SelectedIndexChanged);
+            this.lstGameFiles.DoubleClick += new System.EventHandler(this.lstGameFiles_DoubleClick);
             // 
             // label1
             // 
