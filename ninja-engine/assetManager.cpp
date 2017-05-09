@@ -128,6 +128,12 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 
 		sprite = new Sprite();
 		assert(sprite && "ERROR: Out of memory, can't allocate sprite!\n");
+
+		al_set_new_bitmap_format(ALLEGRO_PIXEL_FORMAT_ANY_32_WITH_ALPHA);
+
+		int flags = al_get_new_bitmap_flags();
+		flags |= ALLEGRO_NO_PREMULTIPLIED_ALPHA;
+		al_set_new_bitmap_flags(flags);
 			
 		ALLEGRO_BITMAP* bmp = al_load_bitmap(file.c_str());
 

@@ -7,17 +7,6 @@
 #include "sprite.h"
 #include "gameOptions.h"
 
-// DOES NOT USE THE DEPTH BUFFER
-// relies on Drawing order (we are 2d after all.)
-
-#define USE_DESKTOP_COLOR_DEPTH
-
-#ifndef USE_DESKTOP_COLOR_DEPTH
-#	define DEFAULT_COLOR_DEPTH 16
-#else
-#	define DEFAULT_COLOR_DEPTH desktop_color_depth()
-#endif
-
 DECLARE_SINGLETON(GameWindow)
 
 int screen_size_x = DEFAULT_SCREEN_SIZE_X;
@@ -282,11 +271,9 @@ void GameWindow::DrawSprite(Sprite* sprite, float x, float y,
 
 	glTranslatef(rx, ry, 0.0f);
 
-	//if (use_rotation) {
-		glTranslatef(sprite->width/2.0f, sprite->height/2.0f, 0.0f);
-		glRotatef(rotate_angle, 0.0f, 0.0f, 1.0f);
-		glTranslatef(-sprite->width/2.0f, -sprite->height/2.0f, 0.0f);
-	//}
+	glTranslatef(sprite->width/2.0f, sprite->height/2.0f, 0.0f);
+	glRotatef(rotate_angle, 0.0f, 0.0f, 1.0f);
+	glTranslatef(-sprite->width/2.0f, -sprite->height/2.0f, 0.0f);
 
 	glScalef(sprite->width, sprite->height, 1.0f);
 
@@ -317,12 +304,8 @@ void GameWindow::SetClearColor(float r, float g, float b) {
 	glClearColor(r, g, b, 1.0f);
 }
 
-GLenum sfactor, dfactor;
-
 int GameWindow::Init( uint _width, uint _height, bool _fullscreen) 
-{	
-	sfactor = GL_ONE; dfactor = GL_ONE_MINUS_SRC_ALPHA;
-
+{
 	fade_rate = 0;
 	fade_alpha = 255;
 	fading_state = FADED_NONE;
@@ -353,10 +336,7 @@ int GameWindow::Init( uint _width, uint _height, bool _fullscreen)
 		return -1;
 	}
 
-	if (InitGL())
-		initialized = true;
-	else
-		initialized = false;
+	initialized = InitGL();
 
 	// Draw the window once so it's black whilst everything else loads
 	BeginDrawing();
@@ -374,7 +354,9 @@ void GameWindow::SetTitle(const char* szTitle)
 }
 
 bool GameWindow::InitGL() {
-	glShadeModel(GL_FLAT);
+	// apparently, all of this stuff never did _anything_
+
+	/*glShadeModel(GL_FLAT);
 
 	glViewport(0, 0, SCREEN_W, SCREEN_H);
 	glMatrixMode(GL_PROJECTION); 
@@ -387,7 +369,7 @@ bool GameWindow::InitGL() {
 
 	// move the origin to bottom left
 	glTranslatef(0, -SCREEN_H, 0);
-	glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_MODELVIEW);*/
 
 	return true;
 }
@@ -398,11 +380,10 @@ void GameWindow::Clear() {
 }
 
 void GameWindow::BeginDrawing() {
+	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
-	// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	// glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-	glBlendFunc(sfactor, dfactor);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void GameWindow::EndDrawing() {

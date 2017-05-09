@@ -24,20 +24,13 @@ void ObjectBounce::Update() {
 		play_hit_sound = false;
 	}
 
-	//if (alpha == 0) {
-	//	is_dead = true;
-	//}
+	if (alpha == 0) {
+		is_dead = true;
+	}
 
 	if (hit_with_explosion_last_frame) {
 		_physics_body->SetType(b2_dynamicBody);
-		
-		for (b2Fixture* fixture = _physics_body->GetFixtureList(); fixture; fixture = fixture->GetNext())
-		{
-			b2Filter filter = fixture->GetFilterData();
-			filter.maskBits &= ~PLAYER; // don't collide with players anymore.
-			fixture->SetFilterData(filter);
-		}
-
+		DontCollideWithPlayer();
 		FadeOut(60);
 	}
 	

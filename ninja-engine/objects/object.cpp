@@ -293,6 +293,16 @@ b2Vec2 Object::GetCenter() const
 	return b2Vec2(_Pos.x + GetWidth() / 2, _Pos.y + GetHeight() / 2);
 }
 
+void Object::DontCollideWithPlayer()
+{
+	for (b2Fixture* fixture = _physics_body->GetFixtureList(); fixture; fixture = fixture->GetNext())
+	{
+		b2Filter filter = fixture->GetFilterData();
+		filter.maskBits &= ~PLAYER; // don't collide with players anymore.
+		fixture->SetFilterData(filter);
+	}
+}
+
 void Object::ResetForNextFrame()
 {
 	m_kCurrentCollision.up = m_kCurrentCollision.down = m_kCurrentCollision.left = m_kCurrentCollision.right = 0;

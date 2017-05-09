@@ -322,6 +322,7 @@ void ObjectPlayer::DropBombsIfNeeded()
 	}
 
 	objBall->SetXY(ball_pos);
+	objBall->DontCollideWithPlayer();
 }
 
 void ObjectPlayer::ScreenBoundsConstraint() {

@@ -1722,6 +1722,10 @@ public partial class Object : global::System.IDisposable {
     return ret;
   }
 
+  public void DontCollideWithPlayer() {
+    enginePINVOKE.Object_DontCollideWithPlayer(swigCPtr);
+  }
+
   public void ResetForNextFrame() {
     enginePINVOKE.Object_ResetForNextFrame(swigCPtr);
   }
@@ -4266,6 +4270,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_GetCenter")]
   public static extern global::System.IntPtr Object_GetCenter(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_DontCollideWithPlayer")]
+  public static extern void Object_DontCollideWithPlayer(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Object_ResetForNextFrame")]
   public static extern void Object_ResetForNextFrame(global::System.Runtime.InteropServices.HandleRef jarg1);

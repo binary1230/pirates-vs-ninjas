@@ -3800,6 +3800,14 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_GetCenter(void * jarg1) {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_DontCollideWithPlayer(void * jarg1) {
+  Object *arg1 = (Object *) 0 ;
+  
+  arg1 = (Object *)jarg1; 
+  (arg1)->DontCollideWithPlayer();
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_Object_ResetForNextFrame(void * jarg1) {
   Object *arg1 = (Object *) 0 ;
   
