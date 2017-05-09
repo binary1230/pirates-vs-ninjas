@@ -3,7 +3,7 @@
 
 #include "globals.h"
 #include "animation.h"
-#include "gameState.h"
+#include "game.h"
 #include "gameWorld.h"
 #include "objectFactory.h"
 #include "objectEnemy.h"

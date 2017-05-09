@@ -7,7 +7,7 @@
 #include "objectCutBars.h"
 #include "window.h"
 #include "gameSound.h"
-#include "gameState.h"
+#include "game.h"
 #include "gameOptions.h"
 
 // LUA: Debug only - print something to stderr from lua
@@ -210,7 +210,7 @@ int LUAAPI lua_jumped_back_from_a_door(lua_State* lua) {
 
 int LUAAPI lua_engine_should_exit_game(lua_State* lua) 
 {
-	int retval = GAMESTATE->ShouldExit() ? 1 : 0;
+	int retval = GAME->ShouldExit() ? 1 : 0;
 	lua_pushnumber(lua, retval);
 	return 1;
 }

@@ -1209,20 +1209,20 @@ public class GameWorld : GameMode {
 
 }
 
-public class GameState : global::System.IDisposable {
+public class Game : global::System.IDisposable {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
 
-  internal GameState(global::System.IntPtr cPtr, bool cMemoryOwn) {
+  internal Game(global::System.IntPtr cPtr, bool cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(GameState obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(Game obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
-  ~GameState() {
+  ~Game() {
     Dispose();
   }
 
@@ -1231,7 +1231,7 @@ public class GameState : global::System.IDisposable {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          enginePINVOKE.delete_GameState(swigCPtr);
+          enginePINVOKE.delete_Game(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -1239,96 +1239,96 @@ public class GameState : global::System.IDisposable {
     }
   }
 
-  public static GameState GetInstance() {
-    global::System.IntPtr cPtr = enginePINVOKE.GameState_GetInstance();
-    GameState ret = (cPtr == global::System.IntPtr.Zero) ? null : new GameState(cPtr, false);
+  public static Game GetInstance() {
+    global::System.IntPtr cPtr = enginePINVOKE.Game_GetInstance();
+    Game ret = (cPtr == global::System.IntPtr.Zero) ? null : new Game(cPtr, false);
     return ret;
   }
 
-  public static void SetInstance(GameState c) {
-    enginePINVOKE.GameState_SetInstance(GameState.getCPtr(c));
+  public static void SetInstance(Game c) {
+    enginePINVOKE.Game_SetInstance(Game.getCPtr(c));
   }
 
   public static void CreateInstance() {
-    enginePINVOKE.GameState_CreateInstance();
+    enginePINVOKE.Game_CreateInstance();
   }
 
   public static void FreeInstance() {
-    enginePINVOKE.GameState_FreeInstance();
+    enginePINVOKE.Game_FreeInstance();
   }
 
   public void Shutdown() {
-    enginePINVOKE.GameState_Shutdown(swigCPtr);
+    enginePINVOKE.Game_Shutdown(swigCPtr);
   }
 
   public bool Init(int argc, SWIGTYPE_p_p_char argv) {
-    bool ret = enginePINVOKE.GameState_Init(swigCPtr, argc, SWIGTYPE_p_p_char.getCPtr(argv));
+    bool ret = enginePINVOKE.Game_Init(swigCPtr, argc, SWIGTYPE_p_p_char.getCPtr(argv));
     return ret;
   }
 
   public void RunMainLoop_BlockingHelper() {
-    enginePINVOKE.GameState_RunMainLoop_BlockingHelper(swigCPtr);
+    enginePINVOKE.Game_RunMainLoop_BlockingHelper(swigCPtr);
   }
 
   public void ProcessEvents() {
-    enginePINVOKE.GameState_ProcessEvents(swigCPtr);
+    enginePINVOKE.Game_ProcessEvents(swigCPtr);
   }
 
   public void TickIfNeeded() {
-    enginePINVOKE.GameState_TickIfNeeded(swigCPtr);
+    enginePINVOKE.Game_TickIfNeeded(swigCPtr);
   }
 
   public void Tick() {
-    enginePINVOKE.GameState_Tick(swigCPtr);
+    enginePINVOKE.Game_Tick(swigCPtr);
   }
 
   public void UpdateGlobalInput() {
-    enginePINVOKE.GameState_UpdateGlobalInput(swigCPtr);
+    enginePINVOKE.Game_UpdateGlobalInput(swigCPtr);
   }
 
   public void SetRandomSeed(int arg0) {
-    enginePINVOKE.GameState_SetRandomSeed(swigCPtr, arg0);
+    enginePINVOKE.Game_SetRandomSeed(swigCPtr, arg0);
   }
 
   public bool IsPaused() {
-    bool ret = enginePINVOKE.GameState_IsPaused(swigCPtr);
+    bool ret = enginePINVOKE.Game_IsPaused(swigCPtr);
     return ret;
   }
 
   public void SetPaused(bool newState) {
-    enginePINVOKE.GameState_SetPaused(swigCPtr, newState);
+    enginePINVOKE.Game_SetPaused(swigCPtr, newState);
   }
 
   public int GetRandomSeed() {
-    int ret = enginePINVOKE.GameState_GetRandomSeed(swigCPtr);
+    int ret = enginePINVOKE.Game_GetRandomSeed(swigCPtr);
     return ret;
   }
 
   public bool IsPlayingBackDemo() {
-    bool ret = enginePINVOKE.GameState_IsPlayingBackDemo(swigCPtr);
+    bool ret = enginePINVOKE.Game_IsPlayingBackDemo(swigCPtr);
     return ret;
   }
 
   public void SignalGameExit() {
-    enginePINVOKE.GameState_SignalGameExit(swigCPtr);
+    enginePINVOKE.Game_SignalGameExit(swigCPtr);
   }
 
   public void SignalEndCurrentMode() {
-    enginePINVOKE.GameState_SignalEndCurrentMode(swigCPtr);
+    enginePINVOKE.Game_SignalEndCurrentMode(swigCPtr);
   }
 
   public bool ShouldExit() {
-    bool ret = enginePINVOKE.GameState_ShouldExit(swigCPtr);
+    bool ret = enginePINVOKE.Game_ShouldExit(swigCPtr);
     return ret;
   }
 
   public bool GetPropPhysicsDebugDraw() {
-    bool ret = enginePINVOKE.GameState_GetPropPhysicsDebugDraw(swigCPtr);
+    bool ret = enginePINVOKE.Game_GetPropPhysicsDebugDraw(swigCPtr);
     return ret;
   }
 
   public void SetPropPhysicsDebugDraw(bool val) {
-    enginePINVOKE.GameState_SetPropPhysicsDebugDraw(swigCPtr, val);
+    enginePINVOKE.Game_SetPropPhysicsDebugDraw(swigCPtr, val);
   }
 
 }
@@ -4007,71 +4007,71 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_GameWorld")]
   public static extern void delete_GameWorld(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_GetInstance")]
-  public static extern global::System.IntPtr GameState_GetInstance();
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_GetInstance")]
+  public static extern global::System.IntPtr Game_GetInstance();
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_SetInstance")]
-  public static extern void GameState_SetInstance(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_SetInstance")]
+  public static extern void Game_SetInstance(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_CreateInstance")]
-  public static extern void GameState_CreateInstance();
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_CreateInstance")]
+  public static extern void Game_CreateInstance();
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_FreeInstance")]
-  public static extern void GameState_FreeInstance();
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_FreeInstance")]
+  public static extern void Game_FreeInstance();
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_Shutdown")]
-  public static extern void GameState_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_Shutdown")]
+  public static extern void Game_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_Init")]
-  public static extern bool GameState_Init(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_Init")]
+  public static extern bool Game_Init(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_RunMainLoop_BlockingHelper")]
-  public static extern void GameState_RunMainLoop_BlockingHelper(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_RunMainLoop_BlockingHelper")]
+  public static extern void Game_RunMainLoop_BlockingHelper(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_ProcessEvents")]
-  public static extern void GameState_ProcessEvents(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_ProcessEvents")]
+  public static extern void Game_ProcessEvents(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_TickIfNeeded")]
-  public static extern void GameState_TickIfNeeded(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_TickIfNeeded")]
+  public static extern void Game_TickIfNeeded(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_Tick")]
-  public static extern void GameState_Tick(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_Tick")]
+  public static extern void Game_Tick(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_UpdateGlobalInput")]
-  public static extern void GameState_UpdateGlobalInput(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_UpdateGlobalInput")]
+  public static extern void Game_UpdateGlobalInput(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_SetRandomSeed")]
-  public static extern void GameState_SetRandomSeed(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_SetRandomSeed")]
+  public static extern void Game_SetRandomSeed(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_IsPaused")]
-  public static extern bool GameState_IsPaused(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_IsPaused")]
+  public static extern bool Game_IsPaused(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_SetPaused")]
-  public static extern void GameState_SetPaused(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_SetPaused")]
+  public static extern void Game_SetPaused(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_GetRandomSeed")]
-  public static extern int GameState_GetRandomSeed(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_GetRandomSeed")]
+  public static extern int Game_GetRandomSeed(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_IsPlayingBackDemo")]
-  public static extern bool GameState_IsPlayingBackDemo(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_IsPlayingBackDemo")]
+  public static extern bool Game_IsPlayingBackDemo(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_SignalGameExit")]
-  public static extern void GameState_SignalGameExit(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_SignalGameExit")]
+  public static extern void Game_SignalGameExit(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_SignalEndCurrentMode")]
-  public static extern void GameState_SignalEndCurrentMode(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_SignalEndCurrentMode")]
+  public static extern void Game_SignalEndCurrentMode(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_ShouldExit")]
-  public static extern bool GameState_ShouldExit(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_ShouldExit")]
+  public static extern bool Game_ShouldExit(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_GameState")]
-  public static extern void delete_GameState(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_Game")]
+  public static extern void delete_Game(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_GetPropPhysicsDebugDraw")]
-  public static extern bool GameState_GetPropPhysicsDebugDraw(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_GetPropPhysicsDebugDraw")]
+  public static extern bool Game_GetPropPhysicsDebugDraw(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameState_SetPropPhysicsDebugDraw")]
-  public static extern void GameState_SetPropPhysicsDebugDraw(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_SetPropPhysicsDebugDraw")]
+  public static extern void Game_SetPropPhysicsDebugDraw(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_Init")]
   public static extern bool ObjectLayer_Init(global::System.Runtime.InteropServices.HandleRef jarg1);

@@ -4,7 +4,7 @@
 #include "gameMode.h"
 #include "sprite.h"
 
-class GameState;
+class Game;
 class OGGFILE;
 
 //! Represents a physical simulation (the main game levels)

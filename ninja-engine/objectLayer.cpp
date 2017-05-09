@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "objectLayer.h"
-#include "gameState.h"
+#include "game.h"
 #include "object.h"
 #include "gameWorld.h"
 

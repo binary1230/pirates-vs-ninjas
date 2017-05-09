@@ -4,7 +4,7 @@
 
 #include "globals.h"
 #include "animation.h"
-#include "gameState.h"
+#include "game.h"
 #include "objectPlayer.h"
 
 // all of this class is slightly hackish for the moment.

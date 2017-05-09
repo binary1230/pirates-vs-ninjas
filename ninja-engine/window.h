@@ -5,7 +5,7 @@
 #include "globals.h"
 #include "rect.h"
 
-class GameState;
+class Game;
 class Sprite;
 
 // HAXXXXXXXX.  these are the old names from old allegro.  
@@ -25,9 +25,9 @@ enum FADE_STATE {
 
 
 //! The onscreen window
-class GameWindow {
+class Window {
 
-	DECLARE_SINGLETON_CLASS(GameWindow)
+	DECLARE_SINGLETON_CLASS(Window)
 
 	protected:
 		bool initialized;
@@ -120,9 +120,9 @@ class GameWindow {
 
 		inline ALLEGRO_DISPLAY* GetDisplay() { return display; }
 
-		virtual ~GameWindow();
+		virtual ~Window();
 };
 
-#define WINDOW GameWindow::GetInstance()
+#define WINDOW Window::GetInstance()
 
 #endif // WINDOW_H

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "gameOptions.h"
 #include "gameSound.h"
-#include "gameState.h"
+#include "game.h"
 #include "assetManager.h"
 #include "globalDefines.h"
 

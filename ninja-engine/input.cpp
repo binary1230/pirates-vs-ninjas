@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "input.h"
-#include "gameState.h"
+#include "game.h"
 #include "gameOptions.h"
 #include "eventManager.h"
 #include "assetManager.h"
@@ -267,7 +267,7 @@ bool Input::InitPlayback(std::string filename, bool seed_engine) {
 		error = true;
 	} else {
 		if (seed_engine) {
-			GAMESTATE->SetRandomSeed(seed);
+			GAME->SetRandomSeed(seed);
 			TRACE("InputPlayback: Using random seed %u\n", seed);
 		}
 	}
@@ -384,7 +384,7 @@ bool Input::InitRecorder(std::string filename) {
 										VERSION_STRING, ALLEGRO_PLATFORM_STR);
 	
 	// write the current random seed
-	fprintf(demofile, "%i\n", GAMESTATE->GetRandomSeed() );
+	fprintf(demofile, "%i\n", GAME->GetRandomSeed() );
 	
 	return true;
 }

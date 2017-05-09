@@ -368,7 +368,7 @@ namespace Swig {
 #include "gameOptions.h"
 #include "gameMode.h"
 #include "gameWorld.h"
-#include "gameState.h"
+#include "game.h"
 #include "objects/object.h"
 #include "objectFactory.h"
 
@@ -2836,50 +2836,50 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_GameWorld(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_GameState_GetInstance() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Game_GetInstance() {
   void * jresult ;
-  GameState *result = 0 ;
+  Game *result = 0 ;
   
-  result = (GameState *)GameState::GetInstance();
+  result = (Game *)Game::GetInstance();
   jresult = (void *)result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SetInstance(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_SetInstance(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
-  GameState::SetInstance(arg1);
+  arg1 = (Game *)jarg1; 
+  Game::SetInstance(arg1);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_CreateInstance() {
-  GameState::CreateInstance();
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_CreateInstance() {
+  Game::CreateInstance();
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_FreeInstance() {
-  GameState::FreeInstance();
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_FreeInstance() {
+  Game::FreeInstance();
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_Shutdown(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_Shutdown(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   (arg1)->Shutdown();
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameState_Init(void * jarg1, int jarg2, void * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Game_Init(void * jarg1, int jarg2, void * jarg3) {
   unsigned int jresult ;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   int arg2 ;
   char **arg3 = (char **) 0 ;
   bool result;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   arg2 = (int)jarg2; 
   arg3 = (char **)jarg3; 
   result = (bool)(arg1)->Init(arg2,(char const **)arg3);
@@ -2888,155 +2888,155 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameState_Init(void * jarg1, int jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_RunMainLoop_BlockingHelper(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_RunMainLoop_BlockingHelper(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   (arg1)->RunMainLoop_BlockingHelper();
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_ProcessEvents(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_ProcessEvents(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   (arg1)->ProcessEvents();
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_TickIfNeeded(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_TickIfNeeded(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   (arg1)->TickIfNeeded();
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_Tick(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_Tick(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   (arg1)->Tick();
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_UpdateGlobalInput(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_UpdateGlobalInput(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   (arg1)->UpdateGlobalInput();
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SetRandomSeed(void * jarg1, int jarg2) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_SetRandomSeed(void * jarg1, int jarg2) {
+  Game *arg1 = (Game *) 0 ;
   int arg2 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   arg2 = (int)jarg2; 
   (arg1)->SetRandomSeed(arg2);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameState_IsPaused(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Game_IsPaused(void * jarg1) {
   unsigned int jresult ;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool result;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   result = (bool)(arg1)->IsPaused();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SetPaused(void * jarg1, unsigned int jarg2) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_SetPaused(void * jarg1, unsigned int jarg2) {
+  Game *arg1 = (Game *) 0 ;
   bool arg2 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   arg2 = jarg2 ? true : false; 
   (arg1)->SetPaused(arg2);
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_GameState_GetRandomSeed(void * jarg1) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Game_GetRandomSeed(void * jarg1) {
   int jresult ;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   int result;
   
-  arg1 = (GameState *)jarg1; 
-  result = (int)((GameState const *)arg1)->GetRandomSeed();
+  arg1 = (Game *)jarg1; 
+  result = (int)((Game const *)arg1)->GetRandomSeed();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameState_IsPlayingBackDemo(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Game_IsPlayingBackDemo(void * jarg1) {
   unsigned int jresult ;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool result;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   result = (bool)(arg1)->IsPlayingBackDemo();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SignalGameExit(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_SignalGameExit(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   (arg1)->SignalGameExit();
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SignalEndCurrentMode(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_SignalEndCurrentMode(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   (arg1)->SignalEndCurrentMode();
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameState_ShouldExit(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Game_ShouldExit(void * jarg1) {
   unsigned int jresult ;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool result;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   result = (bool)(arg1)->ShouldExit();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_delete_GameState(void * jarg1) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_Game(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   delete arg1;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameState_GetPropPhysicsDebugDraw(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Game_GetPropPhysicsDebugDraw(void * jarg1) {
   unsigned int jresult ;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool result;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   result = (bool)(arg1)->GetPropPhysicsDebugDraw();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameState_SetPropPhysicsDebugDraw(void * jarg1, unsigned int jarg2) {
-  GameState *arg1 = (GameState *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_SetPropPhysicsDebugDraw(void * jarg1, unsigned int jarg2) {
+  Game *arg1 = (Game *) 0 ;
   bool arg2 ;
   
-  arg1 = (GameState *)jarg1; 
+  arg1 = (Game *)jarg1; 
   arg2 = jarg2 ? true : false; 
   (arg1)->SetPropPhysicsDebugDraw(arg2);
 }

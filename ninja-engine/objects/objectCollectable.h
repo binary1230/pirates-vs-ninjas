@@ -4,7 +4,7 @@
 #include "object.h"
 #include "globals.h"
 
-class GameState;
+class Game;
 
 class ObjectCollectable : public Object {
 	friend class boost::serialization::access;

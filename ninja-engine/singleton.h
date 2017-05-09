@@ -5,7 +5,7 @@
 // 
 // Why we need this:
 // Typically everything needs access to the global-ish
-// classes like GameState, Physics, Sound, and AssetManager
+// classes like Game, Physics, Sound, and AssetManager
 //
 // But what a _pain_ it is to keep a pointer to these in all
 // of our objects!  For instance, all the Objects need access to

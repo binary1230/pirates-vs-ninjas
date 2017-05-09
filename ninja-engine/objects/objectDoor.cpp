@@ -3,7 +3,7 @@
 
 #include "globals.h"
 #include "animation.h"
-#include "gameState.h"
+#include "game.h"
 #include "gameWorld.h"
 #include "gameSound.h"
 #include "animations.h"
@@ -39,7 +39,7 @@ void ObjectDoor::DoDoorAction() {
 	switch (door_type) {
 		case LEVEL_EXIT:
 			exitInfo.showInitialText = true;
-			GAMESTATE->SignalEndCurrentMode();
+			GAME->SignalEndCurrentMode();
 			break;
 
 		case SWITCH_TO_ANOTHER_MODE:
@@ -56,7 +56,7 @@ void ObjectDoor::DoDoorAction() {
 			exitInfo.showInitialText = false;
 
 			WORLD->SetExitInfo(exitInfo);
-			GAMESTATE->SignalEndCurrentMode();
+			GAME->SignalEndCurrentMode();
 			break;
 
 		case RETURN_TO_LAST_MODE:
@@ -73,7 +73,7 @@ void ObjectDoor::DoDoorAction() {
 			exitInfo.showInitialText = false;
 
 			WORLD->SetExitInfo(exitInfo);
-			GAMESTATE->SignalEndCurrentMode();
+			GAME->SignalEndCurrentMode();
 			break;
 
 		case WARP_TO_ANOTHER_PORTAL:

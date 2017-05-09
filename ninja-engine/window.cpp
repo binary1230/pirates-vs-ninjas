@@ -2,17 +2,17 @@
 #include "window.h"
 
 #include "assetManager.h"
-#include "gameState.h"
+#include "game.h"
 #include "globals.h"
 #include "sprite.h"
 #include "gameOptions.h"
 
-DECLARE_SINGLETON(GameWindow)
+DECLARE_SINGLETON(Window)
 
 int screen_size_x = DEFAULT_SCREEN_SIZE_X;
 int screen_size_y = DEFAULT_SCREEN_SIZE_Y;
 
-void GameWindow::Screenshot(char* filename) {
+void Window::Screenshot(char* filename) {
 	/*std::string file;
 	static int screenshot_num = 0;
 
@@ -28,22 +28,22 @@ void GameWindow::Screenshot(char* filename) {
 	al_save_bitmap(file, al_get_target_bitmap());*/
 }
 	
-void GameWindow::DrawFade() {
+void Window::DrawFade() {
 	if (fading_state == FADED_NONE)
 		return;
 
 	DrawRect(0,0,width,height, al_map_rgb(0,0,0),true,fade_alpha);
 }
 
-void GameWindow::Draw() {
+void Window::Draw() {
 	DrawFade();
 }
 
-void GameWindow::Update() {
+void Window::Update() {
 	UpdateFade();
 }
 
-void GameWindow::UpdateFade() {
+void Window::UpdateFade() {
 
 	if (fading_state == FADED_NONE || fading_state == FADED_OUT)
 		return;
@@ -59,17 +59,17 @@ void GameWindow::UpdateFade() {
 	}
 }
 
-void GameWindow::SetFadedIn() {
+void Window::SetFadedIn() {
 	fade_alpha = 0;
 	fading_state = FADED_NONE;
 }
 
-void GameWindow::SetFadedOut() {
+void Window::SetFadedOut() {
 	fade_alpha = 255;
 	fading_state = FADED_OUT;
 }
 
-void GameWindow::FadeOut(uint rate = 1 /*=1*/) {
+void Window::FadeOut(uint rate = 1 /*=1*/) {
 	if (fading_state != FADING_OUT) {
 		fade_rate = rate;
 		fade_alpha = 0;
@@ -80,7 +80,7 @@ void GameWindow::FadeOut(uint rate = 1 /*=1*/) {
 	fading_state = FADING_OUT;
 }
 
-void GameWindow::FadeIn(uint rate = 1 /*=1*/) {
+void Window::FadeIn(uint rate = 1 /*=1*/) {
 	if (fading_state != FADING_IN) {
 		fade_rate = rate;
 		fade_alpha = 255;
@@ -91,7 +91,7 @@ void GameWindow::FadeIn(uint rate = 1 /*=1*/) {
 	fading_state = FADING_IN;
 }
 
-void GameWindow::DrawRect(_Rect &r, ALLEGRO_COLOR col, bool filled, int alpha) {
+void Window::DrawRect(_Rect &r, ALLEGRO_COLOR col, bool filled, int alpha) {
 	DrawRect(	(int)r.getx1(), (int)r.gety1(), 
 				(int)r.getx2(), (int)r.gety2(), 
 				col, filled, alpha);
@@ -104,7 +104,7 @@ void GameWindow::DrawRect(_Rect &r, ALLEGRO_COLOR col, bool filled, int alpha) {
 // to make it look like there is one continuous gradient going up the level
 
 // Usually the screen height is smaller than the level height
-void GameWindow::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR top_col, 
+void Window::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR top_col, 
 	int bottom_y, int top_y, int level_height) 
 {	
 	// get the color differences for computing the new colors
@@ -150,7 +150,7 @@ void GameWindow::DrawBackgroundGradient(ALLEGRO_COLOR bottom_col, ALLEGRO_COLOR 
 // Colors start at the bottom left and go counter-clockwise
 // Color order: (bottom left, bottom right, top right, top left)
 // TODO: prob convert alpha param to float
-void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2, 
+void Window::DrawQuad(	int x1, int y1, int x2, int y2, 
 							ALLEGRO_COLOR col1, ALLEGRO_COLOR col2, ALLEGRO_COLOR col3, ALLEGRO_COLOR col4,
 							bool filled, int alpha ) 
 {
@@ -179,7 +179,7 @@ void GameWindow::DrawQuad(	int x1, int y1, int x2, int y2,
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-void GameWindow::DrawRect(	int x1, int y1, 
+void Window::DrawRect(	int x1, int y1, 
 							int x2, int y2, 
 							ALLEGRO_COLOR col, bool filled, int alpha)
 {
@@ -192,7 +192,7 @@ void GameWindow::DrawRect(	int x1, int y1,
 // text object delimiters (see objectTxtOverlay.cpp)
 #define OBJECT_TXT_LINE_DELIM "|"			// Which char goes to the next line
 
-void GameWindow::DrawText(int x, int y, std::string text) {
+void Window::DrawText(int x, int y, std::string text) {
 	vector<std::string> lines;
 	StringSplit(text, OBJECT_TXT_LINE_DELIM, lines);
 	int i, max = lines.size();
@@ -215,7 +215,7 @@ void GameWindow::DrawText(int x, int y, std::string text) {
 // NOT flip it at all) 
 //
 // Holy sweetness. Remember that '^' is XOR, and XOR rocks.
-void GameWindow::DrawSprite(Sprite* sprite, float x, float y, 
+void Window::DrawSprite(Sprite* sprite, float x, float y, 
 							bool flip_x, bool flip_y, 
 							float rotate_angle,
 							GLuint alpha, bool bDrawBoundingBoxOnly) 
@@ -300,11 +300,11 @@ void GameWindow::DrawSprite(Sprite* sprite, float x, float y,
 		glEnable(GL_TEXTURE_2D);
 }
 
-void GameWindow::SetClearColor(float r, float g, float b) {
+void Window::SetClearColor(float r, float g, float b) {
 	glClearColor(r, g, b, 1.0f);
 }
 
-int GameWindow::Init( uint _width, uint _height, bool _fullscreen) 
+int Window::Init( uint _width, uint _height, bool _fullscreen) 
 {
 	fade_rate = 0;
 	fade_alpha = 255;
@@ -348,12 +348,12 @@ int GameWindow::Init( uint _width, uint _height, bool _fullscreen)
 	return 0;
 }
 
-void GameWindow::SetTitle(const char* szTitle)
+void Window::SetTitle(const char* szTitle)
 {
 	al_set_window_title(WINDOW->GetDisplay(), szTitle);
 }
 
-bool GameWindow::InitGL() {
+bool Window::InitGL() {
 	// apparently, all of this stuff never did _anything_
 
 	/*glShadeModel(GL_FLAT);
@@ -374,29 +374,29 @@ bool GameWindow::InitGL() {
 	return true;
 }
 
-void GameWindow::Clear() {
+void Window::Clear() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 }
 
-void GameWindow::BeginDrawing() {
+void Window::BeginDrawing() {
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void GameWindow::EndDrawing() {
+void Window::EndDrawing() {
 	glDisable(GL_BLEND);
 }
 
 // draws the backbuffer to the screen and erases the backbuffer
-void GameWindow::Flip() {
+void Window::Flip() {
 	al_wait_for_vsync(); // i guess right thing to do? 2017
 	al_flip_display();
 }
 
-void GameWindow::Shutdown() {
+void Window::Shutdown() {
 	if (!initialized)
 		return;
 
@@ -405,7 +405,7 @@ void GameWindow::Shutdown() {
 	initialized = false;
 }
 
-GameWindow::GameWindow() : initialized(false) {
+Window::Window() : initialized(false) {
 }
 
-GameWindow::~GameWindow() {}
+Window::~Window() {}

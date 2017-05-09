@@ -275,7 +275,7 @@
     <ClInclude Include="gameModes.h" />
     <ClInclude Include="gameOptions.h" />
     <ClInclude Include="gameSound.h" />
-    <ClInclude Include="gameState.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="gameWorld.h" />
     <ClInclude Include="globalDefines.h" />
     <ClInclude Include="globals.h" />
@@ -381,7 +381,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="gameState.cpp">
+    <ClCompile Include="game.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>

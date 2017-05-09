@@ -4,7 +4,7 @@
 #include "window.h"
 #include "object.h"
 #include "physicsDebugRenderer.h"
-#include "gameState.h"
+#include "game.h"
 #include "physicsExplosion.h"
 
 // NOTE: do NOT new/delete ANY physics objects EXCEPT m_pkWorld
@@ -92,7 +92,7 @@ void PhysicsManager::CreateExplosionAt(const b2Vec2 & center)
 
 void PhysicsManager::Draw()
 {
-	if (GAMESTATE->GetPropPhysicsDebugDraw()) {
+	if (GAME->GetPropPhysicsDebugDraw()) {
 		m_pkPhysicsWorld->DrawDebugData();
 		
 		for (PhysicsExplosion*& explosion : _explosions) {

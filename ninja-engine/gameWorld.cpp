@@ -8,7 +8,7 @@
 #include "object.h"
 #include "objectText.h"
 #include "input.h"
-#include "gameState.h"
+#include "game.h"
 #include "objectLayer.h"
 #include "window.h"
 #include "gameOptions.h"
@@ -279,11 +279,11 @@ void GameWorld::UpdateObjects()
 
 void GameWorld::Update() {
 	if (_AllowExiting && INPUT->KeyOnce(GAMEKEY_EXIT)) {
-		GAMESTATE->SignalGameExit();
+		GAME->SignalGameExit();
 		return;
 	}
 
-	if (!GAMESTATE->IsPaused()) {
+	if (!GAME->IsPaused()) {
 		DoMainGameUpdate();
 	}
 

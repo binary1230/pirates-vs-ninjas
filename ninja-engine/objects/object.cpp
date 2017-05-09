@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "object.h"
 
-#include "gameState.h"
+#include "game.h"
 #include "window.h"
 #include "globals.h"
 #include "animation.h"

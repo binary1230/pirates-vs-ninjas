@@ -67,7 +67,7 @@ namespace MapEditor
             wasPaused = gameWrapper.Paused;
 
             chkSnapToGrid.Checked = GameWorld.GetInstance().GetEditor().GetPropSnapToGrid();
-            chkDrawPhysicsDebug.Checked = GameState.GetInstance().GetPropPhysicsDebugDraw();
+            chkDrawPhysicsDebug.Checked = Game.GetInstance().GetPropPhysicsDebugDraw();
 
             if (gameWrapper.Paused)
             {
@@ -308,7 +308,7 @@ namespace MapEditor
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            GameState.GetInstance().SetPropPhysicsDebugDraw(chkDrawPhysicsDebug.Checked);
+            Game.GetInstance().SetPropPhysicsDebugDraw(chkDrawPhysicsDebug.Checked);
         }
 
         private void chkSnapToGrid_CheckedChanged(object sender, EventArgs e)

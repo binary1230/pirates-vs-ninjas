@@ -5,7 +5,7 @@
 #include "window.h"
 #include "sprite.h"
 #include "input.h"
-#include "gameState.h"
+#include "game.h"
 #include "gameWorld.h"
 
 int ObjectController::GetHeight() const {

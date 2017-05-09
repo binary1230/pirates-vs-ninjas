@@ -2702,10 +2702,10 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_CollisionDirection swig_types[4]
 #define SWIGTYPE_p_Editor swig_types[5]
 #define SWIGTYPE_p_EditorBaseUI swig_types[6]
-#define SWIGTYPE_p_GameMode swig_types[7]
-#define SWIGTYPE_p_GameModeExitInfo swig_types[8]
-#define SWIGTYPE_p_GameOptions swig_types[9]
-#define SWIGTYPE_p_GameState swig_types[10]
+#define SWIGTYPE_p_Game swig_types[7]
+#define SWIGTYPE_p_GameMode swig_types[8]
+#define SWIGTYPE_p_GameModeExitInfo swig_types[9]
+#define SWIGTYPE_p_GameOptions swig_types[10]
 #define SWIGTYPE_p_GameWorld swig_types[11]
 #define SWIGTYPE_p_Object swig_types[12]
 #define SWIGTYPE_p_ObjectBackground swig_types[13]
@@ -2761,7 +2761,7 @@ typedef struct{} LANGUAGE_OBJ;
 #include "gameOptions.h"
 #include "gameMode.h"
 #include "gameWorld.h"
-#include "gameState.h"
+#include "game.h"
 #include "objects/object.h"
 #include "objectFactory.h"
 
@@ -6946,13 +6946,13 @@ static swig_lua_class *swig_GameWorld_bases[] = {0,0};
 static const char *swig_GameWorld_base_names[] = {"GameMode *",0};
 static swig_lua_class _wrap_class_GameWorld = { "GameWorld", "GameWorld", &SWIGTYPE_p_GameWorld,0, swig_delete_GameWorld, swig_GameWorld_methods, swig_GameWorld_attributes, &swig_GameWorld_Sf_SwigStatic, swig_GameWorld_meta, swig_GameWorld_bases, swig_GameWorld_base_names };
 
-static int _wrap_GameState_GetInstance(lua_State* L) {
+static int _wrap_Game_GetInstance(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *result = 0 ;
+  Game *result = 0 ;
   
-  SWIG_check_num_args("GameState::GetInstance",0,0)
-  result = (GameState *)GameState::GetInstance();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_GameState,0); SWIG_arg++; 
+  SWIG_check_num_args("Game::GetInstance",0,0)
+  result = (Game *)Game::GetInstance();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Game,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6963,18 +6963,18 @@ fail:
 }
 
 
-static int _wrap_GameState_SetInstance(lua_State* L) {
+static int _wrap_Game_SetInstance(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("GameState::SetInstance",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::SetInstance",1,"GameState *");
+  SWIG_check_num_args("Game::SetInstance",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::SetInstance",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_SetInstance",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_SetInstance",1,SWIGTYPE_p_Game);
   }
   
-  GameState::SetInstance(arg1);
+  Game::SetInstance(arg1);
   
   return SWIG_arg;
   
@@ -6986,11 +6986,11 @@ fail:
 }
 
 
-static int _wrap_GameState_CreateInstance(lua_State* L) {
+static int _wrap_Game_CreateInstance(lua_State* L) {
   int SWIG_arg = 0;
   
-  SWIG_check_num_args("GameState::CreateInstance",0,0)
-  GameState::CreateInstance();
+  SWIG_check_num_args("Game::CreateInstance",0,0)
+  Game::CreateInstance();
   
   return SWIG_arg;
   
@@ -7002,11 +7002,11 @@ fail:
 }
 
 
-static int _wrap_GameState_FreeInstance(lua_State* L) {
+static int _wrap_Game_FreeInstance(lua_State* L) {
   int SWIG_arg = 0;
   
-  SWIG_check_num_args("GameState::FreeInstance",0,0)
-  GameState::FreeInstance();
+  SWIG_check_num_args("Game::FreeInstance",0,0)
+  Game::FreeInstance();
   
   return SWIG_arg;
   
@@ -7018,15 +7018,15 @@ fail:
 }
 
 
-static int _wrap_GameState_Shutdown(lua_State* L) {
+static int _wrap_Game_Shutdown(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("GameState::Shutdown",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::Shutdown",1,"GameState *");
+  SWIG_check_num_args("Game::Shutdown",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::Shutdown",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_Shutdown",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_Shutdown",1,SWIGTYPE_p_Game);
   }
   
   (arg1)->Shutdown();
@@ -7041,26 +7041,26 @@ fail:
 }
 
 
-static int _wrap_GameState_Init(lua_State* L) {
+static int _wrap_Game_Init(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   int arg2 ;
   char **arg3 = (char **) 0 ;
   bool result;
   
-  SWIG_check_num_args("GameState::Init",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::Init",1,"GameState *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("GameState::Init",2,"int const");
-  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("GameState::Init",3,"char const **");
+  SWIG_check_num_args("Game::Init",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::Init",1,"Game *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Game::Init",2,"int const");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("Game::Init",3,"char const **");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_Init",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_Init",1,SWIGTYPE_p_Game);
   }
   
   arg2 = (int const)lua_tonumber(L, 2);
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_p_char,0))){
-    SWIG_fail_ptr("GameState_Init",3,SWIGTYPE_p_p_char);
+    SWIG_fail_ptr("Game_Init",3,SWIGTYPE_p_p_char);
   }
   
   result = (bool)(arg1)->Init(arg2,(char const **)arg3);
@@ -7075,15 +7075,15 @@ fail:
 }
 
 
-static int _wrap_GameState_RunMainLoop_BlockingHelper(lua_State* L) {
+static int _wrap_Game_RunMainLoop_BlockingHelper(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("GameState::RunMainLoop_BlockingHelper",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::RunMainLoop_BlockingHelper",1,"GameState *");
+  SWIG_check_num_args("Game::RunMainLoop_BlockingHelper",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::RunMainLoop_BlockingHelper",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_RunMainLoop_BlockingHelper",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_RunMainLoop_BlockingHelper",1,SWIGTYPE_p_Game);
   }
   
   (arg1)->RunMainLoop_BlockingHelper();
@@ -7098,15 +7098,15 @@ fail:
 }
 
 
-static int _wrap_GameState_ProcessEvents(lua_State* L) {
+static int _wrap_Game_ProcessEvents(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("GameState::ProcessEvents",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::ProcessEvents",1,"GameState *");
+  SWIG_check_num_args("Game::ProcessEvents",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::ProcessEvents",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_ProcessEvents",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_ProcessEvents",1,SWIGTYPE_p_Game);
   }
   
   (arg1)->ProcessEvents();
@@ -7121,15 +7121,15 @@ fail:
 }
 
 
-static int _wrap_GameState_TickIfNeeded(lua_State* L) {
+static int _wrap_Game_TickIfNeeded(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("GameState::TickIfNeeded",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::TickIfNeeded",1,"GameState *");
+  SWIG_check_num_args("Game::TickIfNeeded",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::TickIfNeeded",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_TickIfNeeded",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_TickIfNeeded",1,SWIGTYPE_p_Game);
   }
   
   (arg1)->TickIfNeeded();
@@ -7144,15 +7144,15 @@ fail:
 }
 
 
-static int _wrap_GameState_Tick(lua_State* L) {
+static int _wrap_Game_Tick(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("GameState::Tick",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::Tick",1,"GameState *");
+  SWIG_check_num_args("Game::Tick",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::Tick",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_Tick",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_Tick",1,SWIGTYPE_p_Game);
   }
   
   (arg1)->Tick();
@@ -7167,15 +7167,15 @@ fail:
 }
 
 
-static int _wrap_GameState_UpdateGlobalInput(lua_State* L) {
+static int _wrap_Game_UpdateGlobalInput(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("GameState::UpdateGlobalInput",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::UpdateGlobalInput",1,"GameState *");
+  SWIG_check_num_args("Game::UpdateGlobalInput",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::UpdateGlobalInput",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_UpdateGlobalInput",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_UpdateGlobalInput",1,SWIGTYPE_p_Game);
   }
   
   (arg1)->UpdateGlobalInput();
@@ -7190,17 +7190,17 @@ fail:
 }
 
 
-static int _wrap_GameState_SetRandomSeed(lua_State* L) {
+static int _wrap_Game_SetRandomSeed(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   int arg2 ;
   
-  SWIG_check_num_args("GameState::SetRandomSeed",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::SetRandomSeed",1,"GameState *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("GameState::SetRandomSeed",2,"int");
+  SWIG_check_num_args("Game::SetRandomSeed",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::SetRandomSeed",1,"Game *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Game::SetRandomSeed",2,"int");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_SetRandomSeed",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_SetRandomSeed",1,SWIGTYPE_p_Game);
   }
   
   arg2 = (int)lua_tonumber(L, 2);
@@ -7216,16 +7216,16 @@ fail:
 }
 
 
-static int _wrap_GameState_IsPaused(lua_State* L) {
+static int _wrap_Game_IsPaused(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool result;
   
-  SWIG_check_num_args("GameState::IsPaused",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::IsPaused",1,"GameState *");
+  SWIG_check_num_args("Game::IsPaused",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::IsPaused",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_IsPaused",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_IsPaused",1,SWIGTYPE_p_Game);
   }
   
   result = (bool)(arg1)->IsPaused();
@@ -7240,17 +7240,17 @@ fail:
 }
 
 
-static int _wrap_GameState_SetPaused(lua_State* L) {
+static int _wrap_Game_SetPaused(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool arg2 ;
   
-  SWIG_check_num_args("GameState::SetPaused",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::SetPaused",1,"GameState *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameState::SetPaused",2,"bool");
+  SWIG_check_num_args("Game::SetPaused",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::SetPaused",1,"Game *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Game::SetPaused",2,"bool");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_SetPaused",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_SetPaused",1,SWIGTYPE_p_Game);
   }
   
   arg2 = (lua_toboolean(L, 2)!=0);
@@ -7266,19 +7266,19 @@ fail:
 }
 
 
-static int _wrap_GameState_GetRandomSeed(lua_State* L) {
+static int _wrap_Game_GetRandomSeed(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   int result;
   
-  SWIG_check_num_args("GameState::GetRandomSeed",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::GetRandomSeed",1,"GameState const *");
+  SWIG_check_num_args("Game::GetRandomSeed",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::GetRandomSeed",1,"Game const *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_GetRandomSeed",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_GetRandomSeed",1,SWIGTYPE_p_Game);
   }
   
-  result = (int)((GameState const *)arg1)->GetRandomSeed();
+  result = (int)((Game const *)arg1)->GetRandomSeed();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -7290,16 +7290,16 @@ fail:
 }
 
 
-static int _wrap_GameState_IsPlayingBackDemo(lua_State* L) {
+static int _wrap_Game_IsPlayingBackDemo(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool result;
   
-  SWIG_check_num_args("GameState::IsPlayingBackDemo",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::IsPlayingBackDemo",1,"GameState *");
+  SWIG_check_num_args("Game::IsPlayingBackDemo",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::IsPlayingBackDemo",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_IsPlayingBackDemo",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_IsPlayingBackDemo",1,SWIGTYPE_p_Game);
   }
   
   result = (bool)(arg1)->IsPlayingBackDemo();
@@ -7314,15 +7314,15 @@ fail:
 }
 
 
-static int _wrap_GameState_SignalGameExit(lua_State* L) {
+static int _wrap_Game_SignalGameExit(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("GameState::SignalGameExit",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::SignalGameExit",1,"GameState *");
+  SWIG_check_num_args("Game::SignalGameExit",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::SignalGameExit",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_SignalGameExit",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_SignalGameExit",1,SWIGTYPE_p_Game);
   }
   
   (arg1)->SignalGameExit();
@@ -7337,15 +7337,15 @@ fail:
 }
 
 
-static int _wrap_GameState_SignalEndCurrentMode(lua_State* L) {
+static int _wrap_Game_SignalEndCurrentMode(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("GameState::SignalEndCurrentMode",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::SignalEndCurrentMode",1,"GameState *");
+  SWIG_check_num_args("Game::SignalEndCurrentMode",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::SignalEndCurrentMode",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_SignalEndCurrentMode",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_SignalEndCurrentMode",1,SWIGTYPE_p_Game);
   }
   
   (arg1)->SignalEndCurrentMode();
@@ -7360,16 +7360,16 @@ fail:
 }
 
 
-static int _wrap_GameState_ShouldExit(lua_State* L) {
+static int _wrap_Game_ShouldExit(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool result;
   
-  SWIG_check_num_args("GameState::ShouldExit",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::ShouldExit",1,"GameState *");
+  SWIG_check_num_args("Game::ShouldExit",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::ShouldExit",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_ShouldExit",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_ShouldExit",1,SWIGTYPE_p_Game);
   }
   
   result = (bool)(arg1)->ShouldExit();
@@ -7384,16 +7384,16 @@ fail:
 }
 
 
-static int _wrap_GameState_GetPropPhysicsDebugDraw(lua_State* L) {
+static int _wrap_Game_GetPropPhysicsDebugDraw(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool result;
   
-  SWIG_check_num_args("GameState::GetPropPhysicsDebugDraw",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::GetPropPhysicsDebugDraw",1,"GameState *");
+  SWIG_check_num_args("Game::GetPropPhysicsDebugDraw",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::GetPropPhysicsDebugDraw",1,"Game *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_GetPropPhysicsDebugDraw",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_GetPropPhysicsDebugDraw",1,SWIGTYPE_p_Game);
   }
   
   result = (bool)(arg1)->GetPropPhysicsDebugDraw();
@@ -7408,17 +7408,17 @@ fail:
 }
 
 
-static int _wrap_GameState_SetPropPhysicsDebugDraw(lua_State* L) {
+static int _wrap_Game_SetPropPhysicsDebugDraw(lua_State* L) {
   int SWIG_arg = 0;
-  GameState *arg1 = (GameState *) 0 ;
+  Game *arg1 = (Game *) 0 ;
   bool arg2 ;
   
-  SWIG_check_num_args("GameState::SetPropPhysicsDebugDraw",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameState::SetPropPhysicsDebugDraw",1,"GameState *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("GameState::SetPropPhysicsDebugDraw",2,"bool");
+  SWIG_check_num_args("Game::SetPropPhysicsDebugDraw",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::SetPropPhysicsDebugDraw",1,"Game *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Game::SetPropPhysicsDebugDraw",2,"bool");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameState,0))){
-    SWIG_fail_ptr("GameState_SetPropPhysicsDebugDraw",1,SWIGTYPE_p_GameState);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_SetPropPhysicsDebugDraw",1,SWIGTYPE_p_Game);
   }
   
   arg2 = (lua_toboolean(L, 2)!=0);
@@ -7434,65 +7434,65 @@ fail:
 }
 
 
-static void swig_delete_GameState(void *obj) {
-GameState *arg1 = (GameState *) obj;
+static void swig_delete_Game(void *obj) {
+Game *arg1 = (Game *) obj;
 delete arg1;
 }
-static swig_lua_attribute swig_GameState_attributes[] = {
+static swig_lua_attribute swig_Game_attributes[] = {
     {0,0,0}
 };
-static swig_lua_method swig_GameState_methods[]= {
-    { "Shutdown", _wrap_GameState_Shutdown},
-    { "Init", _wrap_GameState_Init},
-    { "RunMainLoop_BlockingHelper", _wrap_GameState_RunMainLoop_BlockingHelper},
-    { "ProcessEvents", _wrap_GameState_ProcessEvents},
-    { "TickIfNeeded", _wrap_GameState_TickIfNeeded},
-    { "Tick", _wrap_GameState_Tick},
-    { "UpdateGlobalInput", _wrap_GameState_UpdateGlobalInput},
-    { "SetRandomSeed", _wrap_GameState_SetRandomSeed},
-    { "IsPaused", _wrap_GameState_IsPaused},
-    { "SetPaused", _wrap_GameState_SetPaused},
-    { "GetRandomSeed", _wrap_GameState_GetRandomSeed},
-    { "IsPlayingBackDemo", _wrap_GameState_IsPlayingBackDemo},
-    { "SignalGameExit", _wrap_GameState_SignalGameExit},
-    { "SignalEndCurrentMode", _wrap_GameState_SignalEndCurrentMode},
-    { "ShouldExit", _wrap_GameState_ShouldExit},
-    { "GetPropPhysicsDebugDraw", _wrap_GameState_GetPropPhysicsDebugDraw},
-    { "SetPropPhysicsDebugDraw", _wrap_GameState_SetPropPhysicsDebugDraw},
+static swig_lua_method swig_Game_methods[]= {
+    { "Shutdown", _wrap_Game_Shutdown},
+    { "Init", _wrap_Game_Init},
+    { "RunMainLoop_BlockingHelper", _wrap_Game_RunMainLoop_BlockingHelper},
+    { "ProcessEvents", _wrap_Game_ProcessEvents},
+    { "TickIfNeeded", _wrap_Game_TickIfNeeded},
+    { "Tick", _wrap_Game_Tick},
+    { "UpdateGlobalInput", _wrap_Game_UpdateGlobalInput},
+    { "SetRandomSeed", _wrap_Game_SetRandomSeed},
+    { "IsPaused", _wrap_Game_IsPaused},
+    { "SetPaused", _wrap_Game_SetPaused},
+    { "GetRandomSeed", _wrap_Game_GetRandomSeed},
+    { "IsPlayingBackDemo", _wrap_Game_IsPlayingBackDemo},
+    { "SignalGameExit", _wrap_Game_SignalGameExit},
+    { "SignalEndCurrentMode", _wrap_Game_SignalEndCurrentMode},
+    { "ShouldExit", _wrap_Game_ShouldExit},
+    { "GetPropPhysicsDebugDraw", _wrap_Game_GetPropPhysicsDebugDraw},
+    { "SetPropPhysicsDebugDraw", _wrap_Game_SetPropPhysicsDebugDraw},
     {0,0}
 };
-static swig_lua_method swig_GameState_meta[] = {
+static swig_lua_method swig_Game_meta[] = {
     {0,0}
 };
 
-static swig_lua_attribute swig_GameState_Sf_SwigStatic_attributes[] = {
+static swig_lua_attribute swig_Game_Sf_SwigStatic_attributes[] = {
     {0,0,0}
 };
-static swig_lua_const_info swig_GameState_Sf_SwigStatic_constants[]= {
+static swig_lua_const_info swig_Game_Sf_SwigStatic_constants[]= {
     {0,0,0,0,0,0}
 };
-static swig_lua_method swig_GameState_Sf_SwigStatic_methods[]= {
-    { "GetInstance", _wrap_GameState_GetInstance},
-    { "SetInstance", _wrap_GameState_SetInstance},
-    { "CreateInstance", _wrap_GameState_CreateInstance},
-    { "FreeInstance", _wrap_GameState_FreeInstance},
+static swig_lua_method swig_Game_Sf_SwigStatic_methods[]= {
+    { "GetInstance", _wrap_Game_GetInstance},
+    { "SetInstance", _wrap_Game_SetInstance},
+    { "CreateInstance", _wrap_Game_CreateInstance},
+    { "FreeInstance", _wrap_Game_FreeInstance},
     {0,0}
 };
-static swig_lua_class* swig_GameState_Sf_SwigStatic_classes[]= {
+static swig_lua_class* swig_Game_Sf_SwigStatic_classes[]= {
     0
 };
 
-static swig_lua_namespace swig_GameState_Sf_SwigStatic = {
-    "GameState",
-    swig_GameState_Sf_SwigStatic_methods,
-    swig_GameState_Sf_SwigStatic_attributes,
-    swig_GameState_Sf_SwigStatic_constants,
-    swig_GameState_Sf_SwigStatic_classes,
+static swig_lua_namespace swig_Game_Sf_SwigStatic = {
+    "Game",
+    swig_Game_Sf_SwigStatic_methods,
+    swig_Game_Sf_SwigStatic_attributes,
+    swig_Game_Sf_SwigStatic_constants,
+    swig_Game_Sf_SwigStatic_classes,
     0
 };
-static swig_lua_class *swig_GameState_bases[] = {0};
-static const char *swig_GameState_base_names[] = {0};
-static swig_lua_class _wrap_class_GameState = { "GameState", "GameState", &SWIGTYPE_p_GameState,0, swig_delete_GameState, swig_GameState_methods, swig_GameState_attributes, &swig_GameState_Sf_SwigStatic, swig_GameState_meta, swig_GameState_bases, swig_GameState_base_names };
+static swig_lua_class *swig_Game_bases[] = {0};
+static const char *swig_Game_base_names[] = {0};
+static swig_lua_class _wrap_class_Game = { "Game", "Game", &SWIGTYPE_p_Game,0, swig_delete_Game, swig_Game_methods, swig_Game_attributes, &swig_Game_Sf_SwigStatic, swig_Game_meta, swig_Game_bases, swig_Game_base_names };
 
 static int _wrap_ObjectLayer_Init(lua_State* L) {
   int SWIG_arg = 0;
@@ -16126,10 +16126,10 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "GameWorld_CreateInstance", _wrap_GameWorld_CreateInstance},
     { "GameWorld_FreeInstance", _wrap_GameWorld_FreeInstance},
     { "GameWorld_CreateWorld", _wrap_GameWorld_CreateWorld},
-    { "GameState_GetInstance", _wrap_GameState_GetInstance},
-    { "GameState_SetInstance", _wrap_GameState_SetInstance},
-    { "GameState_CreateInstance", _wrap_GameState_CreateInstance},
-    { "GameState_FreeInstance", _wrap_GameState_FreeInstance},
+    { "Game_GetInstance", _wrap_Game_GetInstance},
+    { "Game_SetInstance", _wrap_Game_SetInstance},
+    { "Game_CreateInstance", _wrap_Game_CreateInstance},
+    { "Game_FreeInstance", _wrap_Game_FreeInstance},
     { "Object_AddPrototype", _wrap_Object_AddPrototype},
     { "Object_CreateObject", _wrap_Object_CreateObject},
     { "ObjectBackground_DynamicCastFrom", _wrap_ObjectBackground_DynamicCastFrom},
@@ -16159,7 +16159,7 @@ static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_GameModeExitInfo,
 &_wrap_class_GameMode,
 &_wrap_class_GameWorld,
-&_wrap_class_GameState,
+&_wrap_class_Game,
 &_wrap_class_ObjectLayer,
 &_wrap_class_CollisionDirection,
 &_wrap_class_Object,
@@ -16246,10 +16246,10 @@ static swig_type_info _swigt__p_CameraFollow = {"_p_CameraFollow", "CameraFollow
 static swig_type_info _swigt__p_CollisionDirection = {"_p_CollisionDirection", "CollisionDirection *", 0, 0, (void*)&_wrap_class_CollisionDirection, 0};
 static swig_type_info _swigt__p_Editor = {"_p_Editor", "Editor *", 0, 0, (void*)&_wrap_class_Editor, 0};
 static swig_type_info _swigt__p_EditorBaseUI = {"_p_EditorBaseUI", "EditorBaseUI *", 0, 0, (void*)&_wrap_class_EditorBaseUI, 0};
+static swig_type_info _swigt__p_Game = {"_p_Game", "Game *", 0, 0, (void*)&_wrap_class_Game, 0};
 static swig_type_info _swigt__p_GameMode = {"_p_GameMode", "GameMode *", 0, 0, (void*)&_wrap_class_GameMode, 0};
 static swig_type_info _swigt__p_GameModeExitInfo = {"_p_GameModeExitInfo", "GameModeExitInfo *", 0, 0, (void*)&_wrap_class_GameModeExitInfo, 0};
 static swig_type_info _swigt__p_GameOptions = {"_p_GameOptions", "GameOptions *", 0, 0, (void*)&_wrap_class_GameOptions, 0};
-static swig_type_info _swigt__p_GameState = {"_p_GameState", "GameState *", 0, 0, (void*)&_wrap_class_GameState, 0};
 static swig_type_info _swigt__p_GameWorld = {"_p_GameWorld", "GameWorld *", 0, 0, (void*)&_wrap_class_GameWorld, 0};
 static swig_type_info _swigt__p_Object = {"_p_Object", "Object *", 0, 0, (void*)&_wrap_class_Object, 0};
 static swig_type_info _swigt__p_ObjectBackground = {"_p_ObjectBackground", "ObjectBackground *", 0, 0, (void*)&_wrap_class_ObjectBackground, 0};
@@ -16292,10 +16292,10 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_CollisionDirection,
   &_swigt__p_Editor,
   &_swigt__p_EditorBaseUI,
+  &_swigt__p_Game,
   &_swigt__p_GameMode,
   &_swigt__p_GameModeExitInfo,
   &_swigt__p_GameOptions,
-  &_swigt__p_GameState,
   &_swigt__p_GameWorld,
   &_swigt__p_Object,
   &_swigt__p_ObjectBackground,
@@ -16338,10 +16338,10 @@ static swig_cast_info _swigc__p_CameraFollow[] = {  {&_swigt__p_CameraFollow, 0,
 static swig_cast_info _swigc__p_CollisionDirection[] = {  {&_swigt__p_CollisionDirection, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Editor[] = {  {&_swigt__p_Editor, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_EditorBaseUI[] = {  {&_swigt__p_EditorBaseUI, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Game[] = {  {&_swigt__p_Game, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameMode[] = {  {&_swigt__p_GameWorld, _p_GameWorldTo_p_GameMode, 0, 0},  {&_swigt__p_GameMode, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameModeExitInfo[] = {  {&_swigt__p_GameModeExitInfo, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameOptions[] = {  {&_swigt__p_GameOptions, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_GameState[] = {  {&_swigt__p_GameState, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameWorld[] = {  {&_swigt__p_GameWorld, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Object[] = {  {&_swigt__p_ObjectController, _p_ObjectControllerTo_p_Object, 0, 0},  {&_swigt__p_ObjectCutBars, _p_ObjectCutBarsTo_p_Object, 0, 0},  {&_swigt__p_ObjectBounce, _p_ObjectBounceTo_p_Object, 0, 0},  {&_swigt__p_ObjectCollectable, _p_ObjectCollectableTo_p_Object, 0, 0},  {&_swigt__p_ObjectText, _p_ObjectTextTo_p_Object, 0, 0},  {&_swigt__p_ObjectDoor, _p_ObjectDoorTo_p_Object, 0, 0},  {&_swigt__p_ObjectEnemy, _p_ObjectEnemyTo_p_Object, 0, 0},  {&_swigt__p_ObjectSpring, _p_ObjectSpringTo_p_Object, 0, 0},  {&_swigt__p_Object, 0, 0, 0},  {&_swigt__p_ObjectBackground, _p_ObjectBackgroundTo_p_Object, 0, 0},  {&_swigt__p_ObjectPlayer, _p_ObjectPlayerTo_p_Object, 0, 0},  {&_swigt__p_ObjectFan, _p_ObjectFanTo_p_Object, 0, 0},  {&_swigt__p_ObjectStatic, _p_ObjectStaticTo_p_Object, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ObjectBackground[] = {  {&_swigt__p_ObjectBackground, 0, 0, 0},{0, 0, 0, 0}};
@@ -16384,10 +16384,10 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_CollisionDirection,
   _swigc__p_Editor,
   _swigc__p_EditorBaseUI,
+  _swigc__p_Game,
   _swigc__p_GameMode,
   _swigc__p_GameModeExitInfo,
   _swigc__p_GameOptions,
-  _swigc__p_GameState,
   _swigc__p_GameWorld,
   _swigc__p_Object,
   _swigc__p_ObjectBackground,

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "xmlParser.h"
 // #include "StdString.h"
-#include "gameState.h"
+#include "game.h"
 #include "input.h"
 #include "assetManager.h"
 #include "window.h"
@@ -16,11 +16,11 @@ void GameMenu::DoNewGame() {
 	// LoadNewMode(....);
 
 	// For now, we just Let it roll onto the next mode
-	GAMESTATE->SignalEndCurrentMode();
+	GAME->SignalEndCurrentMode();
 }
 
 void GameMenu::DoQuit() {
-	GAMESTATE->SignalGameExit();
+	GAME->SignalGameExit();
 }
 
 // Hardcoded for now...

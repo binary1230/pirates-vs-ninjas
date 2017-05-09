@@ -4,7 +4,7 @@
 #include "gameMode.h"
 #include "sprite.h"
 
-class GameState;
+class Game;
 
 class AnimationEditorMode : public GameMode
 {

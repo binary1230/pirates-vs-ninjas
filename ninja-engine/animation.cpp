@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "animation.h"
-#include "gameState.h"
+#include "game.h"
 #include "sprite.h"
 #include "window.h"
 #include "assetManager.h"

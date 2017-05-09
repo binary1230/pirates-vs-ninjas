@@ -47,14 +47,14 @@ namespace MapEditor
         }
 
         public bool Paused {
-            get { return GameState.GetInstance() != null && GameState.GetInstance().IsPaused(); }
-            set { GameState.GetInstance().SetPaused(value); }
+            get { return Game.GetInstance() != null && Game.GetInstance().IsPaused(); }
+            set { Game.GetInstance().SetPaused(value); }
         }
 
         public bool Init(string mapname)
         {
-            GameState.CreateInstance();
-            GameState game = GameState.GetInstance();
+            Game.CreateInstance();
+            Game game = Game.GetInstance();
             if (game == null)
                 return false;
 
@@ -75,7 +75,7 @@ namespace MapEditor
 
         public void OnTick()
         {
-            GameState game = GameState.GetInstance();
+            Game game = Game.GetInstance();
 
             _should_exit = game.ShouldExit();
 
@@ -89,10 +89,10 @@ namespace MapEditor
 
         public void Shutdown()
         {
-            GameState game = GameState.GetInstance();
+            Game game = Game.GetInstance();
             game.Shutdown();
 
-            GameState.FreeInstance();
+            Game.FreeInstance();
         }
 
         public List<String> GetObjectDefNames()

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "animationeditor.h"
 #include "assetManager.h"
-#include "gameState.h"
+#include "game.h"
 #include "input.h"
 #include "window.h"
 
@@ -36,7 +36,7 @@ void AnimationEditorMode::Update()
 	INPUT->Update();
 
 	if (INPUT->KeyOnce(GAMEKEY_EXIT))
-		GAMESTATE->SignalGameExit();
+		GAME->SignalGameExit();
 }
 
 AnimationEditorMode::AnimationEditorMode() :

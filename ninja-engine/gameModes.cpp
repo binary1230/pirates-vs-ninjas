@@ -4,7 +4,7 @@
 #include "xmlParser.h"
 #include "assetManager.h"
 #include "gameMode.h"
-#include "gameState.h"
+#include "game.h"
 #include "gameWorld.h"
 #include "gameMenu.h"
 #include "credits.h"
@@ -162,7 +162,7 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 void GameModes::DoGameExit() {
 	signal_game_exit = true;
 	signal_end_current_mode = true;
-	GAMESTATE->SignalGameExit();
+	GAME->SignalGameExit();
 }
 
 void GameModes::SignalEndCurrentMode() {

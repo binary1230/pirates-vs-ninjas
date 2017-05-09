@@ -22,7 +22,7 @@
 #include "gameOptions.h"
 #include "gameMode.h"
 #include "gameWorld.h"
-#include "gameState.h"
+#include "game.h"
 #include "objects/object.h"
 #include "objectFactory.h"
 
@@ -62,7 +62,7 @@ using namespace std;
 %include "gameOptions.h"
 %include "gameMode.h"
 %include "gameWorld.h"
-%include "gameState.h"
+%include "game.h"
 %include "objectLayer.h"
 
 %typemap(csclassmodifiers) Object "public partial class"

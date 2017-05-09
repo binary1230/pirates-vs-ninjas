@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "credits.h"
-#include "gameState.h"
+#include "game.h"
 #include "input.h"
 #include "assetManager.h"
 #include "window.h"
@@ -52,7 +52,7 @@ void CreditsMode::Update() {
 
 	// If we finished scrolling or they press the exit key, we exit
 	if (scroll_offset < -int(credits_sprite->height) || INPUT->KeyOnce(GAMEKEY_EXIT))	{
-   		GAMESTATE->SignalEndCurrentMode();
+   		GAME->SignalEndCurrentMode();
 	}
 }
 

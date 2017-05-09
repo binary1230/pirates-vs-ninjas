@@ -2,7 +2,7 @@
 #include "objectFactory.h"
 
 #include "globals.h"
-#include "gameState.h"
+#include "game.h"
 #include "sprite.h"
 #include "object.h"
 

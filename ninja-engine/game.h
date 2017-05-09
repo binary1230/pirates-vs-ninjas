@@ -1,14 +1,12 @@
-#ifndef GAMESTATE_H
-#define GAMESTATE_H
+#ifndef Game_H
+#define Game_H
 
-class GameState;
+class Game;
 class BaseInput;
 class GameMode;
 class AssetManager;
 class GameSound;
 class GameModes;
-class ezSockets;
-class GameNetwork;
 
 //! Represents the current state of the game.
 
@@ -16,8 +14,8 @@ class GameNetwork;
 //! coordinated object which initializes, runs, and destroys
 //! the entire game.  Anything of importance starts in this
 //! class somewhere.
-class GameState {
-	DECLARE_SINGLETON_CLASS(GameState)
+class Game {
+	DECLARE_SINGLETON_CLASS(Game)
 
 	protected:
 		ALLEGRO_TIMER* m_timer;
@@ -30,14 +28,8 @@ class GameState {
 		//! Collection of all game modes (e.g. menu mode, simulation mode, etc)
 		GameModes *modes;
 
-		//! The game network functionality:
-		GameNetwork *network;
-
 		//! Fires off timer related events
 		ALLEGRO_EVENT_QUEUE *event_queue = NULL;
-
-		//! True if we are using the network
-		bool IsUsingNetwork() {return network != NULL;};
 		
 		//! Initialize all game related stuff
 		int InitSystems();								
@@ -54,9 +46,6 @@ class GameState {
 		//! Init sound system
 		int InitSound();
 
-		//! Init the game network
-		int InitNetwork();
-		
 		//! Load master game config from an XML file, return an XMLNode which is
 		//! the first game Mode's config we should now load.
 		int LoadXMLConfig(std::string xml_filename);
@@ -137,11 +126,11 @@ class GameState {
 
 		bool ShouldExit() { return exit_game; }
 		
-		~GameState();
+		~Game();
 
 		CREATE_PROPERTY(bool, PhysicsDebugDraw)
 };
 
-#define GAMESTATE GameState::GetInstance()
+#define GAME Game::GetInstance()
 
 #endif

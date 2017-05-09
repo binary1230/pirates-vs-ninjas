@@ -3,7 +3,7 @@
 #include "startup.h"
 #include "stdafx.h"
 #include "startup.h"
-#include "gameState.h"
+#include "game.h"
 #include "gameOptions.h"
 #include "globals.h"
 #include "assetManager.h"
@@ -26,36 +26,36 @@ DllExport int run_ninjas_engine___helper(const int argc, const char* argv[])
 }
 
 DllExport bool ninjas_engine_init(const int argc, const char** argv) {
-	assert(!GAMESTATE);
-	GAMESTATE->CreateInstance();
-	return GAMESTATE->Init(argc, argv);
+	assert(!GAME);
+	GAME->CreateInstance();
+	return GAME->Init(argc, argv);
 }
 
 DllExport void ninjas_engine_shutdown() {
-	assert(GAMESTATE);
-	GAMESTATE->Shutdown();
-	GAMESTATE->FreeInstance();
+	assert(GAME);
+	GAME->Shutdown();
+	GAME->FreeInstance();
 }
 
 DllExport void ninjas_engine_run__blocking_helper() {
-	assert(GAMESTATE);
-	GAMESTATE->RunMainLoop_BlockingHelper();
+	assert(GAME);
+	GAME->RunMainLoop_BlockingHelper();
 }
 
 DllExport bool ninjas_engine_should_exit()
 {
-	assert(GAMESTATE);
-	return GAMESTATE->ShouldExit();
+	assert(GAME);
+	return GAME->ShouldExit();
 }
 
 DllExport void ninjas_engine_process_events() {
-	assert(GAMESTATE);
-	GAMESTATE->ProcessEvents();
+	assert(GAME);
+	GAME->ProcessEvents();
 }
 
 DllExport void ninjas_engine_tick() {
-	assert(GAMESTATE);
-	GAMESTATE->TickIfNeeded();
+	assert(GAME);
+	GAME->TickIfNeeded();
 }
 
 DllExport void ninjas_engine_test()

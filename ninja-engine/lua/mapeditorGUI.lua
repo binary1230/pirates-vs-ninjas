@@ -5,7 +5,7 @@ require("wx")
 
 -- Game engine singleton variables
 -- These give us some nice shortcuts without having to type tons of crap
-local GAMESTATE         = engine.GameState_GetInstance()
+local Game         = engine.Game_GetInstance()
 local WORLD             = engine.GameWorld_GetInstance()
 
 -- Global variables
@@ -71,12 +71,12 @@ function mapeditorgui_init()
     dialog:Connect(wx.wxEVT_IDLE,
       function(event)
       
-        if GAMESTATE:ShouldExit() == true then
+        if Game:ShouldExit() == true then
           dialog:Close(true)
           return
         end
         
-        GAMESTATE:Tick()
+        Game:Tick()
         
         event:Skip()
         event:RequestMore() -- make wx keep firing this event

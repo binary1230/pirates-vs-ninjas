@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "objectPlayer.h"
 
-#include "gameState.h"
+#include "game.h"
 #include "globals.h"
 #include "input.h"
 #include "gameSound.h"

@@ -3,7 +3,7 @@
 
 #include "object.h"
 
-class GameState;
+class Game;
 
 //! An Object which repeats itself, usually used for backgrounds
 class ObjectBackground : public Object {

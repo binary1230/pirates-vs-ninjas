@@ -5,7 +5,7 @@
 #include "gameWorld.h"
 #include "input.h"
 #include "window.h"
-#include "gameState.h"
+#include "game.h"
 #include "camera.h"
 
 Object * Editor::CreateObject(const char * objDefName, const char * layerName) {
@@ -141,7 +141,7 @@ void Editor::Draw() {
 }
 
 void Editor::CommonUpdate() {
-	_pausedChanged = _wasPaused != GAMESTATE->IsPaused();
+	_pausedChanged = _wasPaused != GAME->IsPaused();
 	if (_pausedChanged) {
 		FlashText(!_wasPaused ? "paused" : "unpaused");
 	}
@@ -191,7 +191,7 @@ void Editor::FlashText(string text) {
 }
 
 void Editor::NoModeUpdate() {
-	if (!GAMESTATE->IsPaused()) {
+	if (!GAME->IsPaused()) {
 		SelectObject(NULL);
 		return;
 	}
@@ -242,7 +242,7 @@ void Editor::UpdateMove() {
 
 	UpdateSelectedObjectPosition();
 
-	if (GAMESTATE->IsPaused()) {
+	if (GAME->IsPaused()) {
 		if (INPUT->MouseButtonOnce(MOUSE_LEFT_BTN) || INPUT->RealKeyOnce(ALLEGRO_KEY_ENTER)) {
 			_mode = EDITOR_NONE;
 
@@ -253,7 +253,7 @@ void Editor::UpdateMove() {
 
 	bool endMode =	INPUT->RealKeyOnce(ALLEGRO_KEY_ESCAPE)	|| 
 					INPUT->MouseButtonOnce(MOUSE_RIGHT_BTN) ||
-					(_pausedChanged && !GAMESTATE->IsPaused());
+					(_pausedChanged && !GAME->IsPaused());
 
 	if (endMode) {
 		if (_should_delete_selection_after_move_done) {
@@ -303,11 +303,11 @@ void Editor::Update() {
 
 	CommonAfterUpdate();
 
-	_wasPaused = GAMESTATE->IsPaused();
+	_wasPaused = GAME->IsPaused();
 }
 
 void Editor::CommonAfterUpdate() {
-	if (!GAMESTATE->IsPaused()) {
+	if (!GAME->IsPaused()) {
 		camera_offset = b2Vec2(0, 0);
 	}
 		
@@ -334,7 +334,7 @@ Editor::Editor() {
 	_SnapToGrid = false;
 	WORLD->SetPropAllowExiting(false);
 	_mode = EDITOR_NONE;
-	_wasPaused = GAMESTATE->IsPaused();
+	_wasPaused = GAME->IsPaused();
 	_pausedChanged = false;
 	_obj_under_mouse = NULL;
 

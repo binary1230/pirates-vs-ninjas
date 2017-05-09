@@ -2,7 +2,7 @@
 #include "objectBackground.h"
 
 #include "globals.h"
-#include "gameState.h"
+#include "game.h"
 #include "animation.h"
 #include "gameWorld.h"
 #include "object.h"
