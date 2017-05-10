@@ -31,26 +31,26 @@ class Game {
 		ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 		
 		//! Initialize all game related stuff
-		int InitSystems();								
+		bool InitSystems();								
 		
 		//! Init basic allegro stuff
-		int InitAllegro();
+		bool InitAllegro();
 
 		//! Init game timing
 		bool InitAllegroEvents();
 		
 		//! Init input subsystems
-		int InitInput();								
+		bool InitInput();								
 
 		//! Init sound system
-		int InitSound();
+		bool InitSound();
 
 		//! Load master game config from an XML file, return an XMLNode which is
 		//! the first game Mode's config we should now load.
-		int LoadXMLConfig(std::string xml_filename);
+		bool LoadXMLConfig(std::string xml_filename);
 		
 		//! Load a game mode from an XML config file
-		int LoadGameModes();
+		bool LoadGameModes();
 
 		//! Update the state of the game
 		void Update();
@@ -124,7 +124,7 @@ class Game {
 
 		bool ShouldExit() { return exit_game; }
 
-		void CreateGameState();
+		void CreateGameStateIfNotExists();
 		void FreeGameState();
 
 		GameState* GetState();

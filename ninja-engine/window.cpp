@@ -304,7 +304,7 @@ void Window::SetClearColor(float r, float g, float b) {
 	glClearColor(r, g, b, 1.0f);
 }
 
-int Window::Init( uint _width, uint _height, bool _fullscreen) 
+bool Window::Init( uint _width, uint _height, bool _fullscreen) 
 {
 	fade_rate = 0;
 	fade_alpha = 255;
@@ -323,7 +323,7 @@ int Window::Init( uint _width, uint _height, bool _fullscreen)
 	display = al_create_display(width, height);
 	if (!display) {
 		TRACE("failed to create display!");
-		return -1;
+		return false;
 	}
 	
 	SetTitle(VERSION_STRING);
@@ -333,7 +333,7 @@ int Window::Init( uint _width, uint _height, bool _fullscreen)
 	main_font = al_load_ttf_font(fontfile.c_str(), 12, 0);
 	if (!main_font) {
 		TRACE("failed to create main font (does the file exist?)");
-		return -1;
+		return false;
 	}
 
 	initialized = InitGL();
@@ -345,7 +345,7 @@ int Window::Init( uint _width, uint _height, bool _fullscreen)
 	Flip();
 	EndDrawing();
 
-	return 0;
+	return true;
 }
 
 void Window::SetTitle(const char* szTitle)

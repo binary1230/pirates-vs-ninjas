@@ -6,17 +6,17 @@
 #include "window.h"
 #include "gameSound.h"
 
-int CreditsMode::Init(XMLNode xMode) {
+bool CreditsMode::Init(XMLNode xMode) {
 	std::string file = xMode.getChildNode("scrollPic").getText();
 	
 	credits_sprite = ASSETMANAGER->LoadSprite(file.c_str());
 
 	if (!credits_sprite)
-		return -1;
+		return false;
 
 	if (!xMode.getChildNode("scrollSpeed").getInt(scroll_speed)) {
 		TRACE(" -- Invalid scroll speed!\n");
-		return -1;
+		return false;
 	}
 	scroll_offset = WINDOW->Height();
 
@@ -28,7 +28,7 @@ int CreditsMode::Init(XMLNode xMode) {
 		SOUND->PlayMusic(music_file);
 	}
 
-	return 0;
+	return true;
 }
 
 void CreditsMode::Shutdown() {

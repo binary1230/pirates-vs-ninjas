@@ -16,7 +16,7 @@ class CreditsMode : public GameMode {
 			OGGFILE* music;
 
 		public:
-			int Init(XMLNode);
+			bool Init(XMLNode);
 			void Shutdown();
 
 			void Draw();

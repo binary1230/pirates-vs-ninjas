@@ -74,7 +74,7 @@ void GameWorld::Clear() {
 	_camera = nullptr;
 }
 
-int GameWorld::Init(XMLNode /*unused*/) {
+bool GameWorld::Init(XMLNode /*unused*/) {
 	if (OPTIONS->GetPropMapEditorEnabled())
 		map_editor = new Editor();
 
@@ -82,36 +82,31 @@ int GameWorld::Init(XMLNode /*unused*/) {
 	if ( !OBJECT_FACTORY || OBJECT_FACTORY->Init() < 0 ) 
 	{
 		TRACE("ERROR: InitSystems: failed to init OBJECT_FACTORY!\n");
-		return -1;
+		return false;
 	}
 
 	EFFECTS->CreateInstance();
 	if ( !EFFECTS || !EFFECTS->Init() ) 
 	{
 		TRACE("ERROR: InitSystems: failed to init EffectsManager!\n");
-		return -1;
+		return false;
 	}
 
 	EVENTS->CreateInstance();
 	if (!EVENTS || !EVENTS->Init()) 
 	{
 		TRACE("ERROR: InitSystems: failed to init EventsManager!\n");
-		return -1;
+		return false;
 	}
 
 	PHYSICS->CreateInstance();
 	if ( !PHYSICS || !PHYSICS->Init() )
 	{
 		TRACE("ERROR: InitSystems: failed to init PhysicsManager!\n");
-		return -1;
+		return false;
 	}
 
-	int iReturn = Load();
-
-	if (iReturn != 0)
-		return iReturn;
-
-	return iReturn;
+	return Load();
 }
 
 //! Transforms view coordinates into absolute screen coordinates
@@ -340,7 +335,7 @@ void GameWorld::LoadMusic(const char* music_file) {
 	}
 }
 
-int GameWorld::Load() {
+bool GameWorld::Load() {
 	is_loading = true;
 	m_bJumpedBackFromADoor = false;
 	_objectsToAdd.clear();
@@ -350,14 +345,14 @@ int GameWorld::Load() {
 	if (!PHYSICS->OnWorldInit())
 	{
 		TRACE("ERROR: InitSystems: failed to init (part 2) PhysicsManager::OnLevelLoaded()!\n");
-		return -1;
+		return false;
 	}
 
 	if (!LoadObjectDefsFromXML())
-		return -1;
+		return false;
 
 	if (!FinishLoadingObjects())
-		return -1;
+		return false;
 
 	for (int i = 0; i < m_included_effect_xml_files.size(); ++i)
 	{
@@ -372,7 +367,7 @@ int GameWorld::Load() {
 	}
 
 	if (!InitJumpBackFromDoor()) {
-		return -1;
+		return false;
 	}
 
 	CachePlayerObjects();
@@ -398,7 +393,7 @@ int GameWorld::Load() {
 	
 	m_bJumpedBackFromADoor = false;
 	
-	return 0;	
+	return true;
 }
 
 bool GameWorld::FinishLoadingObjects()

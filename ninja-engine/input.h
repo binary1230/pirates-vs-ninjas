@@ -210,7 +210,7 @@ class Input {
 		
 	public:
 		//! Init the input system
-		int Init();
+		bool Init();
 
 		//! Init demo playback stuff
 		bool InitPlayback(std::string filename, bool seed_engine = true);

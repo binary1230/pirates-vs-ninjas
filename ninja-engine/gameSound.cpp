@@ -108,7 +108,7 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 	return true;
 }
 
-int GameSound::Init(bool _sound_enabled) {
+bool GameSound::Init(bool _sound_enabled) {
 	sound_enabled = _sound_enabled;
 
 	if (!sound_enabled)
@@ -123,12 +123,12 @@ int GameSound::Init(bool _sound_enabled) {
 
 	if (!al_init_acodec_addon()) {
 		TRACE("failed to initialize audio codecs!\n");
-		return -1;
+		return false;
 	}
 
 	if (!al_reserve_samples(10)) {
 		fprintf(stderr, "failed to reserve samples!\n");
-		return -1;
+		return false;
 	}
 
 	soundMap.clear();
@@ -136,7 +136,7 @@ int GameSound::Init(bool _sound_enabled) {
 	GLOBALS->Value("sound_use_variable_pitch", use_variable_pitch);
 	GLOBALS->Value("sound_freq_range", freq_range);
 
-	return 0;
+	return true;
 }
 
 void GameSound::Shutdown() {

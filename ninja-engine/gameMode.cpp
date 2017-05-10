@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "gameMode.h"
 
+bool GameMode::Init(XMLNode)
+{
+	return false;
+}
+
 GameMode::GameMode() {}
 GameMode::~GameMode() {}
 

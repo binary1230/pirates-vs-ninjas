@@ -113,24 +113,24 @@ void GameMenu::CheckKeys() {
 	}
 }
 
-int GameMenu::Init(XMLNode xMode) {
+bool GameMenu::Init(XMLNode xMode) {
 	current_pos = 0;
 
 	back = ASSETMANAGER->LoadSprite(xMode.getChildNode("bgPic").getText());
 	if (!back) {
 		TRACE("-- MENU ERROR: Couldn't load bgPic.\n");
-		return -1;
+		return false;
 	}
 
 	selector = ASSETMANAGER->LoadSprite(xMode.getChildNode("selectorPic").getText());
 	if (!selector) {
 		TRACE("-- MENU ERROR: Couldn't load selectorPic\n");
-		return -1;
+		return false;
 	}
 
 	if (!xMode.getChildNode("xpos").getInt(x_pos)) {
 		TRACE("-- MENU ERROR: Invalid xPos\n");
-		return -1;
+		return false;
 	}
 
 	XMLNode xPositions = xMode.getChildNode("ypositions");
@@ -143,7 +143,7 @@ int GameMenu::Init(XMLNode xMode) {
 
 		if (!xPos.getInt(ypos)) {
 			TRACE("-- MENU ERROR: Invalid yPos\n");
-			return -1;
+			return false;
 		}
 		y_pos.push_back(ypos);
 
@@ -154,7 +154,7 @@ int GameMenu::Init(XMLNode xMode) {
 		}
 	}
 
-	return 0;
+	return true;
 }
 
 void GameMenu::Shutdown() {

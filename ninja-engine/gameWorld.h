@@ -80,8 +80,7 @@ class GameWorld : public GameMode {
 			void AddNewObjectsIfNeeded();
 
 			//! Sets up simulation from an XML file
-			//XXX should be moved into a friend factory class, or something.
-			int Load();
+			bool Load();
 			bool FinishLoadingObjects();
 		
 			// these virtuals might be overridden by the map editor
@@ -117,7 +116,7 @@ class GameWorld : public GameMode {
 				return vector<Object*>{ std::begin(_objects), std::end(_objects) };
 			}
 
-			virtual int Init(XMLNode xMode);
+			virtual bool Init(XMLNode xMode);
 			virtual void Shutdown();
 
 			inline Editor* GetEditor() {

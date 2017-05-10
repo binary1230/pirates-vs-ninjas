@@ -389,24 +389,24 @@ bool Input::InitRecorder(std::string filename) {
 	return true;
 }
 
-int Input::Init() {
+bool Input::Init() {
 	
 	if (!CommonInit()) {
-		return -1;
+		return false;
 	}
 
 	if (OPTIONS->RecordDemo()) {
 		if (!InitRecorder(OPTIONS->GetDemoFilename()))
-			return -1;
+			return false;
 	} else if (OPTIONS->PlaybackDemo()) {
 		if (!InitPlayback(OPTIONS->GetDemoFilename()))
-			return -1;
+			return false;
 	} else {
 		if (!InitLive())
-			return -1;
+			return false;
 	}
 
-	return 0;
+	return true;
 }
 
 bool Input::InitLive() {

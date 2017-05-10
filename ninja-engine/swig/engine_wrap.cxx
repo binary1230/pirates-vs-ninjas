@@ -3024,7 +3024,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Game_CreateGameState(void * jarg1) {
   Game *arg1 = (Game *) 0 ;
   
   arg1 = (Game *)jarg1; 
-  (arg1)->CreateGameState();
+  (arg1)->CreateGameStateIfNotExists();
 }
 
 

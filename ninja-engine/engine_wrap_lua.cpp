@@ -7408,14 +7408,14 @@ static int _wrap_Game_CreateGameState(lua_State* L) {
   int SWIG_arg = 0;
   Game *arg1 = (Game *) 0 ;
   
-  SWIG_check_num_args("Game::CreateGameState",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::CreateGameState",1,"Game *");
+  SWIG_check_num_args("Game::CreateGameStateIfNotExists",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::CreateGameStateIfNotExists",1,"Game *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
     SWIG_fail_ptr("Game_CreateGameState",1,SWIGTYPE_p_Game);
   }
   
-  (arg1)->CreateGameState();
+  (arg1)->CreateGameStateIfNotExists();
   
   return SWIG_arg;
   
@@ -7547,7 +7547,7 @@ static swig_lua_method swig_Game_methods[]= {
     { "SignalGameExit", _wrap_Game_SignalGameExit},
     { "SignalEndCurrentMode", _wrap_Game_SignalEndCurrentMode},
     { "ShouldExit", _wrap_Game_ShouldExit},
-    { "CreateGameState", _wrap_Game_CreateGameState},
+    { "CreateGameStateIfNotExists", _wrap_Game_CreateGameState},
     { "FreeGameState", _wrap_Game_FreeGameState},
     { "GetState", _wrap_Game_GetState},
     { "GetPropPhysicsDebugDraw", _wrap_Game_GetPropPhysicsDebugDraw},

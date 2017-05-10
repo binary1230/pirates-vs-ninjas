@@ -48,8 +48,7 @@ class GameSound {
 
 			void StopSound(ALLEGRO_SAMPLE_ID* sample_id);
 
-			//! Init the sound system
-			int Init(bool _sound_enabled);
+			bool Init(bool _sound_enabled);
 
 			void Update();
 

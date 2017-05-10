@@ -5,7 +5,7 @@
 #include "input.h"
 #include "window.h"
 
-int AnimationEditorMode::Init( XMLNode xMode )
+bool AnimationEditorMode::Init( XMLNode xMode )
 {
 	m_pkCursorSprite = ASSETMANAGER->LoadSprite("cursor.png");
 	assert(m_pkCursorSprite && "Unable to load cursor");

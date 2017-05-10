@@ -59,7 +59,7 @@ void GameModes::DoEndCurrentMode() {
 
 	std::string mode_to_load = PickNextMode(exitInfo);
 
-	if (mode_to_load.length() == 0 || LoadMode(mode_to_load, exitInfo) == -1)
+	if (mode_to_load.length() == 0 || !LoadMode(mode_to_load, exitInfo))
 		signal_game_exit = true;
 }
 
@@ -88,7 +88,7 @@ std::string GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 //! Use the specified mode exit info from the last mode that exited
 //! If there was no mode exit info, just pass in a blank oldExitInfo and
 //! the new mode will ignore it.
-int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldExitInfo) {
+bool GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldExitInfo) {	
 	currentMode = NULL;
 
 	TRACE(" Mode Info: filename '%s'\n", mode_filename.c_str() );
@@ -96,7 +96,7 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 
 	if (mode_filename.empty()) {
 		TRACE("ERROR: Can't load modefile named '%s'", mode_filename.c_str());
-		return -1;
+		return false;
 	}
 
 	string modeType;
@@ -141,7 +141,7 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 		error = true;
 	} else {
 		// pass on the old exit info
-		currentMode->SetOldExitInfo(oldExitInfo); 
+		currentMode->SetOldExitInfo(oldExitInfo);
 
 		// setup the new exit info
 		GameModeExitInfo exitInfo = currentMode->GetExitInfo();
@@ -149,14 +149,14 @@ int GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldEx
 		currentMode->SetExitInfo(exitInfo);
 	}
 
-	if (error || currentMode->Init(xMode) == -1) {
+	if (error || !currentMode->Init(xMode)) {
 		TRACE("ERROR: GameModes: failed to init mode type '%s'!\n", modeType.c_str());
-		return -1;
+		return false;
 	}
 
 	WINDOW->FadeIn(30);
 		
-	return 0;
+	return true;
 }
 
 void GameModes::DoGameExit() {
@@ -175,7 +175,7 @@ void GameModes::SignalGameExit() {
 	signal_game_exit = true;
 }
 
-int GameModes::Init(XMLNode _xGame) {
+bool GameModes::Init(XMLNode _xGame) {
 
 	TRACE(" Modes: Starting init.\n");
 
@@ -190,13 +190,12 @@ int GameModes::Init(XMLNode _xGame) {
 
 	if (max <= 0) {
 		TRACE(" -- Error: No modes found.\n");
-		return -1;
+		return false;
 	}
 
 	mode_files.resize(max); 
 	std::string tmp;
 
-	// iterate backwards for push_back(), lame I know.
 	for (i=iterator=0; i < max; i++) {
 		mode_files[i] = _xGame.getChildNode("mode_file", &iterator).getText();
 	}
@@ -209,15 +208,15 @@ int GameModes::Init(XMLNode _xGame) {
 	}
 
 	// actually load up the first mode
- 	if (LoadMode(firstModeToLoad, GameModeExitInfo() ) == -1) {
-		return -1;
+ 	if (!LoadMode(firstModeToLoad, GameModeExitInfo())) {
+		return false;
 	}
 
 	assert(currentMode != NULL);
 	
 	TRACE(" Modes: Init complete.\n");
 
-	return 0;
+	return true;
 }
 
 void GameModes::Shutdown() {

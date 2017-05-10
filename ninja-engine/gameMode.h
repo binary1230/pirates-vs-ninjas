@@ -58,7 +58,7 @@ class GameMode {
 			GameModeExitInfo lastExitInfo;		
 
 		public:
-			virtual int Init(XMLNode) = 0;
+			virtual bool Init(XMLNode);
 			virtual void Shutdown() = 0;
 
 			//! Draw this mode

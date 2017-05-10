@@ -20,12 +20,12 @@ DECLARE_SINGLETON(Game)
 
 // Parse the master XML file
 // returns: XMLNode of first GameMode to load
-int Game::LoadXMLConfig(std::string xml_filename) {
+bool Game::LoadXMLConfig(std::string xml_filename) {
 				
 	string xml_path = ASSETMANAGER->GetPathOf(xml_filename.c_str());
 	if (xml_path.length() <= 0) {
 		TRACE("Error: Game can't find mater XML file named %s", xml_filename.c_str());
-		return -1;
+		return false;
 	}
 
 	xGame = XMLNode::openFileHelper(xml_path.c_str(), "game");
@@ -50,7 +50,7 @@ int Game::LoadXMLConfig(std::string xml_filename) {
 	GLOBALS->CreateInstance();
 	GLOBALS->Init(xGlobalVars);
 
-	return 0;	
+	return true;
 }
 
 void Game::SignalEndCurrentMode() {
@@ -59,7 +59,7 @@ void Game::SignalEndCurrentMode() {
 
 //! Initialize basic allegro library stuff
 //! This must be called FIRST before ANY allegro stuff
-int Game::InitAllegro() {
+bool Game::InitAllegro() {
 	
 	#if ALLEGRO_VERBOSE_DEBUG_OUTPUT
 	al_register_trace_handler(allegro_debug_printer);
@@ -67,12 +67,12 @@ int Game::InitAllegro() {
 
 	if (!al_init()) {
 		TRACE("-- FATAL ERROR: Allegro_init() failed.\n");
-		return -1;
+		return false;
 	}
 
 	SetRandomSeed(42);	// for now, makes testing easier
 
-	return 0;
+	return true;
 }
 
 //! Initialize game systems - main function
@@ -80,7 +80,7 @@ int Game::InitAllegro() {
 //! This is the first init function, it needs to initialize
 //! Allegro, the window, the input subsystem, and the default game mode
 //! BE CAREFUL, things need to be done IN ORDER here.
-int Game::InitSystems() {
+bool Game::InitSystems() {
 		
 	TRACE("[Beginning Game Init]\n");
 				
@@ -93,16 +93,16 @@ int Game::InitSystems() {
 	RegisterObjectPrototypes();
 
 	TRACE("[init: allegro]\n");
-	if (InitAllegro() < 0) {
+	if (!InitAllegro()) {
 		TRACE("ERROR: InitSystems: failed to init allegro!\n");
-		return -1;
+		return false;
 	}
 
 	TRACE("[init: assetManager]\n");
 	ASSETMANAGER->CreateInstance();
-	if (!ASSETMANAGER || ASSETMANAGER->Init() < 0) {
+	if (!ASSETMANAGER || !ASSETMANAGER->Init()) {
 		TRACE("ERROR: InitSystems: failed to create assetManager!\n");
-		return -1;
+		return false;
 	}
 
 	ASSETMANAGER->AppendToSearchPath("data/");			// what we normally expect
@@ -112,26 +112,26 @@ int Game::InitSystems() {
 	TRACE("[init: xml config]\n");
 
 	// just DIES if it can't load this file (bad)
-	if (LoadXMLConfig("default.xml") < 0) {
+	if (!LoadXMLConfig("default.xml")) {
 		TRACE("ERROR: Failed to parse default.xml");	
-		return -1;
+		return false;
 	}
 
 	TRACE("[init: window]\n");
 	WINDOW->CreateInstance();
-	if ( !WINDOW ||	WINDOW->Init(screen_size_x, screen_size_y, OPTIONS->IsFullscreen()) < 0 ) {
+	if ( !WINDOW ||	!WINDOW->Init(screen_size_x, screen_size_y, OPTIONS->IsFullscreen()) ) {
 		TRACE("ERROR: InitSystems: failed to init window!\n");
-		return -1;
+		return false;
 	}
 
 	TRACE("[init: input subsystem]\n");
-	if (InitInput() == -1) {
+	if (!InitInput()) {
 		TRACE("ERROR: InitSystems: failed to init input subsystem!\n");
-		return -1;
+		return false;
 	}
 
 	TRACE("[init: sound subsystem]\n");
-	if (InitSound() == -1) {
+	if (!InitSound()) {
 		TRACE("ERROR: InitSystems: failed to init sound subsystem!\n");
 	}
 
@@ -139,64 +139,64 @@ int Game::InitSystems() {
 	LUA->CreateInstance();
 	if ( !LUA || !LUA->Init() ) {
 		TRACE("ERROR: InitSystems: failed to init lua scripting!\n");
-		return -1;
+		return false;
 	}
 
 	TRACE("[init: loading game modes]\n");
-	if (LoadGameModes() == -1) {
+	if (!LoadGameModes()) {
 		TRACE("ERROR: InitSystems: failed to init default game mode!\n");
-		return -1;
+		return false;
 	}
 
 	if (!InitAllegroEvents()) {
 		TRACE("ERROR: InitSystems: Can't init timers.\n");
-		return -1;
+		return false;
 	}
 		
 	TRACE("[init complete]\n");
 				
-	return 0;
+	return true;
 }
 
-int Game::LoadGameModes() {
+bool Game::LoadGameModes() {
 	modes = new GameModes();
 
 	if (!modes)
-		return -1;
+		return false;
 
 	return modes->Init(xGame);
 }
 
 //! Init sound subsystem
 //TODO if sound init fails, make it just keep going instead of erroring out.
-int Game::InitSound() {
+bool Game::InitSound() {
 
 	SOUND->CreateInstance();
 
 	if (!SOUND) {
 		TRACE(" Failed to create sound instance.\n");
-		return -1;
+		return false;
 	}
 
 	if (!OPTIONS->SoundEnabled())
 		TRACE(" Sound disabled.\n");
 
-	if ( !SOUND || (SOUND->Init(OPTIONS->SoundEnabled()) == -1) ) {
-		return -1;
+	if ( !SOUND || !SOUND->Init(OPTIONS->SoundEnabled())) {
+		return false;
 	}
 				
-	return 0;
+	return true;
 }
 
 //! Init input subsystem
-int Game::InitInput() {
+bool Game::InitInput() {
 	INPUT->CreateInstance();
 	
-	if ( !INPUT || (INPUT->Init() == -1) ) {
-		return -1;
+	if ( !INPUT || !INPUT->Init() ) {
+		return false;
 	}
 
-	return 0;
+	return true;
 }
 
 //! Init game timers
@@ -245,7 +245,7 @@ bool Game::Init(const int argc, const char** argv) {
 		return false;
 	}
 
-	if (InitSystems() == -1) {
+	if (!InitSystems()) {
 		TRACE("ERROR: Failed to init game!\n");
 		return false;
 	}
@@ -423,7 +423,7 @@ void Game::SignalGameExit() {
 	modes->SignalGameExit();
 }
 
-void Game::CreateGameState() {
+void Game::CreateGameStateIfNotExists() {
 	if (!_state)
 		_state = new GameState();
 }
@@ -437,7 +437,7 @@ void Game::FreeGameState() {
 
 GameState* Game::GetState()
 {
-	CreateGameState();
+	CreateGameStateIfNotExists();
 	return _state;
 }
 

@@ -18,7 +18,7 @@ class GameModes {
 		void DoEndCurrentMode();
 		void DoGameExit();
 
-		int LoadMode(std::string, const GameModeExitInfo& exitInfo);
+		bool LoadMode(std::string, const GameModeExitInfo& exitInfo);
 		std::string PickNextMode(const GameModeExitInfo& exitInfo);
 
 	public:
@@ -26,13 +26,11 @@ class GameModes {
 		void Draw();
 
 		//! Should point to a <game> element with <mode_file> tags
-		int Init(XMLNode _xGame);
+		bool Init(XMLNode _xGame);
 		void Shutdown();
 
 		void SignalEndCurrentMode();
 		void SignalGameExit();
-
-		void LoadMode(int which);
 
 		GameModes();
 		~GameModes();

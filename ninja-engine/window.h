@@ -49,7 +49,7 @@ class Window {
 		void UpdateFade();
 
 	public:
-		int Init(	uint _width, uint _height, bool _fullscreen = 0);
+		bool Init(uint _width, uint _height, bool _fullscreen = 0);
 
 		void SetTitle( const char* szTitle );
 		void Shutdown();

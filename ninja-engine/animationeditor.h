@@ -17,7 +17,7 @@ class AnimationEditorMode : public GameMode
 			void LoadSprite(const char* objectXmlFile);
 
 		public:
-			int Init(XMLNode);
+			bool Init(XMLNode);
 			void Shutdown();
 
 			void Draw();
