@@ -1618,6 +1618,14 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_logging_fn_get() {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_allegro_debug_printer(char * jarg1) {
+  char *arg1 = (char *) 0 ;
+  
+  arg1 = (char *)jarg1; 
+  allegro_debug_printer((char const *)arg1);
+}
+
+
 SWIGEXPORT int SWIGSTDCALL CSharp_DEFAULT_SCREEN_SIZE_X_get() {
   int jresult ;
   int result;
@@ -3008,6 +3016,34 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Game_ShouldExit(void * jarg1) {
   arg1 = (Game *)jarg1; 
   result = (bool)(arg1)->ShouldExit();
   jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_CreateGameState(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
+  
+  arg1 = (Game *)jarg1; 
+  (arg1)->CreateGameState();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_FreeGameState(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
+  
+  arg1 = (Game *)jarg1; 
+  (arg1)->FreeGameState();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Game_GetState(void * jarg1) {
+  void * jresult ;
+  Game *arg1 = (Game *) 0 ;
+  GameState *result = 0 ;
+  
+  arg1 = (Game *)jarg1; 
+  result = (GameState *)(arg1)->GetState();
+  jresult = (void *)result; 
   return jresult;
 }
 

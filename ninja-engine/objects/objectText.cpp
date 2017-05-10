@@ -156,7 +156,7 @@ bool ObjectText::Init() {
 	SetText("");
 	SetAvatarFilename("");
 
-	wait_sprite = ASSETMANAGER->LoadSprite("wait1.png", true);
+	wait_sprite = ASSETMANAGER->LoadSprite("wait1.png");
 
 	// really shouldn't assume this...
 	SetModalActive(true);

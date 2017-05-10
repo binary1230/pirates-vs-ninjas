@@ -108,6 +108,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <iomanip>
+#include <sstream>
 #include <math.h>
 #include <png.h>
 // #include <GL/gl.h>

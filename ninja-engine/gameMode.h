@@ -4,22 +4,22 @@
 //! Holds info about the last mode completed (if wanted)
 struct GameModeExitInfo {
 
-	bool useExitInfo;					//! Whether to use any of this info at all.
+	bool useExitInfo;				//! Whether to use any of this info at all.
 
-	std::string lastModeName;			//! The name of the mode that is exiting 
-														//! (e.g. "level1.xml") 
+	std::string lastModeName;		//! The name of the mode that is exiting 
+									//! (e.g. "level1.xml") 
 
 	std::string nextModeToLoad;		//! If not empty, holds the name of the
-														//! next mode to run. (e.g. "level2.xml")
+									//! next mode to run. (e.g. "level2.xml")
 
 	std::string lastPortalName;		//! The last portal we went through
-														//! (allows player to spawn at a specific door)
+									//! (allows player to spawn at a specific door)
 	
 	bool useNextModeToLoad;
 	bool useLastPortalName;
 
 	bool showInitialText;			//! sorta-hack.  set to false to disable initial
-														//! text.  useful for portal warping
+									//! text.  useful for portal warping
 
 	GameModeExitInfo() {
 		nextModeToLoad = lastPortalName = lastModeName = "";

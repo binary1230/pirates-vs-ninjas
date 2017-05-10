@@ -65,9 +65,7 @@ class AssetManager {
 
 		//! Opens a bitmap file, or returns NULL on failure
 		//! This function looks in the current search path
-		//! it also outputs the palette in *pal
-		//! if use_alpha is true, this bitmap is loaded as a 32bit RGBA image
-		Sprite* LoadSprite(const char* filename, bool use_alpha = false); 
+		Sprite* LoadSprite(const char* filename, bool suppress_file_errors = false);
 
 		//! Opens a sound file (e.g. WAV), or returns NULL on failure
 		//! This function looks in the current search path

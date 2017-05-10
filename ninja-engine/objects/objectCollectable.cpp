@@ -20,6 +20,8 @@ bool ObjectCollectable::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
+	// TODO: _pickup_type = xMode.getChildNode("item_type").getText();
+
 	uses_physics_engine = 1;
 	is_static = 1;
 	is_sensor = 1;

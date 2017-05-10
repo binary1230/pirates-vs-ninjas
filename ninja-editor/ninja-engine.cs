@@ -1322,6 +1322,20 @@ public class Game : global::System.IDisposable {
     return ret;
   }
 
+  public void CreateGameState() {
+    enginePINVOKE.Game_CreateGameState(swigCPtr);
+  }
+
+  public void FreeGameState() {
+    enginePINVOKE.Game_FreeGameState(swigCPtr);
+  }
+
+  public SWIGTYPE_p_GameState GetState() {
+    global::System.IntPtr cPtr = enginePINVOKE.Game_GetState(swigCPtr);
+    SWIGTYPE_p_GameState ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_GameState(cPtr, false);
+    return ret;
+  }
+
   public bool GetPropPhysicsDebugDraw() {
     bool ret = enginePINVOKE.Game_GetPropPhysicsDebugDraw(swigCPtr);
     return ret;
@@ -3683,6 +3697,9 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_logging_fn_get")]
   public static extern global::System.IntPtr logging_fn_get();
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_allegro_debug_printer")]
+  public static extern void allegro_debug_printer(string jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_DEFAULT_SCREEN_SIZE_X_get")]
   public static extern int DEFAULT_SCREEN_SIZE_X_get();
 
@@ -4063,6 +4080,15 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_ShouldExit")]
   public static extern bool Game_ShouldExit(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_CreateGameState")]
+  public static extern void Game_CreateGameState(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_FreeGameState")]
+  public static extern void Game_FreeGameState(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_GetState")]
+  public static extern global::System.IntPtr Game_GetState(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_delete_Game")]
   public static extern void delete_Game(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -5037,6 +5063,10 @@ public class engine {
     } 
   }
 
+  public static void allegro_debug_printer(string text) {
+    enginePINVOKE.allegro_debug_printer(text);
+  }
+
   public static void StringSplit(string str, string delim, SWIGTYPE_p_std__vectorT_std__string_t results) {
     enginePINVOKE.StringSplit(str, delim, SWIGTYPE_p_std__vectorT_std__string_t.getCPtr(results));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
@@ -5206,6 +5236,22 @@ public class SWIGTYPE_p_Camera {
   }
 
   internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_Camera obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+}
+
+public class SWIGTYPE_p_GameState {
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+
+  internal SWIGTYPE_p_GameState(global::System.IntPtr cPtr, bool futureUse) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+
+  protected SWIGTYPE_p_GameState() {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
+  }
+
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_GameState obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 }

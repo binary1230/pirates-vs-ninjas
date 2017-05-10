@@ -1,5 +1,5 @@
-#ifndef Game_H
-#define Game_H
+#ifndef GAME_H
+#define GAME_H
 
 class Game;
 class BaseInput;
@@ -7,8 +7,7 @@ class GameMode;
 class AssetManager;
 class GameSound;
 class GameModes;
-
-//! Represents the current state of the game.
+class GameState;
 
 //! The MAIN class in the game - the centrally
 //! coordinated object which initializes, runs, and destroys
@@ -59,9 +58,6 @@ class Game {
 		//! Draw the current state of the game
 		void Draw();
 
-		//! Update FPS display
-		void UpdateFPS();
-		
 		//! Set to TRUE to immediately shutdown the game 
 		bool exit_game;	
 	
@@ -79,6 +75,8 @@ class Game {
 
 		//! The current FPS rate
 		int m_iCurrentFps;
+
+		GameState* _state;
 					
 	public:
 
@@ -125,6 +123,11 @@ class Game {
 		void SignalEndCurrentMode();
 
 		bool ShouldExit() { return exit_game; }
+
+		void CreateGameState();
+		void FreeGameState();
+
+		GameState* GetState();
 		
 		~Game();
 
@@ -133,4 +136,4 @@ class Game {
 
 #define GAME Game::GetInstance()
 
-#endif
+#endif // GAME_H

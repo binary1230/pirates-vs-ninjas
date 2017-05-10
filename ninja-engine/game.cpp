@@ -14,6 +14,7 @@
 #include "physics.h"
 #include "gameWorld.h"
 #include "objectFactory.h"
+#include "gameState.h"
 
 DECLARE_SINGLETON(Game)
 
@@ -54,20 +55,6 @@ int Game::LoadXMLConfig(std::string xml_filename) {
 
 void Game::SignalEndCurrentMode() {
 	modes->SignalEndCurrentMode();
-}
-
-void allegro_debug_printer(const char *text)
-{
-	// filter out some spam here.
-	if (strncmp("agl-tex INFO", text, 12) != 0 &&
-		strncmp("agl-font INFO", text, 13) != 0 &&
-		strncmp("agl-win INFO", text, 12) != 0 &&
-		strncmp("agl-scorer INFO", text, 15) != 0 &&
-		strncmp("al-gfx INFO", text, 11) != 0 )
-	{
-		        
-		TRACE("%s", text);
-	}
 }
 
 //! Initialize basic allegro library stuff
@@ -424,8 +411,9 @@ int Game::GetRandomSeed() const {
 };
 
 Game::Game() {
-	modes = NULL;
-	m_timer = NULL;
+	modes = nullptr;
+	m_timer = nullptr;
+	_state = nullptr;
 	_PhysicsDebugDraw = false;
 }
 
@@ -433,6 +421,24 @@ void Game::SignalGameExit() {
 	exit_game = true; 
 	is_playing_back_demo = false;
 	modes->SignalGameExit();
+}
+
+void Game::CreateGameState() {
+	if (!_state)
+		_state = new GameState();
+}
+
+void Game::FreeGameState() {
+	if (_state)
+		delete _state;
+
+	_state = nullptr;
+}
+
+GameState* Game::GetState()
+{
+	CreateGameState();
+	return _state;
 }
 
 Game::~Game() {}

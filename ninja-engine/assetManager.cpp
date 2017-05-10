@@ -111,7 +111,7 @@ bool AssetManager::FileExists(const char* file) const {
 }
 
 //! Opens a bitmap, utilizes the search paths
-Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha) 
+Sprite* AssetManager::LoadSprite(const char* filename, bool suppress_file_errors) 
 {	
 	Sprite* sprite = NULL;
 	
@@ -125,10 +125,6 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 	// 2) Try to open the file
 	std::string file = GetPathOf(filename);
 	if (file.length() != 0) {
-
-		sprite = new Sprite();
-		assert(sprite && "ERROR: Out of memory, can't allocate sprite!\n");
-
 		al_set_new_bitmap_format(ALLEGRO_PIXEL_FORMAT_ANY_32_WITH_ALPHA);
 
 		int flags = al_get_new_bitmap_flags();
@@ -146,28 +142,28 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool use_alpha)
 		#endif
 	
 		if (!bmp) {
-			TRACE("ERROR: Can't load bitmap file: '%s'\n", file);
-			delete sprite;
+			if (!suppress_file_errors) {
+				TRACE("ERROR: Can't load bitmap file: '%s'\n", file);
+			}
 			return NULL;
 		}
+
+		uint opengl_tex_id = al_get_opengl_texture(bmp);
+
+		if (opengl_tex_id == 0) {
+			TRACE("ERROR: Failed making texture for '%s'\n", file.c_str());
+			return NULL;
+		}
+
+		sprite = new Sprite();
 
 		sprite->width = al_get_bitmap_width(bmp);
 		sprite->height = al_get_bitmap_height(bmp);
-		sprite->texture = al_get_opengl_texture(bmp);
-				
+		sprite->texture = opengl_tex_id;
+
+		sprites[filename] = sprite;
+
 		bmp = NULL;
-
-		// add to the loaded sprites list
-		if (sprite->texture != 0) {
-			sprites[filename] = sprite;
-		} else {
-			TRACE(	"ERROR: Failed making texture for '%s'\n"
-					"-NOTE: Make sure texture size is a multiple of 2!\n",
-					file.c_str());
-
-			delete sprite;
-			return NULL;
-		}
 	}
 	
 	return sprite;

@@ -40,6 +40,20 @@ void StringSplit(std::string str, std::string delim, vector<std::string> &result
 	}
 }
 
+void allegro_debug_printer(const char *text)
+{
+	// filter out some spam here.
+	if (strncmp("agl-tex INFO", text, 12) != 0 &&
+		strncmp("agl-font INFO", text, 13) != 0 &&
+		strncmp("agl-win INFO", text, 12) != 0 &&
+		strncmp("agl-scorer INFO", text, 15) != 0 &&
+		strncmp("al-gfx INFO", text, 11) != 0)
+	{
+
+		TRACE("%s", text);
+	}
+}
+
 /*
 // DEBUG HACK STUFF
 #ifndef DEBUG_HACK_NASTY_STUFF

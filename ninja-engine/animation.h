@@ -97,7 +97,9 @@ class Animation {
 		//! Used in constructing a new animation
 		//! Pushes a sprite frame onto it.
 		bool CreateSpriteFrame(	const char* filename, const int duration, 
-								const bool freeze_at_end, const bool use_alpha );
+								const bool freeze_at_end);
+
+		bool CreateSingleSpriteFrame(const char * file, const int duration, bool freeze_at_end);
 
 		//! Used in constructing a new animation 
 		//! Pushes a sound frame onto it

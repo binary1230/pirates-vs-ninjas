@@ -459,7 +459,6 @@ void GameWorld::CachePlayerObjects() {
 	}
 }
 
-
 bool GameWorld::LoadObjectDefsFromXML() {
 	for (string& objectDefXmlFile : m_included_objectdef_xml_files) {
 		if (!OBJECT_FACTORY->LoadObjectDefsFromIncludeXML(objectDefXmlFile)) {

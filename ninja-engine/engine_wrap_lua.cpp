@@ -2706,41 +2706,42 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_GameMode swig_types[8]
 #define SWIGTYPE_p_GameModeExitInfo swig_types[9]
 #define SWIGTYPE_p_GameOptions swig_types[10]
-#define SWIGTYPE_p_GameWorld swig_types[11]
-#define SWIGTYPE_p_Object swig_types[12]
-#define SWIGTYPE_p_ObjectBackground swig_types[13]
-#define SWIGTYPE_p_ObjectBounce swig_types[14]
-#define SWIGTYPE_p_ObjectCollectable swig_types[15]
-#define SWIGTYPE_p_ObjectController swig_types[16]
-#define SWIGTYPE_p_ObjectCutBars swig_types[17]
-#define SWIGTYPE_p_ObjectDoor swig_types[18]
-#define SWIGTYPE_p_ObjectEnemy swig_types[19]
-#define SWIGTYPE_p_ObjectFactory swig_types[20]
-#define SWIGTYPE_p_ObjectFan swig_types[21]
-#define SWIGTYPE_p_ObjectLayer swig_types[22]
-#define SWIGTYPE_p_ObjectPlayer swig_types[23]
-#define SWIGTYPE_p_ObjectSpring swig_types[24]
-#define SWIGTYPE_p_ObjectStatic swig_types[25]
-#define SWIGTYPE_p_ObjectText swig_types[26]
-#define SWIGTYPE_p_Sprite swig_types[27]
-#define SWIGTYPE_p_XMLNode swig_types[28]
-#define SWIGTYPE_p__Rect swig_types[29]
-#define SWIGTYPE_p_b2Vec2 swig_types[30]
-#define SWIGTYPE_p_b2WorldManifold swig_types[31]
-#define SWIGTYPE_p_f_p_q_const__char__void swig_types[32]
-#define SWIGTYPE_p_float swig_types[33]
-#define SWIGTYPE_p_listT_Object_p_t swig_types[34]
-#define SWIGTYPE_p_p_char swig_types[35]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[36]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[37]
-#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[38]
-#define SWIGTYPE_p_std__string swig_types[39]
-#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[40]
-#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[41]
-#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[42]
-#define SWIGTYPE_p_unsigned_int swig_types[43]
-static swig_type_info *swig_types[45];
-static swig_module_info swig_module = {swig_types, 44, 0, 0, 0, 0};
+#define SWIGTYPE_p_GameState swig_types[11]
+#define SWIGTYPE_p_GameWorld swig_types[12]
+#define SWIGTYPE_p_Object swig_types[13]
+#define SWIGTYPE_p_ObjectBackground swig_types[14]
+#define SWIGTYPE_p_ObjectBounce swig_types[15]
+#define SWIGTYPE_p_ObjectCollectable swig_types[16]
+#define SWIGTYPE_p_ObjectController swig_types[17]
+#define SWIGTYPE_p_ObjectCutBars swig_types[18]
+#define SWIGTYPE_p_ObjectDoor swig_types[19]
+#define SWIGTYPE_p_ObjectEnemy swig_types[20]
+#define SWIGTYPE_p_ObjectFactory swig_types[21]
+#define SWIGTYPE_p_ObjectFan swig_types[22]
+#define SWIGTYPE_p_ObjectLayer swig_types[23]
+#define SWIGTYPE_p_ObjectPlayer swig_types[24]
+#define SWIGTYPE_p_ObjectSpring swig_types[25]
+#define SWIGTYPE_p_ObjectStatic swig_types[26]
+#define SWIGTYPE_p_ObjectText swig_types[27]
+#define SWIGTYPE_p_Sprite swig_types[28]
+#define SWIGTYPE_p_XMLNode swig_types[29]
+#define SWIGTYPE_p__Rect swig_types[30]
+#define SWIGTYPE_p_b2Vec2 swig_types[31]
+#define SWIGTYPE_p_b2WorldManifold swig_types[32]
+#define SWIGTYPE_p_f_p_q_const__char__void swig_types[33]
+#define SWIGTYPE_p_float swig_types[34]
+#define SWIGTYPE_p_listT_Object_p_t swig_types[35]
+#define SWIGTYPE_p_p_char swig_types[36]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t swig_types[37]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__const_iterator swig_types[38]
+#define SWIGTYPE_p_std__mapT_std__string_const_XMLNode_t__iterator swig_types[39]
+#define SWIGTYPE_p_std__string swig_types[40]
+#define SWIGTYPE_p_std__vectorT_ObjectLayer_p_t swig_types[41]
+#define SWIGTYPE_p_std__vectorT_Object_p_t swig_types[42]
+#define SWIGTYPE_p_std__vectorT_std__string_t swig_types[43]
+#define SWIGTYPE_p_unsigned_int swig_types[44]
+static swig_type_info *swig_types[46];
+static swig_module_info swig_module = {swig_types, 45, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -4122,6 +4123,25 @@ static int _wrap_logging_fn_get(lua_State* L) {
   SWIG_check_num_args("logging_fn",0,0)
   result = (void (*)(char const *))logging_fn;
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_f_p_q_const__char__void,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_allegro_debug_printer(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  
+  SWIG_check_num_args("allegro_debug_printer",1,1)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("allegro_debug_printer",1,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  allegro_debug_printer((char const *)arg1);
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -7384,6 +7404,76 @@ fail:
 }
 
 
+static int _wrap_Game_CreateGameState(lua_State* L) {
+  int SWIG_arg = 0;
+  Game *arg1 = (Game *) 0 ;
+  
+  SWIG_check_num_args("Game::CreateGameState",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::CreateGameState",1,"Game *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_CreateGameState",1,SWIGTYPE_p_Game);
+  }
+  
+  (arg1)->CreateGameState();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Game_FreeGameState(lua_State* L) {
+  int SWIG_arg = 0;
+  Game *arg1 = (Game *) 0 ;
+  
+  SWIG_check_num_args("Game::FreeGameState",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::FreeGameState",1,"Game *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_FreeGameState",1,SWIGTYPE_p_Game);
+  }
+  
+  (arg1)->FreeGameState();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Game_GetState(lua_State* L) {
+  int SWIG_arg = 0;
+  Game *arg1 = (Game *) 0 ;
+  GameState *result = 0 ;
+  
+  SWIG_check_num_args("Game::GetState",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::GetState",1,"Game *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_GetState",1,SWIGTYPE_p_Game);
+  }
+  
+  result = (GameState *)(arg1)->GetState();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_GameState,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Game_GetPropPhysicsDebugDraw(lua_State* L) {
   int SWIG_arg = 0;
   Game *arg1 = (Game *) 0 ;
@@ -7457,6 +7547,9 @@ static swig_lua_method swig_Game_methods[]= {
     { "SignalGameExit", _wrap_Game_SignalGameExit},
     { "SignalEndCurrentMode", _wrap_Game_SignalEndCurrentMode},
     { "ShouldExit", _wrap_Game_ShouldExit},
+    { "CreateGameState", _wrap_Game_CreateGameState},
+    { "FreeGameState", _wrap_Game_FreeGameState},
+    { "GetState", _wrap_Game_GetState},
     { "GetPropPhysicsDebugDraw", _wrap_Game_GetPropPhysicsDebugDraw},
     { "SetPropPhysicsDebugDraw", _wrap_Game_SetPropPhysicsDebugDraw},
     {0,0}
@@ -16115,6 +16208,7 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {0,0,0,0,0,0}
 };
 static swig_lua_method swig_SwigModule_methods[]= {
+    { "allegro_debug_printer", _wrap_allegro_debug_printer},
     { "StringSplit", _wrap_StringSplit},
     { "DebugTrace", _wrap_DebugTrace},
     { "GameOptions_GetInstance", _wrap_GameOptions_GetInstance},
@@ -16250,6 +16344,7 @@ static swig_type_info _swigt__p_Game = {"_p_Game", "Game *", 0, 0, (void*)&_wrap
 static swig_type_info _swigt__p_GameMode = {"_p_GameMode", "GameMode *", 0, 0, (void*)&_wrap_class_GameMode, 0};
 static swig_type_info _swigt__p_GameModeExitInfo = {"_p_GameModeExitInfo", "GameModeExitInfo *", 0, 0, (void*)&_wrap_class_GameModeExitInfo, 0};
 static swig_type_info _swigt__p_GameOptions = {"_p_GameOptions", "GameOptions *", 0, 0, (void*)&_wrap_class_GameOptions, 0};
+static swig_type_info _swigt__p_GameState = {"_p_GameState", "GameState *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_GameWorld = {"_p_GameWorld", "GameWorld *", 0, 0, (void*)&_wrap_class_GameWorld, 0};
 static swig_type_info _swigt__p_Object = {"_p_Object", "Object *", 0, 0, (void*)&_wrap_class_Object, 0};
 static swig_type_info _swigt__p_ObjectBackground = {"_p_ObjectBackground", "ObjectBackground *", 0, 0, (void*)&_wrap_class_ObjectBackground, 0};
@@ -16296,6 +16391,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_GameMode,
   &_swigt__p_GameModeExitInfo,
   &_swigt__p_GameOptions,
+  &_swigt__p_GameState,
   &_swigt__p_GameWorld,
   &_swigt__p_Object,
   &_swigt__p_ObjectBackground,
@@ -16342,6 +16438,7 @@ static swig_cast_info _swigc__p_Game[] = {  {&_swigt__p_Game, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_GameMode[] = {  {&_swigt__p_GameWorld, _p_GameWorldTo_p_GameMode, 0, 0},  {&_swigt__p_GameMode, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameModeExitInfo[] = {  {&_swigt__p_GameModeExitInfo, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameOptions[] = {  {&_swigt__p_GameOptions, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_GameState[] = {  {&_swigt__p_GameState, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GameWorld[] = {  {&_swigt__p_GameWorld, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Object[] = {  {&_swigt__p_ObjectController, _p_ObjectControllerTo_p_Object, 0, 0},  {&_swigt__p_ObjectCutBars, _p_ObjectCutBarsTo_p_Object, 0, 0},  {&_swigt__p_ObjectBounce, _p_ObjectBounceTo_p_Object, 0, 0},  {&_swigt__p_ObjectCollectable, _p_ObjectCollectableTo_p_Object, 0, 0},  {&_swigt__p_ObjectText, _p_ObjectTextTo_p_Object, 0, 0},  {&_swigt__p_ObjectDoor, _p_ObjectDoorTo_p_Object, 0, 0},  {&_swigt__p_ObjectEnemy, _p_ObjectEnemyTo_p_Object, 0, 0},  {&_swigt__p_ObjectSpring, _p_ObjectSpringTo_p_Object, 0, 0},  {&_swigt__p_Object, 0, 0, 0},  {&_swigt__p_ObjectBackground, _p_ObjectBackgroundTo_p_Object, 0, 0},  {&_swigt__p_ObjectPlayer, _p_ObjectPlayerTo_p_Object, 0, 0},  {&_swigt__p_ObjectFan, _p_ObjectFanTo_p_Object, 0, 0},  {&_swigt__p_ObjectStatic, _p_ObjectStaticTo_p_Object, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ObjectBackground[] = {  {&_swigt__p_ObjectBackground, 0, 0, 0},{0, 0, 0, 0}};
@@ -16388,6 +16485,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_GameMode,
   _swigc__p_GameModeExitInfo,
   _swigc__p_GameOptions,
+  _swigc__p_GameState,
   _swigc__p_GameWorld,
   _swigc__p_Object,
   _swigc__p_ObjectBackground,

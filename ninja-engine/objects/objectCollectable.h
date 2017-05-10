@@ -15,6 +15,7 @@ class ObjectCollectable : public Object {
 	}
 
 	protected:
+		string pickup_type;
 				
 	public:
 		IMPLEMENT_CLONE(ObjectCollectable)

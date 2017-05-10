@@ -2,22 +2,19 @@
 
 <objectDefinitions>
 
-<objectDef name="ring" type="Collectable">
+<objectDef name="pickup-bomb" type="Collectable">
 	<animations default="default">
 		<animation name="default">
 			<frames>
-				<frame name="spinners/spinnerXXXX.png" duration="2" />
+				<frame name="spinners/bombXXXX.png" duration="3" />
 			</frames>
 			<show_in_order />
 			<repeat />
 		</animation>
 	</animations>
 	<sounds>
-		<sound name="ring">sounds/ring.wav</sound>
+		<!-- <sound name="ring">sounds/ring.wav</sound> -->
 	</sounds>
-	<properties>
-		<collectable type="ring" />
-	</properties>
 </objectDef>
 
 </objectDefinitions>

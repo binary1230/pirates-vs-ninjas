@@ -170,25 +170,57 @@ void Animation::Shutdown()
 	}
 }
 
-//! Add a sprite frame to this animation
-bool Animation::CreateSpriteFrame(	const char* _file, 
-									const int duration, 
-									bool freeze_at_end, 
-									bool use_alpha) 
-{				
-	AnimFrame *f = new AnimFrame();
-	assert(f != NULL);
-	assert(_file != NULL);
 
-	f->sprite = ASSETMANAGER->LoadSprite(_file, use_alpha);
+bool Animation::CreateSpriteFrame(	const char* file, const int duration, bool freeze_at_end) {
+	// see if this filename has a sequence indicated on it
 
-	if (!f->sprite) {
-		TRACE("ERROR: Can't load image file: '%s'\n", _file);
+	string filename = file;
+
+	int idx = filename.find("XXXX");
+
+	if (idx == string::npos) {
+		// no sequence present, just load this file directly
+		if (CreateSingleSpriteFrame(file, duration, freeze_at_end)) {
+			return true;	
+		} else {
+			TRACE("ERROR: Can't load image file: '%s'\n", file);
+			return false;
+		}
+	}
+	
+	// sequence present, try to load there
+	int frame_num = 1; // start on frame 1
+	bool loaded_this_ok;
+	bool loaded_at_least_one_frame = false;
+	string final_filename;
+
+	do {
+		std::ostringstream ss;
+		ss << std::setw(4) << std::setfill('0') << frame_num;
+		final_filename = filename.substr(0, idx) + ss.str() + filename.substr(idx + 4);
+
+		loaded_this_ok = CreateSingleSpriteFrame(final_filename.c_str(), duration, freeze_at_end);
+		loaded_at_least_one_frame = loaded_at_least_one_frame || loaded_this_ok;
+
+		frame_num++;
+	} while (loaded_this_ok);
+
+	return loaded_at_least_one_frame;
+}
+
+bool Animation::CreateSingleSpriteFrame(const char* file, const int duration, bool freeze_at_end) {
+	assert(file != NULL);
+
+	Sprite* sprite = ASSETMANAGER->LoadSprite(file);
+
+	if (!sprite) {
 		return false;
 	}
 
+	AnimFrame *f = new AnimFrame();
+
+	f->sprite = sprite;
 	f->frame_type = ANIMFRAME_SPRITE;
-	f->sprite->use_alpha = use_alpha;
 	f->duration = duration;
 	f->freeze_at_end = freeze_at_end;
 
@@ -198,7 +230,6 @@ bool Animation::CreateSpriteFrame(	const char* _file,
 bool Animation::CreateEffectFrame(	const std::string &effectData, 
 									const bool freeze_at_end ) 
 {	
-
 	AnimFrame *f = new AnimFrame();
 	assert(f != NULL);
 	assert(effectData.length() > 0);
@@ -319,7 +350,6 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 	int freeze_at_end;
 	XMLNode xFrames, xFrame;
 	int i, iterator, numFrames, numSpriteFrames = 0;
-	bool use_alpha = false;			// whether we use the sprite's alpha channel
 	int first_sprite_frame = -1; // which frame is the first sprite frame
 	
 	Animation* anim = new Animation();
@@ -334,16 +364,12 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 
 	assert(numFrames != 0 && "ERROR: No <frame> tags found!\n");
 
+	bool loaded_ok = true;
+
 	// loop through each <frame> tag
-	for (i=iterator=0; i<numFrames; i++) {
-
+	for (i=iterator=0; i<numFrames; i++) 
+	{
 		xFrame = xFrames.getChildNode("frame", &iterator);
-
-		const char* alpha_enabled = xFrame.getAttribute("alpha_enabled");
-			
-		if (alpha_enabled != NULL && std::string(alpha_enabled) == "true") {
-			use_alpha = true;
-		}
 	
 		const char* freeze = xFrame.getAttribute("pause");
 		if (!freeze)
@@ -356,7 +382,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 		if (xFrame.getAttribute("type") == NULL)
 			frame_type = "sprite";
 		else
-			frame_type = xFrame.getAttribute("type");;
+			frame_type = xFrame.getAttribute("type");
 
 		// figure out what type of frame this is and do The Right Thing
 		if (frame_type == "sprite") 
@@ -364,20 +390,8 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 			// normally what happens - you get an image filename
 			sprite_filename = xFrame.getAttribute("name");
 
-			if (!xFrame.getAttributeInt("duration", duration)) {
-				anim->Shutdown();
-				SAFE_DELETE(anim);
-				return NULL;
-			}
-	
-			if (!anim->CreateSpriteFrame(	sprite_filename.c_str(),
-											duration, 
-											freeze_at_end != 0, 
-											use_alpha)) {
-				anim->Shutdown();
-				SAFE_DELETE(anim);
-				return NULL;
-			}
+			loaded_ok = xFrame.getAttributeInt("duration", duration);
+			loaded_ok = loaded_ok && anim->CreateSpriteFrame(sprite_filename.c_str(), duration, freeze_at_end != 0);
 
 			if (first_sprite_frame == -1)
 				first_sprite_frame = i;
@@ -392,11 +406,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 			extraData = xFrame.getAttribute("data");
 			assert(extraData.length() != 0);
 
-			if (!anim->CreateEffectFrame(extraData, freeze_at_end != 0)) {
-				anim->Shutdown();
-				SAFE_DELETE(anim);
-				return NULL;
-			}
+			loaded_ok = anim->CreateEffectFrame(extraData, freeze_at_end != 0);
 		} 
 		else if (frame_type == "sound") 
 		{
@@ -404,50 +414,36 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 			extraData = xFrame.getAttribute("data");
 			assert(extraData.length() != 0);
 
-			if (!anim->CreateSoundFrame(extraData, freeze_at_end != 0)) {
-				anim->Shutdown();
-				SAFE_DELETE(anim);
-				return NULL;
-			}
+			loaded_ok = anim->CreateSoundFrame(extraData, freeze_at_end != 0);
 		}
 		else if (frame_type == "explosion") {
-			if (!anim->CreateExplosionFrame()) {
-				anim->Shutdown();
-				SAFE_DELETE(anim);
-				return NULL;
-			}
+			loaded_ok = anim->CreateExplosionFrame();
 		}
 		else if (frame_type == "destroy") 
 		{
-			if (!anim->CreateDestroyFrame()) {
-				anim->Shutdown();
-				SAFE_DELETE(anim);
-				return NULL;
-			}
+			loaded_ok = anim->CreateDestroyFrame();
 		} 
 		else if (frame_type == "jumpToFrame")
 		{
-			bool bFailed = false;
 			int iFrameIndexToJumpTo;
 
-			bFailed = !xFrame.getAttributeInt("num", iFrameIndexToJumpTo);
+			loaded_ok = xFrame.getAttributeInt("num", iFrameIndexToJumpTo);
 			iFrameIndexToJumpTo--; // subtract one since this is an INDEX not a FRAME NUMBER
-			bFailed = bFailed || !anim->CreateJumpFrame(iFrameIndexToJumpTo);
-
-			if (bFailed)
-			{
-				anim->Shutdown();
-				SAFE_DELETE(anim);
-				return NULL;
-			}
+			loaded_ok = loaded_ok && anim->CreateJumpFrame(iFrameIndexToJumpTo);
 		}
 		else 
 		{
 			TRACE("ERROR: Invalid frame type specified: '%s'\n", frame_type.c_str());
-			anim->Shutdown();
-			SAFE_DELETE(anim);
-			return NULL;
 		}
+
+		if (!loaded_ok)
+			break;
+	}
+
+	if (!loaded_ok) {
+		anim->Shutdown();
+		SAFE_DELETE(anim);
+		return NULL;
 	}
 
 	// hack.

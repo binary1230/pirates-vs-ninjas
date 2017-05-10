@@ -7,7 +7,7 @@
 
 int AnimationEditorMode::Init( XMLNode xMode )
 {
-	m_pkCursorSprite = ASSETMANAGER->LoadSprite("cursor.png", true);
+	m_pkCursorSprite = ASSETMANAGER->LoadSprite("cursor.png");
 	assert(m_pkCursorSprite && "Unable to load cursor");
 
 	WINDOW->SetClearColor(50,30,30);
