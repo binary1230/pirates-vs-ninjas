@@ -5234,7 +5234,7 @@ static int _wrap_GameMode_Init(lua_State* L) {
   GameMode *arg1 = (GameMode *) 0 ;
   XMLNode arg2 ;
   XMLNode *argp2 ;
-  int result;
+  bool result;
   
   SWIG_check_num_args("GameMode::Init",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameMode::Init",1,"GameMode *");
@@ -5250,8 +5250,8 @@ static int _wrap_GameMode_Init(lua_State* L) {
   }
   arg2 = *argp2;
   
-  result = (int)(arg1)->Init(arg2);
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  result = (bool)(arg1)->Init(arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -5748,7 +5748,7 @@ static int _wrap_GameWorld_Init(lua_State* L) {
   GameWorld *arg1 = (GameWorld *) 0 ;
   XMLNode arg2 ;
   XMLNode *argp2 ;
-  int result;
+  bool result;
   
   SWIG_check_num_args("GameWorld::Init",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::Init",1,"GameWorld *");
@@ -5764,8 +5764,8 @@ static int _wrap_GameWorld_Init(lua_State* L) {
   }
   arg2 = *argp2;
   
-  result = (int)(arg1)->Init(arg2);
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  result = (bool)(arg1)->Init(arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -7404,7 +7404,7 @@ fail:
 }
 
 
-static int _wrap_Game_CreateGameState(lua_State* L) {
+static int _wrap_Game_CreateGameStateIfNotExists(lua_State* L) {
   int SWIG_arg = 0;
   Game *arg1 = (Game *) 0 ;
   
@@ -7412,10 +7412,33 @@ static int _wrap_Game_CreateGameState(lua_State* L) {
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::CreateGameStateIfNotExists",1,"Game *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
-    SWIG_fail_ptr("Game_CreateGameState",1,SWIGTYPE_p_Game);
+    SWIG_fail_ptr("Game_CreateGameStateIfNotExists",1,SWIGTYPE_p_Game);
   }
   
   (arg1)->CreateGameStateIfNotExists();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Game_StartNewGame(lua_State* L) {
+  int SWIG_arg = 0;
+  Game *arg1 = (Game *) 0 ;
+  
+  SWIG_check_num_args("Game::StartNewGame",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Game::StartNewGame",1,"Game *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Game,0))){
+    SWIG_fail_ptr("Game_StartNewGame",1,SWIGTYPE_p_Game);
+  }
+  
+  (arg1)->StartNewGame();
   
   return SWIG_arg;
   
@@ -7547,7 +7570,8 @@ static swig_lua_method swig_Game_methods[]= {
     { "SignalGameExit", _wrap_Game_SignalGameExit},
     { "SignalEndCurrentMode", _wrap_Game_SignalEndCurrentMode},
     { "ShouldExit", _wrap_Game_ShouldExit},
-    { "CreateGameStateIfNotExists", _wrap_Game_CreateGameState},
+    { "CreateGameStateIfNotExists", _wrap_Game_CreateGameStateIfNotExists},
+    { "StartNewGame", _wrap_Game_StartNewGame},
     { "FreeGameState", _wrap_Game_FreeGameState},
     { "GetState", _wrap_Game_GetState},
     { "GetPropPhysicsDebugDraw", _wrap_Game_GetPropPhysicsDebugDraw},
@@ -11311,6 +11335,54 @@ fail:
 }
 
 
+static int _wrap_ObjectCollectable_GetPickupSound(lua_State* L) {
+  int SWIG_arg = 0;
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  std::string result;
+  
+  SWIG_check_num_args("ObjectCollectable::GetPickupSound",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectCollectable::GetPickupSound",1,"ObjectCollectable *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectCollectable,0))){
+    SWIG_fail_ptr("ObjectCollectable_GetPickupSound",1,SWIGTYPE_p_ObjectCollectable);
+  }
+  
+  result = (arg1)->GetPickupSound();
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ObjectCollectable_GetPickupType(lua_State* L) {
+  int SWIG_arg = 0;
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  std::string result;
+  
+  SWIG_check_num_args("ObjectCollectable::GetPickupType",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectCollectable::GetPickupType",1,"ObjectCollectable *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectCollectable,0))){
+    SWIG_fail_ptr("ObjectCollectable_GetPickupType",1,SWIGTYPE_p_ObjectCollectable);
+  }
+  
+  result = (arg1)->GetPickupType();
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_ObjectCollectable_Init(lua_State* L) {
   int SWIG_arg = 0;
   ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
@@ -11373,6 +11445,29 @@ static int _wrap_ObjectCollectable_Shutdown(lua_State* L) {
   }
   
   (arg1)->Shutdown();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ObjectCollectable_Clear(lua_State* L) {
+  int SWIG_arg = 0;
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  
+  SWIG_check_num_args("ObjectCollectable::Clear",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectCollectable::Clear",1,"ObjectCollectable *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectCollectable,0))){
+    SWIG_fail_ptr("ObjectCollectable_Clear",1,SWIGTYPE_p_ObjectCollectable);
+  }
+  
+  (arg1)->Clear();
   
   return SWIG_arg;
   
@@ -11559,9 +11654,12 @@ static swig_lua_attribute swig_ObjectCollectable_attributes[] = {
 };
 static swig_lua_method swig_ObjectCollectable_methods[]= {
     { "Clone", _wrap_ObjectCollectable_Clone},
+    { "GetPickupSound", _wrap_ObjectCollectable_GetPickupSound},
+    { "GetPickupType", _wrap_ObjectCollectable_GetPickupType},
     { "Init", _wrap_ObjectCollectable_Init},
     { "ResetVolatileState", _wrap_ObjectCollectable_ResetVolatileState},
     { "Shutdown", _wrap_ObjectCollectable_Shutdown},
+    { "Clear", _wrap_ObjectCollectable_Clear},
     { "Update", _wrap_ObjectCollectable_Update},
     { "LoadObjectProperties", _wrap_ObjectCollectable_LoadObjectProperties},
     { "OnCollide", _wrap_ObjectCollectable_OnCollide},
@@ -13387,6 +13485,33 @@ fail:
 }
 
 
+static int _wrap_ObjectPlayer_OnItemPickup(lua_State* L) {
+  int SWIG_arg = 0;
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  std::string *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("ObjectPlayer::OnItemPickup",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectPlayer::OnItemPickup",1,"ObjectPlayer *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ObjectPlayer::OnItemPickup",2,"std::string const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectPlayer,0))){
+    SWIG_fail_ptr("ObjectPlayer_OnItemPickup",1,SWIGTYPE_p_ObjectPlayer);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2;
+  (arg1)->OnItemPickup((std::string const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_ObjectPlayer_ResetVolatileState(lua_State* L) {
   int SWIG_arg = 0;
   ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
@@ -13597,6 +13722,7 @@ static swig_lua_method swig_ObjectPlayer_methods[]= {
     { "Shutdown", _wrap_ObjectPlayer_Shutdown},
     { "Update", _wrap_ObjectPlayer_Update},
     { "OnCollide", _wrap_ObjectPlayer_OnCollide},
+    { "OnItemPickup", _wrap_ObjectPlayer_OnItemPickup},
     { "ResetVolatileState", _wrap_ObjectPlayer_ResetVolatileState},
     { "OnAnimationLooped", _wrap_ObjectPlayer_OnAnimationLooped},
     { "PlayAnimation", _wrap_ObjectPlayer_PlayAnimation},

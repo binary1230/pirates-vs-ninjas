@@ -16,6 +16,7 @@
 #include "globalDefines.h"
 #include "physics.h"
 #include "objectCollectable.h"
+#include "gameState.h"
 
 #define DEFAULT_JUMP_VELOCITY 9.0f
 #define DEFAULT_DRAG 0.95f
@@ -271,15 +272,22 @@ void ObjectPlayer::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifol
 
 	if (ObjectDoor* door = dynamic_cast<ObjectDoor*>(obj)) {
 		door_in_front_of_us = door;
-	}
-
-	if (ObjectSpring* spring = dynamic_cast<ObjectSpring*>(obj)) {
+	} else if (ObjectSpring* spring = dynamic_cast<ObjectSpring*>(obj)) {
 		// this should go into the spring class, not here, probably.
 		if (spring->IsSpringActive())
 		{
 			SetVelX(spring->GetPropDirection()->x);
 			SetVelY(spring->GetPropDirection()->y);
 		}
+	}
+}
+
+void ObjectPlayer::OnItemPickup(const string& item_name) {
+	if (item_name == "bomb") {
+		GAME->GetState()->_inventory.has_bombs = true;
+	}
+	else if (item_name == "ring") {
+		GAME->GetState()->_inventory.ring_count++;
 	}
 }
 
@@ -299,6 +307,9 @@ void ObjectPlayer::DropBombsIfNeeded()
 		attack = true;
 
 	if (!attack)
+		return;
+
+	if (!GAME->GetState()->_inventory.has_bombs)
 		return;
 
 	Object* objBall = EFFECTS->TriggerEffect(this, "bomb");

@@ -15,14 +15,20 @@ class ObjectCollectable : public Object {
 	}
 
 	protected:
-		string pickup_type;
+		string _pickup_type;
+		string _sound_on_pickup;
 				
 	public:
 		IMPLEMENT_CLONE(ObjectCollectable)
 
+		string GetPickupSound() { return _sound_on_pickup; }
+		string GetPickupType() { return _pickup_type; }
+
 		bool Init();
 		virtual void ResetVolatileState(VolatileStateLevel level);
 		void Shutdown();
+
+		virtual void Clear();
 		
 		void Update();
 

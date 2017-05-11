@@ -20,13 +20,21 @@ bool ObjectCollectable::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
 		return false;
 
-	// TODO: _pickup_type = xMode.getChildNode("item_type").getText();
+	_pickup_type = xDef.getChildNode("item_type").getText();
+	_sound_on_pickup = xDef.getChildNode("sound_on_pickup").getText();
 
 	uses_physics_engine = 1;
 	is_static = 1;
 	is_sensor = 1;
 
 	return true;
+}
+
+void ObjectCollectable::Clear() {
+	Object::Clear();
+
+	_pickup_type = "";
+	_sound_on_pickup = "";
 }
 
 bool ObjectCollectable::Init() {
@@ -51,7 +59,10 @@ void ObjectCollectable::OnCollide(Object* obj, const b2WorldManifold* pkbWorldMa
 		return;
 
 	if (ObjectPlayer* player = dynamic_cast<ObjectPlayer*>(obj)) {
-		SOUND->PlaySound("ring");
+		player->OnItemPickup(_pickup_type);
+
+		SOUND->PlaySound(_sound_on_pickup);
+
 		_Consumed = true;
 		_dont_draw = true;
 	}

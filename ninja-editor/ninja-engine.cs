@@ -925,8 +925,8 @@ public class GameMode : global::System.IDisposable {
     }
   }
 
-  public virtual int Init(SWIGTYPE_p_XMLNode arg0) {
-    int ret = enginePINVOKE.GameMode_Init(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(arg0));
+  public virtual bool Init(SWIGTYPE_p_XMLNode arg0) {
+    bool ret = enginePINVOKE.GameMode_Init(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(arg0));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -1048,8 +1048,8 @@ public class GameWorld : GameMode {
     return ret;
   }
 
-  public override int Init(SWIGTYPE_p_XMLNode xMode) {
-    int ret = enginePINVOKE.GameWorld_Init(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(xMode));
+  public override bool Init(SWIGTYPE_p_XMLNode xMode) {
+    bool ret = enginePINVOKE.GameWorld_Init(swigCPtr, SWIGTYPE_p_XMLNode.getCPtr(xMode));
     if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -1322,8 +1322,12 @@ public class Game : global::System.IDisposable {
     return ret;
   }
 
-  public void CreateGameState() {
-    enginePINVOKE.Game_CreateGameState(swigCPtr);
+  public void CreateGameStateIfNotExists() {
+    enginePINVOKE.Game_CreateGameStateIfNotExists(swigCPtr);
+  }
+
+  public void StartNewGame() {
+    enginePINVOKE.Game_StartNewGame(swigCPtr);
   }
 
   public void FreeGameState() {
@@ -2074,6 +2078,16 @@ public class ObjectCollectable : Object {
     return ret;
   }
 
+  public string GetPickupSound() {
+    string ret = enginePINVOKE.ObjectCollectable_GetPickupSound(swigCPtr);
+    return ret;
+  }
+
+  public string GetPickupType() {
+    string ret = enginePINVOKE.ObjectCollectable_GetPickupType(swigCPtr);
+    return ret;
+  }
+
   public override bool Init() {
     bool ret = enginePINVOKE.ObjectCollectable_Init(swigCPtr);
     return ret;
@@ -2085,6 +2099,10 @@ public class ObjectCollectable : Object {
 
   public override void Shutdown() {
     enginePINVOKE.ObjectCollectable_Shutdown(swigCPtr);
+  }
+
+  public virtual void Clear() {
+    enginePINVOKE.ObjectCollectable_Clear(swigCPtr);
   }
 
   public override void Update() {
@@ -2647,6 +2665,11 @@ public class ObjectPlayer : Object {
 
   public override void OnCollide(Object obj, SWIGTYPE_p_b2WorldManifold pkbWorldManifold) {
     enginePINVOKE.ObjectPlayer_OnCollide(swigCPtr, Object.getCPtr(obj), SWIGTYPE_p_b2WorldManifold.getCPtr(pkbWorldManifold));
+  }
+
+  public void OnItemPickup(string item_name) {
+    enginePINVOKE.ObjectPlayer_OnItemPickup(swigCPtr, item_name);
+    if (enginePINVOKE.SWIGPendingException.Pending) throw enginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public override void ResetVolatileState(VolatileStateLevel level) {
@@ -3863,7 +3886,7 @@ class enginePINVOKE {
   public static extern void delete_GameModeExitInfo(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameMode_Init")]
-  public static extern int GameMode_Init(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern bool GameMode_Init(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameMode_Shutdown")]
   public static extern void GameMode_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -3923,7 +3946,7 @@ class enginePINVOKE {
   public static extern global::System.IntPtr GameWorld_GetObjects(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_Init")]
-  public static extern int GameWorld_Init(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern bool GameWorld_Init(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_Shutdown")]
   public static extern void GameWorld_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -4081,8 +4104,11 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_ShouldExit")]
   public static extern bool Game_ShouldExit(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_CreateGameState")]
-  public static extern void Game_CreateGameState(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_CreateGameStateIfNotExists")]
+  public static extern void Game_CreateGameStateIfNotExists(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_StartNewGame")]
+  public static extern void Game_StartNewGame(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_Game_FreeGameState")]
   public static extern void Game_FreeGameState(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -4456,6 +4482,12 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectCollectable_DynamicCastFrom")]
   public static extern global::System.IntPtr ObjectCollectable_DynamicCastFrom(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectCollectable_GetPickupSound")]
+  public static extern string ObjectCollectable_GetPickupSound(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectCollectable_GetPickupType")]
+  public static extern string ObjectCollectable_GetPickupType(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectCollectable_Init")]
   public static extern bool ObjectCollectable_Init(global::System.Runtime.InteropServices.HandleRef jarg1);
 
@@ -4464,6 +4496,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectCollectable_Shutdown")]
   public static extern void ObjectCollectable_Shutdown(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectCollectable_Clear")]
+  public static extern void ObjectCollectable_Clear(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectCollectable_Update")]
   public static extern void ObjectCollectable_Update(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -4686,6 +4721,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_OnCollide")]
   public static extern void ObjectPlayer_OnCollide(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_OnItemPickup")]
+  public static extern void ObjectPlayer_OnItemPickup(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectPlayer_ResetVolatileState")]
   public static extern void ObjectPlayer_ResetVolatileState(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);

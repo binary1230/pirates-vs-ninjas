@@ -7,6 +7,9 @@
 #include "gameSound.h"
 
 bool CreditsMode::Init(XMLNode xMode) {
+	if (!GameMode::Init(xMode))
+		return false;
+
 	std::string file = xMode.getChildNode("scrollPic").getText();
 	
 	credits_sprite = ASSETMANAGER->LoadSprite(file.c_str());

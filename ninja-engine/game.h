@@ -125,6 +125,7 @@ class Game {
 		bool ShouldExit() { return exit_game; }
 
 		void CreateGameStateIfNotExists();
+		void StartNewGame();
 		void FreeGameState();
 
 		GameState* GetState();

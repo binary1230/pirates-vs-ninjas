@@ -12,6 +12,11 @@
 			<repeat />
 		</animation>
 	</animations>
+	
+	<item_type>bomb</item_type>
+	<sound_on_pickup>ring</sound_on_pickup>
+	
+	<!-- TODO: need to relocate sounds somewhere else -->
 	<sounds>
 		<!-- <sound name="ring">sounds/ring.wav</sound> -->
 	</sounds>

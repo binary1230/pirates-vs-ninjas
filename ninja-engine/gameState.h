@@ -3,6 +3,7 @@
 class Inventory {
 	public:
 		bool has_bombs;
+		int ring_count;
 
 		Inventory();
 };

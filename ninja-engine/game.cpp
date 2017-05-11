@@ -428,6 +428,15 @@ void Game::CreateGameStateIfNotExists() {
 		_state = new GameState();
 }
 
+void Game::StartNewGame() {
+	// re-create the game state
+	FreeGameState();
+	CreateGameStateIfNotExists();
+
+	// jump to next game mode on the list
+	SignalEndCurrentMode();
+}
+
 void Game::FreeGameState() {
 	if (_state)
 		delete _state;

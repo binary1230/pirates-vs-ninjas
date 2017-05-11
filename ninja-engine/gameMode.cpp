@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "gameMode.h"
+#include "game.h"
 
 bool GameMode::Init(XMLNode)
 {
-	return false;
+	GAME->CreateGameStateIfNotExists();
+
+	return true;
 }
 
 GameMode::GameMode() {}

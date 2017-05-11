@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "xmlParser.h"
-// #include "StdString.h"
 #include "game.h"
 #include "input.h"
 #include "assetManager.h"
@@ -8,22 +7,16 @@
 #include "gameMenu.h"
 #include "globals.h"
 
-// TODO: Move this all into python scripts.
+// TODO: Move this all into scripting?
 
 void GameMenu::DoNewGame() {
-
-	// Should load the new mode:
-	// LoadNewMode(....);
-
-	// For now, we just Let it roll onto the next mode
-	GAME->SignalEndCurrentMode();
+	GAME->StartNewGame();
 }
 
 void GameMenu::DoQuit() {
 	GAME->SignalGameExit();
 }
 
-// Hardcoded for now...
 void GameMenu::DoMenuAction(const std::string &action) {
 	if (action == "") {
 		// do nothing.
@@ -114,6 +107,9 @@ void GameMenu::CheckKeys() {
 }
 
 bool GameMenu::Init(XMLNode xMode) {
+	if (!GameMode::Init(xMode))
+		return false;
+
 	current_pos = 0;
 
 	back = ASSETMANAGER->LoadSprite(xMode.getChildNode("bgPic").getText());

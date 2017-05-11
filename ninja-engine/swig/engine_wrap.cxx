@@ -2224,12 +2224,12 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_GameModeExitInfo(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_GameMode_Init(void * jarg1, void * jarg2) {
-  int jresult ;
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameMode_Init(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
   GameMode *arg1 = (GameMode *) 0 ;
   XMLNode arg2 ;
   XMLNode *argp2 ;
-  int result;
+  bool result;
   
   arg1 = (GameMode *)jarg1; 
   argp2 = (XMLNode *)jarg2; 
@@ -2238,7 +2238,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_GameMode_Init(void * jarg1, void * jarg2) {
     return 0;
   }
   arg2 = *argp2; 
-  result = (int)(arg1)->Init(arg2);
+  result = (bool)(arg1)->Init(arg2);
   jresult = result; 
   return jresult;
 }
@@ -2434,12 +2434,12 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetObjects(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_GameWorld_Init(void * jarg1, void * jarg2) {
-  int jresult ;
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GameWorld_Init(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
   XMLNode arg2 ;
   XMLNode *argp2 ;
-  int result;
+  bool result;
   
   arg1 = (GameWorld *)jarg1; 
   argp2 = (XMLNode *)jarg2; 
@@ -2448,7 +2448,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_GameWorld_Init(void * jarg1, void * jarg2) {
     return 0;
   }
   arg2 = *argp2; 
-  result = (int)(arg1)->Init(arg2);
+  result = (bool)(arg1)->Init(arg2);
   jresult = result; 
   return jresult;
 }
@@ -3020,11 +3020,19 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Game_ShouldExit(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Game_CreateGameState(void * jarg1) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_CreateGameStateIfNotExists(void * jarg1) {
   Game *arg1 = (Game *) 0 ;
   
   arg1 = (Game *)jarg1; 
   (arg1)->CreateGameStateIfNotExists();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_Game_StartNewGame(void * jarg1) {
+  Game *arg1 = (Game *) 0 ;
+  
+  arg1 = (Game *)jarg1; 
+  (arg1)->StartNewGame();
 }
 
 
@@ -4435,6 +4443,30 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ObjectCollectable_DynamicCastFrom(void * ja
 }
 
 
+SWIGEXPORT char * SWIGSTDCALL CSharp_ObjectCollectable_GetPickupSound(void * jarg1) {
+  char * jresult ;
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  std::string result;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  result = (arg1)->GetPickupSound();
+  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_ObjectCollectable_GetPickupType(void * jarg1) {
+  char * jresult ;
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  std::string result;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  result = (arg1)->GetPickupType();
+  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ObjectCollectable_Init(void * jarg1) {
   unsigned int jresult ;
   ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
@@ -4462,6 +4494,14 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCollectable_Shutdown(void * jarg1) {
   
   arg1 = (ObjectCollectable *)jarg1; 
   (arg1)->Shutdown();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectCollectable_Clear(void * jarg1) {
+  ObjectCollectable *arg1 = (ObjectCollectable *) 0 ;
+  
+  arg1 = (ObjectCollectable *)jarg1; 
+  (arg1)->Clear();
 }
 
 
@@ -5235,6 +5275,21 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ObjectPlayer_OnCollide(void * jarg1, void * j
   arg2 = (Object *)jarg2; 
   arg3 = (b2WorldManifold *)jarg3; 
   (arg1)->OnCollide(arg2,(b2WorldManifold const *)arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ObjectPlayer_OnItemPickup(void * jarg1, char * jarg2) {
+  ObjectPlayer *arg1 = (ObjectPlayer *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  arg1 = (ObjectPlayer *)jarg1; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return ;
+  }
+  std::string arg2_str(jarg2);
+  arg2 = &arg2_str; 
+  (arg1)->OnItemPickup((std::string const &)*arg2);
 }
 
 

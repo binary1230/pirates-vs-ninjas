@@ -5,8 +5,14 @@
 #include "input.h"
 #include "window.h"
 
+// 2017 note: this file is old and probably should die.  might still work though, but probably should be reworked
+// with new serialization system
+
 bool AnimationEditorMode::Init( XMLNode xMode )
 {
+	if (!GameMode::Init(xMode))
+		return false;
+
 	m_pkCursorSprite = ASSETMANAGER->LoadSprite("cursor.png");
 	assert(m_pkCursorSprite && "Unable to load cursor");
 

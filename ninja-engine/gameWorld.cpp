@@ -74,7 +74,7 @@ void GameWorld::Clear() {
 	_camera = nullptr;
 }
 
-bool GameWorld::Init(XMLNode /*unused*/) {
+bool GameWorld::Init(XMLNode xml_unused) {
 	if (OPTIONS->GetPropMapEditorEnabled())
 		map_editor = new Editor();
 
@@ -105,6 +105,9 @@ bool GameWorld::Init(XMLNode /*unused*/) {
 		TRACE("ERROR: InitSystems: failed to init PhysicsManager!\n");
 		return false;
 	}
+
+	if (!GameMode::Init(xml_unused))
+		return false;
 
 	return Load();
 }

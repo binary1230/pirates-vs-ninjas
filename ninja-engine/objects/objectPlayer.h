@@ -84,6 +84,8 @@ class ObjectPlayer : public Object {
 		virtual void Update();
 		virtual void OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold);
 
+		void OnItemPickup(const string & item_name);
+
 		virtual void ResetVolatileState(VolatileStateLevel level);
 
 		virtual void OnAnimationLooped();
