@@ -17,6 +17,7 @@
 #include "physics.h"
 #include "objectCollectable.h"
 #include "gameState.h"
+#include "eventManager.h"
 
 #define DEFAULT_JUMP_VELOCITY 9.0f
 #define DEFAULT_DRAG 0.95f
@@ -289,6 +290,8 @@ void ObjectPlayer::OnItemPickup(const string& item_name) {
 	else if (item_name == "ring") {
 		GAME->GetState()->_inventory.ring_count++;
 	}
+
+	EVENTS->OnPickupItem(item_name.c_str());
 }
 
 void ObjectPlayer::ResetVolatileState(VolatileStateLevel level) {

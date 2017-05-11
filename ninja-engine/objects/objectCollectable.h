@@ -5,6 +5,7 @@
 #include "globals.h"
 
 class Game;
+class ObjectPlayer;
 
 class ObjectCollectable : public Object {
 	friend class boost::serialization::access;
@@ -17,6 +18,8 @@ class ObjectCollectable : public Object {
 	protected:
 		string _pickup_type;
 		string _sound_on_pickup;
+
+		void OnCollideWithPlayer(ObjectPlayer * player);
 				
 	public:
 		IMPLEMENT_CLONE(ObjectCollectable)

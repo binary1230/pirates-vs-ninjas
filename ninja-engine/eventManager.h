@@ -15,6 +15,7 @@ class EventManager {
 		void OnUnLoad();
 		void OnEvent(const char* eventName);
 		void OnInputEndedPlayback();
+		void OnPickupItem(const char * name);
 		void OnTextboxDone();
 
 	private:

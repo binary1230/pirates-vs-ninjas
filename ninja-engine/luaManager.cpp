@@ -51,22 +51,26 @@ void LuaManager::Clear()
 	m_pkLuaState = NULL;
 }
 
-/*bool LuaManager::RunVoidFunction1Args(	const char* functionName, 
+bool LuaManager::RunVoidFunction1Args(	const char* functionName, 
 											const char* arg1,
 											bool errorMsgOnFunctionNotFound ) 
 {
+	if (!m_pkLuaState)
+	{
+		TRACE("LUA: Can't call '%s', no lua state!\n", functionName);
+		return false;
+	}
+
 	const int numArgs = 1;	
 	const int numResults = 0;
 
-	lua_getglobal(lua, functionName);
+	lua_getglobal(m_pkLuaState, functionName);
 
-	// not using args right now
-	lua_pushnumber(lua, arg1);   // push 1st argument 
+	lua_pushlstring(m_pkLuaState, arg1, strlen(arg1));
 
-	if (lua_pcall(lua, numArgs, numResults, 0) != 0) {
+	if (lua_pcall(m_pkLuaState, numArgs, numResults, 0) != 0) {
 		if (errorMsgOnFunctionNotFound)
-			TRACE("LUA: Error running function `%s': %s", 
-							functionName, lua_tostring(lua, -1));
+			TRACE("LUA: Error running function `%s': %s\n", functionName, lua_tostring(m_pkLuaState, -1));
 		return false;
 	}
 
@@ -80,7 +84,7 @@ void LuaManager::Clear()
 
 	return true;
 
-}*/
+}
 
 // Example demonstrating how to call a LUA function from
 // C++ with no arguments that returns an int

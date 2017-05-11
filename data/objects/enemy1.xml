@@ -22,9 +22,6 @@
 	</animations>
 	<properties>
 	</properties>
-	<sounds>
-		<sound name="pop2">sounds/pop2.wav</sound>
-	</sounds>
 </objectDef>
 
 </objectDefinitions>

@@ -26,9 +26,6 @@
 	</animations>
 	<properties>
 	</properties>
-	<sounds>
-		<sound name="door3">sounds/door.wav</sound>
-	</sounds>
 </objectDef>
 
 </objectDefinitions>

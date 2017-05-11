@@ -38,10 +38,6 @@
 		</animation>
 	</animations>
 	
-	<sounds>
-		<sound name="jump">sounds/jump.wav</sound>
-	</sounds>
-	
 	<properties>
  		<jumpVelocity>	18.0f	</jumpVelocity>
 		<drag>					0.92f	</drag>

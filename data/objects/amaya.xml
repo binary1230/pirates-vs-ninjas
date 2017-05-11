@@ -52,10 +52,6 @@
 			<repeat />
 		</animation>
 	</animations>
-
-	<sounds>
-		<sound name="jump">sounds/jump.wav</sound>
-	</sounds>
 	
 	<properties>
 		<boundingBox>

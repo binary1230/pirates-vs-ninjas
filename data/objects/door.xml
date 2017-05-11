@@ -27,9 +27,6 @@
 		<solidObject/>
 		<sensorOnly/>
 	</properties>
-	<sounds>
-		<sound name="door3">sounds/door.wav</sound> <!-- REMEMBER, this will overwrite other sfx named door3 -DomPastSelf -->
-	</sounds>
 </objectDef>
 
 </objectDefinitions>

@@ -15,8 +15,6 @@
 	<properties>
 		<staticUntilHeavyImpact/>
 	</properties>
-	<sounds>
-	</sounds>
 </objectDef>
 
 </objectDefinitions>

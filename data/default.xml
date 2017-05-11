@@ -26,8 +26,16 @@
 	-->
 	
 	<!--
-	<mode_file>jouten-shop.xml</mode_file>
+	<mode_file>level_2_shop.xml</mode_file>
 	-->
+	
+	<sounds>
+		<sound name="ring">sounds/ring.wav</sound>
+		<sound name="jump">sounds/jump.wav</sound>
+		<sound name="door3">sounds/door.wav</sound>
+		<sound name="explosion">sounds/explosion.wav</sound>
+		<sound name="spring">sounds/spring.wav</sound>
+	</sounds>
 
 	<!-- game global variables -->
 	<global_vars>

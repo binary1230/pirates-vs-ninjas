@@ -1,11 +1,10 @@
 #ifndef GAMESOUND_H
 #define GAMESOUND_H
 
-//! Maps a sound name to it's handle (e.g. "jump" to the sample)
-typedef map<std::string, ALLEGRO_SAMPLE*> SoundMapping;
-typedef map<std::string, ALLEGRO_SAMPLE*>::iterator s_iter;
+class SoundDef;
 
-// class OGGFILE;
+//! Maps a sound name to it's handle (e.g. "jump" to the sample)
+typedef map<std::string, SoundDef*> SoundMapping;
 
 class GameSound {
 
@@ -33,11 +32,11 @@ class GameSound {
 		public:
 			//! Load and cache a sound
 			//! example: LoadSound("sounds/jump.wav", "jump")
-			//! Then you can PlaySound("jump") to hear it.  Neat eh?
-			ALLEGRO_SAMPLE* LoadSound(const char* filename, const char* sound_name);
+			//! Then you can PlaySound("jump") to hear it.
+			ALLEGRO_SAMPLE* LoadSound(const char* filename, const char* sound_name, bool load_resident = false);
 	
 			//! Load all sounds from a <sounds> block in XML
-			bool LoadSounds(XMLNode &xSounds);
+			bool LoadSounds(XMLNode &xSounds, bool load_resident = false);
 			
 			//! Load a piece of music
 			bool PlayMusic(const char* filename);
@@ -55,7 +54,7 @@ class GameSound {
 			//! Shutdown the sound system
 			void Shutdown();
 
-			void ClearSoundMap();
+			void ClearSoundMap(bool keep_resident_sounds = true);
 
 			~GameSound();
 };

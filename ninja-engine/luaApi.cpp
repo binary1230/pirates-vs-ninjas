@@ -85,8 +85,6 @@ int LUAAPI lua_world_textbox(lua_State* lua) {
 
 			obj->SetLayer( WORLD->FindLayer("overlays") );
 
-			obj->SetModalActive(true);
-
 			WORLD->AddObject(obj);
 		}
 	}

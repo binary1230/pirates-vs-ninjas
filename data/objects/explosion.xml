@@ -27,9 +27,6 @@
 	</animations>
 	<properties>
 	</properties>
-	<sounds>
-		<sound name="explosion">sounds/explosion.wav</sound>
-	</sounds>
 </objectDef>
 
 </objectDefinitions>

@@ -111,7 +111,6 @@ bool Game::InitSystems() {
 
 	TRACE("[init: xml config]\n");
 
-	// just DIES if it can't load this file (bad)
 	if (!LoadXMLConfig("default.xml")) {
 		TRACE("ERROR: Failed to parse default.xml");	
 		return false;
@@ -133,6 +132,13 @@ bool Game::InitSystems() {
 	TRACE("[init: sound subsystem]\n");
 	if (!InitSound()) {
 		TRACE("ERROR: InitSystems: failed to init sound subsystem!\n");
+	}
+
+	if (xGame.nChildNode("sounds")) {
+		XMLNode xSounds = xGame.getChildNode("sounds");
+		if (!SOUND->LoadSounds(xSounds, true)) {
+			return false;
+		}
 	}
 
 	TRACE("[init: embedded lua scripting]\n");
@@ -375,14 +381,14 @@ void Game::Shutdown() {
 		LUA->Shutdown();
 	}
 
-	if (SOUND) {
-		SOUND->Shutdown();
-		SOUND->FreeInstance();
-	}
-
 	if (ASSETMANAGER) {
 		ASSETMANAGER->Shutdown();
 		ASSETMANAGER->FreeInstance();
+	}
+
+	if (SOUND) {
+		SOUND->Shutdown();
+		SOUND->FreeInstance();
 	}
 	
 	// window destruction code must be LAST

@@ -6,6 +6,7 @@
 #include "game.h"
 #include "gameSound.h"
 #include "objectPlayer.h"
+#include "eventManager.h"
 
 void ObjectCollectable::Shutdown() {
 	BaseShutdown();
@@ -48,24 +49,28 @@ void ObjectCollectable::ResetVolatileState(VolatileStateLevel level) {
 	}
 }
 
-ObjectCollectable::ObjectCollectable() 
-{
-	_Consumed = false;
-}
-ObjectCollectable::~ObjectCollectable() {}
-
 void ObjectCollectable::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
 	if (_Consumed)
 		return;
 
 	if (ObjectPlayer* player = dynamic_cast<ObjectPlayer*>(obj)) {
-		player->OnItemPickup(_pickup_type);
-
-		SOUND->PlaySound(_sound_on_pickup);
-
-		_Consumed = true;
-		_dont_draw = true;
+		OnCollideWithPlayer(player);
 	}
 }
+
+void ObjectCollectable::OnCollideWithPlayer(ObjectPlayer * player)
+{
+	player->OnItemPickup(_pickup_type);
+
+	SOUND->PlaySound(_sound_on_pickup);
+
+	_Consumed = true;
+	_dont_draw = true;
+}
+
+ObjectCollectable::ObjectCollectable() {
+	_Consumed = false;
+}
+ObjectCollectable::~ObjectCollectable() {}
 
 BOOST_CLASS_EXPORT_GUID(ObjectCollectable, "ObjectCollectable")

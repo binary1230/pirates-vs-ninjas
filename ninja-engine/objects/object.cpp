@@ -306,13 +306,6 @@ void Object::DontCollideWithPlayer()
 void Object::ResetForNextFrame()
 {
 	m_kCurrentCollision.up = m_kCurrentCollision.down = m_kCurrentCollision.left = m_kCurrentCollision.right = 0;
-
-	if (_physics_body)
-	{
-		const b2Vec2& kPos = _physics_body->GetPosition();
-		_Pos.x = kPos.x;
-		_Pos.y = kPos.y;
-	}
 }
 
 void Object::BaseShutdown() {

@@ -14,9 +14,6 @@
 			<repeat />
 		</animation>
 	</animations>
-	<sounds>
-		<sound name="spring">sounds/spring.wav</sound>
-	</sounds>
 	<springDirection>
 		<x>70.0</x> <y>0.0</y>
 	</springDirection>

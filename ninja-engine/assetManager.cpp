@@ -12,9 +12,9 @@ int AssetManager::Init() {
 	return true;
 }
 
-void AssetManager::Free() {
+void AssetManager::Free(bool free_resident_data) {
 	FreeSprites();
-	FreeSamples();
+	FreeSamples(!free_resident_data);
 }
 
 string AssetManager::GetCurrentWorkingDir() {
@@ -33,14 +33,20 @@ string AssetManager::GetCurrentExeFullPath() {
 }
 
 // XXX should make these templated...
-void AssetManager::FreeSamples() {
-	for (auto i = samples.begin(); i != samples.end(); i++) {
-		if (i->second)
-			al_destroy_sample(i->second);
-	}
-	samples.clear();
+void AssetManager::FreeSamples(bool keep_resident_sounds) {
 	if (SOUND)
-		SOUND->ClearSoundMap();
+		SOUND->ClearSoundMap(keep_resident_sounds);
+
+	for (auto it = samples.begin(); it != samples.end();) {
+		if (keep_resident_sounds && it->second._is_resident) {
+			it++;
+		} else {
+			if (it->second._sample)
+				al_destroy_sample(it->second._sample);
+
+			it = samples.erase(it);
+		}
+	}
 }
 
 void AssetManager::FreeSprites() {
@@ -61,7 +67,7 @@ void AssetManager::FreeSprites() {
 }
 
 void AssetManager::Shutdown() {	
-	Free();
+	Free(true);
 	paths.clear();
 }
 
@@ -169,26 +175,34 @@ Sprite* AssetManager::LoadSprite(const char* filename, bool suppress_file_errors
 	return sprite;
 }
 
-ALLEGRO_SAMPLE* AssetManager::LoadSound(const char* filename) {
-	ALLEGRO_SAMPLE *spl = NULL;
-
+SoundDef* AssetManager::LoadSound(const char* filename, bool is_resident) 
+{	
 	// 1) See if this sample is already loaded
 	auto i = samples.find(filename);
-
 	if (i != samples.end()) {
-		return i->second;		// return the already loaded sample
+		return &i->second;		// return the already loaded sample
 	}
 
 	// 2) Try to open the file
+	return LoadSampleFromFile(filename, is_resident);
+}
+
+SoundDef* AssetManager::LoadSampleFromFile(const char * filename, bool is_resident)
+{
 	std::string file = GetPathOf(filename);
-	if (file.length() != 0) {
-		spl = al_load_sample(file.c_str());
+	if (file.length() == 0)
+		return NULL;
 
-		if (spl)
-			samples[filename] = spl;
-	}
+	ALLEGRO_SAMPLE* spl = al_load_sample(file.c_str());
+	if (!spl)
+		return NULL;
 
-	return spl;
+	SoundDef tmpdef;
+	tmpdef._is_resident = is_resident;
+	tmpdef._sample = spl;
+
+	samples[filename] = tmpdef;
+	return &samples[filename];
 }
 
 AssetManager::AssetManager() {

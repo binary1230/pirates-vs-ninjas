@@ -12,7 +12,10 @@ ALLEGRO_SAMPLE* GameSound::FindCachedSoundByName(const char* name) {
 	if (s == soundMap.end())
 		return NULL;
 
-	return s->second;
+	SoundDef* def = s->second;
+	assert(def);
+
+	return s->second->_sample;
 }
 
 //! Plays a sound
@@ -29,7 +32,7 @@ void GameSound::PlaySound(std::string name, unsigned int pan, ALLEGRO_PLAYMODE l
 	}
 
 	if (!spl) {
-		TRACE("- SOUND: ERROR: Can't load [non-cached] sound '%s'\n", name);
+		TRACE("- SOUND: ERROR: Can't load [non-cached] sound '%s'\n", name.c_str());
 		return;
 	}
 	
@@ -72,25 +75,24 @@ void GameSound::Update() {
 }
 
 //! Loads a sound, you can call it later with PlaySound(sound_name)
-ALLEGRO_SAMPLE* GameSound::LoadSound(const char* filename, const char* sound_name) {
+ALLEGRO_SAMPLE* GameSound::LoadSound(const char* filename, const char* sound_name, bool load_resident) {
 	if (!sound_enabled)
 		return NULL;
 
-	// we need to enable this sometime, we should not be overwriting stuff 
-	// that's already in the map, that should be an error.
-	// right now am too lazy to deal with this properly.
-	// assert(!FindCachedSoundByName(sound_name));
+	if (FindCachedSoundByName(sound_name)) {
+		TRACE("ERROR: duplicate sound definition: not loading '%s' because it already was already loaded under '%s'", filename, sound_name);
+	}
 
-	ALLEGRO_SAMPLE* spl = ASSETMANAGER->LoadSound(filename);
+	SoundDef* def = ASSETMANAGER->LoadSound(filename, load_resident);
 
-	if (!spl)
+	if (!def)
 		return NULL;
 	
-	soundMap[sound_name] = spl;
-	return spl;
+	soundMap[sound_name] = def;
+	return def->_sample;
 }
 	
-bool GameSound::LoadSounds(XMLNode &xSounds) {
+bool GameSound::LoadSounds(XMLNode &xSounds, bool load_resident) {
 	XMLNode xSound;
 	int max, i, iterator;
 
@@ -99,7 +101,7 @@ bool GameSound::LoadSounds(XMLNode &xSounds) {
 		xSound = xSounds.getChildNode("sound", &iterator);
 		std::string name = xSound.getAttribute("name");
 		
-		if (!LoadSound(xSound.getText(), name.c_str())) {
+		if (!LoadSound(xSound.getText(), name.c_str(), load_resident)) {
 			TRACE("ERROR: Can't load soundfile: '%s'\n", xSound.getText());
 			return false;
 		}
@@ -152,12 +154,18 @@ void GameSound::Shutdown() {
 	al_uninstall_audio();
 }
 
+void GameSound::ClearSoundMap(bool keep_resident_sounds) {
+	for (auto it = soundMap.begin(); it != soundMap.end();) {
+		if (keep_resident_sounds && it->second->_is_resident) {
+			it++;
+		} else {
+			it = soundMap.erase(it);
+		}
+	}
+}
+
 GameSound::GameSound() {
 	sound_enabled = false;
 }
 
 GameSound::~GameSound() {}
-
-void GameSound::ClearSoundMap() {
-	soundMap.clear();
-}

@@ -23,10 +23,13 @@ class Sprite;
 typedef map<std::string, Sprite*> SpriteList;
 typedef map<std::string, Sprite*>::iterator SpriteListIter;
 
-typedef map<std::string, ALLEGRO_SAMPLE*> SampleList;
-typedef map<std::string, ALLEGRO_SAMPLE*>::iterator SampleListIter;
+class SoundDef {
+	public:
+		ALLEGRO_SAMPLE* _sample;
+		bool _is_resident;			// resident samples load at start, then stay loaded forever
+};
 
-// class OGGFILE; // TEMPHACK
+typedef map<std::string, SoundDef> SampleList;
 
 //! Manages game assets and memory
 class AssetManager {
@@ -37,14 +40,16 @@ class AssetManager {
 		vector<std::string> paths;
 		SpriteList sprites;
 		SampleList samples;
+
+		SoundDef* LoadSampleFromFile(const char * filename, bool is_resident);
 		
 	public:
 		int Init();
 		void Shutdown();
 
 		void FreeSprites();
-		void FreeSamples();
-		void Free();
+		void FreeSamples(bool keep_resident_sounds = true);
+		void Free(bool free_resident_data = false);
 
 		static string GetCurrentExeFullPath();
 		static string GetCurrentWorkingDir();
@@ -69,7 +74,7 @@ class AssetManager {
 
 		//! Opens a sound file (e.g. WAV), or returns NULL on failure
 		//! This function looks in the current search path
-		ALLEGRO_SAMPLE* LoadSound(const char* filename);
+		SoundDef* LoadSound(const char* filename, bool load_resident = false);
 
 		//! Returns the current working directory
 		std::string GetMacOSXCurrentWorkingDir() const;
