@@ -24,5 +24,7 @@
 	<include_xml_file>objects/ring.xml</include_xml_file>
 	<include_xml_file>objects/item-bomb.xml</include_xml_file>
 	<include_xml_file>objects/dynamic_block.xml</include_xml_file>
+	<include_xml_file>objects/tallblock.xml</include_xml_file>
+	
 
 </objectDefinitions>
