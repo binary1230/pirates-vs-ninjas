@@ -210,14 +210,30 @@ void Editor::NoModeUpdate() {
 		}
 	}
 
-	if (_Selection && INPUT->RealKeyOnce(ALLEGRO_KEY_DELETE)) {
-		DeleteCurrentSelection();
-	}
+	if (_Selection) {
+		if (INPUT->RealKeyOnce(ALLEGRO_KEY_DELETE)) {
+			DeleteCurrentSelection();
+		}
 
-	if (_Selection && INPUT->RealKeyOnce(ALLEGRO_KEY_M)) {
-		_mode = EDITOR_MOVE;
-		_should_delete_selection_after_move_done = false;
-		FlashText("move mode");
+		if (INPUT->RealKeyOnce(ALLEGRO_KEY_M)) {
+			_mode = EDITOR_MOVE;
+			_should_delete_selection_after_move_done = false;
+			FlashText("move mode");
+		}
+
+		if (INPUT->RealKeyOnce(ALLEGRO_KEY_PGUP)) {
+			WORLD->ReorderObject(_Selection, false);
+			FlashText("re-order up");
+			if (_EditorUI)
+				_EditorUI->OnObjectsChanged();
+		}
+
+		if (INPUT->RealKeyOnce(ALLEGRO_KEY_PGDN)) {
+			WORLD->ReorderObject(_Selection, true);
+			FlashText("re-order down");
+			if (_EditorUI)
+				_EditorUI->OnObjectsChanged();
+		}
 	}
 
 	if (INPUT->RealKeyOnce(ALLEGRO_KEY_F5)) {

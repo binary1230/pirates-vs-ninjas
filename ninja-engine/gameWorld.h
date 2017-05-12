@@ -137,6 +137,8 @@ class GameWorld : public GameMode {
 			// NOTE you CANNOT directly add objects to the world during Update()'s
 			void AddObject(	Object* obj, bool addImmediately = false);
 
+			void ReorderObject(Object * obj, bool move_backwards);
+
 			//! Find a layer by name
 			ObjectLayer* FindLayer(const char* name);
 
@@ -156,6 +158,8 @@ class GameWorld : public GameMode {
 			uint GetNumPlayers() { return m_kCachedPlayers.size(); }
 			
 			virtual void Draw();
+			void DrawObjects();
+
 			virtual void Update();
 
 			void DoMainGameUpdate();

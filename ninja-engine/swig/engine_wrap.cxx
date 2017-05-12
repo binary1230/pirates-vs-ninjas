@@ -2530,6 +2530,18 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_AddObject__SWIG_1(void * jarg1, voi
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_ReorderObject(void * jarg1, void * jarg2, unsigned int jarg3) {
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  bool arg3 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  arg2 = (Object *)jarg2; 
+  arg3 = jarg3 ? true : false; 
+  (arg1)->ReorderObject(arg2,arg3);
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_FindLayer(void * jarg1, char * jarg2) {
   void * jresult ;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -2587,6 +2599,14 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_Draw(void * jarg1) {
   
   arg1 = (GameWorld *)jarg1; 
   (arg1)->Draw();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_DrawObjects(void * jarg1) {
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  (arg1)->DrawObjects();
 }
 
 
@@ -3169,34 +3189,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_SetVisible(void * jarg1, unsigned
   arg1 = (ObjectLayer *)jarg1; 
   arg2 = jarg2 ? true : false; 
   (arg1)->SetVisible(arg2);
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_Draw(void * jarg1) {
-  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
-  
-  arg1 = (ObjectLayer *)jarg1; 
-  (arg1)->Draw();
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_AddObject(void * jarg1, void * jarg2) {
-  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
-  Object *arg2 = (Object *) 0 ;
-  
-  arg1 = (ObjectLayer *)jarg1; 
-  arg2 = (Object *)jarg2; 
-  (arg1)->AddObject(arg2);
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ObjectLayer_RemoveObject(void * jarg1, void * jarg2) {
-  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
-  Object *arg2 = (Object *) 0 ;
-  
-  arg1 = (ObjectLayer *)jarg1; 
-  arg2 = (Object *)jarg2; 
-  (arg1)->RemoveObject(arg2);
 }
 
 

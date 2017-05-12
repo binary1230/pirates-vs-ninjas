@@ -310,7 +310,6 @@ void Object::ResetForNextFrame()
 
 void Object::BaseShutdown() {
 	assert(_Layer);
-	_Layer->RemoveObject(this);
 
 	int i, max = animations.size();
 	for (i = 0; i < max; i++) {

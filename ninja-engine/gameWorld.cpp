@@ -213,16 +213,22 @@ void GameWorld::Draw()
 			_levelHeight);
 	}
 
-	int i, max = _layers.size();
-
-	for (i = 0; i < max; i++) {
-		_layers[i]->Draw();
-	}
+	DrawObjects();
 
 	PHYSICS->Draw();
 
 	if (map_editor)
 		map_editor->Draw();
+}
+
+void GameWorld::DrawObjects() {
+	for (ObjectLayer*& layer : _layers) {
+		for (Object*& obj : _objects) {
+			if (obj->GetLayer() == layer) {
+				obj->Draw();
+			}
+		}
+	}
 }
 
 void GameWorld::RemoveDeadObjectsIfNeeded() {
@@ -483,10 +489,40 @@ void GameWorld::AddObject(Object* obj, bool addImmediately) {
 	if (addImmediately) {
 		_objects.push_front(obj);
 		obj->InitPhysics();
-		obj->GetLayer()->AddObject(obj);
 	} else {
 		_objectsToAdd.push_back(obj);
 	}
+}
+
+// Change the order of the object in the list of objects
+// Objects that are at the front of the list will be drawn over items on the back of the list
+void GameWorld::ReorderObject(Object* obj, bool move_backwards) {
+	for (auto it = _objects.begin(); it != _objects.end();) {
+		if (*it != obj) {
+			++it;
+			continue;
+		}
+
+		auto prev = prev(it);
+
+		it = _objects.erase(it);
+
+		if (move_backwards) {
+			if (it != _objects.begin())
+				it--;
+			if (it != _objects.begin())
+				it--;
+		}
+		else {
+			//if (it != _objects.end())
+			//	it++;
+		}
+
+		_objects.insert(it, obj);
+		return;
+	}
+
+	assert(false && "Asked to re-order object, but it's not actually part of the world");
 }
 
 GameWorld::GameWorld() {

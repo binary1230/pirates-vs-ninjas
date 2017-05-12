@@ -1086,6 +1086,10 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_AddObject__SWIG_1(swigCPtr, Object.getCPtr(obj));
   }
 
+  public void ReorderObject(Object obj, bool move_backwards) {
+    enginePINVOKE.GameWorld_ReorderObject(swigCPtr, Object.getCPtr(obj), move_backwards);
+  }
+
   public ObjectLayer FindLayer(string name) {
     global::System.IntPtr cPtr = enginePINVOKE.GameWorld_FindLayer(swigCPtr, name);
     ObjectLayer ret = (cPtr == global::System.IntPtr.Zero) ? null : new ObjectLayer(cPtr, false);
@@ -1110,6 +1114,10 @@ public class GameWorld : GameMode {
 
   public override void Draw() {
     enginePINVOKE.GameWorld_Draw(swigCPtr);
+  }
+
+  public void DrawObjects() {
+    enginePINVOKE.GameWorld_DrawObjects(swigCPtr);
   }
 
   public override void Update() {
@@ -1415,18 +1423,6 @@ public class ObjectLayer : global::System.IDisposable {
 
   public void SetVisible(bool _visible) {
     enginePINVOKE.ObjectLayer_SetVisible(swigCPtr, _visible);
-  }
-
-  public void Draw() {
-    enginePINVOKE.ObjectLayer_Draw(swigCPtr);
-  }
-
-  public void AddObject(Object arg0) {
-    enginePINVOKE.ObjectLayer_AddObject(swigCPtr, Object.getCPtr(arg0));
-  }
-
-  public void RemoveObject(Object arg0) {
-    enginePINVOKE.ObjectLayer_RemoveObject(swigCPtr, Object.getCPtr(arg0));
   }
 
   public ObjectLayer() : this(enginePINVOKE.new_ObjectLayer(), true) {
@@ -3969,6 +3965,9 @@ class enginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_AddObject__SWIG_1")]
   public static extern void GameWorld_AddObject__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_ReorderObject")]
+  public static extern void GameWorld_ReorderObject(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3);
+
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_FindLayer")]
   public static extern global::System.IntPtr GameWorld_FindLayer(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
@@ -3983,6 +3982,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_Draw")]
   public static extern void GameWorld_Draw(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_DrawObjects")]
+  public static extern void GameWorld_DrawObjects(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_Update")]
   public static extern void GameWorld_Update(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -4148,15 +4150,6 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_SetVisible")]
   public static extern void ObjectLayer_SetVisible(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_Draw")]
-  public static extern void ObjectLayer_Draw(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_AddObject")]
-  public static extern void ObjectLayer_AddObject(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
-
-  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_ObjectLayer_RemoveObject")]
-  public static extern void ObjectLayer_RemoveObject(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_new_ObjectLayer")]
   public static extern global::System.IntPtr new_ObjectLayer();

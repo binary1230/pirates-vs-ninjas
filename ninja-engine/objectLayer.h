@@ -13,14 +13,17 @@ class ObjectLayer {
 	template<class Archive>
 	void serialize(Archive & ar, const unsigned int version)
 	{
-		ar & BOOST_SERIALIZATION_NVP(objects);
+		if (version < 1) {
+			list<Object*> _obsolete;
+			ar & boost::serialization::make_nvp("objects", _obsolete);
+		}
+
 		ar & BOOST_SERIALIZATION_NVP(scroll_speed);
 		ar & BOOST_SERIALIZATION_NVP(name);
 		ar & BOOST_SERIALIZATION_NVP(visible);
 	}
 
 	protected:
-		list<Object*> objects;
 		bool visible;
 		float scroll_speed;
 		std::string name;
@@ -39,20 +42,15 @@ class ObjectLayer {
 		//! Get/Set layer visibility
 		bool IsVisible() { return visible; };
 		void SetVisible(bool _visible) { visible = _visible; };
-
-		//! Draw all objects on this layer
-		void Draw();
-		
-		//! Put an object onto this layer
-		void AddObject(Object*);
-
-		//! Remove an object from this layer
-		void RemoveObject(Object*);
 		
 		ObjectLayer();
 		virtual ~ObjectLayer();
 
 		friend class MapSaver;
 };
+
+#if !defined(SWIG)
+BOOST_CLASS_VERSION(ObjectLayer, 1)
+#endif 
 
 #endif // OBJECTLAYER_H

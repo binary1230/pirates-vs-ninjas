@@ -6033,6 +6033,39 @@ static int _wrap_GameWorld_AddObject(lua_State* L) {
 }
 
 
+static int _wrap_GameWorld_ReorderObject(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Object *arg2 = (Object *) 0 ;
+  bool arg3 ;
+  
+  SWIG_check_num_args("GameWorld::ReorderObject",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::ReorderObject",1,"GameWorld *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("GameWorld::ReorderObject",2,"Object *");
+  if(!lua_isboolean(L,3)) SWIG_fail_arg("GameWorld::ReorderObject",3,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_ReorderObject",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Object,0))){
+    SWIG_fail_ptr("GameWorld_ReorderObject",2,SWIGTYPE_p_Object);
+  }
+  
+  arg3 = (lua_toboolean(L, 3)!=0);
+  (arg1)->ReorderObject(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_GameWorld_FindLayer(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -6151,6 +6184,29 @@ static int _wrap_GameWorld_Draw(lua_State* L) {
   }
   
   (arg1)->Draw();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GameWorld_DrawObjects(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  
+  SWIG_check_num_args("GameWorld::DrawObjects",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::DrawObjects",1,"GameWorld *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_DrawObjects",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  (arg1)->DrawObjects();
   
   return SWIG_arg;
   
@@ -6910,11 +6966,13 @@ static swig_lua_method swig_GameWorld_methods[]= {
     { "JumpedBackFromADoor", _wrap_GameWorld_JumpedBackFromADoor},
     { "SetModalObject", _wrap_GameWorld_SetModalObject},
     { "AddObject", _wrap_GameWorld_AddObject},
+    { "ReorderObject", _wrap_GameWorld_ReorderObject},
     { "FindLayer", _wrap_GameWorld_FindLayer},
     { "GetLayers", _wrap_GameWorld_GetLayers},
     { "GetPlayer", _wrap_GameWorld_GetPlayer},
     { "GetNumPlayers", _wrap_GameWorld_GetNumPlayers},
     { "Draw", _wrap_GameWorld_Draw},
+    { "DrawObjects", _wrap_GameWorld_DrawObjects},
     { "Update", _wrap_GameWorld_Update},
     { "DoMainGameUpdate", _wrap_GameWorld_DoMainGameUpdate},
     { "SaveWorldOverCurrentFile", _wrap_GameWorld_SaveWorldOverCurrentFile},
@@ -7808,89 +7866,6 @@ fail:
 }
 
 
-static int _wrap_ObjectLayer_Draw(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
-  
-  SWIG_check_num_args("ObjectLayer::Draw",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectLayer::Draw",1,"ObjectLayer *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectLayer,0))){
-    SWIG_fail_ptr("ObjectLayer_Draw",1,SWIGTYPE_p_ObjectLayer);
-  }
-  
-  (arg1)->Draw();
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectLayer_AddObject(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
-  Object *arg2 = (Object *) 0 ;
-  
-  SWIG_check_num_args("ObjectLayer::AddObject",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectLayer::AddObject",1,"ObjectLayer *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ObjectLayer::AddObject",2,"Object *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectLayer,0))){
-    SWIG_fail_ptr("ObjectLayer_AddObject",1,SWIGTYPE_p_ObjectLayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("ObjectLayer_AddObject",2,SWIGTYPE_p_Object);
-  }
-  
-  (arg1)->AddObject(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_ObjectLayer_RemoveObject(lua_State* L) {
-  int SWIG_arg = 0;
-  ObjectLayer *arg1 = (ObjectLayer *) 0 ;
-  Object *arg2 = (Object *) 0 ;
-  
-  SWIG_check_num_args("ObjectLayer::RemoveObject",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ObjectLayer::RemoveObject",1,"ObjectLayer *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ObjectLayer::RemoveObject",2,"Object *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ObjectLayer,0))){
-    SWIG_fail_ptr("ObjectLayer_RemoveObject",1,SWIGTYPE_p_ObjectLayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Object,0))){
-    SWIG_fail_ptr("ObjectLayer_RemoveObject",2,SWIGTYPE_p_Object);
-  }
-  
-  (arg1)->RemoveObject(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_new_ObjectLayer(lua_State* L) {
   int SWIG_arg = 0;
   ObjectLayer *result = 0 ;
@@ -7932,9 +7907,6 @@ static swig_lua_method swig_ObjectLayer_methods[]= {
     { "GetScrollSpeed", _wrap_ObjectLayer_GetScrollSpeed},
     { "IsVisible", _wrap_ObjectLayer_IsVisible},
     { "SetVisible", _wrap_ObjectLayer_SetVisible},
-    { "Draw", _wrap_ObjectLayer_Draw},
-    { "AddObject", _wrap_ObjectLayer_AddObject},
-    { "RemoveObject", _wrap_ObjectLayer_RemoveObject},
     {0,0}
 };
 static swig_lua_method swig_ObjectLayer_meta[] = {
