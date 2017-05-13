@@ -13,11 +13,6 @@ class ObjectLayer {
 	template<class Archive>
 	void serialize(Archive & ar, const unsigned int version)
 	{
-		if (version < 1) {
-			list<Object*> _obsolete;
-			ar & boost::serialization::make_nvp("objects", _obsolete);
-		}
-
 		ar & BOOST_SERIALIZATION_NVP(scroll_speed);
 		ar & BOOST_SERIALIZATION_NVP(name);
 		ar & BOOST_SERIALIZATION_NVP(visible);
