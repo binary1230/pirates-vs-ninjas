@@ -496,29 +496,37 @@ void GameWorld::AddObject(Object* obj, bool addImmediately) {
 
 // Change the order of the object in the list of objects
 // Objects that are at the front of the list will be drawn over items on the back of the list
-void GameWorld::ReorderObject(Object* obj, bool move_backwards) {
-	for (auto it = _objects.begin(); it != _objects.end();) {
-		if (*it != obj) {
-			++it;
+void GameWorld::ReorderObject(Object* obj, bool move_backwards, int step) {
+	for (auto current_pos = _objects.begin(); current_pos != _objects.end();) {
+		if (*current_pos != obj) {
+			++current_pos;
 			continue;
 		}
 
-		auto prev = prev(it);
-
-		it = _objects.erase(it);
+		auto new_pos = _objects.erase(current_pos);
 
 		if (move_backwards) {
-			if (it != _objects.begin())
-				it--;
-			if (it != _objects.begin())
-				it--;
-		}
-		else {
-			//if (it != _objects.end())
-			//	it++;
+			for (int i = 0; i < step; ++i) {
+				if (new_pos == _objects.begin())
+					break;
+
+				new_pos--;
+			}
+		} else {
+			for (int i = 0; i < step; ++i) {
+				if (new_pos == _objects.end())
+					break;
+
+				new_pos++;
+			}
 		}
 
-		_objects.insert(it, obj);
+		// iter_swap(it, swapwith);
+
+		// if (current_pos != new_pos) {
+			_objects.insert(new_pos, obj);
+		// }
+
 		return;
 	}
 

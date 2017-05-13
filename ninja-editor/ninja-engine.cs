@@ -1086,8 +1086,8 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_AddObject__SWIG_1(swigCPtr, Object.getCPtr(obj));
   }
 
-  public void ReorderObject(Object obj, bool move_backwards) {
-    enginePINVOKE.GameWorld_ReorderObject(swigCPtr, Object.getCPtr(obj), move_backwards);
+  public void ReorderObject(Object obj, bool move_backwards, int step) {
+    enginePINVOKE.GameWorld_ReorderObject(swigCPtr, Object.getCPtr(obj), move_backwards, step);
   }
 
   public ObjectLayer FindLayer(string name) {
@@ -3966,7 +3966,7 @@ class enginePINVOKE {
   public static extern void GameWorld_AddObject__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_ReorderObject")]
-  public static extern void GameWorld_ReorderObject(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3);
+  public static extern void GameWorld_ReorderObject(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3, int jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_FindLayer")]
   public static extern global::System.IntPtr GameWorld_FindLayer(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);

@@ -6038,11 +6038,13 @@ static int _wrap_GameWorld_ReorderObject(lua_State* L) {
   GameWorld *arg1 = (GameWorld *) 0 ;
   Object *arg2 = (Object *) 0 ;
   bool arg3 ;
+  int arg4 ;
   
-  SWIG_check_num_args("GameWorld::ReorderObject",3,3)
+  SWIG_check_num_args("GameWorld::ReorderObject",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::ReorderObject",1,"GameWorld *");
   if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("GameWorld::ReorderObject",2,"Object *");
   if(!lua_isboolean(L,3)) SWIG_fail_arg("GameWorld::ReorderObject",3,"bool");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("GameWorld::ReorderObject",4,"int");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
     SWIG_fail_ptr("GameWorld_ReorderObject",1,SWIGTYPE_p_GameWorld);
@@ -6054,7 +6056,8 @@ static int _wrap_GameWorld_ReorderObject(lua_State* L) {
   }
   
   arg3 = (lua_toboolean(L, 3)!=0);
-  (arg1)->ReorderObject(arg2,arg3);
+  arg4 = (int)lua_tonumber(L, 4);
+  (arg1)->ReorderObject(arg2,arg3,arg4);
   
   return SWIG_arg;
   
@@ -16473,7 +16476,7 @@ static swig_type_info _swigt__p_std__mapT_std__string_const_XMLNode_t__const_ite
 static swig_type_info _swigt__p_std__mapT_std__string_const_XMLNode_t__iterator = {"_p_std__mapT_std__string_const_XMLNode_t__iterator", "ObjectDefMappingIter *|std::map< std::string const,XMLNode >::iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *", 0, 0, (void*)&_wrap_class_string, 0};
 static swig_type_info _swigt__p_std__vectorT_ObjectLayer_p_t = {"_p_std__vectorT_ObjectLayer_p_t", "std::vector< ObjectLayer * > *", 0, 0, (void*)&_wrap_class_ObjectLayerVector, 0};
-static swig_type_info _swigt__p_std__vectorT_Object_p_t = {"_p_std__vectorT_Object_p_t", "ObjectArray *|std::vector< Object * > *", 0, 0, (void*)&_wrap_class_ObjectVector, 0};
+static swig_type_info _swigt__p_std__vectorT_Object_p_t = {"_p_std__vectorT_Object_p_t", "std::vector< Object * > *", 0, 0, (void*)&_wrap_class_ObjectVector, 0};
 static swig_type_info _swigt__p_std__vectorT_std__string_t = {"_p_std__vectorT_std__string_t", "std::vector< std::string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int *|uint *", 0, 0, (void*)0, 0};
 

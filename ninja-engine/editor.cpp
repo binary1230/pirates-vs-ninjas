@@ -221,15 +221,27 @@ void Editor::NoModeUpdate() {
 			FlashText("move mode");
 		}
 
+		const int large_step = 50;
+
 		if (INPUT->RealKeyOnce(ALLEGRO_KEY_PGUP)) {
-			WORLD->ReorderObject(_Selection, false);
+			int step = 1;
+			if (INPUT->RealKey(ALLEGRO_KEY_LSHIFT)) {
+				step = large_step;
+			}
+
+			WORLD->ReorderObject(_Selection, false, step);
 			FlashText("re-order up");
 			if (_EditorUI)
 				_EditorUI->OnObjectsChanged();
 		}
 
 		if (INPUT->RealKeyOnce(ALLEGRO_KEY_PGDN)) {
-			WORLD->ReorderObject(_Selection, true);
+			int step = 1;
+			if (INPUT->RealKey(ALLEGRO_KEY_LSHIFT)) {
+				step = large_step;
+			}
+
+			WORLD->ReorderObject(_Selection, true, step);
 			FlashText("re-order down");
 			if (_EditorUI)
 				_EditorUI->OnObjectsChanged();

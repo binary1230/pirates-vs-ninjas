@@ -2530,15 +2530,17 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_AddObject__SWIG_1(void * jarg1, voi
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_ReorderObject(void * jarg1, void * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_ReorderObject(void * jarg1, void * jarg2, unsigned int jarg3, int jarg4) {
   GameWorld *arg1 = (GameWorld *) 0 ;
   Object *arg2 = (Object *) 0 ;
   bool arg3 ;
+  int arg4 ;
   
   arg1 = (GameWorld *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = jarg3 ? true : false; 
-  (arg1)->ReorderObject(arg2,arg3);
+  arg4 = (int)jarg4; 
+  (arg1)->ReorderObject(arg2,arg3,arg4);
 }
 
 

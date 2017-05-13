@@ -14,7 +14,6 @@ class Camera;
 class CameraFollow;
 			
 typedef list<Object*> ObjectList;
-typedef vector<Object*> ObjectArray;
 
 //! Represents a physical simulation (the main game levels)
 class GameWorld : public GameMode {
@@ -137,7 +136,7 @@ class GameWorld : public GameMode {
 			// NOTE you CANNOT directly add objects to the world during Update()'s
 			void AddObject(	Object* obj, bool addImmediately = false);
 
-			void ReorderObject(Object * obj, bool move_backwards);
+			void ReorderObject(Object * obj, bool move_backwards, int step);
 
 			//! Find a layer by name
 			ObjectLayer* FindLayer(const char* name);

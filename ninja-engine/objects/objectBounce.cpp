@@ -24,14 +24,16 @@ void ObjectBounce::Update() {
 		play_hit_sound = false;
 	}
 
-	if (alpha == 0) {
-		is_dead = true;
-	}
+	if (_static_until_heavy_impact) {
+		if (alpha == 0) {
+			is_dead = true;
+		}
 
-	if (hit_with_explosion_last_frame) {
-		_physics_body->SetType(b2_dynamicBody);
-		DontCollideWithPlayer();
-		FadeOut(60);
+		if (hit_with_explosion_last_frame) {
+			_physics_body->SetType(b2_dynamicBody);
+			DontCollideWithPlayer();
+			FadeOut(60);
+		}
 	}
 	
 	hit_with_explosion_last_frame = false;
@@ -69,7 +71,7 @@ void ObjectBounce::InitPhysics() {
 }
 
 void ObjectBounce::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
-	bool isExplosion = !obj; // this... won't be true forever. fix this for real.
+	bool isExplosion = !obj; // this... won't be true forever. fix this later.
 
 	if (isExplosion)
 		hit_with_explosion_last_frame = true;

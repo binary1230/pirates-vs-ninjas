@@ -188,10 +188,11 @@ namespace MapEditor
         {
             GameWorld world = GameWorld.GetInstance();
             ObjectVector objects = world.GetObjects();
+            Object selection = GetSelectedObject();
 
             lstObjects.BeginUpdate();
 
-            List<KeyValuePair<uint, string>> keysToRemove = new List<KeyValuePair<uint, string>>();
+            var keysToRemove = new List<KeyValuePair<uint, string>>();
 
             // 1) remove anything that's no longer present
             foreach (KeyValuePair<uint, string> kvp in objectList)
@@ -234,11 +235,44 @@ namespace MapEditor
                 if (found)
                     continue;
 
-                KeyValuePair<uint, string> objectListItemToAdd = new KeyValuePair<uint, string>(
+                var objectListItemToAdd = new KeyValuePair<uint, string>(
                     obj.GetID(), obj.GetPropObjectDefName()
                 );
                 objectList.Add(objectListItemToAdd);
             }
+
+            // 3) object list should be ok, now ensure ordering is still ok
+            uint selected_id = 0;
+            if (selection != null)
+                selected_id = selection.GetID();
+
+            int i = 0;
+            foreach (Object obj in objects)
+            {
+                if (obj.GetID() != objectList[i].Key)
+                {
+                    // ordering is wrong, search for the item in the right spot and swap it here
+                    bool found = false;
+                    for (int j = i + 1; j < objectList.Count; ++j)
+                    {
+                        if (objectList[j].Key == obj.GetID())
+                        {
+                            found = true;
+
+                            var tmp = objectList[i];
+                            objectList[i] = objectList[j];
+                            objectList[j] = tmp;
+                            break;
+                        }
+                    }
+                    Debug.Assert(found);
+                }
+
+                i++;
+            }
+
+            if (selection != null)
+                lstObjects.SelectedValue = selected_id;
 
             lstObjects.EndUpdate();
         }

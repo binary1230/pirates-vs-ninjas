@@ -102,8 +102,15 @@ void Object::UpdateFade() {
 }
 
 void Object::FadeOut(int time) {
-	fade_out_time_total = fade_out_time_remaining = time;
-	alpha = 255;
+	if (!is_fading) {
+		fade_out_time_total = time;
+		fade_out_time_remaining = time;
+		alpha = 255;
+	} else {
+		fade_out_time_total = std::min(fade_out_time_total, time);
+		fade_out_time_remaining = std::min(fade_out_time_remaining, time);
+	}
+
 	is_fading = true;
 }
 
