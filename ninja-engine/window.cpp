@@ -199,11 +199,15 @@ void Window::DrawText(int x, int y, std::string text) {
 
 	int _x = x;
 	int _y = y;
-	ALLEGRO_COLOR col = al_map_rgb(255,255,255);	// white text color
+	ALLEGRO_COLOR col = al_map_rgba_f(1.0f,1.0f,1.0f,1.0f);
 
 	glLoadIdentity();
 	for (i = 0; i < max; i++) {
+
+		// IMPORTANT NOTE: Only call this function AFTER drawing all the other opengl stuff.
+		// otherwise you may see weird artifacts like messed up alpha blending on objects drawn after this
 		al_draw_text(main_font, col, _x, _y, ALLEGRO_ALIGN_LEFT, lines[i].c_str());
+
 		_y += FONT_HEIGHT;
 	}
 }
@@ -384,6 +388,10 @@ void Window::BeginDrawing() {
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// not used for opengl, for stuff like text only.  not currently using.
+	// al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA); // default
+	// al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);   // non-premultiplied alpha?
 }
 
 void Window::EndDrawing() {
