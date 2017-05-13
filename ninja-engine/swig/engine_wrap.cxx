@@ -2508,6 +2508,18 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_SetModalObject(void * jarg1, void *
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_GameWorld_GetModalObject(void * jarg1) {
+  void * jresult ;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Object *result = 0 ;
+  
+  arg1 = (GameWorld *)jarg1; 
+  result = (Object *)((GameWorld const *)arg1)->GetModalObject();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_GameWorld_AddObject__SWIG_0(void * jarg1, void * jarg2, unsigned int jarg3) {
   GameWorld *arg1 = (GameWorld *) 0 ;
   Object *arg2 = (Object *) 0 ;

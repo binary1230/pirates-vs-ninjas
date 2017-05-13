@@ -126,9 +126,10 @@ class GameWorld : public GameMode {
 			inline bool IsLoading() {return is_loading;}
 
 			//! Returns true during loading if we jumped back from a door
-			bool JumpedBackFromADoor() const {return m_bJumpedBackFromADoor;}
+			bool JumpedBackFromADoor() const { return m_bJumpedBackFromADoor; }
 
-			void SetModalObject(Object* obj) {modal_active = obj;};
+			void SetModalObject(Object* obj) {modal_active = obj; }
+			Object* GetModalObject() const { return modal_active; }
 
 			//! Add an object to the world
 			// if addImmediately is false, this goes on the objectAddList

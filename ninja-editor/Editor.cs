@@ -145,7 +145,7 @@ namespace MapEditor
         public void Init(string mapname) { 
             Console.WriteLine(Directory.GetCurrentDirectory());
 
-            if (!gameWrapper.Init(mapname)) {
+            if (!gameWrapper.Init(mapname, true)) {
                 MessageBox.Show("Failed to init game, see log for details");
                 Close();
                 return;

@@ -3,6 +3,7 @@
 #include "window.h"
 #include "rect.h"
 #include "globalDefines.h"
+#include "gameWorld.h"
 
 bool ObjectCutBars::LoadObjectProperties(XMLNode &xDef) {
 	if (!Object::LoadObjectProperties(xDef))
@@ -65,6 +66,10 @@ void ObjectCutBars::Update() {
 
 void ObjectCutBars::Draw() {
 	if (_state == STATE_INACTIVE)
+		return;
+
+	// don't draw this textbox if there's a modal object present that's not us
+	if (WORLD->GetModalObject() && WORLD->GetModalObject() != this)
 		return;
 
 	int screen_height = WINDOW->Height();

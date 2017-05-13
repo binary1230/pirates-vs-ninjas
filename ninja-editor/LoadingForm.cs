@@ -14,7 +14,12 @@ namespace MapEditor
 {
     public partial class LoadingForm : Form
     {
-        Editor editorFrm = null;
+        Editor _editorFrm = null;
+
+        string[] _search_paths = new string[] {
+            "data/",
+            "../../data/",
+        };
 
         public LoadingForm()
         {
@@ -28,16 +33,16 @@ namespace MapEditor
 
         public void LoadLevel(string mapname, bool resave_and_exit)
         {
-            editorFrm = new Editor();
+            _editorFrm = new Editor();
 
             Hide();
 
-            editorFrm.SetMapName(mapname, resave_and_exit);
-            editorFrm.ShowDialog();
+            _editorFrm.SetMapName(mapname, resave_and_exit);
+            _editorFrm.ShowDialog();
 
             Show();
 
-            editorFrm = null;
+            _editorFrm = null;
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
@@ -87,12 +92,7 @@ namespace MapEditor
         {
             bool loaded = false;
 
-            string[] paths = new string[] {
-                "data/",
-                "../../data/",
-            };
-
-            foreach (string path in paths)
+            foreach (string path in _search_paths)
             {
                 loaded = PopulateMapData(path);
                 if (loaded)
@@ -141,8 +141,31 @@ namespace MapEditor
 
         private void txtFilename_TextChanged(object sender, EventArgs e)
         {
-            if (txtFilename.Text == "")
-                btnLoad.Enabled = false;
+            btnPlayMap.Enabled = btnLoad.Enabled = txtFilename.Text != "";
+        }
+
+        private void btnPlayMap_Click(object sender, EventArgs e)
+        {
+            RunGame(txtFilename.Text);
+        }
+
+        private void btnPlayFullGame_Click(object sender, EventArgs e)
+        {
+            RunGame(""); // empty means run entire game
+        }
+
+        private void RunGame(string mapfilename)
+        {
+            Hide();
+
+            // This method runs the game fine, just sometimes it goes a little slower.
+            // For fastest speed, run the game as the native EXE.
+            var game = new GameWrapper();
+            game.Init(mapfilename, false);
+            game.Run_Blocking();
+            game.Shutdown();
+
+            Show();
         }
     }
 }

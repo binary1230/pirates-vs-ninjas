@@ -33,13 +33,16 @@
             this.lstGameFiles = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnResaveAll = new System.Windows.Forms.Button();
+            this.btnPlayMap = new System.Windows.Forms.Button();
+            this.btnPlayFullGame = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(398, 226);
+            this.btnLoad.Location = new System.Drawing.Point(245, 280);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnLoad.Size = new System.Drawing.Size(73, 21);
             this.btnLoad.TabIndex = 0;
             this.btnLoad.Text = "Edit Map";
             this.btnLoad.UseVisualStyleBackColor = true;
@@ -47,9 +50,9 @@
             // 
             // txtFilename
             // 
-            this.txtFilename.Location = new System.Drawing.Point(12, 226);
+            this.txtFilename.Location = new System.Drawing.Point(11, 280);
             this.txtFilename.Name = "txtFilename";
-            this.txtFilename.Size = new System.Drawing.Size(380, 20);
+            this.txtFilename.Size = new System.Drawing.Size(228, 20);
             this.txtFilename.TabIndex = 1;
             this.txtFilename.Text = "level_0.xml";
             this.txtFilename.TextChanged += new System.EventHandler(this.txtFilename_TextChanged);
@@ -59,7 +62,7 @@
             this.lstGameFiles.FormattingEnabled = true;
             this.lstGameFiles.Location = new System.Drawing.Point(13, 39);
             this.lstGameFiles.Name = "lstGameFiles";
-            this.lstGameFiles.Size = new System.Drawing.Size(460, 147);
+            this.lstGameFiles.Size = new System.Drawing.Size(535, 147);
             this.lstGameFiles.TabIndex = 2;
             this.lstGameFiles.SelectedIndexChanged += new System.EventHandler(this.lstGameFiles_SelectedIndexChanged);
             this.lstGameFiles.DoubleClick += new System.EventHandler(this.lstGameFiles_DoubleClick);
@@ -83,11 +86,43 @@
             this.btnResaveAll.UseVisualStyleBackColor = true;
             this.btnResaveAll.Click += new System.EventHandler(this.btnResaveAll_Click);
             // 
+            // btnPlayMap
+            // 
+            this.btnPlayMap.Location = new System.Drawing.Point(324, 280);
+            this.btnPlayMap.Name = "btnPlayMap";
+            this.btnPlayMap.Size = new System.Drawing.Size(91, 21);
+            this.btnPlayMap.TabIndex = 5;
+            this.btnPlayMap.Text = "Play This Map";
+            this.btnPlayMap.UseVisualStyleBackColor = true;
+            this.btnPlayMap.Click += new System.EventHandler(this.btnPlayMap_Click);
+            // 
+            // btnPlayFullGame
+            // 
+            this.btnPlayFullGame.Location = new System.Drawing.Point(457, 280);
+            this.btnPlayFullGame.Name = "btnPlayFullGame";
+            this.btnPlayFullGame.Size = new System.Drawing.Size(91, 21);
+            this.btnPlayFullGame.TabIndex = 6;
+            this.btnPlayFullGame.Text = "Play Full Game";
+            this.btnPlayFullGame.UseVisualStyleBackColor = true;
+            this.btnPlayFullGame.Click += new System.EventHandler(this.btnPlayFullGame_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 264);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Selected Map";
+            // 
             // LoadingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 261);
+            this.ClientSize = new System.Drawing.Size(560, 310);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.btnPlayFullGame);
+            this.Controls.Add(this.btnPlayMap);
             this.Controls.Add(this.btnResaveAll);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lstGameFiles);
@@ -109,5 +144,8 @@
         private System.Windows.Forms.ListBox lstGameFiles;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnResaveAll;
+        private System.Windows.Forms.Button btnPlayMap;
+        private System.Windows.Forms.Button btnPlayFullGame;
+        private System.Windows.Forms.Label label2;
     }
 }

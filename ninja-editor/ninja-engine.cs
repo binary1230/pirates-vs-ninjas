@@ -1078,6 +1078,12 @@ public class GameWorld : GameMode {
     enginePINVOKE.GameWorld_SetModalObject(swigCPtr, Object.getCPtr(obj));
   }
 
+  public Object GetModalObject() {
+    global::System.IntPtr cPtr = enginePINVOKE.GameWorld_GetModalObject(swigCPtr);
+    Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
+    return ret;
+  }
+
   public void AddObject(Object obj, bool addImmediately) {
     enginePINVOKE.GameWorld_AddObject__SWIG_0(swigCPtr, Object.getCPtr(obj), addImmediately);
   }
@@ -3958,6 +3964,9 @@ class enginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_SetModalObject")]
   public static extern void GameWorld_SetModalObject(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_GetModalObject")]
+  public static extern global::System.IntPtr GameWorld_GetModalObject(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ninja-engine.dll", EntryPoint="CSharp_GameWorld_AddObject__SWIG_0")]
   public static extern void GameWorld_AddObject__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3);

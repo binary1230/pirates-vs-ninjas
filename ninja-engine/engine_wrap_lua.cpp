@@ -5901,6 +5901,30 @@ fail:
 }
 
 
+static int _wrap_GameWorld_GetModalObject(lua_State* L) {
+  int SWIG_arg = 0;
+  GameWorld *arg1 = (GameWorld *) 0 ;
+  Object *result = 0 ;
+  
+  SWIG_check_num_args("GameWorld::GetModalObject",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GameWorld::GetModalObject",1,"GameWorld const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_GameWorld,0))){
+    SWIG_fail_ptr("GameWorld_GetModalObject",1,SWIGTYPE_p_GameWorld);
+  }
+  
+  result = (Object *)((GameWorld const *)arg1)->GetModalObject();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Object,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_GameWorld_AddObject__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   GameWorld *arg1 = (GameWorld *) 0 ;
@@ -6968,6 +6992,7 @@ static swig_lua_method swig_GameWorld_methods[]= {
     { "IsLoading", _wrap_GameWorld_IsLoading},
     { "JumpedBackFromADoor", _wrap_GameWorld_JumpedBackFromADoor},
     { "SetModalObject", _wrap_GameWorld_SetModalObject},
+    { "GetModalObject", _wrap_GameWorld_GetModalObject},
     { "AddObject", _wrap_GameWorld_AddObject},
     { "ReorderObject", _wrap_GameWorld_ReorderObject},
     { "FindLayer", _wrap_GameWorld_FindLayer},

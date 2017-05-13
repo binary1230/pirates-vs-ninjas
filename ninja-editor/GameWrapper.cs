@@ -51,8 +51,16 @@ namespace MapEditor
             set { Game.GetInstance().SetPaused(value); }
         }
 
-        public bool Init(string mapname)
+        private bool _map_editor_enabled = true;
+        public bool MapEditorEnabled
         {
+            get { return _map_editor_enabled; }
+        }
+
+        public bool Init(string mapname, bool enable_editor)
+        {
+            _map_editor_enabled = enable_editor;
+
             Game.CreateInstance();
             Game game = Game.GetInstance();
             if (game == null)
@@ -61,14 +69,20 @@ namespace MapEditor
             GameOptions.CreateInstance();
             GameOptions options = GameOptions.GetInstance();
 
-            options.SetPropMapEditorEnabled(true);
-            options.SetPropFirstMode(mapname);
+            if (_map_editor_enabled)
+                options.SetPropMapEditorEnabled(true);
+
+            if (mapname != "")
+                options.SetPropFirstMode(mapname);
 
             if (!game.Init(0, null))
                 return false;
 
-            game.SetPaused(true);
-            Paused = true;
+            if (_map_editor_enabled)
+            {
+                game.SetPaused(true);
+                Paused = true;
+            }
 
             return true;
         }
@@ -85,6 +99,13 @@ namespace MapEditor
 
             game.ProcessEvents();
             game.TickIfNeeded();
+        }
+
+        public void Run_Blocking()
+        {
+            Game game = Game.GetInstance();
+
+            game.RunMainLoop_BlockingHelper();
         }
 
         public void Shutdown()

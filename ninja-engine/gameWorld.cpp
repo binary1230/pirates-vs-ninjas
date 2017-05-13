@@ -224,7 +224,7 @@ void GameWorld::Draw()
 void GameWorld::DrawObjects() {
 	for (ObjectLayer*& layer : _layers) {
 		for (Object*& obj : _objects) {
-			if (obj->GetLayer() == layer) {
+			if (obj->GetLayer() == layer && !obj->IsDead()) {
 				obj->Draw();
 			}
 		}
