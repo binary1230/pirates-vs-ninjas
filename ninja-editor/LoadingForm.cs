@@ -102,7 +102,11 @@ namespace MapEditor
             if (!loaded)
             {
                 MessageBox.Show("Couldn't load default.xml (is this exe next to the 'data/' dir?)");
+                return;
             }
+
+            if (lstGameFiles.SelectedItem == null && lstGameFiles.Items.Count >= 1)
+                lstGameFiles.SelectedIndex = 0;
         }
 
         private void LoadingForm_Load(object sender, EventArgs e)
