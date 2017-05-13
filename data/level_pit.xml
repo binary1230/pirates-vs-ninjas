@@ -903,7 +903,7 @@
 	<music>PVN-I_lost_my_glasses.ogg</music>
 	<width>1200</width>
 	<height>6500</height>
-	<lua_script>scripts/level3.lua</lua_script>
+	<lua_script>scripts/level_pit.lua</lua_script>
 	<_camera class_id="14" class_name="CameraFollow" tracking_level="1" version="1" object_id="_83">
 		<Camera class_id="13" tracking_level="1" version="1" object_id="_84"></Camera>
 		<follow_object class_id_reference="9" object_id_reference="_57"></follow_object>

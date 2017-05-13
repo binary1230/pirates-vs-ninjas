@@ -6139,7 +6139,7 @@
 	<music></music>
 	<width>16000</width>
 	<height>5000</height>
-	<lua_script>scripts/level0.lua</lua_script>
+	<lua_script>scripts/level_tropical.lua</lua_script>
 	<_camera class_id="16" class_name="CameraFollow" tracking_level="1" version="1" object_id="_558">
 		<Camera class_id="15" tracking_level="1" version="1" object_id="_559"></Camera>
 		<follow_object class_id_reference="11" object_id_reference="_512"></follow_object>

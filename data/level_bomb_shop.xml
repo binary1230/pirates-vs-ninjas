@@ -617,7 +617,7 @@
 	<music>jouten-shop.ogg</music>
 	<width>1024</width>
 	<height>650</height>
-	<lua_script>scripts/level2_shop.lua</lua_script>
+	<lua_script>scripts/level_bomb_shop.lua</lua_script>
 	<_camera class_id="15" class_name="CameraFollow" tracking_level="1" version="1" object_id="_56">
 		<Camera class_id="14" tracking_level="1" version="1" object_id="_57"></Camera>
 		<follow_object class_id_reference="11" object_id_reference="_55"></follow_object>

@@ -2154,7 +2154,7 @@
 				<_rotate_velocity>0.000000000e+00</_rotate_velocity>
 			</Object>
 			<door_type>0</door_type>
-			<mode_to_jump_to_on_activate>level_2_shop.xml</mode_to_jump_to_on_activate>
+			<mode_to_jump_to_on_activate>level_bomb_shop.xml</mode_to_jump_to_on_activate>
 			<door_name>joutenShop</door_name>
 		</item>
 		<item class_id_reference="3" object_id="_198">
@@ -3216,7 +3216,7 @@
 	<music>level2.ogg</music>
 	<width>10000</width>
 	<height>6000</height>
-	<lua_script>scripts/level2.lua</lua_script>
+	<lua_script>scripts/level_fire_underground.lua</lua_script>
 	<_camera class_id="15" class_name="CameraFollow" tracking_level="1" version="1" object_id="_293">
 		<Camera class_id="14" tracking_level="1" version="1" object_id="_294"></Camera>
 		<follow_object class_id_reference="9" object_id_reference="_196"></follow_object>

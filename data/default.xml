@@ -9,25 +9,11 @@
 		<author>Dominic Cerquetti</author>
 	</info>
 
-	<!-- the default mode is the first one, unless overriden on the command
-	     line (e.g. ninjas.exe -m 1) -->
-	<!-- ID's must be > 0 -->
-
-
 	<mode_file>menu.xml</mode_file>
-	<mode_file>level_0.xml</mode_file>
-	<mode_file>level_3.xml</mode_file>
-	<mode_file>level_2.xml</mode_file> 
+	<mode_file>level_tropical.xml</mode_file>
+	<mode_file>level_pit.xml</mode_file>
+	<mode_file>level_fire_underground.xml</mode_file> 
 	<mode_file>credits.xml</mode_file>
-	
-	<!-- 
-	now really old.
-	<mode_file>level_1.xml</mode_file>
-	-->
-	
-	<!--
-	<mode_file>level_2_shop.xml</mode_file>
-	-->
 	
 	<sounds>
 		<sound name="ring">sounds/ring.wav</sound>
