@@ -15,7 +15,3 @@ function OnPickupItem(itemname)
 		world_textbox(msg, "bomb-icon.png");
 	end
 end
-
-function Textbox_Done()
-	DoCutBars();
-end

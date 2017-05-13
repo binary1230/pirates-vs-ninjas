@@ -12,7 +12,7 @@ function UpdateIntroState()
 
 		music_play("bassy1.ogg");
 		-- world_play_input_script("data/input/level1.1.input");
-		world_textbox("Sup. It's a good day to be a sweet, sweet ninja.| |(Press C to continue)~I should meet up with my friend~I'll just head up from here.", "amaya-icon.png");
+		world_textbox("Our ninja science shows disturbances detected|in the underground treasure caverns|(Press C to continue)~I should go check it out.~There's a door around here somewhere.", "amaya-icon.png");
 
 		
 	elseif introState == 2 then

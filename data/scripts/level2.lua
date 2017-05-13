@@ -1,7 +1,7 @@
 -- Level 2 - Jouten's Lair
 
 function DoCutBars()
-	world_create_cutbars("Pirates VS Ninjas|Level 2 - Jouten's Lair");
+	world_create_cutbars("Pirates VS Ninjas|Level 2 - Treasure Cave");
 end
 
 function Level_OnLoad() 
@@ -12,7 +12,7 @@ function Level_OnLoad()
 		return;
 	end
 
-	msg = "You found the|'cosmic door'.| |Huzzah.~As a reward, I'll|tell you a little|secret.  If you press|the \"D\" key,|you will drop little|airballs.~Don't ask me why|Jouten can do it.|He's just a|tech guy.~I mean, Toneriko|is understandable,|since she's...| |Oops.|No plot for you yet!~Anyway, press \"C\"|to start.  Try and|find that 'cosmic|door' again.";
+	msg = "My friend's shop is up ahead|and should have more useful NINJA SCIENCE~I'll head over there";
 
 	world_textbox(msg, "amaya-icon.png");
 end
