@@ -6,15 +6,15 @@
 	<animations default="default">
 		<animation name="still">
 			<frames>
-				<frame name="enemytest\whaleguy1.png" duration="3" alpha_enabled="true" />
+				<frame name="enemytest\whaleguy1.png" duration="3"  />
 			</frames>
 			<show_in_order />
 			<repeat />
 		</animation>
 		<animation name="moving">
 			<frames>
-				<frame name="enemytest\whaleguy2.png" duration="5" alpha_enabled="true" />
-				<frame name="enemytest\whaleguy3.png" duration="3" alpha_enabled="true" />
+				<frame name="enemytest\whaleguy2.png" duration="5"  />
+				<frame name="enemytest\whaleguy3.png" duration="3"  />
 			</frames>
 			<show_in_order />
 			<repeat />

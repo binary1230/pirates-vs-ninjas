@@ -6,20 +6,20 @@
 	<animations default="default">
 		<animation name="default">
 			<frames>
-				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb4.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb4.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb1.png" duration="8" alpha_enabled="true" />
-				<frame name="bomb2.png" duration="8" alpha_enabled="true" />
+				<frame name="bomb1.png" duration="8"  />
+				<frame name="bomb2.png" duration="8"  />
+				<frame name="bomb1.png" duration="8"  />
+				<frame name="bomb2.png" duration="8"  />
+				<frame name="bomb1.png" duration="8"  />
+				<frame name="bomb2.png" duration="8"  />
+				<frame name="bomb1.png" duration="8"  />
+				<frame name="bomb4.png" duration="8"  />
+				<frame name="bomb1.png" duration="8"  />
+				<frame name="bomb2.png" duration="8"  />
+				<frame name="bomb1.png" duration="8"  />
+				<frame name="bomb4.png" duration="8"  />
+				<frame name="bomb1.png" duration="8"  />
+				<frame name="bomb2.png" duration="8"  />
 				<frame type="effect" data="explosion1" />
 				<frame type="destroy" />
 			</frames>

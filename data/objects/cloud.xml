@@ -6,7 +6,7 @@
 	<animations default="default">
 		<animation name="default">
 			<frames>
-				<frame name="cloud.png" duration="3" alpha_enabled="true" />
+				<frame name="cloud.png" duration="3"  />
 			</frames>
 			<show_in_order />
 			<repeat />
