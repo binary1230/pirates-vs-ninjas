@@ -9,18 +9,18 @@
 			<frames>
 				<frame name="amaya2/idle/njgs0001.png" duration="20"  />
 			</frames>
-			
-			
 		</animation>
 	
 		<animation name="walking">
 			<frames>
 				<frame name="amaya2/run/njgs0053.png" duration="1"  />
 				<frame name="amaya2/run/njgs0054.png" duration="1"  />
+				<frame type="sound" data="step2"/>
 				<frame name="amaya2/run/njgs0055.png" duration="1"  />
 				<frame name="amaya2/run/njgs0056.png" duration="1"  />
 				<frame name="amaya2/run/njgs0057.png" duration="1"  />
 				<frame name="amaya2/run/njgs0058.png" duration="1"  />
+				<frame type="sound" data="step2"/>
 				<frame name="amaya2/run/njgs0059.png" duration="1"  />
 				<frame name="amaya2/run/njgs0060.png" duration="1"  />
 			</frames>
@@ -36,7 +36,7 @@
 		<animation name="jumping">
 			<frames>
 				<frame name="amaya2/jump/njgs0021.png" duration="13"  />
-				<frame name="amaya2/jump/njgs0022.png" duration="10"  />
+				<frame name="amaya2/jump/njgs0022.png" duration="10"  /> <!-- jump to here -->
 				<frame name="amaya2/jump/njgs0023.png" duration="4"  />
 				<frame name="amaya2/jump/njgs0024.png" duration="4"  />
 				<frame name="amaya2/jump/njgs0025.png" duration="4"  />
@@ -49,6 +49,7 @@
 	
 	<properties>
 		<boundingBox>
+			<!-- needed to work around weird sprite size.  resize sprites and you could maybe remove this -->
 			<offset_x>22</offset_x>
 			<offset_y>17</offset_y>
 			<width>29</width>

@@ -61,7 +61,9 @@ void Game::SignalEndCurrentMode() {
 //! This must be called FIRST before ANY allegro stuff
 bool Game::InitAllegro() {
 	
-	#if ALLEGRO_VERBOSE_DEBUG_OUTPUT
+	// #define ALLEGRO_VERBOSE_DEBUG_OUTPUT
+
+	#ifdef ALLEGRO_VERBOSE_DEBUG_OUTPUT
 	al_register_trace_handler(allegro_debug_printer);
 	#endif
 

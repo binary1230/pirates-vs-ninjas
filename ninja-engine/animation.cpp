@@ -163,8 +163,6 @@ void Animation::ResetAnimation()
 		_currentFrame = frames[0];
 	else
 		_currentFrame = NULL;
-
-	
 }
 
 //! Free memory associated with this animation

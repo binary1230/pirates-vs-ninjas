@@ -15,7 +15,14 @@
 	<mode_file>level_fire_underground.xml</mode_file> 
 	<mode_file>credits.xml</mode_file>
 	
+	<!-- these are resident sounds, loaded forever -->
 	<sounds>
+		<sound name="select">sounds/select.wav</sound>
+		<sound name="menu_move">sounds/menu_move.wav</sound>
+		
+	
+		<sound name="step1">sounds/step01.wav</sound>
+		<sound name="step2">sounds/step02.wav</sound>
 		<sound name="ring">sounds/ring.wav</sound>
 		<sound name="itemget">sounds/itemget.wav</sound>
 		<sound name="jump">sounds/jump.wav</sound>

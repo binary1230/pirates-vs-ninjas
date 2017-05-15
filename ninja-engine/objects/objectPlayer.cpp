@@ -175,6 +175,7 @@ void ObjectPlayer::Update()
 
 		if (m_kCurrentCollision.down) {
 			m_kPlayerState = STANDING;
+			SOUND->PlaySound("step1");
 			break;
 		}
 	

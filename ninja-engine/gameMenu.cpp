@@ -6,14 +6,17 @@
 #include "window.h"
 #include "gameMenu.h"
 #include "globals.h"
+#include "gameSound.h"
 
 // TODO: Move this all into scripting?
 
 void GameMenu::DoNewGame() {
+	SOUND->PlaySound("select");
 	GAME->StartNewGame();
 }
 
 void GameMenu::DoQuit() {
+	SOUND->PlaySound("select");
 	GAME->SignalGameExit();
 }
 
@@ -88,11 +91,13 @@ void GameMenu::CheckKeys() {
 		if ((current_pos--) == 0) {
 			current_pos = y_pos.size() - 1;
 		}
+		SOUND->PlaySound("menu_move");
 	}
 
 	if (INPUT->KeyOnce(PLAYERKEY_DOWN, 1)) {
 		if ((++current_pos) == y_pos.size())
 			current_pos = 0;
+		SOUND->PlaySound("menu_move");
 	}
 
 	if (INPUT->KeyOnce(GAMEKEY_EXIT)) {
