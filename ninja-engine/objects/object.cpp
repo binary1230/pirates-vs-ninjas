@@ -489,11 +489,13 @@ bool Object::LoadObjectAnimations(XMLNode &xDef) {
 		xAnim = xAnims.getChildNode("animation", &iterator);
 		anim_name = xAnim.getAttribute("name");
 
-		// Load the animation	
-		anim = Animation::Load(xAnim, this);
+		anim = new Animation();
 
-		if (!anim)
+		// Load the animation	
+		if (!anim->Init(xAnim, this)) {
+			delete anim;
 			return false;
+		}
 
 		// if we have animation names (e.g. "walking") then use them to figure
 		// out which index we store this animation at

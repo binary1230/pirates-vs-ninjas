@@ -20,139 +20,151 @@ void AnimFrame::Clear()
 	nextFrame = NULL;
 }
 
-// ------------------------------------------- //
-
-bool Animation::Init() 
-{
-	frames.clear();
-	currentFrame = NULL;
-	elapsed_time = 0;
-	freeze_animation = false;
-	speed_multiplier = 1;
-	attachedObject = NULL;
-	return true;
-}
-
 // Draw current frame at specified position, flipping if requested
 void Animation::DrawAt(int x, int y, bool flip_x, bool flip_y) 
 {
-	assert(currentFrame != NULL);
-	WINDOW->DrawSprite(currentFrame->sprite, x, y);
+	assert(_currentFrame != NULL);
+	WINDOW->DrawSprite(_currentFrame->sprite, x, y);
 }
 
-//! Update the animation, advancing to the next frame
-//! if enough time has passed
+void Animation::SetSpeedMultiplier(int multiplier) {
+	_speed_multiplier = max(multiplier, 1);
+}
+
+void Animation::SetFrozen(bool is_frozen) {
+	_freeze_animation = is_frozen; 
+	if (!_freeze_animation) {
+		_animation_just_started = false;
+	}
+}
+
+//! Update the animation, advancing to the next frame if enough time has passed
 void Animation::Update() 
 {
-	bool need_to_switch_frames = false;
-
-	// don't need to do anything if we have less than 2 frames or are frozen
-	if (frames.size() < 2 || freeze_animation)
+	// don't need to do anything if we don't have more than 1 frame, or are frozen
+	if (frames.size() <= 1 || _freeze_animation)
 		return;
 
-	++elapsed_time;
+	--_time_til_next_frame;
 
-	if (elapsed_time >= currentFrame->duration * speed_multiplier)
-		need_to_switch_frames = true;
-					
-	if (need_to_switch_frames) {
-		elapsed_time = 0;
-		SwitchToNextFrame();
-		
-		if (currentFrame->freeze_at_end) {
-			// set the new elapsed time to be the length of this frame
-			// so that when we unfreeze the animation it goes right to
-			// the next frame
-			elapsed_time = currentFrame->duration * speed_multiplier;
-			freeze_animation = true;
+	if (_time_til_next_frame <= 0 || _animation_just_started) {
+		if (!_animation_just_started) {
+			AdvanceOneFrame();
+		}
+
+		_animation_just_started = false;
+		RunCurrentFrameActions();
+
+		_time_til_next_frame = _currentFrame->duration * _speed_multiplier;
+
+		if (_currentFrame->freeze_at_end) {
+			_time_til_next_frame = 0; // when we unfreeze, immediately go to next frame
+			_freeze_animation = true;
 		}
 	}
 }
 
-// Switch this animation to its next frame
-// (maybe this is too complicated.)
-void Animation::SwitchToNextFrame() 
+void Animation::SwitchToNextFrame()
 {
-	// special cases
-	// if the frame is an EFFECT frame or a SOUND frame, then
-	// trigger that EFFECT or SOUND, and then immediately advance
-	// to the next frame in the animation
 
-	std::string soundName, effectName;
-	Object* obj;
-	AnimFrame* oldFrame = currentFrame;
+}
 
-	// NOTE: if no currentFrame->nextFrame, NEVER advance it until reset
-	if (currentFrame->nextFrame)
-		currentFrame = currentFrame->nextFrame;
+// return true if caller should immediately process the next frame
+bool Animation::RunCurrentFrameAction() {
+	bool should_run_next_frame_action = false;
 
-	switch (oldFrame->frame_type) {
-		case ANIMFRAME_SPRITE:
-			if (currentFrame->frame_type != ANIMFRAME_SPRITE)
-				SwitchToNextFrame();
-			break;
+	switch (_currentFrame->frame_type) {
+	case ANIMFRAME_SPRITE:
+		// noop
+		break;
 
-		case ANIMFRAME_SOUND:
-			soundName = oldFrame->extraData;
+	case ANIMFRAME_DESTROY:
+		if (_attachedObject)
+			_attachedObject->SetIsDead(true);
+		break;
 
-			if (soundName.length() == 0)
-				TRACE(	"ERROR: No sound name specified "
-													"in animation sound frame\n");
+	case ANIMFRAME_SOUND:
+		if (_currentFrame->extraData.length() == 0)
+			TRACE("ERROR: No sound name specified in animation sound frame\n");
+		else
+			SOUND->PlaySound(_currentFrame->extraData);
 
-			SOUND->PlaySound(soundName);
-			SwitchToNextFrame();
-			break;
+		should_run_next_frame_action = true;
+		break;
 
-		case ANIMFRAME_EFFECT:
-			effectName = oldFrame->extraData;
+	case ANIMFRAME_EFFECT:
+		if (_currentFrame->extraData.length() == 0)
+			TRACE("ERROR: No effect name specified in animation sound frame\n");
+		else
+			EFFECTS->TriggerEffect(_attachedObject, _currentFrame->extraData);
 
-			if (effectName.length() == 0)
-				TRACE(	"ERROR: No sound name specified "
-													"in animation sound frame\n");
+		should_run_next_frame_action = true;
+		break;
 
-			obj = EFFECTS->TriggerEffect( attachedObject, effectName );
+	case ANIMFRAME_EXPLOSION:
+		PHYSICS->CreateExplosionAt(_attachedObject->GetCenter());
+		should_run_next_frame_action = true;
+		break;
 
-			SwitchToNextFrame();
-			break;
+	case ANIMFRAME_JUMP:
+		// just go to the next frame
+		should_run_next_frame_action = true;
+		break;
 
-		case ANIMFRAME_EXPLOSION:
-			PHYSICS->CreateExplosionAt(attachedObject->GetCenter());
-			break;
-
-		case ANIMFRAME_JUMP:
-
-			// do NOTHING!
-			SwitchToNextFrame();
-			break;
-
-		case ANIMFRAME_DESTROY:
-
-			if (attachedObject)
-				attachedObject->SetIsDead(true);
-
-			break;
-
-		// not nice for now.
-		default: case ANIMFRAME_INVALID:
-			assert(0 && "ERROR: Got an invalid frame type!");
-			break;
+	default: case ANIMFRAME_INVALID:
+		assert(0 && "ERROR: invalid frame type!");
+		break;
 	}
 
-	// the next frame MUST BE a sprite frame.
-	assert(currentFrame->frame_type == ANIMFRAME_SPRITE);
+	return should_run_next_frame_action;
+}
 
-	if (currentFrame == frames[0] && attachedObject)
-		attachedObject->OnAnimationLooped();
+void Animation::AdvanceOneFrame() {
+	// actually advance to next frame, if one exists
+	// if next frame doesn't exist, don't advance it until we're reset
+	if (_currentFrame->nextFrame)
+		_currentFrame = _currentFrame->nextFrame;
+}
+
+// Switch this animation to its next frame, do the action of that frame
+void Animation::RunCurrentFrameActions()
+{
+	bool continue_advancing_frames;
+	int safety__max_loops_remaining = 100;
+
+	do {
+		continue_advancing_frames = RunCurrentFrameAction();
+
+		if (continue_advancing_frames)
+			AdvanceOneFrame();
+
+		if (_currentFrame == frames[0] && _attachedObject)
+			_attachedObject->OnAnimationLooped();
+
+		// sanity check, make sure we aren't in an infinite loop
+		safety__max_loops_remaining--;
+		assert(safety__max_loops_remaining != 0 && "Animation data error: We're in an infinite loop, check animation data for problems");
+		if (safety__max_loops_remaining == 0)
+			break;
+
+	} while (continue_advancing_frames);
+
+	// make sure we ended up on a valid frame type
+	assert(_currentFrame->frame_type == ANIMFRAME_SPRITE || _currentFrame->frame_type == ANIMFRAME_DESTROY);
 }
 
 //! Reset this animation back to the first frame
 void Animation::ResetAnimation() 
 {
-	freeze_animation = false;
+	_freeze_animation = false;
+	_animation_just_started = true;
+
 	if (frames.size())
-		currentFrame = frames[0];
+		_currentFrame = frames[0];
 	else
-		currentFrame = NULL;
+		_currentFrame = NULL;
+
+	
 }
 
 //! Free memory associated with this animation
@@ -188,7 +200,7 @@ bool Animation::CreateSpriteFrame(	const char* file, const int duration, bool fr
 		}
 	}
 	
-	// sequence present, try to load there
+	// animation sequence of sprites present on disk (i.e. frame0001.png, frame0002.png, etc), try to load there
 	int frame_num = 1; // start on frame 1
 	bool loaded_this_ok;
 	bool loaded_at_least_one_frame = false;
@@ -329,7 +341,7 @@ bool Animation::PushFrame(AnimFrame* f)
 	// frames->nextFrame links to the frame to play after this one.
 	// ensure that the last frame always links to the first one
 	if (frames.size() <= 1) {
-		currentFrame = frames[0];
+		_currentFrame = frames[0];
  	} else {
 		int lastFrame = frames.size() - 1;
 		frames[lastFrame - 1]->nextFrame = f;
@@ -338,26 +350,20 @@ bool Animation::PushFrame(AnimFrame* f)
 	return true;
 }
 
-//! Static helper method to create new animations from XML
-//!
-//! Does not currently support frames out of order and
-//! other wackiness.  Soon enough, my young apprentice.
-//!
-Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject) 
+bool Animation::Init(XMLNode &xAnim, Object* attachedObject)
 {
-	int duration;
 	std::string sprite_filename, frame_type, extraData;
-	int freeze_at_end;
 	XMLNode xFrames, xFrame;
 	int i, iterator, numFrames, numSpriteFrames = 0;
 	int first_sprite_frame = -1; // which frame is the first sprite frame
 	
-	Animation* anim = new Animation();
-	
-	if (!anim || !anim->Init() )
-		return NULL;
-
-	anim->attachedObject = attachedObject;
+	_animation_just_started = true;
+	frames.clear();
+	_currentFrame = NULL;
+	_time_til_next_frame = 0;
+	_freeze_animation = false;
+	_speed_multiplier = 1;
+	_attachedObject = attachedObject;
 	
 	xFrames = xAnim.getChildNode("frames");
 	numFrames = xFrames.nChildNode("frame");
@@ -371,6 +377,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 	{
 		xFrame = xFrames.getChildNode("frame", &iterator);
 	
+		int freeze_at_end;
 		const char* freeze = xFrame.getAttribute("pause");
 		if (!freeze)
 			freeze_at_end = 0;
@@ -390,8 +397,9 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 			// normally what happens - you get an image filename
 			sprite_filename = xFrame.getAttribute("name");
 
+			int duration;
 			loaded_ok = xFrame.getAttributeInt("duration", duration);
-			loaded_ok = loaded_ok && anim->CreateSpriteFrame(sprite_filename.c_str(), duration, freeze_at_end != 0);
+			loaded_ok = loaded_ok && CreateSpriteFrame(sprite_filename.c_str(), duration, freeze_at_end != 0);
 
 			if (first_sprite_frame == -1)
 				first_sprite_frame = i;
@@ -406,7 +414,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 			extraData = xFrame.getAttribute("data");
 			assert(extraData.length() != 0);
 
-			loaded_ok = anim->CreateEffectFrame(extraData, freeze_at_end != 0);
+			loaded_ok = CreateEffectFrame(extraData, freeze_at_end != 0);
 		} 
 		else if (frame_type == "sound") 
 		{
@@ -414,14 +422,14 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 			extraData = xFrame.getAttribute("data");
 			assert(extraData.length() != 0);
 
-			loaded_ok = anim->CreateSoundFrame(extraData, freeze_at_end != 0);
+			loaded_ok = CreateSoundFrame(extraData, freeze_at_end != 0);
 		}
 		else if (frame_type == "explosion") {
-			loaded_ok = anim->CreateExplosionFrame();
+			loaded_ok = CreateExplosionFrame();
 		}
 		else if (frame_type == "destroy") 
 		{
-			loaded_ok = anim->CreateDestroyFrame();
+			loaded_ok = CreateDestroyFrame();
 		} 
 		else if (frame_type == "jumpToFrame")
 		{
@@ -429,7 +437,7 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 
 			loaded_ok = xFrame.getAttributeInt("num", iFrameIndexToJumpTo);
 			iFrameIndexToJumpTo--; // subtract one since this is an INDEX not a FRAME NUMBER
-			loaded_ok = loaded_ok && anim->CreateJumpFrame(iFrameIndexToJumpTo);
+			loaded_ok = loaded_ok && CreateJumpFrame(iFrameIndexToJumpTo);
 		}
 		else 
 		{
@@ -441,9 +449,8 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 	}
 
 	if (!loaded_ok) {
-		anim->Shutdown();
-		SAFE_DELETE(anim);
-		return NULL;
+		Shutdown();
+		return false;
 	}
 
 	// hack.
@@ -457,18 +464,25 @@ Animation* Animation::Load(XMLNode &xAnim, Object* attachedObject)
 	// that an option in XML
 	assert(first_sprite_frame != -1);
 
-	anim->width = anim->frames[first_sprite_frame]->sprite->width;
-	anim->height = anim->frames[first_sprite_frame]->sprite->height;
+	_width = frames[first_sprite_frame]->sprite->width;
+	_height = frames[first_sprite_frame]->sprite->height;
 
-	if (anim->currentFrame->freeze_at_end)	
-		anim->freeze_animation = true;
+	if (_currentFrame->freeze_at_end)
+		_freeze_animation = true;
 	
-	return anim;
+	return true;
 }
 
 Animation::Animation()
 {
-	currentFrame = NULL;
+	_debug_flag = false;
+	_currentFrame = NULL;
+	_attachedObject = NULL;
+	_animation_just_started = true;
+	_time_til_next_frame = 0;
+	_freeze_animation = false;
+	_speed_multiplier = 1;
+	_width = _height = -1;
 }
 
 Animation::~Animation() {}

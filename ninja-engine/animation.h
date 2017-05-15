@@ -13,12 +13,12 @@ typedef map<const std::string, uint> AnimationMapping;
 //! Sprite - this frame is an image we should display (NORMALLY what happens)
 //! 
 enum AnimFrameType {
-	ANIMFRAME_SPRITE,   // this frame displays a sprite
-	ANIMFRAME_EFFECT,	// this frame triggers an effect (dust, smoke, etc)
-	ANIMFRAME_SOUND,	// this frame triggers a sound
-	ANIMFRAME_EXPLOSION, // this frame triggers a physics effect
-	ANIMFRAME_DESTROY,  // this frame destroyes the parent object
-	ANIMFRAME_JUMP,  // this frame destroyes the parent object
+	ANIMFRAME_SPRITE,		// this frame displays a sprite
+	ANIMFRAME_EFFECT,		// this frame triggers an effect (dust, smoke, etc)
+	ANIMFRAME_SOUND,		// this frame triggers a sound
+	ANIMFRAME_EXPLOSION,	// this frame triggers a physics effect
+	ANIMFRAME_DESTROY,		// this frame destroys the parent object
+	ANIMFRAME_JUMP,			// jump to another frame in the animation
 
 	ANIMFRAME_INVALID = -1
 };
@@ -57,42 +57,48 @@ class Animation {
 		vector<struct AnimFrame*> frames;	
 		
 		//! Points to the current frame we are drawing
-		AnimFrame* currentFrame;	
+		AnimFrame* _currentFrame;	
 
 		//! Points to the object this animation is associated with
-		Object* attachedObject;
+		Object* _attachedObject;
 
-		//! The number of times that our current frame has been 
-		int elapsed_time;
+		bool _animation_just_started;
+
+		int _time_til_next_frame;
 	
-		bool freeze_animation;		//! True if we do not advance the animation
+		bool _freeze_animation;		//! True if we do not advance the animation
 
-		int speed_multiplier;			//! Factor to multiply the current animation 
-															//! speed by. (e.g 2 = 2x as slow)
+		int _speed_multiplier;			//! Factor to multiply the current animation 
+										//! speed by. (e.g 2 = 2x as slow)
 		
-		int width, height;				//! Animation width/height
+		int _width, _height;				//! Animation width/height
 
 		// Push a new frame onto the end of this animation
 		bool PushFrame(AnimFrame* f);
+
+		bool RunCurrentFrameAction();
+
+		void AdvanceOneFrame();
 		
 	public:
 		void DrawAt(int _x, int _y, bool flip_x=0, bool flip_y=0);
 		void Update();
 
+		void SwitchToNextFrame();
+
 		//! The speed multiplier can slow down the animation speed.
 		//! Higher values result in a slower animation
-		void SetSpeedMultiplier(int m) {speed_multiplier = max(m, 1);};
+		void SetSpeedMultiplier(int multiplier);
 
-		void SwitchToNextFrame();
+		void RunCurrentFrameActions();
 
 		void ResetAnimation();		//! Set the animation back to the first frame
 
-		inline void Unfreeze() {freeze_animation = false;};
-		inline void Freeze() {freeze_animation = true;};
-		inline void ToggleFreeze() {freeze_animation = !freeze_animation;};
+		void SetFrozen(bool is_frozen);
+		inline void ToggleFreeze() {_freeze_animation = !_freeze_animation;}
 
-		bool Init();							//! Initialize the animation
-		void Shutdown();					//! Cleanup this animation
+		bool Init(XMLNode &xAnim, Object* attachedObject);
+		void Shutdown();
 
 		//! Used in constructing a new animation
 		//! Pushes a sprite frame onto it.
@@ -121,16 +127,15 @@ class Animation {
 		//! When this frame is called we will jump to a different frame #
 		bool CreateJumpFrame( int iFrameToJumpTo );
 		
-		inline int GetWidth() {return width;};
-		inline int GetHeight() {return height;};
+		inline int GetWidth() {return _width;};
+		inline int GetHeight() {return _height;};
 		
-		inline Sprite* GetCurrentSprite() {return currentFrame->sprite;}
+		inline Sprite* GetCurrentSprite() {return _currentFrame->sprite;}
 
 		Animation();
 		~Animation();
 
-		//! Static factory method
-		static Animation* Load(XMLNode &xAnim, Object* attachedObject);
+		bool _debug_flag;
 };
 
 #endif // ANIMATION_H

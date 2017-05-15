@@ -67,7 +67,7 @@ ObjectSpring::~ObjectSpring() {}
 void ObjectSpring::OnCollide(Object* obj, const b2WorldManifold* pkbWorldManifold) {
 	if (ObjectPlayer* player = dynamic_cast<ObjectPlayer*>(obj)) {
 		if (spring_reset_time == 0) {
-			currentAnimation->Unfreeze();
+			currentAnimation->SetFrozen(false);
 			spring_reset_time = DEFAULT_SPRING_RESET_TIME;
 		}
 	}
