@@ -11,24 +11,24 @@
 				<frame name="toneriko/run2.png" duration="1" />
 				<frame name="toneriko/run3.png" duration="1" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 				
 		<animation name="standing">
 			<frames>
 			<frame name="toneriko/stand.png" duration="64" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 
 		<animation name="jumping">
 			<frames>
 				<frame name="toneriko/jump.png" duration="3" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	

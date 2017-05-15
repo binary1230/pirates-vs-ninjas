@@ -10,8 +10,8 @@
 				<frame type="sound" data="spring" />
 				<frame name="spring2-right.png" duration="6" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<springDirection>

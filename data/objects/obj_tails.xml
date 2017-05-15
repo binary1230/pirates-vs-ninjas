@@ -9,8 +9,8 @@
 				<frame name="fly1.png" duration="4" />
 				<frame name="fly2.png" duration="4" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

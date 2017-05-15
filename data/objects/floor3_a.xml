@@ -8,8 +8,8 @@
 			<frames>
 				<frame name="floor3_a.png" duration="1" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

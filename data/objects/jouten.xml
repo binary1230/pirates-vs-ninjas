@@ -17,24 +17,24 @@
 				<frame name="jouten/run8.png" duration="2" />
 				<frame name="jouten/run9.png" duration="2" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 				
 		<animation name="standing">
 			<frames>
 			<frame name="jouten/stand.png" duration="64" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 
 		<animation name="jumping">
 			<frames>
 				<frame name="jouten/jump.png" duration="3" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	

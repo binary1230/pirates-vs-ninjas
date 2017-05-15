@@ -16,8 +16,8 @@
 				<img name="xrun7.png" duration="2" />
 				<img name="xrun8.png" duration="2" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 				
 		<animation name="standing">
@@ -29,8 +29,8 @@
 				<img name="xwait1.png" duration="4" />
 				<img name="xwait2.png" duration="64" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 
 		<animation name="jumping">
@@ -40,8 +40,8 @@
 				<img name="xspin3.png" duration="3" />
 				<img name="xspin4.png" duration="3" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

@@ -8,8 +8,8 @@
 			<frames>
 				<frame name="sign-LEFTRIGHTkey.png" duration="50" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

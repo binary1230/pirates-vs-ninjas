@@ -8,8 +8,8 @@
 			<frames>
 				<frame name="sign-arrow-up.png" duration="1" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

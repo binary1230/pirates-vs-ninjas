@@ -8,8 +8,8 @@
 			<frames>
 				<frame name="s_palm_small.png" duration="1" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

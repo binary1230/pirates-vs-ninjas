@@ -8,8 +8,8 @@
 			<frames>
 				<frame name="opener_left.png" duration="3" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

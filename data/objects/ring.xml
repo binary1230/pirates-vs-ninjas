@@ -8,8 +8,8 @@
 			<frames>
 				<frame name="spinners/spinnerXXXX.png" duration="2" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<item_type>ring</item_type>

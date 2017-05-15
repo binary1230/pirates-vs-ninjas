@@ -23,8 +23,8 @@
 				<frame type="effect" data="explosion1" />
 				<frame type="destroy" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

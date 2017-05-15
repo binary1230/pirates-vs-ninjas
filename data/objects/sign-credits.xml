@@ -9,8 +9,8 @@
 				<frame name="sign-dommadeit.png" duration="50" />
 				<frame name="sign-theend.png" duration="50" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

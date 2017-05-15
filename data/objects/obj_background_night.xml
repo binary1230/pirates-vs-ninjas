@@ -8,8 +8,8 @@
 			<frames>
 				<frame name="wide-bg2-starry1.png" duration="1" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

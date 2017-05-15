@@ -8,8 +8,8 @@
 			<frames>
 				<frame name="door3-open1.png" duration=1 />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 		<animation name="opening">
 			<frames>
@@ -20,8 +20,8 @@
 				<frame name="door3-open5.png" duration=50 />
 				<frame name="door3-open5.png" duration=3 />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

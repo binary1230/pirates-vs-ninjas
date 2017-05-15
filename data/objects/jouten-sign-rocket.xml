@@ -9,8 +9,8 @@
 				<frame name="jouten-sign-rocket.png" duration="10" alpha_enabled=true />
 				<frame name="jouten-sign-rocket2.png" duration="3" alpha_enabled=true />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>

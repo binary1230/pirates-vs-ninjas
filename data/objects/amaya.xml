@@ -9,8 +9,8 @@
 			<frames>
 				<frame name="amaya2/idle/njgs0001.png" duration="20"  />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	
 		<animation name="walking">
@@ -24,8 +24,6 @@
 				<frame name="amaya2/run/njgs0059.png" duration="1"  />
 				<frame name="amaya2/run/njgs0060.png" duration="1"  />
 			</frames>
-			<show_in_order />
-			<repeat />
 		</animation>
 
 		<animation name="sliding">
@@ -33,8 +31,6 @@
 				<frame name="amaya2/slide/njgs0046.png" duration="15"  />
 				<frame name="amaya2/slide/njgs0047.png" duration="10"  pause=1 />
 			</frames>
-			<show_in_order />
-			<repeat />
 		</animation>
 
 		<animation name="jumping">
@@ -48,8 +44,6 @@
 				<frame name="amaya2/jump/njgs0027.png" duration="4"  />
 				<frame type="jumpToFrame" num="2" /> <!-- first frame is ONE -->
 			</frames>
-			<show_in_order />
-			<repeat />
 		</animation>
 	</animations>
 	
@@ -60,7 +54,6 @@
 			<width>29</width>
 			<height>63</height>
 		</boundingBox>
-
  		<jumpVelocity>30.0f</jumpVelocity>
 		<drag>0.92f</drag>
 		<minVelocity>4.0f</minVelocity>

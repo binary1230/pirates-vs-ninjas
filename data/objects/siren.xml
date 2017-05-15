@@ -12,8 +12,8 @@
 				<frame name="siren2.png" duration="4" />
 				<frame name="siren3.png" duration="4" />
 			</frames>
-			<show_in_order />
-			<repeat />
+			
+			
 		</animation>
 	</animations>
 	<properties>
