@@ -17,6 +17,7 @@
 	
 	<sounds>
 		<sound name="ring">sounds/ring.wav</sound>
+		<sound name="itemget">sounds/itemget.wav</sound>
 		<sound name="jump">sounds/jump.wav</sound>
 		<sound name="door3">sounds/door.wav</sound>
 		<sound name="explosion">sounds/explosion.wav</sound>

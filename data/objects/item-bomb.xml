@@ -13,7 +13,7 @@
 		</animation>
 	</animations>
 	<item_type>bomb</item_type>
-	<sound_on_pickup>ring</sound_on_pickup>
+	<sound_on_pickup>itemget</sound_on_pickup>
 </objectDef>
 
 </objectDefinitions>
