@@ -90,9 +90,6 @@ class GameWorld : public GameMode {
 
 			void CachePlayerObjects();
 
-			//! ONLY used during init, temp variables for "repeat" xml tags
-			int repeater_current_x, repeater_current_y;
-
 			//! Modal object
 			//! If a modal object (e.g. on-screen text) is active
 			//! then the rest of the game pauses until it responds
