@@ -310,6 +310,8 @@ void Window::SetClearColor(float r, float g, float b) {
 
 bool Window::Init( uint _width, uint _height, bool _fullscreen) 
 {
+	EASY_BLOCK("Create Window");
+
 	fade_rate = 0;
 	fade_alpha = 255;
 	fading_state = FADED_NONE;

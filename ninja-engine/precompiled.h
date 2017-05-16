@@ -38,9 +38,16 @@
 	#define _SECURE_SCL 0
 	#define _HAS_ITERATOR_DEBUGGING 0    // 2017, enabling this breaks, like, everything.
 	#endif // _DEBUG
-
-	// #define  ALLEGRO_STATICLINK   // old? 2017
 #endif // WIN32
+
+#ifdef  BUILD_WITH_EASY_PROFILER
+#include <easy/profiler.h>
+#else
+	#define EASY_THREAD(x)		// noop
+	#define EASY_BLOCK(x)		// noop
+	#define EASY_FUNCTION(x)	// noop
+	#define EASY_END_BLOCK		// noop
+#endif // PROFILING_ENABLED
 
 // -----------------------------
 

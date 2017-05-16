@@ -89,6 +89,9 @@ std::string GameModes::PickNextMode(const GameModeExitInfo& exitInfo) {
 //! If there was no mode exit info, just pass in a blank oldExitInfo and
 //! the new mode will ignore it.
 bool GameModes::LoadMode(std::string mode_filename, const GameModeExitInfo& oldExitInfo) {	
+	EASY_BLOCK("Load Mode");
+	EASY_FUNCTION(profiler::colors::Amber);
+
 	currentMode = NULL;
 
 	TRACE(" Mode Info: filename '%s'\n", mode_filename.c_str() );

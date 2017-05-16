@@ -84,6 +84,7 @@ bool Game::InitAllegro() {
 //! BE CAREFUL, things need to be done IN ORDER here.
 bool Game::InitSystems() {
 		
+	EASY_BLOCK("GameInit");
 	TRACE("[Beginning Game Init]\n");
 				
 	exit_game = false;
@@ -137,6 +138,7 @@ bool Game::InitSystems() {
 	}
 
 	if (xGame.nChildNode("sounds")) {
+		EASY_BLOCK("Load sounds");
 		XMLNode xSounds = xGame.getChildNode("sounds");
 		if (!SOUND->LoadSounds(xSounds, true)) {
 			return false;
@@ -167,6 +169,7 @@ bool Game::InitSystems() {
 }
 
 bool Game::LoadGameModes() {
+	EASY_BLOCK("Load Game Modes");
 	modes = new GameModes();
 
 	if (!modes)
@@ -232,7 +235,22 @@ bool Game::InitAllegroEvents() {
 	return true;
 }
 
+void Game::InitProfiler() {
+#ifdef BUILD_WITH_EASY_PROFILER
+
+	EASY_PROFILER_ENABLE;
+	profiler::startListen();
+	EASY_THREAD("Main");
+	EASY_PROFILER_ENABLE;
+
+#endif
+}
+
 bool Game::Init(const int argc, const char** argv) {
+	InitProfiler();
+
+	EASY_BLOCK("GameInit");
+
 	#ifdef REDIRECT_STDERR
 	TRACE("Redirecting stderr output to '" REDIRECT_STDERR_FILENAME "'\n");
 
@@ -276,7 +294,7 @@ void Game::RunMainLoop_BlockingHelper()
 }
 
 void Game::ProcessEvents() 
-{
+{	
 	ALLEGRO_EVENT ev;
 	while (al_get_next_event(event_queue, &ev)) {
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
@@ -302,6 +320,7 @@ void Game::TickIfNeeded() {
 }
 
 void Game::Tick() {
+	EASY_FUNCTION(profiler::colors::Green);
 	Update();
 	Draw();
 }
@@ -326,6 +345,8 @@ void Game::UpdateGlobalInput()
 
 //! Update all game status
 void Game::Update() {
+	EASY_FUNCTION(profiler::colors::Orange);
+
 	if (exit_game)
 		return;
 
@@ -344,6 +365,8 @@ void Game::Update() {
 }
 
 void Game::Draw() {
+	EASY_FUNCTION(profiler::colors::Magenta);
+
 	if (exit_game || !OPTIONS->DrawGraphics())
 		return;
 
@@ -407,6 +430,10 @@ void Game::Shutdown() {
 
 	modes = NULL;
 	xGame = XMLNode::emptyXMLNode;
+
+	#ifdef PROFILING_ENABLED
+	profiler::stopListen();
+	#endif
 }
 
 void Game::SetRandomSeed(int val) { 

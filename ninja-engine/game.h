@@ -38,6 +38,8 @@ class Game {
 
 		//! Init game timing
 		bool InitAllegroEvents();
+
+		void InitProfiler();
 		
 		//! Init input subsystems
 		bool InitInput();								

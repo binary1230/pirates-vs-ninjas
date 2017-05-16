@@ -75,6 +75,9 @@ void GameWorld::Clear() {
 }
 
 bool GameWorld::Init(XMLNode xml_unused) {
+	EASY_FUNCTION(profiler::colors::Magenta);
+	EASY_BLOCK("World Init");
+
 	if (OPTIONS->GetPropMapEditorEnabled())
 		map_editor = new Editor();
 
@@ -328,10 +331,15 @@ void GameWorld::SaveWorld(string filename)
 }
 
 GameWorld* GameWorld::CreateWorld(string mode_filename = "") {
+	EASY_BLOCK("Create World - XML Load");
 	GameWorld* unserialized_world = NULL;
 	std::ifstream ifs(mode_filename);
 	boost::archive::xml_iarchive ia(ifs);
+	EASY_END_BLOCK;
+
+	EASY_BLOCK("Create World - XML Unserialize");
 	ia >> BOOST_SERIALIZATION_NVP(unserialized_world);
+	EASY_END_BLOCK;
 
 	WORLD->SetInstance(unserialized_world);
 
@@ -345,6 +353,9 @@ void GameWorld::LoadMusic(const char* music_file) {
 }
 
 bool GameWorld::Load() {
+	EASY_FUNCTION(profiler::colors::Blue);
+	EASY_BLOCK("World Load");
+
 	is_loading = true;
 	m_bJumpedBackFromADoor = false;
 	_objectsToAdd.clear();
@@ -464,6 +475,8 @@ void GameWorld::CachePlayerObjects() {
 }
 
 bool GameWorld::LoadObjectDefsFromXML() {
+	EASY_FUNCTION(profiler::colors::Red);
+
 	for (string& objectDefXmlFile : m_included_objectdef_xml_files) {
 		if (!OBJECT_FACTORY->LoadObjectDefsFromIncludeXML(objectDefXmlFile)) {
 			return false;
