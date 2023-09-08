@@ -1,12 +1,12 @@
-# Image Gallery
+# Image Gallery - Ninja Girl
+Art Credit: Eliezer Medina
+
+![ninjagirl-large3](./some_src_assets/ninjagirl-large3.png)
+![ninjagirl](./some_src_assets/ninjagirl.gif)
 
 ## Fall
 
 ![njgs0070](./fall/njgs0070.png)
-
-## Idle
-
-![njgs0001](./idle/njgs0001.png)
 
 ## Jump
 
@@ -25,7 +25,7 @@
 ![njgs0030](./land/njgs0030.png)
 ![njgs0031](./land/njgs0031.png)
 
-## Old
+## Idle
 
 ![ninjagirl-idle1](./old/ninjagirl-idle1.png)
 ![ninjagirl-idle2](./old/ninjagirl-idle2.png)
@@ -50,8 +50,3 @@
 
 ![njgs0046](./slide/njgs0046.png)
 ![njgs0047](./slide/njgs0047.png)
-
-## Some Source Assets
-
-![ninjagirl-large3](./some_src_assets/ninjagirl-large3.png)
-![ninjagirl](./some_src_assets/ninjagirl.gif)
